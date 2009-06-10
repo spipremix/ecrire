@@ -12,13 +12,28 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-include_spip('inc/presentation');
-include_spip('inc/install');
+function exec_config_identite(){
+	if (!autoriser('configurer','identite',0)) {
+		include_spip('inc/minipres');
+		echo minipres();
+		exit;
+	}
+	$commencer_page = charger_fonction('commencer_page','inc');
+	echo $commencer_page(_T('titre_identite_site'));
 
-// http://doc.spip.org/@exec_admin_declarer_dist
-function exec_admin_declarer_dist()
-{
-	$admin_tech = charger_fonction('admin_tech','exec');
-	$admin_tech();
+	echo debut_gauche("configurer_identite",true);
+
+	//
+	// Le logo de notre site, c'est site{on,off}0.{gif,png,jpg}
+	//
+	$iconifier = charger_fonction('iconifier', 'inc');
+	echo $iconifier('id_syndic', 0, 'configuration');
+
+	echo debut_droite("configurer_identite",true);
+
+
+	echo recuperer_fond('prive/configurer/identite',$_GET);
+	echo fin_gauche(),fin_page();
 }
+
 ?>

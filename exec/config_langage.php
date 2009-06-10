@@ -12,13 +12,18 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-include_spip('inc/presentation');
-include_spip('inc/install');
+function exec_config_langage(){
+	
+	$commencer_page = charger_fonction('commencer_page','inc');
+	echo $commencer_page(_T('titre_config_langage'));
+	
+	echo barre_onglets('infos_perso', 'config_langage');
 
-// http://doc.spip.org/@exec_admin_declarer_dist
-function exec_admin_declarer_dist()
-{
-	$admin_tech = charger_fonction('admin_tech','exec');
-	$admin_tech();
+	echo debut_gauche("configurer_langage",true);
+	echo debut_droite("configurer_langage",true);
+
+	echo recuperer_fond('prive/configurer/langage',$_GET);
+	echo fin_gauche(),fin_page();
 }
+
 ?>
