@@ -2579,7 +2579,7 @@ function balise_TRI_dist($p, $liste='true') {
 	}
 	// forcer la jointure si besoin, et si le champ est statique
 	if (preg_match(",^'([\w.]+)'$,i",$_champ,$m)){
-		index_pile($b, $m[1], $p->boucles);
+		index_pile($b, $m[1], $p->boucles,'',null,true,false);
 	}
 
 	$_libelle = interprete_argument_balise(2,$p);

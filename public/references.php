@@ -69,7 +69,7 @@ function index_boucle($p){
  *
  * @param string $idb        Identifiant de la boucle
  * @param string $nom_champ  Nom du champ SQL cherché
- * @param Boucle $boucles    AST du squelette
+ * @param array $boucles    AST du squelette
  * @param string $explicite
  *     Indique que le nom de la boucle est explicite dans la balise #_nomboucletruc:CHAMP
  * @param null|string $defaut
@@ -78,10 +78,12 @@ function index_boucle($p){
  * @param bool $remonte_pile
  *     Permettre de remonter la pile des boucles ou non (dans ce cas on
  *     ne cherche que danss la 1ère boucle englobante)
+ * @param bool $select
+ *     Pour ajouter au select de la boucle, par defaut true
  * @return string
  *     Code PHP pour obtenir le champ SQL
  */
-function index_pile($idb, $nom_champ, &$boucles, $explicite='', $defaut=null, $remonte_pile=true) {
+function index_pile($idb, $nom_champ, &$boucles, $explicite='', $defaut=null, $remonte_pile=true, $select=true) {
 	if (!is_string($defaut))
 		$defaut = '@$Pile[0][\''. strtolower($nom_champ) . '\']';
 
@@ -107,7 +109,7 @@ function index_pile($idb, $nom_champ, &$boucles, $explicite='', $defaut=null, $r
 		// $c = le nom du champ demandé
 		list ($t, $c) = index_tables_en_pile($idb, $nom_champ, $boucles, $joker);
 		if ($t) {
-			if (!in_array($t, $boucles[$idb]->select)) {
+			if ($select AND !in_array($t, $boucles[$idb]->select)) {
 				$boucles[$idb]->select[] = $t;
 			}
 			$champ = '$Pile[$SP' . ($i ? "-$i" : "") . '][\'' . $c . '\']';
