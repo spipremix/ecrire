@@ -69,12 +69,13 @@ function install_fichier_connexion($nom, $texte)
  * @param string $base      Nom de la base de données
  * @param string $type      Moteur SQL {@example 'sqlite3', 'mysql'}
  * @param string $pref      Préfixe des tables {@example 'spip'}
- * @param string $ldap      ?
+ * @param string $ldap      Type d'authentification (cas si 'ldap')
+ * @param string $charset   Charset de la connexion SQL
  * @return string
  *     Texte du fichier de connexion
  * 
 **/
-function install_connexion($adr, $port, $login, $pass, $base, $type, $pref, $ldap='')
+function install_connexion($adr, $port, $login, $pass, $base, $type, $pref, $ldap='', $charset='')
 {
 	$adr = addcslashes($adr,"'\\");
 	$port = addcslashes($port,"'\\");
@@ -84,10 +85,11 @@ function install_connexion($adr, $port, $login, $pass, $base, $type, $pref, $lda
 	$type = addcslashes($type,"'\\");
 	$pref = addcslashes($pref,"'\\");
 	$ldap = addcslashes($ldap,"'\\");
-	return "\$GLOBALS['spip_connect_version'] = 0.7;\n"
+	$charset = addcslashes($charset,"'\\");
+	return "\$GLOBALS['spip_connect_version'] = 0.8;\n"
 	. "spip_connect_db("
 	. "'$adr','$port','$login','$pass','$base'"
-	. ",'$type', '$pref','$ldap');\n";
+	. ",'$type', '$pref','$ldap','$charset');\n";
 }
 
 
@@ -111,9 +113,9 @@ function analyse_fichier_connection($file)
 	} else {
 		$ar = '\s*\'([^\']*)\'';
 		$r = '\s*,' . $ar;
-		$r = "#spip_connect_db[(]$ar$r$r$r$r(?:$r(?:$r(?:$r)?)?)?#";
+		$r = "#spip_connect_db[(]$ar$r$r$r$r(?:$r(?:$r(?:$r(?:$r)?)?)?)?#";
 		if (preg_match($r, $s, $regs)) {
-			$regs[2] = $regs[1] . (!$regs[2] ? '' : ":$port_db;");
+			$regs[2] = $regs[1] . (!$regs[2] ? '' : ":".$regs[2].";");
 			array_shift($regs);
 			array_shift($regs);
 			return $regs;

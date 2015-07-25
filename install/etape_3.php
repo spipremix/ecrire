@@ -144,6 +144,12 @@ function install_bases($adresse_db, $login_db, $pass_db,  $server_db, $choix_db,
 	  @$fquery("DELETE FROM spip_meta WHERE nom='import_all' OR  nom='admin'", $server_db);
 	}
 
+	// recuperer le charset de la connexion dans les meta
+	$charset = '';
+	$r = $fquery("SELECT valeur FROM spip_meta WHERE nom='charset_sql_connexion'", $server_db);
+	if ($r) $r = sql_fetch($r, $server_db);
+	if ($r) $charset = $r['valeur'];
+
 	$ligne_rappel = install_mode_appel($server_db);
 
 	$result_ok = @$fquery("SELECT COUNT(*) FROM spip_meta", $server_db);
@@ -168,7 +174,9 @@ function install_bases($adresse_db, $login_db, $pass_db,  $server_db, $choix_db,
 						      $pass_db,
 						      $sel_db,
 						      $server_db,
-						      $table_prefix));
+						      $table_prefix,
+					        '',
+					        $charset));
 	return '';
 }
 
