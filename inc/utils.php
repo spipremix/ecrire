@@ -2189,7 +2189,7 @@ function spip_initialisation_suite(){
 				case 'k': $memory *= 1024;
 			}
 			if ($memory<_MEMORY_LIMIT_MIN*1024*1024){
-				ini_set('memory_limit', $m = _MEMORY_LIMIT_MIN . 'M');
+				@ini_set('memory_limit', $m = _MEMORY_LIMIT_MIN . 'M');
 				if (trim(ini_get('memory_limit'))!=$m){
 					if (!defined('_INTERDIRE_COMPACTE_HEAD_ECRIRE')) define('_INTERDIRE_COMPACTE_HEAD_ECRIRE', true); // evite une page blanche car on ne saura pas calculer la css dans ce hit
 				}
