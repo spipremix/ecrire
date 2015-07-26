@@ -152,9 +152,11 @@ function liens_absolus($texte, $base='') {
 			foreach(array('href', 'src') as $attr) {
 				$href = extraire_attribut($lien[0], $attr);
 				if (strlen($href)>0) {
-					$abs = url_absolue($href, $base);
-					if ($href != $abs and !preg_match('/^#/',$href)) {
-						$texte = inserer_attribut($texte, $attr, $abs);
+					if (!preg_match(';^((?:[a-z]{3,7}:)?//);iS', $href)){
+						$abs = url_absolue($href, $base);
+						if (rtrim($href,'/')!==rtrim($abs,'/') and !preg_match('/^#/', $href)){
+							$texte = inserer_attribut($texte, $attr, $abs);
+						}
 					}
 				}
 			}
