@@ -1540,13 +1540,20 @@ function url_de_base($profondeur=null) {
 		OR (isset($_SERVER['HTTPS']) AND
 		    test_valeur_serveur($_SERVER['HTTPS']))
 	) ? 'https' : 'http';
-	# note : HTTP_HOST contient le :port si necessaire
-	$host = $_SERVER['HTTP_HOST'];
-	if (isset($_SERVER['SERVER_PORT'])
-		AND $port=$_SERVER['SERVER_PORT']
-		AND strpos($host,":")==false){
-		if ($http=="http" AND $port!=80) $host.=":$port";
-		if ($http=="https" AND $port!=443) $host.=":$port";
+	if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])){
+		$host = strtr($_SERVER['HTTP_X_FORWARDED_HOST'], "<>?\"' \r\n", '________');
+	}
+	else {
+		# note : HTTP_HOST contient le :port si necessaire
+		$host = $_SERVER['HTTP_HOST'];
+		if (isset($_SERVER['SERVER_PORT'])
+			AND $port=$_SERVER['SERVER_PORT']
+			AND strpos($host,":")==false){
+			if (!defined('_PORT_HTTP_STANDARD')) define('_PORT_HTTP_STANDARD','80');
+			if (!defined('_PORT_HTTPS_STANDARD')) define('_PORT_HTTPS_STANDARD','443');
+			if ($http=="http" AND !in_array($port,explode(',',_PORT_HTTP_STANDARD))) $host.=":$port";
+			if ($http=="https" AND !in_array($port,explode(',',_PORT_HTTPS_STANDARD))) $host.=":$port";
+		}
 	}
 	if (!$GLOBALS['REQUEST_URI']){
 		if (isset($_SERVER['REQUEST_URI'])) {

@@ -194,6 +194,10 @@ function calculer_contexte_implicite(){
 		'notes' => $notes?$notes('','contexter_cache'):'',
 		'spip_version_code' => $GLOBALS['spip_version_code'],
 	);
+	if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])){
+		$contexte_implicite['host'] .= "|" . $_SERVER['HTTP_X_FORWARDED_HOST'];
+	}
+
 	return $contexte_implicite;
 }
 
