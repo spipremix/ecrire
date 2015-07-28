@@ -10,14 +10,18 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+/**
+ * Ce fichier regroupe les fonctions permettant de calculer la page et les entêtes
+ * 
+ * Determine le contexte donne par l'URL (en tenant compte des reecritures) 
+ * grace a la fonction de passage d'URL a id (reciproque dans urls/*php)
+ * 
+ * @package SPIP\Core\Compilateur\Assembler
+**/
+
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 if (!defined('_CONTEXTE_IGNORE_VARIABLES')) define('_CONTEXTE_IGNORE_VARIABLES', "/(^var_|^PHPSESSID$)/");
-//
-// calcule la page et les entetes
-// determine le contexte donne par l'URL (en tenant compte des reecritures) 
-// grace a la fonction de passage d'URL a id (reciproque dans urls/*php)
-//
 
 // http://code.spip.net/@assembler
 function assembler($fond, $connect=''){
@@ -150,14 +154,20 @@ function assembler($fond, $connect=''){
 	return $page;
 }
 
-//
-// Contexte : lors du calcul d'une page spip etablit le contexte a partir
-// des variables $_GET et $_POST, purgees des fausses variables var_*
-// Note : pour hacker le contexte depuis le fichier d'appel (page.php),
-// il est recommande de modifier $_GET['toto'] (meme si la page est
-// appelee avec la methode POST).
-//
-// http://code.spip.net/@calculer_contexte
+/**
+ * Calcul le contexte de la page
+ * 
+ * lors du calcul d'une page spip etablit le contexte a partir
+ * des variables $_GET et $_POST, purgees des fausses variables var_*
+ * 
+ * Note : pour hacker le contexte depuis le fichier d'appel (page.php),
+ * il est recommande de modifier $_GET['toto'] (meme si la page est
+ * appelee avec la methode POST).
+ * 
+ * http://code.spip.net/@calculer_contexte
+ * 
+ * @return array Un tableau du contexte de la page
+ */
 function calculer_contexte() {
 
 	$contexte = array();
@@ -303,10 +313,17 @@ function inserer_balise_dynamique($contexte_exec, $contexte_compil){
 	}
 }
 
-// Attention, un appel explicite a cette fonction suppose certains include
-// $echo = faut-il faire echo ou return
-
-// http://code.spip.net/@inclure_balise_dynamique
+/**
+ * Inclusion de balise dynamique
+ * Attention, un appel explicite a cette fonction suppose certains include
+ * 
+ * http://code.spip.net/@inclure_balise_dynamique
+ * 
+ * @param string|array $texte
+ * @param bool $echo Faut-il faire echo ou return
+ * @param array $contexte_compil Contexte de la compilation
+ * @return string
+ */
 function inclure_balise_dynamique($texte, $echo=true, $contexte_compil=array()){
 	if (is_array($texte)) {
 
@@ -335,7 +352,7 @@ function inclure_balise_dynamique($texte, $echo=true, $contexte_compil=array()){
 		}
 		// _pipelines au pluriel array('nom_pipeline' => $args...) avec une syntaxe permettant plusieurs pipelines
 		if (isset($page['contexte']['_pipelines'])
-		  AND is_array($page['contexte']['_pipelines'])
+			AND is_array($page['contexte']['_pipelines'])
 			AND count($page['contexte']['_pipelines'])) {
 			foreach($page['contexte']['_pipelines'] as $pipe=>$args){
 				$args['contexte'] = $page['contexte'];
@@ -417,8 +434,20 @@ function creer_contexte_de_modele($args){
 	return $contexte;
 }
 
-// Calcule le modele et retourne la mini-page ainsi calculee
-// http://code.spip.net/@inclure_modele
+/**
+ * Calcule le modele et retourne la mini-page ainsi calculee
+ *
+ * http://code.spip.net/@inclure_modele
+ * 
+ * @param $type string
+ * @param $id int
+ * @param $params array Paramètres du modèle
+ * @param $lien array Informations du lien entourant l'appel du modèle en base de données
+ * @param $connect string 
+ * @param $env array
+ * @staticvar string $compteur
+ * @return string
+ */
 function inclure_modele($type, $id, $params, $lien, $connect='', $env=array()){
 
 	static $compteur;
