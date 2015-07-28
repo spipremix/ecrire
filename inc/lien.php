@@ -137,8 +137,8 @@ function liens_implicite_glose_dist($texte,$id,$type,$args,$ancre,$connect=''){
 function traiter_lien_implicite($ref, $texte='', $pour='url', $connect=''){
 	if (!($match = typer_raccourci($ref))) return false;
 	@list($type,,$id,,$args,,$ancre) = $match;
-# attention dans le cas des sites le lien doit pointer non pas sur
-# la page locale du site, mais directement sur le site lui-meme
+	// attention dans le cas des sites le lien doit pointer non pas sur
+	// la page locale du site, mais directement sur le site lui-meme
 	if ($f = charger_fonction("implicite_$type","liens",true))
 		$url = $f($texte,$id,$type,$args,$ancre,$connect);
 	if (!$url)
