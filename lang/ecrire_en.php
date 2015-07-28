@@ -577,7 +577,7 @@ and their status is colour-coded:',
 	'label_choix_langue' => 'Choose your language',
 	'label_nom_fichier_connect' => 'Indicate the name for this server',
 	'label_slogan_site' => 'Website slogan',
-	'label_taille_ecran' => 'Screen width', # MODIF
+	'label_taille_ecran' => 'Screen width',
 	'label_texte_et_icones_navigation' => 'Navigation menu',
 	'label_texte_et_icones_page' => 'Page display',
 	'ldap_correspondance' => 'inherit field @champ@',
