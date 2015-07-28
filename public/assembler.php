@@ -20,7 +20,7 @@ if (!defined('_CONTEXTE_IGNORE_VARIABLES')) define('_CONTEXTE_IGNORE_VARIABLES',
 //
 
 // http://code.spip.net/@assembler
-function assembler($fond, $connect='') {
+function assembler($fond, $connect=''){
 
 	// flag_preserver est modifie ici, et utilise en globale
 	// use_cache sert a informer le bouton d'admin pr savoir s'il met un *
@@ -206,17 +206,15 @@ function calculer_contexte_implicite(){
 //
 
 // http://code.spip.net/@auto_content_type
-function auto_content_type($page)
-{
+function auto_content_type($page){
 	global $flag_preserver;
-	if (!isset($flag_preserver))
-	  {
-	    $flag_preserver = ($page && preg_match("/header\s*\(\s*.content\-type:/isx",$page['texte']) || (isset($page['entetes']['Content-Type'])));
-	  }
+	if (!isset($flag_preserver)){
+		$flag_preserver = ($page && preg_match("/header\s*\(\s*.content\-type:/isx",$page['texte']) || (isset($page['entetes']['Content-Type'])));
+	}
 }
 
 // http://code.spip.net/@inclure_page
-function inclure_page($fond, $contexte, $connect='') {
+function inclure_page($fond, $contexte, $connect=''){
 	static $cacher, $produire_page;
 	global $lastmodified;
 
@@ -287,7 +285,6 @@ function public_produire_page_dist($fond, $contexte, $use_cache, $chemin_cache, 
 	return $page;
 }
 
-
 // Fonction inseree par le compilateur dans le code compile.
 // Elle recoit un contexte pour inclure un squelette, 
 // et les valeurs du contexte de compil prepare par memoriser_contexte_compil
@@ -298,8 +295,7 @@ function public_produire_page_dist($fond, $contexte, $use_cache, $chemin_cache, 
 // 3: ligne
 // 4: langue
 
-function inserer_balise_dynamique($contexte_exec, $contexte_compil)
-{
+function inserer_balise_dynamique($contexte_exec, $contexte_compil){
 	if (!is_array($contexte_exec))
 		echo $contexte_exec; // message d'erreur etc
 	else {
@@ -311,8 +307,7 @@ function inserer_balise_dynamique($contexte_exec, $contexte_compil)
 // $echo = faut-il faire echo ou return
 
 // http://code.spip.net/@inclure_balise_dynamique
-function inclure_balise_dynamique($texte, $echo=true, $contexte_compil=array())
-{
+function inclure_balise_dynamique($texte, $echo=true, $contexte_compil=array()){
 	if (is_array($texte)) {
 
 		list($fond, $delainc, $contexte_inclus) = $texte;
@@ -366,11 +361,10 @@ function inclure_balise_dynamique($texte, $echo=true, $contexte_compil=array())
 		echo $texte;
 	else
 		return $texte;
-
 }
 
 // http://code.spip.net/@message_page_indisponible
-function message_page_indisponible ($page, $contexte) {
+function message_page_indisponible ($page, $contexte){
 	static $deja = false;
 	if ($deja) return "erreur";
 	$codes = array(
@@ -401,7 +395,7 @@ function message_page_indisponible ($page, $contexte) {
 // temporairement ici : a mettre dans le futur inc/modeles
 // creer_contexte_de_modele('left', 'autostart=true', ...) renvoie un array()
 // http://code.spip.net/@creer_contexte_de_modele
-function creer_contexte_de_modele($args) {
+function creer_contexte_de_modele($args){
 	$contexte = array();
 	foreach ($args as $var=>$val) {
 		if (is_int($var)){ // argument pas formate
@@ -425,7 +419,7 @@ function creer_contexte_de_modele($args) {
 
 // Calcule le modele et retourne la mini-page ainsi calculee
 // http://code.spip.net/@inclure_modele
-function inclure_modele($type, $id, $params, $lien, $connect='', $env=array()) {
+function inclure_modele($type, $id, $params, $lien, $connect='', $env=array()){
 
 	static $compteur;
 	if (++$compteur>10) return ''; # ne pas boucler indefiniment
@@ -489,10 +483,8 @@ function inclure_modele($type, $id, $params, $lien, $connect='', $env=array()) {
 	$contexte['args'] = $arg_list; // on passe la liste des arguments du modeles dans une variable args
 	$contexte = array_merge($contexte,$arg_list);
 
-
 	// Appliquer le modele avec le contexte
 	$retour = recuperer_fond($fond, $contexte, array(), $connect);
-
 
 	// Regarder si le modele tient compte des liens (il *doit* alors indiquer
 	// spip_lien_ok dans les classes de son conteneur de premier niveau ;
@@ -516,7 +508,7 @@ function inclure_modele($type, $id, $params, $lien, $connect='', $env=array()) {
 // pour recuperer $page complet, utiliser:
 // 	recuperer_fond($fond,$contexte,array('raw'=>true))
 // http://code.spip.net/@evaluer_fond
-function evaluer_fond ($fond, $contexte=array(), $connect=null) {
+function evaluer_fond($fond, $contexte=array(), $connect=null){
 
 	$page = inclure_page($fond, $contexte, $connect);
 
