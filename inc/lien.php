@@ -256,7 +256,9 @@ function traiter_modeles($texte, $doublons=false, $echap='', $connect='', $liens
 				$lien = array(
 					'href' => extraire_attribut($r[0],'href'),
 					'class' => extraire_attribut($r[0],'class'),
-					'mime' => extraire_attribut($r[0],'type')
+					'mime' => extraire_attribut($r[0],'type'),
+					'title' => extraire_attribut($r[0],'title'),
+					'hreflang' => extraire_attribut($r[0],'hreflang')
 				);
 				$n = strlen($r[0]);
 				$a -= $n;
@@ -276,7 +278,7 @@ function traiter_modeles($texte, $doublons=false, $echap='', $connect='', $liens
 				// dans les parametres, plutot que les liens echappes
 				if (!is_null($liens))
 					$params = str_replace($liens[0], $liens[1], $params);
-			  $modele = inclure_modele($type, $id, $params, $lien, $connect, $env);
+				$modele = inclure_modele($type, $id, $params, $lien, $connect, $env);
 				// en cas d'echec, 
 				// si l'objet demande a une url, 
 				// creer un petit encadre vers elle
@@ -285,11 +287,11 @@ function traiter_modeles($texte, $doublons=false, $echap='', $connect='', $liens
 						$lien = traiter_lien_implicite("$type$id", '', 'tout', $connect);
 					if ($lien)
 						$modele = '<a href="'
-						  .$lien['url']
-						  .'" class="spip_modele'
-						  . '">'
-						  .sinon($lien['titre'], _T('ecrire:info_sans_titre'))
-						  ."</a>";
+							.$lien['url']
+							.'" class="spip_modele'
+							. '">'
+							.sinon($lien['titre'], _T('ecrire:info_sans_titre'))
+							."</a>";
 					else {
 						$modele = "";
 						if (test_espace_prive()) {
