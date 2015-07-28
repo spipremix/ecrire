@@ -46,7 +46,7 @@
 		<traducteur nom="RealET" lien="http://trad.spip.net/auteur/realet" />
 		<traducteur nom="Torsten Willmann" lien="http://trad.spip.net/auteur/torsten-willmann" />
 	</langue>
-	<langue code="en" url="http://trad.spip.net/tradlang_module/ecrire_?lang_cible=en" total="793" traduits="792" relire="0" modifs="1" nouveaux="0" pourcent="99.87">
+	<langue code="en" url="http://trad.spip.net/tradlang_module/ecrire_?lang_cible=en" total="793" traduits="793" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="b_b" lien="http://trad.spip.net/auteur/b_b" />
 		<traducteur nom="Benitron" lien="http://trad.spip.net/auteur/benitron" />
 		<traducteur nom="Cerf" lien="http://trad.spip.net/auteur/cerf" />
@@ -147,7 +147,7 @@
 	<langue code="my" url="http://trad.spip.net/tradlang_module/ecrire_?lang_cible=my" total="793" traduits="494" relire="0" modifs="38" nouveaux="261" pourcent="62.30">
 		<traducteur nom="kent1" lien="http://trad.spip.net/auteur/kent1" />
 	</langue>
-	<langue code="nl" url="http://trad.spip.net/tradlang_module/ecrire_?lang_cible=nl" total="793" traduits="790" relire="0" modifs="2" nouveaux="1" pourcent="99.62">
+	<langue code="nl" url="http://trad.spip.net/tradlang_module/ecrire_?lang_cible=nl" total="793" traduits="793" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="ericdg10" lien="http://trad.spip.net/auteur/ericdg10" />
 		<traducteur nom="gerbrand" lien="http://trad.spip.net/auteur/gerbrand" />
 		<traducteur nom="Hanjo" lien="http://trad.spip.net/auteur/hanjo" />
