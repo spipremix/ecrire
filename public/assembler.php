@@ -439,7 +439,7 @@ function creer_contexte_de_modele($args){
  *
  * http://code.spip.net/@inclure_modele
  * 
- * @param $type string
+ * @param $type string Nom du modele
  * @param $id int
  * @param $params array Paramètres du modèle
  * @param $lien array Informations du lien entourant l'appel du modèle en base de données
@@ -498,12 +498,14 @@ function inclure_modele($type, $id, $params, $lien, $connect='', $env=array()){
 	if (isset($class))
 		$contexte['class'] = $class;
 
-	// Si un lien a ete passe en parametre, ex: [<modele1>->url]
+	// Si un lien a ete passe en parametre, ex: [<modele1>->url] ou [<modele1|title_du_lien{hreflang}->url]
 	if ($lien) {
 		# un eventuel guillemet (") sera reechappe par #ENV
 		$contexte['lien'] = str_replace("&quot;",'"', $lien['href']);
 		$contexte['lien_class'] = $lien['class'];
 		$contexte['lien_mime'] = $lien['mime'];
+		$contexte['lien_title'] = $lien['title'];
+		$contexte['lien_hreflang'] = $lien['hreflang'];
 	}
 
 	// Traiter les parametres
