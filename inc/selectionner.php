@@ -115,11 +115,12 @@ function construire_selectionner_hierarchie($idom, $liste, $racine, $url, $name,
 	. ""
 	. "<input style='width: 100px;float:$spip_lang_right;' type='search' id='$idom1'"
 	  // eliminer Return car il provoque la soumission (balise unique)
+	  // et eliminer Tab pour la navigation au clavier
 	  // ce serait encore mieux de ne le faire que s'il y a encore plusieurs
 	  // resultats retournes par la recherche
-	. "\nonkeypress=\"k=event.keyCode;if (k==13 || k==3){return false;}\""
-	  // lancer la recherche apres le filtrage ci-dessus
-	. "\nonkeyup=\"return onkey_rechercher(this.value,"
+	. "\nonkeypress=\"k=event.keyCode;if (k==13 || k==3 || k==9){return false;}\""
+	  // lancer la recherche apres le filtrage ci-dessus sauf sur le tab (navigation au clavier)
+	. "\nonkeyup=\"if(event.keyCode==9){return false;};return onkey_rechercher(this.value,"
 	  // la destination de la recherche
 	. "'$idom4'"
 #	. "this.parentNode.parentNode.parentNode.parentNode.nextSibling.firstChild.id"
