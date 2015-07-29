@@ -256,8 +256,7 @@ function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem=0) {
 function selecteur_rubrique_ajax($id_rubrique, $type, $restreint, $idem=0, $do) {
 
 	if ($id_rubrique) {
-		$titre = sql_fetsel("titre", "spip_rubriques", "id_rubrique=$id_rubrique");
-		$titre = $titre['titre'];
+		$titre = sql_getfetsel("titre", "spip_rubriques", "id_rubrique=".intval($id_rubrique));
 	} else if ($type == 'auteur')
 		$titre = '&nbsp;';
 	else
@@ -301,15 +300,14 @@ function selecteur_rubrique_ajax($id_rubrique, $type, $restreint, $idem=0, $do) 
  * @return string
  *     Code HTML du sélecteur de rubrique AJAX
 **/
-function construire_selecteur($url, $js, $idom, $name, $init='', $id=0)
-{
+function construire_selecteur($url, $js, $idom, $name, $init='', $id=0){
 	$icone = (strpos($idom, 'auteur')!==false) ? 'auteur-24.png' : 'rechercher-20.png';
 	return
- 	"<div class='rubrique_actuelle'><a onclick=\""
+	"<div class='rubrique_actuelle'><a href='#' onclick=\""
 	.  $js
 	. "return charger_node_url_si_vide('"
 	. $url
-	. "', this.parentNode.nextSibling, this.nextSibling,'',event)\"><img src='"
+	. "', this.parentNode.nextSibling, this.nextSibling,'',event)\" title='"._T('titre_image_selecteur')."'><img src='"
 	. chemin_image($icone)
 	. "'\nstyle='vertical-align: middle;' alt='"._T('titre_image_selecteur')."' /></a><img src='"
 	. chemin_image('searching.gif') 
