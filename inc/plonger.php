@@ -16,7 +16,7 @@ include_spip('inc/texte');
 
 // http://code.spip.net/@inc_plonger_dist
 function inc_plonger_dist($id_rubrique, $idom="", $list=array(), $col = 1, $exclu=0, $do='aff') {
-	global  $spip_lang_left;
+	global $spip_lang_left;
 	
 	if ($list) $id_rubrique = $list[$col-1];
 	
@@ -60,8 +60,11 @@ function inc_plonger_dist($id_rubrique, $idom="", $list=array(), $col = 1, $excl
 			$classe1 = $id_rubrique ? 'petite-rubrique' : "petit-secteur";
 			if (isset($rub[$id]["enfants"])) {
 				$classe2 = " class='rub-ouverte'";
-				$url = "\nhref='$rec&amp;id=$id'" ;
-			} else {  $url = $classe2 = '' ; }
+				$url = "\nhref='$rec&amp;id=$id'";
+			} else {
+				$classe2 = $url = '';
+				$url = "\nhref='javascript:void(0)'";
+			}
 
 			$js_func = $do . '_selection_titre';
 			$click = "\nonclick=\"changerhighlight(this.parentNode.parentNode.parentNode);\nreturn "
