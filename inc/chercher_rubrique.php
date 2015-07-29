@@ -307,9 +307,9 @@ function construire_selecteur($url, $js, $idom, $name, $init='', $id=0){
 	.  $js
 	. "return charger_node_url_si_vide('"
 	. $url
-	. "', this.parentNode.nextSibling, this.nextSibling,'',event)\" title='"._T('titre_image_selecteur')."'><img src='"
+	. "', this.parentNode.nextSibling, this.nextSibling,'',event)\" title='".attribut_html(_T('titre_image_selecteur'))."'><img src='"
 	. chemin_image($icone)
-	. "'\nstyle='vertical-align: middle;' alt='"._T('titre_image_selecteur')."' /></a><img src='"
+	. "'\nstyle='vertical-align: middle;' alt='".attribut_html(_T('titre_image_selecteur'))."' /></a><img src='"
 	. chemin_image('searching.gif') 
 	. "' id='img_"
 	.  $idom
