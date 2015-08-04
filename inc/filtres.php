@@ -1850,27 +1850,6 @@ function date_fin_semaine($annee, $mois, $jour) {
 
 
 
-/**
- * Récupération de données d'un (très vieux) champ extra 
- *
- * Ce filtre n'a de sens qu'avec la balise `#EXTRA`
- * lorsque les tables (SPIP 1.8) possédaient une colonne 'extra'
- * où étaient stockés des valeurs supplémentaires sérialisées.
- *
- * On pouvait les obtenir avec `[(#EXTRA|extra{cle})]`
- *
- * @deprecated Utiliser le plugin Champs Extras
- * @param string $letexte
- *     Texte de la colonne `extra` avec les données sérialisées
- * @param string $champ
- *     Nom du champ supplémentaire désiré
- * @return string
- *     Valeur du champ
-**/
-function extra($letexte, $champ) {
-	$champs = unserialize($letexte);
-	return $champs[$champ];
-}
 
 // postautobr : transforme les sauts de ligne en _
 // http://code.spip.net/@post_autobr

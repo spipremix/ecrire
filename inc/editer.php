@@ -255,9 +255,6 @@ function formulaires_editer_objet_charger($type, $id='new', $id_parent=0, $lier_
 		  . $hidden
 		  . (isset($md5) ? $md5 : '');
 
-
-	if (isset($contexte['extra']))
-		$contexte['extra'] = unserialize($contexte['extra']);
 	// preciser que le formulaire doit passer dans un pipeline
 	$contexte['_pipeline'] = array('editer_contenu_objet',array('type'=>$type,'id'=>$id));
 
