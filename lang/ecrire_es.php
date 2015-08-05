@@ -387,7 +387,9 @@ Los idiomas que ya se utilizan en el sitio (al principio de la lista) no pueden 
 	'info_post_scriptum' => 'Post Scríptum',
 	'info_post_scriptum_2' => 'Post Scríptum:',
 	'info_pour' => 'para',
-	'info_preview_texte' => 'Es posible previsualizar el sitio como si todos los artículos y las breves (que tengan al menos el estado «propuesto») estuviesen publicados. Debe esta posibilidad estar disponible sólo para los administradores, para todos los redactores, o para nadie?', # MODIF
+	'info_preview_texte' => 'Es posible previsualizar los diferentes elementos editoriales del sitio que tengan por lo menos el estatuto de "propuesto", así como los elementos que están en curso de redacción y de los que seamos el autor. Esta función debe estar disponible para los administradores, los redactores, o para nadie ?
+
+',
 	'info_procedez_par_etape' => 'proceda etapa por etapa',
 	'info_procedure_maj_version' => 'Se debe ejecutar el proceso de actualización de la base de datos a esta nueva versión de SPIP.',
 	'info_proxy_ok' => 'Test del proxy logrado.',
@@ -558,7 +560,7 @@ Las traducciones están asociadas al original, en un color que indica su estado:
 	'label_choix_langue' => 'Seleccione su idioma',
 	'label_nom_fichier_connect' => 'Indica el nombre utilizado para este servidor',
 	'label_slogan_site' => 'Eslogan del sitio',
-	'label_taille_ecran' => 'Ancho de pantalla', # MODIF
+	'label_taille_ecran' => 'Ancho de pantalla',
 	'label_texte_et_icones_navigation' => 'Menú de navegación',
 	'label_texte_et_icones_page' => 'Aparencia en la página',
 	'ldap_correspondance' => 'herencia del campo @champ@',
@@ -741,6 +743,7 @@ Las traducciones están asociadas al original, en un color que indica su estado:
 	'texte_date_publication_anterieure_nonaffichee' => 'No mostrar fecha de redacción anterior.',
 	'texte_date_publication_article' => 'FECHA DE PUBLICACIÓN EN LÍNEA:',
 	'texte_date_publication_objet' => 'Fecha de publicación en línea:',
+	'texte_definir_comme_traduction_rubrique' => 'Esta rúbrica es una traducción de la rúbrica número :',
 	'texte_descriptif_rapide' => 'Descripción rápida',
 	'texte_effacer_base' => 'Borrar la base de datos SPIP',
 	'texte_effacer_statistiques' => 'Borrar las estadísticas',
