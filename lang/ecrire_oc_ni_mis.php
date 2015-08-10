@@ -394,7 +394,7 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_post_scriptum' => 'Post-Escrich',
 	'info_post_scriptum_2' => 'Post-Escrich :',
 	'info_pour' => 'per',
-	'info_preview_texte' => 'Es poussible de previsualisà lou sit couma se toui lu article e brèva (que àugue au màncou lou statut « proupausat ») èron publicat. Dèu aquela poussibilità estre duberda basta ai aministratour, a toui lu redatour, o a degun ?', # MODIF
+	'info_preview_texte' => 'Es poussible de previsualisà toui lu elemen editourial dou sit que an au màncou lou statut « proupausat », couma pura lu elemen en cours de redacioun que sian l’autour. Dèu aquela poussibilità estre duberda basta ai aministratour, a toui lu redatour, o a degun ?',
 	'info_procedez_par_etape' => 'proucedès tapa per tapa',
 	'info_procedure_maj_version' => 'la proucedura de metuda a jou dèu èstre lançada per adatà la basa de dounada a la nouvèla version de SPIP.',
 	'info_proxy_ok' => 'Prova dóu proxy ruèisset.',
@@ -566,7 +566,7 @@ embé una coulou qu’endica lou sieu estat :',
 	'label_choix_langue' => 'Seleciounàs la vouòstra lenga',
 	'label_nom_fichier_connect' => 'Endicàs lou noum utilisat per aqueu servidou',
 	'label_slogan_site' => 'Eslougan dóu sit',
-	'label_taille_ecran' => 'Larguessa de l’ecran', # MODIF
+	'label_taille_ecran' => 'Larguessa de l’ecran',
 	'label_texte_et_icones_navigation' => 'Menù de navigacioun',
 	'label_texte_et_icones_page' => 'Afichage en la pàgina',
 	'ldap_correspondance' => 'eritage dóu camp @champ@',
