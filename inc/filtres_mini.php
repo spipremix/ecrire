@@ -155,7 +155,8 @@ function liens_absolus($texte, $base='') {
 					if (!preg_match(';^((?:[a-z]{3,7}:)?//);iS', $href)){
 						$abs = url_absolue($href, $base);
 						if (rtrim($href,'/')!==rtrim($abs,'/') and !preg_match('/^#/', $href)){
-							$texte = inserer_attribut($texte, $attr, $abs);
+							$texte_lien = inserer_attribut($lien[0], $attr, $abs);
+							$texte = str_replace($lien[0],$texte_lien,$texte);
 						}
 					}
 				}
