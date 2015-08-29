@@ -402,7 +402,7 @@ function phraser_champs_interieurs($texte, $ligne, $sep, $result) {
 			$champ->avant =
 				phraser_champs_exterieurs($match[1],$n,$sep,$result);
 			$debut = substr($champ->apres,1);
-			$n += substr_count(substr($texte, 0, strpos($texte, $debut)), "\n");
+			if (!empty($debut)) $n += substr_count(substr($texte, 0, strpos($texte, $debut)), "\n");
 			$champ->apres = phraser_champs_exterieurs($debut,$n,$sep,$result);
 
 			$result[$i] = $champ;
@@ -821,7 +821,7 @@ function public_phraser_html_dist($texte, $id_parent, &$boucles, $descr, $ligne=
 			$boucles[$id_boucle] = $result;
 		$all_res = phraser_champs_etendus($debut, $ligne, $all_res);
 		$all_res[] = &$boucles[$id_boucle];
-		$ligne += substr_count(substr($texte, 0, strpos($texte, $suite)), "\n");
+		if (!empty($suite)) $ligne += substr_count(substr($texte, 0, strpos($texte, $suite)), "\n");
 		$texte = $suite;
 	}
 
