@@ -1987,7 +1987,9 @@ function spip_initialisation_core($pi=NULL, $pa=NULL, $ti=NULL, $ta=NULL) {
 	spip_desinfecte($_REQUEST);
 
 	// Par ailleurs on ne veut pas de magic_quotes au cours de l'execution
-	@set_magic_quotes_runtime(0);
+	if(version_compare(PHP_VERSION, '5.3.0', '<')){
+		set_magic_quotes_runtime(0);
+	}
 
 	// Si les variables sont passees en global par le serveur,
 	// il faut faire quelques verifications de base
