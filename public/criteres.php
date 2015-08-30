@@ -1000,6 +1000,7 @@ function calculer_parties(&$boucles, $id_boucle, $debut, $mode){
 
 	$boucles[$id_boucle]->mode_partie = "\n\t"
 		.'$debut_boucle = '.$debut.";\n	"
+		."\$debut_boucle = intval(\$debut_boucle);\n	"
 		.'$fin_boucle = min('.$fin.", \$Numrows['$id_boucle']['total'] - 1);\n	"
 		.'$Numrows[\''.$id_boucle."']['grand_total'] = \$Numrows['$id_boucle']['total'];\n	"
 		.'$Numrows[\''.$id_boucle.'\']["total"] = max(0,$fin_boucle - $debut_boucle + 1);'
