@@ -500,6 +500,7 @@ function phraser_criteres($params, &$result) {
 			OR preg_match("/^(n|n-|(n-)?\d+)$/S", $param)) {
 				$op = ',';
 				$not = "";
+				$cond = false;
 			} else {
 				// Le debut du premier argument est l'operateur
 				preg_match("/^([!]?)([a-zA-Z][a-zA-Z0-9_]*)[[:space:]]*(\??)[[:space:]]*(.*)$/ms", $param, $m);
