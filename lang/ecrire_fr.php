@@ -705,7 +705,7 @@ dans une couleur qui indique leur état :',
 
 	// Q
 	'queue_executer_maintenant' => 'Exécuter maintenant',
-	'queue_info_purger' => 'Vous pouvez supprimer tous les travaux en attente et ré-initialiser la liste avec les travaux périodiques',
+	'queue_info_purger' => 'Vous pouvez supprimer tous les travaux en attente et réinitialiser la liste avec les travaux périodiques',
 	'queue_nb_jobs_in_queue' => '@nb@ travaux en attente',
 	'queue_next_job_in_nb_sec' => 'Prochain travail dans @nb@ s',
 	'queue_no_job_in_queue' => 'Aucun travail en attente',
