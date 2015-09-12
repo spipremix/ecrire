@@ -118,7 +118,8 @@ function liste_objets_bloques($exec,$contexte=array(),$auteur=null){
 		if ($en_cours=trouver_objet_exec($exec)
 			AND $en_cours['edition']
 			AND $type = $en_cours['type']
-		  AND ($id = $contexte[$en_cours['id_table_objet']] OR $id = _request($en_cours['id_table_objet']))) {
+			AND ((isset($contexte[$en_cours['id_table_objet']]) and $id = $contexte[$en_cours['id_table_objet']])
+				OR $id = _request($en_cours['id_table_objet']))) {
 			// marquer le fait que l'objet est ouvert en edition par toto
 			// a telle date ; une alerte sera donnee aux autres redacteurs
 			signale_edition ($id,  $auteur, $type);
