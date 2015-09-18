@@ -621,7 +621,8 @@ dans une couleur qui indique leur état :',
 	'mois_non_connu' => 'non connu',
 
 	// N
-	'nouvelle_version_spip' => 'La version @version@ de SPIP est disponible',
+	'nouvelle_version_spip' => 'La mise à jour @version@ de SPIP est disponible',
+	'nouvelle_version_spip_majeure' => 'Une nouvelle version SPIP @version@ est disponible',
 
 	// O
 	'onglet_contenu' => 'Contenu',
