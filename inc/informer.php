@@ -18,6 +18,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 function inc_informer_dist($id, $col, $exclus, $rac, $type, $do='aff')
 {
 	include_spip('inc/texte');
+	$titre = $descriptif = '';
 	if ($type == "rubrique") {
 		$row = sql_fetsel("titre, descriptif", "spip_rubriques", "id_rubrique = $id");
 		if ($row) {
@@ -26,8 +27,7 @@ function inc_informer_dist($id, $col, $exclus, $rac, $type, $do='aff')
 		} else {
 			$titre = _T('info_racine_site');
 		}
-	} else
-		$titre = '';
+	}
 
 	$res = '';
 	if ($type == "rubrique" AND $GLOBALS['spip_display'] != 1 AND isset($GLOBALS['meta']['image_process']))
