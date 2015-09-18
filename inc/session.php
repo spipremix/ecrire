@@ -304,6 +304,9 @@ function session_set($nom, $val=null) {
 	else {
 		// On ajoute la valeur dans la globale
 		$GLOBALS['visiteur_session'][$nom] = $val;
+		if ($remove) {
+			$remove = array_diff($remove, array($nom));
+		}
 	}
 	if (!$actualiser_sessions){
 		// il faut creer la session si on en a pas, la premiere fois
