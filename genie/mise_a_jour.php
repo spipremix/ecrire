@@ -24,9 +24,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param int $t
  * @return int
  */
-function genie_mise_a_jour_dist($t) {
+function genie_mise_a_jour_dist($t){
 	include_spip('inc/meta');
-	$maj = info_maj ('spip', 'SPIP', $GLOBALS['spip_version_branche']);
+	$maj = info_maj('spip', 'SPIP', $GLOBALS['spip_version_branche']);
 	ecrire_meta('info_maj_spip',$maj?($GLOBALS['spip_version_branche']."|$maj"):"",'non');
 
 	mise_a_jour_ecran_securite();
@@ -102,7 +102,7 @@ function mise_a_jour_ecran_securite(){
  *
  * @return string
  */
-function info_maj ($dir, $file, $version){
+function info_maj($dir, $file, $version){
 	include_spip('inc/plugin');
 
 	list($maj,$min,$rev) = preg_split('/\D+/', $version);
@@ -165,8 +165,7 @@ function info_maj ($dir, $file, $version){
  * @return string
  *     Contenu du fichier de cache de l'info de maj de SPIP.
  */
-function info_maj_cache($nom, $dir, $page='')
-{
+function info_maj_cache($nom, $dir, $page=''){
 	$re = '<archives id="a' . $GLOBALS['meta']["alea_ephemere"] . '">';
 	if (preg_match("/$re/", $page)) return $page;
 
