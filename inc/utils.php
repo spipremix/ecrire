@@ -505,8 +505,7 @@ function ancre_url($url, $ancre) {
 }
 
 /**
- * pour le nom du cache, les types_urls et self
- * http://code.spip.net/@nettoyer_uri
+ * Pour le nom du cache, les `types_urls` et `self`
  *
  * @param string|null $reset
  * @return string

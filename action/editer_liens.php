@@ -62,19 +62,19 @@ function objet_associable($objet){
 /**
  * Associer un ou des objets à des objets listés
  * 
- * $objets_source et $objets_lies sont de la forme
- * array($objet=>$id_objets,...)
- * $id_objets peut lui meme etre un scalaire ou un tableau pour une liste d'objets du meme type
- * ou de la forme array("NOT",$id_objets) pour une selection par exclusion
+ * `$objets_source` et `$objets_lies` sont de la forme
+ * `array($objet=>$id_objets,...)`
+ * `$id_objets` peut lui même être un scalaire ou un tableau pour une liste d'objets du même type
+ * ou de la forme `array("NOT", $id_objets)` pour une sélection par exclusion
  *
  * Les objets sources sont les pivots qui portent les liens
  * et pour lesquels une table spip_xxx_liens existe
  * (auteurs, documents, mots)
  *
- * on peut passer optionnellement une qualification du (des) lien(s) qui sera
- * alors appliquee dans la foulee.
- * En cas de lot de liens, c'est la meme qualification qui est appliquee a tous
- *
+ * On peut passer optionnellement une qualification du (des) lien(s) qui sera
+ * alors appliquée dans la foulée.
+ * En cas de lot de liens, c'est la même qualification qui est appliquée a tous
+ * 
  * @api
  * @param array $objets_source
  * @param array|string $objets_lies

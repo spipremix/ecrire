@@ -190,8 +190,6 @@ function ajouter_session($auteur) {
  *
  * Retourne false en cas d'echec, l'id_auteur de la session si defini, null sinon
  *
- * http://code.spip.net/@verifier_session
- *
  * @param bool $change
  * @return bool|int|null
  */
