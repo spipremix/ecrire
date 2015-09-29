@@ -111,6 +111,11 @@ function plugins_get_infos_un($plug, $reload, $dir, &$cache)
 	$ret = $f($texte, $plug, $dir);
 	$ret['filemtime'] = $time;
 	$ret['md5_file'] = $md5;
+	// Si on lit le paquet.xml de SPIP, on rajoute un procure php afin que les plugins puissent
+	// utiliser un necessite php. SPIP procure donc la version php courante du serveur.
+	if ($ret['prefix'] == 'spip') {
+		$ret['procure']['php'] = array('nom' => 'php', 'version' => phpversion());
+	}
 	$diff = ($ret != $pcache);
 
 	if ($diff) {
