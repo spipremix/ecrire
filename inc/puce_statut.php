@@ -77,19 +77,29 @@ function inc_puce_statut_dist($id_objet, $statut, $id_parent, $type, $ajax=false
 }
 
 /**
- * Recuperer l'image correspondant au statut, telle que declaree dans
- * declarer_tables_objets_sql
- * sous la forme
- * array('imagepardefaut.png','statut1'=>'imagestatut1.png','statut2'=>imagestatut2.png' ...)
- * mettre une chaine vide pour ne pas avoir d'image pour un statut particulier
+ * Récuperer l'image correspondant au statut pour un objet éditorial indiqué
  *
- * si rien de declare et que le statut est dans les cas connus (prepa, prop, publie, refuse, poubelle)
- * renvoyer l'image par defaut
+ * Retrouve l'image correspondant au statut, telle que declarée dans
+ * `declarer_tables_objets_sql` sous la forme :
+ *
+ *     ```
+ *     array(
+ *         'imagepardefaut.png',
+ *         'statut1' => 'imagestatut1.png',
+ *         'statut2' => 'imagestatut2.png',
+ *         ...
+ *     )
+ *     ```
+ * 
+ * Mettre une chaine vide pour ne pas avoir d'image pour un statut particulier.
+ *
+ * Si rien n'est declaré et que le statut est dans un des cas connus habituels
+ * (prepa, prop, publie, refuse, poubelle), alors on renvoie l'image par défaut pour ce statut
  *
  * @param string $objet
  * @param string $statut
- * @return string
- *   null si pas capable de determiner l'image
+ * @return string|null
+ *   null si pas capable de déterminer l'image
  */
 function statut_image($objet,$statut){
 	$src = null;
@@ -129,14 +139,24 @@ function statut_image($objet,$statut){
 }
 
 /**
- * Recuperer le titre correspondant au statut, tel que declaree dans
- * declarer_tables_objets_sql
- * sous la forme
- * array('titre par defaut','statut1'=>'titre statut 1','statut2'=>'titre statut 2' ...)
- * mettre une chaine vide pour ne pas avoir de titre pour un statut particulier
+ * Récupérer le titre correspondant au statut pour un objet éditorial indiqué
  *
- * si rien de declare et que le statut est dans les cas connus (prepa, prop, publie, refuse, poubelle)
- * renvoyer le texte par defaut
+ * Retrouve le titre correspondant au statut, tel qu'il a été declaré dans
+ * `declarer_tables_objets_sql` sous la forme :
+ *
+ *     ```
+ *     array(
+ *         'titre par defaut',
+ *         'statut1' => 'titre statut 1',
+ *         'statut2' => 'titre statut 2',
+ *          ...
+ *    )
+ *    ```
+ * 
+ * Mettre une chaine vide pour ne pas avoir de titre pour un statut particulier.
+ *
+ * Si rien n'est declaré et que le statut est dans un des cas connus habituels
+ * (prepa, prop, publie, refuse, poubelle), alors on renvoie le texte par défaut pour ce statut
  *
  * @param string $objet
  * @param string $statut
@@ -235,8 +255,6 @@ function statut_texte_instituer($objet,$statut){
  * Hack de compatibilite: les appels directs ont un  $type != 'auteur'
  * si l'auteur ne peut pas se connecter
  *
- * http://code.spip.net/@puce_statut_auteur_dist
- *
  * @param int $id
  * @param string $statut
  * @param int $id_parent
@@ -264,7 +282,7 @@ function puce_statut_auteur_dist($id, $statut, $id_parent, $type, $ajax='', $men
 }
 
 
-// http://code.spip.net/@puce_statut_rubrique_dist
+
 function puce_statut_rubrique_dist($id, $statut, $id_rubrique, $type, $ajax='',$menu_rapide=_ACTIVER_PUCE_RAPIDE) {
 	return http_img_pack('rubrique-16.png', '');
 }
@@ -365,7 +383,7 @@ function puce_statut_changement_rapide($id, $statut, $id_rubrique, $type='articl
 	}
 }
 
-// http://code.spip.net/@afficher_script_statut
+
 function afficher_script_statut($id, $type, $n, $img, $statut, $titre, $act='') {
 	$h = generer_action_auteur("instituer_objet","$type-$id-$statut");
 	$h = "selec_statut('$id', '$type', $n, jQuery('img',this).attr('src'), '$h');return false;";
@@ -375,7 +393,6 @@ function afficher_script_statut($id, $type, $n, $img, $statut, $titre, $act='') 
 
 // compat
 // La couleur du statut
-// http://code.spip.net/@puce_statut
 
 function puce_statut($statut, $atts='') {
 	$src = statut_image('article',$statut);
