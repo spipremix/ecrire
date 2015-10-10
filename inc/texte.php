@@ -237,6 +237,12 @@ function typo($letexte, $echapper=true, $connect=null, $env=array()) {
 	if ($interdire_script)
 		$letexte = interdire_scripts($letexte);
 
+	// Dans l'espace prive on se mefie de tout contenu dangereux
+	// https://core.spip.net/issues/3371
+	if (isset($env['espace_prive']) AND $env['espace_prive']){
+		$letexte = echapper_html_suspect($letexte);
+	}
+
 	return $letexte;
 }
 
