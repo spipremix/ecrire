@@ -92,18 +92,22 @@ function traiter_raccourcis($letexte) {
 
 
 /**
- * Échapper et affichier joliement les `<script` ...
+ * Échapper et affichier joliement les `<script` et `<iframe`...
  *
  * @param string $t
  * @param string $class Attributs HTML du conteneur à ajouter
  * @return string
  */
 function echappe_js($t,$class=' class="echappe-js"') {
-	if (preg_match_all(',<script.*?($|</script.),isS', $t, $r, PREG_SET_ORDER))
-	foreach ($r as $regs)
-		$t = str_replace($regs[0],
-			"<code$class>".nl2br(spip_htmlspecialchars($regs[0])).'</code>',
-			$t);
+	foreach(array('script','iframe') as $tag){
+		if (stripos($t,"<$tag")!==false
+			AND preg_match_all(',<'.$tag.'.*?($|</'.$tag.'.),isS', $t, $r, PREG_SET_ORDER)){
+			foreach ($r as $regs)
+				$t = str_replace($regs[0],
+					"<code$class>".nl2br(spip_htmlspecialchars($regs[0])).'</code>',
+					$t);
+		}
+	}
 	return $t;
 }
 
