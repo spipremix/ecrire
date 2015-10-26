@@ -186,7 +186,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_activer_cookie' => 'Puteţi să activaţi un <b>cookie de corespondenţă</b>, ceea ce vă va
  permite să treceţi cu uşurinţă de la site-ul public la site-ul privat.',
 	'info_admin_etre_webmestre' => 'Daţi-mi drepturi de webmaster',
-	'info_admin_gere_rubriques' => 'Acest administrator gestionează rubricile următoare :',
 	'info_admin_je_suis_webmestre' => 'Sunt <b>webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Daţi acestui administrator drepturi de webmaster',
 	'info_admin_webmestre' => 'Acest administrator este <b>webmaster</b>',

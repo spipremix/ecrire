@@ -193,7 +193,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_activer_cookie' => 'Możesz uaktywnić <b>cookies korespondecji</b>, co ci
  pozwoli przechodzić łatwo pomiędzy stroną publiczną a prywatną.',
 	'info_admin_etre_webmestre' => 'Daj mi prawa administratora sieci',
-	'info_admin_gere_rubriques' => 'Ten administrator zarządza następującymi działami:',
 	'info_admin_statuer_webmestre' => 'Daj webmasterowi prawo do tego administratora.',
 	'info_admin_webmestre' => 'Ten administrator jest <b>webmestre</b>',
 	'info_administrateur' => 'Administrator',
@@ -634,7 +633,7 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 
 	// Q
 	'queue_executer_maintenant' => 'Uruchom teraz',
-	'queue_info_purger' => 'Możesz usunąć wszystkie zadania w toku i zresetować listę zadań okresowych',
+	'queue_info_purger' => 'Możesz usunąć wszystkie zadania w toku i zresetować listę zadań okresowych', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ zadania w kolejce',
 	'queue_next_job_in_nb_sec' => 'Następne zadanie w @nb@ S',
 	'queue_no_job_in_queue' => 'Brak zadań w toku',

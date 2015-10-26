@@ -201,7 +201,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_activer_cookie' => 'Gallout a rit implijout un <b>toupin heuliañ</b>, ar pezh a dalvezo deoc’h da dremen en un doare aes eus al lec’hienn brevez d’an hini foran.',
 	'info_activer_menu_developpement' => 'Diskouez al roll Diorrenniñ',
 	'info_admin_etre_webmestre' => 'Reiñ din gwirioù ur mestr-gwiad ',
-	'info_admin_gere_rubriques' => 'Ar rubrikennoù da-heul a vez meret gant ar merour-mañ :',
 	'info_admin_je_suis_webmestre' => 'mestr-gwiad <b>ez on</b>',
 	'info_admin_statuer_webmestre' => 'Reiñ gwirioù ur mestr-gwiad d’an amaezhier-mañ',
 	'info_admin_webmestre' => 'An amaezhier-mañ zo<b>mestr-gwiad</b>',
@@ -607,7 +606,7 @@ diskouezet en ul liv disheñvel, diouzh o stad :',
 	'mois_non_connu' => 'dianav',
 
 	// N
-	'nouvelle_version_spip' => 'Prest eo handelv @version@ SPIP ',
+	'nouvelle_version_spip' => 'Prest eo handelv @version@ SPIP ', # MODIF
 
 	// O
 	'onglet_contenu' => 'Endalc’had',
@@ -691,7 +690,7 @@ diskouezet en ul liv disheñvel, diouzh o stad :',
 
 	// Q
 	'queue_executer_maintenant' => 'Seveniñ bremañ',
-	'queue_info_purger' => 'Bez e c’hallit lemel an holl labourioù o c’hortoz, ha nevesaat roll al labourioù mareadek',
+	'queue_info_purger' => 'Bez e c’hallit lemel an holl labourioù o c’hortoz, ha nevesaat roll al labourioù mareadek', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ labourioù o c’hortoz',
 	'queue_next_job_in_nb_sec' => 'Labour-all a-benn @nb@ eilenn',
 	'queue_no_job_in_queue' => 'Labour ebet o chom a-ispilh',

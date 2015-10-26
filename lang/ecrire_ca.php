@@ -203,7 +203,6 @@ desactivada per raons de seguretat (cosa normal en molts proveïdors d’hostatg
 	'info_activer_cookie' => 'Podeu activar una <b>galeta de correspondència</b>, us permetrà passar fàcilment del lloc públic al lloc privat.',
 	'info_activer_menu_developpement' => 'Afegir el menú Desenvolupament',
 	'info_admin_etre_webmestre' => 'Donar-me els drets d’administrador',
-	'info_admin_gere_rubriques' => 'Aquest administrador gestiona les següents seccions:',
 	'info_admin_je_suis_webmestre' => 'Sóc <b>administrador</b>',
 	'info_admin_statuer_webmestre' => 'Donar a aquest administrador els drets de webmestre',
 	'info_admin_webmestre' => 'Aquest administrador és <b>webmestre</b>',
@@ -599,7 +598,7 @@ amb un color que indica el seu estat:',
 	'mois_non_connu' => 'desconegut',
 
 	// N
-	'nouvelle_version_spip' => 'Està disponible la versió @version@ d’SPIP',
+	'nouvelle_version_spip' => 'Està disponible la versió @version@ d’SPIP', # MODIF
 
 	// O
 	'onglet_contenu' => 'Contingut',
@@ -683,7 +682,7 @@ amb un color que indica el seu estat:',
 
 	// Q
 	'queue_executer_maintenant' => 'Executar ara',
-	'queue_info_purger' => 'Vous pouvez supprimer tous les travaux en attente et ré-inialiser la liste avec les travaux périodiques',
+	'queue_info_purger' => 'Vous pouvez supprimer tous les travaux en attente et ré-inialiser la liste avec les travaux périodiques', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ treballs en espera',
 	'queue_next_job_in_nb_sec' => 'Proper treball en @nb@ s',
 	'queue_no_job_in_queue' => 'Cap treball en espera',

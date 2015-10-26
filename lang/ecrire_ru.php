@@ -110,7 +110,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'entree_infos_perso' => 'Об авторе',
 	'entree_infos_perso_2' => 'Кто автор?',
 	'entree_interieur_rubrique' => 'В разделе:',
-	'entree_liens_sites' => '<b>Гипрссылка</b> (ссылка, сайт для посещения ...)',
+	'entree_liens_sites' => '<b>Гиперссылка</b> (ссылка, сайт для посещения ...)',
 	'entree_login' => 'Ваш логин',
 	'entree_login_connexion_1' => 'Логин соединения',
 	'entree_login_connexion_2' => '(Иногда соответствует вашему логину  FTP доступа и иногда остается пустым)',
@@ -201,7 +201,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_activer_cookie' => 'Вы можете включить <b>администраторский cookie</b>, который позволяет вам легко переключаться между основной и административной частью сайта.',
 	'info_activer_menu_developpement' => 'Показать меню Développement',
 	'info_admin_etre_webmestre' => 'Предоставить мне права вебмастера',
-	'info_admin_gere_rubriques' => 'Этот администратор управляет следующими разделами:',
 	'info_admin_je_suis_webmestre' => 'Я <b>вебмастер</b>',
 	'info_admin_statuer_webmestre' => 'Сделать администратора вебмастером сайта',
 	'info_admin_webmestre' => 'Администратор является <b>вебмастером</b>',
@@ -235,6 +234,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_message' => 'Нет сообщений',
 	'info_aucun_rubrique' => 'Нет разделов',
 	'info_aujourdhui' => 'сегодня:',
+	'info_auteur_gere_rubriques' => 'Этот автор управляет следующими рубриками:',
 	'info_auteur_gere_toutes_rubriques' => 'Этот автор управляет <b>всеми разделами</b>',
 	'info_auteur_gere_toutes_rubriques_2' => 'Я управляю <b>всеми разделами</b>',
 	'info_auteurs' => 'Авторы',
@@ -601,7 +601,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'mois_non_connu' => 'неизвестный',
 
 	// N
-	'nouvelle_version_spip' => 'Доступна новая версия SPIP @version@ ',
+	'nouvelle_version_spip' => 'Доступно обновление - версия SPIP @version@ ',
+	'nouvelle_version_spip_majeure' => 'Доступна новая версия SPIP @version@ ',
 
 	// O
 	'onglet_contenu' => 'Содержания',
@@ -685,7 +686,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// Q
 	'queue_executer_maintenant' => 'Запустить',
-	'queue_info_purger' => 'Вы можете удалить все текущие задачи и обнулить всю очередь задач',
+	'queue_info_purger' => 'Вы можете удалить все текущие задачи и очистить всю очередь задач',
 	'queue_nb_jobs_in_queue' => 'В очереди @nb@ задач',
 	'queue_next_job_in_nb_sec' => 'Следующая задача  через @nb@ s',
 	'queue_no_job_in_queue' => 'Список задач пуст',

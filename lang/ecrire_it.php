@@ -203,7 +203,6 @@ Se non conosci queste informazioni, richiedile all’amministratore del sistema 
 di passare facilmente dal sito pubblico all’interfaccia privata.',
 	'info_activer_menu_developpement' => 'Mostra il menù Sviluppo',
 	'info_admin_etre_webmestre' => 'Concedimi i privilegi di webmaster',
-	'info_admin_gere_rubriques' => 'Questo amministratore gestisce le seguenti rubriche:',
 	'info_admin_je_suis_webmestre' => 'Sono <b>webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Dai a questo amministratore i privilegi di webmaster',
 	'info_admin_webmestre' => 'Questo amministratore è un <b>webmaster</b>',
@@ -610,7 +609,7 @@ Le traduzioni sono associate all’originale,
 	'mois_non_connu' => 'sconosciuto',
 
 	// N
-	'nouvelle_version_spip' => 'La versione @version@ di SPIP è disponibile',
+	'nouvelle_version_spip' => 'La versione @version@ di SPIP è disponibile', # MODIF
 
 	// O
 	'onglet_contenu' => 'Contenuto',
@@ -693,7 +692,7 @@ Le traduzioni sono associate all’originale,
 
 	// Q
 	'queue_executer_maintenant' => 'Esegui adesso',
-	'queue_info_purger' => 'È possibile eliminare tutti i lavori in sospeso e reinizializzare lista con delle elaborazioni periodiche',
+	'queue_info_purger' => 'È possibile eliminare tutti i lavori in sospeso e reinizializzare lista con delle elaborazioni periodiche', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ processi in coda',
 	'queue_next_job_in_nb_sec' => 'Prossimo processo in @nb@ s',
 	'queue_no_job_in_queue' => 'Nessun processo appeso',

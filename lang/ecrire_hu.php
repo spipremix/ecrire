@@ -135,7 +135,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'image_administrer_rubrique' => 'Ezt a rubrikát adminisztrálhatja',
 	'info_1_article' => '1 cikk',
 	'info_activer_cookie' => 'Egy <b>hivatkozási sütit</b> (cookie) lehet aktiválni, melynek segítségével könnyen át tud menni a nyilvános részről a privát részre.',
-	'info_admin_gere_rubriques' => 'Ez az adminisztrátor a következő rovatokat kezelheti :',
 	'info_administrateur' => 'Adminisztrátor',
 	'info_administrateur_1' => 'Adminisztrátor',
 	'info_administrateur_2' => 'honlap (<i>óvatosan használja</i>)',

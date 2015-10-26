@@ -138,7 +138,6 @@ Bann zinformasyon-la, sé komandèr-sistèm ou komandèr-rézo sak i dwa donn a 
 	'image_administrer_rubrique' => 'Ou néna drwa d-komandman sir rubrik-la',
 	'info_1_article' => '1 lartik',
 	'info_activer_cookie' => 'I pé fé zwé inn <b>gatomakro drokonésans </b>. Kom sa ou sra kav pas fasilman dopwi lafigirwèb piblik sir lo sit privé.',
-	'info_admin_gere_rubriques' => 'Komandèr-la lé responsab si bann rubrik anba :',
 	'info_administrateur' => 'Komandèr',
 	'info_administrateur_1' => 'Komandèr',
 	'info_administrateur_2' => 'lo sitwèb(<i>anserv èk prékosyon</i>)',

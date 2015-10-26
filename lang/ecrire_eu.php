@@ -197,7 +197,6 @@ Seguritate hobetzeko, konfigurazio hau aldatu behar zenuke, edo @constantes@ kon
 	'info_1_visiteur' => 'Bisitari 1',
 	'info_activer_cookie' => 'Egokitasun-"cookie" bat aktibatu dezakezu; horrek aukera emango dizu orrialdeakeguneratzeko, eta jendaurreko ataletik erredakziora errazki aldatzeko ere.',
 	'info_admin_etre_webmestre' => 'Web-arduradun eskubideak nire kontuari ezarri',
-	'info_admin_gere_rubriques' => 'Pertsona horrek honako atal hauek administratzenditu:',
 	'info_admin_je_suis_webmestre' => '<b>web-arduradun</b> naiz.',
 	'info_admin_statuer_webmestre' => 'Administratzaile honi Web-arduradun eskubideak eman',
 	'info_admin_webmestre' => 'Administratzaile hau <b>Web-arduradun</b> da.',
@@ -589,7 +588,7 @@ Hutsik utz ezazu ez betetzeko, espazio edo komak tarteka itzazu LDAP eremu bat b
 	'mois_non_connu' => 'ezezagun',
 
 	// N
-	'nouvelle_version_spip' => 'SPIPen @version@ bertsioa eskuragarri da.',
+	'nouvelle_version_spip' => 'SPIPen @version@ bertsioa eskuragarri da.', # MODIF
 
 	// O
 	'onglet_contenu' => 'Edukia',
@@ -672,7 +671,7 @@ Hutsik utz ezazu ez betetzeko, espazio edo komak tarteka itzazu LDAP eremu bat b
 
 	// Q
 	'queue_executer_maintenant' => 'Exekutatu orai',
-	'queue_info_purger' => 'Zain diren lan guziak ezeztatzen ahal dituzu, eta zerrenda berrabiarazi lan periodikoekin',
+	'queue_info_purger' => 'Zain diren lan guziak ezeztatzen ahal dituzu, eta zerrenda berrabiarazi lan periodikoekin', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ lan zain daude',
 	'queue_next_job_in_nb_sec' => 'Ondoko lana @nb@ segundutan',
 	'queue_no_job_in_queue' => 'Zain dauden lanik ez da',

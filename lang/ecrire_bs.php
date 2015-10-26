@@ -121,7 +121,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'image_administrer_rubrique' => 'Mozete biti administrator ove rubrike',
 	'info_1_article' => '1. clanak',
 	'info_activer_cookie' => 'Mozete aktivirati jedan <b> cookie za administraciu </b>, koji ce vam dozvoliti lak prelaz iz javnog u privati prostor.',
-	'info_admin_gere_rubriques' => 'Ovaj administrator uredzuje sljedece rubrike:',
 	'info_administrateur' => 'Administrator',
 	'info_administrateur_1' => 'Administrator',
 	'info_administrateur_2' => 'stranice (<i>pazljiva  upotreba</i>)',

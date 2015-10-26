@@ -200,7 +200,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_activer_cookie' => 'Je kan een <b>toegangskoekie</b> activeren, waardoor je makkelijk kan wisselen tussen de het publieke en het private deel van de website.',
 	'info_activer_menu_developpement' => 'Toon het menu Ontwikkeling',
 	'info_admin_etre_webmestre' => 'Geef me de taken van de webmaster',
-	'info_admin_gere_rubriques' => 'Deze auteur beheert de volgende rubrieken :',
 	'info_admin_je_suis_webmestre' => 'Ik ben <b>webmestre</b>',
 	'info_admin_statuer_webmestre' => 'Geef deze administrator webmaster rechten',
 	'info_admin_webmestre' => 'Deze beheerder is <b>webmaster</b>',
@@ -235,6 +234,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_message' => 'Geen bericht',
 	'info_aucun_rubrique' => 'Geen rubriek',
 	'info_aujourdhui' => 'vandaag:',
+	'info_auteur_gere_rubriques' => 'Deze auteur beheert de volgende rubrieken:',
 	'info_auteur_gere_toutes_rubriques' => 'Deze auteur beheert <b>alle rubrieken</b>',
 	'info_auteur_gere_toutes_rubriques_2' => 'Ik beheer <b>alle rubrieken</b>',
 	'info_auteurs' => 'De auteurs',
@@ -609,6 +609,7 @@ een kleur geeft hun status aan :',
 
 	// N
 	'nouvelle_version_spip' => 'Versie @version@ van SPIP is beschikbaar',
+	'nouvelle_version_spip_majeure' => 'Een nieuwe versie van SPIP @version@ is beschikbaar',
 
 	// O
 	'onglet_contenu' => 'Inhoud',
@@ -692,7 +693,7 @@ een kleur geeft hun status aan :',
 
 	// Q
 	'queue_executer_maintenant' => 'Nu uitvoeren',
-	'queue_info_purger' => 'U kunt alle werken in afwachting verwijderen en het lijst van periodieke werken herstarten',
+	'queue_info_purger' => 'U kunt alle wachtende werkzaamheden verwijderen en het lijst van periodieke werken herstarten',
 	'queue_nb_jobs_in_queue' => '@nb@ wachtrij',
 	'queue_next_job_in_nb_sec' => 'Volgende opdracht in @nb@ s',
 	'queue_no_job_in_queue' => 'Geen opdracht in de wachtrij',

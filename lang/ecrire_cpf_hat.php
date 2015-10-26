@@ -137,7 +137,6 @@ Tout informasyon-nan,  komandèr-sistèm ou komandèr-rézo li dwa donn a w.',
 	'info_1_article' => '1 atik',
 	'info_activer_cookie' => 'Ou kapab mèt <b> yon gatomakro ki rokonèt a w</b>, ki ke pèmè 
  fè yon viré ant sit piblik ek sit privé.',
-	'info_admin_gere_rubriques' => 'Komandè-a gè ribrik yo isit kote mèm :',
 	'info_administrateur' => 'Komandè',
 	'info_administrateur_1' => 'Komandè',
 	'info_administrateur_2' => 'sit (<i>atansyon kan w ke itilize ali</i>)',

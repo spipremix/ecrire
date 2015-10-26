@@ -193,7 +193,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_1_visiteur' => '1 Visiteur',
 	'info_activer_cookie' => 'Dir kënnt e <b>Cookie</b> aktivéieren, deen iech erlaabt einfach vum ëffentlechen op de private Site ze wiesselen.',
 	'info_admin_etre_webmestre' => 'Mir Webmaster-Rechter ginn',
-	'info_admin_gere_rubriques' => 'Dësen Admin këmmert sech ëm folgend Rubriken:',
 	'info_admin_je_suis_webmestre' => 'Ech si <b>Webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Dësem Admin Webmaster-Rechter ginn',
 	'info_admin_webmestre' => 'Dësen Admin ass <b>Webmaster</b>',
@@ -572,7 +571,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'mois_non_connu' => 'onbekannt',
 
 	// N
-	'nouvelle_version_spip' => 'D’Versioun @version@ vu SPIP ass do',
+	'nouvelle_version_spip' => 'D’Versioun @version@ vu SPIP ass do', # MODIF
 
 	// O
 	'onglet_contenu' => 'Inhalt',
@@ -654,7 +653,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// Q
 	'queue_executer_maintenant' => 'Elo ausféieren',
-	'queue_info_purger' => 'Dir kënnt all Aarbechten déi nach ustinn läschen an d’Lëscht mat de periodeschen Aarbechten nei starten',
+	'queue_info_purger' => 'Dir kënnt all Aarbechten déi nach ustinn läschen an d’Lëscht mat de periodeschen Aarbechten nei starten', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ Aarbechten an der Waardeschläif',
 	'queue_next_job_in_nb_sec' => 'Nächst Aarbecht an @nb@ s',
 	'queue_no_job_in_queue' => 'Kéng Aarbecht an der Waardeschläif',

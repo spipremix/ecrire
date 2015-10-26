@@ -128,7 +128,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_1_article' => '１記事',
 	'info_activer_cookie' => '<b>管理者用クッキー</b>を使うことが出来ます。 それによって
 パブリックなサイトとプライベートエリアの切替が簡単に出来ます。',
-	'info_admin_gere_rubriques' => 'この管理者は下記のセクションを管理:',
 	'info_administrateur' => '管理者',
 	'info_administrateur_1' => '管理者',
 	'info_administrateur_2' => 'サイトについて（<i>注意して使って</i>）',

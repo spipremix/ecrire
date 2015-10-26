@@ -202,7 +202,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
  jednoducho prechádzať medzi verejne prístupnou  stránkou a súkromnou zónou.',
 	'info_activer_menu_developpement' => 'Zobraziť menu Vývoj',
 	'info_admin_etre_webmestre' => 'Prideliť mi práva administrátora webu',
-	'info_admin_gere_rubriques' => 'Tento administrátor riadi tieto rubriky:',
 	'info_admin_je_suis_webmestre' => 'Som <b>webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Dať tomuto administrátorovi práva webmastera',
 	'info_admin_webmestre' => 'Tento administrátor je <b>webmaster</b>',
@@ -613,7 +612,7 @@ a stav ich spracovania je označený farbou:',
 	'mois_non_connu' => 'neznámy',
 
 	// N
-	'nouvelle_version_spip' => 'K dispozícii je SPIP verzia @version@',
+	'nouvelle_version_spip' => 'K dispozícii je SPIP verzia @version@', # MODIF
 
 	// O
 	'onglet_contenu' => 'Obsah',
@@ -697,7 +696,7 @@ a stav ich spracovania je označený farbou:',
 
 	// Q
 	'queue_executer_maintenant' => 'Spustiť teraz',
-	'queue_info_purger' => 'Môžete vymazať všetky čakajúce úlohy a zaplniť zoznam pravidelnými úlohami',
+	'queue_info_purger' => 'Môžete vymazať všetky čakajúce úlohy a zaplniť zoznam pravidelnými úlohami', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ úloh v rade',
 	'queue_next_job_in_nb_sec' => 'Ďalšia úloha o @nb@ s.',
 	'queue_no_job_in_queue' => 'Žiadne nevykonané úlohy',

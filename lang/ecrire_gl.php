@@ -183,7 +183,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_1_visiteur' => '1 visitante',
 	'info_activer_cookie' => 'Pode activar unha <b>cookie de correspondencia</b>, co cal poderá pasar facilmente do web público ao web privado.',
 	'info_admin_etre_webmestre' => 'Concederme os dereitos de administrador',
-	'info_admin_gere_rubriques' => 'Esta persoa xestiona os seguintes temas:',
 	'info_admin_je_suis_webmestre' => 'Son o/a <b>webmáster</b>',
 	'info_admin_statuer_webmestre' => 'Dar a este administrador dereitos de webmáster',
 	'info_admin_webmestre' => 'Este administrdor é <b>webmáster</b>',
@@ -576,7 +575,7 @@ cunha cor que indica o seu estado :',
 	'mois_non_connu' => 'descoñecido',
 
 	// N
-	'nouvelle_version_spip' => 'A versión @version@ de SPIP está dispoñible',
+	'nouvelle_version_spip' => 'A versión @version@ de SPIP está dispoñible', # MODIF
 
 	// O
 	'onglet_contenu' => 'Contido',

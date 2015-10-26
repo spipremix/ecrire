@@ -194,7 +194,6 @@ Tamen vi povas malŝalti ĝin.',
 	'info_1_visiteur' => '1 vizitanto',
 	'info_activer_cookie' => 'Vi povas aktivigi <b>por-korespondan kuketon</b>. Tio ebligos al vi facile iri de la publika spaco al la privata.',
 	'info_admin_etre_webmestre' => 'Doni al mi la rajtoj de retejestro',
-	'info_admin_gere_rubriques' => 'Tiu mastrumanto mastrumas la jenajn rubrikojn :',
 	'info_admin_je_suis_webmestre' => 'Mi estas <b>retejestro</b>',
 	'info_admin_statuer_webmestre' => 'Doni al tiu mastrumanto la rajtoj de retejestro',
 	'info_admin_webmestre' => 'Tiu mastrumanto estas <b>retejestro</b>',
@@ -591,7 +590,7 @@ La tradukoj estas kunligitaj al la originalo, kun koloro kiu indikas ties staton
 	'mois_non_connu' => 'nekonata',
 
 	// N
-	'nouvelle_version_spip' => 'SPIP-versio @version@ estas disponebla',
+	'nouvelle_version_spip' => 'SPIP-versio @version@ estas disponebla', # MODIF
 
 	// O
 	'onglet_contenu' => 'Enhavo',
@@ -674,7 +673,7 @@ La tradukoj estas kunligitaj al la originalo, kun koloro kiu indikas ties staton
 
 	// Q
 	'queue_executer_maintenant' => 'Lanĉi nun',
-	'queue_info_purger' => 'Vi povas forviŝi ĉiujn atendante taskojn kaj restarigi la liston kun la periodaj taskoj',
+	'queue_info_purger' => 'Vi povas forviŝi ĉiujn atendante taskojn kaj restarigi la liston kun la periodaj taskoj', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ atendante taskoj',
 	'queue_next_job_in_nb_sec' => 'Sekva tasko post @nb@ s',
 	'queue_no_job_in_queue' => 'Neniu atendante tasko',

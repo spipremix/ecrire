@@ -204,7 +204,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 التنقل بسهولة بين الموقع العمومي والمجال الخاص.',
 	'info_activer_menu_developpement' => 'عرض قائمة التطوير',
 	'info_admin_etre_webmestre' => 'إعطائي حقوق المشرف',
-	'info_admin_gere_rubriques' => 'هذا المدير يتمتع بحق إدارة الأقسام التالية:',
 	'info_admin_je_suis_webmestre' => 'أنا <b>مشرف</b>',
 	'info_admin_statuer_webmestre' => 'اعطاء حقوق مسؤول الموقع لهذا المدير',
 	'info_admin_webmestre' => 'هذا المدير هو <b>مسؤول الموقع</b>',
@@ -241,6 +240,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_message' => 'لا توجد رسائل',
 	'info_aucun_rubrique' => 'لا أقسام',
 	'info_aujourdhui' => 'اليوم:',
+	'info_auteur_gere_rubriques' => 'هذا المؤلف يدير الأقسام التالية:',
 	'info_auteur_gere_toutes_rubriques' => 'هذا المؤلف يدير <b>كل الأقسام</b>',
 	'info_auteur_gere_toutes_rubriques_2' => 'أدير <b>كل الأقسام</b>',
 	'info_auteurs' => 'المؤلفون',
@@ -583,7 +583,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_choix_langue' => 'حدد لغتك',
 	'label_nom_fichier_connect' => 'أدخل الاسم الذي يستخدمه هذا الخادم',
 	'label_slogan_site' => 'شعار الموقع',
-	'label_taille_ecran' => 'عرض الشاشة', # MODIF
+	'label_taille_ecran' => 'عرض الشاشة',
 	'label_texte_et_icones_navigation' => 'قائمة التصفح',
 	'label_texte_et_icones_page' => 'عرض في الصفحة',
 	'ldap_correspondance' => 'استلام من الحقل @champ@',
@@ -623,7 +623,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'mois_non_connu' => 'غير معروف',
 
 	// N
-	'nouvelle_version_spip' => 'الإصدار @version@ من SPIP متوافر الآن',
+	'nouvelle_version_spip' => 'ترقية SPIP رقم @version@ متوافرة الآن',
+	'nouvelle_version_spip_majeure' => 'إصدار جديد من رقم @version@ من SPIP متوافر الآن',
 
 	// O
 	'onglet_contenu' => 'المحتوى',

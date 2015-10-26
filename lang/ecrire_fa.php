@@ -198,7 +198,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_1_visiteur' => 'بازديد‌كننده‌ي 1',
 	'info_activer_cookie' => ' شما ميتوانيد  كوكى مكاتبه  را فعال نماپيد اينكار به شما اجازه خواهد داد كه براحتى از سايت همگانى به سايت خصوصى برويد',
 	'info_admin_etre_webmestre' => 'دادن حق وب مستر به من',
-	'info_admin_gere_rubriques' => ':اين گرداننده سايت بخشهاى زير را اداره ميكند',
 	'info_admin_je_suis_webmestre' => 'من <b>webmestre</b> هستم',
 	'info_admin_statuer_webmestre' => 'تفويض حق وب مستري به اين مدير',
 	'info_admin_webmestre' => 'اين مدير <b>webmestre</b> است',
@@ -582,7 +581,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'mois_non_connu' => 'شناخته نشده',
 
 	// N
-	'nouvelle_version_spip' => 'اسپيپ نسخه‌ي @version@ در دسترس است  ',
+	'nouvelle_version_spip' => 'اسپيپ نسخه‌ي @version@ در دسترس است  ', # MODIF
 
 	// O
 	'onglet_contenu' => 'محتوا',
@@ -665,7 +664,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// Q
 	'queue_executer_maintenant' => 'اجرا حالا',
-	'queue_info_purger' => 'مي‌‌توانيد تمام كارهاي در دست انجام را حذف كنيد و فهرست  كارهاي دوره‌اي را بازتنظيم (ريست) كنيد',
+	'queue_info_purger' => 'مي‌‌توانيد تمام كارهاي در دست انجام را حذف كنيد و فهرست  كارهاي دوره‌اي را بازتنظيم (ريست) كنيد', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ وظيفه در صف ',
 	'queue_next_job_in_nb_sec' => 'وظيفه‌ي بعدي در  @nb@ امين',
 	'queue_no_job_in_queue' => 'وظيفه‌اي در دست اجرا نيست',

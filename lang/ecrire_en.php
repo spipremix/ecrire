@@ -201,7 +201,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
  to switch easily between the public site and the private area.',
 	'info_activer_menu_developpement' => 'Show the Development menu',
 	'info_admin_etre_webmestre' => 'Give me web administrator rights',
-	'info_admin_gere_rubriques' => 'This administrator manages the following sections:',
 	'info_admin_je_suis_webmestre' => 'I am a <b>webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Give webmaster rights to this administrator ',
 	'info_admin_webmestre' => 'This administrator is <b>webmaster</b>',
@@ -238,6 +237,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_message' => 'No messages',
 	'info_aucun_rubrique' => 'No sections',
 	'info_aujourdhui' => 'today:',
+	'info_auteur_gere_rubriques' => 'This author manages the following sections:',
 	'info_auteur_gere_toutes_rubriques' => 'This author manage <b>all the sections</b>',
 	'info_auteur_gere_toutes_rubriques_2' => 'I manage <b>all the sections</b>',
 	'info_auteurs' => 'Authors',
@@ -617,7 +617,8 @@ and their status is colour-coded:',
 	'mois_non_connu' => 'unknown',
 
 	// N
-	'nouvelle_version_spip' => 'SPIP version @version@ is available',
+	'nouvelle_version_spip' => 'SPIP upgrade @version@ is available',
+	'nouvelle_version_spip_majeure' => 'A new SPIP version @version@ is available',
 
 	// O
 	'onglet_contenu' => 'Contents',

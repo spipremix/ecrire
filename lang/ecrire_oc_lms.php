@@ -124,7 +124,6 @@ L’administrator dau sistema o de la ret vos deu poder fornir
 	'image_administrer_rubrique' => 'Podetz administrar quela rubrica',
 	'info_1_article' => '1 article',
 	'info_activer_cookie' => 'Podetz activar un <b>cookie de correspondéncia</b>; quò lai vos permetrá de passar aisat dau sit public au sit privat.',
-	'info_admin_gere_rubriques' => 'Quel administrator gerís las rubricas seguentas:',
 	'info_administrateur' => 'Administrator',
 	'info_administrateur_1' => 'Administrator',
 	'info_administrateur_2' => 'dau sit(<i>d’utilizar emb precaucion</i>)',

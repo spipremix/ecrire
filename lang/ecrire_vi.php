@@ -122,7 +122,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'image_administrer_rubrique' => 'Bạn có thể quản trị đề mục này',
 	'info_1_article' => '1 bài',
 	'info_activer_cookie' => 'Bạn có thể cho chạy <b>administration cookie</b> để bạn có thể qua lại giữa trang web công cộng và khu vực riêng.',
-	'info_admin_gere_rubriques' => 'Nhân vật này có quyền quản trị các đề mục sau đây:',
 	'info_administrateur' => 'Quản lý',
 	'info_administrateur_1' => 'Quản lý',
 	'info_administrateur_2' => 'của trang web (<i>sử dụng cẩn thận</i>)',

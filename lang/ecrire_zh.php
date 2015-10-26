@@ -123,7 +123,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'image_administrer_rubrique' => '您可以管理该栏',
 	'info_1_article' => '1篇文章',
 	'info_activer_cookie' => '您可以激活<b>相应的cookie</b>,以便让您轻松转换公共站点为私私人站点.',
-	'info_admin_gere_rubriques' => '该管理员管理以下专栏:',
 	'info_administrateur' => '管理员',
 	'info_administrateur_1' => '管理员',
 	'info_administrateur_2' => '站点 (<i>谨慎使用</i>)',

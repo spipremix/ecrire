@@ -201,7 +201,6 @@ Estas informações deverão ser fornecidas pelo administrador do sistema ou da 
 	'info_activer_cookie' => 'Você pode ativar um <b>cookie de correspondência</b>, que lhe permitirá passar facilmente do site público para o site privado.',
 	'info_activer_menu_developpement' => 'Exibir o menu Desenvolvimento',
 	'info_admin_etre_webmestre' => 'Me conceder direitos de webmaster',
-	'info_admin_gere_rubriques' => 'Este administrador gerencia as seguintes seções:',
 	'info_admin_je_suis_webmestre' => 'Eu sou <b>webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Dar a este administrador os direitos de webmaster',
 	'info_admin_webmestre' => 'Este administrador é <b>webmaster</b>',
@@ -592,7 +591,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'mois_non_connu' => 'desconhecido',
 
 	// N
-	'nouvelle_version_spip' => 'A versão @version@ do SPIP está disponível.',
+	'nouvelle_version_spip' => 'A versão @version@ do SPIP está disponível.', # MODIF
 
 	// O
 	'onglet_contenu' => 'Conteúdo',
@@ -675,7 +674,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 
 	// Q
 	'queue_executer_maintenant' => 'Executar agora',
-	'queue_info_purger' => 'Você pode excluir todas as tarefas em espera e reinicializar a lista com as tarefas periódicas',
+	'queue_info_purger' => 'Você pode excluir todas as tarefas em espera e reinicializar a lista com as tarefas periódicas', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ trabalhos em espera',
 	'queue_next_job_in_nb_sec' => 'Próximo trabalho em @nb@ s',
 	'queue_no_job_in_queue' => 'Nenhum tarefa em espera',

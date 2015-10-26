@@ -182,7 +182,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_activer_cookie' => 'Puedes activar una <b>cookie de correspondencia</b>, que va
  permitite que pases fácilmente del sitiu públicu al sitiu privau.',
 	'info_admin_etre_webmestre' => 'Conseñame permisos de webmaster',
-	'info_admin_gere_rubriques' => 'Esti alministrador xestiona les estayes siguientes:',
 	'info_admin_je_suis_webmestre' => 'Yá soi <b>webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Da-y a esti alministrador permisos de webmaster',
 	'info_admin_webmestre' => 'Esti alministrador ye <b>webmaster</b>',
@@ -571,7 +570,7 @@ con una color que indica el estáu:',
 	'mois_non_connu' => 'desconocíu',
 
 	// N
-	'nouvelle_version_spip' => 'Ta disponible la versión @version@ de SPIP',
+	'nouvelle_version_spip' => 'Ta disponible la versión @version@ de SPIP', # MODIF
 
 	// O
 	'onglet_contenu' => 'Conteníu',

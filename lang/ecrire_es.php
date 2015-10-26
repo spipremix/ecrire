@@ -200,7 +200,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_activer_cookie' => 'Puede activar una <b>"cookie" de correspondencia</b>, que le permite actualizar páginas y pasar fácilmente de la parte pública a la redacción.',
 	'info_activer_menu_developpement' => 'Mostrar el menu desarrollo ',
 	'info_admin_etre_webmestre' => 'Darme derechos de webmaster',
-	'info_admin_gere_rubriques' => 'Esta persona administra las secciones siguientes:',
 	'info_admin_je_suis_webmestre' => 'Soy <b>webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Dar a este/a administrador/a derechos de webmaster',
 	'info_admin_webmestre' => 'Este/a administrador/a es <b>webmaster</b>',
@@ -600,7 +599,7 @@ Las traducciones están asociadas al original, en un color que indica su estado:
 	'mois_non_connu' => 'desconocido',
 
 	// N
-	'nouvelle_version_spip' => 'La versión @version@ de SPIP está disponible',
+	'nouvelle_version_spip' => 'La versión @version@ de SPIP está disponible', # MODIF
 
 	// O
 	'onglet_contenu' => 'Contenido',

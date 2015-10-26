@@ -198,7 +198,6 @@ Essas informações devem poder ser fornecidas pelo administrador do sistema ou 
 	'info_activer_cookie' => 'Pode activar um <b>cookie de correspondência</b>, o que lhe
  permitirá passar facilmente do sítio público ao sítio privado ',
 	'info_admin_etre_webmestre' => 'Conceder-me os direitos de webmaster',
-	'info_admin_gere_rubriques' => 'Este administrador gere as seguintes rubricas:',
 	'info_admin_je_suis_webmestre' => 'Eu sou <b>webmaster</b>',
 	'info_admin_statuer_webmestre' => 'Conceder ao administrador os direitos de webmaster',
 	'info_admin_webmestre' => 'Este administrador é <b>webmaster</b>',
@@ -605,7 +604,7 @@ numa cor que indica o seu estado:',
 	'mois_non_connu' => 'não conhecido',
 
 	// N
-	'nouvelle_version_spip' => 'A versão @version@ de SPIP está disponível',
+	'nouvelle_version_spip' => 'A versão @version@ de SPIP está disponível', # MODIF
 
 	// O
 	'onglet_contenu' => 'Conteúdo',
@@ -688,7 +687,7 @@ numa cor que indica o seu estado:',
 
 	// Q
 	'queue_executer_maintenant' => 'Executar agora',
-	'queue_info_purger' => 'Pode eliminar todas as tarefas em espera e pôr a zeros a lista de tarefas periódicas',
+	'queue_info_purger' => 'Pode eliminar todas as tarefas em espera e pôr a zeros a lista de tarefas periódicas', # MODIF
 	'queue_nb_jobs_in_queue' => '@nb@ tarefas em espera',
 	'queue_next_job_in_nb_sec' => 'Próxima tarefa em @nb@ s',
 	'queue_no_job_in_queue' => 'Sem tarefas em espera',

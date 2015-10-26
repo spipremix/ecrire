@@ -149,7 +149,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'image_administrer_rubrique' => 'អ្នក​អាច​គ្រប់គ្រង​ផ្នែក​នេះ',
 	'info_1_article' => 'អត្ថបទ ១',
 	'info_activer_cookie' => 'អ្នអ្នក អាចធ្វើអោយសកម្ម មួយ <b>ខូកឃីឆ្លងឆ្លើយ</b>, វា នឹងអនុញ្ញាតអ្នក ងាយដើរ ពីសៃថ៍សាធារណះ ទៅសៃថ៍ឯកជន។',
-	'info_admin_gere_rubriques' => 'អ្នកគ្រប់គ្រង​នេះ​ចាត់ចែង​ផ្នែក​ដូច​ខាងក្រោម ៖',
 	'info_administrateur' => 'អ្នកគ្រប់គ្រង',
 	'info_administrateur_1' => 'អ្នកគ្រប់គ្រង',
 	'info_administrateur_2' => 'នៃសៃថ៍ (<i>ប្រើប្រាស់ ដោយប្រយត្ន</i>)',

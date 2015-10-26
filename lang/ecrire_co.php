@@ -188,7 +188,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_activer_cookie' => 'Pudete puru attivà un <b>cookie di currispundenza</b>, vi permetterà 
 	di passà senza straziu da u situ pùbblicu à u situ privatu.',
 	'info_admin_etre_webmestre' => 'Dammi i diritti di webmaestru',
-	'info_admin_gere_rubriques' => 'St’amministratore gestisce e seguenti rùbbriche :',
 	'info_admin_je_suis_webmestre' => 'Sò u <b>webmaestru</b>',
 	'info_admin_statuer_webmestre' => 'Dà à st’amministratore tutti i diritti di webmaestru',
 	'info_admin_webmestre' => 'St’amministratore hè <b>webmaestru</b>',
@@ -576,7 +575,7 @@ U so statutu hè signalatu da u culore di l’icona (scrittore = giallu; amminis
 	'mois_non_connu' => 'scunnisciutu',
 
 	// N
-	'nouvelle_version_spip' => 'Hè dispunìbule a versione @version@ di SPIP',
+	'nouvelle_version_spip' => 'Hè dispunìbule a versione @version@ di SPIP', # MODIF
 
 	// O
 	'onglet_contenu' => 'Cuntenutu',

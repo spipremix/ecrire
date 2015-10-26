@@ -122,7 +122,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'image_administrer_rubrique' => 'Mi síw tò àkpáxwé é lɔ',
 	'info_1_article' => 'wěkpá ɖòkpó',
 	'info_activer_cookie' => 'Mi sí wlán xógbè é sɔgbèbɔ mi ná dó jɛ àgun dévómɛ.',
-	'info_admin_gere_rubriques' => 'tìtòt é lɔ nɔ bló àkpáxwé é lɔ lɛ ɖó:',
 	'info_administrateur' => ' tìtòtɔ ',
 	'info_administrateur_1' => 'tìtòtɔ',
 	'info_administrateur_2' => 'gblogblojí  yè z kpó yɛyì',
