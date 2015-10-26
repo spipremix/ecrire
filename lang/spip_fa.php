@@ -31,6 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'annuler' => 'باطل شود',
 	'antispam_champ_vide' => 'خواهشمند است اين قسمت را خالى بگذاريد:',
 	'articles_recents' => 'تازه ترين مقاله ها',
+	'avis_1_erreur_saisie' => 'يك خطا در حساب شما هست، دوست داريد اطلاعات را تأييد كنيد.',
 	'avis_archive_incorrect' => 'فايل بايگاني فايل اسپيپ نيست',
 	'avis_archive_invalide' => 'فايل بايگانى معتبر نميباشد',
 	'avis_attention' => 'توجه !',

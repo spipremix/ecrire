@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'annuler' => 'Anulà',
 	'antispam_champ_vide' => 'Vourguès laissà aqueu camp vuèi:',
 	'articles_recents' => 'Lu article mai rechent',
-	'avis_1_erreur_saisie' => 'Lì a 1 errour en la vouòstra sesìda, vourguès verificà li infourmacioun.',
+	'avis_1_erreur_saisie' => 'Lì a 1 errour en la vouòstra sesìda, vourguès verificà li infourmacioun.', # MODIF
 	'avis_archive_incorrect' => 'lou fichié arquivi noun es un fichié SPIP',
 	'avis_archive_invalide' => 'lou fichier arquivi noun es valid',
 	'avis_attention' => 'MÈFI !',
@@ -223,7 +223,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'dirs_repertoires_absents' => '<p><b>Lu repertori seguent noun soun estat trouvat :</b></p><ul>@bad_dirs@.</ul>
   <p>Si pòu que vengue d’un proublema de maiùscoula o minùscula mau metuda.
   Verificàs que li minùscula e maiùscoula d’aquelu repertori courrespouòndon ben embé cen qu’es afichat
-  aquì soubre ; s’es pas lou cas, renoumàs lu repertori embé lou vouòstre lougiciau FTP per courregì l’errour.</p>
+  aquì soubre ; s’es pas lou cas, renoumàs lu repertori emb’au vouòstre lougiciau FTP per courregì l’errour.</p>
   <p>Un còu qu’aurès fach acò, pourès ',
 	'dirs_repertoires_suivants' => '<p><b>Lu repertori seguent noun soun achessible en escritura :</b></p><ul>@bad_dirs@.</ul>
   <p>Per lì remedià, utilisàs lou vouòstre client FTP per fin de reglà lu drech d’achès de cadun
