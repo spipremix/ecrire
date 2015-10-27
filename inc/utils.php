@@ -1255,8 +1255,11 @@ function find_in_path ($file, $dirname='', $include=false) {
 					include_once _ROOT_CWD . $a;
 					$inc[$dirname][$file] = $inc[''][$dirname . $file] = true;
 				}
-				if (!defined('_SAUVER_CHEMIN'))
-					define('_SAUVER_CHEMIN',true);
+				if (!defined('_SAUVER_CHEMIN')){
+					// si le chemin n'a pas encore ete charge, ne pas lever le flag, ne pas cacher
+					if (is_null($GLOBALS['path_files'])) return $a;
+					define('_SAUVER_CHEMIN', true);
+				}
 				return $GLOBALS['path_files'][$GLOBALS['path_sig']][$dirname][$file] = $GLOBALS['path_files'][$GLOBALS['path_sig']][''][$dirname . $file] = $a;
 			}
 		}
