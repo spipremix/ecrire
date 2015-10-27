@@ -899,7 +899,7 @@ function queue_sleep_time_to_next_job($force=null) {
 			define('_JQ_NEXT_JOB_TIME_FILENAME', _DIR_TMP . "job_queue_next.txt");
 		}
 		// utiliser un cache memoire si dispo
-		if (include_spip('inc/memoization') AND defined('_MEMOIZE_MEMORY') AND _MEMOIZE_MEMORY) {
+		if (function_exists("cache_get") AND defined('_MEMOIZE_MEMORY') AND _MEMOIZE_MEMORY) {
 			$queue_next_job_time = cache_get(_JQ_NEXT_JOB_TIME_FILENAME);
 		}
 		else {

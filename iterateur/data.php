@@ -136,7 +136,6 @@ class IterateurDATA implements Iterator {
 	protected function cache_get($cle) {
 		if (!$cle) return;
 		# utiliser memoization si dispo
-		include_spip('inc/memoization');
 		if (!function_exists('cache_get')) return;
 		return cache_get($cle);
 	}
@@ -154,7 +153,6 @@ class IterateurDATA implements Iterator {
 			$valeur = $this->tableau;
 		}
 		# utiliser memoization si dispo
-		include_spip('inc/memoization');
 		if (!function_exists('cache_set')) return;
 		return cache_set($cle,
 			array(
