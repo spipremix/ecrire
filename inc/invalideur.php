@@ -21,12 +21,12 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('base/serial');
 
 /** Estime la taille moyenne d'un fichier cache, pour ne pas les regarder (10ko) */
-define('_TAILLE_MOYENNE_FICHIER_CACHE', 1024 * 10);
+if (!defined('_TAILLE_MOYENNE_FICHIER_CACHE')) define('_TAILLE_MOYENNE_FICHIER_CACHE', 1024 * 10);
 /**
- * Si un fichier n'a pas servi (fileatime) depuis plus d'une heure, on se sent
+ * Si un fichier n'a pas été servi (fileatime) depuis plus d'une heure, on se sent
  * en droit de l'éliminer
  */
-define('_AGE_CACHE_ATIME', 3600);
+if (!defined('_AGE_CACHE_ATIME')) define('_AGE_CACHE_ATIME', 3600);
 
 /**
  * Calcul le nombre de fichiers à la racine d'un répertoire ainsi qu'une
