@@ -10,7 +10,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// A
 	'activer_plugin' => 'Plugin aktivieren',
 	'affichage' => 'Anzeigen',
-	'aide_non_disponible' => 'Teil der Online-Hilfe in dieser Sprache noch nicht verfügbar.',
+	'aide_non_disponible' => 'Dieser Teil der Online-Hilfe ist in dieser Sprache noch nicht verfügbar.',
 	'annuler_recherche' => 'Sucheingabe löschen',
 	'auteur' => 'Autor:',
 	'avis_acces_interdit' => 'Zugang verweigert.',
