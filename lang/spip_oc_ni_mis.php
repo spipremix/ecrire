@@ -25,13 +25,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'admin_recalculer' => 'Recarculà aquela pàgina',
 	'afficher_calendrier' => 'Afichà lou calendari',
 	'afficher_trad' => 'afichà li traducioun',
-	'alerte_maj_impossible' => '<b>Alèrta !</b> La metuda a jou de la basa SQL vers la versioun @version@ es empoussible ; magara que lì a un proublema relatiéu au drech de moudificà la basa de dounada. Vourguès countatà lou vouòstre aubergadour.',
+	'alerte_maj_impossible' => '<b>Alèrta !</b> La messa a jou de la basa SQL vers la versioun @version@ es empoussible ; magara que lì a un proublema relatiéu au drech de moudificà la basa de dounada. Vourguès countatà lou vouòstre aubergadour.',
 	'alerte_modif_info_concourante' => 'MÈFI : Aquela infourmacioun es estada moudificada d’un autre bias. La valour atuala es :',
 	'analyse_xml' => 'Analisa XML',
 	'annuler' => 'Anulà',
 	'antispam_champ_vide' => 'Vourguès laissà aqueu camp vuèi:',
 	'articles_recents' => 'Lu article mai rechent',
-	'avis_1_erreur_saisie' => 'Lì a 1 errour en la vouòstra sesìda, vourguès verificà li infourmacioun.', # MODIF
+	'avis_1_erreur_saisie' => 'Lì a 1 errour en la vouòstra sesìda, vourguès verificà li infourmacioun.',
 	'avis_archive_incorrect' => 'lou fichié arquivi noun es un fichié SPIP',
 	'avis_archive_invalide' => 'lou fichier arquivi noun es valid',
 	'avis_attention' => 'MÈFI !',
@@ -221,7 +221,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'dirs_preliminaire' => 'Preliminari : <b>Reglà lu drech d’achès</b>',
 	'dirs_probleme_droits' => 'Proublèma de drech d’achès',
 	'dirs_repertoires_absents' => '<p><b>Lu repertori seguent noun soun estat trouvat :</b></p><ul>@bad_dirs@.</ul>
-  <p>Si pòu que vengue d’un proublema de maiùscoula o minùscula mau metuda.
+  <p>Si pòu que vengue d’un proublema de maiùscoula o minùscula mau messa.
   Verificàs que li minùscula e maiùscoula d’aquelu repertori courrespouòndon ben embé cen qu’es afichat
   aquì soubre ; s’es pas lou cas, renoumàs lu repertori emb’au vouòstre lougiciau FTP per courregì l’errour.</p>
   <p>Un còu qu’aurès fach acò, pourès ',
@@ -422,7 +422,7 @@ sera ignourada) :
 	'info_message_supprime' => 'MESSAGE SUPRIMAT',
 	'info_messages_nb' => '@nb@ message',
 	'info_messages_un' => '1 message',
-	'info_mise_en_ligne' => 'Data de metuda en ligna :',
+	'info_mise_en_ligne' => 'Data de messa en ligna :',
 	'info_modification_parametres_securite' => 'modificacioun dei parametre de segurtà',
 	'info_mois_courant' => 'En cours de mes:',
 	'info_mot_cle_ajoute' => 'Lou mot clau seguent es estat ajustat a ',
@@ -633,9 +633,9 @@ e vi recounetà au sit.
 				mà soun pas estat diretamen
 				inserat. Segoun la coumpaginacioun dóu sit public,
 				pouran aparèisse souta fourma de doucumen jounch.',
-	'texte_erreur_mise_niveau_base' => 'Errour de basa de dounada dóu tems de la metuda a nivèu.
+	'texte_erreur_mise_niveau_base' => 'Errour de basa de dounada dóu tems de la messa a nivèu.
 		L’image <b>@fichier@</b> es pas passada (article @id_article@).
-		Noutàs ben aquela referença, reprouvàs la metuda a
+		Noutàs ben aquela referença, reprouvàs la messa a
 		nivèu, e verificàs pi que lu image aparèisson
 		encara en lu article.',
 	'texte_erreur_visiteur' => 'Avès prouvat d’achèdre a l’espaci privat emb’un identificant que noun lou permete.',
