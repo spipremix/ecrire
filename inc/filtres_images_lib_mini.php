@@ -833,6 +833,10 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process='AUTO',
 		if ($process == 'imagick') {
 			$vignette = "$destination.".$format_sortie;
 
+			if (!class_exists('Imagick')) {
+				spip_log("Classe Imagick absente !", _LOG_ERREUR);
+				return;
+			}
 			$imagick = new Imagick();
 			$imagick->readImage($image);
 			$imagick->resizeImage($destWidth, $destHeight, Imagick::FILTER_LANCZOS, 1 );//, IMAGICK_FILTER_LANCZOS, _IMG_IMAGICK_QUALITE / 100);
