@@ -214,7 +214,7 @@ function typo($letexte, $echapper=true, $connect=null, $env=array()) {
 	if (is_null($connect)){
 		$connect = '';
 		$interdire_script = true;
-		$env['espace_prive'] = 1;
+		$env['espace_prive'] = test_espace_prive();
 	}
 
 	// Echapper les codes <html> etc
