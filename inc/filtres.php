@@ -1136,47 +1136,113 @@ function vider_date($letexte) {
 	return $letexte;
 }
 
-// http://code.spip.net/@recup_heure
+/**
+ * Retrouve à partir d'une chaîne les valeurs heures, minutes, secondes
+ *
+ * Retrouve une horaire au format `11:29:55`
+ * 
+ * @param string $date
+ *     Chaîne de date contenant éventuellement une horaire
+ * @return array
+ *     - [heures, minutes, secondes] si horaire trouvée
+ *     - [0, 0, 0] sinon
+**/
 function recup_heure($date){
 
 	static $d = array(0,0,0);
-	if (!preg_match('#([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})#', $date, $r)) 
+	if (!preg_match('#([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})#', $date, $r)) {
 		return $d;
-	
+	}
+
 	array_shift($r);
 	return $r;
 }
 
-// http://code.spip.net/@heures
+/**
+ * Retourne l'heure d'une date
+ *
+ * @filtre
+ * @uses recup_heure()
+ * 
+ * @param string $numdate La date à extraire
+ * @return int heures, sinon 0
+**/
 function heures($numdate) {
 	$date_array = recup_heure($numdate);
-	if ($date_array)
+	if ($date_array) {
 		list($heures, $minutes, $secondes) = $date_array;
+	}
 	return $heures;
 }
 
-// http://code.spip.net/@minutes
+/**
+ * Retourne les minutes d'une date
+ *
+ * @filtre
+ * @uses recup_heure()
+ * 
+ * @param string $numdate La date à extraire
+ * @return int minutes, sinon 0
+**/
 function minutes($numdate) {
 	$date_array = recup_heure($numdate);
-	if ($date_array)
+	if ($date_array) {
 		list($heures, $minutes, $secondes) = $date_array;
+	}
 	return $minutes;
 }
 
-// http://code.spip.net/@secondes
+/**
+ * Retourne les secondes d'une date
+ *
+ * @filtre
+ * @uses recup_heure()
+ * 
+ * @param string $numdate La date à extraire
+ * @return int secondes, sinon 0
+**/
 function secondes($numdate) {
 	$date_array = recup_heure($numdate);
-	if ($date_array)
-		list($heures,$minutes,$secondes) = $date_array;
+	if ($date_array) {
+		list($heures, $minutes, $secondes) = $date_array;
+	}
 	return $secondes;
 }
 
-// http://code.spip.net/@heures_minutes
+/**
+ * Retourne l'horaire (avec minutes) d'une date, tel que `12h36`
+ *
+ * @note
+ *     Le format de retour varie selon la langue utilisée.
+ *
+ * @param string $numdate La date à extraire
+ * @return string L'heure formatée dans la langue en cours.
+**/
 function heures_minutes($numdate) {
 	return _T('date_fmt_heures_minutes', array('h'=> heures($numdate), 'm'=> minutes($numdate)));
 }
 
-// http://code.spip.net/@recup_date
+/**
+ * Retrouve à partir d'une date les valeurs année, mois, jour, heures, minutes, secondes
+ *
+ * Annee, mois, jour sont retrouvés si la date contient par exemple :
+ * - '03/11/2015', '3/11/15'
+ * - '2015-11-04', '2015-11-4'
+ * - '2015-11'
+ *
+ * Dans ces cas, les heures, minutes, secondes sont retrouvés avec `recup_heure()`
+ *
+ * Annee, mois, jour, heures, minutes, secondes sont retrouvés si la date contient par exemple :
+ * - '20151104111420'
+ * 
+ * @uses recup_heure()
+ * 
+ * @param string $numdate La date à extraire
+ * @param bool $forcer_jour
+ *     True pour tout le temps renseigner un jour ou un mois (le 1) s'il
+ *     ne sont pas indiqués dans la date.
+ * @return array [année, mois, jour, heures, minutes, secondes]
+**/
 function recup_date($numdate, $forcer_jour = true){
 	if (!$numdate) return '';
 	$heures = $minutes = $secondes = 0;
@@ -1217,8 +1283,9 @@ function recup_date($numdate, $forcer_jour = true){
 
 	if ($forcer_jour AND $jour == '0') $jour = '1';
 	if ($forcer_jour AND $mois == '0') $mois = '1';
-	if ($annee OR $mois OR $jour OR $heures OR $minutes OR $secondes)
+	if ($annee OR $mois OR $jour OR $heures OR $minutes OR $secondes) {
 		return array($annee, $mois, $jour, $heures, $minutes, $secondes);
+	}
 }
 
 // une date pour l'interface : utilise date_relative si le decalage
@@ -1333,21 +1400,26 @@ function date_relativecourt($date, $decalage_maxi=0) {
 
 /**
  * Formatage humain de la date $numdate selon le format $vue
- * http://code.spip.net/@affdate_base
  *
- * @param $numdate
- * @param $vue
- * @param array $options
- *   param : 'abbr' ou 'initiale' permet d'afficher les jours au format court ou initiale
- *   annee_courante : permet de definir l'annee de reference pour l'affichage des dates courtes
+ * @param string $numdate
+ *     Une écriture de date
+ * @param string $vue
+ *     Type de format souhaité ou expression pour `strtotime()` tel que `Y-m-d h:i:s`
+ * @param array $options {
+ *     @type string $param
+ *         'abbr' ou 'initiale' permet d'afficher les jours au format court ou initiale
+ *     @type int $annee_courante
+ *         Permet de definir l'annee de reference pour l'affichage des dates courtes
+ * }
  * @return mixed|string
  */
 function affdate_base($numdate, $vue, $options = array()) {
-	if (is_string($options))
-		$options = array('param'=>$options);
+	if (is_string($options)) {
+		$options = array('param' => $options);
+	}
 	$date_array = recup_date($numdate, false);
 	if (!$date_array) return;
-	list($annee, $mois, $jour, $heures, $minutes, $secondes)= $date_array;
+	list($annee, $mois, $jour, $heures, $minutes, $secondes) = $date_array;
 
 	// 1er, 21st, etc.
 	$journum = $jour;
