@@ -131,13 +131,27 @@ function phraser_polyglotte($texte,$ligne, $result) {
 }
 
 
-/// Reperer les balises de traduction
-/// <:module:chaine{arg1=texte1,arg2=#BALISE}|filtre1{texte2,#BALISE}|filtre2:>
-/// chaine peut etre vide si =texte1 est present et arg1 est vide
-/// sinon ce n'est pas un idiome
-// http://code.spip.net/@phraser_idiomes
-function phraser_idiomes($texte,$ligne,$result) {
+
+/**
+ * Repérer les balises de traduction (idiomes)
+ *
+ * Phrase les idiomes tel que
+ * - `<:chaine:>`
+ * - `<:module:chaine:>`
+ * - `<:module:chaine{arg1=texte1,arg2=#BALISE}|filtre1{texte2,#BALISE}|filtre2:>`
+ *
+ * @note
+ *    `chaine` peut etre vide si `=texte1` est present et `arg1` est vide
+ *    sinon ce n'est pas un idiome
+ * 
+ * @param string $texte
+ * @param int $ligne
+ * @param array $result
+ * @return array
+**/
+function phraser_idiomes($texte, $ligne, $result) {
 	while (preg_match(BALISE_IDIOMES, $texte, $match)) {
+		$match = array_pad($match, 8, null);
 		$p = strpos($texte, $match[0]);
 		$ko = (!$match[3] && ($match[5][0]!=='='));
 		$debut = substr($texte, 0, $p + ($ko ? strlen($match[0]) : 0));
@@ -159,7 +173,7 @@ function phraser_idiomes($texte,$ligne,$result) {
 		$champ->nom_champ = strtolower($match[3]);
 		$champ->module = $match[2];
 		// pas d'imbrication pour les filtres sur langue
-		phraser_args(@$match[7], ":", '', array(), $champ);
+		phraser_args($match[7], ":", '', array(), $champ);
 		$result[] = $champ;
 	}
 	if ($texte!=="")  $result = phraser_champs($texte,$ligne,$result);
