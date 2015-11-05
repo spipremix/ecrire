@@ -88,6 +88,7 @@ function init_entete($titre='', $dummy=0, $minipres=false) {
 	. init_head($titre, $dummy, $minipres)
 	. "</head>\n";
 }
+
 /**
  * Retourne le code HTML du head (intégration des JS et CSS) de l'espace privé
  *
@@ -160,23 +161,6 @@ function init_body_class() {
 	return $GLOBALS['spip_ecran'] . " $spip_display_navigation $spip_display_outils ".$display_class[$GLOBALS['spip_display']];
 }
 
-
-/**
- * Créer un `<area shape="rect" />`
- *  
- * @deprecated since version 2.0.0
- * @param string $lien
- * @param string $set
- * @param string $couleur
- * @param string $coords
- * @param string $titre
- * @param string $mouseOver
- * @return string
- */
-function lien_change_var($lien, $set, $couleur, $coords, $titre, $mouseOver="") {
-	$lien = parametre_url($lien, $set, $couleur);
-	return "\n<area shape='rect' href='$lien' coords='$coords' title=\"$titre\" alt=\"$titre\" $mouseOver />";
-}
 
 /**
  * Afficher la liste des auteurs connectés à l'espace privé
