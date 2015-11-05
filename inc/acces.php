@@ -270,8 +270,7 @@ function ecrire_acces() {
 /**
  * Créer un password htaccess
  *
- * @uses crypt()
- * @link http://docs.php.net/manual/fr/function.crypt.php
+ * @link http://docs.php.net/manual/fr/function.crypt.php Documentation de `crypt()`
  * 
  * @global string $htsalt
  *   Une chaîne de sel sur laquelle sera fondée le hachage.
@@ -282,8 +281,9 @@ function ecrire_acces() {
  */
 function generer_htpass($pass) {
 	global $htsalt;
-	if (function_exists('crypt'))
+	if (function_exists('crypt')) {
 		return crypt($pass, $htsalt);
+	}
 }
 
 /**
