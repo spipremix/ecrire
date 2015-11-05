@@ -213,7 +213,7 @@ function spip_nfslock($fichier,$max_age=0) {
  * happen unless someone is violating the locking protocol.
  *
  * @author Alexis Rosen <alexis@panix.com>
- * @see spip_nfslock
+ * @see spip_nfslock()
  *
  * @param string $fichier Chemin du fichier
  * @param bool $birth Timestamp de l'heure de création du verrou
