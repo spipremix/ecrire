@@ -77,9 +77,7 @@ class Bouton {
  *
  * On passe la main au pipeline "ajouter_onglets".
  *
- * @uses onglets_plugins()
- * @uses autoriser()
- *
+ * @see plugin_ongletbouton() qui crée la fonction `onglets_plugins()`
  * @pipeline_appel ajouter_onglets
  *
  * @param string $script
@@ -90,9 +88,10 @@ function definir_barre_onglets($script) {
 	$onglets=array();
 	$liste_onglets = array();
 
-	// ajouter les onglets issus des plugin via plugin.xml
-	if (function_exists('onglets_plugins'))
+	// ajouter les onglets issus des plugin via paquet.xml
+	if (function_exists('onglets_plugins')) {
 		$liste_onglets = onglets_plugins();
+	}
 
 
 	foreach($liste_onglets as $id => $infos){
