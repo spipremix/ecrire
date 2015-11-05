@@ -76,7 +76,7 @@ function action_tester_taille_dist() {
 		} else {
 			// c'est un cas "on a reussi la borne max initiale, donc on a pas de limite connue"
 			$t = 0;
-			echo "OK";
+			echo "&infin;";
 		}
 		ecrire_meta('max_taille_vignettes', $t, 'non');
 		die();
