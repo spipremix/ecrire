@@ -21,19 +21,19 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 /**
  * Obtenir ou définir les différents jeux de couleurs de l'espace privé
  *
- * - Appelée _sans argument_, cette fonction retourne un menu de couleurs.
+ * - Appelée _sans argument_, cette fonction retourne un tableau décrivant les jeux les couleurs possibles.
  * - Avec un _argument numérique_, elle retourne les paramètres d'URL 
- * pour les feuilles de style calculées (cf `commencer_page` et `svg`)
- * - Avec un _argument de type tableau_, soit elle remplace le tableau par défaut
- * par celui donné en argument, _soit_, avec le second paramètre
- * à `true`, elle complète le tableau par celui donné en premier argument.
+ *   pour les feuilles de style calculées (cf. formulaire configurer_preferences)
+ * - Avec un _argument de type tableau_ :
+ *   - soit elle remplace le tableau par défaut par celui donné en argument
+ *   - soit elle le complète, si `$ajouter` vaut `true`.
  * 
- * @see commencer_page()
+ * @see formulaires_configurer_preferences_charger_dist()
  * 
  * @staticvar array $couleurs_spip
  * @param null|int|array $choix
  * @param bool $ajouter
- * @return array
+ * @return array|string
  */
 function inc_couleurs_dist($choix=NULL, $ajouter=false)
 {
@@ -112,21 +112,20 @@ function inc_couleurs_dist($choix=NULL, $ajouter=false)
 
 	if (is_numeric($choix)) {
 		// Compatibilite ascendante (plug-ins notamment)
-		$GLOBALS["couleur_claire"] = $couleurs_spip[$choix]['couleur_claire'];
-		$GLOBALS["couleur_foncee"] = $couleurs_spip[$choix]['couleur_foncee'];
-		$GLOBALS["couleur_lien"] = $couleurs_spip[$choix]['couleur_lien'];
+		$GLOBALS["couleur_claire"]   = $couleurs_spip[$choix]['couleur_claire'];
+		$GLOBALS["couleur_foncee"]   = $couleurs_spip[$choix]['couleur_foncee'];
+		$GLOBALS["couleur_lien"]     = $couleurs_spip[$choix]['couleur_lien'];
 		$GLOBALS["couleur_lien_off"] = $couleurs_spip[$choix]['couleur_lien_off'];
-		
-	  return
-	    "couleur_claire=" .
-	    substr($couleurs_spip[$choix]['couleur_claire'],1).
-	    '&couleur_foncee=' .
-	    substr($couleurs_spip[$choix]['couleur_foncee'],1);
+
+		return
+			"couleur_claire="  . substr($couleurs_spip[$choix]['couleur_claire'], 1).
+			'&couleur_foncee=' . substr($couleurs_spip[$choix]['couleur_foncee'], 1);
 	} else {
 		if (is_array($choix)) {
 			if ($ajouter) {
-				foreach($choix as $c)
+				foreach($choix as $c) {
 					$couleurs_spip[] = $c;
+				}
 				return $couleurs_spip;
 			} else {
 				return $couleurs_spip = $choix;
