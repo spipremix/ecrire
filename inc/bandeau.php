@@ -105,8 +105,7 @@ function definir_barre_boutons($contexte=array(),$icones = true, $autorise = tru
 			if (!$parent
 				// provisoire, eviter les vieux boutons
 				AND (!in_array($id,array('forum','statistiques_visites')))
-				AND autoriser('menugrandeentree',"_$id",0,NULL,array('contexte'=>$contexte))
-
+				AND (!$autorise OR autoriser('menugrandeentree',"_$id",0,NULL,array('contexte'=>$contexte)))
 			) {
 				$position = (isset($infos['position']) and $infos['position']) ? $infos['position'] : count($boutons_admin);
 				$boutons_admin = array_slice($boutons_admin,0,$position)

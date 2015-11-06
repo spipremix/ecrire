@@ -3970,7 +3970,7 @@ function filtre_implode_dist($a,$b){return is_array($a)?implode($b,$a):$a;}
 function bando_images_background(){
 	include_spip('inc/bandeau');
 	// recuperer tous les boutons et leurs images
-	$boutons = definir_barre_boutons(definir_barre_contexte(),true,false);
+	$boutons = definir_barre_boutons(definir_barre_contexte(), true, false);
 
 	$res = "";
 	foreach($boutons as $page => $detail){
