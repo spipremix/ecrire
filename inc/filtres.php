@@ -1138,7 +1138,7 @@ function antispam($texte) {
  * @filtre
  * @param int $id_auteur
  *     L'auteur qui demande la page 
- * @param string $clé
+ * @param string $cle
  *     La clé à tester
  * @param string $dir
  *     Un type d'accès (nom du répertoire dans lequel sont rangés les squelettes demandés, tel que 'rss')
@@ -1184,14 +1184,50 @@ function sinon ($texte, $sinon='') {
 		return $sinon;
 }
 
-// |choixsivide{vide,pasvide} affiche pasvide si la chaine n'est pas vide...
-// http://code.spip.net/@choixsivide
+/**
+ * Filtre `|choixsivide{vide, pas vide}` alias de `|?{si oui, si non}` avec les arguments inversés
+ * 
+ * @example
+ *     `[(#TEXTE|choixsivide{vide, plein})]` affiche vide si le `#TEXTE`
+ *     est considéré vide par PHP (chaîne vide, false, 0, tableau vide, etc…).
+ *     C'est l'équivalent de `[(#TEXTE|?{plein, vide})]`
+ *     
+ * @filtre
+ * @see choixsiegal()
+ * @link http://www.spip.net/4189
+ * 
+ * @param mixed $a
+ *     La valeur à tester
+ * @param mixed $vide
+ *     Ce qui est retourné si `$a` est considéré vide
+ * @param mixed $pasvide
+ *     Ce qui est retourné sinon
+ * @return mixed
+**/
 function choixsivide($a, $vide, $pasvide) {
 	return $a ? $pasvide : $vide;
 }
 
-// |choixsiegal{aquoi,oui,non} affiche oui si la chaine est egal a aquoi ...
-// http://code.spip.net/@choixsiegal
+/**
+ * Filtre `|choixsiegal{valeur, sioui, sinon}`
+ *
+ * @example
+ *     `#LANG_DIR|choixsiegal{ltr,left,right}` retourne `left` si
+ *      `#LANG_DIR` vaut `ltr` et `right` sinon.
+ * 
+ * @filtre
+ * @link http://www.spip.net/4148
+ * 
+ * @param mixed $a1
+ *     La valeur à tester
+ * @param mixed $a2
+ *     La valeur de comparaison
+ * @param mixed $v
+ *     Ce qui est retourné si la comparaison est vraie
+ * @param mixed $f
+ *     Ce qui est retourné sinon
+ * @return mixed
+**/
 function choixsiegal($a1,$a2,$v,$f) {
 	return ($a1 == $a2) ? $v : $f;
 }
