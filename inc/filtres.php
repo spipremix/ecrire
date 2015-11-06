@@ -990,16 +990,38 @@ function majuscules($texte) {
 	return "<span style='text-transform: uppercase;'>$texte</span>";
 }
 
-// "127.4 ko" ou "3.1 Mo"
-// http://code.spip.net/@taille_en_octets
+/**
+ * Retourne une taille en octets humainement lisible
+ * 
+ * Tel que "127.4 ko" ou "3.1 Mo"
+ * 
+ * @example
+ *     - `[(#TAILLE|taille_en_octets)]`
+ *     - `[(#VAL{123456789}|taille_en_octets)]` affiche `117.7 Mo`
+ * 
+ * @filtre
+ * @link http://www.spip.net/4316
+ * @param int $taille
+ * @return string
+**/
 function taille_en_octets ($taille) {
-	if (!defined('_KILOBYTE')) define('_KILOBYTE', 1024);
+	if (!defined('_KILOBYTE')) {
+		/**
+		 * Définit le nombre d'octets dans un Kilobyte
+		 * @var int 
+		**/
+		define('_KILOBYTE', 1024);
+	}
 
-	if ($taille < 1) return '';
-	if ($taille < _KILOBYTE) {$taille = _T('taille_octets', array('taille' => $taille));}
-	else if ($taille < _KILOBYTE*_KILOBYTE) {
+	if ($taille < 1) {
+		return '';
+	}
+	if ($taille < _KILOBYTE) {
+		$taille = _T('taille_octets', array('taille' => $taille));
+	}
+	elseif ($taille < _KILOBYTE*_KILOBYTE) {
 		$taille = _T('taille_ko', array('taille' => round($taille/_KILOBYTE, 1)));
-	} else if ($taille < _KILOBYTE*_KILOBYTE*_KILOBYTE) {
+	} elseif ($taille < _KILOBYTE*_KILOBYTE*_KILOBYTE) {
 		$taille = _T('taille_mo', array('taille' => round($taille/_KILOBYTE/_KILOBYTE, 1)));
 	} else {
 		$taille = _T('taille_go', array('taille' => round($taille/_KILOBYTE/_KILOBYTE/_KILOBYTE, 2)));
