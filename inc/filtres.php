@@ -1121,7 +1121,34 @@ function antispam($texte) {
 	return preg_replace("/@/", " $masque ", $texte);
 }
 
-// http://code.spip.net/@securiser_acces
+/**
+ * Vérifie un accès à faible sécurité
+ *
+ * Vérifie qu'un visiteur peut accéder à la page demandée,
+ * qui est protégée par une clé, calculée à partir du low_sec de l'auteur,
+ * et des paramètres le composant l'appel (op, args)
+ *
+ * @example
+ *     `[(#ID_AUTEUR|securiser_acces{#ENV{cle}, rss, #ENV{op}, #ENV{args}}|sinon_interdire_acces)]`
+ *
+ * @see bouton_spip_rss() pour générer un lien de faible sécurité pour les RSS privés
+ * @see afficher_low_sec() pour calculer une clé valide
+ * @uses verifier_low_sec()
+ * 
+ * @filtre
+ * @param int $id_auteur
+ *     L'auteur qui demande la page 
+ * @param string $clé
+ *     La clé à tester
+ * @param string $dir
+ *     Un type d'accès (nom du répertoire dans lequel sont rangés les squelettes demandés, tel que 'rss')
+ * @param string $op
+ *     Nom de l'opération éventuelle
+ * @param string $args
+ *     Nom de l'argument calculé
+ * @return bool
+ *     True si on a le droit d'accès, false sinon.
+**/
 function securiser_acces($id_auteur, $cle, $dir, $op='', $args='')
 {
 	include_spip('inc/acces');

@@ -358,15 +358,21 @@ function lien_article_virtuel($virtuel){
 
 
 /**
- * Filtre pour generer un bouton RSS prive
- * protege par un hash de faible securite
+ * Filtre pour générer un lien vers un flux RSS privé
  *
- * http://code.spip.net/@bouton_spip_rss
+ * Le RSS est protegé par un hash de faible sécurité
  *
+ * @example
+ *     - `[(#VAL{a_suivre}|bouton_spip_rss)]`
+ *     - `[(#VAL{signatures}|bouton_spip_rss{#ARRAY{id_article,#ID_ARTICLE}})]`
+ * 
+ * @filtre
+ * @uses param_low_sec()
  * @param string $op
  * @param array $args
  * @param string $lang
  * @return string
+ *     Code HTML du lien
  */
 function bouton_spip_rss($op, $args=array(), $lang='', $title='RSS') {
 	include_spip('inc/acces');
