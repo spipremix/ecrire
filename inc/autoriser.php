@@ -274,6 +274,8 @@ function autoriser_creer_dist($faire, $type, $id, $qui, $opt) {
 /**
  * Autorisation de prévisualiser un contenu
  *
+ * @uses test_previsualiser_objet_champ()
+ * 
  * @param  string $faire Action demandée
  * @param  string $type  Type d'objet sur lequel appliquer l'action
  * @param  int    $id    Identifiant de l'objet
@@ -284,9 +286,9 @@ function autoriser_creer_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_previsualiser_dist($faire, $type, $id, $qui, $opt) {
 
 	// Le visiteur a-t-il un statut prevu par la config ?
-	if (strpos($GLOBALS['meta']['preview'], ",". $qui['statut'] .",")
-	!==false)
+	if (strpos($GLOBALS['meta']['preview'], ",". $qui['statut'] .",") !== false) {
 		return test_previsualiser_objet_champ($type, $id, $qui, $opt);
+	}
 
 	// Sinon, on regarde s'il a un jeton (var_token) et on lui pose
 	// le cas echeant une session contenant l'autorisation
@@ -313,25 +315,34 @@ function autoriser_previsualiser_dist($faire, $type, $id, $qui, $opt) {
 }
 
 /**
- * Options de la fonction autoriser_previsualiser_dist
+ * Teste qu'un objet éditorial peut être prévisualisé
+ * 
+ * Cela permet ainsi de commander l'affichage dans l'espace prive du bouton "previsualiser"
+ * voir `prive/objets/infos/article.html` etc.
  *
- * commande l'affichage dans l'espace prive du bouton "previsualiser"
- * voir prive/objets/infos/article.html etc.
+ * Cela dépend du statut actuel de l'objet d'une part, et d'autre part de la
+ * clé `previsu` dans le tableau `statut` de la déclaration de l'objet éditorial.
+ * Cette clé `previsu` liste des statuts, séparés par des virgules,
+ * qui ont le droit d'avoir une prévisualisation. La présence de `xx/auteur` indique que pour le
+ * statut `xx`, l'auteur en cours doit être un des auteurs de l'objet éditorial en question
+ * pour que ce statut autorise la prévisualisation.
+ *
+ * Exemple pour les articles : `'previsu' => 'publie,prop,prepa/auteur',`
  * 
  * @uses lister_tables_objets_sql()
- * @uses table_objet_sql()
  * 
- * @param array $qui 
- * @param string|null $type
- * @param string|null $id
- * @param array $opt
- * @return boolean
+ * @param  string $type  Type d'objet sur lequel appliquer l'action
+ * @param  int    $id    Identifiant de l'objet
+ * @param  array  $qui   Description de l'auteur demandant l'autorisation
+ * @param  array  $opt   Options de cette autorisation
+ * @return boolean True si autorisé, false sinon.
  */
 function test_previsualiser_objet_champ($type=null, $id=0, $qui=array(), $opt=array()) {
 
 	// si pas de type et statut fourni, c'est une autorisation generale => OK
-	if (!$type)
+	if (!$type) {
 		return true;
+	}
 
 	include_spip('base/objets');
 	$infos = lister_tables_objets_sql(table_objet_sql($type));
@@ -1204,9 +1215,9 @@ function autoriser_configurerpreferences_dist($faire,$type,$id,$qui,$opt) {
 }
 
 /**
- * Autorisation d'afficher le menu développement (préférences utilisateur)
+ * Autorisation d'afficher le menu développement
  *
- * Toujours OK
+ * Dépend de la préférences utilisateur
  * 
  * @param  string $faire Action demandée
  * @param  string $type  Type d'objet sur lequel appliquer l'action
@@ -1221,8 +1232,18 @@ function autoriser_menudeveloppement_menugrandeentree_dist($faire, $type, $id, $
 }
 
 /**
- * Par defaut les grandes entrees sont visibles de tous
- */
+ * Autorisation d'afficher une grande entrée de menu
+ *
+ * Par defaut les grandes entrees (accueil, édition, publication, etc.)
+ * sont visibles de tous
+ * 
+ * @param  string $faire Action demandée
+ * @param  string $type  Type d'objet sur lequel appliquer l'action
+ * @param  int    $id    Identifiant de l'objet
+ * @param  array  $qui   Description de l'auteur demandant l'autorisation
+ * @param  array  $opt   Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+**/
 function autoriser_menugrandeentree_dist($faire, $type, $id, $qui, $opt){
 	return true;
 }
