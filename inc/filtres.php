@@ -255,32 +255,61 @@ function filtrer($filtre) {
 }
 
 
-/*
+/**
+ * Filtre `set` qui sauve la valeur en entrée dans une variable
  *
- * [(#CALCUL|set{toto})] enregistre le résultat de #CALCUL
- *           dans la variable toto et renvoie vide
+ * La valeur pourra être retrouvée avec `#GET{variable}`.
+ * 
+ * @example 
+ *     `[(#CALCUL|set{toto})]` enregistre le résultat de `#CALCUL`
+ *     dans la variable `toto` et renvoie vide.
+ *     C'est équivalent à `[(#SET{toto, #CALCUL})]` dans ce cas.
+ *     `#GET{toto}` retourne la valeur sauvegardée.
  *
- * [(#CALCUL|set{toto,1})] enregistre le résultat de #CALCUL
- *           dans la variable toto et renvoie la valeur
+ * @example
+ *     `[(#CALCUL|set{toto,1})]` enregistre le résultat de `#CALCUL`
+ *      dans la variable toto et renvoie la valeur. Cela permet d'utiliser
+ *      d'autres filtres ensuite. `#GET{toto}` retourne la valeur.
  *
+ * @filtre
+ * @param array $Pile Pile de données
+ * @param mixed $val  Valeur à sauver
+ * @param string $key Clé d'enregistrement
+ * @param bool $continue True pour retourner la valeur
+ * @return mixed 
  */
 function filtre_set(&$Pile, $val, $key, $continue = null) {
 	$Pile['vars'][$key] = $val;
 	return $continue ? $val : '';
 }
 
-/*
- * [(#TRUC|debug{avant}|calcul|debug{apres}|etc)] affiche
- *   la valeur de #TRUC avant et après le calcul
+/**
+ * Filtre `debug` qui affiche un debug de la valeur en entrée
+ *
+ * Log la valeur dans `debug.log` et l'affiche si on est webmestre.
+ *
+ * @example
+ *     `[(#TRUC|debug)]` affiche et log la valeur de `#TRUC`
+ * @example
+ *     `[(#TRUC|debug{avant}|calcul|debug{apres}|etc)]`
+ *     affiche la valeur de `#TRUC` avant et après le calcul,
+ *     en précisant "avant" et "apres".
+ *
+ * @filtre
+ * @link http://www.spip.net/5695
+ * @param mixed $val La valeur à debugguer
+ * @param mixed|null $key Clé pour s'y retrouver
+ * @return mixed Retourne la valeur (sans la modifier).
  */
 function filtre_debug($val, $key=null) {
 	$debug = (
-		is_null($key) ? '' :  (var_export($key,true)." = ")
+		is_null($key) ? '' :  (var_export($key, true)." = ")
 	) . var_export($val, true);
 
 	include_spip('inc/autoriser');
-	if (autoriser('webmestre'))
+	if (autoriser('webmestre')) {
 		echo "<div class='spip_debug'>\n",$debug,"</div>\n";
+	}
 
 	spip_log($debug, 'debug');
 
@@ -508,9 +537,14 @@ function corriger_toutes_entites_html($texte) {
 	return preg_replace(',&amp;(#?[a-z0-9]+;),iS', '&\1', $texte);
 }
 
-// http://code.spip.net/@proteger_amp
+/**
+ * Échappe les `&` en `&amp;`
+ *
+ * @param string $texte
+ * @return string
+**/
 function proteger_amp($texte){
-	return str_replace('&','&amp;',$texte);
+	return str_replace('&', '&amp;', $texte);
 }
 
 
@@ -584,22 +618,36 @@ function filtrer_entites($texte) {
 	return $texte;
 }
 
-// caracteres de controle - http://www.w3.org/TR/REC-xml/#charsets
-// http://code.spip.net/@supprimer_caracteres_illegaux
+/**
+ * Supprime des caractères illégaux
+ *
+ * Remplace les caractères de controle par le caractère `-`
+ * 
+ * @link http://www.w3.org/TR/REC-xml/#charsets
+ * 
+ * @param string|array $texte
+ * @return string|array
+**/
 function supprimer_caracteres_illegaux($texte) {
 	static $from = "\x0\x1\x2\x3\x4\x5\x6\x7\x8\xB\xC\xE\xF\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F";
 	static $to = null;
-	
+
 	if (is_array($texte)) {
 		return array_map('corriger_caracteres_windows', $texte);
 	}
-	
+
 	if (!$to) $to = str_repeat('-', strlen($from));
 	return strtr($texte, $from, $to);
 }
 
-// Supprimer caracteres windows et les caracteres de controle ILLEGAUX
-// http://code.spip.net/@corriger_caracteres
+/**
+ * Correction de caractères
+ *
+ * Supprimer les caracteres windows non conformes et les caracteres de controle illégaux
+ * 
+ * @param string|array $texte
+ * @return string|array
+**/
 function corriger_caracteres ($texte) {
 	$texte = corriger_caracteres_windows($texte);
 	$texte = supprimer_caracteres_illegaux($texte);
