@@ -633,7 +633,7 @@ function supprimer_caracteres_illegaux($texte) {
 	static $to = null;
 
 	if (is_array($texte)) {
-		return array_map('corriger_caracteres_illegaux', $texte);
+		return array_map('supprimer_caracteres_illegaux', $texte);
 	}
 
 	if (!$to) $to = str_repeat('-', strlen($from));
