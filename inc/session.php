@@ -359,6 +359,11 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 	if (!$id_auteur)
 		return;
 
+	// les préférences sont désérialisées, toujours.
+	if (isset($auteur['prefs']) and is_string($auteur['prefs'])) {
+		$auteur['prefs'] = unserialize($auteur['prefs']);
+	}
+
 	// memoriser l'auteur courant (celui qui modifie la fiche)
 	$sauve = $GLOBALS['visiteur_session'];
 
