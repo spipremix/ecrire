@@ -647,9 +647,9 @@ function balise_distante_interdite($p) {
 function champs_traitements ($p) {
 	global $table_des_traitements;
 
-	if (isset($table_des_traitements[$p->nom_champ]))
+	if (isset($table_des_traitements[$p->nom_champ])) {
 		$ps = $table_des_traitements[$p->nom_champ];
-	else {
+	} else {
 		// quand on utilise un traitement catch-all *
 		// celui-ci ne s'applique pas sur les balises calculees qui peuvent gerer
 		// leur propre securite
@@ -694,8 +694,9 @@ function champs_traitements ($p) {
 		(strpos($ps,'propre') !== false)
 		OR
 		(strpos($ps,'typo') !== false)
-	))
+	)) {
 		$ps = 'traiter_doublons_documents($doublons, '.$ps.')';
+	}
 
 	// La protection des champs par |safehtml est assuree par les extensions
 	// dans la declaration des traitements des champs sensibles

@@ -1950,7 +1950,7 @@ function balise_INCLURE_dist($p) {
 			$msg = array('zbug_balise_sans_argument', array('balise' => ' INCLURE'));
 			erreur_squelette($msg, $p);
 	}
-	else 	{
+	else {
 		$p->code = 'charge_scripts(' . $_contexte[1] . ',false)';
 	}
 

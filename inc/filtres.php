@@ -3257,12 +3257,34 @@ function table_valeur($table, $cle, $defaut='') {
 	return $table;
 }
 
-// filtre match pour faire des tests avec expression reguliere
-// [(#TEXTE|match{^ceci$,Uims})]
-// retourne le fragment de chaine qui "matche"
-// il est possible de passer en 3eme argument optionnel le numero de parenthese capturante
-// accepte egalement la syntaxe #TRUC|match{truc(...)$,1} ou le modificateur n'est pas passe en second argument
-// http://code.spip.net/@match
+/**
+ * Retrouve un motif dans un texte à partir d'une expression régulière
+ *
+ * S'appuie sur la fonction `preg_match()` en PHP 
+ * @example
+ *    - `[(#TITRE|match{toto})]`
+ *    - `[(#TEXTE|match{^ceci$,Uims})]`
+ *    - `[(#TEXTE|match{truc(...)$, UimsS, 1})]` Capture de la parenthèse indiquée
+ *    - `[(#TEXTE|match{truc(...)$, 1})]` Équivalent, sans indiquer les modificateurs
+ * 
+ * @filtre
+ * @link http://www.spip.net/4299
+ * @link http://php.net/manual/fr/function.preg-match.php Pour des infos sur `preg_match()`
+ * 
+ * @param string $texte
+ *     Texte dans lequel chercher
+ * @param string|int $expression
+ *     Expression régulière de recherche, sans le délimiteur
+ * @param string $modif
+ *     - string : Modificateurs de l'expression régulière
+ *     - int : Numéro de parenthèse capturante
+ * @param int $capte
+ *     Numéro de parenthèse capturante
+ * @return bool|string
+ *     - false : l'expression n'a pas été trouvée
+ *     - true : expression trouvée, mais pas la parenthèse capturante
+ *     - string : expression trouvée.
+**/
 function match($texte, $expression, $modif="UimsS",$capte=0) {
 	if (intval($modif) AND $capte==0){
 		$capte = $modif;
@@ -3310,10 +3332,18 @@ function replace($texte, $expression, $replace='', $modif="UimsS") {
 }
 
 
-// cherche les documents numerotes dans un texte traite par propre()
-// et affecte les doublons['documents']
-// http://code.spip.net/@traiter_doublons_documents
-// http://code.spip.net/@traiter_doublons_documents
+/**
+ * Cherche les documents numerotés dans un texte traite par `propre()`
+ *
+ * Affecte la liste des doublons['documents']
+ * 
+ * @param array $doublons
+ *     Liste des doublons
+ * @param string $letexte
+ *     Le texte
+ * @return string
+ *     Le texte
+**/
 function traiter_doublons_documents(&$doublons, $letexte) {
 
 	// Verifier dans le texte & les notes (pas beau, helas)
@@ -3332,8 +3362,16 @@ function traiter_doublons_documents(&$doublons, $letexte) {
 	return $letexte;
 }
 
-// filtre vide qui ne renvoie rien
-// http://code.spip.net/@vide
+/**
+ * Filtre vide qui ne renvoie rien
+ *
+ * @example
+ *     `[(#CALCUL|vide)]` n'affichera pas le résultat du calcul
+ * @filtre
+ * 
+ * @param mixed $texte
+ * @return string Chaîne vide
+**/
 function vide($texte){
 	return "";
 }
@@ -3388,13 +3426,28 @@ function concat(){
 }
 
 
-// http://code.spip.net/@charge_scripts
+/**
+ * Retourne le contenu d'un ou plusieurs fichiers
+ *
+ * Les chemins sont cherchés dans le path de SPIP
+ *
+ * @see balise_INCLURE_dist() La balise `#INCLURE` peut appeler cette fonction
+ * 
+ * @param array|string $files
+ *     - array : Liste de fichiers
+ *     - string : fichier ou fichiers séparés par `|` 
+ * @param bool $script
+ *     - si true, considère que c'est un fichier js à chercher `javascript/`
+ * @return string
+ *     Contenu du ou des fichiers, concaténé
+**/
 function charge_scripts($files, $script = true) {
 	$flux = "";
 	foreach(is_array($files)?$files:explode("|",$files) as $file) {
 		if (!is_string($file)) continue;
-		if ($script)
+		if ($script) {
 			$file = preg_match(",^\w+$,",$file) ? "javascript/$file.js" : '';
+		}
 		if ($file) $path = find_in_path($file);
 		if ($path) $flux .= spip_file_get_contents($path);
 	}
@@ -3404,13 +3457,12 @@ function charge_scripts($files, $script = true) {
 
 
 /**
- * produit une balise img avec un champ alt d'office si vide
- * attention le htmlentities et la traduction doivent etre appliques avant.
+ * Produit une balise img avec un champ alt d'office si vide
  *
- * http://code.spip.net/@http_img_pack
+ * Attention le htmlentities et la traduction doivent être appliqués avant.
  *
- * @param $img
- * @param $alt
+ * @param string $img
+ * @param string $alt
  * @param string $atts
  * @param string $title
  * @param array $options
@@ -3927,11 +3979,11 @@ function prepare_icone_base($type, $lien, $texte, $fond, $fonction="", $class=""
  * Crée un lien ayant une icone
  *
  * @uses prepare_icone_base()
- * 
- * @param string $texte
- *     Texte du lien
+ *
  * @param string $lien
  *     URL du lien
+ * @param string $texte
+ *     Texte du lien
  * @param string $fond
  *     Objet avec ou sans son extension et sa taille (article, article-24, article-24.png)
  * @param string $fonction
@@ -4073,7 +4125,7 @@ function filtre_bouton_action_horizontal_dist($lien, $texte, $fond, $fonction=""
  *     Texte du lien
  * @param string $fond
  *     Nom de l'image utilisée
- * @param string $class
+ * @param string $align
  *     Classe CSS d'alignement (`left`, `right`, `center`)
  * @param string $fonction
  *     Fonction du lien (`edit`, `new`, `del`)

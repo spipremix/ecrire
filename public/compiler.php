@@ -1147,12 +1147,13 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 	$descr['documents'] = compile_inclure_doublons($squelette);
 
 	// Demander la description des tables une fois pour toutes
-	// et reperer si les doublons sont demandes
+	if (!$trouver_table) {
+		$trouver_table = charger_fonction('trouver_table', 'base');
+	}
+
+	// reperer si les doublons sont demandes
 	// pour un inclure ou une boucle document
 	// c'est utile a la fonction champs_traitements
-	if (!$trouver_table)
-		$trouver_table = charger_fonction('trouver_table', 'base');
-
 	foreach($boucles as $id => $boucle) {
 		if (!($type = $boucle->type_requete)) continue;
 		if (!$descr['documents'] AND (
