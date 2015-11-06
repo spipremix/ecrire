@@ -348,6 +348,7 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 	// si l'auteur est celui de la session courante, verifier/creer la session si besoin
 	$fichier_session_courante = "";
 	if ($id_auteur == $id_auteur_courant){
+		$auteur = array_merge($GLOBALS['visiteur_session'], $auteur);
 		ajouter_session($auteur);
 		if ($id_auteur){
 			$fichier_session_courante = fichier_session('alea_ephemere');
