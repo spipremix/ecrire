@@ -1237,8 +1237,25 @@ function choixsiegal($a1,$a2,$v,$f) {
 // Date, heure, saisons
 //
 
-// on normalise la date, si elle vient du contexte (public/parametrer.php), on force le jour
-// http://code.spip.net/@normaliser_date
+
+/**
+ * Normaliser une date vers le format datetime (Y-m-d H:i:s)
+ *
+ * @note
+ *     Si elle vient du contexte (public/parametrer.php), on force le jour
+ * 
+ * @filtre
+ * @link http://www.spip.net/5518
+ * @uses vider_date()
+
+ * @param string $date
+ *     La date à normaliser
+ * @param bool $forcer_jour
+ *     true pour forcer à indiquer un jour et mois (01) s'il n'y en a pas.
+ * @return string
+ *     - une date au format datetime
+ *     - une chaîne vide si la date est considérée nulle
+**/
 function normaliser_date($date, $forcer_jour = false) {
 	$date = vider_date($date);
 	if ($date) {
@@ -1255,13 +1272,21 @@ function normaliser_date($date, $forcer_jour = false) {
 			$date = date("Y-m-d H:i:s", strtotime($date));
 		}
 
-		if ($forcer_jour)
+		if ($forcer_jour) {
 			$date = str_replace('-00', '-01', $date);
+		}
 	}
 	return $date;
 }
 
-// http://code.spip.net/@vider_date
+/**
+ * Enlève une date considérée comme vide
+ * 
+ * @param string $letexte
+ * @return string
+ *     - La date entrée (si elle n'est pas considérée comme nulle)
+ *     - Une chaine vide
+**/
 function vider_date($letexte) {
 	if (strncmp("0000-00-00", $letexte,10)==0) return '';
 	if (strncmp("0001-01-01", $letexte,10)==0) return '';
@@ -1295,6 +1320,7 @@ function recup_heure($date){
  * Retourne l'heure d'une date
  *
  * @filtre
+ * @link http://www.spip.net/4293
  * @uses recup_heure()
  * 
  * @param string $numdate La date à extraire
@@ -1312,6 +1338,7 @@ function heures($numdate) {
  * Retourne les minutes d'une date
  *
  * @filtre
+ * @link http://www.spip.net/4300
  * @uses recup_heure()
  * 
  * @param string $numdate La date à extraire
@@ -1329,6 +1356,7 @@ function minutes($numdate) {
  * Retourne les secondes d'une date
  *
  * @filtre
+ * @link http://www.spip.net/4312
  * @uses recup_heure()
  * 
  * @param string $numdate La date à extraire
@@ -1343,11 +1371,14 @@ function secondes($numdate) {
 }
 
 /**
- * Retourne l'horaire (avec minutes) d'une date, tel que `12h36`
+ * Retourne l'horaire (avec minutes) d'une date, tel que `12h36min`
  *
  * @note
  *     Le format de retour varie selon la langue utilisée.
  *
+ * @filtre
+ * @link http://www.spip.net/5519
+ * 
  * @param string $numdate La date à extraire
  * @return string L'heure formatée dans la langue en cours.
 **/
