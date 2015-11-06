@@ -121,7 +121,11 @@ function chercher_rubrique($titre,$id_objet, $id_parent, $objet, $id_secteur, $r
 				. "</div>";
 		}
 		$form = "<input type='hidden' name='editer_$objet' value='oui' />\n" . $form;
-		$form = generer_action_auteur("editer_$objet", $id_objet, self(), $form, " method='post' class='submit_plongeur'");
+		if ($action = charger_fonction("editer_$objet", "action", true)) {
+			$form = generer_action_auteur("editer_$objet", $id_objet, self(), $form, " method='post' class='submit_plongeur'");
+		} else {
+			$form = generer_action_auteur("editer_objet", "$objet/$id_objet", self(), $form, " method='post' class='submit_plongeur'");
+		}
 	}
 
 	if ($retour_sans_cadre)

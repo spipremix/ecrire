@@ -22,7 +22,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * Point d'entrée d'édition d'un objet
  * 
  * On ne peut entrer que par un appel en fournissant $id et $objet
- * mais pas pas une url
+ * ou avec un argument d'action sécurisée de type "objet/id"
  *
  * @param int $id
  * @param string $objet
@@ -31,7 +31,14 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  */
 function action_editer_objet_dist($id=null, $objet=null, $set=null) {
 
-	// appel direct depuis une url interdit
+	// appel direct depuis une url avec arg = "objet/id"
+	if (is_null($id) OR is_null($objet)){
+		$securiser_action = charger_fonction('securiser_action', 'inc');
+		$arg = $securiser_action();
+		list($objet, $id) = array_pad(explode("/", $arg, 2), 2, null);
+	}
+
+	// appel incorrect ou depuis une url erronnée interdit
 	if (is_null($id) OR is_null($objet)){
 		include_spip('inc/minipres');
 		echo minipres(_T('info_acces_interdit'));
