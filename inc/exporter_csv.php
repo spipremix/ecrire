@@ -19,6 +19,7 @@ include_spip('inc/texte');
 /**
  * Exporter un champ pour un export CSV : pas de retour a la ligne,
  * et echapper les guillements par des doubles guillemets
+ * 
  * @param string $champ
  * @return string
  */
@@ -33,8 +34,13 @@ function exporter_csv_champ($champ) {
 
 /**
  * Exporter une ligne complete au format CSV, avec delimiteur fourni
+ *
+ * @uses exporter_csv_champ()
+ * 
  * @param array $ligne
  * @param string $delim
+ * @param string|null $importer_charset
+ *     Si défini exporte dans le charset indiqué
  * @return string
  */
 function exporter_csv_ligne($ligne, $delim = ',', $importer_charset = null) {
@@ -47,11 +53,14 @@ function exporter_csv_ligne($ligne, $delim = ',', $importer_charset = null) {
 
 /**
  * Exporte une ressource sous forme de fichier CSV
+ * 
  * La ressource peut etre un tableau ou une resource SQL issue d'une requete
  * L'extension est choisie en fonction du delimiteur :
- * si on utilise ',' c'est un vrai csv avec extension csv
- * si on utilise ';' ou tabulation c'est pour E*cel, et on exporte en iso-truc, avec une extension .xls
+ * - si on utilise ',' c'est un vrai csv avec extension csv
+ * - si on utilise ';' ou tabulation c'est pour E*cel, et on exporte en iso-truc, avec une extension .xls
  *
+ * @uses exporter_csv_ligne()
+ * 
  * @param string $titre
  *   titre utilise pour nommer le fichier
  * @param array|resource $resource
@@ -63,7 +72,7 @@ function exporter_csv_ligne($ligne, $delim = ',', $importer_charset = null) {
  *   pour envoyer le fichier exporte (permet le telechargement)
  * @return string
  */
-function inc_exporter_csv_dist($titre, $resource, $delim=',', $entetes = null,$envoyer = true){
+function inc_exporter_csv_dist($titre, $resource, $delim=',', $entetes = null, $envoyer = true){
 
 	$filename = preg_replace(',[^-_\w]+,', '_', translitteration(textebrut(typo($titre))));
 	
@@ -82,8 +91,9 @@ function inc_exporter_csv_dist($titre, $resource, $delim=',', $entetes = null,$e
 	}
 	$filename = "$filename.$extension";
 
-	if ($entetes AND is_array($entetes) AND count($entetes))
+	if ($entetes AND is_array($entetes) AND count($entetes)) {
 		$output = exporter_csv_ligne($entetes,$delim,$importer_charset);
+	}
 
 	// on passe par un fichier temporaire qui permet de ne pas saturer la memoire
 	// avec les gros exports
@@ -104,8 +114,8 @@ function inc_exporter_csv_dist($titre, $resource, $delim=',', $entetes = null,$e
 		//Header("Content-Type: text/plain; charset=$charset");
 		header("Content-Length: $length");
 		ob_clean();
-    flush();
-    readfile($fichier);
+		flush();
+		readfile($fichier);
 	}
 
 	return $fichier;
