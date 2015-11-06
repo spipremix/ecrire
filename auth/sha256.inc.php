@@ -104,8 +104,8 @@ if (!class_exists('nanoSha2'))
         /**
          * Here are the bitwise and functions as defined in FIPS180-2 Standard
          *
-         * @param unknown $x
-         * @param unknown $y
+         * @param int $x
+         * @param int $y
          * @param int $n
          * @return int
          */
@@ -136,8 +136,9 @@ if (!class_exists('nanoSha2'))
 
         /**
          * Logical bitwise right shift (PHP default is arithmetic shift)
-         * @param unknown $x
-         * @param unknown $n
+         * @param int $x
+         * @param int $n
+         * return int
          */
         function SHR($x, $n)        // x >> n
         {
@@ -161,42 +162,42 @@ if (!class_exists('nanoSha2'))
         }
 
         /** ROTR
-         * @param unknown $x
-         * @param unknown $n
+         * @param int $x
+         * @param int $n
          * @return int */
         function ROTR($x, $n) { return (int)(($this->SHR($x, $n) | ($x << (32-$n)) & 0xFFFFFFFF)); }
 
         /** Ch
-         * @param unknown $x
-         * @param unknown $y
-         * @param unknown $z
-         * @return unknown */
+         * @param int $x
+         * @param int $y
+         * @param int $z
+         * @return int */
         function Ch($x, $y, $z) { return ($x & $y) ^ ((~$x) & $z); }
 
         /** Maj
-         * @param unknown $x
-         * @param unknown $y
-         * @param unknown $z
-         * @return unknown */
+         * @param int $x
+         * @param int $y
+         * @param int $z
+         * @return int */
         function Maj($x, $y, $z) { return ($x & $y) ^ ($x & $z) ^ ($y & $z); }
 
         /** Sigma0
-         * @param unknown $x
+         * @param int $x
          * @return int */
         function Sigma0($x) { return (int) ($this->ROTR($x, 2)^$this->ROTR($x, 13)^$this->ROTR($x, 22)); }
 
         /** Sigma1
-         * @param unknown $x
+         * @param int $x
          * @return int */
         function Sigma1($x) { return (int) ($this->ROTR($x, 6)^$this->ROTR($x, 11)^$this->ROTR($x, 25)); }
 
         /** Sigma_0
-         * @param unknown $x
+         * @param int $x
          * @return int */
         function sigma_0($x) { return (int) ($this->ROTR($x, 7)^$this->ROTR($x, 18)^$this->SHR($x, 3)); }
 
         /** Sigma_1
-         * @param unknown $x
+         * @param int $x
          * @return int */
         function sigma_1($x) { return (int) ($this->ROTR($x, 17)^$this->ROTR($x, 19)^$this->SHR($x, 10)); }
 

@@ -21,10 +21,11 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 /**
  * Supprimer le logo d'un objet
+ * 
  * @param string $objet
  * @param int $id_objet
  * @param string $etat
- *   on ou off
+ *     `on` ou `off`
  */
 function logo_supprimer($objet, $id_objet, $etat){
 	$chercher_logo = charger_fonction('chercher_logo','inc');
@@ -34,19 +35,22 @@ function logo_supprimer($objet, $id_objet, $etat){
 
 	// existe-t-il deja un logo ?
 	$logo = $chercher_logo($id_objet, $primary, $etat);
-	if ($logo)
+	if ($logo) {
 		spip_unlink($logo[0]);
+	}
 }
 
 /**
+ * Modifier le logo d'un objet
  * @param string $objet
  * @param int $id_objet
  * @param string $etat
- *   on ou off
+ *     `on` ou `off`
  * @param string|array $source
- *   array : sous tableau de $_FILE issu de l'upload
- *   string : fichier source (chemin complet ou chemin relatif a tmp/upload)
+ *     - array : sous tableau de `$_FILE` issu de l'upload
+ *     - string : fichier source (chemin complet ou chemin relatif a `tmp/upload`)
  * @return string
+ *     Erreur, sinon ''
  */
 function logo_modifier($objet, $id_objet, $etat, $source){
 	$chercher_logo = charger_fonction('chercher_logo','inc');
