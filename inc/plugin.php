@@ -520,7 +520,12 @@ function actualise_plugins_actifs($pipe_recherche = false){
 function ecrire_plugin_actifs($plugin,$pipe_recherche=false,$operation='raz') {
 
 	// creer le repertoire cache/ si necessaire ! (installation notamment)
-	sous_repertoire(_DIR_CACHE, '', false,true);
+	$cache = sous_repertoire(_DIR_CACHE, '', false, true);
+
+	// Si on n'a ni cache accessible, ni connexion SQL, on ne peut pas faire grand chose encore.
+	if (!$cache and !spip_connect()) {
+		return false;
+	}
 
 	if ($operation!='raz') {
 		$plugin_valides = liste_chemin_plugin_actifs();
