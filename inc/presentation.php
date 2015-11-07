@@ -105,12 +105,6 @@ function afficher_plus($lien) {include_spip('inc/filtres_ecrire');afficher_plus_
 // Fonctions d'affichage
 //
 
-// http://code.spip.net/@afficher_objets
-function afficher_objets($type, $titre_table,$requete,$formater='',$force=false){
-	$afficher_objets = charger_fonction('afficher_objets','inc');
-	return $afficher_objets($type, $titre_table,$requete,$formater,$force);
-}
-
 // Fonctions onglets
 // http://code.spip.net/@debut_onglet
 // @param string $sous_classe	prend la valeur second pour definir les onglet de deuxieme niveau
