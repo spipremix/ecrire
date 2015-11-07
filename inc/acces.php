@@ -299,8 +299,25 @@ function verifier_htaccess($rep, $force=false) {
 	$htaccess = rtrim($rep,"/") . "/" . _ACCESS_FILE_NAME;
 	if (((@file_exists($htaccess)) OR defined('_TEST_DIRS')) AND !$force)
 		return true;
+
+	// directive deny compatible Apache 2.0+
+	$deny =
+"# Deny all requests from Apache 2.4+.
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+# Deny all requests from Apache 2.0-2.2.
+<IfModule !mod_authz_core.c>
+  Deny from all
+</IfModule>
+";
+	// support des vieilles versions Apache 1.x mais uniquement si elles l'annoncent (pas en mode PROD)
+	if ($v = apache_get_version() AND strncmp($v,"Apache/1.",9)==0){
+		$deny = "deny from all\n";
+	}
+
 	if ($ht = @fopen($htaccess, "w")) {
-		fputs($ht, "deny from all\n");
+		fputs($ht, $deny);
 		fclose($ht);
 		@chmod($htaccess, _SPIP_CHMOD & 0666);
 		$t = rtrim($rep,"/") . "/.ok";
