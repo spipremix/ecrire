@@ -595,7 +595,7 @@ e riconnetterti all’area riservata.
 	'pass_nouveau_pass' => 'Nuova password',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Password dimenticata',
-	'pass_procedure_changer' => 'Per modificare la tua password, dobbiamo prima verificare la tua identità. Inserisci l’indirizzo email associato al tuo account.',
+	'pass_procedure_changer' => 'Per modificare la tua password, dobbiamo prima verificare la tua identità. Inserisci l’indirizzo email associato al tuo account.', # MODIF
 	'pass_quitter_fenetre' => 'Chiudi la finestra',
 	'pass_rappel_login' => 'Ricorda: il tuo ID (login) è « @login@ ».',
 	'pass_recevoir_mail' => 'Riceverai un email contenente le istruzioni per recuperare i dati di accesso al sito.',

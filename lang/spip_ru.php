@@ -605,7 +605,7 @@ and connect again to the site.
 	'pass_nouveau_pass' => 'Новый пароль',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Забытый пароль',
-	'pass_procedure_changer' => 'Введите e-mail, который вы указали при регистрации.',
+	'pass_procedure_changer' => 'Введите e-mail, который вы указали при регистрации.', # MODIF
 	'pass_quitter_fenetre' => 'Закрыть окно',
 	'pass_rappel_login' => 'Напоминаем: ваш  логин "@login@".',
 	'pass_recevoir_mail' => 'Вы получите письмо, в котором будут дальнейшие инструкции по регистрации на сайте.',

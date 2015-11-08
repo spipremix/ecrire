@@ -581,7 +581,7 @@ i tornar-vos a connectar al lloc.
 	'pass_nouveau_pass' => 'Nova contrasenya',
 	'pass_ok' => 'D’acord',
 	'pass_oubli_mot' => 'Oblit de la contrasenya',
-	'pass_procedure_changer' => 'Per canviar la contrasenya, hem de verificar primerament la vostra identitat. Per això, indiqueu-nos el correu electrònic associat al vostre compte.',
+	'pass_procedure_changer' => 'Per canviar la contrasenya, hem de verificar primerament la vostra identitat. Per això, indiqueu-nos el correu electrònic associat al vostre compte.', # MODIF
 	'pass_quitter_fenetre' => 'Tancar aquesta finestra',
 	'pass_rappel_login' => 'Recordatori: la vostra identificació (usuari) és " @login@".',
 	'pass_recevoir_mail' => 'Voleu rebre un correu electrònic indicant com recuperar l’accés al lloc.',

@@ -563,7 +563,7 @@ kevreañ en-dro ouzh al lec’hienn.
 	'pass_nouveau_pass' => 'Ger-tremen nevez',
 	'pass_ok' => 'MAT EO',
 	'pass_oubli_mot' => 'Ankouaet ar ger-tremen',
-	'pass_procedure_changer' => 'Evit kemmañ ho ker-tremen, ez eo ret deomp gwiriekaat piv oc’h. Evit en ober diskouezit deomp ar postel liammet gant ho kont.', # RELIRE
+	'pass_procedure_changer' => 'Evit kemmañ ho ker-tremen, ez eo ret deomp gwiriekaat piv oc’h. Evit en ober diskouezit deomp ar postel liammet gant ho kont.', # MODIF
 	'pass_quitter_fenetre' => 'Kuitaat ar prenestr-mañ',
 	'pass_rappel_login' => 'Dalc’hit soñj : « @login@ » eo ho anv-tremen (login).',
 	'pass_recevoir_mail' => 'Ur postel a vo kaset deoc’h, ennañ an titouroù ret da c’hallout tizhout al lec’hienn en-dro.',

@@ -583,7 +583,7 @@ e reconectar-se com o site.
 	'pass_nouveau_pass' => 'Nova senha',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Esquecimento de senha',
-	'pass_procedure_changer' => 'Para alterar a sua senha, é necessário verificar a sua identidade. Para isso, informe o endereço de e-mail associado a esta sua conta.',
+	'pass_procedure_changer' => 'Para alterar a sua senha, é necessário verificar a sua identidade. Para isso, informe o endereço de e-mail associado a esta sua conta.', # MODIF
 	'pass_quitter_fenetre' => 'Fechar esta janela',
 	'pass_rappel_login' => 'Lembrete: seu login é «@login@».',
 	'pass_recevoir_mail' => 'Você receberá um e-mail explicando como você pode recuperar o acesso ao site.',

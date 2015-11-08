@@ -590,7 +590,7 @@ ponovo dobiti pristup web stranicama.
 	'pass_nouveau_pass' => 'nova lozinka',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'lozinka zaboravljena',
-	'pass_procedure_changer' => 'Kako bismo promjenili vašu lozinku, moramo prvo provjeriti vaš identitet. Stoga nam morate navesti mail adresu pridruženu vašem korisničkom računu.',
+	'pass_procedure_changer' => 'Kako bismo promjenili vašu lozinku, moramo prvo provjeriti vaš identitet. Stoga nam morate navesti mail adresu pridruženu vašem korisničkom računu.', # MODIF
 	'pass_quitter_fenetre' => 'napustiti ovaj prozor',
 	'pass_rappel_login' => 'podsjetnik: Vaše korisničko ime za prijavu (login) je "@login@".',
 	'pass_recevoir_mail' => 'Primit ćete mail sa uputama za povrat pristupa web stranicama.',

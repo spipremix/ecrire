@@ -580,7 +580,7 @@ Orduan pasahitza berri bat jarri eta gunera berriz konektatzen ahalko zara. ',
 	'pass_nouveau_pass' => 'Pasahitz berria',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Pasahitza ahaztu dut',
-	'pass_procedure_changer' => 'Pasahitza aldatu aitzin, zure nortasuna baieztatu behar dugu. Horregatik zure kontuari lotutako helbide elektronikoa jakinarazi behar diguzu.',
+	'pass_procedure_changer' => 'Pasahitza aldatu aitzin, zure nortasuna baieztatu behar dugu. Horregatik zure kontuari lotutako helbide elektronikoa jakinarazi behar diguzu.', # MODIF
 	'pass_quitter_fenetre' => 'Leiho honetatik irten',
 	'pass_rappel_login' => 'Gogoan izan: zure identifikatzailea (logina) hau da : «@login@».',
 	'pass_recevoir_mail' => 'Gunerako sarbidea nola berreskuratzen ahal duzun zehazten duen mezu bat jasoko duzu.',

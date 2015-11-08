@@ -597,7 +597,7 @@ a znova sa prihlásiť na stránku.
 	'pass_nouveau_pass' => 'Nové heslo',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Zabudnuté heslo',
-	'pass_procedure_changer' => 'Ak si chcete zmeniť heslo, musíme overiť vašu identitu. Použijeme na to e-mailovú adresu priradenú k vášmu účtu.',
+	'pass_procedure_changer' => 'Ak si chcete zmeniť heslo, musíme overiť vašu identitu. Použijeme na to e-mailovú adresu priradenú k vášmu účtu.', # MODIF
 	'pass_quitter_fenetre' => 'Zatvoriť toto okno',
 	'pass_rappel_login' => 'Na pripomenutie: váš identifikátor (prihlasovacie meno) je "@login@".',
 	'pass_recevoir_mail' => 'Dostanete e-mail, ktorý vám vysvetlí, ako znova získať prístup na stránku.',

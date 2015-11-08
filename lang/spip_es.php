@@ -587,7 +587,7 @@ volver a conectarte al sitio.
 	'pass_nouveau_pass' => 'Nueva contraseña',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Contraseña olvidada',
-	'pass_procedure_changer' => 'Para cambiar tu contraseña, primero es necesario verificar tu identidad. Para eso, indica la dirección email asociada a tu cuenta.',
+	'pass_procedure_changer' => 'Para cambiar tu contraseña, primero es necesario verificar tu identidad. Para eso, indica la dirección email asociada a tu cuenta.', # MODIF
 	'pass_quitter_fenetre' => 'Abandonar esta ventana',
 	'pass_rappel_login' => 'Recuerda: tu identificador (login) es «@login@».',
 	'pass_recevoir_mail' => 'Recibirás un mensaje de correo electrónico indicando como recuperar tu acceso al sitio.',

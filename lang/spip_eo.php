@@ -592,7 +592,7 @@ kaj ensaluti.
 	'pass_nouveau_pass' => 'Nova pasvorto',
 	'pass_ok' => 'JES',
 	'pass_oubli_mot' => 'Pasvorto-forgeso',
-	'pass_procedure_changer' => 'Por ŝanĝi vian pasvorton, ni unue devas kontroli vian identecon. Por tio, specifu al ni la asociitan retpoŝtadreson el via konto.',
+	'pass_procedure_changer' => 'Por ŝanĝi vian pasvorton, ni unue devas kontroli vian identecon. Por tio, specifu al ni la asociitan retpoŝtadreson el via konto.', # MODIF
 	'pass_quitter_fenetre' => 'Forlasi tiun fenestron',
 	'pass_rappel_login' => 'Memoru : via ensalutilo (salutnomo) estas « @login@ ».',
 	'pass_recevoir_mail' => 'Vi ricevos retmesaĝon indikantan al vi kiel retrovi vian aliron al la retejo.',

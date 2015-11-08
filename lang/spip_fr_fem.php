@@ -598,7 +598,7 @@ et vous reconnecter au site.
 	'pass_nouveau_pass' => 'Nouveau mot de passe',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Oubli du mot de passe',
-	'pass_procedure_changer' => 'Pour changer votre mot de passe, nous devons d’abord vérifier votre identité. Pour cela indiquez-nous l’adresse email associée à votre compte.',
+	'pass_procedure_changer' => 'Pour changer votre mot de passe, nous devons d’abord vérifier votre identité. Pour cela indiquez-nous l’adresse email associée à votre compte.', # MODIF
 	'pass_quitter_fenetre' => 'Quitter cette fenêtre',
 	'pass_rappel_login' => 'Rappel : votre identifiant (login) est « @login@ ».',
 	'pass_recevoir_mail' => 'Vous allez recevoir un email vous indiquant comment retrouver votre accès au site.',

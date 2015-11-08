@@ -600,7 +600,7 @@ opnieuw verbinding maken met de site
 	'pass_nouveau_pass' => 'Nieuw paswoord',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Paswoord vergeten',
-	'pass_procedure_changer' => 'Om je wachtwoord te wijzigen, moeten we eerst uw identiteit controleren. Geef hiervoor het e-mailadres gekoppeld aan je account.',
+	'pass_procedure_changer' => 'Om je wachtwoord te wijzigen, moeten we eerst uw identiteit controleren. Geef hiervoor het e-mailadres gekoppeld aan je account.', # MODIF
 	'pass_quitter_fenetre' => 'Venster sluiten',
 	'pass_rappel_login' => 'Herinnering : je aanmeldingsnaam (login) is "@login@".',
 	'pass_recevoir_mail' => 'Je zal een e-mail ontvangen waarin uitgelegd staat hoe je opnieuw toegang krijgt tot de site.',

@@ -583,7 +583,7 @@ Dir kënnt do e neit Passwuert aginn an Iech um Site umellen.
 	'pass_nouveau_pass' => 'Neit Passwuert',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Vergiessen vum Passwuert',
-	'pass_procedure_changer' => 'Mir mussen är Identitéit kontrolléieren fir äert Passwuert ze änneren. Dofir gitt ons d’Email-Adress un déi zu ärem Login gehéiert.',
+	'pass_procedure_changer' => 'Mir mussen är Identitéit kontrolléieren fir äert Passwuert ze änneren. Dofir gitt ons d’Email-Adress un déi zu ärem Login gehéiert.', # MODIF
 	'pass_quitter_fenetre' => 'Dës Fënster zoumaachen',
 	'pass_rappel_login' => 'Rappel: äre Login ass "@login@".',
 	'pass_recevoir_mail' => 'Dir kritt e Message mat Instruktiounen fir den Zougang zum Site erëm ze kréien.',
