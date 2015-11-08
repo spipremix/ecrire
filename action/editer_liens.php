@@ -94,15 +94,15 @@ function objet_associer($objets_source, $objets_lies, $qualif = null){
 /**
  * Dissocier un (ou des) objet(s)  des objets listés
  * 
- * $objets_source et $objets sont de la forme
- * array($objet=>$id_objets,...)
- * $id_objets peut lui meme etre un scalaire ou un tableau pour une liste d'objets du meme type
+ * `$objets_source` et `$objets_lies` sont de la forme
+ * `array($objet=>$id_objets,...)`
+ * `$id_objets` peut lui-même être un scalaire ou un tableau pour une liste d'objets du même type
  *
  * Les objets sources sont les pivots qui portent les liens
  * et pour lesquels une table spip_xxx_liens existe
  * (auteurs, documents, mots)
  *
- * un * pour $objet,$id_objet permet de traiter par lot
+ * un * pour $objet, $id_objet permet de traiter par lot
  * seul le type de l'objet source ne peut pas accepter de joker et doit etre explicite
  *
  * S'il y a des rôles possibles entre les 2 objets, et qu'aucune condition

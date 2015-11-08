@@ -1513,19 +1513,22 @@ function test_valeur_serveur($truc) {
 // Fonctions de fabrication des URL des scripts de Spip
 //
 /**
- * l'URL de base du site, sans se fier a meta(adresse_site) qui
- * peut etre fausse (sites a plusieurs noms d'hotes, deplacements, erreurs)
- * Note : la globale $profondeur_url doit etre initialisee de maniere a
- * indiquer le nombre de sous-repertoires de l'url courante par rapport a la
- * racine de SPIP : par exemple, sur ecrire/ elle vaut 1, sur sedna/ 1, et a
- * la racine 0. Sur url/perso/ elle vaut 2
- * http://code.spip.net/@url_de_base
+ * Calcule l'url de base du site
+ *
+ * Calcule l'URL de base du site, sans se fier à la méta (adresse_site) qui
+ * peut être fausse (sites avec plusieurs noms d’hôtes, déplacements, erreurs)
+ * 
+ * @note
+ *     La globale `$profondeur_url` doit être initialisée de manière à
+ *     indiquer le nombre de sous-répertoires de l'url courante par rapport à la
+ *     racine de SPIP : par exemple, sur ecrire/ elle vaut 1, sur sedna/ 1, et à
+ *     la racine 0. Sur url/perso/ elle vaut 2
  *
  * @param int|boo|array $profondeur
- *    si non renseignee : retourne l'url pour la profondeur $GLOBALS['profondeur_url']
- *    si int : indique que l'on veut l'url pour la prondeur indiquee
- *    si bool : retourne le tableau static complet
- *    si array : reinitialise le tableau static complet avec la valeur fournie
+ *    - si non renseignée : retourne l'url pour la profondeur $GLOBALS['profondeur_url']
+ *    - si int : indique que l'on veut l'url pour la profondeur indiquée
+ *    - si bool : retourne le tableau static complet
+ *    - si array : réinitialise le tableau static complet avec la valeur fournie
  * @return string|array
  */
 function url_de_base($profondeur=null) {
