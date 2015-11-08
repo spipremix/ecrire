@@ -1452,19 +1452,68 @@ function recup_date($numdate, $forcer_jour = true){
 	}
 }
 
-// une date pour l'interface : utilise date_relative si le decalage
-// avec time() est de moins de douze heures, sinon la date complete
-// http://code.spip.net/@date_interface
-function date_interface($date, $decalage_maxi = 43200/* 12*3600 */) {
+
+/**
+ * Retourne une date relative si elle est récente, sinon une date complète
+ *
+ * En fonction de la date transmise, peut retourner par exemple :
+ * - «il y a 3 minutes»,
+ * - «il y a 11 heures»,
+ * - «10 mai 2015 à 10h23min»
+ * 
+ * @example `[(#DATE|date_interface)]`
+ * 
+ * @filtre
+ * @link http://www.spip.net/5520
+ * @uses date_relative()
+ * @uses affdate_heure() utilisé si le décalage est trop grand
+ * 
+ * @param string $date
+ *     La date fournie
+ * @param int $decalage_maxi
+ *     Durée écoulée, en secondes, à partir de laquelle on bascule sur une date complète.
+ *     Par défaut +/- 12h.
+ * @return string
+ *     La date relative ou complète
+**/
+function date_interface($date, $decalage_maxi = 43200 /* 12*3600 */) {
 	return sinon(
 		date_relative($date, $decalage_maxi),
 		affdate_heure($date)
 	);
 }
 
-// http://code.spip.net/@date_relative
-function date_relative($date, $decalage_maxi=0,$ref_date=null) {
-	
+
+/**
+ * Retourne une date relative (passée ou à venir)
+ *
+ * En fonction de la date transmise ainsi que de la date de référence
+ * (par défaut la date actuelle), peut retourner par exemple :
+ * - «il y a 3 minutes»,
+ * - «il y a 2 semmaines»,
+ * - «dans 1 semaine»
+ *
+ * @example
+ *     - `[(#DATE|date_relative)]`
+ *     - `[(#DATE|date_relative{43200})]`
+ *     - `[(#DATE|date_relative{0, #AUTRE_DATE})]` Calcul relatif à une date spécifique
+ * 
+ * @filtre
+ * @link http://www.spip.net/4277
+ * 
+ * @param string $date
+ *     La date fournie
+ * @param int $decalage_maxi
+ *     Durée écoulée, en secondes, au delà de laquelle on ne retourne pas de date relative
+ *     Indiquer `0` (par défaut) pour ignorer.
+ * @param string $ref_date
+ *     La date de référence pour le calcul relatif, par défaut la date actuelle
+ * @return string
+ *     - La date relative
+ *     - "" si un dépasse le décalage maximum est indiqué et dépassé.
+**/
+function date_relative($date, $decalage_maxi=0, $ref_date=null) {
+
 	if (is_null($ref_date))
 		$ref_time = time();
 	else
@@ -1532,7 +1581,27 @@ function date_relative($date, $decalage_maxi=0,$ref_date=null) {
 }
 
 
-// http://code.spip.net/@date_relativecourt
+
+/**
+ * Retourne une date relative courte (passée ou à venir)
+ *
+ * Retourne «hier», «aujourd'hui» ou «demain» si la date correspond, sinon
+ * utilise `date_relative()`
+ *
+ * @example `[(#DATE|date_relativecourt)]`
+ * 
+ * @filtre
+ * @uses date_relative()
+ * 
+ * @param string $date
+ *     La date fournie
+ * @param int $decalage_maxi
+ *     Durée écoulée, en secondes, au delà de laquelle on ne retourne pas de date relative
+ *     Indiquer `0` (par défaut) pour ignorer.
+ * @return string
+ *     - La date relative
+ *     - "" si un dépasse le décalage maximum est indiqué et dépassé.
+**/
 function date_relativecourt($date, $decalage_maxi=0) {
 	
 	if (!$date) return;
@@ -1556,8 +1625,6 @@ function date_relativecourt($date, $decalage_maxi=0) {
 	else {
 		$retour = date_relative($date, $decalage_maxi);
 	}
-
-
 
 	return $retour;
 }
