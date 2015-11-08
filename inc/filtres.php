@@ -1630,7 +1630,7 @@ function date_relativecourt($date, $decalage_maxi=0) {
 }
 
 /**
- * Formatage humain de la date $numdate selon le format $vue
+ * Formatage humain de la date `$numdate` selon le format `$vue`
  *
  * @param string $numdate
  *     Une écriture de date
@@ -1759,34 +1759,131 @@ function affdate_base($numdate, $vue, $options = array()) {
 	}
 }
 
-// http://code.spip.net/@nom_jour
+
+/**
+ * Affiche le nom du jour pour une date donnée
+ *
+ * @example
+ *     - `[(#DATE|nom_jour)]` lundi
+ *     - `[(#DATE|nom_jour{abbr})]` lun.
+ *     - `[(#DATE|nom_jour{initiale})]` l.
+ * 
+ * @filtre
+ * @link http://www.spip.net/4305
+ * @uses affdate_base()
+ *
+ * @param string $numdate
+ *     Une écriture de date
+ * @param string $forme
+ *     Forme spécifique de retour :
+ *     - initiale : l'initiale du jour
+ *     - abbr : abbréviation du jour
+ *     - '' : le nom complet (par défaut)
+ * @return string
+ *     Nom du jour 
+**/
 function nom_jour($numdate, $forme = '') {
 	if(!($forme == 'abbr' OR $forme == 'initiale')) $forme = '';
 	return affdate_base($numdate, 'nom_jour', $forme);
 }
 
-// http://code.spip.net/@jour
+/**
+ * Affiche le numéro du jour (1er à 31) pour une date donnée
+ *
+ * Utilise une abbréviation (exemple "1er") pour certains jours,
+ * en fonction de la langue utilisée.
+ *
+ * @example `[(#DATE|jour)]`
+ * 
+ * @filtre
+ * @link http://www.spip.net/4295
+ * @uses affdate_base()
+ * @see journum()
+ * 
+ * @param string $numdate
+ *     Une écriture de date
+ * @return int
+ *     Numéro du jour 
+**/
 function jour($numdate) {
 	return affdate_base($numdate, 'jour');
 }
 
-// http://code.spip.net/@journum
+/**
+ * Affiche le numéro du jour (1 à 31) pour une date donnée
+ *
+ * @example `[(#DATE|journum)]`
+ *
+ * @filtre
+ * @uses affdate_base()
+ * @see jour()
+ * 
+ * @param string $numdate
+ *     Une écriture de date
+ * @return int
+ *     Numéro du jour 
+**/
 function journum($numdate) {
 	return affdate_base($numdate, 'journum');
 }
 
-// http://code.spip.net/@mois
+/**
+ * Affiche le numéro du mois (01 à 12) pour une date donnée
+ *
+ * @example `[(#DATE|mois)]`
+ * 
+ * @filtre
+ * @link http://www.spip.net/4303
+ * @uses affdate_base()
+ * 
+ * @param string $numdate
+ *     Une écriture de date
+ * @return string
+ *     Numéro du mois (sur 2 chiffres)
+**/
 function mois($numdate) {
 	return affdate_base($numdate, 'mois');
 }
 
-// http://code.spip.net/@nom_mois
+/**
+ * Affiche le nom du mois pour une date donnée
+ * 
+ * @example
+ *     - `[(#DATE|nom_mois)]` novembre
+ *     - `[(#DATE|nom_mois{abbr})]` nov.
+ * 
+ * @filtre
+ * @link http://www.spip.net/4306
+ * @uses affdate_base()
+ *
+ * @param string $numdate
+ *     Une écriture de date
+ * @param string $forme
+ *     Forme spécifique de retour :
+ *     - abbr : abbréviation du mois
+ *     - '' : le nom complet (par défaut)
+ * @return string
+ *     Nom du mois 
+**/
 function nom_mois($numdate, $forme='') {
 	if(!($forme == 'abbr')) $forme = '';
 	return affdate_base($numdate, 'nom_mois', $forme);
 }
 
-// http://code.spip.net/@annee
+/**
+ * Affiche l'année sur 4 chiffres d'une date donnée
+ *
+ * @example `[(#DATE|annee)]`
+ * 
+ * @filtre
+ * @link http://www.spip.net/4146
+ * @uses affdate_base()
+ * 
+ * @param string $numdate
+ *     Une écriture de date
+ * @return int
+ *     Année (sur 4 chiffres)
+**/
 function annee($numdate) {
 	return affdate_base($numdate, 'annee');
 }
@@ -1816,13 +1913,36 @@ function annee($numdate) {
  * @return string
  *     La date formatée
 **/
-// http://code.spip.net/@saison
 function saison($numdate, $hemisphere = 'nord') {
 	if ($hemisphere != 'sud') $hemisphere = 'nord';
 	return affdate_base($numdate, 'saison', $hemisphere);
 }
 
-// http://code.spip.net/@saison_annee
+
+/**
+ * Affiche le nom boréal ou austral de la saison suivi de l'année en cours
+ *
+ * @filtre
+ * @uses affdate_base()
+ * @example
+ *     En PHP
+ *     ```
+ *     saison_annee("2008-10-11 14:08:45") affiche "automne 2008"
+ *     saison_annee("2008-10-11 14:08:45", "sud") affiche "printemps 2008"
+ *     ```
+ *     En squelettes
+ *     ```
+ *     [(#DATE|saison_annee)]
+ *     [(#DATE|saison_annee{sud})]
+ *     ```
+ *
+ * @param string $numdate
+ *     Une écriture de date
+ * @param string $hemisphere
+ *     Nom optionnel de l'hémisphère (sud ou nord) ; par défaut nord
+ * @return string
+ *     La date formatée
+**/
 function saison_annee($numdate, $hemisphere = 'nord') {
 	if ($hemisphere != 'sud') $hemisphere = 'nord';
 	return affdate_base($numdate, 'saison_annee', $hemisphere);
@@ -2359,22 +2479,40 @@ function unique($donnee, $famille='', $cpt = false) {
 	}
 }
 
-//
-// Filtre |alterner
-//
-// Exemple [(#COMPTEUR_BOUCLE|alterner{'bleu','vert','rouge'})]
-//
-// http://code.spip.net/@alterner
+
+/**
+ * Filtre qui alterne des valeurs en fonction d'un compteur
+ *
+ * Affiche à tour de rôle et dans l'ordre, un des arguments transmis
+ * à chaque incrément du compteur.
+ *
+ * S'il n'y a qu'un seul argument, et que c'est un tableau,
+ * l'alternance se fait sur les valeurs du tableau. 
+ * 
+ * Souvent appliqué à l'intérieur d'une boucle, avec le compteur `#COMPTEUR_BOUCLE`
+ *
+ * @example
+ *     - `[(#COMPTEUR_BOUCLE|alterner{bleu,vert,rouge})]`
+ *     - `[(#COMPTEUR_BOUCLE|alterner{#LISTE{bleu,vert,rouge}})]`
+ *
+ * @filtre
+ * @link http://www.spip.net/4145
+ * 
+ * @param int $i
+ *     Le compteur
+ * @return mixed
+ *     Une des valeurs en fonction du compteur.
+**/
 function alterner($i) {
 	// recuperer les arguments (attention fonctions un peu space)
 	$num = func_num_args();
 	$args = func_get_args();
 
-	if($num == 2 && is_array($args[1])) {
-    $args = $args[1];
-    array_unshift($args,'');
-    $num = count($args);
-  }
+	if ($num == 2 && is_array($args[1])) {
+		$args = $args[1];
+		array_unshift($args, '');
+		$num = count($args);
+	}
 
 	// renvoyer le i-ieme argument, modulo le nombre d'arguments
 	return $args[(intval($i)-1)%($num-1)+1];
