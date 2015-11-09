@@ -234,10 +234,10 @@ function liste_plugin_valides($liste_plug, $force = false)
  * et dans leur plus recente version compatible
  * avec la version presente de SPIP
  *
- * @param $liste
- * @param $plug
- * @param $infos
- * @param $dir
+ * @param array $liste
+ * @param string $plug
+ * @param array $infos
+ * @param string $dir
  */
 function plugin_valide_resume(&$liste, $plug, $infos, $dir){
 	$i = $infos[$dir][$plug];
