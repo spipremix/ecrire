@@ -204,31 +204,7 @@ function liste_plugin_valides($liste_plug, $force = false){
 		}
 	}
 
-	// les procure de core.xml sont consideres comme des plugins proposes,
-	// mais surchargeables (on peut activer un plugin qui procure ca pour l'ameliorer,
-	// donc avec le meme prefixe)
-	foreach ($infos['_DIR_RESTREINT']['']['procure'] as $procure){
-		$p = strtoupper($procure['nom']);
-		if (!isset($liste_non_classee[$p])){
-			$procure['etat'] = '?';
-			$procure['dir_type'] = '_DIR_RESTREINT';
-			$procure['dir'] = $procure['nom'];
-			$liste_non_classee[$p] = $procure;
-			// on fournit une information minimale pour ne pas perturber la compilation
-			$infos['_DIR_RESTREINT'][$procure['nom']] = array(
-				'prefix' => $procure['nom'],
-				'nom' => $procure['nom'],
-				'etat' => $procure['etat'],
-				'version' => $procure['version'],
-				'chemin' => array(),
-				'necessite' => array(),
-				'utilise' => array(),
-				'lib' => array(),
-				'menu' => array(),
-				'onglet' => array(),
-			);
-		}
-	}
+	plugin_fixer_procure($liste_non_classee, $infos);
 
 	return array($infos, $liste_non_classee);
 }
@@ -241,10 +217,10 @@ function liste_plugin_valides($liste_plug, $force = false){
  * @param array $liste
  * @param string $plug
  * @param array $infos
- * @param string $dir
+ * @param string $dir_type
  */
-function plugin_valide_resume(&$liste, $plug, $infos, $dir){
-	$i = $infos[$dir][$plug];
+function plugin_valide_resume(&$liste, $plug, $infos, $dir_type){
+	$i = $infos[$dir_type][$plug];
 	if (isset($i['erreur']) AND $i['erreur'])
 		return;
 	if (!plugin_version_compatible($i['compatibilite'], $GLOBALS['spip_version_branche'], 'spip'))
@@ -258,8 +234,59 @@ function plugin_valide_resume(&$liste, $plug, $infos, $dir){
 			'etat' => $i['etat'],
 			'version' => $i['version'],
 			'dir' => $plug,
-			'dir_type' => $dir
+			'dir_type' => $dir_type
 		);
+	}
+}
+
+/**
+ * Completer la liste des plugins avec les eventuels procure
+ *
+ * les <procure> sont consideres comme des plugins proposes,
+ * mais surchargeables (on peut activer un plugin qui procure ca pour l'ameliorer,
+ * donc avec le meme prefixe, qui sera pris en compte si il a une version plus grande)
+ *
+ * @param array $liste
+ * @param array $infos
+ */
+function plugin_fixer_procure(&$liste, &$infos){
+	foreach($liste as $p=>$resume){
+		$i = $infos[$resume['dir_type']][$resume['dir']];
+		if (isset($i['procure']) AND $i['procure']){
+			foreach($i['procure'] as $procure){
+				$p = strtoupper($procure['nom']);
+				$dir = $resume['dir'];
+				if ($dir) $dir .= "/";
+				$dir .= "procure:".$procure['nom'];
+
+				$procure['etat'] = '?';
+				$procure['dir_type'] = $resume['dir_type'];
+				$procure['dir'] = $dir;
+
+				// si ce plugin n'est pas deja procure, ou dans une version plus ancienne
+				// on ajoute cette version a la liste
+				if (!isset($liste[$p])
+					OR spip_version_compare($p['version'], $liste[$p]['version'], '>')
+				  ){
+					$liste[$p] = $procure;
+
+					// on fournit une information minimale pour ne pas perturber la compilation
+					$infos[$resume['dir_type']][$dir] = array(
+						'prefix' => $procure['nom'],
+						'nom' => $procure['nom'],
+						'etat' => $procure['etat'],
+						'version' => $procure['version'],
+						'chemin' => array(),
+						'necessite' => array(),
+						'utilise' => array(),
+						'lib' => array(),
+						'menu' => array(),
+						'onglet' => array(),
+						'procure' => array(),
+					);
+				}
+			}
+		}
 	}
 }
 
@@ -689,6 +716,7 @@ function plugins_precompile_xxxtions($plugin_valides, $ordre)
 				// donc ni sa relecture, ni sa detection
 				if (!isset($info[$charge])
 					AND $dir // exclure le cas du plugin "SPIP"
+					AND strpos($dir,":")===false // exclure le cas des procure:
 					AND file_exists("$dir$plug/paquet.xml") // uniquement pour les paquet.xml
 					){
 					if (is_readable("$dir$plug/".($file=$info['prefix']."_".$charge.".php"))){
