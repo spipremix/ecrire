@@ -229,28 +229,34 @@ function liste_plugin_valides($liste_plug, $force = false)
 	return array($infos, $liste_non_classee);
 }
 
-// Ne retenir un plugin que s'il est valide
-// et dans leur plus recente version compatible
-// avec la version presente de SPIP
-
-function plugin_valide_resume(&$liste, $plug, $infos, $dir)
-{
+/**
+ * Ne retenir un plugin que s'il est valide
+ * et dans leur plus recente version compatible
+ * avec la version presente de SPIP
+ *
+ * @param $liste
+ * @param $plug
+ * @param $infos
+ * @param $dir
+ */
+function plugin_valide_resume(&$liste, $plug, $infos, $dir){
 	$i = $infos[$dir][$plug];
 	if (isset($i['erreur']) AND $i['erreur'])
 		return;
-	if (!plugin_version_compatible($i['compatibilite'], $GLOBALS['spip_version_branche'],'spip'))
+	if (!plugin_version_compatible($i['compatibilite'], $GLOBALS['spip_version_branche'], 'spip'))
 		return;
 	$p = strtoupper($i['prefix']);
 	if (!isset($liste[$p])
-	OR spip_version_compare($i['version'],$liste[$p]['version'],'>')) {
+		OR spip_version_compare($i['version'], $liste[$p]['version'], '>')
+	  ){
 		$liste[$p] = array(
 			'nom' => $i['nom'],
 			'etat' => $i['etat'],
-			'version'=> $i['version'],
-			'dir'=> $plug,
+			'version' => $i['version'],
+			'dir' => $plug,
 			'dir_type' => $dir
-					       );
-		}
+		);
+	}
 }
 
 /**
