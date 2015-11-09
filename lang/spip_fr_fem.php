@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'annuler' => 'Annuler',
 	'antispam_champ_vide' => 'Veuillez laisser ce champ vide :',
 	'articles_recents' => 'Articles les plus récents',
-	'avis_1_erreur_saisie' => 'Il y a 1 erreur dans votre saisie, veuillez vérifier les informations.', # MODIF
+	'avis_1_erreur_saisie' => 'Il y a 1 erreur dans votre saisie, veuillez vérifier les informations.',
 	'avis_archive_incorrect' => 'le fichier archive n’est pas un fichier SPIP',
 	'avis_archive_invalide' => 'le fichier archive n’est pas valide',
 	'avis_attention' => 'ATTENTION !',
@@ -598,7 +598,7 @@ et vous reconnecter au site.
 	'pass_nouveau_pass' => 'Nouveau mot de passe',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Oubli du mot de passe',
-	'pass_procedure_changer' => 'Pour changer votre mot de passe, nous devons d’abord vérifier votre identité. Pour cela indiquez-nous l’adresse email associée à votre compte.', # MODIF
+	'pass_procedure_changer' => 'Pour modifier votre mot de passe, merci d’indiquer l’adresse email associée à votre compte.',
 	'pass_quitter_fenetre' => 'Quitter cette fenêtre',
 	'pass_rappel_login' => 'Rappel : votre identifiant (login) est « @login@ ».',
 	'pass_recevoir_mail' => 'Vous allez recevoir un email vous indiquant comment retrouver votre accès au site.',
