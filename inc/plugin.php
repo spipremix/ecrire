@@ -155,46 +155,50 @@ function plugin_version_compatible($intervalle, $version, $avec_quoi = '') {
 }
 
 
-
-// Construire la liste des infos strictement necessaires aux plugins a activer
-// afin de les memoriser dans une meta pas trop grosse
-// http://code.spip.net/@liste_plugin_valides
-function liste_plugin_valides($liste_plug, $force = false)
-{
+/**
+ * Construire la liste des infos strictement necessaires aux plugins a activer
+ * afin de les memoriser dans une meta pas trop grosse
+ * http://code.spip.net/@liste_plugin_valides
+ *
+ * @param array $liste_plug
+ * @param bool $force
+ * @return array
+ */
+function liste_plugin_valides($liste_plug, $force = false){
 	$liste_ext = liste_plugin_files(_DIR_PLUGINS_DIST);
-	$get_infos = charger_fonction('get_infos','plugins');
+	$get_infos = charger_fonction('get_infos', 'plugins');
 	$infos = array(
 		// lister les extensions qui sont automatiquement actives
 		'_DIR_PLUGINS_DIST' => $get_infos($liste_ext, $force, _DIR_PLUGINS_DIST),
 		'_DIR_PLUGINS' => $get_infos($liste_plug, $force, _DIR_PLUGINS)
-		       );
+	);
 
 	// creer une premiere liste non ordonnee mais qui ne retient
 	// que les plugins valides, et dans leur derniere version en cas de doublon
-	$infos['_DIR_RESTREINT'][''] = $get_infos('./',$force,_DIR_RESTREINT);
+	$infos['_DIR_RESTREINT'][''] = $get_infos('./', $force, _DIR_RESTREINT);
 	$infos['_DIR_RESTREINT']['SPIP']['version'] = $GLOBALS['spip_version_branche'];
 	$infos['_DIR_RESTREINT']['SPIP']['chemin'] = array();
-	$liste_non_classee = array('SPIP'=>array(
+	$liste_non_classee = array('SPIP' => array(
 		'nom' => 'SPIP',
 		'etat' => 'stable',
 		'version' => $GLOBALS['spip_version_branche'],
 		'dir_type' => '_DIR_RESTREINT',
-		'dir'=> '',
+		'dir' => '',
 	)
 	);
 
-	foreach($liste_ext as $plug){
-	  if (isset($infos['_DIR_PLUGINS_DIST'][$plug]))
-	    plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS_DIST');
+	foreach ($liste_ext as $plug){
+		if (isset($infos['_DIR_PLUGINS_DIST'][$plug]))
+			plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS_DIST');
 	}
-	foreach($liste_plug as $plug) {
-	  if (isset($infos['_DIR_PLUGINS'][$plug]))
-	    plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS');
+	foreach ($liste_plug as $plug){
+		if (isset($infos['_DIR_PLUGINS'][$plug]))
+			plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS');
 	}
 
-	if (defined('_DIR_PLUGINS_SUPPL') and _DIR_PLUGINS_SUPPL) {
+	if (defined('_DIR_PLUGINS_SUPPL') and _DIR_PLUGINS_SUPPL){
 		$infos['_DIR_PLUGINS_SUPPL'] = $get_infos($liste_plug, false, _DIR_PLUGINS_SUPPL);
-		foreach($liste_plug as $plug) {
+		foreach ($liste_plug as $plug){
 			if (isset($infos['_DIR_PLUGINS_SUPPL'][$plug]))
 				plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS_SUPPL');
 		}
@@ -203,7 +207,7 @@ function liste_plugin_valides($liste_plug, $force = false)
 	// les procure de core.xml sont consideres comme des plugins proposes,
 	// mais surchargeables (on peut activer un plugin qui procure ca pour l'ameliorer,
 	// donc avec le meme prefixe)
-	foreach($infos['_DIR_RESTREINT']['']['procure'] as $procure) {
+	foreach ($infos['_DIR_RESTREINT']['']['procure'] as $procure){
 		$p = strtoupper($procure['nom']);
 		if (!isset($liste_non_classee[$p])){
 			$procure['etat'] = '?';
