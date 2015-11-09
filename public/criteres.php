@@ -2000,7 +2000,7 @@ function calculer_critere_infixe_date($idb, &$boucles, $col){
 
 	if (!$table['date'] && !isset($GLOBALS['table_date'][$table['id_table']])) return '';
 	$pred = $date_orig = isset($GLOBALS['table_date'][$table['id_table']])? $GLOBALS['table_date'][$table['id_table']] : $table['date'];
-	$pred = $date_orig = $table['date'];
+
 	$col = $regs[1];
 	if (isset($regs[3]) AND $suite = $regs[3]){
 		# Recherche de l'existence du champ date_xxxx,
