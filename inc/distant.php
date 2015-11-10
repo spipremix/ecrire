@@ -965,7 +965,8 @@ function recuperer_infos_distantes($source, $max = 0, $charger_si_petite_image =
 
 /**
  * Tester si un host peut etre recuperer directement ou doit passer par un proxy
- * on peut passer en parametre le proxy et la liste des host exclus,
+ * 
+ * On peut passer en parametre le proxy et la liste des host exclus,
  * pour les besoins des tests, lors de la configuration
  *
  * @param string $host
@@ -974,10 +975,12 @@ function recuperer_infos_distantes($source, $max = 0, $charger_si_petite_image =
  * @return string
  */
 function need_proxy($host, $http_proxy = null, $http_noproxy = null){
-	if (is_null($http_proxy))
-		$http_proxy = @$GLOBALS['meta']["http_proxy"];
-	if (is_null($http_noproxy))
-		$http_noproxy = @$GLOBALS['meta']["http_noproxy"];
+	if (is_null($http_proxy)) {
+		$http_proxy = isset($GLOBALS['meta']["http_proxy"]) ? $GLOBALS['meta']["http_proxy"] : null;
+	}
+	if (is_null($http_noproxy)) {
+		$http_noproxy = isset($GLOBALS['meta']["http_noproxy"]) ? $GLOBALS['meta']["http_proxy"] : null;
+	}
 
 	$domain = substr($host, strpos($host, '.'));
 
@@ -990,9 +993,9 @@ function need_proxy($host, $http_proxy = null, $http_noproxy = null){
 
 /**
  * Initialise une requete HTTP avec entetes
- * decompose l'url en son schema+host+path+port
- * et lance la requete
- * retourne le descripteur sur lequel lire la reponse
+ * 
+ * Décompose l'url en son schema+host+path+port et lance la requete.
+ * Retourne le descripteur sur lequel lire la réponse.
  *
  * @uses lance_requete()
  *
@@ -1023,12 +1026,16 @@ function init_http($method, $url, $refuse_gz = false, $referer = '', $datas = ""
 		$scheme = $t['scheme'];
 		$noproxy = $scheme . '://';
 	}
-	if (isset($t['user']))
+	if (isset($t['user'])) {
 		$user = array($t['user'], $t['pass']);
+	}
 
 	if (!isset($t['port']) || !($port = $t['port'])) $port = 80;
 	if (!isset($t['path']) || !($path = $t['path'])) $path = "/";
-	if (@$t['query']) $path .= "?" . $t['query'];
+
+	if (!empty($t['query'])) {
+		$path .= "?" . $t['query'];
+	}
 
 	$f = lance_requete($method, $scheme, $user, $host, $path, $port, $noproxy, $refuse_gz, $referer, $datas, $vers, $date);
 	if (!$f OR !is_resource($f)){
