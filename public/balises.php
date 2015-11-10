@@ -2397,12 +2397,16 @@ function balise_AIDER_dist($p) {
  * des formulaires charger / vérifier / traiter avec les hidden de
  * l'URL d'action
  *
+ * Accèpte 2 arguments optionnels :
+ * - L'url de l'action (par défaut `#ENV{action}`
+ * - Le nom du formulaire (par défaut `#ENV{form}`
+ * 
  * @balise
  * @see form_hidden()
  * @example
  *     ```
  *     <form method='post' action='#ENV{action}'><div>
- *     #ACTION_FORMULAIRE{#ENV{action}}
+ *     #ACTION_FORMULAIRE
  *     ```
  * 
  * @param Champ $p
@@ -2424,7 +2428,7 @@ function balise_ACTION_FORMULAIRE($p){
 		value=\'' . $_form . '\' />' .
 	'<input name=\'formulaire_action_args\' type=\'hidden\'
 		value=\'' . @\$Pile[0]['formulaire_args']. '\' />' .
-	(@\$Pile[0]['_hidden']?@\$Pile[0]['_hidden']:'') .
+	(!empty(\$Pile[0]['_hidden']) ? @\$Pile[0]['_hidden'] : '') .
 	'</div>'";
 
 	$p->interdire_scripts = false;
