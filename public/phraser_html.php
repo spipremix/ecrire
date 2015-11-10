@@ -60,6 +60,7 @@ define('CHAMP_SQL_PLUS_FONC', '`?([A-Z_\/][A-Z_\/0-9.]*)' . SQL_ARGS . '?`?');
 function phraser_inclure($texte, $ligne, $result) {
 
 	while (preg_match(BALISE_INCLURE, $texte, $match)) {
+		$match = array_pad($match, 3, null);
 		$p = strpos($texte,$match[0]);
 		$debut = substr($texte, 0, $p);
 		if ($p) $result = phraser_idiomes($debut, $ligne, $result);
@@ -67,10 +68,10 @@ function phraser_inclure($texte, $ligne, $result) {
 		$champ = new Inclure;
 		$champ->ligne = $ligne;
 		$ligne += substr_count($match[0], "\n");
-		$fichier = @$match[2];
+		$fichier = $match[2];
 		# assurer ici la migration .php3 => .php
 		# et de l'ancienne syntaxe INCLURE(page.php3) devenue surperflue
-		if (preg_match(',^(.*[.]php)3$,', $fichier, $r)) {
+		if ($fichier and preg_match(',^(.*[.]php)3$,', $fichier, $r)) {
 			$fichier = $r[1];
 		}
 		$champ->texte = ($fichier !== 'page.php') ? $fichier : '';

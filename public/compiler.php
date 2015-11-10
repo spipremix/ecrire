@@ -637,7 +637,7 @@ function memoriser_contexte_compil($p) {
 	return join(',', array(
 		_q($p->descr['sourcefile']),
 		_q($p->descr['nom']),
-		@_q($p->id_boucle),
+		_q(isset($p->id_boucle) ? $p->id_boucle : null),
 		intval($p->ligne),
 		'$GLOBALS[\'spip_lang\']'));
 }
