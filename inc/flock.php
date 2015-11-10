@@ -108,21 +108,23 @@ function spip_fclose_unlock($handle){
  * @return string
  *     Contenu du fichier
 **/
-function spip_file_get_contents ($fichier) {
+function spip_file_get_contents($fichier) {
 	if (substr($fichier, -3) != '.gz') {
-		if (function_exists('file_get_contents')
-		AND ( 
-			// quand on est sous window on ne sait pas si file_get_contents marche
+		if (function_exists('file_get_contents')) {
+			// quand on est sous windows on ne sait pas si file_get_contents marche
 			// on essaye : si ca retourne du contenu alors c'est bon
 			// sinon on fait un file() pour avoir le coeur net
-		  ($contenu = @file_get_contents ($fichier))
-		  OR _OS_SERVEUR != 'windows')
-		)
-			return $contenu;
-		else
+			$contenu = @file_get_contents($fichier);
+			if (!$contenu AND _OS_SERVEUR == 'windows') {
+				$contenu = @file($fichier);
+			}
+		} else {
 			$contenu = @file($fichier);
-	} else
-			$contenu = @gzfile($fichier);
+		}
+	} else {
+		$contenu = @gzfile($fichier);
+	}
+
 	return is_array($contenu)?join('', $contenu):(string)$contenu;
 }
 
