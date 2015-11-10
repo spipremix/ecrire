@@ -35,8 +35,9 @@ if (!defined('_TEST_FILE_EXISTS')) {
 #define('_SPIP_LOCK_MODE',1); // utiliser le flock php
 #define('_SPIP_LOCK_MODE',2); // utiliser le nfslock de spip
 
-if (_SPIP_LOCK_MODE==2)
+if (_SPIP_LOCK_MODE==2) {
 	include_spip('inc/nfslock');
+}
 
 $GLOBALS['liste_verrous'] = array();
 
@@ -57,21 +58,22 @@ $GLOBALS['liste_verrous'] = array();
  * @return Resource
  *     Ressource sur le fichier ouvert, sinon false.
 **/
-function spip_fopen_lock($fichier,$mode,$verrou){
-	if (_SPIP_LOCK_MODE==1){
-		if ($fl = @fopen($fichier,$mode))
+function spip_fopen_lock($fichier, $mode, $verrou) {
+	if (_SPIP_LOCK_MODE==1) {
+		if ($fl = @fopen($fichier, $mode)) {
 			// verrou
 			@flock($fl, $verrou);
+		}
 		return $fl;
 	}
 	elseif(_SPIP_LOCK_MODE==2) {
-		if (($verrou = spip_nfslock($fichier)) && ($fl = @fopen($fichier,$mode))){
-			$GLOBALS['liste_verrous'][$fl] = array($fichier,$verrou);
+		if (($verrou = spip_nfslock($fichier)) && ($fl = @fopen($fichier, $mode))){
+			$GLOBALS['liste_verrous'][$fl] = array($fichier, $verrou);
 			return $fl;
 		}
 		else return false;
 	}
-	return @fopen($fichier,$mode);
+	return @fopen($fichier, $mode);
 }
 
 /**
