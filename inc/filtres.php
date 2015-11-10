@@ -1951,19 +1951,19 @@ function saison_annee($numdate, $hemisphere = 'nord') {
 /**
  * Formate une date
  *
+ * @example
+ *     En PHP`affdate("2008-10-11 14:08:45")` affiche "11 octobre 2008"
+ *
+ * @example
+ *     En squelettes
+ *     - `[(#DATE|affdate)]`
+ *     - `[(#DATE|affdate{Y-m-d})]`
+ * 
  * @filtre
  * @link http://www.spip.net/4129
  * @uses affdate_base()
- * @example
- *     En PHP
- *     ```
- *     affdate("2008-10-11 14:08:45") affiche "11 octobre 2008"
- *     ```
- *     En squelettes
- *     ```
- *     [(#DATE|affdate)]
- *     [(#DATE|affdate{Y-m-d})]
- *     ```
+ * @see affdate_court()
+ * @see affdate_jourcourt()
  *
  * @param string $numdate
  *     Une écriture de date
@@ -1976,12 +1976,56 @@ function affdate($numdate, $format='entier') {
 	return affdate_base($numdate, $format);
 }
 
-// http://code.spip.net/@affdate_court
+
+/**
+ * Formate une date, omet l'année si année courante, sinon omet le jour
+ *
+ * Si l'année actuelle (ou indiquée dans `$annee_courante`) est 2015,
+ * retournera "21 juin" si la date en entrée est le 21 juin 2015,
+ * mais retournera "juin 2013" si la date en entrée est le 21 juin 2013.
+ *
+ * @example `[(#DATE|affdate_court)]`
+ * 
+ * @filtre
+ * @link http://www.spip.net/4130
+ * @uses affdate_base()
+ * @see affdate()
+ * @see affdate_jourcourt()
+ *
+ * @param string $numdate
+ *     Une écriture de date
+ * @param int|null $annee_courante
+ *     L'année de comparaison, utilisera l'année en cours si omis.
+ * @return string
+ *     La date formatée
+**/
 function affdate_court($numdate, $annee_courante=null) {
 	return affdate_base($numdate, 'court', array('annee_courante'=>$annee_courante));
 }
 
-// http://code.spip.net/@affdate_jourcourt
+
+/**
+ * Formate une date, omet l'année si année courante
+ *
+ * Si l'année actuelle (ou indiquée dans `$annee_courante`) est 2015,
+ * retournera "21 juin" si la date en entrée est le 21 juin 2015,
+ * mais retournera "21 juin 2013" si la date en entrée est le 21 juin 2013.
+ *
+ * @example `[(#DATE|affdate_jourcourt)]`
+ * 
+ * @filtre
+ * @link http://www.spip.net/4131
+ * @uses affdate_base()
+ * @see affdate()
+ * @see affdate_court()
+ *
+ * @param string $numdate
+ *     Une écriture de date
+ * @param int|null $annee_courante
+ *     L'année de comparaison, utilisera l'année en cours si omis.
+ * @return string
+ *     La date formatée
+**/
 function affdate_jourcourt($numdate, $annee_courante=null) {
 	return affdate_base($numdate, 'jourcourt', array('annee_courante'=>$annee_courante));
 }
@@ -2192,7 +2236,7 @@ function centrer($letexte) {return aligner($letexte,'center');}
 /**
  * Retourne un texte de style CSS aligné sur la langue en cours
  * @deprecated
- * @param unknown $bof
+ * @param mixed $bof Inutilisé
  * @return string Style CSS
 **/
 function style_align($bof) {
@@ -2204,7 +2248,17 @@ function style_align($bof) {
 // Export iCal
 //
 
-// http://code.spip.net/@filtrer_ical
+/**
+ * Adapte un texte pour être inséré dans une valeur d'un export ICAL
+ *
+ * Passe le texte en utf8, enlève les sauts de lignes et échappe les virgules.
+ *
+ * @example `SUMMARY:[(#TITRE|filtrer_ical)]`
+ * @filtre
+ * 
+ * @param string $texte
+ * @return string
+**/
 function filtrer_ical($texte) {
 	#include_spip('inc/charsets');
 	$texte = html2unicode($texte);
@@ -2215,12 +2269,27 @@ function filtrer_ical($texte) {
 	return $texte;
 }
 
-// http://code.spip.net/@date_ical
+/**
+ * Adapte une date pour être insérée dans une valeur de date d'un export ICAL
+ *
+ * Retourne une date au format `Ymd\THis`, tel que '20150428T163254'
+ * 
+ * @example `DTSTAMP:[(#DATE|date_ical)]`
+ * @filtre
+ * @uses recup_heure()
+ * @uses recup_date()
+ * 
+ * @param string $date
+ *     La date
+ * @param int $addminutes
+ *     Ajouter autant de minutes à la date 
+ * @return string
+ *     Date au format ical
+**/
 function date_ical($date, $addminutes = 0) {
 	list($heures, $minutes, $secondes) = recup_heure($date);
 	list($annee, $mois, $jour) = recup_date($date);
-	return date("Ymd\THis", 
-		    mktime($heures, $minutes+$addminutes,$secondes,$mois,$jour,$annee));
+	return date("Ymd\THis", mktime($heures, $minutes + $addminutes, $secondes, $mois, $jour, $annee));
 }
 
 // date_iso retourne la date au format "RFC 3339" / "ISO 8601"
