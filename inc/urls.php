@@ -57,9 +57,17 @@ include_spip('base/objets');
  */
 function urls_decoder_url($url, $fond='', $contexte=array(), $assembler=false){
 	static $current_base = null;
+
 	// les anciennes fonctions modifient directement les globales
 	// on les sauve avant l'appel, et on les retablit apres !
-	$save = array(@$GLOBALS['fond'],@$GLOBALS['contexte'],@$_SERVER['REDIRECT_url_propre'],@$_ENV['url_propre'],$GLOBALS['profondeur_url']);
+	$save = array(
+		isset($GLOBALS['fond']) ? $GLOBALS['fond'] : null,
+		isset($GLOBALS['contexte']) ? $GLOBALS['contexte'] : null,
+		isset($_SERVER['REDIRECT_url_propre']) ? $_SERVER['REDIRECT_url_propre'] : null,
+		isset($_ENV['url_propre']) ? $_ENV['url_propre'] : null,
+		$GLOBALS['profondeur_url']
+	);
+
 	if (is_null($current_base)){
 		include_spip('inc/filtres_mini');
 		// le decodage des urls se fait toujours par rapport au site public
