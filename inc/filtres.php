@@ -2048,7 +2048,20 @@ function affdate_mois_annee($numdate) {
 	return affdate_base($numdate, 'mois_annee');
 }
 
-// http://code.spip.net/@affdate_heure
+/**
+ * Retourne la date suivie de l'heure
+ *
+ * @example `[(#DATE|affdate_heure)]` peut donner "11 novembre 2015 à 11h10min"
+ * 
+ * @filtre
+ * @uses recup_date()
+ * @uses affdate()
+ *
+ * @param string $numdate
+ *     Une écriture de date
+ * @return string
+ *     La date formatée
+**/
 function affdate_heure($numdate) {
 	$date_array = recup_date($numdate);
 	if (!$date_array) return;
@@ -2292,9 +2305,26 @@ function date_ical($date, $addminutes = 0) {
 	return date("Ymd\THis", mktime($heures, $minutes + $addminutes, $secondes, $mois, $jour, $annee));
 }
 
-// date_iso retourne la date au format "RFC 3339" / "ISO 8601"
-// voir http://www.php.net/manual/fr/ref.datetime.php#datetime.constants
-// http://code.spip.net/@date_iso
+
+/**
+ * Retourne une date formattée au format "RFC 3339" ou "ISO 8601"
+ *
+ * @example `[(#DATE|date_iso)]` peut donner "2015-11-11T10:13:45Z"
+ * 
+ * @filtre
+ * @link http://www.spip.net/5641
+ * @link https://fr.wikipedia.org/wiki/ISO_8601
+ * @link http://www.ietf.org/rfc/rfc3339.txt
+ * @link http://php.net/manual/fr/class.datetime.php
+ * 
+ * @uses recup_date()
+ * @uses recup_heure()
+ *
+ * @param string $date_heure
+ *     Une écriture de date
+ * @return string
+ *     La date formatée
+**/
 function date_iso($date_heure) {
 	list($annee, $mois, $jour) = recup_date($date_heure);
 	list($heures, $minutes, $secondes) = recup_heure($date_heure);
@@ -2302,9 +2332,25 @@ function date_iso($date_heure) {
 	return gmdate('Y-m-d\TH:i:s\Z', $time);
 }
 
-// date_822 retourne la date au format "RFC 822"
-// utilise pour <pubdate> dans certains feeds RSS
-// http://code.spip.net/@date_822
+/**
+ * Retourne une date formattée au format "RFC 822" 
+ *
+ * Utilisé pour `<pubdate>` dans certains flux RSS
+ * 
+ * @example `[(#DATE|date_822)]` peut donner "Wed, 11 Nov 2015 11:13:45 +0100"
+ * 
+ * @filtre
+ * @link http://www.spip.net/4276
+ * @link http://php.net/manual/fr/class.datetime.php
+ * 
+ * @uses recup_date()
+ * @uses recup_heure()
+ *
+ * @param string $date_heure
+ *     Une écriture de date
+ * @return string
+ *     La date formatée
+**/
 function date_822($date_heure) {
 	list($annee, $mois, $jour) = recup_date($date_heure);
 	list($heures, $minutes, $secondes) = recup_heure($date_heure);
@@ -2312,19 +2358,52 @@ function date_822($date_heure) {
 	return date('r', $time);
 }
 
-// http://code.spip.net/@date_anneemoisjour
+/**
+ * Pour une date commençant par `Y-m-d`, retourne `Ymd`
+ *
+ * @example `date_anneemoisjour('2015-10-11 11:27:03')` retourne `20151011`
+ * @see date_anneemois()
+ * 
+ * @param string $d
+ *     Une écriture de date commençant par un format `Y-m-d` (comme date ou datetime SQL).
+ *     Si vide, utilise la date actuelle.
+ * @return string
+ *     Date au format `Ymd`
+**/
 function date_anneemoisjour($d)  {
 	if (!$d) $d = date("Y-m-d");
 	return  substr($d, 0, 4) . substr($d, 5, 2) .substr($d, 8, 2);
 }
 
-// http://code.spip.net/@date_anneemois
+/**
+ * Pour une date commençant par `Y-m`, retourne `Ym`
+ *
+ * @example `date_anneemoisjour('2015-10-11 11:27:03')` retourne `201510`
+ * @see date_anneemoisjour()
+ * 
+ * @param string $d
+ *     Une écriture de date commençant par un format `Y-m` (comme date ou datetime SQL).
+ *     Si vide, utilise la date actuelle.
+ * @return string
+ *     Date au format `Ym`
+**/
 function date_anneemois($d)  {
 	if (!$d) $d = date("Y-m-d");
 	return  substr($d, 0, 4) . substr($d, 5, 2);
 }
 
-// http://code.spip.net/@date_debut_semaine
+/**
+ * Retourne le premier jour (lundi) de la même semaine au format `Ymd`
+ *
+ * @example `date_debut_semaine(2015, 11, 11)` retourne `20151109`
+ * @see date_fin_semaine()
+ * 
+ * @param int $annee 
+ * @param int $mois
+ * @param int $jour
+ * @return string
+ *     Date au lundi de la même semaine au format `Ymd`
+**/
 function date_debut_semaine($annee, $mois, $jour) {
   $w_day = date("w", mktime(0,0,0,$mois, $jour, $annee));
   if ($w_day == 0) $w_day = 7; // Gaffe: le dimanche est zero
@@ -2332,7 +2411,18 @@ function date_debut_semaine($annee, $mois, $jour) {
   return date("Ymd", mktime(0,0,0,$mois,$debut,$annee));
 }
 
-// http://code.spip.net/@date_fin_semaine
+/**
+ * Retourne le dernier jour (dimanche) de la même semaine au format `Ymd`
+ *
+ * @example `date_debut_semaine(2015, 11, 11)` retourne `20151115`
+ * @see date_fin_semaine()
+ * 
+ * @param int $annee 
+ * @param int $mois
+ * @param int $jour
+ * @return string
+ *     Date au dimanche de la même semaine au format `Ymd`
+**/
 function date_fin_semaine($annee, $mois, $jour) {
   $w_day = date("w", mktime(0,0,0,$mois, $jour, $annee));
   if ($w_day == 0) $w_day = 7; // Gaffe: le dimanche est zero
