@@ -2433,8 +2433,27 @@ function date_fin_semaine($annee, $mois, $jour) {
 
 
 
-// postautobr : transforme les sauts de ligne en _
-// http://code.spip.net/@post_autobr
+
+/**
+ * Transforme les sauts de ligne simples en sauts forcés avec `_ `
+ *
+ * Ne modifie pas les sauts de paragraphe (2 sauts consécutifs au moins),
+ * ou les retours à l'intérieur de modèles ou de certaines balises html.
+ *
+ * @note
+ *     Cette fonction pouvait être utilisée pour forcer les alinéas,
+ *     (retours à la ligne sans saut de paragraphe), mais ce traitement
+ *     est maintenant automatique.
+ *     Cf. plugin Textwheel et la constante _AUTOBR
+ *
+ * @uses echappe_html()
+ * @uses echappe_retour()
+ * 
+ * @param string $texte
+ * @param string $delim
+ *      Ce par quoi sont remplacés les sauts
+ * @return string
+**/
 function post_autobr($texte, $delim="\n_ ") {
 	if (!function_exists('echappe_html'))
 		include_spip('inc/texte_mini');
@@ -2481,11 +2500,51 @@ function post_autobr($texte, $delim="\n_ ") {
 }
 
 
+/**
+ * Expression régulière pour obtenir le contenu des extraits polyglottes `<multi>`
+ * @var string */
 define('_EXTRAIRE_MULTI', "@<multi>(.*?)</multi>@sS");
 
-// Extraire et transformer les blocs multi ; on indique la langue courante
-// pour ne pas mettre de span@lang=fr si on est deja en fr
-// http://code.spip.net/@extraire_multi
+
+/**
+ * Extrait une langue des extraits polyglottes (`<multi>`)
+ *
+ * Retrouve les balises `<multi>` d'un texte et remplace son contenu
+ * par l'extrait correspondant à la langue demandée.
+ *
+ * Si la langue demandée n'est pas trouvée dans le multi, ni une langue
+ * approchante (exemple `fr` si on demande `fr_TU`), on retourne l'extrait
+ * correspondant à la langue par défaut (option 'lang_defaut'), qui est
+ * par défaut la langue du site. Et si l'extrait n'existe toujours pas
+ * dans cette langue, ça utilisera la première langue utilisée
+ * dans la balise `<multi>`.
+ *
+ * Ne pas mettre de span@lang=fr si on est déjà en fr.
+ *
+ * @filtre
+ * @link http://www.spip.net/5332
+ *
+ * @uses extraire_trads()
+ * @uses approcher_langue()
+ * @uses lang_typo()
+ * @uses code_echappement()
+ * @uses echappe_retour()
+ * 
+ * @param string $letexte
+ * @param string $lang
+ *     Langue à retrouver (si vide, utilise la langue en cours).
+ * @param array $options Options {
+ *     @type bool $echappe_span
+ *         True pour échapper les balises span (false par défaut)
+ *     @type string $lang_defaut
+ *         Code de langue : permet de définir la langue utilisée par défaut,
+ *         en cas d'absence de traduction dans la langue demandée.
+ *         Par défaut la langue du site.
+ *         Indiquer 'aucune' pour ne pas retourner de texte si la langue
+ *         exacte n'a pas été trouvée.
+ * }
+ * @return string
+**/
 function extraire_multi($letexte, $lang=null, $options=array()) {
 
 	if ($letexte
