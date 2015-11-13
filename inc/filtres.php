@@ -2599,8 +2599,18 @@ function extraire_multi($letexte, $lang=null, $options=array()) {
 	return $letexte;
 }
 
-// convertit le contenu d'une balise multi en un tableau
-// http://code.spip.net/@extraire_trad
+/**
+ * Convertit le contenu d'une balise `<multi>` en un tableau 
+ *
+ * Exemple de blocs.
+ * - `texte par défaut [fr] en français [en] en anglais`
+ * - `[fr] en français [en] en anglais`
+ * 
+ * @param string $bloc
+ *     Le contenu intérieur d'un bloc multi
+ * @return array [code de langue => texte]
+ *     Peut retourner un code de langue vide, lorsqu'un texte par défaut est indiqué.
+**/
 function extraire_trads($bloc) {
 	$lang = '';
 // ce reg fait planter l'analyse multi s'il y a de l'{italique} dans le champ
