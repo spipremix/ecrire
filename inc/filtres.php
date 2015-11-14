@@ -1033,29 +1033,28 @@ function taille_en_octets ($taille) {
 /**
  * Rend une chaine utilisable sans dommage comme attribut HTML
  *
+ * @example `<a href="#URL_ARTICLE" title="[(#TITRE|attribut_html)]">#TITRE</a>`
+ * 
  * @filtre
  * @link http://www.spip.net/4282
  * @uses textebrut()
  * @uses texte_backend()
- * @example
- *     ```
- *     <a href="#URL_ARTICLE" title="[(#TITRE|attribut_html)]">#TITRE</a>
- *     ```
  * 
  * @param string $texte
  *     Texte à mettre en attribut
  * @param bool $textebrut
- *     Passe le texte en texte brut ?
+ *     Passe le texte en texte brut (enlève les balises html) ?
  * @return string
  *     Texte prêt pour être utilisé en attribut HTML
 **/
-function attribut_html($texte,$textebrut = true) {
+function attribut_html($texte, $textebrut = true) {
 	$u = $GLOBALS['meta']['pcre_u'];
-	if ($textebrut)
+	if ($textebrut) {
 		$texte = preg_replace(array(",\n,",",\s(?=\s),msS".$u),array(" ",""),textebrut($texte));
+	}
 	$texte = texte_backend($texte);
 	$texte = str_replace(array("'",'"'),array('&#039;', '&#034;'), $texte);
-	
+
 	return preg_replace(array("/&(amp;|#38;)/","/&(?![A-Za-z]{0,4}\w{2,3};|#[0-9]{2,5};)/"),array("&","&#38;") , $texte);
 }
 
@@ -2805,8 +2804,34 @@ function extraire_attribut($balise, $attribut, $complet = false) {
 		return $att;
 }
 
-// modifier (ou inserer) un attribut html dans une balise
-// http://code.spip.net/@inserer_attribut
+/**
+ * Insérer (ou modifier) un attribut html dans une balise
+ *
+ * @example
+ *     - `[(#LOGO_ARTICLE|inserer_attribut{class, logo article})]`
+ *     - `[(#LOGO_ARTICLE|inserer_attribut{alt, #TTTRE|attribut_html|couper{60}})]`
+ *     - `[(#FICHIER|image_reduire{40}|inserer_attribut{data-description, #DESCRIPTIF})]`
+ *       Laissera les balises HTML de la valeur (ici `#DESCRIPTIF`) si on n'applique pas le
+ *       filtre `attribut_html` dessus.
+ * 
+ * @filtre
+ * @link http://www.spip.net/4294
+ * @uses attribut_html()
+ * @uses extraire_attribut()
+ * 
+ * @param string $balise
+ *     Code html de la balise (ou contenant une balise)
+ * @param string $attribut
+ *     Nom de l'attribut html à modifier
+ * @param string $val
+ *     Valeur de l'attribut à appliquer
+ * @param bool $proteger
+ *     Prépare la valeur en tant qu'attribut de balise (mais conserve les balises html).
+ * @param bool $vider
+ *     True pour vider l'attribut. Une chaîne vide pour `$val` fera pareil.
+ * @return string
+ *     Code html modifié
+**/
 function inserer_attribut($balise, $attribut, $val, $proteger=true, $vider=false) {
 	// preparer l'attribut
 	// supprimer les &nbsp; etc mais pas les balises html
@@ -2841,6 +2866,8 @@ function inserer_attribut($balise, $attribut, $val, $proteger=true, $vider=false
 /**
  * Supprime un attribut HTML 
  *
+ * @example `[(#LOGO_ARTICLE|vider_attribut{class})]`
+ * 
  * @filtre
  * @link http://www.spip.net/4142
  * @uses inserer_attribut()
