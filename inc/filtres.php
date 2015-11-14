@@ -3194,41 +3194,91 @@ function tags2dcsubject($tags) {
 	return $subjects;
 }
 
-// retourne la premiere balise du type demande
-// ex: [(#DESCRIPTIF|extraire_balise{img})]
-// Si on a passe un tableau de textes, renvoyer un tableau de resultats
-// http://code.spip.net/@extraire_balise
+/**
+ * Retourne la premiere balise html du type demandé
+ *
+ * Retourne le contenu d'une balise jusqu'à la première fermeture rencontrée
+ * du même type.
+ * Si on a passe un tableau de textes, retourne un tableau de resultats.
+ * 
+ * @example `[(#DESCRIPTIF|extraire_balise{img})]`
+ *
+ * @filtre
+ * @link http://www.spip.net/4289
+ * @see extraire_balises()
+ * @note
+ *     Attention : les résultats peuvent être incohérents sur des balises imbricables,
+ *     tel que demander à extraire `div` dans le texte `<div> un <div> mot </div> absent </div>`,
+ *     ce qui retournerait `<div> un <div> mot </div>` donc.
+ * 
+ * @param string|array $texte
+ *     Texte(s) dont on souhaite extraire une balise html
+ * @param string $tag
+ *     Nom de la balise html à extraire
+ * @return void|string|array
+ *     - Code html de la balise, sinon rien
+ *     - Tableau de résultats, si tableau en entrée.
+**/
 function extraire_balise($texte, $tag='a') {
 	if (is_array($texte)) {
-		array_walk($texte,
+		array_walk(
+			$texte,
 			create_function('&$a,$key,$t', '$a = extraire_balise($a,$t);'),
-			$tag);
+			$tag
+		);
 		return $texte;
 	}
 
 	if (preg_match(
-	",<$tag\b[^>]*(/>|>.*</$tag\b[^>]*>|>),UimsS",
-	$texte, $regs))
+		",<$tag\b[^>]*(/>|>.*</$tag\b[^>]*>|>),UimsS",
+		$texte, $regs))
+	{
 		return $regs[0];
+	}
 }
 
-// extraire toutes les balises du type demande, sous forme de tableau
-// Si on a passe un tableau de textes, renvoyer un tableau de resultats
-// http://code.spip.net/@extraire_balises
+/**
+ * Extrait toutes les balises html du type demandé
+ *
+ * Retourne dans un tableau le contenu de chaque balise jusqu'à la première
+ * fermeture rencontrée du même type.
+ * Si on a passe un tableau de textes, retourne un tableau de resultats.
+ * 
+ * @example `[(#TEXTE|extraire_balises{img}|implode{" - "})]`
+ *
+ * @filtre
+ * @link http://www.spip.net/5618
+ * @see extraire_balise()
+ * @note
+ *     Attention : les résultats peuvent être incohérents sur des balises imbricables,
+ *     tel que demander à extraire `div` dans un texte.
+ * 
+ * @param string|array $texte
+ *     Texte(s) dont on souhaite extraire une balise html
+ * @param string $tag
+ *     Nom de la balise html à extraire
+ * @return array
+ *     - Liste des codes html des occurrences de la balise, sinon tableau vide
+ *     - Tableau de résultats, si tableau en entrée.
+**/
 function extraire_balises($texte, $tag='a') {
 	if (is_array($texte)) {
-		array_walk($texte,
+		array_walk(
+			$texte,
 			create_function('&$a,$key,$t', '$a = extraire_balises($a,$t);'),
-			$tag);
+			$tag
+		);
 		return $texte;
 	}
 
 	if (preg_match_all(
-	",<${tag}\b[^>]*(/>|>.*</${tag}\b[^>]*>|>),UimsS",
-	$texte, $regs, PREG_PATTERN_ORDER))
+		",<${tag}\b[^>]*(/>|>.*</${tag}\b[^>]*>|>),UimsS",
+		$texte, $regs, PREG_PATTERN_ORDER))
+	{
 		return $regs[0];
-	else
+	} else {
 		return array();
+	}
 }
 
 /**
