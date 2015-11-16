@@ -3289,6 +3289,11 @@ function extraire_balises($texte, $tag='a') {
  * un tableau (dans ce cas elle tentera de le désérialiser, et sinon retournera
  * la valeur par défaut transmise).
  *
+ * @example `[(#VAL{deux}|in_any{#LISTE{un,deux,trois}}|oui) ... ]`
+ *
+ * @filtre
+ * @see filtre_find() Assez proche, avec les arguments valeur et tableau inversés.
+ *
  * @param string $val
  *     Valeur à chercher dans le tableau
  * @param array|string $vals
@@ -3303,7 +3308,7 @@ function extraire_balises($texte, $tag='a') {
 **/
 function in_any($val, $vals, $def='') {
 	if (!is_array($vals) AND $v=unserialize($vals)) $vals = $v;
-  return (!is_array($vals) ? $def : (in_array($val, $vals) ? ' ' : ''));
+	return (!is_array($vals) ? $def : (in_array($val, $vals) ? ' ' : ''));
 }
 
 
@@ -3457,26 +3462,86 @@ function filtre_bornes_pagination_dist($courante, $nombre, $max = 10) {
 }
 
 
-// Ces trois fonctions permettent de simuler les filtres |reset et |end
-// pour extraire la premiere ou la derniere valeur d'un tableau ; utile
-// pour la pagination (mais peut-etre a refaire plus simplement)
-
-// http://code.spip.net/@filtre_reset
+/**
+ * Retourne la première valeur d'un tableau
+ *
+ * Plus précisément déplace le pointeur du tableau sur la première valeur et la retourne.
+ *
+ * @example `[(#LISTE{un,deux,trois}|reset)]` retourne 'un'
+ * 
+ * @filtre
+ * @link http://php.net/manual/fr/function.reset.php
+ * @see filtre_end()
+ * 
+ * @param array $array
+ * @return mixed|null|false
+ *    - null si $array n'est pas un tableau,
+ *    - false si le tableau est vide
+ *    - la première valeur du tableau sinon.
+**/
 function filtre_reset($array) {
 	return !is_array($array) ? null : reset($array);
 }
-// http://code.spip.net/@filtre_end
+
+/**
+ * Retourne la dernière valeur d'un tableau
+ *
+ * Plus précisément déplace le pointeur du tableau sur la dernière valeur et la retourne.
+ *
+ * @example `[(#LISTE{un,deux,trois}|end)]` retourne 'trois'
+ * 
+ * @filtre
+ * @link http://php.net/manual/fr/function.end.php
+ * @see filtre_reset()
+ * 
+ * @param array $array
+ * @return mixed|null|false
+ *    - null si $array n'est pas un tableau,
+ *    - false si le tableau est vide
+ *    - la dernière valeur du tableau sinon.
+**/
 function filtre_end($array) {
 	return !is_array($array) ? null : end($array);
 }
 
-// http://code.spip.net/@filtre_push
+/**
+ * Empile une valeur à la fin d'un tableau
+ *
+ * @example `[(#LISTE{un,deux,trois}|push{quatre}|print)]`
+ * 
+ * @filtre
+ * @link http://www.spip.net/4571
+ * @link http://php.net/manual/fr/function.array-push.php
+ * 
+ * @param array $array
+ * @param mixed $val 
+ * @return array|string
+ *     - '' si $array n'est pas un tableau ou si echec.
+ *     - le tableau complété de la valeur sinon.
+ *     
+**/
 function filtre_push($array, $val) {
-	if($array == '' OR !array_push($array, $val)) return '';
+	if (!is_array($array) OR !array_push($array, $val)) {
+		return '';
+	}
 	return $array;
 }
 
-// http://code.spip.net/@filtre_find
+/**
+ * Indique si une valeur est contenue dans un tableau
+ *
+ * @example `[(#LISTE{un,deux,trois}|find{quatre}|oui) ... ]`
+ * 
+ * @filtre
+ * @link http://www.spip.net/4575
+ * @see in_any() Assez proche, avec les paramètres tableau et valeur inversés.
+ * 
+ * @param array $array
+ * @param mixed $val 
+ * @return bool
+ *     - `false` si `$array` n'est pas un tableau
+ *     - `true` si la valeur existe dans le tableau, `false` sinon.
+**/
 function filtre_find($array, $val) {
 	return (is_array($array) AND in_array($val, $array));
 }
