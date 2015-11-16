@@ -10,6 +10,13 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+/**
+ * Ce fichier contient les fonctions simples
+ * de traitement d'image.
+ *
+ * @package SPIP\Core\Filtres\Images
+ */
+ 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('inc/filtres_images_lib_mini'); // par precaution
 
