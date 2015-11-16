@@ -51,7 +51,7 @@ function couleur_eclaircir ($couleur, $coeff=0.5) {
 }
 
 // selectionner les images qui vont subir une transformation sur un critere de taille
-// ls images exclues sont marquees d'une class filtre_inactif qui bloque les filtres suivants
+// les images exclues sont marquees d'une class filtre_inactif qui bloque les filtres suivants
 // dans la fonction image_filtrer
 // http://code.spip.net/@image_select
 function image_select($img,$width_min=0, $height_min=0, $width_max=10000, $height_max=1000){
@@ -74,8 +74,6 @@ function image_select($img,$width_min=0, $height_min=0, $width_max=10000, $heigh
 	}
 	return $img;
 }
-
-
 
 /**
  * Réduit les images à une taille maximale (chevauchant un rectangle)
