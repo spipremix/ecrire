@@ -13,7 +13,14 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('inc/filtres_images_lib_mini'); // par precaution
 
-// http://code.spip.net/@couleur_html_to_hex
+/**
+ * Transforme un code couleur textuel (black, white, green...) et code hexadécimal
+ * 
+ * @param string $couleur
+ * 		Le code couleur textuel
+ * @return string
+ * 		Le code hexadécimal de la couleur (sans le #) ou le code couleur textuel si non trouvé
+ */
 function couleur_html_to_hex($couleur){
 	$couleurs_html=array(
 		'aqua'=>'00FFFF','black'=>'000000','blue'=>'0000FF','fuchsia'=>'FF00FF','gray'=>'808080','green'=>'008000','lime'=>'00FF00','maroon'=>'800000',
@@ -23,7 +30,18 @@ function couleur_html_to_hex($couleur){
 	return $couleur;
 }
 
-// http://code.spip.net/@couleur_foncer
+/**
+ * Rend une couleur (code hexadécimal) plus foncée
+ * 
+ * @uses _couleur_hex_to_dec() Pour transformer le code hexadécimal en décimal
+ * 
+ * @param string $couleur
+ * 		Code hexadécimal d'une couleur
+ * @param float $coeff
+ * 		Coefficient (de 0 à 1)
+ * @return string
+ * 		Code hexadécimal de la couleur plus foncée
+ */
 function couleur_foncer ($couleur, $coeff=0.5) {
 	$couleurs = _couleur_hex_to_dec($couleur);
 
@@ -36,7 +54,18 @@ function couleur_foncer ($couleur, $coeff=0.5) {
 	return $couleur;
 }
 
-// http://code.spip.net/@couleur_eclaircir
+/**
+ * Eclaircit une couleur (code hexadécimal) 
+ * 
+ * @uses _couleur_hex_to_dec() Pour transformer le code hexadécimal en décimal
+ * 
+ * @param string $couleur
+ * 		Code hexadécimal d'une couleur
+ * @param float $coeff
+ * 		Coefficient (de 0 à 1)
+ * @return string
+ * 		Code hexadécimal de la couleur éclaircie
+ */
 function couleur_eclaircir ($couleur, $coeff=0.5) {
 	$couleurs = _couleur_hex_to_dec($couleur);
 
@@ -50,10 +79,25 @@ function couleur_eclaircir ($couleur, $coeff=0.5) {
 
 }
 
-// selectionner les images qui vont subir une transformation sur un critere de taille
-// les images exclues sont marquees d'une class filtre_inactif qui bloque les filtres suivants
-// dans la fonction image_filtrer
-// http://code.spip.net/@image_select
+/**
+ * Selectionne les images qui vont subir une transformation sur un critere de taille
+ * 
+ * Les images exclues sont marquees d'une class filtre_inactif qui bloque les filtres suivants
+ * dans la fonction image_filtrer
+ * 
+ * @param string $img
+ * 		Un tag html `<img src=... />`.
+ * @param int $width_min
+ * 		Largeur minimale de l'image à traiter (0 par défaut)
+ * @param int $height_min
+ * 		Hauteur minimale de l'image à traiter (0 par défaut)
+ * @param int $width_max
+ * 		Largeur minimale de l'image à traiter (10000 par défaut)
+ * @param int $height_max
+ * 		Hauteur minimale de l'image à traiter (10000 par défaut)
+ * @return 
+ * 		Le tag html `<img src=... />` avec une class `filtre_inactif` ou pas
+ */
 function image_select($img,$width_min=0, $height_min=0, $width_max=10000, $height_max=1000){
 	if (!$img) return $img;
 	list ($h,$l) = taille_image($img);
