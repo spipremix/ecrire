@@ -291,7 +291,7 @@ function generer_htpass($pass) {
  * 
  * @uses recuperer_lapage()
  * @param string $rep
- *        Nom du répertoire où SPIP doit vérifier l'existence d'un fichier .htaccess
+ *     Nom du répertoire où SPIP doit vérifier l'existence d'un fichier .htaccess
  * @param bool $force
  * @return boolean
  */
@@ -312,7 +312,7 @@ function verifier_htaccess($rep, $force=false) {
 </IfModule>
 ";
 	// support des vieilles versions Apache 1.x mais uniquement si elles l'annoncent (pas en mode PROD)
-	if ($v = apache_get_version() AND strncmp($v,"Apache/1.",9)==0){
+	if (function_exists('apache_get_version') AND $v = apache_get_version() AND strncmp($v,"Apache/1.",9) == 0){
 		$deny = "deny from all\n";
 	}
 
