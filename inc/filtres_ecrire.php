@@ -371,6 +371,7 @@ function lien_article_virtuel($virtuel){
  * @param string $op
  * @param array $args
  * @param string $lang
+ * @param string $title
  * @return string
  *     Code HTML du lien
  */
@@ -384,9 +385,7 @@ function bouton_spip_rss($op, $args=array(), $lang='', $title='RSS') {
 
 
 /**
- * Verifier la presence d'alertes pour les auteur
- *
- * http://code.spip.net/@alertes_auteur
+ * Vérifier la présence d'alertes pour les auteur
  *
  * @param int $id_auteur
  * @return string

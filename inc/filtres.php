@@ -3614,8 +3614,19 @@ function filtre_pagination_dist($total, $nom, $position, $pas, $liste = true, $m
 	return recuperer_fond("modeles/pagination$modele", $pagination, array('trim'=>true), $connect);
 }
 
-// passer les url relatives a la css d'origine en url absolues
-// http://code.spip.net/@urls_absolues_css
+
+/**
+ * Passer les url relatives à la css d'origine en url absolues
+ *
+ * @uses suivre_lien()
+ * 
+ * @param string $contenu
+ *     Contenu du fichier CSS
+ * @param string $source
+ *     Chemin du fichier CSS
+ * @return string
+ *     Contenu avec urls en absolus
+**/
 function urls_absolues_css($contenu, $source) {
 	$path = suivre_lien(url_absolue($source),'./');
 
@@ -5160,13 +5171,16 @@ function insert_head_css_conditionnel($flux){
 }
 
 /**
- * Produire un fichier statique a partir d'un squelette dynamique
- * Permet ensuite a apache de le servir en statique sans repasser
- * par spip.php a chaque hit sur le fichier
- * si le format (css ou js) est passe dans contexte['format'], on l'utilise
- * sinon on regarde si le fond finit par .css ou .js
- * sinon on utilie "html"
+ * Produire un fichier statique à partir d'un squelette dynamique
+ * 
+ * Permet ensuite à Apache de le servir en statique sans repasser
+ * par spip.php à chaque hit sur le fichier.
+ * 
+ * Si le format (css ou js) est passe dans `contexte['format']`, on l'utilise
+ * sinon on regarde si le fond finit par .css ou .js, sinon on utilie "html"
  *
+ * @uses urls_absolues_css()
+ * 
  * @param string $fond
  * @param array $contexte
  * @param array $options
