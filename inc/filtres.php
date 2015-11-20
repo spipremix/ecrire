@@ -3757,11 +3757,29 @@ function direction_css ($css, $voulue='') {
 	return $f;
 }
 
-// recuperere le chemin d'une css existante et :
-// cree (ou recree) dans _DIR_VAR/cache_css/ une css dont les url relatives sont passees en url absolues
-// http://code.spip.net/@url_absolue_css
-function url_absolue_css ($css) {
-	if (!preg_match(',\.css$,i', $css, $r)) return $css;
+
+/**
+ * Transforme les urls relatives d'un fichier CSS en absolues
+ *
+ * Récupère le chemin d'une css existante et crée (ou recrée) dans `_DIR_VAR/cache_css/`
+ * une css dont les url relatives sont passées en url absolues
+ *
+ * Le calcul n'est pas refait si le fichier cache existe déjà et que
+ * la source n'a pas été modifiée depuis.
+ *
+ * @uses recuperer_page() si l'URL source n'est pas sur le même site
+ * @uses urls_absolues_css()
+ * 
+ * @param string $css
+ *     Chemin ou URL du fichier CSS source
+ * @return string
+ *     - Chemin du fichier CSS transformé (si source lisible et mise en cache réussie)
+ *     - Chemin ou URL du fichier CSS source sinon.
+**/
+function url_absolue_css($css) {
+	if (!preg_match(',\.css$,i', $css, $r)) {
+		return $css;
+	}
 
 	$url_absolue_css = url_absolue($css);
 
@@ -3770,27 +3788,30 @@ function url_absolue_css ($css) {
 		. preg_replace(",(.*?)(_rtl|_ltr)?$,","\\1-urlabs-" . substr(md5("$css-urlabs"), 0,4) . "\\2",$f) 
 		. '.css';
 
-	if ((@filemtime($f) > @filemtime($css))
-	AND (_VAR_MODE != 'recalcul'))
+	if ((@filemtime($f) > @filemtime($css)) AND (_VAR_MODE != 'recalcul')) {
 		return $f;
+	}
 
 	if ($url_absolue_css==$css){
 		if (strncmp($GLOBALS['meta']['adresse_site'],$css,$l=strlen($GLOBALS['meta']['adresse_site']))!=0
 		 OR !lire_fichier(_DIR_RACINE . substr($css,$l), $contenu)){
 		 		include_spip('inc/distant');
-		 		if (!$contenu = recuperer_page($css))
+		 		if (!$contenu = recuperer_page($css)) {
 					return $css;
+				}
 		}
 	}
-	elseif (!lire_fichier($css, $contenu))
+	elseif (!lire_fichier($css, $contenu)) {
 		return $css;
+	}
 
 	// passer les url relatives a la css d'origine en url absolues
 	$contenu = urls_absolues_css($contenu, $css);
 
 	// ecrire la css
-	if (!ecrire_fichier($f, $contenu))
+	if (!ecrire_fichier($f, $contenu)) {
 		return $css;
+	}
 
 	return $f;
 }
@@ -3960,30 +3981,79 @@ function vide($texte){
 // Filtres pour le modele/emb (embed document)
 //
 
-// A partir d'un #ENV, retourne des <param ...>
-// http://code.spip.net/@env_to_params
-function env_to_params ($texte, $ignore_params=array()) {
+/**
+ * Écrit des balises HTML `<param...>` à partir d'un tableau de données tel que `#ENV`
+ *
+ * Permet d'écrire les balises `<param>` à indiquer dans un `<object>`
+ * en prenant toutes les valeurs du tableau transmis.
+ *
+ * Certaines clés spécifiques à SPIP et aux modèles embed sont omises :
+ * id, lang, id_document, date, date_redac, align, fond, recurs, emb, dir_racine
+ *
+ * @example `[(#ENV*|env_to_params)]`
+ * 
+ * @link http://www.spip.net/4005
+ * 
+ * @param array|string $env
+ *      Tableau cle => valeur des paramètres à écrire, ou chaine sérialisée de ce tableau
+ * @param array $ignore_params
+ *      Permet de compléter les clés ignorées du tableau.
+ * @return string
+ *      Code HTML résultant
+**/
+function env_to_params($env, $ignore_params=array()) {
 	$ignore_params = array_merge (
 		array('id', 'lang', 'id_document', 'date', 'date_redac', 'align', 'fond', '', 'recurs', 'emb', 'dir_racine'),
-	$ignore_params);
-	$tableau = unserialize($texte);
+		$ignore_params
+	);
+	if (!is_array($env)) {
+		$env = unserialize($env);
+	}
 	$texte = "";
-	foreach ($tableau as $i => $j)
-		if (is_string($j) AND !in_array($i,$ignore_params))
-			$texte .= "<param name='".$i."'\n\tvalue='".$j."' />";
+	if ($env) {
+		foreach ($env as $i => $j) {
+			if (is_string($j) AND !in_array($i, $ignore_params)) {
+				$texte .= "<param name='".$i."'\n\tvalue='".$j."' />";
+			}
+		}
+	}
 	return $texte;
 }
-// A partir d'un #ENV, retourne des attributs
-// http://code.spip.net/@env_to_attributs
-function env_to_attributs ($texte, $ignore_params=array()) {
+
+/**
+ * Écrit des attributs HTML à partir d'un tableau de données tel que `#ENV`
+ *
+ * Permet d'écrire des attributs d'une balise HTML en utilisant les données du tableau transmis.
+ * Chaque clé deviendra le nom de l'attribut (et la valeur, sa valeur)
+ *
+ * Certaines clés spécifiques à SPIP et aux modèles embed sont omises :
+ * id, lang, id_document, date, date_redac, align, fond, recurs, emb, dir_racine
+ *
+ * @example `<embed src='#URL_DOCUMENT' [(#ENV*|env_to_attributs)] width='#GET{largeur}' height='#GET{hauteur}'></embed>`
+ * 
+ * @param array|string $env
+ *      Tableau cle => valeur des attributs à écrire, ou chaine sérialisée de ce tableau
+ * @param array $ignore_params
+ *      Permet de compléter les clés ignorées du tableau.
+ * @return string
+ *      Code HTML résultant
+**/
+function env_to_attributs ($env, $ignore_params=array()) {
 	$ignore_params = array_merge (
 		array('id', 'lang', 'id_document', 'date', 'date_redac', 'align', 'fond', '', 'recurs', 'emb', 'dir_racine'),
-	$ignore_params);
-	$tableau = unserialize($texte);
+		$ignore_params
+	);
+	if (!is_array($env)) {
+		$env = unserialize($env);
+	}
 	$texte = "";
-	foreach ($tableau as $i => $j)
-		if (is_string($j) AND !in_array($i,$ignore_params))
-			$texte .= $i."='".$j."' ";
+	if ($env) {
+		foreach ($env as $i => $j) {
+			if (is_string($j) AND !in_array($i,$ignore_params)) {
+				$texte .= $i."='".$j."' ";
+			}
+		}
+	}
 	return $texte;
 }
 

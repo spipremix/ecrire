@@ -23,6 +23,15 @@ include_spip('inc/texte'); //inclue inc/lang et inc/filtres
 
 /**
  * Retourne le début d'une page HTML minimale (de type installation ou erreur)
+ *
+ * Le contenu de CSS minimales (reset.css, clear.css, minipres.css) est inséré
+ * dans une balise script inline (compactée si possible) 
+ * 
+ * @uses utiliser_langue_visiteur()
+ * @uses http_no_cache()
+ * @uses html_lang_attributes()
+ * @uses compacte() si le plugin compresseur est présent
+ * @uses url_absolue_css()
  * 
  * @param string $titre
  *    Titre. `AUTO`, indique que l'on est dans le processus d'installation de SPIP
@@ -40,13 +49,15 @@ function install_debut_html($titre = 'AUTO', $onLoad = '', $all_inline = false) 
 
 	http_no_cache();
 
-	if ($titre=='AUTO')
+	if ($titre=='AUTO') {
 		$titre=_T('info_installation_systeme_publication');
+	}
 
 	# le charset est en utf-8, pour recuperer le nom comme il faut
 	# lors de l'installation
-	if (!headers_sent())
+	if (!headers_sent()) {
 		header('Content-Type: text/html; charset=utf-8');
+	}
 
 	$css = "";
 	$files = array('reset.css','clear.css','minipres.css');
@@ -54,10 +65,11 @@ function install_debut_html($titre = 'AUTO', $onLoad = '', $all_inline = false) 
 		// inliner les CSS (optimisation de la page minipres qui passe en un seul hit a la demande)
 		foreach ($files as $name){
 			$file = direction_css(find_in_theme($name));
-			if (function_exists("compacte"))
+			if (function_exists("compacte")) {
 				$file = compacte($file);
-			else
+			} else {
 				$file = url_absolue_css($file); // precaution
+			}
 			lire_fichier($file,$c);
 			$css .= $c;
 		}
