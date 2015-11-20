@@ -3991,7 +3991,8 @@ function vide($texte){
  * id, lang, id_document, date, date_redac, align, fond, recurs, emb, dir_racine
  *
  * @example `[(#ENV*|env_to_params)]`
- * 
+ *
+ * @filtre
  * @link http://www.spip.net/4005
  * 
  * @param array|string $env
@@ -4030,6 +4031,7 @@ function env_to_params($env, $ignore_params=array()) {
  * id, lang, id_document, date, date_redac, align, fond, recurs, emb, dir_racine
  *
  * @example `<embed src='#URL_DOCUMENT' [(#ENV*|env_to_attributs)] width='#GET{largeur}' height='#GET{hauteur}'></embed>`
+ * @filtre
  * 
  * @param array|string $env
  *      Tableau cle => valeur des attributs à écrire, ou chaine sérialisée de ce tableau
@@ -4145,10 +4147,8 @@ function http_img_pack($img, $alt, $atts='', $title='', $options = array()) {
 }
 
 /**
- * generer une directive style='background:url()' a partir d'un fichier image
+ * Générer une directive `style='background:url()'` à partir d'un fichier image
  * 
- * http://code.spip.net/@http_style_background
- *
  * @param string $img
  * @param string $att
  * @return string
@@ -4158,29 +4158,48 @@ function http_style_background($img, $att=''){
 }
 
 /**
- * une fonction pour generer une balise img a partir d'un nom de fichier
+ * Générer une balise HTML `img` à partir d'un nom de fichier
  *
+ * @uses http_img_pack()
+ * 
  * @param string $img
  * @param string $alt
  * @param string $class
  * @return string
+ *     Code HTML de la balise IMG
  */
-function filtre_balise_img_dist($img,$alt="",$class=""){
+function filtre_balise_img_dist($img, $alt="", $class=""){
 	return http_img_pack($img, $alt, $class?" class='".attribut_html($class)."'":'', '', array('chemin_image'=>false,'utiliser_suffixe_size'=>false));
 }
 
 
-//[(#ENV*|unserialize|foreach)]
-// http://code.spip.net/@filtre_foreach_dist
-function filtre_foreach_dist($balise_deserializee, $modele = 'foreach') {
+/**
+ * Affiche chaque valeur d'un tableau associatif en utilisant un modèle
+ *
+ * @example
+ *     - `[(#ENV*|unserialize|foreach)]`
+ *     - `[(#ARRAY{a,un,b,deux}|foreach)]`
+ *
+ * @filtre
+ * @link http://www.spip.net/4248
+ * 
+ * @param array $tableau
+ *     Tableau de données à afficher
+ * @param string $modele
+ *     Nom du modèle à utiliser
+ * @return string
+ *     Code HTML résultant
+**/
+function filtre_foreach_dist($tableau, $modele = 'foreach') {
 	$texte = '';
-	if(is_array($balise_deserializee))
-		foreach($balise_deserializee as $k => $v) {
+	if (is_array($tableau)) {
+		foreach($tableau as $k => $v) {
 			$res = recuperer_fond('modeles/'.$modele,
 				array_merge(array('cle' => $k), (is_array($v) ? $v : array('valeur' => $v)))
 			);
 			$texte .= $res;
 		}
+	}
 	return $texte;
 }
 
@@ -4189,7 +4208,7 @@ function filtre_foreach_dist($balise_deserializee, $modele = 'foreach') {
  * Obtient des informations sur les plugins actifs
  *
  * @filtre
- * @uses liste_plugin_actifs() Voir liste_plugin_actifs() pour connaître les informations affichables
+ * @uses liste_plugin_actifs() pour connaître les informations affichables
  * 
  * @param string $plugin
  *     Préfixe du plugin ou chaîne vide
