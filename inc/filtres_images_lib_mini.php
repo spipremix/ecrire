@@ -640,13 +640,21 @@ function image_graver($img){
 	return $img;
 }
 
-// Transforme une image a palette indexee (256 couleurs max) en "vraies" couleurs RGB
-// Si la transformation ne peut se faire on renvoie false. Si elle peut se faire ou si
-// l'image est deja en vrai RGB, on renvoie true.
-// Existe seulement pour compatibilite avec PHP < 5.5
-// http://code.spip.net/@imagepalettetotruecolor
+
 if (!function_exists("imagepalettetotruecolor")) {
- function imagepalettetotruecolor(&$img) {
+/**
+ * Transforme une image à palette indexée (256 couleurs max) en "vraies" couleurs RGB
+ *
+ * @note Pour compatibilité avec PHP < 5.5
+ *
+ * @link http://php.net/manual/fr/function.imagepalettetotruecolor.php
+ * 
+ * @param ressource $img
+ * @return bool
+ *     - true si l'image est déjà en vrai RGB ou peut être transformée
+ *     - false si la transformation ne peut être faite.
+**/
+function imagepalettetotruecolor(&$img) {
 	if (!$img OR !function_exists('imagecreatetruecolor')) {
 		return false;
 	} elseif (!imageistruecolor($img)) {
@@ -669,27 +677,49 @@ if (!function_exists("imagepalettetotruecolor")) {
  }
 }
 
-// http://code.spip.net/@image_tag_changer_taille
-function _image_tag_changer_taille($tag,$width,$height,$style=false){
-	if ($style===false) $style = extraire_attribut($tag,'style');
+/**
+ * Applique des attributs de taille (width, height) à une balise HTML
+ *
+ * Utilisé avec des balises `<img>` tout particulièrement.
+ * 
+ * Modifie l'attribut style s'il était renseigné, en enlevant les
+ * informations éventuelles width / height dedans.
+ *
+ * @uses extraire_attribut()
+ * @uses inserer_attribut()
+ * 
+ * @param string $tag
+ *     Code html de la balise
+ * @param int $width
+ *     Hauteur
+ * @param int $height
+ *     Largeur
+ * @param bool|string $style
+ *     Attribut html style à appliquer.
+ *     False extrait celui présent dans la balise
+ * @return string
+ *     Code html modifié de la balise.
+**/
+function _image_tag_changer_taille($tag, $width, $height, $style=false){
+	if ($style===false) $style = extraire_attribut($tag, 'style');
+
 	// enlever le width et height du style
 	$style = preg_replace(",(^|;)\s*(width|height)\s*:\s*[^;]+,ims","",$style);
 	if ($style AND $style{0}==';') $style=substr($style,1);
+
 	// mettre des attributs de width et height sur les images, 
 	// ca accelere le rendu du navigateur
 	// ca permet aux navigateurs de reserver la bonne taille 
 	// quand on a desactive l'affichage des images.
 	$tag = inserer_attribut($tag,'width',$width);
 	$tag = inserer_attribut($tag,'height',$height);
-	
-	// Ancien style inline pour IE6 mais qui casse la possibilité de surcharger en CSS
-	//$style = "height:".$height."px;width:".$width."px;".$style;
-	
+
 	// attributs deprecies. Transformer en CSS
 	if ($espace = extraire_attribut($tag, 'hspace')){
 		$style = "margin:${espace}px;".$style;
 		$tag = inserer_attribut($tag,'hspace','');
 	}
+
 	$tag = inserer_attribut($tag,'style',$style, true, $style ? false : true);
 	return $tag;
 }
