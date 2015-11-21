@@ -492,11 +492,13 @@ function _image_imageico($img, $fichier) {
  * Crée un fichier_image temporaire .src ou vérifie que le fichier_image
  * définitif a bien été créé.
  *
+ * @uses statut_effacer_images_temporaires()
+ * 
  * @param ressource $img
  *     Une ressource de type Image GD.
  * @param array $valeurs
  *     Un tableau des informations (tailles, traitement, path...) accompagnant
- *    l'image.
+ *     l'image.
  * @param int $qualite
  *     N'est utilisé que pour les images jpg.
  *     Le niveau de qualité du fichier résultant : de 0 (pire qualité, petit
@@ -504,7 +506,6 @@ function _image_imageico($img, $fichier) {
  *     valeur (85) de la constante _IMG_GD_QUALITE (modifiable depuis
  *     mes_options.php).
  * @return bool
- * 
  *     - true si le traitement GD s'est bien finalisé ;
  *     - false sinon.
  */
@@ -534,6 +535,8 @@ function _image_gd_output($img,$valeurs, $qualite=_IMG_GD_QUALITE){
  * Reconstruit une image à partir des sources de contrôle de son ancienne
  * construction
  *
+ * @uses ramasse_miettes()
+ * 
  * @param string $fichier_manquant
  *     Chemin vers le fichier manquant
 **/
@@ -601,8 +604,6 @@ function ramasse_miettes($fichier){
  * d'images dans un squelette.
  * 
  * @filtre
- * @link http://code.spip.net/@image_graver
- * 
  * @uses reconstruire_image_intermediaire()
  *     Si l'image finale a déjà été supprimée car considérée comme temporaire
  *     par une autre série de filtres images débutant pareil
@@ -996,7 +997,6 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process='AUTO',
 }
 
 // Calculer le ratio
-// http://code.spip.net/@image_ratio
 function _image_ratio ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 	$ratioWidth = $srcWidth/$maxWidth;
 	$ratioHeight = $srcHeight/$maxHeight;
@@ -1017,7 +1017,6 @@ function _image_ratio ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 }
 
 // Calculer le ratio ajuste sur la plus petite dimension
-// http://code.spip.net/@ratio_passe_partout
 function ratio_passe_partout ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 	$ratioWidth = $srcWidth/$maxWidth;
 	$ratioHeight = $srcHeight/$maxHeight;
@@ -1037,7 +1036,7 @@ function ratio_passe_partout ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 		min($ratioWidth,$ratioHeight));
 }
 
-// http://code.spip.net/@process_image_reduire
+
 function process_image_reduire($fonction,$img,$taille,$taille_y,$force,$cherche_image,$process){
 	$image = false;
 	if (($process == 'AUTO') AND isset($GLOBALS['meta']['image_process']))
