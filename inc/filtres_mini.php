@@ -114,7 +114,7 @@ function suivre_lien($url, $lien) {
  * @param string $base URL de base de destination (par défaut ce sera l'URL de notre site)
  * @return string Texte ou URL (en absolus)
 **/
-function url_absolue($url, $base='') {
+function url_absolue($url, $base = '') {
 	if (strlen($url = trim($url)) == 0)
 		return '';
 	if (!$base)
@@ -145,7 +145,7 @@ function protocole_implicite($url_absolue){
  * @param string $base URL de base de destination (par défaut ce sera l'URL de notre site)
  * @return string Texte avec des URLs absolues
 **/
-function liens_absolus($texte, $base='') {
+function liens_absolus($texte, $base = '') {
 	if (preg_match_all(',(<(a|link|image|img|script)\s[^<>]*(href|src)=[^<>]*>),imsS', 
 	$texte, $liens, PREG_SET_ORDER)) {
 		foreach ($liens as $lien) {
@@ -179,7 +179,7 @@ function liens_absolus($texte, $base='') {
  * @param string $base URL de base de destination (par défaut ce sera l'URL de notre site)
  * @return string Texte ou URL (en absolus)
 **/
-function abs_url($texte, $base='') {
+function abs_url($texte, $base = '') {
 	if ($GLOBALS['mode_abs_url'] == 'url')
 		return url_absolue($texte, $base);
 	else
@@ -195,7 +195,7 @@ function abs_url($texte, $base='') {
 * @param bool $double_encode
 * @return string
 */
-function spip_htmlspecialchars($string, $flags=null, $encoding='ISO-8859-1', $double_encode = true){
+function spip_htmlspecialchars($string, $flags = null, $encoding = 'ISO-8859-1', $double_encode = true){
 	if (is_null($flags)) {
 		$flags = ENT_COMPAT;
 		if (defined('ENT_HTML401')) {
@@ -215,7 +215,7 @@ function spip_htmlspecialchars($string, $flags=null, $encoding='ISO-8859-1', $do
 * @param bool $double_encode
 * @return string
 */
-function spip_htmlentities($string,$flags=null,$encoding = 'ISO-8859-1',$double_encode = true){
+function spip_htmlentities($string, $flags = null, $encoding = 'ISO-8859-1', $double_encode = true){
 	if (is_null($flags)) {
 		$flags = ENT_COMPAT;
 		if (defined('ENT_HTML401')) {

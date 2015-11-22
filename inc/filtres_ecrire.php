@@ -81,7 +81,7 @@ function parametres_css_prive(){
  * @param bool $retour_sans_cadre
  * @return string
  */
-function chercher_rubrique($titre,$id_objet, $id_parent, $objet, $id_secteur, $restreint,$actionable = false, $retour_sans_cadre=false){
+function chercher_rubrique($titre, $id_objet, $id_parent, $objet, $id_secteur, $restreint, $actionable = false, $retour_sans_cadre = false){
 	global $spip_lang_right;
 	include_spip('inc/autoriser');
 	if (intval($id_objet) && !autoriser('modifier', $objet, $id_objet))
@@ -146,7 +146,7 @@ function chercher_rubrique($titre,$id_objet, $id_parent, $objet, $id_secteur, $r
  * @param bool $accepter
  * @return bool
  */
-function avoir_visiteurs($past=false, $accepter=true) {
+function avoir_visiteurs($past = false, $accepter = true) {
 	if ($GLOBALS['meta']["forums_publics"] == 'abo') return true;
 	if ($accepter AND $GLOBALS['meta']["accepter_visiteurs"] <> 'non') return true;
 	if (sql_countsel('spip_articles', "accepter_forum='abo'"))return true;
@@ -192,7 +192,7 @@ function statuts_articles_visibles($statut_auteur){
  * @param string $attente
  * @return string
  */
-function traduire_statut_auteur($statut,$attente=""){
+function traduire_statut_auteur($statut, $attente = ""){
 	$plus = "";
 	if ($statut=='nouveau') {
 		if ($attente) {
@@ -229,7 +229,7 @@ function traduire_statut_auteur($statut,$attente=""){
  * @param string $objet
  * @return string
  */
-function afficher_qui_edite($id_objet,$objet){
+function afficher_qui_edite($id_objet, $objet){
 	static $qui = array();
 	if (isset($qui[$objet][$id_objet]))
 		return $qui[$objet][$id_objet];
@@ -263,7 +263,7 @@ function afficher_qui_edite($id_objet,$objet){
  *   dans tous les cas, les statuts existants en base sont inclus
  * @return array
  */
-function auteurs_lister_statuts($quoi='tous',$en_base=true) {
+function auteurs_lister_statuts($quoi = 'tous', $en_base = true) {
 	if (!defined('AUTEURS_MIN_REDAC')) define('AUTEURS_MIN_REDAC', "0minirezo,1comite,5poubelle");
 
 	switch($quoi){
@@ -317,7 +317,7 @@ function auteurs_lister_statuts($quoi='tous',$en_base=true) {
  * @param string $objet    Objet en cours de création
  * @return int             Identifiant de la rubrique dans laquelle créer l'objet
  */
-function trouver_rubrique_creer_objet($id_rubrique,$objet){
+function trouver_rubrique_creer_objet($id_rubrique, $objet){
 	global $connect_id_rubrique;
 	if (!$id_rubrique AND defined('_CHOIX_RUBRIQUE_PAR_DEFAUT') AND _CHOIX_RUBRIQUE_PAR_DEFAUT){
 		$in = !count($connect_id_rubrique)
@@ -375,7 +375,7 @@ function lien_article_virtuel($virtuel){
  * @return string
  *     Code HTML du lien
  */
-function bouton_spip_rss($op, $args=array(), $lang='', $title='RSS') {
+function bouton_spip_rss($op, $args = array(), $lang = '', $title = 'RSS') {
 	include_spip('inc/acces');
 	$clic = http_img_pack('feed.png', 'RSS', '', $title);
 	$args = param_low_sec($op, $args, $lang, 'rss');
@@ -480,7 +480,7 @@ function filtre_afficher_enfant_rub_dist($id_rubrique){
  * 
  * @return string
  */
-function afficher_plus_info($lien, $titre="+", $titre_lien="") {
+function afficher_plus_info($lien, $titre = "+", $titre_lien = "") {
 	$titre = attribut_html($titre);
 	$icone = "\n<a href='$lien' title='$titre' class='plus_info'>" .
 		http_img_pack("information-16.png", $titre) ."</a>";
@@ -504,7 +504,7 @@ function afficher_plus_info($lien, $titre="+", $titre_lien="") {
  * @param string $objet_lien
  * @return array
  */
-function lister_objets_lies($objet_source,$objet,$id_objet,$objet_lien){
+function lister_objets_lies($objet_source, $objet, $id_objet, $objet_lien){
 	include_spip('action/editer_liens');
 	$l = array();
 	// quand $objet == $objet_lien == $objet_source on reste sur le cas par defaut de $objet_lien == $objet_source

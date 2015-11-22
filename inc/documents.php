@@ -151,7 +151,7 @@ function copier_document($ext, $orig, $source) {
  * @param string $type
  * @return bool|string
  */
-function determine_upload($type='') {
+function determine_upload($type = '') {
 	if(!function_exists('autoriser'))
 		include_spip('inc/autoriser');
 	
@@ -186,7 +186,7 @@ function determine_upload($type='') {
  *     - `false` : valeur par défaut. On ne fait que copier le fichier source vers la destination.
  * @return bool|mixed|string
  */
-function deplacer_fichier_upload($source, $dest, $move=false) {
+function deplacer_fichier_upload($source, $dest, $move = false) {
 	// Securite
 	if (substr($dest,0,strlen(_DIR_RACINE))==_DIR_RACINE)
 		$dest = _DIR_RACINE.preg_replace(',\.\.+,', '.', substr($dest,strlen(_DIR_RACINE)));
@@ -230,7 +230,7 @@ function deplacer_fichier_upload($source, $dest, $move=false) {
  * @param bool $return
  * @return boolean|string
  */
-function check_upload_error($error, $msg='', $return=false) {
+function check_upload_error($error, $msg = '', $return = false) {
 	global $spip_lang_right;
 
 	if (!$error) return false;

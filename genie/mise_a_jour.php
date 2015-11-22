@@ -165,7 +165,7 @@ function info_maj($dir, $file, $version){
  * @return string
  *     Contenu du fichier de cache de l'info de maj de SPIP.
  */
-function info_maj_cache($nom, $dir, $page=''){
+function info_maj_cache($nom, $dir, $page = ''){
 	$re = '<archives id="a' . $GLOBALS['meta']["alea_ephemere"] . '">';
 	if (preg_match("/$re/", $page)) return $page;
 

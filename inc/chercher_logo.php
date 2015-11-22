@@ -33,7 +33,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     - Liste (chemin complet du fichier, répertoire de logos, nom du logo, extension du logo, date de modification)
  *     - array vide aucun logo trouvé.
 **/
-function inc_chercher_logo_dist($id, $_id_objet, $mode='on') {
+function inc_chercher_logo_dist($id, $_id_objet, $mode = 'on') {
 	global $formats_logos;
 	# attention au cas $id = '0' pour LOGO_SITE_SPIP : utiliser intval()
 

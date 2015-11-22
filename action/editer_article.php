@@ -37,7 +37,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return array
  *     Liste (identifiant de l'article, Texte d'erreur éventuel)
  */
-function action_editer_article_dist($arg=null) {
+function action_editer_article_dist($arg = null) {
 	include_spip('inc/autoriser');
 	$err="";
 	if (is_null($arg)){
@@ -83,7 +83,7 @@ function action_editer_article_dist($arg=null) {
  *     - Null si aucun champ à modifier,
  *     - Chaîne contenant un texte d'erreur sinon.
  */
-function article_modifier($id_article, $set=null) {
+function article_modifier($id_article, $set = null) {
 
 	// unifier $texte en cas de texte trop long
 	trop_longs_articles();
@@ -155,7 +155,7 @@ function article_modifier($id_article, $set=null) {
  *     Identifiant du nouvel article
  * 
  */
-function article_inserer($id_rubrique, $set=null) {
+function article_inserer($id_rubrique, $set = null) {
 
 	// Si id_rubrique vaut 0 ou n'est pas definie, creer l'article
 	// dans la premiere rubrique racine
@@ -260,7 +260,7 @@ function article_inserer($id_rubrique, $set=null) {
  * @return string
  *     Chaîne vide
  */
-function article_instituer($id_article, $c, $calcul_rub=true) {
+function article_instituer($id_article, $c, $calcul_rub = true) {
 
 	include_spip('inc/autoriser');
 	include_spip('inc/rubriques');
@@ -389,7 +389,7 @@ function article_instituer($id_article, $c, $calcul_rub=true) {
  *     null si aucune action à faire
  *     void sinon
  */
-function editer_article_heritage($id_article, $id_rubrique, $statut, $champs, $cond=true) {
+function editer_article_heritage($id_article, $id_rubrique, $statut, $champs, $cond = true) {
 
 	// Si on deplace l'article
 	//  changer aussi son secteur et sa langue (si heritee)
@@ -452,7 +452,7 @@ function trop_longs_articles() {
  *     Null si aucun champ à modifier,
  *     Chaîne contenant un texte d'erreur sinon.
  */
-function revisions_articles ($id_article, $c=false) {
+function revisions_articles ($id_article, $c = false) {
 	return article_modifier($id_article,$c);
 }
 
@@ -473,7 +473,7 @@ function revisions_articles ($id_article, $c=false) {
  *     Null si aucun champ à modifier,
  *     Chaîne contenant un texte d'erreur sinon.
  */
-function revision_article ($id_article, $c=false) {
+function revision_article ($id_article, $c = false) {
 	return article_modifier($id_article,$c);
 }
 
@@ -494,7 +494,7 @@ function revision_article ($id_article, $c=false) {
  *     Null si aucun champ à modifier,
  *     Chaîne contenant un texte d'erreur sinon.
  */
-function articles_set($id_article, $set=null) {
+function articles_set($id_article, $set = null) {
 	return article_modifier($id_article,$set);
 }
 
@@ -531,7 +531,7 @@ function insert_article($id_rubrique) {
  * @return string
  *     Chaîne vide
  */
-function instituer_article($id_article, $c, $calcul_rub=true) {
+function instituer_article($id_article, $c, $calcul_rub = true) {
 	return article_instituer($id_article,$c,$calcul_rub);
 }
 ?>

@@ -14,7 +14,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // Decompilation de l'arbre de syntaxe abstraite d'un squelette SPIP
 
-function decompiler_boucle($struct, $fmt='', $prof=0)
+function decompiler_boucle($struct, $fmt = '', $prof = 0)
 {
 	$nom = $struct->id_boucle;
 	$avant = decompiler_($struct->avant, $fmt, $prof);
@@ -42,7 +42,7 @@ function decompiler_boucle($struct, $fmt='', $prof=0)
 	return $f($avant, $nom, $type, $crit, $milieu, $apres, $altern, $prof);
 }
 	
-function decompiler_include($struct, $fmt='', $prof=0)
+function decompiler_include($struct, $fmt = '', $prof = 0)
 {
 	$res = array();
 	foreach($struct->param ? $struct->param : array() as $couple) {
@@ -57,19 +57,19 @@ function decompiler_include($struct, $fmt='', $prof=0)
 	return $f($file, $res, $prof);
 }
 
-function decompiler_texte($struct, $fmt='', $prof=0)
+function decompiler_texte($struct, $fmt = '', $prof = 0)
 {
 	$f = 'format_texte_' . $fmt;
 	return strlen($struct->texte) ? $f($struct->texte, $prof) : '';
 }
 
-function decompiler_polyglotte($struct, $fmt='', $prof=0)
+function decompiler_polyglotte($struct, $fmt = '', $prof = 0)
 {
 	$f = 'format_polyglotte_' . $fmt;
 	return $f($struct->traductions, $prof);
 }
 
-function decompiler_idiome($struct, $fmt='', $prof=0)
+function decompiler_idiome($struct, $fmt = '', $prof = 0)
 {
 	$args = array();
 	foreach ($struct->arg as $k => $v) {
@@ -82,7 +82,7 @@ function decompiler_idiome($struct, $fmt='', $prof=0)
 	return $f($struct->nom_champ, $struct->module, $args, $filtres, $prof);
 }
 
-function decompiler_champ($struct, $fmt='', $prof=0)
+function decompiler_champ($struct, $fmt = '', $prof = 0)
 {
 	$avant = decompiler_($struct->avant, $fmt, $prof);
 	$apres = decompiler_($struct->apres, $fmt, $prof);
@@ -96,7 +96,7 @@ function decompiler_champ($struct, $fmt='', $prof=0)
 	return $f($struct->nom_champ, $struct->nom_boucle, $struct->etoile, $avant, $apres, $args, $filtres, $prof);
 }
 
-function decompiler_liste($sources, $fmt='', $prof=0) {
+function decompiler_liste($sources, $fmt = '', $prof = 0) {
 	if (!is_array($sources)) return '';
 	$f = 'format_liste_' . $fmt;
 	$res = '';
@@ -123,7 +123,7 @@ function decompiler_liste($sources, $fmt='', $prof=0) {
 // - le phraseur fournit un bout du source en plus de la compil
 // - le champ apres signale le critere {"separateur"} ou {'separateur'}
 // - les champs sont implicitement etendus (crochets implicites mais interdits)
-function decompiler_criteres($boucle, $fmt='', $prof=0) {
+function decompiler_criteres($boucle, $fmt = '', $prof = 0) {
 	$sources = $boucle->param;
 	if (!is_array($sources)) return '';
 	$res = '';
@@ -155,7 +155,7 @@ function decompiler_criteres($boucle, $fmt='', $prof=0) {
 }
 
 
-function decompiler_($liste, $fmt='', $prof=0)
+function decompiler_($liste, $fmt = '', $prof = 0)
 {
 	if (!is_array($liste))  return '';
 	$prof2 = ($prof < 0) ? ($prof-1) : ($prof+1);
@@ -190,7 +190,7 @@ function decompiler_($liste, $fmt='', $prof=0)
 	return $f($contenu);
 }
 
-function public_decompiler($liste, $fmt='', $prof=0, $quoi='') 
+function public_decompiler($liste, $fmt = '', $prof = 0, $quoi = '') 
 {
 	if (!include_spip('public/format_' . $fmt)) return "'$fmt'?";
 	$f = 'decompiler_' . $quoi;

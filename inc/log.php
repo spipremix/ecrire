@@ -12,7 +12,7 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-function inc_log_dist($message, $logname=NULL, $logdir=NULL, $logsuf=NULL) {
+function inc_log_dist($message, $logname = NULL, $logdir = NULL, $logsuf = NULL) {
 	static $test_repertoire = array();
 	static $compteur = array();
 	static $debugverb = ""; // pour ne pas le recalculer au reappel

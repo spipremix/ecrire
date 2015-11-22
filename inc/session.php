@@ -34,7 +34,7 @@ $GLOBALS['visiteur_session'] = array(); # globale decrivant l'auteur
  * @param int|array|bool $auteur
  * @return bool|null|void
  */
-function inc_session_dist($auteur=false)
+function inc_session_dist($auteur = false)
 {
 	if (is_numeric($auteur))
 		return supprimer_sessions($auteur, $auteur > 0);
@@ -65,7 +65,7 @@ function inc_session_dist($auteur=false)
  * 		false pour ne pas supprimer les sessions valides de $id_auteur.
  * 		false revient donc a uniquement supprimer les vieilles sessions !
  */
-function supprimer_sessions($id_auteur, $toutes=true, $actives=true) {
+function supprimer_sessions($id_auteur, $toutes = true, $actives = true) {
 
 	spip_log("supprimer sessions auteur $id_auteur","session");
 	if ($toutes OR $id_auteur!==$GLOBALS['visiteur_session']['id_auteur']) {
@@ -193,7 +193,7 @@ function ajouter_session($auteur) {
  * @param bool $change
  * @return bool|int|null
  */
-function verifier_session($change=false) {
+function verifier_session($change = false) {
 	// si pas de cookie, c'est fichu
 	if (!isset($_COOKIE['spip_session']))
 		return false;
@@ -289,7 +289,7 @@ function session_get($nom) {
  * @param null $val
  * @return void|array
  */
-function session_set($nom, $val=null) {
+function session_set($nom, $val = null) {
 	static $remove = array();
 	static $actualiser_sessions = false;
 	if ($nom===false) return $remove;
@@ -477,7 +477,7 @@ function ecrire_fichier_session($fichier, $auteur) {
  * @param bool $tantpis
  * @return string
  */
-function fichier_session($alea, $tantpis=false) {
+function fichier_session($alea, $tantpis = false) {
 
 	if (!isset($GLOBALS['meta'][$alea])) {
 		include_spip('base/abstract_sql');

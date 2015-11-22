@@ -176,7 +176,7 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
  * @param string $parts  
  * @return array
  */
-function mail_normaliser_headers($headers, $from, $to, $texte, $parts="")
+function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "")
 {
 	$charset = $GLOBALS['meta']['charset'];
 

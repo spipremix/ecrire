@@ -28,7 +28,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param bool $phpauth
  * @return array|bool
  */
-function auth_spip_dist ($login, $pass, $serveur='', $phpauth=false) {
+function auth_spip_dist ($login, $pass, $serveur = '', $phpauth = false) {
 
 	// retrouver le login
 	$login = auth_spip_retrouver_login($login);
@@ -137,7 +137,7 @@ function auth_spip_formulaire_login($flux){
  * @return bool
  *	 toujours true pour un auteur cree dans SPIP
  */
-function auth_spip_autoriser_modifier_login($serveur=''){
+function auth_spip_autoriser_modifier_login($serveur = ''){
 	if (strlen($serveur))
 		return false; // les fonctions d'ecriture sur base distante sont encore incompletes
 	return true;
@@ -153,7 +153,7 @@ function auth_spip_autoriser_modifier_login($serveur=''){
  * @return string
  *	message d'erreur si login non valide, chaine vide sinon
  */
-function auth_spip_verifier_login($new_login, $id_auteur=0, $serveur=''){
+function auth_spip_verifier_login($new_login, $id_auteur = 0, $serveur = ''){
 	// login et mot de passe
 	if (strlen($new_login)){
 		if (strlen($new_login) < _LOGIN_TROP_COURT)
@@ -175,7 +175,7 @@ function auth_spip_verifier_login($new_login, $id_auteur=0, $serveur=''){
  * @param string $serveur
  * @return bool
  */
-function auth_spip_modifier_login($new_login, $id_auteur, $serveur=''){
+function auth_spip_modifier_login($new_login, $id_auteur, $serveur = ''){
 	if (is_null($new_login) OR auth_spip_verifier_login($new_login,$id_auteur,$serveur)!='')
 		return false;
 	if (!$id_auteur = intval($id_auteur)
@@ -207,7 +207,7 @@ function auth_spip_modifier_login($new_login, $id_auteur, $serveur=''){
  * @param string $serveur
  * @return string
  */
-function auth_spip_retrouver_login($login, $serveur=''){
+function auth_spip_retrouver_login($login, $serveur = ''){
 	if (!strlen($login)) return null; // pas la peine de requeter
 	$l = sql_quote($login,$serveur,'text');
 	if ($r = sql_getfetsel('login', 'spip_auteurs',
@@ -238,7 +238,7 @@ function auth_spip_retrouver_login($login, $serveur=''){
  * @param string $serveur
  * @return array
  */
-function auth_spip_informer_login($infos, $row, $serveur=''){
+function auth_spip_informer_login($infos, $row, $serveur = ''){
 
 	// pour la methode SPIP on a besoin des alea en plus pour encoder le pass avec
 	$infos['alea_actuel'] = $row['alea_actuel'];
@@ -253,7 +253,7 @@ function auth_spip_informer_login($infos, $row, $serveur=''){
  * @return bool
  *	toujours true pour un auteur cree dans SPIP
  */
-function auth_spip_autoriser_modifier_pass($serveur=''){
+function auth_spip_autoriser_modifier_pass($serveur = ''){
 	if (strlen($serveur))
 		return false; // les fonctions d'ecriture sur base distante sont encore incompletes
 	return true;
@@ -276,7 +276,7 @@ function auth_spip_autoriser_modifier_pass($serveur=''){
  * @return string
  *	message d'erreur si login non valide, chaine vide sinon
  */
-function auth_spip_verifier_pass($login, $new_pass, $id_auteur=0, $serveur=''){
+function auth_spip_verifier_pass($login, $new_pass, $id_auteur = 0, $serveur = ''){
 	// login et mot de passe
 	if (strlen($new_pass) < _PASS_LONGUEUR_MINI)
 		return _T('info_passe_trop_court_car_pluriel',array('nb'=>_PASS_LONGUEUR_MINI));
@@ -293,7 +293,7 @@ function auth_spip_verifier_pass($login, $new_pass, $id_auteur=0, $serveur=''){
  * @param string $serveur
  * @return bool
  */
-function auth_spip_modifier_pass($login, $new_pass, $id_auteur, $serveur=''){
+function auth_spip_modifier_pass($login, $new_pass, $id_auteur, $serveur = ''){
 	if (is_null($new_pass) OR auth_spip_verifier_pass($login, $new_pass,$id_auteur,$serveur)!='')
 		return false;
 
@@ -330,7 +330,7 @@ function auth_spip_modifier_pass($login, $new_pass, $id_auteur, $serveur=''){
  * @param string $serveur
  * @return void
  */
-function auth_spip_synchroniser_distant($id_auteur, $champs, $options = array(), $serveur=''){
+function auth_spip_synchroniser_distant($id_auteur, $champs, $options = array(), $serveur = ''){
 	// ne rien faire pour une base distante : on ne sait pas regenerer les htaccess
 	if (strlen($serveur))
 		return;

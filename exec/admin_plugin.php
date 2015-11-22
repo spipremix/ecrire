@@ -32,7 +32,7 @@ include_spip('inc/securiser_action');
  * @uses actualise_plugins_actifs()
  * @param string $retour Inutilisé
  */
- function exec_admin_plugin_dist($retour='') {
+ function exec_admin_plugin_dist($retour = '') {
 
 	if (!autoriser('configurer', '_plugins')) {
 		include_spip('inc/minipres');

@@ -36,7 +36,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return array
  *     Tableau des champs et valeurs collectées 
  */
-function collecter_requests($white_list, $black_list=array(), $set=null, $tous=false){
+function collecter_requests($white_list, $black_list = array(), $set = null, $tous = false){
 	$c = $set;
 	if (!$c){
 		$c = array();
@@ -88,7 +88,7 @@ function collecter_requests($white_list, $black_list=array(), $set=null, $tous=f
  *     - chaîne vide : Vide si tout s'est bien passé
  *     - chaîne : Texte d'un message d'erreur
  */
-function objet_modifier_champs($objet, $id_objet, $options, $c=null, $serveur='') {
+function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur = '') {
 	if (!$id_objet = intval($id_objet)) {
 		spip_log('Erreur $id_objet non defini', 'warn');
 		return _T('erreur_technique_enregistrement_impossible');
@@ -296,7 +296,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c=null, $serveur=''
  *     true si quelque chose est modifié correctement
  *     false sinon (erreur ou aucun champ modifié)
  */
-function modifier_contenu($type, $id, $options, $c=null, $serveur='') {
+function modifier_contenu($type, $id, $options, $c = null, $serveur = '') {
 	$res = objet_modifier_champs($type, $id, $options, $c, $serveur);
 	return ($res===''?true:false);
 }
@@ -318,7 +318,7 @@ function modifier_contenu($type, $id, $options, $c=null, $serveur='') {
  *     Couples des champs/valeurs modifiées
  * @return mixed|string
  */
-function revision_objet($objet,$id_objet,$c=null){
+function revision_objet($objet, $id_objet, $c = null){
 	$objet = objet_type($objet); // securite
 	include_spip('action/editer_objet');
 	return objet_modifier($objet,$id_objet,$c);

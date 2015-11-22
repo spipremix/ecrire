@@ -207,7 +207,7 @@ function expression_recherche($recherche, $options) {
 // - score pour retourner un score
 // On peut passer les tables, ou une chaine listant les tables souhaitees
 // http://code.spip.net/@recherche_en_base
-function recherche_en_base($recherche='', $tables=NULL, $options=array(), $serveur='') {
+function recherche_en_base($recherche = '', $tables = NULL, $options = array(), $serveur = '') {
 	include_spip('base/abstract_sql');
 
 	if (!is_array($tables)) {
@@ -280,7 +280,7 @@ function recherche_en_base($recherche='', $tables=NULL, $options=array(), $serve
 
 // Effectue une recherche sur toutes les tables de la base de donnees
 // http://code.spip.net/@remplace_en_base
-function remplace_en_base($recherche='', $remplace=NULL, $tables=NULL, $options=array()) {
+function remplace_en_base($recherche = '', $remplace = NULL, $tables = NULL, $options = array()) {
 	include_spip('inc/modifier');
 
 	// options par defaut

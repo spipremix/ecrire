@@ -98,7 +98,7 @@ $GLOBALS['maj'][1935] = array(
  * @param string $champ Nom du champ dans la table
  * @param string $type  Type de champ de destination, par exemple `LONGTEXT`
 **/
-function convertir_un_champ_blob_en_text($table,$champ,$type){
+function convertir_un_champ_blob_en_text($table, $champ, $type){
 	// precaution : definir le charset par defaut de la table, car c'est lui qui prevaut
 	// et il faut qu'il corresponde au charset de la connexion qui est celui
 	// dans lequel on a ecrit le champ en blob

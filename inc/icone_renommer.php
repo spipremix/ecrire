@@ -15,7 +15,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('inc/boutons');
 include_spip('base/objets');
 
-function inc_icone_renommer_dist($fond,$fonction){
+function inc_icone_renommer_dist($fond, $fonction){
 	$size = 24;
 	if (preg_match("/(?:-([0-9]{1,3}))?([.](gif|png))?$/i",$fond,$match)
 		AND ((isset($match[0]) AND $match[0]) OR (isset($match[1]) AND $match[1]))) {

@@ -50,7 +50,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     - true si déjà installé,
  *     - le tableau de get_infos sinon
  */
-function plugins_installer_dist($plug, $action, $dir_type='_DIR_PLUGINS')
+function plugins_installer_dist($plug, $action, $dir_type = '_DIR_PLUGINS')
 {
 	$get_infos = charger_fonction('get_infos','plugins');
 	$infos = $get_infos($plug, false, constant($dir_type));
@@ -148,7 +148,7 @@ function spip_plugin_install($action, $infos, $version_cible){
  * 		Sans operateur : int. -1 pour inferieur, 0 pour egal, 1 pour superieur
  * 		Avec operateur : bool. 
 **/
-function spip_version_compare($v1,$v2,$op=null){
+function spip_version_compare($v1, $v2, $op = null){
 	$v1 = strtolower(preg_replace(',([0-9])[\s-.]?(dev|alpha|a|beta|b|rc|pl|p),i','\\1.\\2',$v1));
 	$v2 = strtolower(preg_replace(',([0-9])[\s-.]?(dev|alpha|a|beta|b|rc|pl|p),i','\\1.\\2',$v2));
 	$v1 = str_replace('rc','RC',$v1); // certaines versions de PHP ne comprennent RC qu'en majuscule

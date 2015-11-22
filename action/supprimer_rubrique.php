@@ -26,7 +26,7 @@ include_spip('inc/charsets');	# pour le nom de fichier
  * @param null|int $id_rubrique
  * @return void
  */
-function action_supprimer_rubrique_dist($id_rubrique=null) {
+function action_supprimer_rubrique_dist($id_rubrique = null) {
 
 	if (is_null($id_rubrique)){
 		$securiser_action = charger_fonction('securiser_action', 'inc');

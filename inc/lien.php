@@ -20,7 +20,7 @@ include_spip('base/abstract_sql');
 // et en plus on veut pouvoir les passer en pipeline
 //
 
-function inc_lien_dist($lien, $texte='', $class='', $title='', $hlang='', $rel='', $connect='', $env=array()){
+function inc_lien_dist($lien, $texte = '', $class = '', $title = '', $hlang = '', $rel = '', $connect = '', $env = array()){
 	return $lien;
 }
 
@@ -31,7 +31,7 @@ function inc_lien_dist($lien, $texte='', $class='', $title='', $hlang='', $rel='
 define('_RACCOURCI_LIEN', "/\[([^][]*?([[]\w*[]][^][]*)*)->(>?)([^]]*)\]/msS");
 
 // http://code.spip.net/@expanser_liens
-function expanser_liens($t, $connect='', $env=array()){
+function expanser_liens($t, $connect = '', $env = array()){
 
 	$t = pipeline('pre_liens', $t);
 
@@ -44,7 +44,7 @@ function expanser_liens($t, $connect='', $env=array()){
 // Meme analyse mais pour eliminer les liens
 // et ne laisser que leur titre, a expliciter si ce n'est fait
 // http://code.spip.net/@nettoyer_raccourcis_typo
-function nettoyer_raccourcis_typo($texte, $connect=''){
+function nettoyer_raccourcis_typo($texte, $connect = ''){
 	return $texte;
 }
 
@@ -71,7 +71,7 @@ define('_RACCOURCI_CHAPO', '/^(\W*)(\W*)(\w*\d+([?#].*)?)$/');
  * @param bool $url
  * @return string
  */
-function virtuel_redirige($virtuel, $url=false){
+function virtuel_redirige($virtuel, $url = false){
 	return $virtuel;
 }
 
@@ -85,7 +85,7 @@ function virtuel_redirige($virtuel, $url=false){
 // 'url':   seulement U  (i.e. generer_url_RACCOURCI)
 
 // http://code.spip.net/@calculer_url
-function calculer_url($ref, $texte='', $pour='url', $connect='', $echappe_typo = true){
+function calculer_url($ref, $texte = '', $pour = 'url', $connect = '', $echappe_typo = true){
 	$r = traiter_lien_implicite($ref, $texte, $pour, $connect, $echappe_typo);
 	return $r ? $r : traiter_lien_explicite($ref, $texte, $pour, $connect, $echappe_typo);
 }
@@ -93,7 +93,7 @@ function calculer_url($ref, $texte='', $pour='url', $connect='', $echappe_typo =
 define('_EXTRAIRE_LIEN', ',^\s*(?:' . _PROTOCOLES_STD . '):?/?/?\s*$,iS');
 
 // http://code.spip.net/@traiter_lien_explicite
-function traiter_lien_explicite ($ref, $texte='', $pour='url', $connect='', $echappe_typo = true){
+function traiter_lien_explicite ($ref, $texte = '', $pour = 'url', $connect = '', $echappe_typo = true){
 	if (preg_match(_EXTRAIRE_LIEN, $ref))
 		return ($pour != 'tout') ? '' : array('','','','');
 
@@ -125,7 +125,7 @@ function traiter_lien_explicite ($ref, $texte='', $pour='url', $connect='', $ech
 	return array('url' => $lien, 'titre' => $texte);
 }
 
-function liens_implicite_glose_dist($texte,$id,$type,$args,$ancre,$connect=''){
+function liens_implicite_glose_dist($texte, $id, $type, $args, $ancre, $connect = ''){
 	if (function_exists($f = 'glossaire_' . $ancre))
 		$url = $f($texte, $id);
 	else
@@ -134,7 +134,7 @@ function liens_implicite_glose_dist($texte,$id,$type,$args,$ancre,$connect=''){
 }
 
 // http://code.spip.net/@traiter_lien_implicite
-function traiter_lien_implicite($ref, $texte='', $pour='url', $connect=''){
+function traiter_lien_implicite($ref, $texte = '', $pour = 'url', $connect = ''){
 	if (!($match = typer_raccourci($ref))) return false;
 	@list($type,,$id,,$args,,$ancre) = $match;
 	// attention dans le cas des sites le lien doit pointer non pas sur
@@ -199,7 +199,7 @@ function typer_raccourci($lien){
  *     @var string $lang Langue si présente, sinon ''
  * }
 **/
-function traiter_raccourci_titre($id, $type, $connect=NULL){
+function traiter_raccourci_titre($id, $type, $connect = NULL){
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table(table_objet($type));
 	if (!($desc AND $s = $desc['titre'])) return array();
@@ -233,7 +233,7 @@ define('_RACCOURCI_MODELE',
 define('_RACCOURCI_MODELE_DEBUT', '@^' . _RACCOURCI_MODELE .'@isS');
 
 // http://code.spip.net/@traiter_modeles
-function traiter_modeles($texte, $doublons=false, $echap='', $connect='', $liens = null, $env = array()){
+function traiter_modeles($texte, $doublons = false, $echap = '', $connect = '', $liens = null, $env = array()){
 	// preserver la compatibilite : true = recherche des documents
 	if ($doublons===true)
 		$doublons = array('documents'=>array('doc','emb','img'));

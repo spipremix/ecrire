@@ -49,7 +49,7 @@ function liste_plugin_files($dir_plugins = null){
 	return $plugin_files[$dir_plugins];
 }
 
-function fast_find_plugin_dirs($dir, $max_prof=100) {
+function fast_find_plugin_dirs($dir, $max_prof = 100) {
 	$fichiers = array();
 	// revenir au repertoire racine si on a recu dossier/truc
 	// pour regarder dossier/truc/ ne pas oublier le / final
@@ -82,7 +82,7 @@ function fast_find_plugin_dirs($dir, $max_prof=100) {
 	return $fichiers;
 }
 
-function is_plugin_dir($dir,$dir_plugins = null){
+function is_plugin_dir($dir, $dir_plugins = null){
 	if (is_array($dir)){
 		foreach($dir as $k=>$d){
 			if (!is_plugin_dir($d,$dir_plugins))
@@ -299,7 +299,7 @@ function plugin_fixer_procure(&$liste, &$infos){
  * @param string $dir_plugins
  * @return array
  */
-function liste_chemin_plugin($liste, $dir_plugins=_DIR_PLUGINS){
+function liste_chemin_plugin($liste, $dir_plugins = _DIR_PLUGINS){
 	foreach ($liste as $prefix=>$infos) {
 		if (!$dir_plugins
 			OR (
@@ -320,7 +320,7 @@ function liste_chemin_plugin($liste, $dir_plugins=_DIR_PLUGINS){
  *     Chemin du répertoire de plugins
  * @return array
  */
-function liste_chemin_plugin_actifs($dir_plugins=_DIR_PLUGINS){
+function liste_chemin_plugin_actifs($dir_plugins = _DIR_PLUGINS){
 	include_spip('plugins/installer');
 	return liste_chemin_plugin(liste_plugin_actifs(), $dir_plugins);
 }
@@ -381,7 +381,7 @@ function plugin_trier($infos, $liste_non_classee)
 
 // Collecte les erreurs dans la meta
 
-function plugins_erreurs($liste_non_classee, $liste, $infos, $msg=array())
+function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array())
 {
 	static $erreurs = array();
 	foreach($liste_non_classee as $p=>$resume){
@@ -401,7 +401,7 @@ function plugins_erreurs($liste_non_classee, $liste, $infos, $msg=array())
 	ecrire_meta('plugin_erreur_activation',	serialize($erreurs));
 }
 
-function plugin_donne_erreurs($raw=false, $raz=true) {
+function plugin_donne_erreurs($raw = false, $raz = true) {
 	if (!isset($GLOBALS['meta']['plugin_erreur_activation'])) return $raw?array():'';
 	$list = @unserialize($GLOBALS['meta']['plugin_erreur_activation']);
 	// Compat ancienne version
@@ -431,7 +431,7 @@ function plugin_donne_erreurs($raw=false, $raz=true) {
  * 		Tableau des messages d'erreurs recus. Il sera vide si tout va bien.
  *
 **/
-function plugin_necessite($n, $liste, $balise='necessite') {
+function plugin_necessite($n, $liste, $balise = 'necessite') {
 	$msg = array();
 	foreach($n as $need){
 		$id = strtoupper($need['nom']);
@@ -554,7 +554,7 @@ function actualise_plugins_actifs($pipe_recherche = false){
  * @return bool
  *     true si il y a eu des modifications sur la liste des plugins actifs, false sinon
 **/
-function ecrire_plugin_actifs($plugin,$pipe_recherche=false,$operation='raz') {
+function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'raz') {
 
 	// creer le repertoire cache/ si necessaire ! (installation notamment)
 	$cache = sous_repertoire(_DIR_CACHE, '', false, true);
@@ -997,7 +997,7 @@ function plugin_installes_meta()
 	ecrire_meta('plugin_installes',serialize($meta_plug_installes),'non');
 }
 
-function ecrire_fichier_php($nom, $contenu, $comment='')
+function ecrire_fichier_php($nom, $contenu, $comment = '')
 {
 	ecrire_fichier($nom,
 		       '<'.'?php' . "\n" . $comment ."\nif (defined('_ECRIRE_INC_VERSION')) {\n". $contenu . "}\n?".'>');

@@ -56,7 +56,7 @@ include_spip('base/abstract_sql');
  * @return array
  *     Retour des traitements.
 **/
-function formulaires_editer_objet_traiter($type, $id='new', $id_parent=0, $lier_trad=0, $retour='', $config_fonc='articles_edit_config', $row=array(), $hidden=''){
+function formulaires_editer_objet_traiter($type, $id = 'new', $id_parent = 0, $lier_trad = 0, $retour = '', $config_fonc = 'articles_edit_config', $row = array(), $hidden = ''){
 
 	$res = array();
 	// eviter la redirection forcee par l'action...
@@ -118,7 +118,7 @@ function formulaires_editer_objet_traiter($type, $id='new', $id_parent=0, $lier_
  * @return array
  *     Tableau des erreurs
 **/
-function formulaires_editer_objet_verifier($type,$id='new', $oblis = array()){
+function formulaires_editer_objet_verifier($type, $id = 'new', $oblis = array()){
 	$erreurs = array();
 	if (intval($id)) {
 		$conflits = controler_contenu($type,$id);
@@ -179,7 +179,7 @@ function formulaires_editer_objet_verifier($type,$id='new', $oblis = array()){
  * @return array
  *     Environnement du formulaire.
 **/
-function formulaires_editer_objet_charger($type, $id='new', $id_parent=0, $lier_trad=0, $retour='', $config_fonc='articles_edit_config', $row=array(), $hidden=''){
+function formulaires_editer_objet_charger($type, $id = 'new', $id_parent = 0, $lier_trad = 0, $retour = '', $config_fonc = 'articles_edit_config', $row = array(), $hidden = ''){
 	$table_objet = table_objet($type);
 	$table_objet_sql = table_objet_sql($type);
 	$id_table_objet = id_table_objet($type);
@@ -331,7 +331,7 @@ function editer_texte_recolle($texte, $att_text)
  * @param $champs_contenu
  * @param int $longueur
  */
-function titre_automatique($champ_titre,$champs_contenu,$longueur=null){
+function titre_automatique($champ_titre, $champs_contenu, $longueur = null){
 	if (!_request($champ_titre)){
 		$titrer_contenu = charger_fonction('titrer_contenu','inc');
 		if (!is_null($longueur))
@@ -359,7 +359,7 @@ function titre_automatique($champ_titre,$champs_contenu,$longueur=null){
  *     Longueur de coupe du texte
  * @return string
  */
-function inc_titrer_contenu_dist($champs_contenu, $c=null, $longueur=50){
+function inc_titrer_contenu_dist($champs_contenu, $c = null, $longueur = 50){
 	// trouver un champ texte non vide
 	$t = "";
 	foreach($champs_contenu as $champ){
@@ -394,7 +394,7 @@ function inc_titrer_contenu_dist($champs_contenu, $c=null, $longueur=50){
  *      - string (avec format html) : contrôles dans des input hidden
  *      - array sinon couples ('$prefixe$colonne => md5)
 **/
-function controles_md5($data, $prefixe='ctr_', $format='html'){
+function controles_md5($data, $prefixe = 'ctr_', $format = 'html'){
 	if (!is_array($data))
 		return false;
 
@@ -454,7 +454,7 @@ function controles_md5($data, $prefixe='ctr_', $format='html'){
  *     - base : le contenu du champ en base
  *     - post : le contenu posté
 **/
-function controler_contenu($type, $id, $options=array(), $c=false, $serveur='') {
+function controler_contenu($type, $id, $options = array(), $c = false, $serveur = '') {
 	include_spip('inc/filtres');
 
 	$table_objet = table_objet($type);
@@ -630,7 +630,7 @@ function display_conflit_champ($x) {
  * @param string $redirect
  * @return string
  */
-function signaler_conflits_edition($conflits, $redirect='') {
+function signaler_conflits_edition($conflits, $redirect = '') {
 	include_spip('inc/minipres');
 	include_spip('inc/revisions');
 	include_spip('afficher_diff/champ');

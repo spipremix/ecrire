@@ -34,7 +34,7 @@ include_spip('inc/rubriques');
  *     Liste : identifiant de la rubrique, message d'erreur éventuel.
  *
  */
-function action_editer_rubrique_dist($arg=null) {
+function action_editer_rubrique_dist($arg = null) {
 
 	if (is_null($arg)){
 		$securiser_action = charger_fonction('securiser_action', 'inc');
@@ -74,7 +74,7 @@ function action_editer_rubrique_dist($arg=null) {
  * @return int
  *     Identifiant de la rubrique crée
  */
-function rubrique_inserer($id_parent, $set=null) {
+function rubrique_inserer($id_parent, $set = null) {
 	$champs = array(
 		'titre' => _T('item_nouvelle_rubrique'),
 		'id_parent' => intval($id_parent),
@@ -120,7 +120,7 @@ function rubrique_inserer($id_parent, $set=null) {
  *     - chaîne vide : Vide si tout s'est bien passé
  *     - chaîne : Texte d'un message d'erreur
  */
-function rubrique_modifier($id_rubrique, $set=null) {
+function rubrique_modifier($id_rubrique, $set = null) {
 	include_spip('inc/autoriser');
 	include_spip('inc/filtres');
 
@@ -174,7 +174,7 @@ function rubrique_modifier($id_rubrique, $set=null) {
  *     true si le déplacement est fait ou s'il n'y a rien à faire
  *     false si la confirmation du déplacement n'est pas présente
  */
-function editer_rubrique_breves($id_rubrique, $id_parent, $c=array())
+function editer_rubrique_breves($id_rubrique, $id_parent, $c = array())
 {
 	if (!sql_countsel('spip_breves', "id_rubrique=$id_rubrique"))
 		return true;
@@ -286,7 +286,7 @@ function insert_rubrique($id_parent) {
  *     - chaîne vide : Vide si tout s'est bien passé
  *     - chaîne : Texte d'un message d'erreur
 **/
-function revisions_rubriques($id_rubrique, $set=null) {
+function revisions_rubriques($id_rubrique, $set = null) {
 	return rubrique_modifier($id_rubrique,$set);
 }
 

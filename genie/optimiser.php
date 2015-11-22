@@ -113,14 +113,14 @@ function optimiser_base_une_table() {
  * @return int
  *     Nombre de suppressions
 **/
-function optimiser_sansref($table, $id, $sel, $and="")
+function optimiser_sansref($table, $id, $sel, $and = '')
 {
 	$in = array();
-	while ($row = sql_fetch($sel)) $in[$row['id']]=true;
+	while ($row = sql_fetch($sel)) $in[$row['id']] = true;
 	sql_free($sel);
 
 	if ($in) {
-		sql_delete($table,  sql_in($id,array_keys($in)) . ($and?" AND $and":""));
+		sql_delete($table,  sql_in($id,array_keys($in)) . ($and ? " AND $and" : ''));
 		spip_log("Numeros des entrees $id supprimees dans la table $table: $in");
 	}
 	return count($in);

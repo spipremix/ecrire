@@ -33,7 +33,7 @@ include_spip('inc/actions');
  *     - Contenu du squelette calculé
  *     - ou tableau d'information sur le squelette.
  */
-function inc_iconifier_dist($objet, $id,  $script, $visible=false, $flag_modif=true) {
+function inc_iconifier_dist($objet, $id,  $script, $visible = false, $flag_modif = true) {
 	// compat avec anciens appels
 	$objet = objet_type($objet);
 	

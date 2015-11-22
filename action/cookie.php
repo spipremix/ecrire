@@ -30,7 +30,7 @@ include_spip('inc/cookie');
  * @param string|null $change_session 
  * @return void
  */
-function action_cookie_dist($set_cookie_admin=null, $change_session = null) {
+function action_cookie_dist($set_cookie_admin = null, $change_session = null) {
 	$redirect_echec = $redirect = null;
 	$test_echec_cookie = null;
 	$url = "";

@@ -166,7 +166,7 @@ function genie_queue_watch_dist(){
  *   priorite
  * @return void
  */
-function queue_genie_replan_job($function,$period,$last=0,$time=null, $priority=0){
+function queue_genie_replan_job($function, $period, $last = 0, $time = null, $priority = 0){
 	static $done = array();
 	if (isset($done[$function])) return;
 	$done[$function] = true;
@@ -177,7 +177,7 @@ function queue_genie_replan_job($function,$period,$last=0,$time=null, $priority=
 	}
 	if (!$last)
 		$last = $time-$period;
-	spip_log("replan_job $function $period $last $time $priority",'queue');
+	spip_log("replan_job $function $period $last $time $priority", 'queue');
 	include_spip('inc/queue');
 	// on replanifie un job cron
 	// uniquement si il n'y en a pas deja un avec le meme nom

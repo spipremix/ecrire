@@ -36,7 +36,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param string $connect
  * @return array
  */
-function public_styliser_dist($fond, $contexte, $lang='', $connect='') {
+function public_styliser_dist($fond, $contexte, $lang = '', $connect = '') {
 	static $styliser_par_z;
 
 	// s'assurer que le fond est licite

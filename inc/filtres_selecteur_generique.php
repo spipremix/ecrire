@@ -13,7 +13,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *    selectionner : tableau des objets que l'on pourra sélectionner (avec un +)
  *    afficher : tableau des objets à afficher (mais pas forcément sélectionnables)
  */
-function selecteur_lister_objets($whitelist=array(), $blacklist=array()){
+function selecteur_lister_objets($whitelist = array(), $blacklist = array()){
 	static $liste_selecteurs, $liste_parents;
 	
 	if (!$liste_selecteurs){
@@ -72,7 +72,7 @@ function selecteur_lister_objets($whitelist=array(), $blacklist=array()){
  *
  * @return array liste des identifiants trouves.
 **/
-function picker_selected($selected, $type=''){
+function picker_selected($selected, $type = ''){
 	$select = array();
 	$type = preg_replace(',\W,','',$type);
 
@@ -105,7 +105,7 @@ function picker_selected($selected, $type=''){
  * @param mixed $rubriques_ou_objets Soit un booléen (pouvant être une chaîne vide aussi) indiquant que les rubriques sont sélectionnables soit un tableau complet des objets sélectionnables.
  * @param bool $articles Booléen indiquant si les articles sont sélectionnables
  */
-function picker_identifie_id_rapide($ref, $rubriques_ou_objets=false, $articles=false){
+function picker_identifie_id_rapide($ref, $rubriques_ou_objets = false, $articles = false){
 	include_spip('inc/json');
 	include_spip('inc/lien');
 	
@@ -155,7 +155,7 @@ function picker_identifie_id_rapide($ref, $rubriques_ou_objets=false, $articles=
  * @param array $types
  * @return string
  */
-function test_enfants_rubrique($id_rubrique,$types=array()){
+function test_enfants_rubrique($id_rubrique, $types = array()){
 	static $has_child = array();
 	if (!isset($has_child[$id_rubrique])){
 		$types = (is_array($types)?array_filter($types):array());

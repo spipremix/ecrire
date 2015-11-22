@@ -306,7 +306,7 @@ function phraserTout($phraseur, $data)
 }
 
 // Init
-function ValidateurXML($process=array()) {
+function ValidateurXML($process = array()) {
 	if (is_array($process)) $this->process = $process;
 }
 
@@ -339,7 +339,7 @@ function ValidateurXML($process=array()) {
 // ayant comme entrees des sous-tableaux [message, ligne, colonne]
 
 // http://code.spip.net/@xml_valider_dist
-function xml_valider_dist($page, $apply=false, $process=false, $doctype='', $charset=null)
+function xml_valider_dist($page, $apply = false, $process = false, $doctype = '', $charset = null)
 {
 	$f = new ValidateurXML($process);
 	$sax = charger_fonction('sax', 'xml');

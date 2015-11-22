@@ -23,7 +23,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param string $style_cadre classe CSS que prendra le cadre
  * @return string Code HTML du cadre dépliable
 **/
-function cadre_depliable($icone,$titre,$deplie,$contenu,$ids='',$style_cadre='r'){
+function cadre_depliable($icone, $titre, $deplie, $contenu, $ids = '', $style_cadre = 'r'){
 	$bouton = bouton_block_depliable($titre,$deplie,$ids);
 	return 
 		debut_cadre($style_cadre,$icone,'',$bouton, '', '', false)
@@ -36,7 +36,7 @@ function cadre_depliable($icone,$titre,$deplie,$contenu,$ids='',$style_cadre='r'
 }
 
 // http://code.spip.net/@block_parfois_visible
-function block_parfois_visible($nom, $invite, $masque, $style='', $visible=false){
+function block_parfois_visible($nom, $invite, $masque, $style = '', $visible = false){
 	return "\n"
 	. bouton_block_depliable($invite,$visible,$nom)
 	. debut_block_depliable($visible,$nom)
@@ -45,7 +45,7 @@ function block_parfois_visible($nom, $invite, $masque, $style='', $visible=false
 }
 
 // http://code.spip.net/@debut_block_depliable
-function debut_block_depliable($deplie,$id=""){
+function debut_block_depliable($deplie, $id = ""){
 	$class=' blocdeplie';
 	// si on n'accepte pas js, ne pas fermer
 	if (!$deplie)
@@ -60,7 +60,7 @@ function fin_block() {
 // $deplie : true (deplie) ou false (plie) ou -1 (inactif) ou 'incertain' pour que le bouton s'auto init au chargement de la page 
 // $ids : id des div lies au bouton (facultatif, par defaut c'est le div.bloc_depliable qui suit)
 // http://code.spip.net/@bouton_block_depliable
-function bouton_block_depliable($texte,$deplie,$ids=""){
+function bouton_block_depliable($texte, $deplie, $ids = ""){
 	$bouton_id = 'b'.substr(md5($texte.microtime()),0,8);
 
 	$class = ($deplie===true)?" deplie":(($deplie==-1)?" impliable":" replie");

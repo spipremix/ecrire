@@ -44,7 +44,7 @@ if (!defined('_DELAI_CACHE_resultats')) define('_DELAI_CACHE_resultats', 600);
  *    cle primaire de la table de recherche
  * @return array
  */
-function inc_prepare_recherche_dist($recherche, $table='articles', $cond=false, $serveur='', $modificateurs = array(), $primary='') {
+function inc_prepare_recherche_dist($recherche, $table = 'articles', $cond = false, $serveur = '', $modificateurs = array(), $primary = '') {
 	static $cache = array();
 	$delai_fraicheur = min(_DELAI_CACHE_resultats,time()-(isset($GLOBALS['meta']['derniere_modif']) ? $GLOBALS['meta']['derniere_modif'] : 0 ));
 

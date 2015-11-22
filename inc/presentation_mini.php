@@ -33,7 +33,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return void
 **/
 function echo_log($f, $ret) {
-	spip_log("Page " . self() . " function $f: echo ".substr($ret,0,50)."...",'echo');
+	spip_log("Page " . self() . " function $f: echo ".substr($ret, 0, 50)."...", 'echo');
 	echo
 	(_SIGNALER_ECHOS?"#Echo par $f#" :"")
 		. $ret;
@@ -43,7 +43,7 @@ function echo_log($f, $ret) {
  * Retourne le code HTML d'un début de cadre pour le centre de page (haut de page)
  * @return string Code HTML
  */
-function debut_grand_cadre(){ return "\n<div class='table_page'>\n";}
+function debut_grand_cadre(){ return "\n<div class = 'table_page'>\n";}
 
 /**
  * Retourne le code HTML d'une fin de cadre pour le centre de page (haut de page)
@@ -61,13 +61,13 @@ function fin_grand_cadre(){ return "\n</div>";}
  * Retourne le code HTML du début de la colonne gauche
  * @return string Code HTML
  */
-function debut_gauche() {	return "<div id='conteneur' class=''>\n<div id='navigation' class='lat' role='contentinfo'>\n";}
+function debut_gauche() {	return "<div id = 'conteneur' class = ''>\n<div id = 'navigation' class = 'lat' role = 'contentinfo'>\n";}
 
 /**
  * Retourne le code HTML de la fin de la colonne
  * @return string Code HTML
  */
-function fin_gauche(){return "</div></div><br class='nettoyeur' />";}
+function fin_gauche(){return "</div></div><br class = 'nettoyeur' />";}
 
 /**
  * Retourne le code HTML du changement de colonne (passer de la gauche à la droite)
@@ -109,7 +109,7 @@ function debut_droite() {
  * @return string
  *     Code HTML
 **/
-function liste_objets_bloques($exec,$contexte=array(),$auteur=null){
+function liste_objets_bloques($exec, $contexte = array(), $auteur = null){
 	$res = '';
 	if ($GLOBALS['meta']["articles_modif"] != "non") {
 		include_spip('inc/drapeau_edition');
@@ -253,7 +253,7 @@ function info_copyright() {
  * @param string $complement  Code HTML supplémentaire
  * @return string             Code HTML
 **/
-function formulaire_recherche($page, $complement=""){
+function formulaire_recherche($page, $complement = ""){
 	$recherche = _request('recherche');
 	$recherche_aff = entites_html($recherche);
 	if (!strlen($recherche)) {

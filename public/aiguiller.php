@@ -140,7 +140,7 @@ function traiter_appels_inclusions_ajax(){
 // Le 1er renvoie True si il faut faire exit a la sortie
 
 // http://code.spip.net/@traiter_formulaires_dynamiques
-function traiter_formulaires_dynamiques($get=false){
+function traiter_formulaires_dynamiques($get = false){
 	static $post = array();
 	static $done = false;
 

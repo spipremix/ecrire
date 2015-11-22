@@ -64,7 +64,7 @@ function xml_debutElement($phraseur, $name, $attrs)
 }
 
 // http://code.spip.net/@xml_finElement
-function xml_finElement($phraseur, $name, $fusion_bal=false)
+function xml_finElement($phraseur, $name, $fusion_bal = false)
 {
 	$ouv = $phraseur->ouvrant[$phraseur->depth];
 
@@ -153,7 +153,7 @@ function coordonnees_erreur($phraseur, $msg)
 }
 
 // http://code.spip.net/@xml_sax_dist
-function xml_sax_dist($page, $apply=false, $phraseur=NULL, $doctype='', $charset=null)
+function xml_sax_dist($page, $apply = false, $phraseur = NULL, $doctype = '', $charset = null)
 {
 	if (is_null($charset))
 		$charset = $GLOBALS['meta']['charset'];
@@ -232,7 +232,7 @@ function xml_sax_dist($page, $apply=false, $phraseur=NULL, $doctype='', $charset
 // sinon on se rabat sur ce qu'en connait SPIP en standard.
 
 // http://code.spip.net/@sax_bug
-function sax_bug($data, $dtc, $charset=null)
+function sax_bug($data, $dtc, $charset = null)
 {
 	if (is_null($charset))
 		$charset = $GLOBALS['meta']['charset'];

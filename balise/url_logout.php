@@ -33,7 +33,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return Champ
  *     Pile complétée du code compilé
 **/
-function balise_URL_LOGOUT ($p) {return calculer_balise_dynamique($p,'URL_LOGOUT', array());
+function balise_URL_LOGOUT ($p) {
+	return calculer_balise_dynamique($p, 'URL_LOGOUT', array());
 }
 
 

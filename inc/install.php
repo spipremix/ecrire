@@ -75,7 +75,7 @@ function install_fichier_connexion($nom, $texte)
  *     Texte du fichier de connexion
  * 
 **/
-function install_connexion($adr, $port, $login, $pass, $base, $type, $pref, $ldap='', $charset='')
+function install_connexion($adr, $port, $login, $pass, $base, $type, $pref, $ldap = '', $charset = '')
 {
 	$adr = addcslashes($adr,"'\\");
 	$port = addcslashes($port,"'\\");
@@ -138,7 +138,7 @@ function analyse_fichier_connection($file)
  * @return array
  *     Liste des noms de connecteurs
 **/
-function bases_referencees($exclu='')
+function bases_referencees($exclu = '')
 {
 	$tables = array();
 	foreach(preg_files(_DIR_CONNECT, '.php$') as $f) {
@@ -149,7 +149,7 @@ function bases_referencees($exclu='')
 }
 
 
-function install_mode_appel($server_db, $tout=true)
+function install_mode_appel($server_db, $tout = true)
 {
 	return ($server_db != 'mysql') ? ''
 	: (($tout  ? test_rappel_nom_base_mysql($server_db) : '')
@@ -261,7 +261,7 @@ function bouton_suivant($code = '') {
 }
 
 // http://code.spip.net/@info_progression_etape
-function info_progression_etape($en_cours,$phase,$dir, $erreur = false){
+function info_progression_etape($en_cours, $phase, $dir, $erreur = false){
 	//$en_cours = _request('etape')?_request('etape'):"";
 	$liste = find_all_in_path($dir,$phase.'(([0-9])+|fin)[.]php$');
 	$debut = 1; $etat = "ok";
@@ -306,7 +306,7 @@ function info_progression_etape($en_cours,$phase,$dir, $erreur = false){
 
 
 // http://code.spip.net/@fieldset
-function fieldset($legend,  $champs = array(), $apres='', $avant='') {
+function fieldset($legend,  $champs = array(), $apres = '', $avant = '') {
 	return "<fieldset>\n" .
 	  $avant .
 	  ($legend ? "<legend>".$legend."</legend>\n" : '') .
@@ -369,7 +369,7 @@ function install_select_serveur()
 }
 
 // http://code.spip.net/@install_connexion_form
-function install_connexion_form($db, $login, $pass, $predef, $hidden, $etape, $jquery=true)
+function install_connexion_form($db, $login, $pass, $predef, $hidden, $etape, $jquery = true)
 {
 	$server_db = (is_string($predef[0])) ? $predef[0] : '';
 
@@ -497,7 +497,7 @@ function predef_ou_cache($adresse_db, $login_db, $pass_db, $server_db)
 // presentation des bases existantes
 
 // http://code.spip.net/@install_etape_liste_bases
-function install_etape_liste_bases($server_db, $login_db, $disabled=array())
+function install_etape_liste_bases($server_db, $login_db, $disabled = array())
 {
 	$bases = $checked = array();
 	$noms = sql_listdbs($server_db);

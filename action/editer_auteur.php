@@ -33,7 +33,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return array
  *     Liste (identifiant de l'auteur, Texte d'erreur éventuel)
  */
-function action_editer_auteur_dist($arg=null) {
+function action_editer_auteur_dist($arg = null) {
 
 	if (is_null($arg)){
 		$securiser_action = charger_fonction('securiser_action', 'inc');
@@ -84,7 +84,7 @@ function action_editer_auteur_dist($arg=null) {
  * @return int
  *     Identifiant de l'auteur créé
  */
-function auteur_inserer($source=null, $set=null) {
+function auteur_inserer($source = null, $set = null) {
 
 	// Ce qu'on va demander comme modifications
 	$champs = array();
@@ -139,7 +139,7 @@ function auteur_inserer($source=null, $set=null) {
  *     - Chaîne vide si aucune erreur,
  *     - Chaîne contenant un texte d'erreur sinon.
  */
-function auteur_modifier($id_auteur, $set = null, $force_update=false) {
+function auteur_modifier($id_auteur, $set = null, $force_update = false) {
 
 	include_spip('inc/modifier');
 	include_spip('inc/filtres');
@@ -208,7 +208,7 @@ function auteur_modifier($id_auteur, $set = null, $force_update=false) {
  *     En cas de lot de liens, c'est la même qualification qui est appliquée à tous
  * @return string
  */
-function auteur_associer($id_auteur,$objets, $qualif = null){
+function auteur_associer($id_auteur, $objets, $qualif = null){
 	include_spip('action/editer_liens');
 	return objet_associer(array('auteur'=>$id_auteur), $objets, $qualif);
 }
@@ -224,7 +224,7 @@ function auteur_associer($id_auteur,$objets, $qualif = null){
  * @param array $c
  * @return string
  */
-function auteur_referent($id_auteur,$c){
+function auteur_referent($id_auteur, $c){
 	return auteur_associer($id_auteur,$c);
 }
 
@@ -243,7 +243,7 @@ function auteur_referent($id_auteur,$c){
  *     Un `*` pour $id_auteur,$objet,$id_objet permet de traiter par lot
  * @return string
  */
-function auteur_dissocier($id_auteur,$objets){
+function auteur_dissocier($id_auteur, $objets){
 	include_spip('action/editer_liens');
 	return objet_dissocier(array('auteur'=>$id_auteur), $objets);
 }
@@ -265,7 +265,7 @@ function auteur_dissocier($id_auteur,$objets){
  *     Couples (colonne, valeur) tel que `array('vu'=>'oui');`
  * @return bool|int
  */
-function auteur_qualifier($id_auteur,$objets,$qualif){
+function auteur_qualifier($id_auteur, $objets, $qualif){
 	include_spip('action/editer_liens');
 	return objet_qualifier_liens(array('auteur'=>$id_auteur), $objets, $qualif);
 }
@@ -416,7 +416,7 @@ function auteur_instituer($id_auteur, $c, $force_webmestre = false) {
  * @param string|null $source
  * @return int
  */
-function insert_auteur($source=null) {
+function insert_auteur($source = null) {
 	return auteur_inserer($source);
 }
 
@@ -459,7 +459,7 @@ function instituer_auteur($id_auteur, $c, $force_webmestre = false) {
  * @param array $c
  * @return string|null
  */
-function revision_auteur($id_auteur, $c=false) {
+function revision_auteur($id_auteur, $c = false) {
 	return auteur_modifier($id_auteur,$c);
 }
 

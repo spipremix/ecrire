@@ -1294,7 +1294,7 @@
   // Description :
   // Parameters :
   // --------------------------------------------------------------------------------
-  function errorName($p_with_code=false)
+  function errorName($p_with_code = false)
   {
     $v_name = array ( PCLZIP_ERR_NO_ERROR => 'PCLZIP_ERR_NO_ERROR',
                       PCLZIP_ERR_WRITE_OPEN_FAIL => 'PCLZIP_ERR_WRITE_OPEN_FAIL',
@@ -1340,7 +1340,7 @@
   // Description :
   // Parameters :
   // --------------------------------------------------------------------------------
-  function errorInfo($p_full=false)
+  function errorInfo($p_full = false)
   {
     if (PCLZIP_ERROR_EXTERNAL == 1) {
       return(PclErrorString());
@@ -1379,7 +1379,7 @@
   //   true on success,
   //   false on error, the error code is set.
   // --------------------------------------------------------------------------------
-  function privCheckFormat($p_level=0)
+  function privCheckFormat($p_level = 0)
   {
     $v_result = true;
 
@@ -1432,7 +1432,7 @@
   //   1 on success.
   //   0 on failure.
   // --------------------------------------------------------------------------------
-  function privParseOptions(&$p_options_list, $p_size, &$v_result_list, $v_requested_options=false)
+  function privParseOptions(&$p_options_list, $p_size, &$v_result_list, $v_requested_options = false)
   {
     $v_result=1;
     
@@ -1876,7 +1876,7 @@
   //   1 on success.
   //   0 on failure.
   // --------------------------------------------------------------------------------
-  function privFileDescrParseAtt(&$p_file_list, &$p_filedescr, $v_options, $v_requested_options=false)
+  function privFileDescrParseAtt(&$p_file_list, &$p_filedescr, $v_options, $v_requested_options = false)
   {
     $v_result=1;
     
@@ -4998,7 +4998,7 @@
   //    1 : OK
   //   -1 : Unable to create directory
   // --------------------------------------------------------------------------------
-  function privDirCheck($p_dir, $p_is_dir=false)
+  function privDirCheck($p_dir, $p_is_dir = false)
   {
     $v_result = 1;
 
@@ -5298,7 +5298,7 @@
   // Description :
   // Parameters :
   // --------------------------------------------------------------------------------
-  function privErrorLog($p_error_code=0, $p_error_string='')
+  function privErrorLog($p_error_code = 0, $p_error_string = '')
   {
     if (PCLZIP_ERROR_EXTERNAL == 1) {
       PclError($p_error_code, $p_error_string);
@@ -5471,7 +5471,7 @@
   // --------------------------------------------------------------------------------
   // Function : PclZipUtilPathInclusion()
   // Description :
-  //   This function indicates if the path $p_path is under the $p_dir tree. Or,
+  //   This function indicates if the path $p_path is under the $p_dir tree. Or, 
   //   said in an other way, if the file or sub-dir $p_path is inside the dir
   //   $p_dir.
   //   The function indicates also if the path is exactly the same as the dir.
@@ -5560,7 +5560,7 @@
   //             3 : src & dest gzip
   // Return Values :
   // --------------------------------------------------------------------------------
-  function PclZipUtilCopyBlock($p_src, $p_dest, $p_size, $p_mode=0)
+  function PclZipUtilCopyBlock($p_src, $p_dest, $p_size, $p_mode = 0)
   {
     $v_result = 1;
 
@@ -5683,7 +5683,7 @@
   // Return Values :
   //   The path translated.
   // --------------------------------------------------------------------------------
-  function PclZipUtilTranslateWinPath($p_path, $p_remove_disk_letter=true)
+  function PclZipUtilTranslateWinPath($p_path, $p_remove_disk_letter = true)
   {
     if (_OS_SERVEUR=='windows' OR stristr(@php_uname(), 'windows')) {
       // ----- Look for potential disk letter

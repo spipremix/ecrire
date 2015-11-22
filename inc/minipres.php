@@ -143,7 +143,7 @@ function install_fin_html() {
  * @return string
  *   HTML de la page
  */
-function minipres($titre='', $corps="", $options = array()){
+function minipres($titre = '', $corps = "", $options = array()){
 
 	// compat signature old
 	// minipres($titre='', $corps="", $onload='', $all_inline = false)

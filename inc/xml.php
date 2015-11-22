@@ -44,7 +44,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     - array : l'arbre XML,
  *     - false si l'arbre xml ne peut être créé ou est vide
 **/
-function spip_xml_load($fichier, $strict=true, $clean=true, $taille_max = 1048576, $datas='', $profondeur = -1){
+function spip_xml_load($fichier, $strict = true, $clean = true, $taille_max = 1048576, $datas = '', $profondeur = -1){
 	$contenu = "";
 	if (tester_url_absolue($fichier)){
 		include_spip('inc/distant');
@@ -75,7 +75,7 @@ if (!defined('_SPIP_XML_TAG_SPLIT')) define('_SPIP_XML_TAG_SPLIT', "{<([^:>][^>]
  *     - array : l'arbre XML,
  *     - false si l'arbre xml ne peut être créé ou est vide
 **/
-function spip_xml_parse(&$texte, $strict=true, $clean=true, $profondeur = -1){
+function spip_xml_parse(&$texte, $strict = true, $clean = true, $profondeur = -1){
 	$out = array();
   // enlever les commentaires
   $charset = 'AUTO';
@@ -153,7 +153,7 @@ function spip_xml_parse(&$texte, $strict=true, $clean=true, $profondeur = -1){
 }
 
 // http://code.spip.net/@spip_xml_aplatit
-function spip_xml_aplatit($arbre,$separateur = " "){
+function spip_xml_aplatit($arbre, $separateur = " "){
 	$s = "";
 	if (is_array($arbre))
 		foreach($arbre as $tag=>$feuille){
@@ -222,7 +222,7 @@ function spip_xml_decompose_tag($tag){
  * @return bool
  *     false si aucun élément ne valide l'expression régulière, true sinon.
 **/
-function spip_xml_match_nodes($regexp,&$arbre,&$matches,$init=true){
+function spip_xml_match_nodes($regexp, &$arbre, &$matches, $init = true){
 	if ($init)
 		$matches = array();
 	if(is_array($arbre) && count($arbre))

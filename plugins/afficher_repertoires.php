@@ -74,7 +74,7 @@ function chemin_plug($racine, $plug) {
 }
 
 // http://code.spip.net/@tree_open_close_dir
-function tree_open_close_dir(&$current,$target,$deplie=array()){
+function tree_open_close_dir(&$current, $target, $deplie = array()){
 	if ($current == $target) return "";
 	$tcur = explode("/",$current);
 	$ttarg = explode("/",$target);

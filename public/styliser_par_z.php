@@ -196,7 +196,7 @@ function public_styliser_par_z_dist($flux){
  * @param bool $espace_prive
  * @return array
  */
-function z_blocs($espace_prive=false) {
+function z_blocs($espace_prive = false) {
 	if ($espace_prive)
 		return (isset($GLOBALS['z_blocs_ecrire'])?$GLOBALS['z_blocs_ecrire']:array('contenu','navigation','extra','head','hierarchie','top'));
 	return (isset($GLOBALS['z_blocs'])?$GLOBALS['z_blocs']:array('contenu'));
@@ -213,7 +213,7 @@ function z_blocs($espace_prive=false) {
  * @param bool $echafauder
  * @return mixed
  */
-function z_contenu_disponible($prefix_path,$z_contenu,$type,$ext,$echafauder=true){
+function z_contenu_disponible($prefix_path, $z_contenu, $type, $ext, $echafauder = true){
 	if ($d = z_trouver_bloc($prefix_path,$z_contenu,$type,$ext))
 		return $d;
 	return $echafauder?z_echafaudable($type):false;
@@ -250,7 +250,7 @@ function z_fond_valide($squelette){
  *	extension du squelette
  * @return string
  */
-function z_trouver_bloc($prefix_path,$bloc,$fond,$ext){
+function z_trouver_bloc($prefix_path, $bloc, $fond, $ext){
 	if (
 		(defined('_ZCORE_BLOC_PREFIX_SKEL') AND $f = find_in_path("$prefix_path$bloc/$bloc.$fond.$ext") AND z_fond_valide($f))
 		OR ($f = find_in_path("$prefix_path$bloc/$fond.$ext") AND z_fond_valide($f))
@@ -321,7 +321,7 @@ function z_echafaudable($type){
  * @param string $ext
  * @return string
  */
-function prive_echafauder_dist($exec,$table,$table_sql,$desc_exec,$ext){
+function prive_echafauder_dist($exec, $table, $table_sql, $desc_exec, $ext){
 	$scaffold = "";
 
 	// page objet ou objet_edit

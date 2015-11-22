@@ -52,7 +52,7 @@ function phraserTout($phraseur, $data)
 }
 
 // http://code.spip.net/@xml_indenter_dist
-function xml_indenter_dist($page, $apply=false)
+function xml_indenter_dist($page, $apply = false)
 {
 	$sax = charger_fonction('sax', 'xml');
 	$f = new IndenteurXML();

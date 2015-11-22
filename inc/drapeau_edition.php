@@ -105,7 +105,7 @@ function ecrire_tableau_edition($edition) {
  * @param string $type
  *     Type d'objet édité
  */
-function signale_edition($id, $auteur, $type='article') {
+function signale_edition($id, $auteur, $type = 'article') {
 	include_spip('base/objets');
 	include_spip('inc/filtres');
 	if (objet_info($type,'editable')!=='oui') {
@@ -138,7 +138,7 @@ function signale_edition($id, $auteur, $type='article') {
  * @return array
  *     Tableau sous la forme `["id_auteur"]["nom de l'auteur"] = time()`
  */
-function qui_edite ($id, $type='article') {
+function qui_edite ($id, $type = 'article') {
 
 	$edition = lire_tableau_edition();
 
@@ -155,7 +155,7 @@ function qui_edite ($id, $type='article') {
  * @return array
  *     Liste de tableaux `['nom_auteur_modif' => x|y|z, 'date_diff' => n]`
  */
-function mention_qui_edite ($id, $type='article') {
+function mention_qui_edite ($id, $type = 'article') {
 	$modif = qui_edite($id, $type);
 	unset($modif[$GLOBALS['visiteur_session']['id_auteur']]);
 
@@ -238,7 +238,7 @@ function debloquer_tous($id_auteur) {
  *     Type de l'objet
  * @return void
  */
-function debloquer_edition($id_auteur, $id_objet, $type='article') {
+function debloquer_edition($id_auteur, $id_objet, $type = 'article') {
 	$edition = lire_tableau_edition();
 
 	foreach ($edition as $objet => $data){

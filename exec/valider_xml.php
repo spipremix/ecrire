@@ -252,7 +252,7 @@ function valider_script($transformer_xml, $script, $dir, $ext)
  * @param string $args [description]
  * @return string
  */
-function valider_pseudo_url($dir, $script, $args='')
+function valider_pseudo_url($dir, $script, $args = '')
 {
 	return  ($dir == 'exec')
 	? generer_url_ecrire($script, $args, false, true)

@@ -25,7 +25,7 @@ include_spip('inc/charsets');
  * @param string $afficher_un
  * @return string
  */
-function plugins_afficher_liste_dist($url_page,$liste_plugins, $liste_plugins_checked, $liste_plugins_actifs, $dir_plugins=_DIR_PLUGINS,$afficher_un = 'afficher_plugin'){
+function plugins_afficher_liste_dist($url_page, $liste_plugins, $liste_plugins_checked, $liste_plugins_actifs, $dir_plugins = _DIR_PLUGINS, $afficher_un = 'afficher_plugin'){
 	$get_infos = charger_fonction('get_infos','plugins');
 	$ligne_plug = charger_fonction($afficher_un,'plugins');
 
@@ -88,7 +88,7 @@ function plugins_afficher_liste_dist($url_page,$liste_plugins, $liste_plugins_ch
 
 
 // http://code.spip.net/@affiche_block_initiale
-function affiche_block_initiale($initiale,$block,$block_actif){
+function affiche_block_initiale($initiale, $block, $block_actif){
 	if (strlen($block)){
 		return "<li class='item'>"
 		  . bouton_block_depliable($initiale,$block_actif?true:false)

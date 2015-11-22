@@ -98,7 +98,7 @@ function traiter_raccourcis($letexte) {
  * @param string $class Attributs HTML du conteneur à ajouter
  * @return string
  */
-function echappe_js($t,$class=' class="echappe-js"') {
+function echappe_js($t, $class = ' class = "echappe-js"') {
 	foreach(array('script','iframe') as $tag){
 		if (stripos($t,"<$tag")!==false
 			AND preg_match_all(',<'.$tag.'.*?($|</'.$tag.'.),isS', $t, $r, PREG_SET_ORDER)){
@@ -200,7 +200,7 @@ function interdire_scripts($arg) {
  * @return string $t
  *     Texte transformé
 **/
-function typo($letexte, $echapper=true, $connect=null, $env=array()) {
+function typo($letexte, $echapper = true, $connect = null, $env = array()) {
 	// Plus vite !
 	if (!$letexte) return $letexte;
 
@@ -271,7 +271,7 @@ define('_TYPO_BALISE', ",</?[a-z!][^<>]*[".preg_quote(_TYPO_PROTEGER)."][^<>]*>,
  * @param string $lang Langue
  * @return string Texte
  */
-function corriger_typo($letexte, $lang='') {
+function corriger_typo($letexte, $lang = '') {
 
 	// Plus vite !
 	if (!$letexte) return $letexte;
@@ -327,7 +327,7 @@ function corriger_typo($letexte, $lang='') {
  * @param null $forcer
  * @return string
  */
-function paragrapher($letexte, $forcer=true) {
+function paragrapher($letexte, $forcer = true) {
 	return $letexte;
 }
 
@@ -368,7 +368,7 @@ function traiter_retours_chariots($letexte) {
  * @return string $t
  *     Texte transformé
 **/
-function propre($t, $connect=null, $env=array()) {
+function propre($t, $connect = null, $env = array()) {
 	// les appels directs a cette fonction depuis le php de l'espace
 	// prive etant historiquement ecrits sans argment $connect
 	// on utilise la presence de celui-ci pour distinguer les cas

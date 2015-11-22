@@ -24,7 +24,7 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
  *     Chaîne "objet id statut". En absence utilise l'argument
  *     de l'action sécurisée.
  */
-function action_instituer_objet_dist($arg=null) {
+function action_instituer_objet_dist($arg = null) {
 
 	if (is_null($arg)){
 		$securiser_action = charger_fonction('securiser_action', 'inc');

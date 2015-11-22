@@ -29,7 +29,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param array $set
  * @return array
  */
-function action_editer_objet_dist($id=null, $objet=null, $set=null) {
+function action_editer_objet_dist($id = null, $objet = null, $set = null) {
 
 	// appel direct depuis une url avec arg = "objet/id"
 	if (is_null($id) OR is_null($objet)){
@@ -71,7 +71,7 @@ function action_editer_objet_dist($id=null, $objet=null, $set=null) {
  * @param array|null $set
  * @return mixed|string
  */
-function objet_modifier($objet, $id, $set=null) {
+function objet_modifier($objet, $id, $set = null) {
 	if (include_spip('action/editer_'.$objet)
 	  AND function_exists($modifier = $objet."_modifier"))
 		return $modifier($id,$set);
@@ -149,7 +149,7 @@ function objet_modifier($objet, $id, $set=null) {
  * @global string $GLOBALS['spip_lang']
  * @return bool|int
  */
-function objet_inserer($objet, $id_parent=null, $set=null) {
+function objet_inserer($objet, $id_parent = null, $set = null) {
 	if (include_spip('action/editer_'.$objet)
 	  AND function_exists($inserer = $objet."_inserer"))
 		return $inserer($id_parent, $set);
@@ -268,7 +268,7 @@ function objet_inserer($objet, $id_parent=null, $set=null) {
  * @param bool $calcul_rub
  * @return string
  */
-function objet_instituer($objet, $id, $c, $calcul_rub=true) {
+function objet_instituer($objet, $id, $c, $calcul_rub = true) {
 	if (include_spip('action/editer_'.$objet)
 	  AND function_exists($instituer = $objet."_instituer"))
 		return $instituer($id,$c,$calcul_rub);
@@ -422,7 +422,7 @@ function objet_instituer($objet, $id, $c, $calcul_rub=true) {
  * @param bool $cond
  * @return void
  */
-function objet_editer_heritage($objet, $id, $id_rubrique, $statut, $champs, $cond=true) {
+function objet_editer_heritage($objet, $id, $id_rubrique, $statut, $champs, $cond = true) {
 	$table_sql = table_objet_sql($objet);
 	$trouver_table = charger_fonction('trouver_table','base');
 	$desc = $trouver_table($table_sql);

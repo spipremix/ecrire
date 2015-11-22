@@ -149,7 +149,7 @@ function spip_file_get_contents($fichier) {
  * @return bool
  *     true si l'opération a réussie, false sinon.
 **/
-function lire_fichier ($fichier, &$contenu, $options=array()) {
+function lire_fichier ($fichier, &$contenu, $options = array()) {
 	$contenu = '';
 	// inutile car si le fichier n'existe pas, le lock va renvoyer false juste apres
 	// economisons donc les acces disque, sauf chez free qui rale pour un rien
@@ -212,7 +212,7 @@ function lire_fichier ($fichier, &$contenu, $options=array()) {
  * @return bool
  *     - true si l’écriture s’est déroulée sans problème.
 **/
-function ecrire_fichier ($fichier, $contenu, $ignorer_echec = false, $truncate=true) {
+function ecrire_fichier ($fichier, $contenu, $ignorer_echec = false, $truncate = true) {
 
 	#spip_timer('ecrire_fichier');
 
@@ -301,7 +301,7 @@ function ecrire_fichier ($fichier, $contenu, $ignorer_echec = false, $truncate=t
  * @param bool $truncate
  *     Écriture avec troncation ?
  */
-function ecrire_fichier_securise ($fichier, $contenu, $ecrire_quand_meme = false, $truncate=true) {
+function ecrire_fichier_securise ($fichier, $contenu, $ecrire_quand_meme = false, $truncate = true) {
 	if (substr($fichier,-4) !== '.php')
 		spip_log('Erreur de programmation: '.$fichier.' doit finir par .php');
 	$contenu = "<"."?php die ('Acces interdit'); ?".">\n" . $contenu;
@@ -324,7 +324,7 @@ function ecrire_fichier_securise ($fichier, $contenu, $ecrire_quand_meme = false
  * @return bool
  *     true si l'opération a réussie, false sinon.
  */
-function lire_fichier_securise ($fichier, &$contenu, $options=array()) {
+function lire_fichier_securise ($fichier, &$contenu, $options = array()) {
 	if ($res = lire_fichier($fichier,$contenu,$options)){
 		$contenu = substr($contenu,strlen("<"."?php die ('Acces interdit'); ?".">\n"));
 	}
@@ -390,7 +390,7 @@ function jeune_fichier($fichier, $n)
  *     - false si on n'arrive pas poser le verrou
  *     - void sinon
  */
-function supprimer_fichier($fichier, $lock=true) {
+function supprimer_fichier($fichier, $lock = true) {
 	if (!@file_exists($fichier))
 		return true;
 
@@ -427,7 +427,7 @@ function spip_unlink($f) {
  * @param bool $clear_realpath_cache
  * @param null $filename
  */
-function spip_clearstatcache($clear_realpath_cache = false, $filename=null){
+function spip_clearstatcache($clear_realpath_cache = false, $filename = null){
 	if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
    // Below PHP 5.3, clearstatcache does not accept any function parameters.
    return clearstatcache();
@@ -534,7 +534,7 @@ function supprimer_repertoire($dir) {
  * @return string
  *     Chemin du répertoire créé. 
 **/
-function sous_repertoire($base, $subdir='', $nobase = false, $tantpis=false) {
+function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false) {
 	static $dirs = array();
 
 	$base = str_replace("//", "/", $base);
@@ -628,7 +628,7 @@ function sous_repertoire($base, $subdir='', $nobase = false, $tantpis=false) {
  * @return array
  *     Chemins des fichiers trouvés.
 **/
-function preg_files($dir, $pattern=-1 /* AUTO */, $maxfiles = 10000, $recurs=array()) {
+function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs = array()) {
 	$nbfiles = 0;
 	if ($pattern == -1)
 		$pattern = "^$dir";

@@ -97,7 +97,7 @@ function action_logout_dist()
  * @param null|string $alea
  * @return string
  */
-function generer_jeton_logout($session,$alea=null){
+function generer_jeton_logout($session, $alea = null){
 	if (is_null($alea)){
 		if (!isset($GLOBALS['meta']['alea_ephemere'])){
 			include_spip('base/abstract_sql');
@@ -122,7 +122,7 @@ function generer_jeton_logout($session,$alea=null){
  * @param array $session
  * @return bool
  */
-function verifier_jeton_logout($jeton,$session){
+function verifier_jeton_logout($jeton, $session){
 	if (generer_jeton_logout($session)===$jeton)
 		return true;
 	if (!isset($GLOBALS['meta']['alea_ephemere_ancien'])){

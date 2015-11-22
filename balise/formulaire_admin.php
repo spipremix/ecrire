@@ -80,7 +80,7 @@ function balise_FORMULAIRE_ADMIN_stat($args, $context_compil) {
  * @return array
  *     Liste : Chemin du squelette, durée du cache, contexte
 **/
-function balise_FORMULAIRE_ADMIN_dyn($float='', $debug='') {
+function balise_FORMULAIRE_ADMIN_dyn($float = '', $debug = '') {
 
 	global $use_cache;
 	static $dejafait = false;
@@ -207,7 +207,7 @@ function admin_objet()
  *     - Chaine vide si on est déjà en prévisu ou si pas de previsualisation possible
  *     - Tableau d'un élément sinon.
 **/
-function admin_preview($type, $id, $desc=null)
+function admin_preview($type, $id, $desc = null)
 {
 	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW) return '';
 

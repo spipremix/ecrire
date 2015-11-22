@@ -70,7 +70,7 @@ function definir_barre_contexte($contexte = null){
  * @param bool $autorise Ne renvoyer que les boutons autorisés
  * @return array
  */
-function definir_barre_boutons($contexte=array(),$icones = true, $autorise = true) {
+function definir_barre_boutons($contexte = array(), $icones = true, $autorise = true) {
     include_spip('inc/autoriser');
 	$boutons_admin=array();
 
@@ -131,7 +131,7 @@ function definir_barre_boutons($contexte=array(),$icones = true, $autorise = tru
  * @param array|null $contexte
  * @return string
  */
-function bandeau_creer_url($url, $args="", $contexte=null){
+function bandeau_creer_url($url, $args = "", $contexte = null){
 	if (!preg_match(',[\/\?],',$url)) {
 		$url = generer_url_ecrire($url,$args,true);
 		// recuperer les parametres du contexte demande par l'url sous la forme

@@ -68,7 +68,7 @@ function changer_langue($lang) {
 // ou permettre de choisir une langue "plus proche",
 // par exemple le francais pour l'espagnol, l'anglais pour l'allemand, etc.
 
-function choisir_traduction ($trads, $lang='') {
+function choisir_traduction ($trads, $lang = '') {
 	$k = approcher_langue($trads, $lang);
 	return $k ? $trads[$k] : array_shift($trads);
 }
@@ -76,7 +76,7 @@ function choisir_traduction ($trads, $lang='') {
 // retourne son 2e argument si c'est un index du premier
 // ou un index approchant sinon et si possible, 
 // la langue X etant consideree comme une approche de X_Y
-function approcher_langue ($trads, $lang='') {
+function approcher_langue ($trads, $lang = '') {
 
 	if (!$lang) $lang = $GLOBALS['spip_lang']; 
 
@@ -119,7 +119,7 @@ function traduire_nom_langue($lang) {
 // hebreu a priori), 'droitier' sinon.
 // C'est utilise par #LANG_DIR, #LANG_LEFT, #LANG_RIGHT.
 // http://code.spip.net/@lang_dir
-function lang_dir($lang='', $droitier='ltr', $gaucher='rtl') {
+function lang_dir($lang = '', $droitier = 'ltr', $gaucher = 'rtl') {
 	static $lang_rtl = array('ar', 'fa', 'ku', 'prs', 'ps', 'ur', 'he', 'heb', 'hbo', 'yi');
 
 	return in_array(($lang ? $lang : $GLOBALS['spip_lang']), $lang_rtl) ?
@@ -132,7 +132,7 @@ function lang_dir($lang='', $droitier='ltr', $gaucher='rtl') {
 // sinon determiner la typo en fonction de la langue courante
 
 // http://code.spip.net/@lang_typo
-function lang_typo($lang='') {
+function lang_typo($lang = '') {
 	if (!$lang) {
 		$lang = isset($GLOBALS['lang_objet'])
 			? $GLOBALS['lang_objet']
@@ -164,7 +164,7 @@ function changer_typo($lang = '') {
 // pour 'changer_lang' (langue de l'article, espace prive), c'est en Ajax
 // 
 // http://code.spip.net/@menu_langues
-function menu_langues($nom_select, $default='') {
+function menu_langues($nom_select, $default = '') {
 	include_spip('inc/actions');
 
 	$langues = liste_options_langues($nom_select);
@@ -194,7 +194,7 @@ function menu_langues($nom_select, $default='') {
 }
 
 // http://code.spip.net/@select_langues
-function select_langues($nom_select, $change, $options, $label="")
+function select_langues($nom_select, $change, $options, $label = "")
 {
 	static $cpt = 0;
 	$id = "menu_langues" . $cpt++;

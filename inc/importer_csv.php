@@ -63,7 +63,7 @@ function importer_csv_nettoie_key($key){
  * @param int $len
  * @return array
  */
-function inc_importer_csv_dist($file, $head = false, $delim = ",", $enclos = '"', $len = 10000) {
+function inc_importer_csv_dist($file, $head = false, $delim = ", ", $enclos = '"', $len = 10000) {
 	$return = false;
 	if (@file_exists($file)
 		AND $handle = fopen($file, "r")){

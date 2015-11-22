@@ -26,7 +26,7 @@ function trace_query_start()
 }
 
 // http://code.spip.net/@trace_query_end
-function trace_query_end($query, $start, $result, $erreur, $serveur=''){
+function trace_query_end($query, $start, $result, $erreur, $serveur = ''){
 	if ($start)
 		trace_query_chrono($start, microtime(), $query, $result, $serveur);
 	// tracer les erreurs, sauf pour select, c'est fait dans abstract_sql
@@ -36,7 +36,7 @@ function trace_query_end($query, $start, $result, $erreur, $serveur=''){
 }
 
 // http://code.spip.net/@trace_query_chrono
-function trace_query_chrono($m1, $m2, $query, $result, $serveur='')
+function trace_query_chrono($m1, $m2, $query, $result, $serveur = '')
 {
 	include_spip('inc/filtres_mini');
 	static $tt = 0, $nb=0;

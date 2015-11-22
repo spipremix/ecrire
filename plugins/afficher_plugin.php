@@ -22,7 +22,7 @@ include_spip('inc/texte');
 include_spip('inc/plugin'); // pour plugin_est_installe
 
 // http://code.spip.net/@ligne_plug
-function plugins_afficher_plugin_dist($url_page, $plug_file, $checked, $actif, $expose=false, $class_li="item", $dir_plugins=_DIR_PLUGINS) {
+function plugins_afficher_plugin_dist($url_page, $plug_file, $checked, $actif, $expose = false, $class_li = "item", $dir_plugins = _DIR_PLUGINS) {
 
 	static $id_input = 0;
 	static $versions = array();
@@ -162,7 +162,7 @@ function plugin_resume($info, $dir_plugins, $plug_file, $url_page){
 	. "</div>";
 }
 
-function plugin_desintalle($plug_file, $nom, $dir_plugins=null){
+function plugin_desintalle($plug_file, $nom, $dir_plugins = null){
 	if (!$dir_plugins)
 		$dir_plugins = _DIR_PLUGINS;
 
@@ -195,7 +195,7 @@ function plugin_etat_en_clair($etat){
 }
 
 // http://code.spip.net/@plugin_propre
-function plugin_propre($texte, $module='') {
+function plugin_propre($texte, $module = '') {
 	// retirer le retour a la racine du module, car le find_in_path se fait depuis la racine
 	if (_DIR_RACINE AND strncmp($module,_DIR_RACINE,strlen(_DIR_RACINE))==0)
 		$module = substr($module,strlen(_DIR_RACINE));
@@ -208,7 +208,7 @@ function plugin_propre($texte, $module='') {
 
 
 // http://code.spip.net/@affiche_bloc_plugin
-function affiche_bloc_plugin($plug_file, $info, $dir_plugins=null) {
+function affiche_bloc_plugin($plug_file, $info, $dir_plugins = null) {
 	if (!$dir_plugins)
 		$dir_plugins = _DIR_PLUGINS;
 
@@ -284,7 +284,7 @@ function affiche_bloc_plugin($plug_file, $info, $dir_plugins=null) {
 	return $s;
 }
 
-function formater_credits($infos, $sep=', ') {
+function formater_credits($infos, $sep = ', ') {
 	$texte = '';
 
 	foreach ($infos as $_credit) {

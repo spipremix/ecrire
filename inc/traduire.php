@@ -35,7 +35,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return array
  *     Liste des fichiers de langue trouvés, dans l'ordre des chemins
  */
-function find_langs_in_path ($file, $dirname='lang') {
+function find_langs_in_path ($file, $dirname = 'lang') {
 	static $dirs=array();
 	$liste = array();
 	foreach(creer_chemin() as $dir) {

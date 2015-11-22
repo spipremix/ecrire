@@ -35,7 +35,7 @@ function generer_nom_fichier_cache($contexte, $page) {
  * @param $valeur
  * @return bool
  */
-function ecrire_cache($nom_cache,$valeur){
+function ecrire_cache($nom_cache, $valeur){
 	$d = substr($nom_cache,0,2);
 	$u = substr($nom_cache,2,2);
 	$rep = _DIR_CACHE;

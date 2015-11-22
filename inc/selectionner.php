@@ -42,7 +42,7 @@ include_spip('inc/filtres');
  * @return string
  *     Code HTML
 **/
-function inc_selectionner_dist ($sel, $idom="", $exclus=0, $aff_racine=false, $recur=true, $do='aff') {
+function inc_selectionner_dist ($sel, $idom = "", $exclus = 0, $aff_racine = false, $recur = true, $do = 'aff') {
 
 	if ($recur) $recur = mini_hier($sel); else $sel = 0;
 
@@ -95,7 +95,7 @@ function inc_selectionner_dist ($sel, $idom="", $exclus=0, $aff_racine=false, $r
  * @return string
  *     Code HTML
 **/
-function construire_selectionner_hierarchie($idom, $liste, $racine, $url, $name, $url_init='')
+function construire_selectionner_hierarchie($idom, $liste, $racine, $url, $name, $url_init = '')
 {
 	global $spip_lang_right;
 

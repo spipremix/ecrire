@@ -40,7 +40,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return bool
  *     true si le cookie a été posé, false sinon.
 **/
-function spip_setcookie ($name='', $value='', $expire=0, $path='AUTO', $domain='', $secure='') {
+function spip_setcookie ($name = '', $value = '', $expire = 0, $path = 'AUTO', $domain = '', $secure = '') {
 	// liste des cookies en httponly (a passer en define si besoin)
 	$httponly = in_array($name, explode(' ', 'spip_session'));
 

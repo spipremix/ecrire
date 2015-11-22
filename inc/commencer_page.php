@@ -40,7 +40,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param bool $alertes ?
  * @return string Code HTML
 **/
-function inc_commencer_page_dist($titre = "", $rubrique = "accueil", $sous_rubrique = "accueil", $id_rubrique = "",$menu=true,$minipres=false, $alertes = true) {
+function inc_commencer_page_dist($titre = "", $rubrique = "accueil", $sous_rubrique = "accueil", $id_rubrique = "", $menu = true, $minipres = false, $alertes = true) {
 	global $connect_id_auteur;
 
 	include_spip('inc/headers');
@@ -72,7 +72,7 @@ function inc_commencer_page_dist($titre = "", $rubrique = "accueil", $sous_rubri
  * @return string
  *     Entête du fichier HTML avec le DOCTYPE
  */
-function init_entete($titre='', $dummy=0, $minipres=false) {
+function init_entete($titre = '', $dummy = 0, $minipres = false) {
 	include_spip('inc/texte');
 	if (!$nom_site_spip = textebrut(typo($GLOBALS['meta']["nom_site"])))
 		$nom_site_spip=  _T('info_mon_site_spip');
@@ -99,7 +99,7 @@ function init_entete($titre='', $dummy=0, $minipres=false) {
  * @param bool $minipres
  * @return string
  */
-function init_head($titre='', $dummy=0, $minipres=false) {
+function init_head($titre = '', $dummy = 0, $minipres = false) {
 	return recuperer_fond("prive/squelettes/head/dist",array('titre'=>$titre,'minipres'=>$minipres?' ':''));
 }
 
@@ -120,7 +120,7 @@ function init_head($titre='', $dummy=0, $minipres=false) {
  * @param bool $menu
  * @return string
  */
-function init_body($rubrique='accueil', $sous_rubrique='accueil', $id_rubrique='',$menu=true) {
+function init_body($rubrique = 'accueil', $sous_rubrique = 'accueil', $id_rubrique = '', $menu = true) {
 	global $connect_id_auteur, $auth_can_disconnect;
 
 	$res = pipeline('body_prive',"<body class='"

@@ -45,7 +45,7 @@ function quete_virtuel($id_article, $connect) {
  * @param string $connect
  * @return array
  */
-function quete_parent_lang($table,$id,$connect=''){
+function quete_parent_lang($table, $id, $connect = ''){
 	static $cache_quete = array();
 
 	if (!isset($cache_quete[$connect][$table][$id])) {
@@ -80,7 +80,7 @@ function quete_parent_lang($table,$id,$connect=''){
  * @param string $connect
  * @return int
  */
-function quete_parent($id_rubrique, $connect='') {
+function quete_parent($id_rubrique, $connect = '') {
 	if (!$id_rubrique = intval($id_rubrique))
 		return 0;
 	$id_parent = quete_parent_lang('spip_rubriques',$id_rubrique,$connect);
@@ -114,7 +114,7 @@ function quete_rubrique($id_article, $serveur) {
  * @param string $connect
  * @return int
  */
-function quete_profondeur($id, $connect='') {
+function quete_profondeur($id, $connect = '') {
 	$n = 0;
 	while ($id) {
 		$n++;
@@ -135,7 +135,7 @@ function quete_profondeur($id, $connect='') {
  * @return string
  *     Morceau de la requête SQL testant la date
  */
-function quete_condition_postdates($champ_date, $serveur='', $ignore_previsu=false) {
+function quete_condition_postdates($champ_date, $serveur = '', $ignore_previsu = false) {
 	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW AND !$ignore_previsu)
 		return "1=1";
 	return
@@ -161,7 +161,7 @@ function quete_condition_postdates($champ_date, $serveur='', $ignore_previsu=fal
  *   true pour forcer le test même en prévisu
  * @return array
  */
-function quete_condition_statut($mstatut,$previsu,$publie, $serveur='', $ignore_previsu=false){
+function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ignore_previsu = false){
 	static $cond = array();
 	$key = func_get_args();
 	$key = implode("-",$key);
@@ -234,7 +234,7 @@ function quete_condition_statut($mstatut,$previsu,$publie, $serveur='', $ignore_
  * @param string $serveur
  * @return array|bool|null
  */
-function quete_fichier($id_document, $serveur='') {
+function quete_fichier($id_document, $serveur = '') {
 	return sql_getfetsel('fichier', 'spip_documents', ("id_document=" . intval($id_document)),	'',array(), '', '', $serveur);
 }
 
@@ -245,7 +245,7 @@ function quete_fichier($id_document, $serveur='') {
  * @param string $serveur
  * @return array|bool
  */
-function quete_document($id_document, $serveur='') {
+function quete_document($id_document, $serveur = '') {
 	return sql_fetsel('*', 'spip_documents', ("id_document=" . intval($id_document)),	'',array(), '', '', $serveur);
 }
 
@@ -335,7 +335,7 @@ function quete_logo($type, $onoff, $id, $id_rubrique, $flag) {
  * @param string $connect
  * @return bool|string
  */
-function quete_logo_file($row, $connect=NULL) {
+function quete_logo_file($row, $connect = NULL) {
 	include_spip('inc/documents');
 	$logo = vignette_logo_document($row, $connect);
 	if (!$logo) $logo = image_du_document($row);
@@ -374,7 +374,7 @@ function quete_logo_file($row, $connect=NULL) {
  *   serveur
  * @return string
  */
-function quete_logo_document($row, $lien, $align, $mode_logo, $x, $y, $connect=NULL) {
+function quete_logo_document($row, $lien, $align, $mode_logo, $x, $y, $connect = NULL) {
 	include_spip('inc/documents');
 	$logo = '';
 	if (!in_array($mode_logo,array('icone','apercu')))
@@ -396,7 +396,7 @@ function quete_logo_document($row, $lien, $align, $mode_logo, $x, $y, $connect=N
  * @param string $connect
  * @return string
  */
-function vignette_logo_document($row, $connect='')
+function vignette_logo_document($row, $connect = '')
 {
 	if (!$row['id_vignette']) return '';
 	$fichier = quete_fichier($row['id_vignette'], $connect);
@@ -425,7 +425,7 @@ function vignette_logo_document($row, $connect='')
  * @param string $connect
  * @return bool|string
  */
-function calcul_exposer ($id, $prim, $reference, $parent, $type, $connect='') {
+function calcul_exposer ($id, $prim, $reference, $parent, $type, $connect = '') {
 	static $exposer = array();
 
 	// Que faut-il exposer ? Tous les elements de $reference
@@ -493,7 +493,7 @@ function calcul_exposer ($id, $prim, $reference, $parent, $type, $connect='') {
  * @param objetc $iter
  * @return int
  */
-function quete_debut_pagination($primary,$valeur,$pas,$iter){
+function quete_debut_pagination($primary, $valeur, $pas, $iter){
 	// on ne devrait pas arriver ici si la cle primaire est inexistante
 	// ou composee, mais verifions
 	if (!$primary OR preg_match('/[,\s]/',$primary))

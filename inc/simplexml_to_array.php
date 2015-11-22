@@ -21,7 +21,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param bool $utiliser_namespace
  * @return array
  */
-function inc_simplexml_to_array_dist($u, $utiliser_namespace=false){
+function inc_simplexml_to_array_dist($u, $utiliser_namespace = false){
 	// decoder la chaine en SimpleXML si pas deja fait
 	if (is_string($u))
 		$u = simplexml_load_string($u);
@@ -38,7 +38,7 @@ function inc_simplexml_to_array_dist($u, $utiliser_namespace=false){
  * @param bool $utiliser_namespace
  * @return array
 **/
-function xmlObjToArr($obj, $utiliser_namespace=false) {
+function xmlObjToArr($obj, $utiliser_namespace = false) {
 
 	$tableau = array();
 

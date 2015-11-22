@@ -15,7 +15,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('inc/texte');
 
 // http://code.spip.net/@inc_plonger_dist
-function inc_plonger_dist($id_rubrique, $idom="", $list=array(), $col = 1, $exclu=0, $do='aff') {
+function inc_plonger_dist($id_rubrique, $idom = "", $list = array(), $col = 1, $exclu = 0, $do = 'aff') {
 	global $spip_lang_left;
 	
 	if ($list) $id_rubrique = $list[$col-1];

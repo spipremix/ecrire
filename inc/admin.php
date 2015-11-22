@@ -43,7 +43,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     Code HTML de la page (pour vérifier les droits),
  *     sinon code HTML de la page après le traitement effectué.
 **/
-function inc_admin_dist($script, $titre, $comment='', $anonymous=false)
+function inc_admin_dist($script, $titre, $comment = '', $anonymous = false)
 {
 	$reprise = true;
 	if (!isset($GLOBALS['meta'][$script])
@@ -91,7 +91,7 @@ function inc_admin_dist($script, $titre, $comment='', $anonymous=false)
  * @return string
  *     Code HTML si message d'erreur, '' sinon;
  */
-function admin_verifie_session($script, $anonymous=false) {
+function admin_verifie_session($script, $anonymous = false) {
 
 	include_spip('base/abstract_sql');
 	$pref = sprintf("_%d_",$GLOBALS['visiteur_session']['id_auteur']);
@@ -150,7 +150,7 @@ function dir_admin()
  * @return string
  *     Nom du fichier
 **/
-function fichier_admin($action, $pref='admin_') {
+function fichier_admin($action, $pref = 'admin_') {
 
 	return $pref . 
 	  substr(md5($action.(time() & ~2047).$GLOBALS['visiteur_session']['login']), 0, 10);
@@ -178,7 +178,7 @@ function fichier_admin($action, $pref='admin_') {
  *     Code HTML de la page (pour vérifier les droits),
  *     sinon chaîne vide si déjà fait.
 **/
-function debut_admin($script, $action='', $corps='') {
+function debut_admin($script, $action = '', $corps = '') {
 
 	if ((!$action) || !(autoriser('webmestre') OR autoriser('chargerftp'))) {
 		include_spip('inc/minipres');
@@ -274,7 +274,7 @@ function fin_admin($action) {
  * @return string
  *     Code HTML du formulaire
 **/
-function copy_request($script, $suite, $submit='')
+function copy_request($script, $suite, $submit = '')
 {
 	include_spip('inc/filtres');
 	foreach(array_merge($_POST,$_GET) as $n => $c) {

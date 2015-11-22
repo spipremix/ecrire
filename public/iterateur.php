@@ -20,7 +20,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * 
  */
 class IterFactory{
-	public static function create($iterateur, $command, $info=null){
+	public static function create($iterateur, $command, $info = null){
 
 		// cas des SI {si expression} analises tres tot
 		// pour eviter le chargement de tout iterateur
@@ -279,7 +279,7 @@ class IterDecorator extends FilterIterator {
 
 
 
-	protected function ajouter_filtre($cle, $op, $valeur, $not=false) {
+	protected function ajouter_filtre($cle, $op, $valeur, $not = false) {
 		if (method_exists($this->iter, 'exception_des_criteres')) {
 			if (in_array($cle, $this->iter->exception_des_criteres())) {
 				return;
@@ -399,7 +399,7 @@ class IterDecorator extends FilterIterator {
 	 * @return bool
 	 *   success or fail if not implemented
 	 */
-	public function seek($n=0, $continue=null) {
+	public function seek($n = 0, $continue = null) {
 		if ($this->func_filtre OR !method_exists($this->iter, 'seek') OR !$this->iter->seek($n)) {
 			$this->seek_loop($n);
 		}
@@ -429,7 +429,7 @@ class IterDecorator extends FilterIterator {
 	 * @param  $max
 	 * @return int
 	 */
-	public function skip($saut, $max=null){
+	public function skip($saut, $max = null){
 		// pas de saut en arriere autorise pour cette fonction
 		if (($saut=intval($saut))<=0) return $this->pos;
 		$seek = $this->pos + $saut;

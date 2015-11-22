@@ -103,7 +103,7 @@ class IterateurDATA implements Iterator {
 	 * @param  $command
 	 * @param array $info
 	 */
-	public function __construct($command, $info=array()) {
+	public function __construct($command, $info = array()) {
 		$this->type='DATA';
 		$this->command = $command;
 		$this->info = $info;
@@ -694,7 +694,7 @@ function inc_yaml_to_array_dist($u){
  * @param int $limit
  * @return array|bool
  */
-function inc_pregfiles_to_array_dist($dir, $regexp=-1, $limit=10000) {
+function inc_pregfiles_to_array_dist($dir, $regexp = -1, $limit = 10000) {
 	return (array) preg_files($dir, $regexp, $limit);
 }
 

@@ -295,7 +295,7 @@ function auth_a_loger()
  * @param array $row
  * @param null|string $date
  */
-function auth_trace($row, $date=null)
+function auth_trace($row, $date = null)
 {
 	// Indiquer la connexion. A la minute pres ca suffit.
 	if (!is_numeric($connect_quand = isset($row['quand'])?$row['quand']:''))
@@ -334,7 +334,7 @@ function auth_trace($row, $date=null)
  * @param mixed $defaut
  * @return mixed
  */
-function auth_administrer($fonction,$args,$defaut=false){
+function auth_administrer($fonction, $args, $defaut = false){
 	$auth_methode = array_shift($args);
 	$auth_methode = $auth_methode ? $auth_methode : 'spip'; // valeur par defaut au cas ou
 	if ($auth = charger_fonction($auth_methode,'auth',true)
@@ -368,7 +368,7 @@ function auth_formulaire_login($flux){
  * @param string $serveur
  * @return string/bool
  */
-function auth_retrouver_login($login, $serveur=''){
+function auth_retrouver_login($login, $serveur = ''){
 	if (!spip_connect($serveur)) {
 		include_spip('inc/minipres');
 		echo minipres(_T('info_travaux_titre'),
@@ -396,7 +396,7 @@ function auth_retrouver_login($login, $serveur=''){
  * @param string $serveur
  * @return array
  */
-function auth_informer_login($login, $serveur=''){
+function auth_informer_login($login, $serveur = ''){
 	if (!$login
 		OR !$login = auth_retrouver_login($login, $serveur)
 		OR !$row = sql_fetsel('*','spip_auteurs','login='.sql_quote($login,$serveur,'text'),'','','','',$serveur)
@@ -431,7 +431,7 @@ function auth_informer_login($login, $serveur=''){
  * @param string $serveur
  * @return mixed
  */
-function auth_identifier_login($login, $password, $serveur=''){
+function auth_identifier_login($login, $password, $serveur = ''){
 	$erreur = "";
 	foreach ($GLOBALS['liste_des_authentifications'] as $methode) {
 		if ($auth = charger_fonction($methode, 'auth',true)){
@@ -458,7 +458,7 @@ function auth_identifier_login($login, $password, $serveur=''){
  * @param string $serveur
  * @return string
  */
-function auth_url_retour_login($auth_methode, $login, $redirect='', $serveur=''){
+function auth_url_retour_login($auth_methode, $login, $redirect = '', $serveur = ''){
 	$securiser_action = charger_fonction('securiser_action','inc');
 	return $securiser_action('auth', "$auth_methode/$login", $redirect, true);
 }
@@ -472,7 +472,7 @@ function auth_url_retour_login($auth_methode, $login, $redirect='', $serveur='')
  * @param string $serveur
  * @return mixed
  */
-function auth_terminer_identifier_login($auth_methode, $login, $serveur=''){
+function auth_terminer_identifier_login($auth_methode, $login, $serveur = ''){
 	$args = func_get_args();
 	$auteur = auth_administrer('terminer_identifier_login',$args);
 	return $auteur;
@@ -537,7 +537,7 @@ function auth_deloger(){
  * @param string $serveur
  * @return bool
  */
-function auth_autoriser_modifier_login($auth_methode, $serveur=''){
+function auth_autoriser_modifier_login($auth_methode, $serveur = ''){
 	$args = func_get_args();
 	return auth_administrer('autoriser_modifier_login',$args);
 }
@@ -553,7 +553,7 @@ function auth_autoriser_modifier_login($auth_methode, $serveur=''){
  * @return string
  *  message d'erreur ou chaine vide si pas d'erreur
  */
-function auth_verifier_login($auth_methode, $new_login, $id_auteur=0, $serveur=''){
+function auth_verifier_login($auth_methode, $new_login, $id_auteur = 0, $serveur = ''){
 	$args = func_get_args();
 	return auth_administrer('verifier_login',$args,'');
 }
@@ -567,7 +567,7 @@ function auth_verifier_login($auth_methode, $new_login, $id_auteur=0, $serveur='
  * @param string $serveur
  * @return bool
  */
-function auth_modifier_login($auth_methode, $new_login, $id_auteur, $serveur=''){
+function auth_modifier_login($auth_methode, $new_login, $id_auteur, $serveur = ''){
 	$args = func_get_args();
 	return auth_administrer('modifier_login',$args);
 }
@@ -583,7 +583,7 @@ function auth_modifier_login($auth_methode, $new_login, $id_auteur, $serveur='')
  * @return bool
  *	succès ou échec
  */
-function auth_autoriser_modifier_pass($auth_methode, $serveur=''){
+function auth_autoriser_modifier_pass($auth_methode, $serveur = ''){
 	$args = func_get_args();
 	return auth_administrer('autoriser_modifier_pass',$args);
 }
@@ -600,7 +600,7 @@ function auth_autoriser_modifier_pass($auth_methode, $serveur=''){
  * @return string
  *	message d'erreur ou chaine vide si pas d'erreur
  */
-function auth_verifier_pass($auth_methode, $login, $new_pass, $id_auteur=0, $serveur=''){
+function auth_verifier_pass($auth_methode, $login, $new_pass, $id_auteur = 0, $serveur = ''){
 	$args = func_get_args();
 	return auth_administrer('verifier_pass',$args,'');
 }
@@ -617,7 +617,7 @@ function auth_verifier_pass($auth_methode, $login, $new_pass, $id_auteur=0, $ser
  * @return bool
  *	succes ou echec
  */
-function auth_modifier_pass($auth_methode, $login, $new_pass, $id_auteur, $serveur=''){
+function auth_modifier_pass($auth_methode, $login, $new_pass, $id_auteur, $serveur = ''){
 	$args = func_get_args();
 	return auth_administrer('modifier_pass',$args);
 }
@@ -634,7 +634,7 @@ function auth_modifier_pass($auth_methode, $login, $new_pass, $id_auteur, $serve
  * @param string $serveur
  * @return void
  */
-function auth_synchroniser_distant($auth_methode=true, $id_auteur=0, $champs=array(), $options = array(), $serveur=''){
+function auth_synchroniser_distant($auth_methode = true, $id_auteur = 0, $champs = array(), $options = array(), $serveur = ''){
 	$args = func_get_args();
 	if ($auth_methode===true OR (isset($options['all']) AND $options['all']==true)){
 		$options['all'] = true; // ajouter une option all=>true pour chaque auth
@@ -658,7 +658,7 @@ function auth_synchroniser_distant($auth_methode=true, $id_auteur=0, $champs=arr
  * @param string $serveur
  * @return array|bool
  */
-function lire_php_auth($login, $pw, $serveur=''){
+function lire_php_auth($login, $pw, $serveur = ''){
 
 	$row = sql_fetsel('*', 'spip_auteurs', 'login=' . sql_quote($login,$serveur,'text'),'','','','',$serveur);
 
@@ -695,7 +695,7 @@ function lire_php_auth($login, $pw, $serveur=''){
  * @param string $re
  * @param string $lien
  */
-function ask_php_auth($pb, $raison, $retour='', $url='', $re='', $lien='') {
+function ask_php_auth($pb, $raison, $retour = '', $url = '', $re = '', $lien = '') {
 	@Header("WWW-Authenticate: Basic realm=\"espace prive\"");
 	@Header("HTTP/1.0 401 Unauthorized");
 	$corps = "";

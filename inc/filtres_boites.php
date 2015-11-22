@@ -123,7 +123,7 @@ function balise_BOITE_FERMER_dist($p) {
  * @return string
  *     HTML du début de la boîte
  */
-function boite_ouvrir($titre, $class='', $head_class='', $id=""){
+function boite_ouvrir($titre, $class = '', $head_class = '', $id = ""){
 	$class = "box $class";
 	$head_class = "clearfix hd $head_class";
 	// dans l'espace prive, titrer en h3 si pas de balise <hn>
@@ -149,7 +149,7 @@ function boite_ouvrir($titre, $class='', $head_class='', $id=""){
  * @return string
  *     HTML de transition vers le pied de la boîte
  */
-function boite_pied($class='act'){
+function boite_pied($class = 'act'){
 	$class = "ft $class";
 	return 	'</div>'
 	.'<div class="cleafix '.$class.'">';

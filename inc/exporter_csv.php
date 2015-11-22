@@ -49,7 +49,7 @@ function exporter_csv_champ($champ) {
  *     Si défini exporte dans le charset indiqué
  * @return string
  */
-function exporter_csv_ligne($ligne, $delim = ',', $importer_charset = null) {
+function exporter_csv_ligne($ligne, $delim = ', ', $importer_charset = null) {
 	$output = join($delim, array_map('exporter_csv_champ', $ligne))."\r\n";
 	if ($importer_charset){
 		$output = unicode2charset(html2unicode(charset2unicode($output)), $importer_charset);
@@ -78,7 +78,7 @@ function exporter_csv_ligne($ligne, $delim = ',', $importer_charset = null) {
  *   pour envoyer le fichier exporte (permet le telechargement)
  * @return string
  */
-function inc_exporter_csv_dist($titre, $resource, $delim=',', $entetes = null, $envoyer = true){
+function inc_exporter_csv_dist($titre, $resource, $delim = ', ', $entetes = null, $envoyer = true){
 
 	$filename = preg_replace(',[^-_\w]+,', '_', translitteration(textebrut(typo($titre))));
 	

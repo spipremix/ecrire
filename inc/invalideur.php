@@ -41,7 +41,7 @@ if (!defined('_AGE_CACHE_ATIME')) define('_AGE_CACHE_ATIME', 3600);
  *     - false si le répertoire ne peut pas être ouvert
  *     - array(nombre de fichiers, approximation de la taille en octet) sinon
 **/
-function nombre_de_fichiers_repertoire($dir,$nb_estim_taille = 20) {
+function nombre_de_fichiers_repertoire($dir, $nb_estim_taille = 20) {
 	$taille = 0; // mesurer la taille de N fichiers au hasard dans le repertoire
 	$nb = $nb_estim_taille;
 	if (!$h = @opendir($dir)) return false;
@@ -103,7 +103,7 @@ function taille_du_cache() {
  * @param bool $modif
  *     Inutilisé
 **/
-function suivre_invalideur($cond, $modif=true) {
+function suivre_invalideur($cond, $modif = true) {
 	if (!$modif)
 		return;
 
@@ -150,7 +150,7 @@ function suivre_invalideur($cond, $modif=true) {
  * @return int
  *     Nombre de fichiers supprimés
 **/
-function purger_repertoire($dir, $options=array()) {
+function purger_repertoire($dir, $options = array()) {
 	$handle = @opendir($dir);
 	if (!$handle) return;
 

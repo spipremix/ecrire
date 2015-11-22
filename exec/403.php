@@ -21,7 +21,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * Un exec d'acces interdit
  * @param string $message
  */
-function exec_403_dist($message = ""){
+function exec_403_dist($message = ''){
 
 	$exec = _request('exec');
 

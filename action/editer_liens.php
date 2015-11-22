@@ -120,7 +120,7 @@ function objet_associer($objets_source, $objets_lies, $qualif = null){
  *     ou tous les rôles (*), en s'affranchissant du vrai nom de la colonne.
  * @return bool|int
  */
-function objet_dissocier($objets_source,$objets_lies, $cond=null){
+function objet_dissocier($objets_source, $objets_lies, $cond = null){
 	return objet_traiter_liaisons('lien_delete',$objets_source,$objets_lies, $cond);
 }
 
@@ -146,7 +146,7 @@ function objet_dissocier($objets_source,$objets_lies, $cond=null){
  * @param array $qualif
  * @return bool|int
  */
-function objet_qualifier_liens($objets_source,$objets_lies,$qualif){
+function objet_qualifier_liens($objets_source, $objets_lies, $qualif){
 	return objet_traiter_liaisons('lien_set',$objets_source,$objets_lies,$qualif);
 }
 
@@ -181,7 +181,7 @@ function objet_qualifier_liens($objets_source,$objets_lies,$qualif){
  * @return array
  *     Liste des trouvailles
  */
-function objet_trouver_liens($objets_source,$objets_lies,$cond=null){
+function objet_trouver_liens($objets_source, $objets_lies, $cond = null){
 	return objet_traiter_liaisons('lien_find',$objets_source,$objets_lies,$cond);
 }
 
@@ -205,7 +205,7 @@ function objet_trouver_liens($objets_source,$objets_lies,$cond=null){
  * @param array|string $objets_lies
  * @return int
  */
-function objet_optimiser_liens($objets_source,$objets_lies){
+function objet_optimiser_liens($objets_source, $objets_lies){
 	return objet_traiter_liaisons('lien_optimise',$objets_source,$objets_lies);
 }
 
@@ -226,7 +226,7 @@ function objet_optimiser_liens($objets_source,$objets_lies){
  * @return int
  *     Nombre de liens copiés
  */
-function objet_dupliquer_liens($objet,$id_source,$id_cible,$types=null,$exclure_types=null){
+function objet_dupliquer_liens($objet, $id_source, $id_cible, $types = null, $exclure_types = null){
 	include_spip('base/objets');
 	$tables = lister_tables_objets_sql();
 	$n = 0;
@@ -293,7 +293,7 @@ function objet_dupliquer_liens($objet,$id_source,$id_cible,$types=null,$exclure_
  *     En fonction des opérations il peut servir à différentes utilisations
  * @return bool|int|array
  */
-function objet_traiter_liaisons($operation,$objets_source,$objets_lies, $set = null){
+function objet_traiter_liaisons($operation, $objets_source, $objets_lies, $set = null){
 	// accepter une syntaxe minimale pour supprimer tous les liens
 	if ($objets_lies=='*') $objets_lies = array('*'=>'*');
 	$modifs = 0; // compter le nombre de modifications
@@ -351,7 +351,7 @@ function objet_traiter_liaisons($operation,$objets_source,$objets_lies, $set = n
  * @return bool|int
  *     Nombre d'insertions faites, false si échec.
  */
-function lien_insert($objet_source,$primary,$table_lien,$id,$objets,$qualif) {
+function lien_insert($objet_source, $primary, $table_lien, $id, $objets, $qualif) {
 	$ins = 0;
 	$echec = null;
 	if (is_null($qualif)) $qualif = array();
@@ -432,7 +432,7 @@ function lien_insert($objet_source,$primary,$table_lien,$id,$objets,$qualif) {
  * @param array $cond                   Conditions par défaut
  * @return array                        Liste des conditions
  */
-function lien_where($primary, $id_source, $objet, $id_objet, $cond=array()){
+function lien_where($primary, $id_source, $objet, $id_objet, $cond = array()){
 	if ((!is_array($id_source) AND !strlen($id_source))
 	  OR !strlen($objet)
 	  OR (!is_array($id_objet) AND !strlen($id_objet)))
@@ -493,7 +493,7 @@ function lien_where($primary, $id_source, $objet, $id_objet, $cond=array()){
  *     Un cas particulier est géré lorsque l'index 'role' est présent (ou absent)
  * @return bool|int
  */
-function lien_delete($objet_source,$primary,$table_lien,$id,$objets,$cond=null){
+function lien_delete($objet_source, $primary, $table_lien, $id, $objets, $cond = null){
 
 	$retire = array();
 	$dels = 0;
@@ -589,7 +589,7 @@ function lien_delete($objet_source,$primary,$table_lien,$id,$objets,$cond=null){
  * @param array $objets
  * @return bool|int
  */
-function lien_optimise($objet_source,$primary,$table_lien,$id,$objets){
+function lien_optimise($objet_source, $primary, $table_lien, $id, $objets){
 	include_spip('genie/optimiser');
 	$echec = false;
 	$dels = 0;
@@ -665,7 +665,7 @@ function lien_optimise($objet_source,$primary,$table_lien,$id,$objets){
  * @return bool|int
  *     Nombre de modifications faites, false si échec.
  */
-function lien_set($objet_source,$primary,$table_lien,$id,$objets,$qualif){
+function lien_set($objet_source, $primary, $table_lien, $id, $objets, $qualif){
 	$echec = null;
 	$ok = 0;
 	if (!$qualif)
@@ -755,7 +755,7 @@ function lien_set($objet_source,$primary,$table_lien,$id,$objets,$qualif){
  *     le role défini dedans (et '*' pour tous les rôles).
  * @return array
  */
-function lien_find($objet_source,$primary,$table_lien,$id,$objets,$cond=null){
+function lien_find($objet_source, $primary, $table_lien, $id, $objets, $cond = null){
 	$trouve = array();
 	foreach($objets as $objet => $id_objets){
 		$objet = ($objet=='*')?$objet:objet_type($objet); # securite
@@ -781,7 +781,7 @@ function lien_find($objet_source,$primary,$table_lien,$id,$objets,$cond=null){
  * @param string $objet
  * @param array|int $ids
  */
-function lien_propage_date_modif($objet,$ids){
+function lien_propage_date_modif($objet, $ids){
 	static $done = array();
 	$hash = md5($objet . serialize($ids));
 

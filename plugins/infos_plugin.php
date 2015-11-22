@@ -20,7 +20,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // lecture d'un texte ecrit en pseudo-xml issu d'un fichier plugin.xml
 // et conversion approximative en tableau PHP.
-function plugins_infos_plugin($desc, $plug='', $dir_plugins=_DIR_PLUGINS) {
+function plugins_infos_plugin($desc, $plug = '', $dir_plugins = _DIR_PLUGINS) {
 	include_spip('inc/xml');
 	$arbre = spip_xml_parse($desc);
 

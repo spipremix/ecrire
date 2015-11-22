@@ -42,7 +42,7 @@ include_spip('inc/autoriser'); // necessaire si appel de l'espace public
  * @return array
  *     Couples clés / valeurs des champs du formulaire à charger.
 **/
-function precharger_objet($type, $id_objet, $id_rubrique=0, $lier_trad=0, $champ_titre = 'titre') {
+function precharger_objet($type, $id_objet, $id_rubrique = 0, $lier_trad = 0, $champ_titre = 'titre') {
 	global $connect_id_rubrique, $spip_lang;
 	
 	$table = table_objet_sql($type);
@@ -126,7 +126,7 @@ function precharger_objet($type, $id_objet, $id_rubrique=0, $lier_trad=0, $champ
  * @return array
  *     Couples clés / valeurs des champs du formulaire à charger
 **/
-function precharger_traduction_objet($type, $id_objet, $id_rubrique=0, $lier_trad=0, $champ_titre = 'titre') {
+function precharger_traduction_objet($type, $id_objet, $id_rubrique = 0, $lier_trad = 0, $champ_titre = 'titre') {
 	$table = table_objet_sql($type);
 	$_id_objet = id_table_objet($table);
 

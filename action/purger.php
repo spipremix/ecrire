@@ -36,7 +36,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     Argument attendu. En absence utilise l'argument
  *     de l'action sécurisée.
  */
-function action_purger_dist($arg=null)
+function action_purger_dist($arg = null)
 {
 	if (is_null($arg)) {
 		$securiser_action = charger_fonction('securiser_action', 'inc');

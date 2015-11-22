@@ -206,7 +206,7 @@ if (!class_exists('nanoSha2'))
          * @param int $byteSize
          * @return array
         **/
-        function string2ordUTF8($s,&$byteSize){
+        function string2ordUTF8($s, &$byteSize){
             $chars = array();
             // par defaut sur 8bits
             $byteSize = 8;
@@ -274,7 +274,7 @@ if (!class_exists('nanoSha2'))
          * @param int $npad
          * @return int[]
         **/
-        function string2binint ($str,$npad=512) {
+        function string2binint ($str, $npad = 512) {
             $bin = array();
             $ords = $this->string2ordUTF8($str,$this->bytesString);
             $npad = $npad/$this->bytesString;

@@ -46,7 +46,7 @@ define('_SPIP_SELECT_RUBRIQUES', 20); /* mettre 100000 pour desactiver ajax */
  * @return string
  *     Code HTML du sélecteur
 **/
-function inc_chercher_rubrique_dist ($id_rubrique, $type, $restreint, $idem=0, $do='aff') {
+function inc_chercher_rubrique_dist ($id_rubrique, $type, $restreint, $idem = 0, $do = 'aff') {
 	if (sql_countsel('spip_rubriques')<1)
 		return '';
 
@@ -170,7 +170,7 @@ function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $excl
  * @return string
  *     Code HTML du sélecteur
 **/
-function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem=0) {
+function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem = 0) {
 	$data = array();
 	if ($type == 'rubrique' AND autoriser('publierdans','rubrique',0))
 		$data[0] = _T('info_racine_site');
@@ -253,7 +253,7 @@ function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem=0) {
  * @return string
  *     Code HTML du sélecteur
  */
-function selecteur_rubrique_ajax($id_rubrique, $type, $restreint, $idem=0, $do) {
+function selecteur_rubrique_ajax($id_rubrique, $type, $restreint, $idem = 0, $do) {
 
 	if ($id_rubrique) {
 		$titre = sql_getfetsel("titre", "spip_rubriques", "id_rubrique=".intval($id_rubrique));
@@ -300,7 +300,7 @@ function selecteur_rubrique_ajax($id_rubrique, $type, $restreint, $idem=0, $do) 
  * @return string
  *     Code HTML du sélecteur de rubrique AJAX
 **/
-function construire_selecteur($url, $js, $idom, $name, $init='', $id=0){
+function construire_selecteur($url, $js, $idom, $name, $init = '', $id = 0){
 	$icone = (strpos($idom, 'auteur')!==false) ? 'auteur-24.png' : 'rechercher-20.png';
 	return
 	"<div class='rubrique_actuelle'><a href='#' onclick=\""

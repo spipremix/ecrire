@@ -47,7 +47,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param bool $public
  * @return array|string
  */
-function inc_securiser_action_dist($action='', $arg='', $redirect="", $mode=false, $att='', $public=false)
+function inc_securiser_action_dist($action = '', $arg = '', $redirect = "", $mode = false, $att = '', $public = false)
 {
 	if ($action)
 		return securiser_action_auteur($action, $arg, $redirect, $mode, $att, $public);
@@ -90,7 +90,7 @@ function inc_securiser_action_dist($action='', $arg='', $redirect="", $mode=fals
  *    - string code HTML du formulaire, si $mode texte,
  *    - array Tableau (action=>x, arg=>x, hash=>x) si $mode=-1.
  */
-function securiser_action_auteur($action, $arg, $redirect="", $mode=false, $att='', $public=false) {
+function securiser_action_auteur($action, $arg, $redirect = "", $mode = false, $att = '', $public = false) {
 
 	// mode URL ou array
 	if (!is_string($mode)){
@@ -121,7 +121,7 @@ function securiser_action_auteur($action, $arg, $redirect="", $mode=false, $att=
  * @param int|null $id_auteur
  * @return array
  */
-function caracteriser_auteur($id_auteur=null) {
+function caracteriser_auteur($id_auteur = null) {
 	static $caracterisation = array();
 
 	if (is_null($id_auteur) AND !isset($GLOBALS['visiteur_session']['id_auteur'])) {
@@ -199,7 +199,7 @@ function _action_auteur($action, $id_auteur, $pass, $alea) {
  * @param int|null $id_auteur
  * @return string
  */
-function calculer_action_auteur($action, $id_auteur=null) {
+function calculer_action_auteur($action, $id_auteur = null) {
 	list($id_auteur, $pass) = caracteriser_auteur($id_auteur);
 	return _action_auteur($action, $id_auteur, $pass, 'alea_ephemere');
 }

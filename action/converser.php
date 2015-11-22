@@ -80,7 +80,7 @@ function action_converser_changer_langue($update_session){
  * @param bool $ecrire 
  * @return void
  */
-function action_converser_post($lang, $ecrire=false)
+function action_converser_post($lang, $ecrire = false)
 {
 	if ($lang) {
 		include_spip('inc/lang');

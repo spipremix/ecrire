@@ -47,7 +47,7 @@ define('_JQ_PENDING',0);
  * @return int
  *	id of job
  */
-function queue_add_job($function, $description, $arguments = array(), $file = '', $no_duplicate = false, $time=0, $priority=0){
+function queue_add_job($function, $description, $arguments = array(), $file = '', $no_duplicate = false, $time = 0, $priority = 0){
 	include_spip('base/abstract_sql');
 
 	// cas pourri de ecrire/action/editer_site avec l'option reload=oui
@@ -176,7 +176,7 @@ function queue_remove_job($id_job){
  *  peut être un simple tableau array('objet'=>'article','id_objet'=>23)
  *  ou un tableau composé de tableaux simples pour lieur plusieurs objets en une fois
  */
-function queue_link_job($id_job,$objets){
+function queue_link_job($id_job, $objets){
 	include_spip('base/abstract_sql');
 
 	if (is_array($objets) AND count($objets)){
@@ -361,7 +361,7 @@ function queue_schedule($force_jobs = null){
  * @param int $time
  * @param int $result
  */
-function queue_close_job(&$row,$time,$result=0){
+function queue_close_job(&$row, $time, $result = 0){
 	// est-ce une tache cron qu'il faut relancer ?
 	if ($periode = queue_is_cron_job($row['fonction'],$row['inclure'])){
 		// relancer avec les nouveaux arguments de temps
@@ -398,7 +398,7 @@ function queue_error_handler(){
  * @param <type> $inclure
  * @return <type>
  */
-function queue_is_cron_job($function,$inclure){
+function queue_is_cron_job($function, $inclure){
 	static $taches = null;
 	if (strncmp($inclure,'genie/',6)==0){
 		if (is_null($taches)){
@@ -421,7 +421,7 @@ function queue_is_cron_job($function,$inclure){
  * @param int $next_time
  *	temps de la tache ajoutee ou 0 pour ASAP
  */
-function queue_update_next_job_time($next_time=null){
+function queue_update_next_job_time($next_time = null){
 	static $nb_jobs_scheduled = null;
 	static $deja_la = false;
 	// prendre le min des $next_time que l'on voit passer ici, en cas de reentrance

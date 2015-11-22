@@ -51,7 +51,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return bool
  *     true si le statut change effectivement
 **/
-function calculer_rubriques_if ($id_rubrique, $modifs, $statut_ancien='', $postdate = false)
+function calculer_rubriques_if ($id_rubrique, $modifs, $statut_ancien = '', $postdate = false)
 {
 	$neuf = false;
 	if ($statut_ancien == 'publie') {
@@ -156,7 +156,7 @@ function depublier_branche_rubrique_if($id_rubrique){
  * @return bool
  *    true si la rubrique a été dépubliée
  */
-function depublier_rubrique_if($id_rubrique,$date=null){
+function depublier_rubrique_if($id_rubrique, $date = null){
 	if (is_null($date)) {
 		$date = date('Y-m-d H:i:s');
 	}
@@ -470,7 +470,7 @@ function calculer_langues_rubriques() {
  * @return string
  *    Liste des langues utilisées séparées par des virgules
 **/
-function calculer_langues_utilisees ($serveur='') {
+function calculer_langues_utilisees ($serveur = '') {
 	include_spip('public/interfaces');
 	include_spip('public/compiler');
 	include_spip('public/composer');
@@ -518,7 +518,7 @@ function calculer_langues_utilisees ($serveur='') {
 				} while (function_exists($functionname));
 				$code = calculer_boucle('calculer_langues_utilisees',$boucles);
 				$code = '$SP=0; $command=array();$command["connect"] = $connect = "' . $serveur . '"; $Pile=array(0=>array());'."\n".$code;
-				$code = 'function '.$functionname.'(){'.$code.'};$res='.$functionname.'();';
+				$code = 'function '.$functionname.'(){'.$code.'};$res = '.$functionname.'();';
 				$res = '';
 				eval($code);
 				$res = explode(',',$res);
@@ -587,7 +587,7 @@ function calcul_branche_in($id) {
  *     Liste des identifiants séparés par des virgules,
  *     incluant les rubriques transmises et toutes leurs parentées
  */
-function calcul_hierarchie_in($id, $tout=true) {
+function calcul_hierarchie_in($id, $tout = true) {
 	$calcul_hierarchie_in = charger_fonction('calcul_hierarchie_in','inc');
 	return $calcul_hierarchie_in($id, $tout);
 }
@@ -657,7 +657,7 @@ function inc_calcul_branche_in_dist($id) {
  *     Liste des identifiants séparés par des virgules,
  *     incluant les rubriques transmises et toutes leurs parentées
  */
-function inc_calcul_hierarchie_in_dist($id, $tout=true) {
+function inc_calcul_hierarchie_in_dist($id, $tout = true) {
 	static $b = array();
 
 	// normaliser $id qui a pu arriver comme un array, comme un entier, ou comme une chaine NN,NN,NN
@@ -761,7 +761,7 @@ function calculer_prochain_postdate($check= false) {
  * @return int
  *     Identifiant de la rubrique la plus profonde.
  */
-function creer_rubrique_nommee($titre, $id_parent=0, $serveur='') {
+function creer_rubrique_nommee($titre, $id_parent = 0, $serveur = '') {
 
 	// eclater l'arborescence demandee
 	// echapper les </multi> et autres balises fermantes html

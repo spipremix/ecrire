@@ -76,7 +76,7 @@ function produire_image_math($tex) {
 
 // Fonction appelee par propre() s'il repere un mode <math>
 // http://code.spip.net/@traiter_math
-function traiter_math($letexte, $source='') {
+function traiter_math($letexte, $source = '') {
 
 	$texte_a_voir = $letexte;
 	while (($debut = strpos($texte_a_voir, "<math>")) !== false) {

@@ -40,7 +40,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return array|string
  *     URL, code HTML du formulaire ou tableau (action, arg, hash)
  */
-function generer_action_auteur($action, $arg, $redirect = "", $mode = false, $att = '', $public = false){
+function generer_action_auteur($action, $arg, $redirect = '', $mode = false, $att = '', $public = false){
 	$securiser_action = charger_fonction('securiser_action', 'inc');
 	return $securiser_action($action, $arg, $redirect, $mode, $att, $public);
 }

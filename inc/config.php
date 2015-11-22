@@ -95,7 +95,7 @@ function expliquer_config($cfg){
  * @return mixed
  *    Contenu de la configuration obtenue
  */
-function lire_config($cfg='', $def=null, $unserialize=true) {
+function lire_config($cfg = '', $def = null, $unserialize = true) {
 	// lire le stockage sous la forme /table/valeur
 	// ou valeur qui est en fait implicitement /meta/valeur
 	// ou casier/valeur qui est en fait implicitement /meta/casier/valeur
@@ -158,7 +158,7 @@ function lire_config($cfg='', $def=null, $unserialize=true) {
  * @param bool $unserialize
  * @return mixed
  */
-function lire_config_metapack_dist($cfg='', $def=null, $unserialize=true) {
+function lire_config_metapack_dist($cfg = '', $def = null, $unserialize = true) {
 	return lire_config($cfg, $def, $unserialize);
 }
 
@@ -170,7 +170,7 @@ function lire_config_metapack_dist($cfg='', $def=null, $unserialize=true) {
  * @param mixed $store
  * @return bool
  */
-function ecrire_config($cfg,$store) {
+function ecrire_config($cfg, $store) {
 	// Brancher sur methodes externes si besoin
 	if ($cfg AND $p=strpos($cfg,'::')){
 		$methode = substr($cfg,0,$p);
@@ -270,7 +270,7 @@ function ecrire_config($cfg,$store) {
  * @param mixed $store
  * @return bool
  */
-function ecrire_config_metapack_dist($cfg,$store) {
+function ecrire_config_metapack_dist($cfg, $store) {
 	// cas particulier en metapack::
 	// si on ecrit une chaine deja serializee, il faut la reserializer pour la rendre
 	// intacte en sortie ...
@@ -523,7 +523,7 @@ function actualise_metas($liste_meta)
  * @param bool $purger_skel
  * @return void
  */
-function appliquer_modifs_config($purger_skel=false) {
+function appliquer_modifs_config($purger_skel = false) {
 
 	foreach(liste_metas() as $i => $v) {
 		if (($x =_request($i))!==NULL)

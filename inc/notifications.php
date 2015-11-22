@@ -29,7 +29,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param array $options
  *   Options de notification, interprétées en fonction de la notification
  */
-function inc_notifications_dist($quoi, $id=0, $options=array()) {
+function inc_notifications_dist($quoi, $id = 0, $options = array()) {
 
 	// charger les fichiers qui veulent ajouter des definitions
 	// ou faire des trucs aussi dans le pipeline, ca fait deux api pour le prix d'une ...
@@ -75,7 +75,7 @@ function notifications_nettoyer_emails(&$emails, $exclure = array()){
  * @param string $from
  * @param string $headers
  */
-function notifications_envoyer_mails($emails, $texte, $sujet="", $from = "", $headers = ""){
+function notifications_envoyer_mails($emails, $texte, $sujet = "", $from = "", $headers = ""){
 	// rien a faire si pas de texte !
 	if (!strlen($texte))
 		return;

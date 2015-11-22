@@ -1123,7 +1123,7 @@ function calculer_criteres($idb, &$boucles){
  * @param string $type    Type d'échappement (char, int...)
  * @return string         Code compilé rééchappé
  */
-function kwote($lisp, $serveur='', $type=''){
+function kwote($lisp, $serveur = '', $type = ''){
 	if (preg_match(_CODE_QUOTE, $lisp, $r))
 		return $r[1]."\"".sql_quote(str_replace(array("\\'", "\\\\"), array("'", "\\"), $r[2]),$serveur,$type)."\"";
 	else

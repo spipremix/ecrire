@@ -35,7 +35,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param bool $ajouter
  * @return array|string
  */
-function inc_couleurs_dist($choix=NULL, $ajouter=false)
+function inc_couleurs_dist($choix = NULL, $ajouter = false)
 {
 	static $couleurs_spip = array(
 // Vert

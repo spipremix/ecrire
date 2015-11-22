@@ -30,7 +30,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param bool $clean_old
  * @return array
  */
-function plugins_get_infos_dist($plug=false, $reload=false, $dir = _DIR_PLUGINS, $clean_old=false){
+function plugins_get_infos_dist($plug = false, $reload = false, $dir = _DIR_PLUGINS, $clean_old = false){
 	static $cache='';
 	static $filecache = '';
 

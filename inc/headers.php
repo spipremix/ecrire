@@ -35,7 +35,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param string $equiv ?
  * @param int $status Code de redirection (301 ou 302)
 **/
-function redirige_par_entete($url, $equiv='', $status = 302) {
+function redirige_par_entete($url, $equiv = '', $status = 302) {
 	if (!in_array($status,array(301,302)))
 		$status = 302;
 
@@ -95,7 +95,7 @@ function redirige_par_entete($url, $equiv='', $status = 302) {
 }
 
 // http://code.spip.net/@redirige_formulaire
-function redirige_formulaire($url, $equiv = '', $format='message') {
+function redirige_formulaire($url, $equiv = '', $format = 'message') {
 	if (!_AJAX
 	AND !headers_sent()
 	AND !_request('var_ajax')) {
@@ -155,7 +155,7 @@ function redirige_formulaire($url, $equiv = '', $format='message') {
  * @param string $equiv
  * @return void
 **/
-function redirige_url_ecrire($script='', $args='', $equiv='') {
+function redirige_url_ecrire($script = '', $args = '', $equiv = '') {
 	return redirige_par_entete(generer_url_ecrire($script, $args, true), $equiv);
 }
 

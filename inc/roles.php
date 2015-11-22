@@ -46,7 +46,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     false si rôles indisponibles on non déclarés
  *     array : description des roles applicables dans 3 index : colonne, titres, roles
 **/
-function roles_presents($objet, $objet_destination='') {
+function roles_presents($objet, $objet_destination = '') {
 	$desc = lister_tables_objets_sql(table_objet_sql($objet));
 
 	// pas de liste de roles, on sort 

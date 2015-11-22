@@ -57,7 +57,7 @@ include_spip('public/jointures');
 
 
 // http://code.spip.net/@argumenter_inclure
-function argumenter_inclure($params, $rejet_filtres, $p, &$boucles, $id_boucle, $echap=true, $lang = '', $fond1=false){
+function argumenter_inclure($params, $rejet_filtres, $p, &$boucles, $id_boucle, $echap = true, $lang = '', $fond1 = false){
 	$l = array();
 	$erreur_p_i_i = '';
 	if (!is_array($params)) return $l;
@@ -212,7 +212,7 @@ function calculer_inclure($p, &$boucles, $id_boucle) {
  * @param bool $ignore_previsu
  *     true pour ne tester que le cas publie et ignorer l'eventuel var_mode=preview de la page
  */
-function instituer_boucle(&$boucle, $echapper=true, $ignore_previsu=false){
+function instituer_boucle(&$boucle, $echapper = true, $ignore_previsu = false){
 	/*
 	$show['statut'][] = array(
 		'champ'=>'statut',  // champ de la table sur lequel porte le filtrage par le statut
@@ -805,7 +805,7 @@ function calculer_order(&$boucle)
 // (qui sera argument d'un Return ou la partie droite d'une affectation).
 
 // http://code.spip.net/@calculer_liste
-function calculer_liste($tableau, $descr, &$boucles, $id_boucle='') {
+function calculer_liste($tableau, $descr, &$boucles, $id_boucle = '') {
 	if (!$tableau) return "''";
 	if (!isset($descr['niv'])) $descr['niv'] = 0;
 	$codes = compile_cas($tableau, $descr, $boucles, $id_boucle);
@@ -1071,7 +1071,7 @@ function compile_inclure_doublons($lexemes)
 // En cas d'erreur, elle retournera un tableau des 2 premiers elements seulement
 
 // http://code.spip.net/@public_compiler_dist
-function public_compiler_dist($squelette, $nom, $gram, $sourcefile, $connect=''){
+function public_compiler_dist($squelette, $nom, $gram, $sourcefile, $connect = ''){
 	// Pre-traitement : reperer le charset du squelette, et le convertir
 	// Bonus : supprime le BOM
 	include_spip('inc/charsets');
@@ -1130,7 +1130,7 @@ function public_compiler_dist($squelette, $nom, $gram, $sourcefile, $connect='')
 // Point d'entree pour arbre de syntaxe abstraite fourni en premier argument
 // Autres specifications comme ci-dessus
 
-function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $connect=''){
+function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $connect = ''){
 	static $trouver_table;
 	spip_timer('calcul_skel');
 
@@ -1316,7 +1316,7 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 		} else $req = ("\n\treturn '';");
 
 		$boucles[$id]->return = 
-			"\n\nfunction BOUCLE" . strtr($id,"-","_") . $nom .
+			"\n\nfunction BOUCLE" . strtr($id, "-", "_") . $nom .
 			'(&$Cache, &$Pile, &$doublons, &$Numrows, $SP) {' .
 			$req .
 			"\n}\n";
@@ -1326,7 +1326,7 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 	// retourner False, sinon inserer leur decompilation
 	if (is_bool($corps)) return false;
 
-	$principal = "\nfunction " . $nom . '($Cache, $Pile, $doublons=array(), $Numrows=array(), $SP=0) {
+	$principal = "\nfunction " . $nom . '($Cache, $Pile, $doublons = array(), $Numrows = array(), $SP = 0) {
 '
 	// reporter de maniere securisee les doublons inclus
 .'

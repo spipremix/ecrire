@@ -38,7 +38,7 @@ include_spip('public/quete');
 # Toutefois pour 2. et 3. preferer la technique de la surcharge
 
 // http://code.spip.net/@public_composer_dist
-function public_composer_dist($squelette, $mime_type, $gram, $source, $connect='') {
+function public_composer_dist($squelette, $mime_type, $gram, $source, $connect = '') {
 
 	$nom = calculer_nom_fonction_squel($squelette, $mime_type, $connect);
 
@@ -164,14 +164,14 @@ function squelette_obsolete($skel, $squelette) {
 
 // Activer l'invalideur de session
 // http://code.spip.net/@invalideur_session
-function invalideur_session(&$Cache, $code=NULL) {
+function invalideur_session(&$Cache, $code = NULL) {
 	$Cache['session']=spip_session();
 	return $code;
 }
 
 
 // http://code.spip.net/@analyse_resultat_skel
-function analyse_resultat_skel($nom, $cache, $corps, $source='') {
+function analyse_resultat_skel($nom, $cache, $corps, $source = '') {
 	static $filtres = array();
 	$headers = array();
 
@@ -272,7 +272,7 @@ function analyse_resultat_skel($nom, $cache, $corps, $source='') {
  * @return string
  *     Introduction calculée
 **/
-function filtre_introduction_dist($descriptif, $texte, $longueur, $connect, $suite=null) {
+function filtre_introduction_dist($descriptif, $texte, $longueur, $connect, $suite = null) {
 	// Si un descriptif est envoye, on l'utilise directement
 	if (strlen($descriptif))
 		return appliquer_traitement_champ($descriptif,'introduction','',array(),$connect);
@@ -565,7 +565,7 @@ function calculer_notes() {
  *     Titre de l'objet
  * @return null;
 **/
-function lang_select_public($lang, $lang_select, $titre=null) {
+function lang_select_public($lang, $lang_select, $titre = null) {
 	// Cas 1. forcer_lang = true et pas de critere {lang_select}
 	if (isset($GLOBALS['forcer_lang']) AND $GLOBALS['forcer_lang']
 	AND $lang_select !== 'oui')
@@ -644,7 +644,7 @@ function match_self($w){
  *     Tableau de description du WHERE dont la description de sous-requête
  *     est remplacée par son code.
 **/
-function remplace_sous_requete($w,$sousrequete){
+function remplace_sous_requete($w, $sousrequete){
 	if (is_array($w)) {
 		if (in_array(reset($w),array("SELF","SUBSELECT"))) return $sousrequete;
 		foreach($w as $k=>$sw)
@@ -942,7 +942,7 @@ function calculer_where_to_string($v, $join = 'AND'){
 //condition suffisante (mais non necessaire) pour qu'une table soit utile
 
 // http://code.spip.net/@calculer_jointnul
-function calculer_jointnul($cle, $exp, $equiv='')
+function calculer_jointnul($cle, $exp, $equiv = '')
 {
 	if (!is_array($exp)) {
 		if ($equiv) $exp = preg_replace($equiv, '', $exp);
@@ -971,7 +971,7 @@ function reinjecte_joint($afrom, $from)
 }
 
 // http://code.spip.net/@remplacer_jointnul
-function remplacer_jointnul($cle, $exp, $equiv='')
+function remplacer_jointnul($cle, $exp, $equiv = '')
 {
 	if (!is_array($exp)) {
 		return preg_replace($equiv, $cle, $exp);
@@ -985,7 +985,7 @@ function remplacer_jointnul($cle, $exp, $equiv='')
 
 // calcul du nom du squelette
 // http://code.spip.net/@calculer_nom_fonction_squel
-function calculer_nom_fonction_squel($skel, $mime_type='html', $connect='')
+function calculer_nom_fonction_squel($skel, $mime_type = 'html', $connect = '')
 {
 	// ne pas doublonner les squelette selon qu'ils sont calcules depuis ecrire/ ou depuis la racine
 	if ($l=strlen(_DIR_RACINE) AND strncmp($skel,_DIR_RACINE,$l)==0)

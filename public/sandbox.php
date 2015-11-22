@@ -191,7 +191,7 @@ function sandbox_filtrer_squelette($skel, $corps, $filtres){
  *     - string : hash de substitution du code php lorsque `$r` est un array
  *     - array : Liste( liste des codes PHP, liste des substitutions )
 **/
-function echapper_php_callback($r=null) {
+function echapper_php_callback($r = null) {
 	static $src = array();
 	static $dst = array();
 

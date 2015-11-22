@@ -313,7 +313,7 @@ $GLOBALS['maj'][16428] = array(
  *     Sinon, nom de la table à lier, tel que `article`, et dans ce cas là,
  *     remplit spip_auteurs_liens à partir de spip_auteurs_articles.
  */
-function maj_liens($pivot, $l='') {
+function maj_liens($pivot, $l = '') {
 
 	@define('_LOG_FILTRE_GRAVITE',8);
 
@@ -399,7 +399,7 @@ function maj_liens($pivot, $l='') {
  * @param array $desc Description de la table de liaison
  * @return void
 **/
-function maj_liens_insertq_multi_check($table,$couples,$desc=array()){
+function maj_liens_insertq_multi_check($table, $couples, $desc = array()){
 	$n_before = sql_countsel($table);
 	sql_insertq_multi($table,$couples,$desc);
 	$n_after = sql_countsel($table);

@@ -37,7 +37,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return string
  *     Code HTML de la liste
  */
-function inc_lister_objets_dist($vue, $contexte=array(), $force=false){
+function inc_lister_objets_dist($vue, $contexte = array(), $force = false){
 	$res = ""; // debug
 	if (!is_array($contexte))
 		return _L('$contexte doit etre un tableau dans inc/lister_objets');

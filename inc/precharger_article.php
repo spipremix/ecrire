@@ -36,7 +36,7 @@ include_spip('inc/precharger_objet');
  * @return array
  *     Couples clés / valeurs des champs du formulaire à charger.
 **/
-function inc_precharger_article_dist($id_article, $id_rubrique=0, $lier_trad=0) {
+function inc_precharger_article_dist($id_article, $id_rubrique = 0, $lier_trad = 0) {
 	return precharger_objet('article', $id_article, $id_rubrique, $lier_trad, 'titre');
 }
 
@@ -57,7 +57,7 @@ function inc_precharger_article_dist($id_article, $id_rubrique=0, $lier_trad=0) 
  * @return array
  *     Couples clés / valeurs des champs du formulaire à charger
 **/
-function inc_precharger_traduction_article_dist($id_article, $id_rubrique=0, $lier_trad=0) {
+function inc_precharger_traduction_article_dist($id_article, $id_rubrique = 0, $lier_trad = 0) {
 	return precharger_traduction_objet('article', $id_article, $id_rubrique, $lier_trad, 'titre');
 }
 

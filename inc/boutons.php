@@ -60,7 +60,7 @@ class Bouton {
    * @param null|mixed $target
    *    Pour ouvrir une fenêtre à part
    */
-  function Bouton($icone, $libelle, $url=null, $urlArg=null,
+  function Bouton($icone, $libelle, $url = null, $urlArg = null, 
 				  $url2=null, $target=null) {
 	$this->icone  = $icone;
 	$this->libelle= $libelle;
@@ -126,7 +126,7 @@ function definir_barre_onglets($script) {
  * @param string $class
  * @return string
  */
-function barre_onglets($rubrique, $ongletCourant, $class="barre_onglet"){
+function barre_onglets($rubrique, $ongletCourant, $class = "barre_onglet"){
 	include_spip('inc/presentation');
 
 	$res = '';

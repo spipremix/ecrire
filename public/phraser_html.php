@@ -92,7 +92,7 @@ function phraser_inclure($texte, $ligne, $result) {
 }
 
 // http://code.spip.net/@phraser_polyglotte
-function phraser_polyglotte($texte,$ligne, $result) {
+function phraser_polyglotte($texte, $ligne, $result) {
 
 	if (preg_match_all(BALISE_POLYGLOTTE, $texte, $m, PREG_SET_ORDER))
 	foreach ($m as $match) {
@@ -182,7 +182,7 @@ function phraser_idiomes($texte, $ligne, $result) {
 }
 
 // http://code.spip.net/@phraser_champs
-function phraser_champs($texte,$ligne,$result) {
+function phraser_champs($texte, $ligne, $result) {
 	while (preg_match("/".NOM_DE_CHAMP."/S", $texte, $match)) {
 	  $p = strpos($texte, $match[0]);
 	  $suite = substr($texte,$p+strlen($match[0]));
@@ -229,7 +229,7 @@ function phraser_champs($texte,$ligne,$result) {
 // on recommence tant qu'il y a des [...] en substituant a l'appel suivant
 
 // http://code.spip.net/@phraser_champs_etendus
-function phraser_champs_etendus($texte, $ligne,$result) {
+function phraser_champs_etendus($texte, $ligne, $result) {
 	if ($texte==="") return $result;
 	$sep = '##';
 	while (strpos($texte,$sep)!== false)
@@ -679,7 +679,7 @@ function phraser_critere_infixe($arg1, $arg2, $args, $op, $not, $cond)
 	return $crit;
 }
 
-function public_phraser_html_dist($texte, $id_parent, &$boucles, $descr, $ligne=1) {
+function public_phraser_html_dist($texte, $id_parent, &$boucles, $descr, $ligne = 1) {
 
 	$all_res = array();
 

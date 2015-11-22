@@ -77,7 +77,7 @@ $GLOBALS['aider_index'] = array(
  * 		true : Le lien est réalisé sur spip.net/aide/ directement...
  * @return string
 **/
-function inc_aider_dist($aide='', $skel='', $env=array(), $aide_spip_directe = false) {
+function inc_aider_dist($aide = '', $skel = '', $env = array(), $aide_spip_directe = false) {
 	global $spip_lang, $aider_index;
 
 	if (($skel = basename($skel))
@@ -140,7 +140,7 @@ function aider_icone($url, $clic= '')
  * @param string $spip_lang_rtl
  * @return string
  */
-function aide_lang_dir($spip_lang,$spip_lang_rtl) {
+function aide_lang_dir($spip_lang, $spip_lang_rtl) {
 	return ($spip_lang<>'he') ? $spip_lang_rtl : '';
 }
 
@@ -298,7 +298,7 @@ function aide_fixe_img($contenu, $server){
  *            Dans quel hn doit-on mettre le titre de section
  * @return string
  */
-function aide_section($aide, $contenu, $prof=2){
+function aide_section($aide, $contenu, $prof = 2){
 	$maxprof = ($prof >=2) ? "12" : "1";
 	$r = "@<h$prof" . '(?: class="spip")?' . '>\s*' . $aide
 	  ."\s*(?:/.+?)?</h$prof>(.*?)<(?:(?:h[$maxprof])|/body)@ism";

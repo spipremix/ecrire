@@ -98,7 +98,7 @@ define('_NAME_LOCK','spip_nfs_lock');
  * @param int $max_age Age maximum du verrou
  * @return int|bool Timestamp du verrou, false si erreur
  */
-function spip_nfslock($fichier,$max_age=0) {
+function spip_nfslock($fichier, $max_age = 0) {
 	$tries = 0;
 		
 	if (!$max_age) $max_age = _DEFAULT_LOCKTIME;
@@ -221,7 +221,7 @@ function spip_nfslock($fichier,$max_age=0) {
  * @param bool $test Mode de test
  * return bool true si déverrouillé, false sinon
  */
-function spip_nfsunlock($fichier, $birth, $max_age=0, $test = false) {
+function spip_nfsunlock($fichier, $birth, $max_age = 0, $test = false) {
 	$id = creer_uniqid();
 	if (!$max_age) $max_age = _DEFAULT_LOCKTIME;
 
@@ -300,7 +300,7 @@ function spip_nfsunlock($fichier, $birth, $max_age=0, $test = false) {
  * @param int $max_age Age maximum du verrou
  * return bool true si déverrouillé, false sinon
  */
-function spip_nfslock_test($fichier, $birth, $max_age=0) {
+function spip_nfslock_test($fichier, $birth, $max_age = 0) {
 	return spip_nfsunlock($fichier, $birth, $max_age, true);
 }
 

@@ -53,7 +53,7 @@ if (!defined('_ACTIVER_PUCE_RAPIDE')) {
  * @return string
  *     Code HTML de l'image de puce de statut à insérer (et du menu de changement si présent)
  */
-function inc_puce_statut_dist($id_objet, $statut, $id_parent, $type, $ajax=false, $menu_rapide=_ACTIVER_PUCE_RAPIDE) {
+function inc_puce_statut_dist($id_objet, $statut, $id_parent, $type, $ajax = false, $menu_rapide = _ACTIVER_PUCE_RAPIDE) {
 	static $f_puce_statut = array();
 	$type = objet_type($type);
 	// cas prioritaire : fonction perso, qui permet aussi de gerer les cas historiques
@@ -101,7 +101,7 @@ function inc_puce_statut_dist($id_objet, $statut, $id_parent, $type, $ajax=false
  * @return string|null
  *   null si pas capable de déterminer l'image
  */
-function statut_image($objet,$statut){
+function statut_image($objet, $statut){
 	$src = null;
 	$table = table_objet_sql($objet);
 	$desc = lister_tables_objets_sql($table);
@@ -162,7 +162,7 @@ function statut_image($objet,$statut){
  * @param string $statut
  * @return string
  */
-function statut_titre($objet,$statut){
+function statut_titre($objet, $statut){
 	$titre = '';
 	$table = table_objet_sql($objet);
 	$desc = lister_tables_objets_sql($table);
@@ -214,7 +214,7 @@ function statut_titre($objet,$statut){
  * @param string $statut
  * @return string
  */
-function statut_texte_instituer($objet,$statut){
+function statut_texte_instituer($objet, $statut){
 	$texte = '';
 	$table = table_objet_sql($objet);
 	$desc = lister_tables_objets_sql($table);
@@ -263,7 +263,7 @@ function statut_texte_instituer($objet,$statut){
  * @param bool $menu_rapide
  * @return string
  */
-function puce_statut_auteur_dist($id, $statut, $id_parent, $type, $ajax='', $menu_rapide=_ACTIVER_PUCE_RAPIDE) {
+function puce_statut_auteur_dist($id, $statut, $id_parent, $type, $ajax = '', $menu_rapide = _ACTIVER_PUCE_RAPIDE) {
 	$img = statut_image('auteur',$statut);
 	if (!$img) return '';
 	$alt = statut_titre('auteur',$statut);
@@ -283,7 +283,7 @@ function puce_statut_auteur_dist($id, $statut, $id_parent, $type, $ajax='', $men
 
 
 
-function puce_statut_rubrique_dist($id, $statut, $id_rubrique, $type, $ajax='',$menu_rapide=_ACTIVER_PUCE_RAPIDE) {
+function puce_statut_rubrique_dist($id, $statut, $id_rubrique, $type, $ajax = '', $menu_rapide = _ACTIVER_PUCE_RAPIDE) {
 	return http_img_pack('rubrique-16.png', '');
 }
 
@@ -307,7 +307,7 @@ function puce_statut_rubrique_dist($id, $statut, $id_rubrique, $type, $ajax='',$
  * @return string
  *     Code HTML de l'image de puce de statut à insérer (et du menu de changement si présent)
 **/
-function puce_statut_changement_rapide($id, $statut, $id_rubrique, $type='article', $ajax = false, $menu_rapide=_ACTIVER_PUCE_RAPIDE) {
+function puce_statut_changement_rapide($id, $statut, $id_rubrique, $type = 'article', $ajax = false, $menu_rapide = _ACTIVER_PUCE_RAPIDE) {
 	$src = statut_image($type, $statut);
 	if (!$src)
 		return $src;
@@ -384,7 +384,7 @@ function puce_statut_changement_rapide($id, $statut, $id_rubrique, $type='articl
 }
 
 
-function afficher_script_statut($id, $type, $n, $img, $statut, $titre, $act='') {
+function afficher_script_statut($id, $type, $n, $img, $statut, $titre, $act = '') {
 	$h = generer_action_auteur("instituer_objet","$type-$id-$statut");
 	$h = "selec_statut('$id', '$type', $n, jQuery('img',this).attr('src'), '$h');return false;";
 	$t = supprimer_tags($titre);
@@ -394,7 +394,7 @@ function afficher_script_statut($id, $type, $n, $img, $statut, $titre, $act='') 
 // compat
 // La couleur du statut
 
-function puce_statut($statut, $atts='') {
+function puce_statut($statut, $atts = '') {
 	$src = statut_image('article',$statut);
 	if (!$src) return '';
 	return http_img_pack($src, statut_titre('article',$statut), $atts);

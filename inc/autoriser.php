@@ -99,7 +99,7 @@ if (!function_exists('autoriser')) {
  * @return bool
  *   true si la personne peut effectuer l'action
  */
-	function autoriser($faire, $type='', $id=0, $qui = NULL, $opt = NULL) {
+	function autoriser($faire, $type = '', $id = 0, $qui = NULL, $opt = NULL) {
 		// Charger les fonctions d'autorisation supplementaires
 		static $pipe;
 		if (!isset($pipe)) { $pipe = 1; pipeline('autoriser'); }
@@ -132,7 +132,7 @@ if (!function_exists('autoriser')) {
  * @return bool
  *   true si la personne peut effectuer l'action
  */
-function autoriser_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL) {
+function autoriser_dist($faire, $type = '', $id = 0, $qui = NULL, $opt = NULL) {
 
 	// Qui ? visiteur_session ?
 	// si null ou '' (appel depuis #AUTORISER) on prend l'auteur loge
@@ -206,7 +206,7 @@ $GLOBALS['autoriser_exception']=array();
  * @param bool $autoriser accorder (true) ou revoquer (false)
  * @return bool
  */
-function autoriser_exception($faire,$type,$id,$autoriser=true){
+function autoriser_exception($faire, $type, $id, $autoriser = true){
 	// une static innaccessible par url pour verifier que la globale est positionnee a bon escient
 	static $autorisation;
 	if ($autoriser==='verifier')
@@ -337,7 +337,7 @@ function autoriser_previsualiser_dist($faire, $type, $id, $qui, $opt) {
  * @param  array  $opt   Options de cette autorisation
  * @return boolean True si autorisé, false sinon.
  */
-function test_previsualiser_objet_champ($type=null, $id=0, $qui=array(), $opt=array()) {
+function test_previsualiser_objet_champ($type = null, $id = 0, $qui = array(), $opt = array()) {
 
 	// si pas de type et statut fourni, c'est une autorisation generale => OK
 	if (!$type) {
@@ -965,7 +965,7 @@ function autoriser_debug_dist($faire, $type, $id, $qui, $opt) {
  * @param bool $raz       Recalculer le résultat connu pour cet auteur
  * @return array          Liste des rubriques
 **/
-function liste_rubriques_auteur($id_auteur, $raz=false) {
+function liste_rubriques_auteur($id_auteur, $raz = false) {
 	static $restreint = array();
 
 	if (!$id_auteur = intval($id_auteur)) return array();
@@ -1030,7 +1030,7 @@ function autoriser_modifierurl_dist($faire, $type, $id, $qui, $opt) {
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_rubrique_previsualiser_dist($faire,$type,$id,$qui,$opt){
+function autoriser_rubrique_previsualiser_dist($faire, $type, $id, $qui, $opt){
 	return autoriser('previsualiser');
 }
 
@@ -1046,7 +1046,7 @@ function autoriser_rubrique_previsualiser_dist($faire,$type,$id,$qui,$opt){
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_rubrique_iconifier_dist($faire,$type,$id,$qui,$opt){
+function autoriser_rubrique_iconifier_dist($faire, $type, $id, $qui, $opt){
 	return autoriser('publierdans', 'rubrique', $id, $qui, $opt);
 }
 
@@ -1062,7 +1062,7 @@ function autoriser_rubrique_iconifier_dist($faire,$type,$id,$qui,$opt){
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_auteur_iconifier_dist($faire,$type,$id,$qui,$opt){
+function autoriser_auteur_iconifier_dist($faire, $type, $id, $qui, $opt){
  return (($id == $qui['id_auteur']) OR
  		(($qui['statut'] == '0minirezo') AND !$qui['restreint']));
 }
@@ -1079,7 +1079,7 @@ function autoriser_auteur_iconifier_dist($faire,$type,$id,$qui,$opt){
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_iconifier_dist($faire,$type,$id,$qui,$opt){
+function autoriser_iconifier_dist($faire, $type, $id, $qui, $opt){
 	// par defaut, on a le droit d'iconifier si on a le droit de modifier
 	return autoriser('modifier', $type, $id, $qui, $opt);
 }
@@ -1146,7 +1146,7 @@ function autoriser_base_reparer_dist($faire, $type, $id, $qui, $opt) {
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_infosperso_dist($faire,$type,$id,$qui,$opt) {
+function autoriser_infosperso_dist($faire, $type, $id, $qui, $opt) {
 	return true;
 }
 
@@ -1162,7 +1162,7 @@ function autoriser_infosperso_dist($faire,$type,$id,$qui,$opt) {
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_langage_configurer_dist($faire,$type,$id,$qui,$opt) {
+function autoriser_langage_configurer_dist($faire, $type, $id, $qui, $opt) {
 	return true;
 }
 
@@ -1178,7 +1178,7 @@ function autoriser_langage_configurer_dist($faire,$type,$id,$qui,$opt) {
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_configurerlangage_dist($faire,$type,$id,$qui,$opt) {
+function autoriser_configurerlangage_dist($faire, $type, $id, $qui, $opt) {
 	return autoriser('configurer', '_langage', $id, $qui, $opt);
 }
 
@@ -1194,7 +1194,7 @@ function autoriser_configurerlangage_dist($faire,$type,$id,$qui,$opt) {
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_preferences_configurer_dist($faire,$type,$id,$qui,$opt) {
+function autoriser_preferences_configurer_dist($faire, $type, $id, $qui, $opt) {
 	return true;
 }
 
@@ -1210,7 +1210,7 @@ function autoriser_preferences_configurer_dist($faire,$type,$id,$qui,$opt) {
  * @param  array  $opt   Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
 **/
-function autoriser_configurerpreferences_dist($faire,$type,$id,$qui,$opt) {
+function autoriser_configurerpreferences_dist($faire, $type, $id, $qui, $opt) {
 	return autoriser('configurer', '_preferences', $id, $qui, $opt);
 }
 
@@ -1406,7 +1406,7 @@ function autoriser_echafauder_dist($faire, $type, $id, $qui, $opt){
  *     - array : liste des id_auteur trouvés
  *     - false : serveur SQL indisponible
  */
-function auteurs_article($id_article, $cond='')
+function auteurs_article($id_article, $cond = '')
 {
 	return sql_allfetsel("id_auteur", "spip_auteurs_liens", "objet='article' AND id_objet=$id_article". ($cond ? " AND $cond" : ''));
 }
@@ -1435,7 +1435,7 @@ function acces_restreint_rubrique($id_rubrique) {
  * @param string $table     la table a vérifier
  * @return bool             true si un parent existe
  */
-function verifier_table_non_vide($table='spip_rubriques') {
+function verifier_table_non_vide($table = 'spip_rubriques') {
 	static $done = array();
 	if (!isset($done[$table]))
 		 $done[$table] = sql_countsel($table)>0;

@@ -485,7 +485,7 @@ function recuperer_url_cache($url, $options = array()){
  *     - Code de la page obtenue (avec ou sans entête)
  *     - false si la page n'a pu être récupérée (status different de 200)
  **/
-function recuperer_page($url, $trans = false, $get_headers = false,
+function recuperer_page($url, $trans = false, $get_headers = false, 
                         $taille_max = null, $datas = '', $boundary = '', $refuser_gz = false,
                         $date_verif = '', $uri_referer = ''){
 	// $copy = copier le fichier ?

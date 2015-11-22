@@ -89,7 +89,7 @@ function trouver_champs_decomposes($champ, $desc){
  * @return string
  *     Alias de la table de jointure (Lx)
  */
-function calculer_jointure(&$boucle, $depart, $arrivee, $col = '', $cond = false, $max_liens=5){
+function calculer_jointure(&$boucle, $depart, $arrivee, $col = '', $cond = false, $max_liens = 5){
 	// les jointures minimales sont optimales :
 	// on contraint le nombre d'etapes en l'augmentant
 	// jusqu'a ce qu'on trouve une jointure ou qu'on atteigne la limite maxi 

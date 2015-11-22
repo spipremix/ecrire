@@ -328,7 +328,7 @@ function analyser_dtd_attlist($dtd, &$dtc, $grammaire)
 // retourne les statistiques (pour debug de DTD, inutilise en mode normal)
 
 // http://code.spip.net/@expanserEntite
-function expanserEntite($val, $macros=array())
+function expanserEntite($val, $macros = array())
 {
 	static $vu = array();
 	if (!is_string($val)) return $vu;

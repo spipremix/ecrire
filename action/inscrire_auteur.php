@@ -212,7 +212,7 @@ function test_login($nom, $mail) {
  * @param array $options
  * @return array
  */
-function envoyer_inscription_dist($desc, $nom, $mode, $options=array()) {
+function envoyer_inscription_dist($desc, $nom, $mode, $options = array()) {
 
 	$contexte = array_merge($desc,$options);
 	$contexte['nom'] = $nom;

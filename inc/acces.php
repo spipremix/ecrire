@@ -138,13 +138,13 @@ function low_sec($id_auteur) {
  *     Par défaut 'rss'.
  * @return string
  */
-function param_low_sec($op, $args=array(), $lang='', $mime='rss')
+function param_low_sec($op, $args = array(), $lang = '', $mime = 'rss')
 {
 	$a = $b = '';
 	foreach ($args as $val => $var)
 		if ($var) {
-			if ($val<>'statut') $a .= ':' . $val.'-'.$var;
-			$b .= $val.'='.$var . '&';
+			if ($val<>'statut') $a .= ':' . $val . '-' . $var;
+			$b .= $val . '=' . $var . '&';
 		}
 	$a = substr($a,1);
 	$id = intval(@$GLOBALS['connect_id_auteur']);
@@ -171,7 +171,7 @@ function param_low_sec($op, $args=array(), $lang='', $mime='rss')
  * @return string
  *     Clé
 **/
-function afficher_low_sec ($id_auteur, $action='') {
+function afficher_low_sec ($id_auteur, $action = '') {
 	return substr(md5($action.low_sec($id_auteur)),0,8);
 }
 
@@ -189,7 +189,7 @@ function afficher_low_sec ($id_auteur, $action='') {
  * @return bool
  *     true si les clés corresponde, false sinon
 **/
-function verifier_low_sec ($id_auteur, $cle, $action='') {
+function verifier_low_sec ($id_auteur, $cle, $action = '') {
 	return ($cle == afficher_low_sec($id_auteur, $action));
 }
 
@@ -295,7 +295,7 @@ function generer_htpass($pass) {
  * @param bool $force
  * @return boolean
  */
-function verifier_htaccess($rep, $force=false) {
+function verifier_htaccess($rep, $force = false) {
 	$htaccess = rtrim($rep,"/") . "/" . _ACCESS_FILE_NAME;
 	if (((@file_exists($htaccess)) OR defined('_TEST_DIRS')) AND !$force)
 		return true;

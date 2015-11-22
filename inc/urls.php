@@ -55,7 +55,7 @@ include_spip('base/objets');
  *   est non vide pour vérifier une URL
  *
  */
-function urls_decoder_url($url, $fond='', $contexte=array(), $assembler=false){
+function urls_decoder_url($url, $fond = '', $contexte = array(), $assembler = false){
 	static $current_base = null;
 
 	// les anciennes fonctions modifient directement les globales
@@ -196,7 +196,7 @@ function urls_liste_objets($preg = true){
  * @param array $contexte
  * @return array
  */
-function nettoyer_url_page($url, $contexte=array())
+function nettoyer_url_page($url, $contexte = array())
 {
 	$url_objets = urls_liste_objets();
 	$raccourci_url_page_html = ',^(?:[^?]*/)?('. $url_objets . ')([0-9]+)(?:\.html)?([?&].*)?$,';
@@ -231,7 +231,7 @@ function nettoyer_url_page($url, $contexte=array())
  * @return string
  *
  */
-function generer_url_ecrire_objet($objet,$id, $args='', $ancre='', $public=null, $connect=''){
+function generer_url_ecrire_objet($objet, $id, $args = '', $ancre = '', $public = null, $connect = ''){
 	static $furls = array();
 	if (!isset($furls[$objet])){
 		if (function_exists($f = 'generer_url_ecrire_' . $objet)

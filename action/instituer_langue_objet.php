@@ -26,7 +26,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param string $changer_lang
  * @return string
  */
-function action_instituer_langue_objet_dist($objet,$id, $id_rubrique, $changer_lang) {
+function action_instituer_langue_objet_dist($objet, $id, $id_rubrique, $changer_lang) {
 	if ($changer_lang) {
 		$table_objet_sql = table_objet_sql($objet);
 		$id_table_objet = id_table_objet($objet);

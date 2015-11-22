@@ -33,7 +33,7 @@ if (!defined("_ECRIRE_INC_VERSION")) return;	#securite
  * @return Champ
  *     Pile complétée du code compilé
 **/
-function balise_LOGIN_PUBLIC ($p, $nom='LOGIN_PUBLIC') {
+function balise_LOGIN_PUBLIC ($p, $nom = 'LOGIN_PUBLIC') {
 	return calculer_balise_dynamique($p, $nom, array('url'));
 }
 

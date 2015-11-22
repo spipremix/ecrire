@@ -45,7 +45,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return string
  *     Nom de la fonction, ou false.
  */
-function charger_fonction($nom, $dossier='exec', $continue=false) {
+function charger_fonction($nom, $dossier = 'exec', $continue = false) {
 	static $echecs = array();
 
 	if (strlen($dossier) AND substr($dossier,-1) != '/') $dossier .= '/';
@@ -166,7 +166,7 @@ function require_spip($f) {
  * @return string|array $val
  *     Les paramètres du pipeline modifiés
 **/
-function minipipe($fonc,&$val){
+function minipipe($fonc, &$val){
 	// fonction
 	if (function_exists($fonc))
 		$val = call_user_func($fonc, $val);
@@ -182,7 +182,7 @@ function minipipe($fonc,&$val){
 
 // chargement du pipeline sous la forme d'un fichier php prepare
 // http://code.spip.net/@pipeline
-function pipeline($action, $val=null) {
+function pipeline($action, $val = null) {
 	static $charger;
 
 	// chargement initial des fonctions mises en cache, ou generation du cache
@@ -261,7 +261,7 @@ function pipeline($action, $val=null) {
  *     Cette dernière notation est controversée mais le 3ème
  *     paramètre est planté pour cause de compatibilité ascendante.
  */
-function spip_log($message=NULL, $name=NULL) {
+function spip_log($message = NULL, $name = NULL) {
 	static $pre = array();
 	static $log;
 	preg_match('/^([a-z_]*)\.?(\d)?$/iS', (string) $name, $regs);
@@ -314,7 +314,7 @@ function journal($phrase, $opt = array()) {
  *     - null si la clé n'a pas été trouvée
  *     - la valeur de la clé sinon.
 **/
-function _request($var, $c=false) {
+function _request($var, $c = false) {
 
 	if (is_array($c))
 		return isset($c[$var]) ? $c[$var] : NULL;
@@ -357,7 +357,7 @@ function _request($var, $c=false) {
  *     - array $c complété si un $c est transmis,
  *     - false sinon
 **/
-function set_request($var, $val = NULL, $c=false) {
+function set_request($var, $val = NULL, $c = false) {
 	if (is_array($c)) {
 		unset($c[$var]);
 		if ($val !== NULL)
@@ -401,7 +401,7 @@ function tester_url_absolue($url){
  * @param string $sep Séparateur entre les paramètres
  * @return string URL
  */
-function parametre_url($url, $c, $v=NULL, $sep='&amp;') {
+function parametre_url($url, $c, $v = NULL, $sep = '&amp;') {
 	// requete erronnee : plusieurs variable dans $c et aucun $v
 	if (strpos($c,"|")!==false AND is_null($v))
 		return null;
@@ -624,7 +624,7 @@ function test_plugin_actif($plugin){
  * @return string
  *     Texte
  */
-function _T($texte, $args=array(), $options=array()) {
+function _T($texte, $args = array(), $options = array()) {
 	static $traduire=false ;
 	$o = array('class'=>'', 'force'=>true);
 	if ($options){
@@ -693,7 +693,7 @@ function _T($texte, $args=array(), $options=array()) {
  * @return string
  *     Texte
  */
-function _L($text, $args=array(), $class=null) {
+function _L($text, $args = array(), $class = null) {
 	$f = $text;
 	if (is_array($args)) {
 		foreach ($args as $name => $value) {
@@ -729,7 +729,7 @@ function joli_repertoire($rep) {
 // spip_timer : on l'appelle deux fois et on a la difference, affichable
 //
 // http://code.spip.net/@spip_timer
-function spip_timer($t='rien', $raw = false) {
+function spip_timer($t = 'rien', $raw = false) {
 	static $time;
 	$a=time(); $b=microtime();
 	// microtime peut contenir les microsecondes et le temps
@@ -757,7 +757,7 @@ function spip_timer($t='rien', $raw = false) {
 // Renvoie False si un fichier n'est pas plus vieux que $duree secondes,
 // sinon renvoie True et le date sauf si ca n'est pas souhaite
 // http://code.spip.net/@spip_touch
-function spip_touch($fichier, $duree=0, $touch=true) {
+function spip_touch($fichier, $duree = 0, $touch = true) {
 	if ($duree) {
 		clearstatcache();
 		if ((@$f=filemtime($fichier)) AND ($f >= time() - $duree))
@@ -802,7 +802,7 @@ function action_cron() {
  *   taches forcees, pour compat avec ancienne syntaxe
  * @return bool
  */
-function cron ($taches=array(), $taches_old= array()) {
+function cron ($taches = array(), $taches_old= array()) {
 	// si pas en mode cron force, laisser tomber.
 	if (!defined('_DIRECT_CRON_FORCE')) return false;
 	if (!is_array($taches)) $taches = $taches_old; // compat anciens appels
@@ -840,7 +840,7 @@ function cron ($taches=array(), $taches_old= array()) {
  * @return int
  *	id of job
  */
-function job_queue_add($function, $description, $arguments = array(), $file = '', $no_duplicate = FALSE, $time=0, $priority=0) {
+function job_queue_add($function, $description, $arguments = array(), $file = '', $no_duplicate = FALSE, $time = 0, $priority = 0) {
 	include_spip('inc/queue');
 	return queue_add_job($function, $description, $arguments, $file, $no_duplicate, $time, $priority);
 }
@@ -866,7 +866,7 @@ function job_queue_remove($id_job){
  *  can be a simple array('objet'=>'article','id_objet'=>23)
  *  or an array of simple array to link multiples objet in one time
  */
-function job_queue_link($id_job,$objets){
+function job_queue_link($id_job, $objets){
 	include_spip('inc/queue');
 	return queue_link_job($id_job,$objets);
 }
@@ -887,7 +887,7 @@ function job_queue_link($id_job,$objets){
  *  - `0` si un job est à traiter
  *  - `null` si la queue n'est pas encore initialisée
  */
-function queue_sleep_time_to_next_job($force=null) {
+function queue_sleep_time_to_next_job($force = null) {
 	static $queue_next_job_time = -1;
 	if ($force===true)
 		$queue_next_job_time = -1;
@@ -944,7 +944,7 @@ function quote_amp($u) {
  * @return string
  *     Balise HTML `<script>` et son contenu
 **/
-function http_script($script, $src='', $noscript='') {
+function http_script($script, $src = '', $noscript = '') {
 	static $done = array();
 
 	if ($src && !isset($done[$src])){
@@ -1033,7 +1033,7 @@ function texte_script($texte) {
  * @return array
  *     Liste des chemins, par ordre de priorité.
 **/
-function _chemin($dir_path=NULL){
+function _chemin($dir_path = NULL){
 	static $path_base = NULL;
 	static $path_full = NULL;
 	if ($path_base==NULL){
@@ -1133,7 +1133,7 @@ function lister_themes_prives(){
 	return $themes;
 }
 
-function find_in_theme($file, $subdir='', $include=false){
+function find_in_theme($file, $subdir = '', $include = false){
 	static $themefiles=array();
 	if (isset($themefiles["$subdir$file"])) return $themefiles["$subdir$file"];
 	$themes = lister_themes_prives();
@@ -1218,7 +1218,7 @@ $GLOBALS['path_files'] = null;
  *     - string : chemin du fichier trouvé
  *     - false : fichier introuvable
 **/
-function find_in_path ($file, $dirname='', $include=false) {
+function find_in_path ($file, $dirname = '', $include = false) {
 	static $dirs=array();
 	static $inc = array(); # cf http://trac.rezo.net/trac/spip/changeset/14743
 	static $c = '';
@@ -1340,7 +1340,7 @@ function save_path_cache(){
  * @param bool $recurs
  * @return array
  */
-function find_all_in_path($dir,$pattern, $recurs=false){
+function find_all_in_path($dir, $pattern, $recurs = false){
 	$liste_fichiers=array();
 	$maxfiles = 10000;
 
@@ -1394,7 +1394,7 @@ function autoriser_sans_cookie($nom)
  *   array : derogatoire, la fonction d'url retourne (objet,id_objet) utilises par nettoyer_raccourcis_typo() pour generer un lien titre
  *           (cas des raccourcis personalises [->spip20] : il faut implementer une fonction generer_url_spip et une fonction generer_url_ecrire_spip)
  */
-function generer_url_entite($id='', $entite='', $args='', $ancre='', $public=NULL, $type=NULL)
+function generer_url_entite($id = '', $entite = '', $args = '', $ancre = '', $public = NULL, $type = NULL)
 {
 	if ($public === NULL) $public = !test_espace_prive();
 	$entite = objet_type($entite); // cas particulier d'appels sur objet/id_objet...
@@ -1447,7 +1447,7 @@ function generer_url_entite($id='', $entite='', $args='', $ancre='', $public=NUL
 	return '';
 }
 
-function generer_url_ecrire_entite_edit($id, $entite, $args='', $ancre=''){
+function generer_url_ecrire_entite_edit($id, $entite, $args = '', $ancre = ''){
 	$exec = objet_info($entite,'url_edit');
 	$url = generer_url_ecrire($exec,$args);
 	if (intval($id))
@@ -1460,7 +1460,7 @@ function generer_url_ecrire_entite_edit($id, $entite, $args='', $ancre=''){
 }
 
 // http://code.spip.net/@urls_connect_dist
-function urls_connect_dist($i, &$entite, $args='', $ancre='', $public=null) {
+function urls_connect_dist($i, &$entite, $args = '', $ancre = '', $public = null) {
 	include_spip('base/connect_sql');
 	$id_type = id_table_objet($entite,$public);
 	return _DIR_RACINE . get_spip_script('./')
@@ -1490,7 +1490,7 @@ function urlencode_1738($url) {
 }
 
 // http://code.spip.net/@generer_url_entite_absolue
-function generer_url_entite_absolue($id='', $entite='', $args='', $ancre='', $connect=NULL)
+function generer_url_entite_absolue($id = '', $entite = '', $args = '', $ancre = '', $connect = NULL)
 {
 	if (!$connect) $connect = true;
 	$h = generer_url_entite($id, $entite, $args, $ancre, $connect);
@@ -1531,7 +1531,7 @@ function test_valeur_serveur($truc) {
  *    - si array : réinitialise le tableau static complet avec la valeur fournie
  * @return string|array
  */
-function url_de_base($profondeur=null) {
+function url_de_base($profondeur = null) {
 
 	static $url = array();
 	if (is_array($profondeur)) return $url = $profondeur;
@@ -1586,7 +1586,7 @@ function url_de_base($profondeur=null) {
  * @param int $prof
  * @return string
  */
-function url_de_($http,$host,$request,$prof=0){
+function url_de_($http, $host, $request, $prof = 0){
 	$prof = max($prof,0);
 
 	$myself = ltrim($request,'/');
@@ -1629,7 +1629,7 @@ function url_de_($http,$host,$request,$prof=0){
  *     - string : on transmet l'url à la fonction
  * @return string URL
 **/
-function generer_url_ecrire($script='', $args="", $no_entities=false, $rel=false) {
+function generer_url_ecrire($script = '', $args = "", $no_entities = false, $rel = false) {
 	if (!$rel)
 		$rel = url_de_base() . _DIR_RESTREINT_ABS . _SPIP_ECRIRE_SCRIPT;
 	else if (!is_string($rel))
@@ -1646,7 +1646,7 @@ function generer_url_ecrire($script='', $args="", $no_entities=false, $rel=false
 }
 
 // http://code.spip.net/@generer_url_retour
-function generer_url_retour($script, $args="")
+function generer_url_retour($script, $args = "")
 {
 	return rawurlencode(generer_url_ecrire($script, $args, true, true));
 }
@@ -1669,7 +1669,7 @@ function generer_url_retour($script, $args="")
  * @return string
  *     Nom du fichier (constante _SPIP_SCRIPT), sinon nom par défaut
 **/
-function get_spip_script($default='') {
+function get_spip_script($default = '') {
 	# cas define('_SPIP_SCRIPT', '');
 	if (_SPIP_SCRIPT)
 		return _SPIP_SCRIPT;
@@ -1702,7 +1702,7 @@ function get_spip_script($default='') {
  *     - Fichier d'exécution public (spip.php par défaut)
  * @return string URL
 **/
-function generer_url_public($script='', $args="", $no_entities=false, $rel=true, $action='') {
+function generer_url_public($script = '', $args = "", $no_entities = false, $rel = true, $action = '') {
 	// si le script est une action (spip_pass, spip_inscription),
 	// standardiser vers la nouvelle API
 
@@ -1727,7 +1727,7 @@ function generer_url_public($script='', $args="", $no_entities=false, $rel=true,
 }
 
 // http://code.spip.net/@generer_url_prive
-function generer_url_prive($script, $args="", $no_entities=false) {
+function generer_url_prive($script, $args = "", $no_entities = false) {
 
 	return generer_url_public($script, $args, $no_entities, false, _DIR_RESTREINT_ABS .  'prive.php');
 }
@@ -1752,7 +1752,7 @@ function generer_url_prive($script, $args="", $no_entities=false) {
  * @return string
  *     Code HTML du formulaire
 **/
-function generer_form_ecrire($script, $corps, $atts='', $submit='') {
+function generer_form_ecrire($script, $corps, $atts = '', $submit = '') {
 	global $spip_lang_right;
 
 	$script1 = explode('&', $script);
@@ -1784,7 +1784,7 @@ function generer_form_ecrire($script, $corps, $atts='', $submit='') {
  * @param bool $public
  * @return string
  */
-function generer_form_action($script, $corps, $atts='', $public=false) {
+function generer_form_action($script, $corps, $atts = '', $public = false) {
 	// si l'on est dans l'espace prive, on garde dans l'url
 	// l'exec a l'origine de l'action, qui permet de savoir si il est necessaire
 	// ou non de proceder a l'authentification (cas typique de l'install par exemple)
@@ -1820,7 +1820,7 @@ function generer_form_action($script, $corps, $atts='', $public=false) {
  * @return string
  *     URL
  */
-function generer_url_action($script, $args="", $no_entities=false , $public = false) {
+function generer_url_action($script, $args = "", $no_entities = false , $public = false) {
 	// si l'on est dans l'espace prive, on garde dans l'url
 	// l'exec a l'origine de l'action, qui permet de savoir si il est necessaire
 	// ou non de proceder a l'authentification (cas typique de l'install par exemple)
@@ -1843,7 +1843,7 @@ function generer_url_action($script, $args="", $no_entities=false , $public = fa
  * @param string $ti Répertoire temporaire inaccessible
  * @param string $ta Répertoire temporaire accessible
  */
-function spip_initialisation($pi=NULL, $pa=NULL, $ti=NULL, $ta=NULL) {
+function spip_initialisation($pi = NULL, $pa = NULL, $ti = NULL, $ta = NULL) {
 	spip_initialisation_core($pi,$pa,$ti,$ta);
 	spip_initialisation_suite();
 }
@@ -1864,7 +1864,7 @@ function spip_initialisation($pi=NULL, $pa=NULL, $ti=NULL, $ta=NULL) {
  * @param string $ti Répertoire temporaire inaccessible
  * @param string $ta Répertoire temporaire accessible
  */
-function spip_initialisation_core($pi=NULL, $pa=NULL, $ti=NULL, $ta=NULL) {
+function spip_initialisation_core($pi = NULL, $pa = NULL, $ti = NULL, $ta = NULL) {
 	static $too_late = 0;
 	if ($too_late++) return;
 
@@ -2312,7 +2312,7 @@ function init_var_mode(){
 // supprimer aussi les eventuels caracteres nuls %00, qui peuvent tromper
 // la commande is_readable('chemin/vers/fichier/interdit%00truc_normal')
 // http://code.spip.net/@spip_desinfecte
-function spip_desinfecte(&$t,$deep = true) {
+function spip_desinfecte(&$t, $deep = true) {
 	static $magic_quotes;
 	if (!isset($magic_quotes))
 		$magic_quotes = @get_magic_quotes_gpc();
@@ -2467,7 +2467,7 @@ function spip_session($force = false) {
  * 		ou une url distante [directement sur spip.net]
  * @return Lien sur une icone d'aide
 **/
-function aide($aide='', $distante = false) {
+function aide($aide = '', $distante = false) {
 		$aider = charger_fonction('aider', 'inc', true);
 	return $aider ?  $aider($aide, '', array(), $distante) : '';
 }
@@ -2501,7 +2501,7 @@ function exec_info_dist() {
  *     - Rien dans la plupart des cas
  *     - string si $message à false.
 **/
-function erreur_squelette($message='', $lieu='') {
+function erreur_squelette($message = '', $lieu = '') {
 	$debusquer = charger_fonction('debusquer', 'public');
 	if (is_array($lieu)) {
 		include_spip('public/compiler');
@@ -2543,7 +2543,7 @@ function erreur_squelette($message='', $lieu='') {
  *     - Contenu du squelette calculé
  *     - ou tableau d'information sur le squelette.
  */
-function recuperer_fond($fond, $contexte=array(), $options = array(), $connect='') {
+function recuperer_fond($fond, $contexte = array(), $options = array(), $connect = '') {
 	if (!function_exists('evaluer_fond'))
 		include_spip('public/assembler');
 	// assurer la compat avec l'ancienne syntaxe
@@ -2634,7 +2634,7 @@ function trouve_modele($nom) {
  * @param bool $pathinfo
  * @return array|string
  */
-function trouver_fond($nom, $dir='', $pathinfo = false) {
+function trouver_fond($nom, $dir = '', $pathinfo = false) {
 	$f = find_in_path($nom.'.'. _EXTENSION_SQUELETTES, $dir?rtrim($dir,'/').'/':'');
 	if (!$pathinfo) return $f;
 	// renvoyer un tableau detaille si $pathinfo==true
@@ -2751,7 +2751,7 @@ function ecrire_metas() {}
  * @param int|null $t Type de retour
  * @return array|void|bool Tableau de la ligne SQL
 **/
-function spip_fetch_array($r, $t=NULL) {
+function spip_fetch_array($r, $t = NULL) {
 	if (!isset($t)) {
 		if ($r) return sql_fetch($r);
 	} else {
@@ -2773,7 +2773,7 @@ function spip_fetch_array($r, $t=NULL) {
  * @param string $message
  * @param string $statut
  */
-function avertir_auteurs($nom,$message, $statut=''){
+function avertir_auteurs($nom, $message, $statut = ''){
 	$alertes = $GLOBALS['meta']['message_alertes_auteurs'];
 	if (!$alertes
 		OR !is_array($alertes = unserialize($alertes)))

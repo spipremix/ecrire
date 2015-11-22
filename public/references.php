@@ -83,7 +83,7 @@ function index_boucle($p){
  * @return string
  *     Code PHP pour obtenir le champ SQL
  */
-function index_pile($idb, $nom_champ, &$boucles, $explicite='', $defaut=null, $remonte_pile=true, $select=true) {
+function index_pile($idb, $nom_champ, &$boucles, $explicite = '', $defaut = null, $remonte_pile = true, $select = true) {
 	if (!is_string($defaut))
 		$defaut = '@$Pile[0][\''. strtolower($nom_champ) . '\']';
 
@@ -150,7 +150,7 @@ function index_pile($idb, $nom_champ, &$boucles, $explicite='', $defaut=null, $r
  * @param string $defaut       Valeur par défaut si aucun des moyens ne l'a trouvé
  * @return string              Code PHP complet de recherche d'un champ
  */
-function index_compose($conditionnel,$defaut) {
+function index_compose($conditionnel, $defaut) {
 	while ($c = array_pop($conditionnel)) {
 		// si on passe defaut = '', ne pas générer d'erreur de compilation.
 		$defaut = "($c:(".($defaut?$defaut:"''")."))";
@@ -519,7 +519,7 @@ define('CODE_EXECUTER_BALISE', "executer_balise_dynamique('%s',
  * @return Champ
  *     Balise complétée de son code d'exécution
 **/
-function calculer_balise_dynamique($p, $nom, $l, $supp=array()) {
+function calculer_balise_dynamique($p, $nom, $l, $supp = array()) {
 
 	if (!balise_distante_interdite($p)) {
 		$p->code = "''";
@@ -822,7 +822,7 @@ function compose_filtres_args($p, $args, $sep)
  * @param null|string $defaut  
  * @return 
 **/
-function calculer_argument_precedent($idb, $nom_champ, &$boucles, $defaut=null) {
+function calculer_argument_precedent($idb, $nom_champ, &$boucles, $defaut = null) {
 
 	// si recursif, forcer l'extraction du champ SQL mais ignorer le code
 	if ($boucles[$idb]->externe) {

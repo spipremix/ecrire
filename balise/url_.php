@@ -250,8 +250,8 @@ function balise_URL_SITE_SPIP_dist($p) {
  */
 function balise_URL_PAGE_dist($p) {
 
-	$code = interprete_argument_balise(1,$p);
-	$args = interprete_argument_balise(2,$p);
+	$code = interprete_argument_balise(1, $p);
+	$args = interprete_argument_balise(2, $p);
 	if ($args == NULL)
 		$args = "''";
 
@@ -259,12 +259,12 @@ function balise_URL_PAGE_dist($p) {
 		// si une fonction de generation des url a ete definie pour ce connect l'utiliser
 		// elle devra aussi traiter le cas derogatoire type=page
 		if (function_exists($f = 'generer_generer_url_'.$s)){
-			if ($args AND $args!=="''") $code .= ", $args";
+			if ($args AND $args !== "''") $code .= ", $args";
 			$code = $f('page', $code, $s);
 			return $p;
 		}
 		$s = 'connect=' .  addslashes($s);
-		$args = (($args AND $args!=="''") ? "$args . '&$s'" : "'$s'");
+		$args = (($args AND $args !== "''") ? "$args . '&$s'" : "'$s'");
 	}
 
 	if (!$code) {

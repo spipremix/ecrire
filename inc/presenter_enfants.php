@@ -28,7 +28,7 @@ include_spip('inc/presentation');
  * @return array $res
  * 	Un tableau des sous rubriques
  */
-function enfant_rub($collection,$debut=0,$limite=500){
+function enfant_rub($collection, $debut = 0, $limite = 500){
 	$voir_logo = (isset($GLOBALS['meta']['image_process']) AND $GLOBALS['meta']['image_process'] != "non");
 	$logo = "";
 
@@ -153,7 +153,7 @@ function sous_enfant_rub($collection2){
  * @return string $res
  * 	Le contenu textuel affiché, la liste des sous rubriques
  */
-function afficher_enfant_rub($id_rubrique=0) {
+function afficher_enfant_rub($id_rubrique = 0) {
 	$pagination = '';
 	$debut = 0;
 	$limite = 500;

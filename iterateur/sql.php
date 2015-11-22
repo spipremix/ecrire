@@ -74,7 +74,7 @@ class IterateurSQL implements Iterator {
 	 * array command: les commandes d'initialisation
 	 * array info: les infos sur le squelette
 	 */
-	public function __construct($command, $info=array()) {
+	public function __construct($command, $info = array()) {
 		$this->type='SQL';
 		$this->command = $command;
 		$this->info = $info;
@@ -121,7 +121,7 @@ class IterateurSQL implements Iterator {
 	 * @param null|string $continue
 	 * @return bool
 	 */
-	public function seek($n=0, $continue=null) {
+	public function seek($n = 0, $continue = null) {
 		if (!sql_seek($this->sqlresult, $n, $this->command['connect'], $continue)) {
 			// SQLite ne sait pas seek(), il faut relancer la query
 			// si la position courante est apres la position visee

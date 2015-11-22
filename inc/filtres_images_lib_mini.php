@@ -416,7 +416,7 @@ function _image_imagepng($img, $fichier) {
  *     - false si l'image créée a une largeur nulle ou n'existe pas ;
  *     - true si une image est bien retournée.
  */
-function _image_imagegif($img,$fichier) {
+function _image_imagegif($img, $fichier) {
 	if  (!function_exists('imagegif')) return false;
 	$tmp = $fichier.".tmp";
 	$ret = imagegif($img,$tmp);
@@ -450,7 +450,7 @@ function _image_imagegif($img,$fichier) {
  *     - false si l'image créée a une largeur nulle ou n'existe pas ;
  *     - true si une image est bien retournée.
  */
-function _image_imagejpg($img,$fichier,$qualite=_IMG_GD_QUALITE) {
+function _image_imagejpg($img, $fichier, $qualite = _IMG_GD_QUALITE) {
 	if (!function_exists('imagejpeg')) return false;
 	$tmp = $fichier.".tmp";
 	$ret = imagejpeg($img,$tmp, $qualite);
@@ -509,7 +509,7 @@ function _image_imageico($img, $fichier) {
  *     - true si le traitement GD s'est bien finalisé ;
  *     - false sinon.
  */
-function _image_gd_output($img,$valeurs, $qualite=_IMG_GD_QUALITE){
+function _image_gd_output($img, $valeurs, $qualite = _IMG_GD_QUALITE){
 	$fonction = "_image_image".$valeurs['format_dest'];
 	$ret = false;
 	#un flag pour reperer les images gravees
@@ -701,7 +701,7 @@ function imagepalettetotruecolor(&$img) {
  * @return string
  *     Code html modifié de la balise.
 **/
-function _image_tag_changer_taille($tag, $width, $height, $style=false){
+function _image_tag_changer_taille($tag, $width, $height, $style = false){
 	if ($style===false) $style = extraire_attribut($tag, 'style');
 
 	// enlever le width et height du style
@@ -727,7 +727,7 @@ function _image_tag_changer_taille($tag, $width, $height, $style=false){
 
 // function d'ecriture du de la balise img en sortie des filtre image
 // reprend le tag initial et surcharge les tags modifies
-function _image_ecrire_tag($valeurs,$surcharge=array()){
+function _image_ecrire_tag($valeurs, $surcharge = array()){
 	$valeurs = pipeline('image_ecrire_tag_preparer',$valeurs);
 
 	$tag = 	str_replace(">","/>",str_replace("/>",">",$valeurs['tag'])); // fermer les tags img pas bien fermes;
@@ -790,7 +790,7 @@ function _image_ecrire_tag($valeurs,$surcharge=array()){
 	return $tag;
 }
 
-function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process='AUTO', $force=false, $test_cache_only = false) {
+function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO', $force = false, $test_cache_only = false) {
 	// ordre de preference des formats graphiques pour creer les vignettes
 	// le premier format disponible, selon la methode demandee, est utilise
 	$image = $valeurs['fichier'];
@@ -1037,7 +1037,7 @@ function ratio_passe_partout ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 }
 
 
-function process_image_reduire($fonction,$img,$taille,$taille_y,$force,$cherche_image,$process){
+function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process){
 	$image = false;
 	if (($process == 'AUTO') AND isset($GLOBALS['meta']['image_process']))
 		$process = $GLOBALS['meta']['image_process'];
@@ -1159,7 +1159,7 @@ class phpthumb_functions {
 	 * @param int $minbytes
 	 * @return string
 	 */
-	public static function LittleEndian2String($number, $minbytes=1) {
+	public static function LittleEndian2String($number, $minbytes = 1) {
 		$intstring = '';
 		while ($number > 0) {
 			$intstring = $intstring.chr($number & 255);

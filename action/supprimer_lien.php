@@ -32,7 +32,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     de l'action sécurisée.
  * @return void
  */
-function action_supprimer_lien_dist($arg=null){
+function action_supprimer_lien_dist($arg = null){
 	if (is_null($arg)){
 		$securiser_action = charger_fonction('securiser_action','inc');
 		$arg = $securiser_action();

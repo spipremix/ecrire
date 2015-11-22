@@ -83,7 +83,7 @@ function cvtconf_formulaire_traiter($flux){
  *   arguments de l'appel de la fonction traiter ($args = func_get_args();)
  * @return string
  */
-function cvtconf_formulaires_configurer_enregistre($form,$args){
+function cvtconf_formulaires_configurer_enregistre($form, $args){
 		$valeurs = array();
 		// charger les valeurs
 		// ce qui permet de prendre en charge une fonction charger() existante
@@ -121,7 +121,7 @@ function cvtconf_formulaires_configurer_enregistre($form,$args){
  * @param array $valeurs
  * @return array
  */
-function cvtconf_definir_configurer_conteneur($form,$valeurs) {
+function cvtconf_definir_configurer_conteneur($form, $valeurs) {
 		// stocker en base
 		// par defaut, dans un casier serialize dans spip_meta (idem CFG)
 		$casier = substr($form,11);
@@ -193,7 +193,7 @@ function cvtconf_formulaires_configurer_recense($form){
  * @param array $store
  * @return string
  */
-function cvtconf_configurer_stocker($form,$valeurs,$store) {
+function cvtconf_configurer_stocker($form, $valeurs, $store) {
 	$trace = '';
 	list($table,$casier,$prefixe,$stockage) = cvtconf_definir_configurer_conteneur($form,$valeurs);
 	// stocker en base
@@ -219,7 +219,7 @@ function cvtconf_configurer_stocker($form,$valeurs,$store) {
  * @param string $form
  * @param array $valeurs
  */
-function cvtconf_configurer_lire_meta($form,&$valeurs) {
+function cvtconf_configurer_lire_meta($form, &$valeurs) {
 	list($table,$casier,$prefixe,$stockage) = cvtconf_definir_configurer_conteneur($form,$valeurs);
 
 	$table = ($table) ? "/$table/" : ""; 

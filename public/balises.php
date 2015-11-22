@@ -45,7 +45,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return string|null
  *     Code PHP si cet argument est présent, sinon null
 **/
-function interprete_argument_balise($n,$p) {
+function interprete_argument_balise($n, $p) {
 	if (($p->param) && (!$p->param[0][0]) && (count($p->param[0])>$n))
 		return calculer_liste($p->param[0][$n],
 			$p->descr,
@@ -1073,7 +1073,7 @@ define('CODE_PAGINATION',
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_PAGINATION_dist($p, $liste='true') {
+function balise_PAGINATION_dist($p, $liste = 'true') {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->descr['id_mere'];
 
 	// s'il n'y a pas de nom de boucle, on ne peut pas paginer
@@ -2550,7 +2550,7 @@ function balise_HTML5_dist($p) {
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_TRI_dist($p, $liste='true') {
+function balise_TRI_dist($p, $liste = 'true') {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->descr['id_mere'];
 
 	// s'il n'y a pas de nom de boucle, on ne peut pas trier

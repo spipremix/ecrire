@@ -49,7 +49,7 @@ function couleur_html_to_hex($couleur){
  * @return string
  * 		Code hexadécimal de la couleur plus foncée
  */
-function couleur_foncer ($couleur, $coeff=0.5) {
+function couleur_foncer ($couleur, $coeff = 0.5) {
 	$couleurs = _couleur_hex_to_dec($couleur);
 
 	$red = $couleurs["red"] - round(($couleurs["red"])*$coeff);
@@ -73,7 +73,7 @@ function couleur_foncer ($couleur, $coeff=0.5) {
  * @return string
  * 		Code hexadécimal de la couleur éclaircie
  */
-function couleur_eclaircir ($couleur, $coeff=0.5) {
+function couleur_eclaircir ($couleur, $coeff = 0.5) {
 	$couleurs = _couleur_hex_to_dec($couleur);
 
 	$red = $couleurs["red"] + round((255 - $couleurs["red"])*$coeff);
@@ -105,7 +105,7 @@ function couleur_eclaircir ($couleur, $coeff=0.5) {
  * @return 
  * 		Le tag html `<img src=... />` avec une class `filtre_inactif` ou pas
  */
-function image_select($img,$width_min=0, $height_min=0, $width_max=10000, $height_max=1000){
+function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000, $height_max = 1000){
 	if (!$img) return $img;
 	list ($h,$l) = taille_image($img);
 	$select = true;
@@ -162,7 +162,7 @@ function image_select($img,$width_min=0, $height_min=0, $width_max=10000, $heigh
  * @return string
  *     Code HTML de l'image ou du texte.
 **/
-function image_passe_partout($img,$taille_x = -1, $taille_y = -1,$force = false,$cherche_image=false,$process='AUTO'){
+function image_passe_partout($img, $taille_x = -1, $taille_y = -1, $force = false, $cherche_image = false, $process = 'AUTO'){
 	if (!$img) return '';
 	list ($hauteur,$largeur) = taille_image($img);
 	if ($taille_x == -1)
@@ -215,7 +215,7 @@ function image_passe_partout($img,$taille_x = -1, $taille_y = -1,$force = false,
  * @return string
  *     Code HTML de l'image ou du texte.
 **/
-function image_reduire($img, $taille = -1, $taille_y = -1, $force=false, $cherche_image=false, $process='AUTO') {
+function image_reduire($img, $taille = -1, $taille_y = -1, $force = false, $cherche_image = false, $process = 'AUTO') {
 	// Determiner la taille x,y maxi
 	// prendre le reglage de previsu par defaut
 	if ($taille == -1)
@@ -248,7 +248,7 @@ function image_reduire($img, $taille = -1, $taille_y = -1, $force=false, $cherch
  * @return string
  *     Code HTML de l'image ou du texte.
 **/
-function image_reduire_par ($img, $val=1, $force=false) {
+function image_reduire_par ($img, $val = 1, $force = false) {
 	list ($hauteur,$largeur) = taille_image($img);
 
 	$l = round($largeur/$val);

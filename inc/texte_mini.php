@@ -72,7 +72,7 @@ if (!defined('_BALISES_BLOCS_REGEXP'))
 // une $source differente ; le script detecte automagiquement si ce qu'on
 // echappe est un div ou un span
 // http://code.spip.net/@code_echappement
-function code_echappement($rempl, $source='', $no_transform=false, $mode=NULL) {
+function code_echappement($rempl, $source = '', $no_transform = false, $mode = NULL) {
 	if (!strlen($rempl)) return '';
 
 	// Tester si on echappe en span ou en div
@@ -157,7 +157,7 @@ define('_PROTEGE_BLOCS', ',<(html|code|cadre|frame|script|style)(\s[^>]*)?>(.*)<
 // - pour $source voir commentaire infra (echappe_retour)
 // - pour $no_transform voir le filtre post_autobr dans inc/filtres
 // http://code.spip.net/@echappe_html
-function echappe_html($letexte, $source='', $no_transform=false,
+function echappe_html($letexte, $source = '', $no_transform = false, 
 $preg='') {
 	if (!is_string($letexte) or !strlen($letexte))
 		return $letexte;
@@ -216,7 +216,7 @@ $preg='') {
 // Rq: $source sert a faire des echappements "a soi" qui ne sont pas nettoyes
 // par propre() : exemple dans multi et dans typo()
 // http://code.spip.net/@echappe_retour
-function echappe_retour($letexte, $source='', $filtre = "") {
+function echappe_retour($letexte, $source = '', $filtre = "") {
 	if (strpos($letexte,"base64$source")) {
 		# spip_log(spip_htmlspecialchars($letexte));  ## pour les curieux
 		$max_prof = 5;
@@ -249,7 +249,7 @@ function echappe_retour($letexte, $source='', $filtre = "") {
 // Reinserer le javascript de confiance (venant des modeles)
 
 // http://code.spip.net/@echappe_retour_modeles
-function echappe_retour_modeles($letexte, $interdire_scripts=false)
+function echappe_retour_modeles($letexte, $interdire_scripts = false)
 {
 	$letexte = echappe_retour($letexte);
 
@@ -284,7 +284,7 @@ function echappe_retour_modeles($letexte, $interdire_scripts=false)
  * @return string
  *     Texte coupé
 **/
-function couper($texte, $taille=50, $suite = '&nbsp;(...)') {
+function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
 	if (!($length=strlen($texte)) OR $taille <= 0) return '';
 	$offset = 400 + 2*$taille;
 	while ($offset<$length
@@ -476,7 +476,7 @@ function safehtml($t) {
  * @return string
  *     Texte sans les modèles d'image
 **/
-function supprime_img($letexte, $message=NULL) {
+function supprime_img($letexte, $message = NULL) {
 	if ($message===NULL) $message = '(' . _T('img_indisponible') . ')';
 	return preg_replace(',<(img|doc|emb)([0-9]+)(\|([^>]*))?'.'\s*/?'.'>,i',
 		$message, $letexte);
