@@ -122,6 +122,7 @@ function auth_mode()
 	// Recuperer les donnees d'identification
 	//
 
+	include_spip('inc/session');
 	// Session valide en cours ?
 	if (isset($_COOKIE['spip_session'])) {
 		$session = charger_fonction('session', 'inc');
@@ -129,7 +130,7 @@ function auth_mode()
 		OR $id_auteur===0 // reprise sur restauration
 		) {
 			$auth_can_disconnect = true;
-			$connect_login = isset($GLOBALS['visiteur_session']['login']) ? $GLOBALS['visiteur_session']['login'] : "";
+			$connect_login = session_get('login');
 		} else unset($_COOKIE['spip_session']);
 	}
 
@@ -150,7 +151,7 @@ function auth_mode()
 					$_SERVER['PHP_AUTH_PW'] = '';
 					$auth_can_disconnect = true;
 					$GLOBALS['visiteur_session'] = $r;
-					$connect_login = $GLOBALS['visiteur_session']['login'];
+					$connect_login = session_get('login');
 					$id_auteur = $r['id_auteur'];
 				} else {
 				  // cas de la session en plus de PHP_AUTH
