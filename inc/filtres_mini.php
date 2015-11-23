@@ -70,7 +70,7 @@ function suivre_lien($url, $lien) {
 	}
 
 	# L'url site spip est un lien absolu aussi
-	if ($lien == $GLOBALS['meta']['adresse_site']){
+	if (isset($GLOBALS['meta']['adresse_site']) and $lien == $GLOBALS['meta']['adresse_site']){
 		return $lien;
 	}
 

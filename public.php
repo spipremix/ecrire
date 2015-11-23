@@ -116,8 +116,8 @@ if (isset($GLOBALS['_INC_PUBLIC']) AND $GLOBALS['_INC_PUBLIC']) {
 
 	// Content-Type ?
 	if (!isset($page['entetes']['Content-Type'])) {
-		$page['entetes']['Content-Type'] = 
-			"text/html; charset=" . $GLOBALS['meta']['charset'];
+		$charset = isset($GLOBALS['meta']['charset']) ? $GLOBALS['meta']['charset'] : "utf-8";
+		$page['entetes']['Content-Type'] = 'text/html; charset=' . $charset;
 		$html = true;
 	} else {
 		$html = preg_match(',^\s*text/html,',$page['entetes']['Content-Type']);
