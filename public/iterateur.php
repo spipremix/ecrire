@@ -46,7 +46,7 @@ class IterFactory{
 				$iter = $a[0];
 
 			// sinon, on cree un iterateur du type donne
-			} else {							
+			} else {
 				// arguments de creation de l'iterateur...
 				// (pas glop)
 				try {
