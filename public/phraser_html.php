@@ -181,45 +181,54 @@ function phraser_idiomes($texte, $ligne, $result) {
 	return $result;
 }
 
-// http://code.spip.net/@phraser_champs
+/**
+ * Repère et phrase les balises SPIP tel que `#NOM` dans un texte
+ *
+ * Phrase également ses arguments si la balise en a (`#NOM{arg, ...}`)
+ *
+ * @uses phraser_polyglotte()
+ * @uses phraser_args()
+ * @uses phraser_vieux()
+ * 
+ * @param string $texte
+ * @param int $ligne
+ * @param array $result
+ * @return array
+**/
 function phraser_champs($texte, $ligne, $result) {
 	while (preg_match("/".NOM_DE_CHAMP."/S", $texte, $match)) {
 		$p = strpos($texte, $match[0]);
+		// texte après la balise
 		$suite = substr($texte, $p + strlen($match[0]));
-		if ($match[5] || (strpos($suite[0], "[0-9]") === false)) {
-			$debut = substr($texte, 0, $p);
-			if ($p)	$result = phraser_polyglotte($debut, $ligne, $result);
-			$ligne += substr_count($debut, "\n");
-			$champ = new Champ;
-			$champ->ligne = $ligne;
-			$ligne += substr_count($match[0], "\n");
-			$champ->nom_boucle = $match[2];
-			$champ->nom_champ = $match[3];
-			$champ->etoile = $match[5];
 
-			if ($suite[0] == '{') {
-				phraser_arg($suite, '', array(), $champ);
-				// ce ltrim est une ereur de conception
-				// mais on le conserve par souci de compatibilite
-				$texte = ltrim($suite);
-				// Il faudrait le normaliser dans l'arbre de syntaxe abstraite
-				// pour faire sauter ce cas particulier a la decompilation.
-				/* Ce qui suit est malheureusement incomplet pour cela:
-				if ($n = (strlen($suite) - strlen($texte))) {
-					$champ->apres = array(new Texte);
-					$champ->apres[0]->texte = substr($suite,0,$n);
-				}
-				*/
-			} else {
-				$texte = $suite;
+		$debut = substr($texte, 0, $p);
+		if ($p)	$result = phraser_polyglotte($debut, $ligne, $result);
+		$ligne += substr_count($debut, "\n");
+		$champ = new Champ;
+		$champ->ligne = $ligne;
+		$ligne += substr_count($match[0], "\n");
+		$champ->nom_boucle = $match[2];
+		$champ->nom_champ = $match[3];
+		$champ->etoile = $match[5];
+
+		if ($suite and $suite[0] == '{') {
+			phraser_arg($suite, '', array(), $champ);
+			// ce ltrim est une ereur de conception
+			// mais on le conserve par souci de compatibilite
+			$texte = ltrim($suite);
+			// Il faudrait le normaliser dans l'arbre de syntaxe abstraite
+			// pour faire sauter ce cas particulier a la decompilation.
+			/* Ce qui suit est malheureusement incomplet pour cela:
+			if ($n = (strlen($suite) - strlen($texte))) {
+				$champ->apres = array(new Texte);
+				$champ->apres[0]->texte = substr($suite,0,$n);
 			}
-			phraser_vieux($champ);
-			$result[] = $champ;
+			*/
 		} else {
-			// faux champ
-			$result = phraser_polyglotte (substr($texte, 0, $p+1), $ligne, $result);
-			$texte = (substr($texte, $p+1));
+			$texte = $suite;
 		}
+		phraser_vieux($champ);
+		$result[] = $champ;
 	}
 	if ($texte !== "") {
 		$result = phraser_polyglotte($texte, $ligne, $result);
