@@ -1037,12 +1037,13 @@ function calculer_critere_parties_aux($idb, &$boucles, $param){
 	} else {
 		preg_match(',^ *(([0-9]+)|n) *(- *([0-9]+)? *)?$,', $param[0]->texte, $m);
 		$a1 = $m[1];
-		if (!@$m[3])
+		if (empty($m[3])) {
 			return array($a1, 0);
-		elseif ($m[4])
+		} elseif (!empty($m[4])) {
 			return array($a1, $m[4]);
-		else return array($a1,
-		                  calculer_liste(array($param[1]), array(), $boucles[$idb]->id_parent, $boucles));
+		} else {
+			return array($a1, calculer_liste(array($param[1]), array(), $boucles[$idb]->id_parent, $boucles));
+		}
 	}
 }
 
