@@ -1501,9 +1501,18 @@ function generer_url_entite_absolue($id = '', $entite = '', $args = '', $ancre =
 	return  $h;
 }
 
-// Sur certains serveurs, la valeur 'Off' tient lieu de false dans certaines
-// variables d'environnement comme $_SERVER[HTTPS] ou ini_get(register_globals)
-// http://code.spip.net/@test_valeur_serveur
+
+/**
+ * Tester qu'une variable d'environnement est active
+ * 
+ * Sur certains serveurs, la valeur 'Off' tient lieu de false dans certaines
+ * variables d'environnement comme $_SERVER[HTTPS] ou ini_get(register_globals)
+ *
+ * @param string|bool $truc
+ *     La valeur de la variable d'environnement
+ * @return bool
+ *     true si la valeur est considérée active ; false sinon.
+**/
 function test_valeur_serveur($truc) {
 	if (!$truc) return false;
 	return (strtolower($truc) !== 'off');
@@ -2001,13 +2010,16 @@ function spip_initialisation_core($pi = NULL, $pa = NULL, $ti = NULL, $ta = NULL
 
 	// Si les variables sont passees en global par le serveur,
 	// il faut faire quelques verifications de base
+	// Todo: test à supprimer lorsque version PHP minimum >= 5.4.
 	$avertir_register_globals = false;
 	if (test_valeur_serveur(@ini_get('register_globals'))) {
 		// ne pas desinfecter les globales en profondeur car elle contient aussi les
 		// precedentes, qui seraient desinfectees 2 fois.
 		spip_desinfecte($GLOBALS,false);
-		if (include_spip('inc/php3'))
+		// plugin grenier
+		if (include_spip('inc/php3')) {
 			spip_register_globals(true);
+		}
 
 		$avertir_register_globals = true;
 	}
@@ -2049,8 +2061,9 @@ function spip_initialisation_core($pi = NULL, $pa = NULL, $ti = NULL, $ta = NULL
 	$inc_meta();
 
 	// on a pas pu le faire plus tot
-	if  ($avertir_register_globals)
-		avertir_auteurs("register_globals",_L("Probl&egrave;me de s&eacute;curit&eacute; : register_globals=on; dans php.ini &agrave; corriger."));
+	if  ($avertir_register_globals) {
+		avertir_auteurs("register_globals", _L("Probl&egrave;me de s&eacute;curit&eacute; : register_globals=on; dans php.ini &agrave; corriger."));
+	}
 
 	// nombre de repertoires depuis la racine
 	// on compare a l'adresse de spip.php : $_SERVER["SCRIPT_NAME"]
@@ -2755,11 +2768,11 @@ function spip_fetch_array($r, $t = NULL) {
 	if (!isset($t)) {
 		if ($r) return sql_fetch($r);
 	} else {
-		if ($t=='SPIP_NUM') $t = MYSQL_NUM;
-		if ($t=='SPIP_BOTH') $t = MYSQL_BOTH;
-		if ($t=='SPIP_ASSOC') $t = MYSQL_ASSOC;
+		if ($t=='SPIP_NUM') $t = MYSQLI_NUM;
+		if ($t=='SPIP_BOTH') $t = MYSQLI_BOTH;
+		if ($t=='SPIP_ASSOC') $t = MYSQLI_ASSOC;
 		spip_log("appel deprecie de spip_fetch_array(..., $t)", 'vieilles_defs');
-		if ($r) return mysql_fetch_array($r, $t);
+		if ($r) return mysqli_fetch_array($r, $t);
 	}
 }
 
