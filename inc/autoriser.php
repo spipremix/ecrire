@@ -136,9 +136,10 @@ function autoriser_dist($faire, $type = '', $id = 0, $qui = NULL, $opt = NULL) {
 
 	// Qui ? visiteur_session ?
 	// si null ou '' (appel depuis #AUTORISER) on prend l'auteur loge
-	if ($qui === NULL OR $qui==='')
-	  $qui = $GLOBALS['visiteur_session'] ? $GLOBALS['visiteur_session'] : array('statut' => '', 'id_auteur' =>0, 'webmestre' => 'non');
-	elseif (is_numeric($qui)) {
+	if ($qui === NULL OR $qui==='') {
+		$qui = $GLOBALS['visiteur_session'] ? $GLOBALS['visiteur_session'] : array();
+		$qui = array_merge(array('statut' => '', 'id_auteur' => 0, 'webmestre' => 'non'), $qui);
+	} elseif (is_numeric($qui)) {
 		$qui = sql_fetsel("*", "spip_auteurs", "id_auteur=".$qui);
 	}
 
@@ -286,7 +287,7 @@ function autoriser_creer_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_previsualiser_dist($faire, $type, $id, $qui, $opt) {
 
 	// Le visiteur a-t-il un statut prevu par la config ?
-	if (strpos($GLOBALS['meta']['preview'], ",". $qui['statut'] .",") !== false) {
+	if (strpos($GLOBALS['meta']['preview'], "," . $qui['statut'] . ",") !== false) {
 		return test_previsualiser_objet_champ($type, $id, $qui, $opt);
 	}
 
