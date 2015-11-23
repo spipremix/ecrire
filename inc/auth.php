@@ -129,7 +129,7 @@ function auth_mode()
 		OR $id_auteur===0 // reprise sur restauration
 		) {
 			$auth_can_disconnect = true;
-			$connect_login = $GLOBALS['visiteur_session']['login'];
+			$connect_login = isset($GLOBALS['visiteur_session']['login']) ? $GLOBALS['visiteur_session']['login'] : "";
 		} else unset($_COOKIE['spip_session']);
 	}
 

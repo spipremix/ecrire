@@ -144,13 +144,17 @@ function ajouter_session($auteur) {
 	if (!isset($auteur['ip_change'])) $auteur['ip_change'] = false;
 
 	if (!isset($auteur['date_session'])) $auteur['date_session'] = time();
-	if (isset($auteur['prefs']) and is_string($auteur['prefs']))
+	if (isset($auteur['prefs']) and is_string($auteur['prefs'])) {
 		$auteur['prefs'] = unserialize($auteur['prefs']);
+	}
+
+	$fichier_session = "";
 
 	// les sessions anonymes sont stockees dans $_SESSION
 	if (!$id_auteur){
-		if (!isset($_SESSION[$_COOKIE['spip_session']]))
-			session_start();
+		if (!isset($_SESSION[$_COOKIE['spip_session']])) {
+			spip_php_session_start();
+		}
 		$_SESSION[$_COOKIE['spip_session']] = preparer_ecriture_session($auteur);
 	}
 	else {
@@ -169,11 +173,12 @@ function ajouter_session($auteur) {
 	  (!isset($auteur['cookie'])
 	    ? 2 : (is_numeric($auteur['cookie'])
 			? $auteur['cookie'] : 20));
+
 	spip_setcookie(
 		'spip_session',
 		$_COOKIE['spip_session'],
 		time() + $duree
-		);
+	);
 	spip_log("ajoute session $fichier_session cookie $duree","session");
 
 	# on en profite pour purger les vieilles sessions anonymes abandonnees
@@ -202,9 +207,10 @@ function verifier_session($change = false) {
 
 	// est-ce une session anonyme ?
 	if (!intval($_COOKIE['spip_session'])){
-		session_start();
-		if (!isset($_SESSION[$_COOKIE['spip_session']]) OR !is_array($_SESSION[$_COOKIE['spip_session']]))
+		spip_php_session_start();
+		if (!isset($_SESSION[$_COOKIE['spip_session']]) OR !is_array($_SESSION[$_COOKIE['spip_session']])) {
 			return false;
+		}
 		$GLOBALS['visiteur_session'] = $_SESSION[$_COOKIE['spip_session']];
 	}
 	else {
@@ -527,6 +533,39 @@ function hash_env() {
   static $res ='';
   if ($res) return $res;
   return $res = md5($GLOBALS['ip'] . (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''));
+}
+
+
+/**
+ * Démarre une session PHP si ce n'est pas déjà fait.
+ *
+ * @link http://php.net/manual/fr/function.session-start.php
+ * @uses is_php_session_started()
+ * @return bool True si une session PHP est ouverte.
+**/
+function spip_php_session_start() {
+	if (!is_php_session_started()) {
+		return session_start();
+	}
+	return true;
+}
+
+/**
+ * Indique si une sesssion PHP est active
+ *
+ * @link http://php.net/manual/fr/function.session-status.php#113468
+ * @return bool true si une session PHP est active
+**/
+function is_php_session_started() {
+	$started = false;
+	if ( php_sapi_name() !== 'cli' ) {
+		if ( version_compare(phpversion(), '5.4.0', '>=') ) {
+			return session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
+		} else {
+			return session_id() === '' ? FALSE : TRUE;
+		}
+	}
+	return FALSE;
 }
 
 ?>
