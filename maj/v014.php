@@ -77,8 +77,8 @@ function maj_v014_dist($version_installee, $version_cible)
 				$fichier = _DIR_IMG . $fichier;
 				$taille = @filesize($fichier);
 				// ici on n'a pas les fonctions absctract !
-				$s = spip_query("INSERT INTO spip_documents (titre, id_type, fichier, mode, largeur, hauteur, taille) VALUES ('image $largeur x $hauteur', $id_type, '$fichier', 'vignette', '$largeur', '$hauteur', '$taille')");
-				$id_document = mysql_insert_id($s);
+				spip_query("INSERT INTO spip_documents (titre, id_type, fichier, mode, largeur, hauteur, taille) VALUES ('image $largeur x $hauteur', $id_type, '$fichier', 'vignette', '$largeur', '$hauteur', '$taille')");
+				$id_document = mysqli_insert_id(_mysql_link());
 				if ($id_document > 0) {
 					spip_query("INSERT INTO spip_documents_articles (id_document, id_article) VALUES ($id_document, $id_article)");
 					$replace = "REPLACE($replace, '<IMG$num_img|', '<IM_$id_document|')";
@@ -230,9 +230,10 @@ function maj_v014_dist($version_installee, $version_cible)
 			$type = addslashes($row['type']);
 			$res = spip_query("SELECT * FROM spip_groupes_mots WHERE titre='$type'");
 			if (sql_count($res) == 0) {
-				$s = spip_query("INSERT INTO spip_groupes_mots (titre, unseul, obligatoire, articles, breves, rubriques, syndic, minirezo, comite, forum) VALUES ('$type', 'non', 'non', 'oui', 'oui', 'non', 'oui', 'oui', 'oui', 'non')");
-			  if ($id_groupe = mysql_insert_id($s))
+				spip_query("INSERT INTO spip_groupes_mots (titre, unseul, obligatoire, articles, breves, rubriques, syndic, minirezo, comite, forum) VALUES ('$type', 'non', 'non', 'oui', 'oui', 'non', 'oui', 'oui', 'oui', 'non')");
+				if ($id_groupe = mysqli_insert_id(_mysql_link())) {
 					spip_query("UPDATE spip_mots SET id_groupe = '$id_groupe' WHERE type='$type'");
+				}
 			}
 		}
 		spip_query("UPDATE spip_articles SET popularite=0");
