@@ -14,41 +14,46 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 class IndenteurXML {
 
-// http://code.spip.net/@debutElement
-function debutElement($phraseur, $name, $attrs)
-{ xml_debutElement($this, $name, $attrs);}
+	// http://code.spip.net/@debutElement
+	function debutElement($phraseur, $name, $attrs) {
+		xml_debutElement($this, $name, $attrs);
+	}
 
-// http://code.spip.net/@finElement
-function finElement($phraseur, $name)
-{ xml_finElement($this, $name);}
+	// http://code.spip.net/@finElement
+	function finElement($phraseur, $name) {
+		xml_finElement($this, $name);
+	}
 
-// http://code.spip.net/@textElement
-function textElement($phraseur, $data)
-{ xml_textElement($this, $data);}
+	// http://code.spip.net/@textElement
+	function textElement($phraseur, $data) {
+		xml_textElement($this, $data);
+	}
 
-function piElement($phraseur, $target, $data)
-{ xml_PiElement($this, $target, $data);}
+	function piElement($phraseur, $target, $data) {
+		xml_PiElement($this, $target, $data);
+	}
 
-// http://code.spip.net/@defautElement
-function defaultElement($phraseur, $data)
-{  xml_defaultElement($this, $data);}
+	// http://code.spip.net/@defautElement
+	function defaultElement($phraseur, $data) {
+		xml_defaultElement($this, $data);
+	}
 
-// http://code.spip.net/@phraserTout
-function phraserTout($phraseur, $data)
-{
-	xml_parsestring($this, $data);
-}
+	// http://code.spip.net/@phraserTout
+	function phraserTout($phraseur, $data)
+	{
+		xml_parsestring($this, $data);
+	}
 
- var $depth = "";
- var $res = "";
- var $err = array();
- var $contenu = array();
- var $ouvrant = array();
- var $reperes = array();
- var $entete = '';
- var $page = '';
- var $dtc = NULL;
- var $sax = NULL;
+	var $depth = "";
+	var $res = "";
+	var $err = array();
+	var $contenu = array();
+	var $ouvrant = array();
+	var $reperes = array();
+	var $entete = '';
+	var $page = '';
+	var $dtc = NULL;
+	var $sax = NULL;
 }
 
 // http://code.spip.net/@xml_indenter_dist
