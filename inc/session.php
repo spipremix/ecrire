@@ -25,11 +25,14 @@ $GLOBALS['visiteur_session'] = array(); # globale decrivant l'auteur
 
 /**
  * 3 actions sur les sessions, selon le type de l'argument:
+ *
  * - numerique: efface toutes les sessions de l'auteur (retour quelconque)
  * - tableau: cree une session pour l'auteur decrit et retourne l'identifiant
  * - bool: predicat de validite de la session indiquee par le cookie
  *
- * http://code.spip.net/@inc_session_dist
+ * @uses supprimer_sessions()
+ * @uses ajouter_session()
+ * @uses verifier_session()
  *
  * @param int|array|bool $auteur
  * @return bool|null|void
@@ -53,17 +56,20 @@ function inc_session_dist($auteur = false)
  * creees il y a plus de 4*_RENOUVELLE_ALEA
  * Tenir compte de l'ancien format ou les noms commencaient par "session_"
  * et du meme coup des repertoires plats
+ *
  * Attention : id_auteur peut etre negatif (cas des auteurs temporaires pendant le dump)
  *
- * http://code.spip.net/@supprimer_sessions
+ * @uses verifier_session()
+ * @uses fichier_session()
+ * @uses spip_session()
  *
  * @param int $id_auteur
- * 		Identifiant d'auteur dont on veut supprimer les sessions
+ *     Identifiant d'auteur dont on veut supprimer les sessions
  * @param bool $toutes
- * 		Supprimer aussi les vieilles sessions des autres auteurs ?
+ *     Supprimer aussi les vieilles sessions des autres auteurs ?
  * @param bool $actives
- * 		false pour ne pas supprimer les sessions valides de $id_auteur.
- * 		false revient donc a uniquement supprimer les vieilles sessions !
+ *     false pour ne pas supprimer les sessions valides de $id_auteur.
+ *     false revient donc a uniquement supprimer les vieilles sessions !
  */
 function supprimer_sessions($id_auteur, $toutes = true, $actives = true) {
 
@@ -92,6 +98,12 @@ function supprimer_sessions($id_auteur, $toutes = true, $actives = true) {
 /**
  * Ajoute une session pour l'auteur décrit par un tableau issu d'un SELECT-SQL
  *
+ * @uses spip_php_session_start() Lorsque session anonyme
+ * @uses hash_env()
+ * @uses preparer_ecriture_session()
+ * @uses fichier_session()
+ * @uses ecrire_fichier_session()
+ * 
  * @param array $auteur
  *     Description de la session de l'auteur. Peut contenir (par exemple)
  *     les clés : id_auteur, nom, login, email, statut, lang, ...
@@ -189,12 +201,18 @@ function ajouter_session($auteur) {
 
 
 /**
- * Verifie si le cookie spip_session indique une session valide.
+ * Vérifie si le cookie spip_session indique une session valide
+ * 
  * Si oui, la decrit dans le tableau $visiteur_session et retourne id_auteur
  * La rejoue si IP change puis accepte le changement si $change=true
  *
  * Retourne false en cas d'echec, l'id_auteur de la session si defini, null sinon
  *
+ * @uses spip_php_session_start() Si session anonyme
+ * @uses fichier_session()
+ * @uses ajouter_session()
+ * @uses hash_env()
+ * 
  * @param bool $change
  * @return bool|int|null
  */
@@ -291,6 +309,9 @@ function session_get($nom) {
  * Ajouter une donnée dans la session SPIP
  *
  * @api
+ * @uses ajouter_session()
+ * @uses terminer_actualiser_sessions() Ajoute la fonction en fin de hit.
+ * 
  * @param string $nom
  * @param null $val
  * @return void|array
@@ -323,6 +344,8 @@ function session_set($nom, $val = null) {
 
 /**
  * En fin de hit, synchroniser toutes les sessions
+ *
+ * @uses actualiser_session()
  */
 function terminer_actualiser_sessions(){
 	// se remettre dans le dossier de travail au cas ou Apache a change
@@ -335,13 +358,20 @@ function terminer_actualiser_sessions(){
 
 
 /**
- * Mettre a jour les sessions existantes pour un auteur
+ * Mettre à jour les sessions existantes pour un auteur
+ * 
  * Quand on modifie une fiche auteur on appelle cette fonction qui va
- * mettre a jour les fichiers de session de l'auteur en question.
- * (auteurs identifies seulement)
+ * mettre à jour les fichiers de session de l'auteur en question.
+ * (auteurs identifiés seulement)
  *
  * Ne concerne que les sessions des auteurs loges (id_auteur connu)
  *
+ * @uses ajouter_session()
+ * @uses fichier_session()
+ * @uses preg_files()
+ * @uses preparer_ecriture_session()
+ * @uses ecrire_fichier_session()
+ * 
  * @param array $auteur
  * @param array $supprimer_cles
  *     Liste des clés à supprimer des tableaux de sessions
@@ -424,8 +454,11 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 
 
 /**
- * Preparer le tableau de session avant ecriture
- * nettoyage de quelques variables sensibles, et appel d'un pipeline
+ * Préparer le tableau de session avant écriture
+ * 
+ * Nettoyage de quelques variables sensibles, et appel d'un pipeline
+ *
+ * @pipeline preparer_fichier_session
  * @param array $auteur
  * @return array
  */
@@ -454,8 +487,6 @@ function preparer_ecriture_session($auteur){
 
 /**
  * Ecrire le fichier d'une session
- *
- * http://code.spip.net/@ecrire_fichier_session
  *
  * @param string $fichier
  * @param array $auteur
