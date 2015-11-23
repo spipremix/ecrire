@@ -164,9 +164,7 @@ function ajouter_session($auteur) {
 
 	// les sessions anonymes sont stockees dans $_SESSION
 	if (!$id_auteur){
-		if (!isset($_SESSION[$_COOKIE['spip_session']])) {
-			spip_php_session_start();
-		}
+		spip_php_session_start();
 		$_SESSION[$_COOKIE['spip_session']] = preparer_ecriture_session($auteur);
 	}
 	else {
@@ -588,7 +586,6 @@ function spip_php_session_start() {
  * @return bool true si une session PHP est active
 **/
 function is_php_session_started() {
-	$started = false;
 	if ( php_sapi_name() !== 'cli' ) {
 		if ( version_compare(phpversion(), '5.4.0', '>=') ) {
 			return session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
