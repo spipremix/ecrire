@@ -86,11 +86,11 @@ if (!class_exists('nanoSha2'))
         var     $bytesString = 16;
 
         /**
-         * Php 4 - 6 compatable constructor
+         * Constructor
          *
          * @param bool $toUpper
          */
-        function nanoSha2($toUpper = false) {
+        function __construct($toUpper = false) {
             // Determine if the caller wants upper case or not.
             $this->toUpper = is_bool($toUpper)
                            ? $toUpper

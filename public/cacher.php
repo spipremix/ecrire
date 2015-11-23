@@ -127,7 +127,8 @@ function cache_valide(&$page, $date) {
 	$now = $_SERVER['REQUEST_TIME'];
 
 	// Apparition d'un nouvel article post-date ?
-	if ($GLOBALS['meta']['post_dates'] == 'non'
+	if (isset($GLOBALS['meta']['post_dates'])
+	  AND $GLOBALS['meta']['post_dates'] == 'non'
 	  AND isset($GLOBALS['meta']['date_prochain_postdate'])
 	  AND $now > $GLOBALS['meta']['date_prochain_postdate']) {
 		spip_log('Un article post-date invalide le cache');

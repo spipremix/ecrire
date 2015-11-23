@@ -12,10 +12,13 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-// Validateur XML en deux passes, fonde sur SAX pour la premiere
-// Faudrait faire deux classes car pour la premiere passe
-// on a les memes methodes et variables que l'indenteur
-
+/**
+ * Validateur XML en deux passes, fondé sur SAX pour la première
+ *
+ * @note
+ *     Faudrait faire deux classes car pour la première passe
+ *     on a les memes methodes et variables que l'indenteur
+**/
 class ValidateurXML {
 
 // http://code.spip.net/@validerElement
@@ -69,8 +72,9 @@ function validerElement($phraseur, $name, $attrs)
 	    }
 	}
 	// Init de la suite des balises a memoriser si regle difficile
-	if ($this->dtc->regles[$name][0]=='/')
-	    $this->fratrie[$depth]='';
+	if ($this->dtc->regles[$name] and $this->dtc->regles[$name][0]=='/') {
+		$this->fratrie[$depth] = '';
+	}
 	if (isset($this->dtc->attributs[$name])) {
 		  foreach ($this->dtc->attributs[$name] as $n => $v)
 		    { if (($v[1] == '#REQUIRED') AND (!isset($attrs[$n])))
@@ -305,8 +309,12 @@ function phraserTout($phraseur, $data)
 	}
 }
 
-// Init
-function ValidateurXML($process = array()) {
+/**
+ * Constructeur
+ *
+ * @param array $process ?
+**/
+function __construct($process = array()) {
 	if (is_array($process)) $this->process = $process;
 }
 
