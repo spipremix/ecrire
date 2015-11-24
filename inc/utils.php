@@ -1524,8 +1524,9 @@ function test_valeur_serveur($truc) {
 /**
  * Calcule l'url de base du site
  *
- * Calcule l'URL de base du site, sans se fier à la méta (adresse_site) qui
- * peut être fausse (sites avec plusieurs noms d’hôtes, déplacements, erreurs)
+ * Calcule l'URL de base du site, en priorité sans se fier à la méta (adresse_site) qui
+ * peut être fausse (sites avec plusieurs noms d’hôtes, déplacements, erreurs).
+ * En dernier recours, lorsqu'on ne trouve rien, on utilise adresse_site comme fallback.
  * 
  * @note
  *     La globale `$profondeur_url` doit être initialisée de manière à
@@ -1561,8 +1562,16 @@ function url_de_base($profondeur = null) {
 		$host = strtr($_SERVER['HTTP_X_FORWARDED_HOST'], "<>?\"' \r\n", '________');
 	}
 	else {
-		# note : HTTP_HOST contient le :port si necessaire
+		// note : HTTP_HOST contient le :port si necessaire
 		$host = $_SERVER['HTTP_HOST'];
+		// si on n'a pas trouvé d'hôte du tout, en dernier recours on utilise adresse_site comme fallback
+		if (is_null($host) and isset($GLOBALS['meta']['adresse_site'])) {
+			$host = $GLOBALS['meta']['adresse_site'];
+			if ($scheme = parse_url($host, PHP_URL_SCHEME)) {
+				$http = $scheme;
+				$host = str_replace("{$scheme}://", '', $host);
+			}
+		}
 		if (isset($_SERVER['SERVER_PORT'])
 			AND $port=$_SERVER['SERVER_PORT']
 			AND strpos($host,":")==false){
