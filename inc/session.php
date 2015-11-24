@@ -343,7 +343,7 @@ function session_set($nom, $val = null) {
 /**
  * En fin de hit, synchroniser toutes les sessions
  *
- * @uses actualiser_session()
+ * @uses actualiser_sessions()
  */
 function terminer_actualiser_sessions(){
 	// se remettre dans le dossier de travail au cas ou Apache a change

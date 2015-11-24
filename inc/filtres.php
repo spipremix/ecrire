@@ -5119,10 +5119,11 @@ function generer_lien_entite($id_objet, $objet, $longueur = 80, $connect = NULL)
 /**
  * Englobe (Wrap) un texte avec des balises
  * 
- * @example
- *      ```
- *      wrap('mot','<b>') => '<b>mot</b>'
- *      ```
+ * @example `wrap('mot','<b>')` donne `<b>mot</b>'`
+ *
+ * @filtre
+ * @uses extraire_balises()
+ * 
  * @param string $texte
  * @param string $wrap
  * @return string
