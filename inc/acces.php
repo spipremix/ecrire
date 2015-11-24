@@ -29,7 +29,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     Mot de passe
 **/
 function creer_pass_aleatoire($longueur = 8, $sel = "") {
-	$seed = (double) (microtime() + 1) * time();
+	$seed = (int) round((microtime() + 1) * time());
+
 	mt_srand($seed);
 	srand($seed);
 	$s = '';
