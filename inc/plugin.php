@@ -266,7 +266,7 @@ function plugin_fixer_procure(&$liste, &$infos){
 				// si ce plugin n'est pas deja procure, ou dans une version plus ancienne
 				// on ajoute cette version a la liste
 				if (!isset($liste[$p])
-					OR spip_version_compare($p['version'], $liste[$p]['version'], '>')
+					OR spip_version_compare($procure['version'], $liste[$p]['version'], '>')
 				  ){
 					$liste[$p] = $procure;
 
