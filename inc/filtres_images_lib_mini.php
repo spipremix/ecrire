@@ -118,7 +118,7 @@ function statut_effacer_images_temporaires($stat){
  *       -   si la fonction `_imagecreatefrom{extension}` n'existe pas ;
  *     - "" (chaîne vide) si le fichier source est distant et n'a pas
  *       réussi à être copié sur le serveur ;
- *     - l'appel à la fonction pipeline `image_preparer_filtre`.
+ *     - array : tableau décrivant de l'image
  */
 function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_creation = NULL, $find_in_path = false) {
 	static $images_recalcul = array();
@@ -725,20 +725,41 @@ function _image_tag_changer_taille($tag, $width, $height, $style = false){
 	return $tag;
 }
 
-// function d'ecriture du de la balise img en sortie des filtre image
-// reprend le tag initial et surcharge les tags modifies
-function _image_ecrire_tag($valeurs, $surcharge = array()){
-	$valeurs = pipeline('image_ecrire_tag_preparer',$valeurs);
 
-	$tag = 	str_replace(">","/>",str_replace("/>",">",$valeurs['tag'])); // fermer les tags img pas bien fermes;
-	
+/**
+ * Écriture de la balise img en sortie de filtre image
+ *
+ * Reprend le tag initial et surcharge les attributs modifiés
+ *
+ * @pipeline_appel image_ecrire_tag_preparer
+ * @pipeline_appel image_ecrire_tag_finir
+ * 
+ * @uses _image_tag_changer_taille()
+ * @uses extraire_attribut()
+ * @uses inserer_attribut()
+ * @see _image_valeurs_trans()
+ * 
+ * @param array $valeurs
+ *     Description de l'image tel que retourné par `_image_valeurs_trans()`
+ * @param array $surcharge
+ *     Permet de surcharger certaines descriptions présentes dans `$valeurs`
+ *     tel que 'style', 'width', 'height'
+ * @return string
+ *     Retourne le code HTML de l'image
+**/
+function _image_ecrire_tag($valeurs, $surcharge = array()){
+	$valeurs = pipeline('image_ecrire_tag_preparer', $valeurs);
+
+	// fermer les tags img pas bien fermes;
+	$tag = 	str_replace(">", "/>", str_replace("/>", ">", $valeurs['tag']));
+
 	// le style
 	$style = $valeurs['style'];
 	if (isset($surcharge['style'])){
 		$style = $surcharge['style'];
 		unset($surcharge['style']);
 	}
-	
+
 	// traiter specifiquement la largeur et la hauteur
 	$width = $valeurs['largeur'];
 	if (isset($surcharge['width'])){
@@ -756,11 +777,12 @@ function _image_ecrire_tag($valeurs, $surcharge = array()){
 	// on remplace toute les ref a src dans le tag
 	$src = extraire_attribut($tag,'src');
 	if (isset($surcharge['src'])){
-		$tag = str_replace($src,$surcharge['src'],$tag);
+		$tag = str_replace($src, $surcharge['src'], $tag);
 		// si il y a des & dans src, alors ils peuvent provenir d'un &amp
 		// pas garanti comme methode, mais mieux que rien
-		if (strpos($src,'&') !== false)
+		if (strpos($src,'&') !== false) {
 			$tag = str_replace(str_replace("&","&amp;",$src),$surcharge['src'],$tag);
+		}
 		$src = $surcharge['src'];
 		unset($surcharge['src']);
 	}
@@ -770,13 +792,16 @@ function _image_ecrire_tag($valeurs, $surcharge = array()){
 		$class = $surcharge['class'];
 		unset($surcharge['class']);
 	}
-	if(strlen($class))
+	if (strlen($class)) {
 		$tag = inserer_attribut($tag,'class',$class);
+	}
 
-	if (count($surcharge))
-		foreach($surcharge as $attribut=>$valeur)
-			$tag = inserer_attribut($tag,$attribut,$valeur);
-	
+	if (count($surcharge)) {
+		foreach($surcharge as $attribut => $valeur) {
+			$tag = inserer_attribut($tag, $attribut, $valeur);
+		}
+	}
+
 	$tag = pipeline('image_ecrire_tag_finir',
 		array(
 			'args' => array(
