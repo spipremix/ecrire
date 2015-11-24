@@ -66,7 +66,7 @@ function creer_uniqid() {
 	static $seeded;
 
 	if (!$seeded) {
-		$seed = (double) (microtime() + 1) * time();
+		$seed = (int) round((microtime() + 1) * time());
 		mt_srand($seed);
 		srand($seed);
 		$seeded = true;
