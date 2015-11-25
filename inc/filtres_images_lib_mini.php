@@ -815,6 +815,26 @@ function _image_ecrire_tag($valeurs, $surcharge = array()){
 	return $tag;
 }
 
+/**
+ * Crée si possible une miniature d'une image
+ *
+ * @see _image_valeurs_trans()
+ * @uses _image_ratio()
+ * 
+ * @param array $valeurs
+ *     Description de l'image, telle que retournée par `_image_valeurs_trans()`
+ * @param int $maxWidth
+ *     Largeur maximum en px de la miniature à réaliser
+ * @param int $maxHeight
+ *     Hauteur maximum en px de la miniateure à réaliser
+ * @param string $process
+ *     Librairie graphique à utiliser (gd1, gd2, netpbm, convert, imagick).
+ *     AUTO utilise la librairie sélectionnée dans la configuration.
+ * @param bool $force
+ * @param bool $test_cache_only
+ * @return array|null
+ *     Description de l'image, sinon null.
+**/
 function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO', $force = false, $test_cache_only = false) {
 	// ordre de preference des formats graphiques pour creer les vignettes
 	// le premier format disponible, selon la methode demandee, est utilise
@@ -822,9 +842,13 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 	$format = $valeurs['format_source'];
 	$destdir = dirname($valeurs['fichier_dest']);
 	$destfile = basename($valeurs['fichier_dest'],".".$valeurs["format_dest"]);
-	
+
 	$format_sortie = $valeurs['format_dest'];
-	
+
+	if (($process == 'AUTO') AND isset($GLOBALS['meta']['image_process'])) {
+		$process = $GLOBALS['meta']['image_process'];
+	}
+
 	// liste des formats qu'on sait lire
 	$img = isset($GLOBALS['meta']['formats_graphiques'])
 	  ? (strpos($GLOBALS['meta']['formats_graphiques'], $format)!==false)
@@ -1062,10 +1086,11 @@ function ratio_passe_partout ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 }
 
 
-function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process){
+function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process = 'AUTO'){
 	$image = false;
-	if (($process == 'AUTO') AND isset($GLOBALS['meta']['image_process']))
+	if (($process == 'AUTO') AND isset($GLOBALS['meta']['image_process'])) {
 		$process = $GLOBALS['meta']['image_process'];
+	}
 	# determiner le format de sortie
 	$format_sortie = false; // le choix par defaut sera bon
 	if ($process == "netpbm") $format_sortie = "jpg";
@@ -1121,18 +1146,18 @@ function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $che
 		if ($image['creer']){
 			@copy($image['fichier'], $image['fichier_dest']);
 		}
-		return _image_ecrire_tag($image,array('src'=>$image['fichier_dest']));
+		return _image_ecrire_tag($image, array('src'=>$image['fichier_dest']));
 	}
 
 	if ($image['creer']==false && !$force)
-		return _image_ecrire_tag($image,array('src'=>$image['fichier_dest'],'width'=>$image['largeur_dest'],'height'=>$image['hauteur_dest']));
+		return _image_ecrire_tag($image, array('src'=>$image['fichier_dest'], 'width'=>$image['largeur_dest'], 'height'=>$image['hauteur_dest']));
 
-	if (in_array($image["format_source"],array('jpg','gif','png'))){
+	if (in_array($image["format_source"], array('jpg','gif','png'))){
 		$destWidth = $image['largeur_dest'];
 		$destHeight = $image['hauteur_dest'];
 		$logo = $image['fichier'];
 		$date = $image["date_src"];
-		$preview = _image_creer_vignette($image, $taille, $taille_y,$process,$force);
+		$preview = _image_creer_vignette($image, $taille, $taille_y, $process, $force);
 
 		if ($preview && $preview['fichier']) {
 			$logo = $preview['fichier'];
@@ -1145,7 +1170,7 @@ function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $che
 		// quand on fait supprimer/reuploader un logo
 		// (pas de filemtime si SAFE MODE)
 		$date = test_espace_prive() ? ('?'.$date) : '';
-		return _image_ecrire_tag($image,array('src'=>"$logo$date",'width'=>$destWidth,'height'=>$destHeight));
+		return _image_ecrire_tag($image, array('src'=>"$logo$date", 'width'=>$destWidth, 'height'=>$destHeight));
 	}
 	else
 		# SVG par exemple ? BMP, tiff ... les redacteurs osent tout!

@@ -143,8 +143,13 @@ function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000,
  *       |image_passe_partout{70,70}
  *       |image_recadre{70,70,center})]
  *     ```
+ *
+ * @filtre
  * @link http://www.spip.net/4562
  * @see image_reduire()
+ * @uses tester_taille()
+ * @uses ratio_passe_partout()
+ * @uses process_image_reduire()
  *
  * @param string $img
  *     Chemin de l'image ou texte
@@ -159,6 +164,8 @@ function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000,
  * @param bool $force
  * @param bool $cherche_image
  * @param string $process
+ *     Librairie graphique à utiliser (gd1, gd2, netpbm, convert, imagick).
+ *     AUTO utilise la librairie sélectionnée dans la configuration.
  * @return string
  *     Code HTML de l'image ou du texte.
 **/
@@ -176,10 +183,10 @@ function image_passe_partout($img, $taille_x = -1, $taille_y = -1, $force = fals
 		$taille_y = 1; # {300,0} -> c'est 300 qui compte
 	elseif ($taille_x == 0 AND $taille_y == 0)
 		return '';
-	
+
 	list($destWidth,$destHeight,$ratio) = ratio_passe_partout($largeur,$hauteur,$taille_x,$taille_y);
 	$fonction = array('image_passe_partout', func_get_args());
-	return process_image_reduire($fonction,$img,$destWidth,$destHeight,$force,$cherche_image,$process);
+	return process_image_reduire($fonction, $img, $destWidth, $destHeight, $force, $cherche_image, $process);
 }
 
 /**
@@ -196,8 +203,11 @@ function image_passe_partout($img, $taille_x = -1, $taille_y = -1, $force = fals
  *     [(#LOGO_ARTICLE|image_reduire{130})]
  *     [(#TEXTE|image_reduire{600,0})]
  *     ```
+ *
+ * @filtre
  * @see image_reduire_par()
  * @see image_passe_partout()
+ * @uses process_image_reduire()
  *
  * @param string $img
  *     Chemin de l'image ou texte
@@ -212,6 +222,8 @@ function image_passe_partout($img, $taille_x = -1, $taille_y = -1, $force = fals
  * @param bool $force
  * @param bool $cherche_image
  * @param string $process
+ *     Librairie graphique à utiliser (gd1, gd2, netpbm, convert, imagick).
+ *     AUTO utilise la librairie sélectionnée dans la configuration.
  * @return string
  *     Code HTML de l'image ou du texte.
 **/
@@ -231,14 +243,15 @@ function image_reduire($img, $taille = -1, $taille_y = -1, $force = false, $cher
 		return '';
 
 	$fonction = array('image_reduire', func_get_args());
-	return process_image_reduire($fonction,$img,$taille,$taille_y,$force,$cherche_image,$process);
+	return process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process);
 }
 
 
 /**
  * Réduit les images d'un certain facteur
- * 
- * @see image_reduire()
+ *
+ * @filtre
+ * @uses image_reduire()
  *
  * @param string $img
  *     Chemin de l'image ou texte
@@ -248,15 +261,15 @@ function image_reduire($img, $taille = -1, $taille_y = -1, $force = false, $cher
  * @return string
  *     Code HTML de l'image ou du texte.
 **/
-function image_reduire_par ($img, $val = 1, $force = false) {
+function image_reduire_par($img, $val = 1, $force = false) {
 	list ($hauteur,$largeur) = taille_image($img);
 
 	$l = round($largeur/$val);
 	$h = round($hauteur/$val);
-	
+
 	if ($l > $h) $h = 0;
 	else $l = 0;
-	
+
 	$img = image_reduire($img, $l, $h, $force);
 
 	return $img;
