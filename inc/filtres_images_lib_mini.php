@@ -91,6 +91,13 @@ function statut_effacer_images_temporaires($stat){
  * Uniquement pour GD2.
  *
  * @pipeline_appel image_preparer_filtre
+ * @uses extraire_attribut()
+ * @uses inserer_attribut()
+ * @uses tester_url_absolue()
+ * @uses copie_locale() Si l'image est distante
+ * @uses taille_image()
+ * @uses _image_ratio()
+ * @uses reconstruire_image_intermediaire()
  * 
  * @param string $img
  *     Un tag html `<img src=... />`.
@@ -1036,15 +1043,30 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 	return $retour;
 }
 
-// Calculer le ratio
-function _image_ratio ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
+/**
+ * Réduire des dimensions en respectant un ratio
+ *
+ * Réduit des dimensions (hauteur, largeur) pour qu'elles
+ * soient incluses dans une hauteur et largeur maximum fournies
+ * en respectant la proportion d'origine
+ *
+ * @example `image_ratio(1000, 1000, 100, 10)` donne `array(10, 10, 100)`
+ * @see ratio_passe_partout() Assez proche.
+ * 
+ * @param int $srcWidth  Largeur de l'image source
+ * @param int $srcHeight Hauteur de l'image source
+ * @param int $maxWidth  Largeur maximum souhaitée
+ * @param int $maxHeight Hauteur maximum souhaitée
+ * @return array Liste [ largeur, hauteur, ratio de réduction ]
+**/
+function _image_ratio($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 	$ratioWidth = $srcWidth/$maxWidth;
 	$ratioHeight = $srcHeight/$maxHeight;
-	
+
 	if ($ratioWidth <=1 AND $ratioHeight <=1) {
 		$destWidth = $srcWidth;
 		$destHeight = $srcHeight;
-	} else if ($ratioWidth < $ratioHeight) {
+	} elseif ($ratioWidth < $ratioHeight) {
 		$destWidth = $srcWidth/$ratioHeight;
 		$destHeight = $maxHeight;
 	}
@@ -1053,18 +1075,33 @@ function _image_ratio ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 		$destHeight = $srcHeight/$ratioWidth;
 	}
 	return array (ceil($destWidth), ceil($destHeight),
-		max($ratioWidth,$ratioHeight));
+		max($ratioWidth, $ratioHeight));
 }
 
-// Calculer le ratio ajuste sur la plus petite dimension
-function ratio_passe_partout ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
+/**
+ * Réduire des dimensions en respectant un ratio sur la plus petite dimension
+ *
+ * Réduit des dimensions (hauteur, largeur) pour qu'elles
+ * soient incluses dans la plus grande hauteur ou largeur maximum fournie
+ * en respectant la proportion d'origine
+ *
+ * @example `ratio_passe_partout(1000, 1000, 100, 10)` donne `array(100, 100, 10)`
+ * @see _image_ratio() Assez proche.
+ *
+ * @param int $srcWidth  Largeur de l'image source
+ * @param int $srcHeight Hauteur de l'image source
+ * @param int $maxWidth  Largeur maximum souhaitée
+ * @param int $maxHeight Hauteur maximum souhaitée
+ * @return array Liste [ largeur, hauteur, ratio de réduction ]
+**/
+function ratio_passe_partout($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 	$ratioWidth = $srcWidth/$maxWidth;
 	$ratioHeight = $srcHeight/$maxHeight;
 
 	if ($ratioWidth <=1 AND $ratioHeight <=1) {
 		$destWidth = $srcWidth;
 		$destHeight = $srcHeight;
-	} else if ($ratioWidth > $ratioHeight) {
+	} elseif ($ratioWidth > $ratioHeight) {
 		$destWidth = $srcWidth/$ratioHeight;
 		$destHeight = $maxHeight;
 	}
@@ -1073,7 +1110,7 @@ function ratio_passe_partout ($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 		$destHeight = $srcHeight/$ratioWidth;
 	}
 	return array (ceil($destWidth), ceil($destHeight),
-		min($ratioWidth,$ratioHeight));
+		min($ratioWidth, $ratioHeight));
 }
 
 

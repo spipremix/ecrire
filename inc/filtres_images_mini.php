@@ -184,7 +184,7 @@ function image_passe_partout($img, $taille_x = -1, $taille_y = -1, $force = fals
 	elseif ($taille_x == 0 AND $taille_y == 0)
 		return '';
 
-	list($destWidth,$destHeight,$ratio) = ratio_passe_partout($largeur,$hauteur,$taille_x,$taille_y);
+	list($destWidth, $destHeight, $ratio) = ratio_passe_partout($largeur,$hauteur,$taille_x,$taille_y);
 	$fonction = array('image_passe_partout', func_get_args());
 	return process_image_reduire($fonction, $img, $destWidth, $destHeight, $force, $cherche_image, $process);
 }
