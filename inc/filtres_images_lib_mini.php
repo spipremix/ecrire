@@ -831,11 +831,10 @@ function _image_ecrire_tag($valeurs, $surcharge = array()){
  *     Librairie graphique à utiliser (gd1, gd2, netpbm, convert, imagick).
  *     AUTO utilise la librairie sélectionnée dans la configuration.
  * @param bool $force
- * @param bool $test_cache_only
  * @return array|null
  *     Description de l'image, sinon null.
 **/
-function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO', $force = false, $test_cache_only = false) {
+function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO', $force = false) {
 	// ordre de preference des formats graphiques pour creer les vignettes
 	// le premier format disponible, selon la methode demandee, est utilise
 	$image = $valeurs['fichier'];
@@ -858,189 +857,181 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 	if (!$force AND !$img) return;
 	$destination = "$destdir/$destfile";
 
-	// chercher un cache
-	$vignette = '';
-	if ($test_cache_only AND !$vignette) return;
-
-	// utiliser le cache ?
-	if (!$test_cache_only)
-	if ($force OR !$vignette OR (@filemtime($vignette) < @filemtime($image))) {
-
-		$creation = true;
-		// calculer la taille
-		if (($srcWidth=$valeurs['largeur']) && ($srcHeight=$valeurs['hauteur'])){
-			if (!($destWidth=$valeurs['largeur_dest']) || !($destHeight=$valeurs['hauteur_dest']))
-				list ($destWidth,$destHeight) = _image_ratio($valeurs['largeur'], $valeurs['hauteur'], $maxWidth, $maxHeight);
+	// calculer la taille
+	if (($srcWidth=$valeurs['largeur']) && ($srcHeight=$valeurs['hauteur'])) {
+		if (!($destWidth=$valeurs['largeur_dest']) || !($destHeight=$valeurs['hauteur_dest'])) {
+			list ($destWidth,$destHeight) = _image_ratio($valeurs['largeur'], $valeurs['hauteur'], $maxWidth, $maxHeight);
 		}
-		elseif ($process == 'convert' OR $process == 'imagick') {
-			$destWidth = $maxWidth;
-			$destHeight = $maxHeight;
-		} else {
-			spip_log("echec $process sur $image");
+	}
+	elseif ($process == 'convert' OR $process == 'imagick') {
+		$destWidth = $maxWidth;
+		$destHeight = $maxHeight;
+	} else {
+		spip_log("echec $process sur $image");
+		return;
+	}
+
+	// Si l'image est de la taille demandee (ou plus petite), simplement la retourner
+	if ($srcWidth AND $srcWidth <= $maxWidth AND $srcHeight <= $maxHeight) {
+		$vignette = $destination.'.'.$format;
+		@copy($image, $vignette);
+	}
+
+	// imagemagick en ligne de commande
+	elseif ($process == 'convert') {
+		if (!defined('_CONVERT_COMMAND')) define('_CONVERT_COMMAND', 'convert'); // Securite : mes_options.php peut preciser le chemin absolu
+		define ('_RESIZE_COMMAND', _CONVERT_COMMAND.' -quality '._IMG_CONVERT_QUALITE.' -resize %xx%y! %src %dest');
+		$vignette = $destination.".".$format_sortie;
+		$commande = str_replace(
+			array('%x', '%y', '%src', '%dest'),
+			array(
+				$destWidth,
+				$destHeight,
+				escapeshellcmd($image),
+				escapeshellcmd($vignette)
+			),
+			_RESIZE_COMMAND);
+		spip_log($commande);
+		exec($commande);
+		if (!@file_exists($vignette)) {
+			spip_log("echec convert sur $vignette");
+			return;	// echec commande
+		}
+	}
+
+	// php5 imagemagick
+	elseif ($process == 'imagick') {
+		$vignette = "$destination.".$format_sortie;
+
+		if (!class_exists('Imagick')) {
+			spip_log("Classe Imagick absente !", _LOG_ERREUR);
+			return;
+		}
+		$imagick = new Imagick();
+		$imagick->readImage($image);
+		$imagick->resizeImage($destWidth, $destHeight, Imagick::FILTER_LANCZOS, 1 );//, IMAGICK_FILTER_LANCZOS, _IMG_IMAGICK_QUALITE / 100);
+		$imagick->writeImage($vignette);
+
+		if (!@file_exists($vignette)) {
+			spip_log("echec imagick sur $vignette");
+			return;
+		}
+	}
+
+	// netpbm
+	elseif ($process == "netpbm") {
+		if (!defined('_PNMSCALE_COMMAND')) define('_PNMSCALE_COMMAND', 'pnmscale'); // Securite : mes_options.php peut preciser le chemin absolu
+		if (_PNMSCALE_COMMAND == '') return;
+		$vignette = $destination.".".$format_sortie;
+		$pnmtojpeg_command = str_replace("pnmscale", "pnmtojpeg", _PNMSCALE_COMMAND);
+		if ($format == "jpg") {
+			
+			$jpegtopnm_command = str_replace("pnmscale", "jpegtopnm", _PNMSCALE_COMMAND);
+			exec("$jpegtopnm_command $image | "._PNMSCALE_COMMAND." -width $destWidth | $pnmtojpeg_command > $vignette");
+			if (!($s = @filesize($vignette)))
+				spip_unlink($vignette);
+			if (!@file_exists($vignette)) {
+				spip_log("echec netpbm-jpg sur $vignette");
+				return;
+			}
+		} else if ($format == "gif") {
+			$giftopnm_command = str_replace("pnmscale", "giftopnm", _PNMSCALE_COMMAND);
+			exec("$giftopnm_command $image | "._PNMSCALE_COMMAND." -width $destWidth | $pnmtojpeg_command > $vignette");
+			if (!($s = @filesize($vignette)))
+				spip_unlink($vignette);
+			if (!@file_exists($vignette)) {
+				spip_log("echec netpbm-gif sur $vignette");
+				return;
+			}
+		} else if ($format == "png") {
+			$pngtopnm_command = str_replace("pnmscale", "pngtopnm", _PNMSCALE_COMMAND);
+			exec("$pngtopnm_command $image | "._PNMSCALE_COMMAND." -width $destWidth | $pnmtojpeg_command > $vignette");
+			if (!($s = @filesize($vignette)))
+				spip_unlink($vignette);
+			if (!@file_exists($vignette)) {
+				spip_log("echec netpbm-png sur $vignette");
+				return;
+			}
+		}
+	}
+
+	// gd ou gd2
+	elseif ($process == 'gd1' OR $process == 'gd2') {
+		if (!function_exists('gd_info')) {
+			spip_log("Librairie GD absente !", _LOG_ERREUR);
+			return;
+		}
+		if (_IMG_GD_MAX_PIXELS && $srcWidth*$srcHeight>_IMG_GD_MAX_PIXELS){
+			spip_log("vignette gd1/gd2 impossible : ".$srcWidth*$srcHeight."pixels");
+			return;
+		}
+		$destFormat = $format_sortie;
+		if (!$destFormat) {
+			spip_log("pas de format pour $image");
 			return;
 		}
 
-		// Si l'image est de la taille demandee (ou plus petite), simplement
-		// la retourner
-		if ($srcWidth
-		AND $srcWidth <= $maxWidth AND $srcHeight <= $maxHeight) {
-			$vignette = $destination.'.'.$format;
-			@copy($image, $vignette);
+		$fonction_imagecreatefrom = $valeurs['fonction_imagecreatefrom'];
+		if (!function_exists($fonction_imagecreatefrom))
+			return '';
+		$srcImage = @$fonction_imagecreatefrom($image);
+		if (!$srcImage) { 
+			spip_log("echec gd1/gd2"); 
+			return; 
+		} 
+
+		// Initialisation de l'image destination
+		$destImage = null;
+		if ($process == 'gd2' AND $destFormat != "gif") {
+			$destImage = ImageCreateTrueColor($destWidth, $destHeight);
 		}
-		// imagemagick en ligne de commande
-		else if ($process == 'convert') {
-			if (!defined('_CONVERT_COMMAND')) define('_CONVERT_COMMAND', 'convert'); // Securite : mes_options.php peut preciser le chemin absolu
-			define ('_RESIZE_COMMAND', _CONVERT_COMMAND.' -quality '._IMG_CONVERT_QUALITE.' -resize %xx%y! %src %dest');
-			$vignette = $destination.".".$format_sortie;
-			$commande = str_replace(
-				array('%x', '%y', '%src', '%dest'),
-				array(
-					$destWidth,
-					$destHeight,
-					escapeshellcmd($image),
-					escapeshellcmd($vignette)
-				),
-				_RESIZE_COMMAND);
-			spip_log($commande);
-			exec($commande);
-			if (!@file_exists($vignette)) {
-				spip_log("echec convert sur $vignette");
-				return;	// echec commande
-			}
+		if (!$destImage) {
+			$destImage = ImageCreate($destWidth, $destHeight);
 		}
-		else
-		// php5 imagemagick
-		if ($process == 'imagick') {
-			$vignette = "$destination.".$format_sortie;
 
-			if (!class_exists('Imagick')) {
-				spip_log("Classe Imagick absente !", _LOG_ERREUR);
-				return;
+		// Recopie de l'image d'origine avec adaptation de la taille 
+		$ok = false; 
+		if (($process == 'gd2') AND function_exists('ImageCopyResampled')) { 
+			if ($format == "gif") { 
+				// Si un GIF est transparent, 
+				// fabriquer un PNG transparent  
+				$transp = imagecolortransparent($srcImage); 
+				if ($transp > 0) $destFormat = "png"; 
 			}
-			$imagick = new Imagick();
-			$imagick->readImage($image);
-			$imagick->resizeImage($destWidth, $destHeight, Imagick::FILTER_LANCZOS, 1 );//, IMAGICK_FILTER_LANCZOS, _IMG_IMAGICK_QUALITE / 100);
-			$imagick->writeImage($vignette);
-
-			if (!@file_exists($vignette)) {
-				spip_log("echec imagick sur $vignette");
-				return;
+			if ($destFormat == "png") { 
+				// Conserver la transparence 
+				if (function_exists("imageAntiAlias")) imageAntiAlias($destImage,true); 
+				@imagealphablending($destImage, false); 
+				@imagesavealpha($destImage,true); 
 			}
+			$ok = @ImageCopyResampled($destImage, $srcImage, 0, 0, 0, 0, $destWidth, $destHeight, $srcWidth, $srcHeight);
 		}
-		else
-		// netpbm
-		if ($process == "netpbm") {
-			if (!defined('_PNMSCALE_COMMAND')) define('_PNMSCALE_COMMAND', 'pnmscale'); // Securite : mes_options.php peut preciser le chemin absolu
-			if (_PNMSCALE_COMMAND == '') return;
-			$vignette = $destination.".".$format_sortie;
-			$pnmtojpeg_command = str_replace("pnmscale", "pnmtojpeg", _PNMSCALE_COMMAND);
-			if ($format == "jpg") {
-				
-				$jpegtopnm_command = str_replace("pnmscale", "jpegtopnm", _PNMSCALE_COMMAND);
-				exec("$jpegtopnm_command $image | "._PNMSCALE_COMMAND." -width $destWidth | $pnmtojpeg_command > $vignette");
-				if (!($s = @filesize($vignette)))
-					spip_unlink($vignette);
-				if (!@file_exists($vignette)) {
-					spip_log("echec netpbm-jpg sur $vignette");
-					return;
-				}
-			} else if ($format == "gif") {
-				$giftopnm_command = str_replace("pnmscale", "giftopnm", _PNMSCALE_COMMAND);
-				exec("$giftopnm_command $image | "._PNMSCALE_COMMAND." -width $destWidth | $pnmtojpeg_command > $vignette");
-				if (!($s = @filesize($vignette)))
-					spip_unlink($vignette);
-				if (!@file_exists($vignette)) {
-					spip_log("echec netpbm-gif sur $vignette");
-					return;
-				}
-			} else if ($format == "png") {
-				$pngtopnm_command = str_replace("pnmscale", "pngtopnm", _PNMSCALE_COMMAND);
-				exec("$pngtopnm_command $image | "._PNMSCALE_COMMAND." -width $destWidth | $pnmtojpeg_command > $vignette");
-				if (!($s = @filesize($vignette)))
-					spip_unlink($vignette);
-				if (!@file_exists($vignette)) {
-					spip_log("echec netpbm-png sur $vignette");
-					return;
-				}
-			}
-		}
-		// gd ou gd2
-		else if ($process == 'gd1' OR $process == 'gd2') {
-			if (!function_exists('gd_info')) {
-				spip_log("Librairie GD absente !", _LOG_ERREUR);
-				return;
-			}
-			if (_IMG_GD_MAX_PIXELS && $srcWidth*$srcHeight>_IMG_GD_MAX_PIXELS){
-				spip_log("vignette gd1/gd2 impossible : ".$srcWidth*$srcHeight."pixels");
-				return;
-			}
-			$destFormat = $format_sortie;
-			if (!$destFormat) {
-				spip_log("pas de format pour $image");
-				return;
-			}
+		if (!$ok)
+			$ok = ImageCopyResized($destImage, $srcImage, 0, 0, 0, 0, $destWidth, $destHeight, $srcWidth, $srcHeight);
 
-			$fonction_imagecreatefrom = $valeurs['fonction_imagecreatefrom'];
-			if (!function_exists($fonction_imagecreatefrom))
-				return '';
-			$srcImage = @$fonction_imagecreatefrom($image);
-			if (!$srcImage) { 
-				spip_log("echec gd1/gd2"); 
-				return; 
-			} 
+		// Sauvegarde de l'image destination
+		$valeurs['fichier_dest'] = $vignette = "$destination.$destFormat";
+		$valeurs['format_dest'] = $format = $destFormat;
+		_image_gd_output($destImage,$valeurs);
 
-			// Initialisation de l'image destination
-			$destImage = null;
-			if ($process == 'gd2' AND $destFormat != "gif") {
-				$destImage = ImageCreateTrueColor($destWidth, $destHeight);
-			}
-			if (!$destImage) {
-				$destImage = ImageCreate($destWidth, $destHeight);
-			}
-
-			// Recopie de l'image d'origine avec adaptation de la taille 
-			$ok = false; 
-			if (($process == 'gd2') AND function_exists('ImageCopyResampled')) { 
-				if ($format == "gif") { 
-					// Si un GIF est transparent, 
-					// fabriquer un PNG transparent  
-					$transp = imagecolortransparent($srcImage); 
-					if ($transp > 0) $destFormat = "png"; 
-				}
-				if ($destFormat == "png") { 
-					// Conserver la transparence 
-					if (function_exists("imageAntiAlias")) imageAntiAlias($destImage,true); 
-					@imagealphablending($destImage, false); 
-					@imagesavealpha($destImage,true); 
-				}
-				$ok = @ImageCopyResampled($destImage, $srcImage, 0, 0, 0, 0, $destWidth, $destHeight, $srcWidth, $srcHeight);
-			}
-			if (!$ok)
-				$ok = ImageCopyResized($destImage, $srcImage, 0, 0, 0, 0, $destWidth, $destHeight, $srcWidth, $srcHeight);
-
-			// Sauvegarde de l'image destination
-			$valeurs['fichier_dest'] = $vignette = "$destination.$destFormat";
-			$valeurs['format_dest'] = $format = $destFormat;
-			_image_gd_output($destImage,$valeurs);
-
-			if ($srcImage)
-				ImageDestroy($srcImage);
-			ImageDestroy($destImage);
-		}
+		if ($srcImage)
+			ImageDestroy($srcImage);
+		ImageDestroy($destImage);
 	}
+
 	$size = @getimagesize($vignette);
 	// Gaffe: en safe mode, pas d'acces a la vignette,
 	// donc risque de balancer "width='0'", ce qui masque l'image sous MSIE
 	if ($size[0] < 1) $size[0] = $destWidth;
 	if ($size[1] < 1) $size[1] = $destHeight;
-	
+
 	$retour['width'] = $largeur = $size[0];
 	$retour['height'] = $hauteur = $size[1];
-	
+
 	$retour['fichier'] = $vignette;
 	$retour['format'] = $format;
 	$retour['date'] = @filemtime($vignette);
-	
+
 	// renvoyer l'image
 	return $retour;
 }
