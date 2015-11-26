@@ -100,7 +100,7 @@ function statut_effacer_images_temporaires($stat){
  * @uses reconstruire_image_intermediaire()
  * 
  * @param string $img
- *     Un tag html `<img src=... />`.
+ *     Chemin de l'image ou balise html `<img src=... />`.
  * @param string $effet
  *     Les nom et paramètres de l'effet à apporter sur l'image
  *     (par exemple : reduire-300-200).
@@ -108,10 +108,9 @@ function statut_effacer_images_temporaires($stat){
  *     Un nom d'extension spécifique demandé (par exemple : jpg, png, txt...).
  *     Par défaut false : GD se débrouille seule).
  * @param array $fonction_creation
- *     Un tableau à 2 éléments. Le premier (string) indique le nom du
- *     filtre de traitement demandé (par exemple : image_reduire) ; le
- *     second (array) est lui-même un tableau reprenant la valeur de $img
- *     et chacun des paramètres passés au filtre.
+ *     Un tableau à 2 éléments :
+ *     1) string : indique le nom du filtre de traitement demandé (par exemple : `image_reduire`) ;
+ *     2) array : tableau reprenant la valeur de `$img` et chacun des arguments passés au filtre utilisé.
  * @param bool $find_in_path
  *     false (par défaut) indique que l'on travaille sur un fichier
  *     temporaire (.src) ; true, sur un fichier définitif déjà existant.
@@ -137,7 +136,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 		$img = "<img src='$source' />";
 	}
 	# gerer img src="data:....base64"
-	else if (preg_match('@^data:image/(jpe?g|png|gif);base64,(.*)$@isS', $source, $regs)) {
+	elseif (preg_match('@^data:image/(jpe?g|png|gif);base64,(.*)$@isS', $source, $regs)) {
 		$local = sous_repertoire(_DIR_VAR,'image-data').md5($regs[2]).'.'.str_replace('jpeg', 'jpg', $regs[1]);
 		if (!file_exists($local)) {
 			ecrire_fichier($local, base64_decode($regs[2]));
@@ -1114,16 +1113,47 @@ function ratio_passe_partout($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 }
 
 
-function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process = 'AUTO'){
+/**
+ * Réduit une image
+ * 
+ * @uses extraire_attribut()
+ * @uses inserer_attribut()
+ * @uses _image_valeurs_trans()
+ * @uses _image_ratio()
+ * @uses _image_tag_changer_taille()
+ * @uses _image_ecrire_tag()
+ * @uses _image_creer_vignette()
+ * 
+ * @param array $fonction
+ *     Un tableau à 2 éléments :
+ *     1) string : indique le nom du filtre de traitement demandé (par exemple : `image_reduire`) ;
+ *     2) array : tableau reprenant la valeur de `$img` et chacun des arguments passés au filtre utilisé.
+ * @param string $img
+ *     Chemin de l'image ou texte contenant une balise img
+ * @param int $taille
+ *     Largeur désirée
+ * @param int $taille_y
+ *     Hauteur désirée
+ * @param bool $force
+ * @param bool $cherche_image
+ *     Inutilisé
+ * @param string $process
+ *     Librairie graphique à utiliser (gd1, gd2, netpbm, convert, imagick).
+ *     AUTO utilise la librairie sélectionnée dans la configuration.
+ * @return string
+ *     Code HTML de la balise img produite
+**/
+function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process = 'AUTO') {
 	$image = false;
 	if (($process == 'AUTO') AND isset($GLOBALS['meta']['image_process'])) {
 		$process = $GLOBALS['meta']['image_process'];
 	}
 	# determiner le format de sortie
 	$format_sortie = false; // le choix par defaut sera bon
-	if ($process == "netpbm") $format_sortie = "jpg";
-	else if ($process == 'gd1' OR $process == 'gd2') {
-		$image = _image_valeurs_trans($img, "reduire-{$taille}-{$taille_y}",$format_sortie,$fonction);
+	if ($process == "netpbm") {
+		$format_sortie = "jpg";
+	} elseif ($process == 'gd1' OR $process == 'gd2') {
+		$image = _image_valeurs_trans($img, "reduire-{$taille}-{$taille_y}", $format_sortie, $fonction);
 
 		// on verifie que l'extension choisie est bonne (en principe oui)
 		$gd_formats = explode(',',$GLOBALS['meta']["gd_formats"]);
@@ -1152,16 +1182,17 @@ function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $che
 		}
 	}
 
-	if (!is_array($image))
-		$image = _image_valeurs_trans($img, "reduire-{$taille}-{$taille_y}",$format_sortie,$fonction);
+	if (!is_array($image)) {
+		$image = _image_valeurs_trans($img, "reduire-{$taille}-{$taille_y}", $format_sortie, $fonction);
+	}
 
-	if (!is_array($image) OR !$image['largeur'] OR !$image['hauteur']){
+	if (!is_array($image) OR !$image['largeur'] OR !$image['hauteur']) {
 		spip_log("image_reduire_src:pas de version locale de $img");
 		// on peut resizer en mode html si on dispose des elements
 		if ($srcw = extraire_attribut($img, 'width')
 		AND $srch = extraire_attribut($img, 'height')) {
 			list($w,$h) = _image_ratio($srcw, $srch, $taille, $taille_y);
-			return _image_tag_changer_taille($img,$w,$h);
+			return _image_tag_changer_taille($img, $w, $h);
 		}
 		// la on n'a pas d'infos sur l'image source... on refile le truc a css
 		// sous la forme style='max-width: NNpx;'
@@ -1177,8 +1208,9 @@ function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $che
 		return _image_ecrire_tag($image, array('src'=>$image['fichier_dest']));
 	}
 
-	if ($image['creer']==false && !$force)
+	if ($image['creer']==false && !$force) {
 		return _image_ecrire_tag($image, array('src'=>$image['fichier_dest'], 'width'=>$image['largeur_dest'], 'height'=>$image['hauteur_dest']));
+	}
 
 	if (in_array($image["format_source"], array('jpg','gif','png'))){
 		$destWidth = $image['largeur_dest'];
@@ -1233,6 +1265,8 @@ class phpthumb_functions {
 	}
 
 	/**
+	 * Retourne un nombre dans une représentation en Little Endian
+	 * 
 	 * @param int $number
 	 * @param int $minbytes
 	 * @return string
@@ -1247,8 +1281,12 @@ class phpthumb_functions {
 	}
 
 	/**
+	 * Transforme une ressource GD en image au format ICO
+	 * 
 	 * @param array $gd_image_array
+	 *     Tableau de ressources d'images GD
 	 * @return string
+	 *     Image au format ICO 
 	 */
 	public static function GD2ICOstring(&$gd_image_array) {
 		foreach ($gd_image_array as $key => $gd_image) {

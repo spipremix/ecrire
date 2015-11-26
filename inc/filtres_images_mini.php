@@ -152,7 +152,7 @@ function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000,
  * @uses process_image_reduire()
  *
  * @param string $img
- *     Chemin de l'image ou texte
+ *     Chemin de l'image ou code html d'une balise img
  * @param int $taille_x
  *     - Largeur maximale en pixels désirée
  *     - -1 prend la taille de réduction des vignettes par défaut
@@ -163,6 +163,7 @@ function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000,
  *     - 0 la taille s'adapte à la hauteur
  * @param bool $force
  * @param bool $cherche_image
+ *     Inutilisé
  * @param string $process
  *     Librairie graphique à utiliser (gd1, gd2, netpbm, convert, imagick).
  *     AUTO utilise la librairie sélectionnée dans la configuration.
@@ -210,7 +211,7 @@ function image_passe_partout($img, $taille_x = -1, $taille_y = -1, $force = fals
  * @uses process_image_reduire()
  *
  * @param string $img
- *     Chemin de l'image ou texte
+ *     Chemin de l'image ou code html d'une balise img
  * @param int $taille
  *     - Largeur maximale en pixels désirée
  *     - -1 prend la taille de réduction des vignettes par défaut
@@ -221,6 +222,7 @@ function image_passe_partout($img, $taille_x = -1, $taille_y = -1, $force = fals
  *     - 0 la taille s'adapte à la hauteur
  * @param bool $force
  * @param bool $cherche_image
+ *     Inutilisé
  * @param string $process
  *     Librairie graphique à utiliser (gd1, gd2, netpbm, convert, imagick).
  *     AUTO utilise la librairie sélectionnée dans la configuration.
@@ -254,7 +256,7 @@ function image_reduire($img, $taille = -1, $taille_y = -1, $force = false, $cher
  * @uses image_reduire()
  *
  * @param string $img
- *     Chemin de l'image ou texte
+ *     Chemin de l'image ou code html d'une balise img
  * @param int $val
  *     Facteur de réduction
  * @param bool $force
