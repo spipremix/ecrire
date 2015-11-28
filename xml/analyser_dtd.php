@@ -322,28 +322,34 @@ function analyser_dtd_attlist($dtd, &$dtc, $grammaire)
 }
 
 
-// Remplace dans la chaine $val les sous-chaines de forme "%NOM;"
-// par leur definition dans le tableau $macros
-// Si le premier argument n'est pas une chaine,
-// retourne les statistiques (pour debug de DTD, inutilise en mode normal)
-
-// http://code.spip.net/@expanserEntite
+/**
+ * Remplace dans la chaîne `$val` les sous-chaines de forme `%NOM;`
+ * par leur definition dans le tableau `$macros`
+ *
+ * Si le premier argument n'est pas une chaîne,
+ * retourne les statistiques (pour debug de DTD, inutilise en mode normal)
+ * 
+ * @param string $val
+ * @param array $macros
+ * @return string|array
+**/
 function expanserEntite($val, $macros = array())
 {
 	static $vu = array();
 	if (!is_string($val)) return $vu;
 
 	if (preg_match_all(_REGEXP_ENTITY_USE, $val, $r, PREG_SET_ORDER)){
-	  foreach($r as $m) {
-		$ent = $m[1];
-		  // il peut valoir ""
-		if (!isset($macros[$ent]))
-			spip_log("Entite $ent inconnu");
-		else {
-			@$vu[$ent]++;
-			$val = str_replace($m[0], $macros[$ent], $val);
+		foreach($r as $m) {
+			$ent = $m[1];
+			// il peut valoir ""
+			if (!isset($macros[$ent])) {
+				spip_log("Entite $ent inconnu");
+			} else {
+				if (!isset($vu[$ent])) { $vu[$ent] = 0; }
+				++$vu[$ent];
+				$val = str_replace($m[0], $macros[$ent], $val);
+			}
 		}
-	  }
 	}
 
 	return trim(preg_replace('/\s+/', ' ', $val));
