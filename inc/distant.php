@@ -47,9 +47,11 @@ define('_REGEXP_COPIE_LOCALE', ',' .
  *   - 'force' - charger toujours (mettre a jour)
  * @param string $local
  *   permet de specifier le nom du fichier local (stockage d'un cache par exemple, et non document IMG)
+ * @param int $taille_max
+ *   taille maxi de la copie local, par defaut _COPIE_LOCALE_MAX_SIZE
  * @return bool|string
  */
-function copie_locale($source, $mode = 'auto', $local = null){
+function copie_locale($source, $mode = 'auto', $local = null, $taille_max=null){
 
 	// si c'est la protection de soi-meme, retourner le path
 	if ($mode!=='force' AND preg_match(_REGEXP_COPIE_LOCALE, $source, $match)){
@@ -84,8 +86,9 @@ function copie_locale($source, $mode = 'auto', $local = null){
 		// passer par un fichier temporaire unique pour gerer les echecs en cours de recuperation
 		// et des eventuelles recuperations concurantes
 		include_spip("inc/acces");
-		$res = recuperer_url($source, array('file' => $localrac, 'taille_max' => _COPIE_LOCALE_MAX_SIZE, 'if_modified_since' => $t ? filemtime($localrac) : ''));
-		if (!$res OR (!$res["length"] AND !$res["status"]!==304)){
+		if (!$taille_max) $taille_max = _COPIE_LOCALE_MAX_SIZE;
+		$res = recuperer_url($source, array('file' => $localrac, 'taille_max' => $taille_max, 'if_modified_since' => $t ? filemtime($localrac) : ''));
+		if (!$res OR (!$res["length"] AND $res["status"]!=304)){
 			spip_log("copie_locale : Echec recuperation $source sur $localrac status : " . $res["status"], _LOG_INFO_IMPORTANTE);
 		}
 		if (!$res['length']){
