@@ -2252,60 +2252,66 @@ function init_var_mode(){
 	if (!$done) {
 
 		if (isset($_GET['var_mode'])) {
+			$var_mode = explode(',',$_GET['var_mode']);
 			// tout le monde peut calcul/recalcul
-			if ($_GET['var_mode'] == 'calcul'
-			OR $_GET['var_mode'] == 'recalcul') {
-				if (!defined('_VAR_MODE')) define('_VAR_MODE',$_GET['var_mode']);
+			if (!defined('_VAR_MODE')){
+				if (in_array('recalcul',$var_mode)) define('_VAR_MODE','recalcul');
+				elseif (in_array('calcul',$var_mode)) define('_VAR_MODE','calcul');
+				$var_mode = array_diff($var_mode,array('calcul','recalcul'));
 			}
-			// preview, debug, blocs, urls et images necessitent une autorisation
-			else if (in_array($_GET['var_mode'],array('preview','debug','inclure','urls','images','traduction'))) {
+			if ($var_mode) {
 				include_spip('inc/autoriser');
+				// autoriser preview si preview seulement, et sinon autoriser debug
 				if (autoriser(
 					($_GET['var_mode'] == 'preview')
 						? 'previsualiser'
 						: 'debug'
 				)) {
-					switch($_GET['var_mode']){
-						case 'traduction':
-							// forcer le calcul pour passer dans traduire
-							if (!defined('_VAR_MODE')) define('_VAR_MODE','calcul');
-							// et ne pas enregistrer de cache pour ne pas trainer les surlignages sur d'autres pages
-							if (!defined('_VAR_NOCACHE')) define('_VAR_NOCACHE',true);
-							break;
-						case 'preview':
-							// basculer sur les criteres de preview dans les boucles
-							if (!defined('_VAR_PREVIEW')) define('_VAR_PREVIEW',true);
-							// forcer le calcul
-							if (!defined('_VAR_MODE')) define('_VAR_MODE','calcul');
-							// et ne pas enregistrer de cache
-							if (!defined('_VAR_NOCACHE')) define('_VAR_NOCACHE',true);
-							break;
-						case 'inclure':
-							// forcer le compilo et ignorer les caches existants
-							if (!defined('_VAR_MODE')) define('_VAR_MODE','calcul');
-							if (!defined('_VAR_INCLURE')) define('_VAR_INCLURE',true);
-							// et ne pas enregistrer de cache
-							if (!defined('_VAR_NOCACHE')) define('_VAR_NOCACHE',true);
-							break;
-						case 'urls':
-							// forcer le compilo et ignorer les caches existants
-							if (!defined('_VAR_MODE')) define('_VAR_MODE','calcul');
-							if (!defined('_VAR_URLS')) define('_VAR_URLS',true);
-							break;
-						case 'images':
-							// forcer le compilo et ignorer les caches existants
-							if (!defined('_VAR_MODE')) define('_VAR_MODE','calcul');
-							// indiquer qu'on doit recalculer les images
-							if (!defined('_VAR_IMAGES')) define('_VAR_IMAGES',true);
-							break;
-						case 'debug':
-							if (!defined('_VAR_MODE')) define('_VAR_MODE','debug');
-							// et ne pas enregistrer de cache
-							if (!defined('_VAR_NOCACHE')) define('_VAR_NOCACHE',true);
-							break;
-						default :
-							if (!defined('_VAR_MODE')) define('_VAR_MODE',$_GET['var_mode']);
-							break;
+					if (in_array('traduction',$var_mode)){
+						// forcer le calcul pour passer dans traduire
+						if (!defined('_VAR_MODE')) define('_VAR_MODE', 'calcul');
+						// et ne pas enregistrer de cache pour ne pas trainer les surlignages sur d'autres pages
+						if (!defined('_VAR_NOCACHE')) define('_VAR_NOCACHE', true);
+						$var_mode = array_diff($var_mode,array('traduction'));
+					}
+					if (in_array('preview',$var_mode)){
+						// basculer sur les criteres de preview dans les boucles
+						if (!defined('_VAR_PREVIEW')) define('_VAR_PREVIEW', true);
+						// forcer le calcul
+						if (!defined('_VAR_MODE')) define('_VAR_MODE', 'calcul');
+						// et ne pas enregistrer de cache
+						if (!defined('_VAR_NOCACHE')) define('_VAR_NOCACHE', true);
+						$var_mode = array_diff($var_mode,array('preview'));
+					}
+					if (in_array('inclure',$var_mode)){
+						// forcer le compilo et ignorer les caches existants
+						if (!defined('_VAR_MODE')) define('_VAR_MODE', 'calcul');
+						if (!defined('_VAR_INCLURE')) define('_VAR_INCLURE', true);
+						// et ne pas enregistrer de cache
+						if (!defined('_VAR_NOCACHE')) define('_VAR_NOCACHE', true);
+						$var_mode = array_diff($var_mode,array('inclure'));
+					}
+					if (in_array('urls',$var_mode)){
+						// forcer le compilo et ignorer les caches existants
+						if (!defined('_VAR_MODE')) define('_VAR_MODE', 'calcul');
+						if (!defined('_VAR_URLS')) define('_VAR_URLS', true);
+						$var_mode = array_diff($var_mode,array('urls'));
+					}
+					if (in_array('images',$var_mode)){
+						// forcer le compilo et ignorer les caches existants
+						if (!defined('_VAR_MODE')) define('_VAR_MODE', 'calcul');
+						// indiquer qu'on doit recalculer les images
+						if (!defined('_VAR_IMAGES')) define('_VAR_IMAGES', true);
+						$var_mode = array_diff($var_mode,array('images'));
+					}
+					if (in_array('debug',$var_mode)){
+						if (!defined('_VAR_MODE')) define('_VAR_MODE', 'debug');
+						// et ne pas enregistrer de cache
+						if (!defined('_VAR_NOCACHE')) define('_VAR_NOCACHE', true);
+						$var_mode = array_diff($var_mode,array('debug'));
+					}
+					if (count($var_mode) AND !defined('_VAR_MODE')){
+						define('_VAR_MODE',reset($var_mode));
 					}
           if (isset($GLOBALS['visiteur_session']['nom']))
 					spip_log($GLOBALS['visiteur_session']['nom']
