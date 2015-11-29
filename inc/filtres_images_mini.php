@@ -147,7 +147,7 @@ function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000,
  * @filtre
  * @link http://www.spip.net/4562
  * @see image_reduire()
- * @uses tester_taille()
+ * @uses taille_image()
  * @uses ratio_passe_partout()
  * @uses process_image_reduire()
  *

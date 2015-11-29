@@ -11,25 +11,97 @@
 \***************************************************************************/
 
 /**
- * Déclaration de filtres relatifs au Mime Types pour les squelettes 
+ * Déclaration de filtres permettent l'incrustation d'un document selon son type Mime
  *
- * @package SPIP\Core\Filtres
+ * Ces filtres peuvent être appelés par le modèle `<embXX>` dans certains cas,
+ * en utilisant `|appliquer_filtre{#MIME_TYPE}` sur un contenu
+ *
+ * @see appliquer_filtre()
+ * 
+ * @package SPIP\Core\Filtres\Mime
 **/
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('inc/filtres');
 
-// Fichier des filtres d'incrustation d'un document selon son type MIME
+
 // Les 7 familles de base ne font rien sauf celle des textes
 
+/**
+ * Filtre d'incrustation d'un document image
+ *
+ * Ne fait rien.
+ * 
+ * @filtre
+ * @param string $t Contenu
+ * @return string Rien.
+**/
 function filtre_image_dist($t) {return '';}
+
+/**
+ * Filtre d'incrustation d'un document audio
+ *
+ * Ne fait rien.
+ * 
+ * @filtre
+ * @param string $t Contenu
+ * @return string Rien.
+**/
 function filtre_audio_dist($t) {return '';}
+
+/**
+ * Filtre d'incrustation d'un document video
+ *
+ * Ne fait rien.
+ * 
+ * @filtre
+ * @param string $t Contenu
+ * @return string Rien.
+**/
 function filtre_video_dist($t) {return '';}
+
+/**
+ * Filtre d'incrustation d'un document application
+ *
+ * Ne fait rien.
+ * 
+ * @filtre
+ * @param string $t Contenu
+ * @return string Rien.
+**/
 function filtre_application_dist($t) {return '';}
+
+/**
+ * Filtre d'incrustation d'un document message
+ *
+ * Ne fait rien.
+ * 
+ * @filtre
+ * @param string $t Contenu
+ * @return string Rien.
+**/
 function filtre_message_dist($t) {return '';}
+
+/**
+ * Filtre d'incrustation d'un document multipart
+ *
+ * Ne fait rien.
+ * 
+ * @filtre
+ * @param string $t Contenu
+ * @return string Rien.
+**/
 function filtre_multipart_dist($t) {return '';}
 
-// http://code.spip.net/@filtre_text_txt_dist
+/**
+ * Filtre d'incrustation d'un document test
+ *
+ * Échappe les chevrons et l'esperluette.
+ * 
+ * @filtre
+ * @param string $t Contenu
+ * @return string Contenu échappé.
+**/
 function filtre_text_dist($t) {
 	static $t1 = array('&', '<', '>');
 	static $t2 = array('&amp;', '&lt;', '&gt;');
@@ -37,8 +109,11 @@ function filtre_text_dist($t) {
 }
 
 /**
- * Produit un joli tableau à partir d'un texte CSV
+ * Filtre d'incrustation d'un document CSV
+ * 
+ * Produit un joli tableau à partir du texte CSV
  *
+ * @filtre
  * @param string $t
  *     Texte CSV
  * @return string
@@ -47,8 +122,9 @@ function filtre_text_dist($t) {
 function filtre_text_csv_dist($t) {
 	include_spip('inc/csv');
 	list($entete, $lignes, $caption) = analyse_csv($t);
-	foreach ($lignes as &$l)
+	foreach ($lignes as &$l) {
 		$l = join('|', $l);
+	}
 	$corps = join("\n", $lignes) . "\n";
 	$corps = $caption .
 		"\n|{{" .
@@ -61,9 +137,16 @@ function filtre_text_csv_dist($t) {
 	return propre($corps);
 }
 
-// Incrustation de HTML, si on est capable de le securiser
-// sinon, afficher le source
-// http://code.spip.net/@filtre_text_html_dist
+/**
+ * Filtre d'incrustation d'un document text/html
+ *
+ * Incrustation de HTML, si on est capable de le sécuriser,
+ * sinon, afficher la source
+ * 
+ * @filtre
+ * @param string $t Code html
+ * @return string Code html sécurisé ou texte échappé
+**/
 function filtre_text_html_dist($t)
 {
 	if (!preg_match(',^(.*?)<body[^>]*>(.*)</body>,is', $t, $r))
@@ -89,7 +172,15 @@ function filtre_text_html_dist($t)
 	return (!$style ? '' : "\n<style>".$style."</style>") . $t;
 }
 
-// http://code.spip.net/@filtre_audio_x_pn_realaudio
+/**
+ * Filtre d'incrustation d'un document RealAudio
+ *
+ * Retourne les paramètres `<param>` nécessaires à la balise `<object>`
+ *
+ * @filtre
+ * @param string $id
+ * @return string Code HTML des balises `<param>`
+**/
 function filtre_audio_x_pn_realaudio($id)
 {
   return "
