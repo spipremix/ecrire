@@ -219,6 +219,10 @@ function f_recuperer_fond($flux) {
  * 
  * Cette fonction est appelée par le pipeline affichage_final
  *
+ * @pipeline affichage_final
+ * @uses queue_sleep_time_to_next_job()
+ * @uses queue_affichage_cron()
+ * 
  * @param string $texte   Contenu de la page envoyée au navigateur
  * @return string         Contenu de la page envoyée au navigateur
  */

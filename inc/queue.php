@@ -259,18 +259,27 @@ function queue_start_job($row){
 }
 
 /**
- * Scheduler :
- * Prend une par une les taches en attente
- * et les lance, dans la limite d'un temps disponible total
- * et d'un nombre maxi de taches
+ * Exécute les prochaînes tâches cron et replanifie les suivantes
+ * 
+ * Prend une par une les tâches en attente et les lance, dans la limite
+ * d'un temps disponible total et d'un nombre maxi de tâches
  *
- * La date de la prochaine tache a executer est mise a jour
- * apres chaque chaque tache finie
- * afin de relancer le scheduler uniquement quand c'est necessaire
+ * La date de la prochaine tâche à exécuter est mise à jour
+ * après chaque chaque tâche finie afin de relancer le scheduler uniquement
+ * quand c'est nécessaire
  *
+ * @uses queue_sleep_time_to_next_job()
+ * @uses queue_error_handler() Pour capturer les erreurs en fin de hit
+ * @uses queue_start_job()
+ * @uses queue_close_job()
+ * @uses queue_update_next_job_time()
+ * 
  * @param array $force_jobs
- *   list of id_job to execute when provided
- * @return null|false
+ *     list of id_job to execute when provided
+ * @return null|bool
+ *     - null : pas de tâche à réaliser maintenant
+ *     - false : pas de connexion SQL
+ *     - true : une planification a été faite.
  */
 function queue_schedule($force_jobs = null){
 	$time = time();
@@ -352,11 +361,15 @@ function queue_schedule($force_jobs = null){
 }
 
 /**
- * Terminer un job au status _JQ_PENDING :
+ * Terminer un job au status _JQ_PENDING
+ * 
  *  - le reprogrammer si c'est un cron
  *  - supprimer ses liens
  *  - le detruire en dernier
  *
+ * @uses queue_is_cron_job()
+ * @uses queue_genie_replan_job()
+ * 
  * @param array $row
  * @param int $time
  * @param int $result
@@ -380,8 +393,10 @@ function queue_close_job(&$row, $time, $result = 0){
 }
 
 /**
- * Recuperer des erreurs auant que possible
+ * Récuperer des erreurs autant que possible
  * en terminant la gestion de la queue
+ *
+ * @uses queue_update_next_job_time()
  */
 function queue_error_handler(){
 	// se remettre dans le bon dossier, car Apache le change parfois (toujours?)
@@ -392,21 +407,27 @@ function queue_error_handler(){
 
 
 /**
- * Tester si une tache etait une tache periodique a reprogrammer
+ * Tester si une tâche était une tâche périodique à reprogrammer
  *
- * @param <type> $function
- * @param <type> $inclure
- * @return <type>
+ * @uses taches_generales()
+ * 
+ * @param string $function
+ *     Nom de la fonction de tâche
+ * @param string $inclure
+ *     Nom de l'inclusion contenant la fonction
+ * @return bool|int
+ *     Périodicité de la tâche en secondes, si tâche périodique, sinon false.
  */
 function queue_is_cron_job($function, $inclure){
 	static $taches = null;
-	if (strncmp($inclure,'genie/',6)==0){
-		if (is_null($taches)){
+	if (strncmp($inclure, 'genie/', 6) == 0){
+		if (is_null($taches)) {
 			include_spip('inc/genie');
 			$taches = taches_generales();
 		}
-		if (isset($taches[$function]))
+		if (isset($taches[$function])) {
 			return $taches[$function];
+		}
 	}
 	return false;
 }
@@ -501,6 +522,11 @@ function queue_set_next_job_time($next) {
  * 
  * Retourne le HTML à ajouter à la page pour declencher le cron
  * ou rien si on a réussi à le lancer en asynchrone.
+ *
+ * Un verrou (cron.lock) empêche l'exécution du cron plus d'une fois par seconde.
+ * 
+ * @uses queue_sleep_time_to_next_job()
+ * @see action_cron() L'URL appelée pour déclencher le cron
  * 
  * @return string
  */
@@ -513,8 +539,10 @@ function queue_affichage_cron(){
 		return $texte;
 
 	// ne pas relancer si on vient de lancer dans la meme seconde par un hit concurent
-	if (file_exists($lock=_DIR_TMP."cron.lock") AND !(@filemtime($lock)<$_SERVER['REQUEST_TIME']))
+	if (file_exists($lock = _DIR_TMP . "cron.lock") AND !(@filemtime($lock)<$_SERVER['REQUEST_TIME'])) {
 		return $texte;
+	}
+
 	@touch($lock);
 
 	// il y a des taches en attentes
@@ -547,8 +575,8 @@ function queue_affichage_cron(){
 					$port = 80;
 			}
 			$fp = @fsockopen($scheme.$parts['host'],
-		        isset($parts['port'])?$parts['port']:$port,
-		        $errno, $errstr, 1);
+				isset($parts['port'])?$parts['port']:$port,
+				$errno, $errstr, 1);
 
 			if ($fp) {
 				$timeout = 200; // ms

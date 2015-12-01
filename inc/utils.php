@@ -770,39 +770,35 @@ function spip_touch($fichier, $duree = 0, $touch = true) {
 	return true;
 }
 
-// Ce declencheur de tache de fond, de l'espace prive (cf inc_presentation)
-// et de l'espace public (cf #SPIP_CRON dans inc_balise), est appelee
-// par un background-image  car contrairement a un iframe vide,
-// les navigateurs ne diront pas qu'ils n'ont pas fini de charger,
-// c'est plus rassurant.
-// C'est aussi plus discret qu'un <img> sous un navigateur non graphique.
 
-// http://code.spip.net/@action_cron
+/**
+ * Action qui déclenche une tache de fond
+ *
+ * @see queue_affichage_cron()
+ * @see action_super_cron_dist()
+ * @uses cron()
+**/
 function action_cron() {
 	include_spip('inc/headers');
 	http_status(204); // No Content
 	header("Connection: close");
-	define('_DIRECT_CRON_FORCE',true);
+	define('_DIRECT_CRON_FORCE', true);
 	cron();
 }
 
 /**
- * cron() : execution des taches de fond
- * On peut lui passer en 1er (ou 2e arg pour compat)
- * le tableau de taches attendu par inc_genie()
- * Retourne Vrai si un tache a pu etre effectuee
- * pas de verrou ici : les verrous sont geres sur chaque tache
- * a chaque execution
- *
- * http://code.spip.net/@cron
- *
+ * Exécution des tâches de fond
+ * 
+ * @uses inc_genie_dist()
+ * 
  * @param array $taches
- *   taches forcees
+ *     Tâches forcées
  * @param array $taches_old
- *   taches forcees, pour compat avec ancienne syntaxe
+ *     Tâches forcées, pour compat avec ancienne syntaxe
  * @return bool
+ *     True si la tache a pu être effectuée
  */
-function cron ($taches = array(), $taches_old= array()) {
+function cron($taches = array(), $taches_old = array()) {
 	// si pas en mode cron force, laisser tomber.
 	if (!defined('_DIRECT_CRON_FORCE')) return false;
 	if (!is_array($taches)) $taches = $taches_old; // compat anciens appels
@@ -821,24 +817,24 @@ function cron ($taches = array(), $taches_old= array()) {
 /**
  * Ajout d'une tache dans la file d'attente
  *
- * @param $function
- *   The function name to call.
- * @param $description
- *   A human-readable description of the queued job.
- * @param $arguments
- *   Optional array of arguments to pass to the function.
- * @param $file
- *   Optional file path which needs to be included for $function.
- *   if ends with '/', will do charger_fonction($function,$file);
- * @param $no_duplicate
- *   If TRUE, do not add the job to the queue if one with the same function and
- *   arguments already exists.
- * @param $time
- *		time for starting the job. If 0, job will start as soon as possible
- * @param $priority
- *		-10 (low priority) to +10 (high priority), 0 is the default
+ * @param string $function
+ *     The function name to call.
+ * @param string $description
+ *     A human-readable description of the queued job.
+ * @param array $arguments
+ *     Optional array of arguments to pass to the function.
+ * @param string $file
+ *     Optional file path which needs to be included for $function.
+ *     if ends with '/', will do charger_fonction($function,$file);
+ * @param bool $no_duplicate
+ *     If TRUE, do not add the job to the queue if one with the same function and
+ *     arguments already exists.
+ * @param int $time
+ *     time for starting the job. If 0, job will start as soon as possible
+ * @param int $priority
+ *     -10 (low priority) to +10 (high priority), 0 is the default
  * @return int
- *	id of job
+ *     id of the job
  */
 function job_queue_add($function, $description, $arguments = array(), $file = '', $no_duplicate = FALSE, $time = 0, $priority = 0) {
 	include_spip('inc/queue');
@@ -861,10 +857,10 @@ function job_queue_remove($id_job){
  * Associer une tache a un/des objets de SPIP
  * 
  * @param int $id_job
- *	id of job to link
+ *     id of job to link
  * @param array $objets
- *  can be a simple array('objet'=>'article','id_objet'=>23)
- *  or an array of simple array to link multiples objet in one time
+ *     can be a simple array('objet'=>'article', 'id_objet'=>23)
+ *     or an array of simple array to link multiples objet in one time
  */
 function job_queue_link($id_job, $objets){
 	include_spip('inc/queue');

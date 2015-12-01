@@ -178,6 +178,8 @@ function f_afficher_blocs_ecrire($flux) {
 
 /**
  * Afficher les taches en attente liees a un objet
+ *
+ * @pipeline affiche_milieu
  * @param string $flux
  * @return string
  */
@@ -197,8 +199,8 @@ function f_queue_affiche_milieu($flux){
 }
 
 /**
- * Trouver l'objet qui correspond
- * a l'exec de l'espace prive passe en argument
+ * Trouver l'objet qui correspond à l'exec de l'espace privé passé en argument
+ * 
  * renvoie false si pas d'objet en cours, ou un tableau associatif
  * contenant les informations table_objet_sql,table,type,id_table_objet,edition
  *
