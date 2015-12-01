@@ -172,7 +172,7 @@ function f_insert_head($texte) {
  * @param string $texte   Contenu de la page envoyée au navigateur
  * @return string         Contenu de la page envoyée au navigateur
 **/
-function f_admin ($texte) {
+function f_admin($texte) {
 	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW AND $GLOBALS['html']) {
 		include_spip('inc/filtres'); // pour http_img_pack
 		$x = "<div class='spip-previsu' "
@@ -203,7 +203,7 @@ function f_admin ($texte) {
  * 
  * Cette fonction est appelée par le pipeline recuperer_fond 
  *
- * @see f_afficher_blocs_ecrire()
+ * @uses f_afficher_blocs_ecrire()
  * @pipeline recuperer_fond
  * 
  * @param  array $flux  Description et contenu de l'inclusion
@@ -217,8 +217,6 @@ function f_recuperer_fond($flux) {
 /**
  * Gérer le lancement du cron si des tâches sont en attente
  * 
- * Cette fonction est appelée par le pipeline affichage_final
- *
  * @pipeline affichage_final
  * @uses queue_sleep_time_to_next_job()
  * @uses queue_affichage_cron()
@@ -231,7 +229,8 @@ function f_queue(&$texte){
 	// eviter une inclusion si rien a faire
 	if (_request('action')=='cron'
 		OR queue_sleep_time_to_next_job()>0
-	  OR defined('_DEBUG_BLOCK_QUEUE')){
+		OR defined('_DEBUG_BLOCK_QUEUE'))
+	{
 		return $texte;
 	}
 
@@ -240,14 +239,16 @@ function f_queue(&$texte){
 
 	// si rien a afficher
 	// ou si on est pas dans une page html, on ne sait rien faire de mieux
-	if (!$code OR !isset($GLOBALS['html']) OR !$GLOBALS['html'])
+	if (!$code OR !isset($GLOBALS['html']) OR !$GLOBALS['html']) {
 		return $texte;
+	}
 
 	// inserer avant le </body> fermant si on peut, a la fin de la page sinon
-	if (($p=strpos($texte,'</body>'))!==FALSE)
+	if (($p=strpos($texte,'</body>'))!==FALSE) {
 		$texte = substr($texte,0,$p).$code.substr($texte,$p);
-	else
+	} else {
 		$texte .= $code;
+	}
 
 	return $texte;
 }
