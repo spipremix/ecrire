@@ -22,10 +22,10 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * Solution
  * --------
  * Toute connexion à SPIP s'achève par un appel (asynchrone si possible)
- * à la fonction `cron()` qui appelle la fonction surchargeable`inc_genie_dist()`
+ * à la fonction `cron()` qui appelle la fonction surchargeable `inc_genie_dist()`
  *
- * Sa definition standard ci-dessous prend dans une liste de tâches
- * la plus prioritaire, leurs dates étant données par leur fichier-verrou.
+ * Sa définition standard ci-dessous prend dans une liste de tâches
+ * la plus prioritaire.
  *
  * Une fonction exécutant une tâche doit retourner un nombre :
  * - nul, si la tache n'a pas à être effecutée
