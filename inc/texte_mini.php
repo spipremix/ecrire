@@ -414,9 +414,7 @@ function echapper_html_suspect($texte){
 	// on teste sur strlen car safehtml supprime le contenu dangereux
 	// mais il peut aussi changer des ' en " sur les attributs html,
 	// donc un test d'egalite est trop strict
-	$sblob = preg_replace(',\W,', '', safehtml($texte));
-	$blob  = preg_replace(',\W,', '', $texte);
-	if ($sblob!==$blob){
+	if (strlen(safehtml($texte))!==strlen($texte)){
 		$texte = str_replace("<","&lt;",$texte);
 	}
 
