@@ -5047,7 +5047,7 @@ function generer_info_entite($id_objet, $type_objet, $info, $etoile = ""){
 	if (!$etoile){
 		// FIXME: on fournit un ENV minimum avec id et type et connect=''
 		// mais ce fonctionnement est a ameliorer !
-		$info_generee = appliquer_traitement_champ($info_generee, $info, table_objet_sql($type_objet),array('id_objet'=>$id_objet,'objet'=>$type_objet,''));
+		$info_generee = appliquer_traitement_champ($info_generee, $info, table_objet($type_objet),array('id_objet'=>$id_objet,'objet'=>$type_objet,''));
 	}
 
 	return $info_generee;
@@ -5058,28 +5058,37 @@ function generer_info_entite($id_objet, $type_objet, $info, $etoile = ""){
  *
  * @param string $texte
  * @param string $champ
- * @param string $table_sql
+ * @param string $table_objet
  * @param array $env
  * @param string $connect
  * @return string
  */
-function appliquer_traitement_champ($texte, $champ, $table_sql = '', $env = array(), $connect = ''){
+function appliquer_traitement_champ($texte,$champ,$table_objet='',$env=array(),$connect=''){
 	if (!$champ)
 		return $texte;
 
 	$champ = strtoupper($champ);
 	$traitements = isset($GLOBALS['table_des_traitements'][$champ]) ? $GLOBALS['table_des_traitements'][$champ] : false;
-	if(!$traitements)
+	if(!$traitements OR !is_array($traitements)){
 		return $texte;
+	}
 
 	$traitement = '';
-	if (isset($traitements[$table_sql]))
-		$traitement = $traitements[$table_sql];
-	elseif (isset($traitements[0]))
+	if ($table_objet AND (!isset($traitements[0]) OR count($traitements)>1)){
+		// necessaire pour prendre en charge les vieux appels avec un table_objet_sql en 3e arg
+		$table_objet = table_objet($table_objet);
+		if (isset($traitements[$table_objet])){
+			$traitement = $traitements[$table_objet];
+		}
+	}
+	if (!$traitement AND isset($traitements[0])){
 		$traitement = $traitements[0];
+	}
+	// (sinon prendre le premier de la liste par defaut ?)
 
-	if (!$traitement)
+	if (!$traitement){
 		return $texte;
+	}
 
 	$traitement = str_replace('%s', "'".texte_script($texte)."'", $traitement);
 
@@ -5089,6 +5098,7 @@ function appliquer_traitement_champ($texte, $champ, $table_sql = '', $env = arra
 
 	return $texte;
 }
+
 
 /**
  * Generer un lien (titre clicable vers url) vers un objet
