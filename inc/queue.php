@@ -313,7 +313,7 @@ function queue_schedule($force_jobs = null){
 	$nbj=0;
 	// attraper les jobs
 	// dont la date est passee (echus en attente),
-	// par odre :
+	// par ordre :
 	//	- de priorite
 	//	- de date
 	// lorsqu'un job cron n'a pas fini, sa priorite est descendue
