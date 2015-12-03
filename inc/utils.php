@@ -2453,15 +2453,19 @@ function lang_select($lang = NULL) {
 	return $lang;
 }
 
-
-// Renvoie une chaine qui decrit la session courante pour savoir si on peut
-// utiliser un cache enregistre pour cette session.
-// Par convention cette chaine ne doit pas contenir de caracteres [^0-9A-Za-z]
-// Attention on ne peut *pas* inferer id_auteur a partir de la session, qui
-// est une chaine arbitraire
-// Cette chaine est courte (8 cars) pour pouvoir etre utilisee dans un nom
-// de fichier cache
-// http://code.spip.net/@spip_session
+/**
+ * Renvoie une chaîne qui identifie la session courante
+ *
+ * Permet de savoir si on peut utiliser un cache enregistré pour cette session.
+ * Cette chaîne est courte (8 cars) pour pouvoir être utilisée dans un nom
+ * de fichier cache.
+ * 
+ * @pipeline_appel definir_session
+ * 
+ * @param bool $force
+ * @return string
+ *     Identifiant de la session
+**/
 function spip_session($force = false) {
 	static $session;
 	if ($force OR !isset($session)) {

@@ -293,6 +293,8 @@ function auth_a_loger()
 /**
  * Tracer en base la date de dernière connexion de l'auteur
  *
+ * @pipeline_appel trig_auth_trace
+ * 
  * @param array $row
  * @param null|string $date
  */

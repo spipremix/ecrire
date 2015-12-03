@@ -21,9 +21,10 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 include_spip('inc/cookie');
 
 /**
- * Se deloger
- * Pour eviter les CSRF on passe par une etape de confirmation si pas de jeton fourni
- * avec un autosubmit js pour ne pas compliquer l'experience utilisateur
+ * Se déloger
+ * 
+ * Pour éviter les CSRF on passe par une étape de confirmation si pas de jeton fourni
+ * avec un autosubmit js pour ne pas compliquer l'expérience utilisateur
  *
  * Déconnecte l'utilisateur en cours et le redirige sur l'URL indiquée par
  * l'argument de l'action sécurisée, et sinon sur la page d'accueil
