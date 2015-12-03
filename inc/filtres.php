@@ -2089,10 +2089,10 @@ function affdate_heure($numdate) {
  * @param string $date_fin
  * @param string $horaire
  * @param string $forme
- *   abbr pour afficher le nom du jour en abrege (Dim. au lieu de Dimanche)
- *   annee pour forcer l'affichage de l'annee courante
- *   jour pour forcer l'affichage du nom du jour
- *   hcal pour avoir un markup microformat abbr
+ *   - `abbr` pour afficher le nom du jour en abrege (Dim. au lieu de Dimanche)
+ *   - `annee` pour forcer l'affichage de l'annee courante
+ *   - `jour` pour forcer l'affichage du nom du jour
+ *   - `hcal` pour avoir un markup microformat abbr
  * @return string
  *     Texte de la date
  */
