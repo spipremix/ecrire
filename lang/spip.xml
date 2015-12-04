@@ -47,7 +47,7 @@
 		<traducteur nom="kent1" lien="http://trad.spip.net/auteur/kent1" />
 		<traducteur nom="Yannick Bailly" lien="http://trad.spip.net/auteur/yannick-bailly" />
 	</langue>
-	<langue code="en" url="http://trad.spip.net/tradlang_module/spip?lang_cible=en" total="636" traduits="635" relire="0" modifs="1" nouveaux="0" pourcent="99.84">
+	<langue code="en" url="http://trad.spip.net/tradlang_module/spip?lang_cible=en" total="636" traduits="636" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="Benitron" lien="http://trad.spip.net/auteur/benitron" />
 		<traducteur nom="Fil" lien="http://trad.spip.net/auteur/fil" />
 		<traducteur nom="George" lien="http://trad.spip.net/auteur/جورج-قندلفت" />
@@ -190,7 +190,7 @@
 	</langue>
 	<langue code="roa" url="http://trad.spip.net/tradlang_module/spip?lang_cible=roa" total="636" traduits="518" relire="0" modifs="32" nouveaux="86" pourcent="81.45">
 	</langue>
-	<langue code="ru" url="http://trad.spip.net/tradlang_module/spip?lang_cible=ru" total="636" traduits="635" relire="0" modifs="1" nouveaux="0" pourcent="99.84">
+	<langue code="ru" url="http://trad.spip.net/tradlang_module/spip?lang_cible=ru" total="636" traduits="636" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="olly" lien="http://trad.spip.net/auteur/olly" />
 		<traducteur nom="Serge Markitanenko" lien="http://trad.spip.net/auteur/serge-markitanenko" />
 	</langue>
@@ -205,7 +205,7 @@
 	</langue>
 	<langue code="tr" url="http://trad.spip.net/tradlang_module/spip?lang_cible=tr" total="636" traduits="544" relire="0" modifs="29" nouveaux="63" pourcent="85.53">
 	</langue>
-	<langue code="uk" url="http://trad.spip.net/tradlang_module/spip?lang_cible=uk" total="636" traduits="635" relire="0" modifs="1" nouveaux="0" pourcent="99.84">
+	<langue code="uk" url="http://trad.spip.net/tradlang_module/spip?lang_cible=uk" total="636" traduits="636" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="olly" lien="http://trad.spip.net/auteur/olly" />
 		<traducteur nom="Retenodus" lien="http://trad.spip.net/auteur/retenodus" />
 	</langue>
