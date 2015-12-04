@@ -593,7 +593,7 @@ and connect again to the site.
 	'pass_nouveau_pass' => 'Новий пароль',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Забутий пароль',
-	'pass_procedure_changer' => 'Введіть e-mail, який ви вказали при реєстрації.', # MODIF
+	'pass_procedure_changer' => 'Щоб змінити пароль, будь ласка, ведіть e-mail, який ви вказали при реєстрації.',
 	'pass_quitter_fenetre' => 'Закрити вікно',
 	'pass_rappel_login' => 'Нагадуємо: ваш логін „@login@”.',
 	'pass_recevoir_mail' => 'Ви одержите листа, в якому будуть подальші інструкції з реєстрації на сайті.',
