@@ -165,7 +165,7 @@ function logo_survol($id_objet, $_id_objet, $type, $align, $fichier, $lien, $p, 
 	if ($fichier) return $code;
 
 	// class spip_logos a supprimer ulterieurement (transition douce vers spip_logo)
-	// cf http://core.spip.org/issues/2483
+	// cf http://core.spip.net/issues/2483
 	$class = "spip_logo ";
 	if ($align) $class .= "spip_logo_$align ";
 	$class .= "spip_logos";

@@ -498,7 +498,7 @@ define('CODE_EXECUTER_BALISE', "executer_balise_dynamique('%s',
  *
  * On leur adjoint les arguments explicites de la balise (cf `#LOGIN{url}`)
  * et d'éventuelles valeurs transmises d'autorité par la balise.
- * (cf http://core.spip.org/issues/1728)
+ * (cf http://core.spip.net/issues/1728)
  * 
  * La fonction `executer_balise_dynamique()` définie par la
  * constante `CODE_EXECUTER_BALISE` recevra à l'exécution la valeur de tout ca.

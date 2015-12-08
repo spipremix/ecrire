@@ -2179,7 +2179,7 @@ function spip_initialisation_suite(){
 	// le script de l'espace prive
 	// Mettre a "index.php" si DirectoryIndex ne le fait pas ou pb connexes:
 	// les anciens IIS n'acceptent pas les POST sur ecrire/ (#419)
-	// meme pb sur thttpd cf. http://forum.spip.org/fr_184153.html
+	// meme pb sur thttpd cf. http://forum.spip.net/fr_184153.html
 	if (!defined('_SPIP_ECRIRE_SCRIPT')) {
 		define('_SPIP_ECRIRE_SCRIPT', (empty($_SERVER['SERVER_SOFTWARE']) ? '' :
 			preg_match(',IIS|thttpd,', $_SERVER['SERVER_SOFTWARE']) ?

@@ -4372,7 +4372,7 @@ function encoder_contexte_ajax($c, $form = '', $emboite = NULL, $ajaxid = '') {
 		$env = $c;
 		if (function_exists('gzdeflate') && function_exists('gzinflate')) {
 			$env = gzdeflate($env);
-			// http://core.spip.org/issues/2667 | https://bugs.php.net/bug.php?id=61287
+			// http://core.spip.net/issues/2667 | https://bugs.php.net/bug.php?id=61287
 			if (substr(phpversion(),0,5) == '5.4.0' AND !@gzinflate($env)) {
 				$cache_contextes_ajax = true;
 				spip_log("Contextes AJAX forces en fichiers ! Erreur PHP 5.4.0", _LOG_AVERTISSEMENT);

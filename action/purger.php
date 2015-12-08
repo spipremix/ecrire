@@ -64,7 +64,7 @@ function action_purger_dist($arg = null)
 			// on ne supprime que _CACHE_PLUGINS_OPT qui declenche la reconstruction des 3
 			// _CACHE_PIPELINES _CACHE_PLUGINS_PATH et _CACHE_PLUGINS_FCT
 			// pour eviter des problemes de concurence
-			// cf http://core.spip.org/issues/2989
+			// cf http://core.spip.net/issues/2989
 			//@spip_unlink(_CACHE_PIPELINES);
 			//@spip_unlink(_CACHE_PLUGINS_PATH);
 			//@spip_unlink(_CACHE_PLUGINS_FCT);

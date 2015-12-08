@@ -578,7 +578,7 @@ function supprimer_toutes_sessions() {
 
 /**
  * Ranger les images de local/cache-gd2 dans des sous-rep
- * http://core.spip.org/issues/3277
+ * http://core.spip.net/issues/3277
  */
 $GLOBALS['maj'][21676] = array(
 	array('ranger_cache_gd2'),

@@ -6,8 +6,8 @@
 	compatibilite="];["
 	schema="21676"
 	documentation="http://www.spip.net"
-	demonstration="http://demo.spip.org"
-	developpement="http://core.spip.org/projects/spip/"
+	demonstration="http://demo.spip.net"
+	developpement="http://core.spip.net/projects/spip/"
 >	
 
 	<nom>SPIP</nom>
