@@ -386,6 +386,20 @@ function autoriser_changerlangue_dist($faire, $type, $id, $qui, $opt) {
 		$multi_secteurs = lire_config('multi_secteurs');
 		$champs = objet_info($type, 'field');
 		if ($multi_secteurs == 'oui' and array_key_exists('id_rubrique', $champs)) { // multilinguisme par secteur et objet rattaché à une rubrique
+			$primary = id_table_objet($type);
+			if ($table!='spip_rubriques'){
+				$id_rubrique = sql_getfetsel('id_rubrique', "$table", "$primary=" . intval($id));
+			} else {
+				$id_rubrique = $id;
+			}
+			$id_secteur = sql_getfetsel('id_secteur', 'spip_rubriques', 'id_rubrique=' . intval($id_rubrique));
+			if (!$id_secteur>0)
+				$id_secteur = $id_rubrique;
+			$langue_secteur = sql_getfetsel('lang', "spip_rubriques", "id_rubrique=" . intval($id_secteur));
+			$langue_objet = sql_getfetsel('lang', "$table", "$primary=" . intval($id));
+			if ($langue_secteur!=$langue_objet){ // configuration incohérente, on laisse l'utilisateur corriger la situation
+				return true;
+			}
 			if ($table != 'spip_rubriques') { // le choix de la langue se fait seulement sur les rubriques
 				return false;
 			} else {
@@ -398,6 +412,20 @@ function autoriser_changerlangue_dist($faire, $type, $id, $qui, $opt) {
 		return false;
 	}
 	return autoriser('modifier',$type,$id,$qui,$opt);
+}
+
+/**
+ * Autorisation de changer le lien de traduction
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type  Type d'objet sur lequel appliquer l'action
+ * @param  int    $id    Identifiant de l'objet
+ * @param  array  $qui   Description de l'auteur demandant l'autorisation
+ * @param  array  $opt   Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+**/
+function autoriser_changertraduction_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('modifier',$type,$id,$qui,$opt);
 }
 
 /**
