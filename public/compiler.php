@@ -635,8 +635,8 @@ function calculer_requete_sql($boucle)
 **/
 function memoriser_contexte_compil($p) {
 	return join(',', array(
-		_q($p->descr['sourcefile']),
-		_q($p->descr['nom']),
+		_q(isset($p->descr['sourcefile']) ? $p->descr['sourcefile'] : ''),
+		_q(isset($p->descr['nom']) ? $p->descr['nom'] : ''),
 		_q(isset($p->id_boucle) ? $p->id_boucle : null),
 		intval($p->ligne),
 		'$GLOBALS[\'spip_lang\']'));
