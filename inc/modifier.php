@@ -78,7 +78,12 @@ function collecter_requests($white_list, $black_list = array(), $set = null, $to
  * @param int $id_objet
  *     Identifiant de l'objet
  * @param array $options
- *     Toutes les options
+ *     array data : tableau des donnees sources utilisees pour la detection de conflit ($_POST sinon fourni ou si nul)
+ *     array nonvide : valeur par defaut des champs que l'on ne veut pas vide
+ *     string date_modif : champ a mettre a date('Y-m-d H:i:s') s'il y a modif
+ *     string invalideur : id de l'invalideur eventuel
+ *     array champs : non documente (utilise seulement par inc/rechercher ?)
+ *     bool indexation : deprecie
  * @param array|null $c
  *     Couples champ/valeur à modifier
  * @param string $serveur
@@ -167,7 +172,10 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 
 	// Verifier si les mises a jour sont pertinentes, datees, en conflit etc
 	include_spip('inc/editer');
-	$conflits = controler_md5($champs, $_POST, $objet, $id_objet, $serveur);
+	if (!isset($options['data']) OR is_null($options['data'])){
+		$options['data'] = &$_POST;
+	}
+	$conflits = controler_md5($champs, $options['data'], $objet, $id_objet, $serveur);
 	// cas hypothetique : normalement inc/editer verifie en amont le conflit edition
 	// et gere l'interface
 	// ici on ne renvoie donc qu'un messsage d'erreur, au cas ou on y arrive quand meme
