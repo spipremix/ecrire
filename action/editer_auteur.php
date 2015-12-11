@@ -154,6 +154,7 @@ function auteur_modifier($id_auteur, $set = null, $force_update = false) {
 
 	if ($err = objet_modifier_champs('auteur', $id_auteur,
 		array(
+			'data' => $set,
 			'nonvide' => array('nom' => _T('ecrire:item_nouvel_auteur'))
 		),
 		$c))

@@ -136,6 +136,7 @@ function rubrique_modifier($id_rubrique, $set = null) {
 
 	if ($err = objet_modifier_champs('rubrique', $id_rubrique,
 		array(
+			'data' => $set,
 			'nonvide' => array('titre' => _T('titre_nouvelle_rubrique')." "._T('info_numero_abbreviation').$id_rubrique)
 		),
 		$c))

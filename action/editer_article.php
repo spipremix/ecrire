@@ -109,6 +109,7 @@ function article_modifier($id_article, $set = null) {
 
 	if ($err = objet_modifier_champs('article', $id_article,
 		array(
+			'data' => $set,
 			'nonvide' => array('titre' => _T('info_nouvel_article')." "._T('info_numero_abbreviation').$id_article),
 			'invalideur' => $invalideur,
 			'indexation' => $indexation,
