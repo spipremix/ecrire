@@ -73,24 +73,24 @@ function test_ecrire($my_dir) {
 // http://code.spip.net/@install_etape_chmod_dist
 function install_etape_chmod_dist()
 {
-	global $test_dirs;
+
 	$test_dir =  _request('test_dir');
 	$chmod = 0;
 
 	if ($test_dir) {
 		if (substr($test_dir,-1)!=='/') $test_dir .= '/';
-		if (!in_array($test_dir, $test_dirs)) $test_dirs[] = _DIR_RACINE  . $test_dir;
+		if (!in_array($test_dir, $GLOBALS['test_dirs'])) $GLOBALS['test_dirs'][] = _DIR_RACINE  . $test_dir;
 	} else {
 		if (!_FILE_CONNECT) {
-			$test_dirs[] = _DIR_CONNECT;
-			$test_dirs[] = _DIR_CHMOD;
+			$GLOBALS['test_dirs'][] = _DIR_CONNECT;
+			$GLOBALS['test_dirs'][] = _DIR_CHMOD;
 		}
 	}
 
 	$bad_dirs = array();
 	$absent_dirs  = array();;
 
-	while (list(, $my_dir) = each($test_dirs)) {
+	while (list(, $my_dir) = each($GLOBALS['test_dirs'])) {
 		$test = test_ecrire($my_dir);
 		if (!$test) {
 			$m = preg_replace(',^' . _DIR_RACINE . ',', '',$my_dir);

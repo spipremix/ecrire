@@ -82,7 +82,6 @@ function balise_FORMULAIRE_ADMIN_stat($args, $context_compil) {
 **/
 function balise_FORMULAIRE_ADMIN_dyn($float = '', $debug = '') {
 
-	global $use_cache;
 	static $dejafait = false;
 
 	if (!@$_COOKIE['spip_admin'])
@@ -128,7 +127,7 @@ function balise_FORMULAIRE_ADMIN_dyn($float = '', $debug = '') {
 	$env['analyser'] = (!$env['debug'] AND !$GLOBALS['xhtml']) ? '' : admin_valider();
 	$env['inclure'] = ((defined('_VAR_INCLURE') AND _VAR_INCLURE)?'inclure':'');
 
-	if (!$use_cache)
+	if (!$GLOBALS['use_cache'])
 		$env['use_cache'] = ' *';
 		
 	if (isset($debug['validation'])) {
@@ -254,9 +253,8 @@ function admin_lang()
 **/
 function admin_valider()
 {
-	global $xhtml;
 
-	return ((@$xhtml !== 'true') ?
+	return ((!isset($GLOBALS['xhtml']) OR $GLOBALS['xhtml'] !== 'true') ?
 		(parametre_url(self(), 'var_mode', 'debug', '&')
 			.'&var_mode_affiche=validation') :
 		('http://validator.w3.org/check?uri='

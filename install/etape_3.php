@@ -17,7 +17,6 @@ include_spip('base/abstract_sql');
 
 // http://code.spip.net/@install_bases
 function install_bases($adresse_db, $login_db, $pass_db,  $server_db, $choix_db, $sel_db, $chmod_db){
-	global $spip_version_base;
 
 	// Prefix des tables :
 	// contrairement a ce qui est dit dans le message (trop strict mais c'est
@@ -114,7 +113,7 @@ function install_bases($adresse_db, $login_db, $pass_db,  $server_db, $choix_db,
 			@sql_insertq('spip_meta', $t, '', $server_db);
 		}
 		$t = array('nom' => 'version_installee',
-			   'valeur' => $spip_version_base,
+			   'valeur' => $GLOBALS['spip_version_base'],
 			   'impt' => 'non');
 		@sql_insertq('spip_meta', $t, '', $server_db);
 		$t['nom'] = 'nouvelle_install';
@@ -135,9 +134,9 @@ function install_bases($adresse_db, $login_db, $pass_db,  $server_db, $choix_db,
 
 	  if ($r) $r = sql_fetch($r, $server_db);
 	  $version_installee = !$r ? 0 : (double) $r['valeur'];
-	  if (!$version_installee OR ($spip_version_base < $version_installee)) {
-	    $fupdateq('spip_meta', array('valeur'=>$spip_version_base, 'impt'=>'non'), "nom='version_installee'",'', $server_db);
-	    spip_log("nouvelle version installee: $spip_version_base");
+	  if (!$version_installee OR ($GLOBALS['spip_version_base'] < $version_installee)) {
+	    $fupdateq('spip_meta', array('valeur'=>$GLOBALS['spip_version_base'], 'impt'=>'non'), "nom='version_installee'",'', $server_db);
+	    spip_log("nouvelle version installee: " . $GLOBALS['spip_version_base']);
 	  }
 	  // eliminer la derniere operation d'admin mal terminee
 	  // notamment la mise a jour 
