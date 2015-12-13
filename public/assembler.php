@@ -278,7 +278,7 @@ function inclure_page($fond, $contexte, $connect = '') {
 		$page = $produire_page($fond, $contexte, $use_cache, $chemin_cache, $contexte, $page, $lastinclude, $connect);
 	}
 	// dans tous les cas, mettre a jour $GLOBALS['lastmodified']
-	$GLOBALS['lastmodified'] = max($GLOBALS['lastmodified'], $lastinclude);
+	$GLOBALS['lastmodified'] = max((isset($GLOBALS['lastmodified']) ? $GLOBALS['lastmodified'] : 0), $lastinclude);
 
 	return $page;
 }
