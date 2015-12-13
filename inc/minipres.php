@@ -43,8 +43,7 @@ include_spip('inc/texte'); //inclue inc/lang et inc/filtres
  *    Code HTML
  */
 function install_debut_html($titre = 'AUTO', $onLoad = '', $all_inline = false) {
-	global $spip_lang_right,$spip_lang_left;
-	
+
 	utiliser_langue_visiteur();
 
 	http_no_cache();

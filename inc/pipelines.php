@@ -110,16 +110,15 @@ function f_tidy ($texte) {
 	 * - true : actif.
 	 * - false par défaut.
 	 */
-	global $xhtml;
 
-	if ($xhtml # tidy demande
+	if ($GLOBALS['xhtml'] # tidy demande
 	AND $GLOBALS['html'] # verifie que la page avait l'entete text/html
 	AND strlen($texte)
 	AND !headers_sent()) {
 		# Compatibilite ascendante
-		if (!is_string($xhtml)) $xhtml ='tidy';
+		if (!is_string($GLOBALS['xhtml'])) $GLOBALS['xhtml'] ='tidy';
 
-		if (!$f = charger_fonction($xhtml, 'inc', true)) {
+		if (!$f = charger_fonction($GLOBALS['xhtml'], 'inc', true)) {
 			spip_log("tidy absent, l'indenteur SPIP le remplace");
 			$f = charger_fonction('sax', 'xml');
 		}

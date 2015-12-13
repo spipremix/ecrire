@@ -36,13 +36,11 @@ include_spip('base/abstract_sql');
  */
 function inc_auth_dist() {
 
-	global $connect_login ;
-
 	$row = auth_mode();
 
 	if ($row) return auth_init_droits($row);
 
-	if (!$connect_login) return auth_a_loger();
+	if (!$GLOBALS['connect_login']) return auth_a_loger();
 
 	// Cas ou l'auteur a ete identifie mais on n'a pas d'info sur lui
 	// C'est soit parce que la base est inutilisable,
@@ -51,7 +49,7 @@ function inc_auth_dist() {
 	// Renvoyer le nom fautif et une URL de remise a zero
 
 	if (spip_connect())
-		return array('login' => $connect_login,
+		return array('login' => $GLOBALS['connect_login'],
 			'site' => generer_url_public('', "action=logout&amp;logout=prive"));
 
 	$n = intval(sql_errno());
@@ -107,16 +105,14 @@ function auth_echec($raison)
  */
 function auth_mode()
 {
-	global $auth_can_disconnect, $ignore_auth_http, $ignore_remote_user;
-	global $connect_login ;
 
 	//
 	// Initialiser variables (eviter hacks par URL)
 	//
 
-	$connect_login = '';
+	$GLOBALS['connect_login'] = '';
 	$id_auteur = NULL;
-	$auth_can_disconnect = false;
+	$GLOBALS['auth_can_disconnect'] = false;
 
 	//
 	// Recuperer les donnees d'identification
@@ -129,14 +125,14 @@ function auth_mode()
 		if ($id_auteur = $session()
 		OR $id_auteur===0 // reprise sur restauration
 		) {
-			$auth_can_disconnect = true;
-			$connect_login = session_get('login');
+			$GLOBALS['auth_can_disconnect'] = true;
+			$GLOBALS['connect_login'] = session_get('login');
 		} else unset($_COOKIE['spip_session']);
 	}
 
 	// Essayer auth http si significatif
 	// (ignorer les login d'intranet independants de spip)
-	if (!$ignore_auth_http) {
+	if (!$GLOBALS['ignore_auth_http']) {
 		if (
 			(isset($_SERVER['PHP_AUTH_USER']) AND isset($_SERVER['PHP_AUTH_PW'])
 						AND $r = lire_php_auth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
@@ -149,9 +145,9 @@ function auth_mode()
 			) {
 				if (!$id_auteur) {
 					$_SERVER['PHP_AUTH_PW'] = '';
-					$auth_can_disconnect = true;
+					$GLOBALS['auth_can_disconnect'] = true;
 					$GLOBALS['visiteur_session'] = $r;
-					$connect_login = session_get('login');
+					$GLOBALS['connect_login'] = session_get('login');
 					$id_auteur = $r['id_auteur'];
 				} else {
 				  // cas de la session en plus de PHP_AUTH
@@ -165,14 +161,14 @@ function auth_mode()
 		// Authentification .htaccess old style, car .htaccess semble
 		// souvent definir *aussi* PHP_AUTH_USER et PHP_AUTH_PW
 		else if (isset($_SERVER['REMOTE_USER']))
-			$connect_login = $_SERVER['REMOTE_USER'];
+			$GLOBALS['connect_login'] = $_SERVER['REMOTE_USER'];
 	}
 
 	$where = (is_numeric($id_auteur)
 	/*AND $id_auteur>0*/ // reprise lors des restaurations
 	) ?
 	  "id_auteur=$id_auteur" :
-	  (!strlen($connect_login) ? '' : "login=" . sql_quote($connect_login,'','text'));
+	  (!strlen($GLOBALS['connect_login']) ? '' : "login=" . sql_quote($GLOBALS['connect_login'],'','text'));
 
 	if (!$where) return '';
 
@@ -197,16 +193,15 @@ function auth_mode()
  */
 function auth_init_droits($row)
 {
-	global $connect_statut, $connect_toutes_rubriques, $connect_id_rubrique, $connect_login, $connect_id_auteur;
 
 	if ($row['statut']=='nouveau'){
 		include_spip('action/inscrire_auteur');
 		$row = confirmer_statut_inscription($row);
 	}
 
-	$connect_id_auteur = $row['id_auteur'];
-	$connect_login = $row['login'];
-	$connect_statut = $row['statut'];
+	$GLOBALS['connect_id_auteur'] = $row['id_auteur'];
+	$GLOBALS['connect_login'] = $row['login'];
+	$GLOBALS['connect_statut'] = $row['statut'];
 
 	$GLOBALS['visiteur_session'] = array_merge((array)$GLOBALS['visiteur_session'], $row);
 
@@ -253,12 +248,12 @@ function auth_init_droits($row)
 	auth_trace($row);
 
 	// Administrateurs
-	if (in_array($connect_statut, explode(',', _STATUT_AUTEUR_RUBRIQUE))) {
+	if (in_array($GLOBALS['connect_statut'], explode(',', _STATUT_AUTEUR_RUBRIQUE))) {
 		if (is_array($GLOBALS['visiteur_session']['restreint'])) {
-			$connect_id_rubrique = $GLOBALS['visiteur_session']['restreint'];
+			$GLOBALS['connect_id_rubrique'] = $GLOBALS['visiteur_session']['restreint'];
 		}
-		if ($connect_statut == '0minirezo') { 
-			$connect_toutes_rubriques = !$connect_id_rubrique;
+		if ($GLOBALS['connect_statut'] == '0minirezo') {
+			$GLOBALS['connect_toutes_rubriques'] = !$GLOBALS['connect_id_rubrique'];
 		}
 	}
 	// Pour les redacteurs, inc_version a fait l'initialisation minimale

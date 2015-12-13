@@ -78,12 +78,11 @@ $GLOBALS['aider_index'] = array(
  * @return string
 **/
 function inc_aider_dist($aide = '', $skel = '', $env = array(), $aide_spip_directe = false) {
-	global $spip_lang, $aider_index;
 
 	if (($skel = basename($skel))
-	AND isset($aider_index[$skel])
-	AND isset($aider_index[$skel][$aide]))
-		$aide = $aider_index[$skel][$aide];
+	AND isset($GLOBALS['aider_index'][$skel])
+	AND isset($GLOBALS['aider_index'][$skel][$aide]))
+		$aide = $GLOBALS['aider_index'][$skel][$aide];
 
 	if ($aide_spip_directe) {
 		// on suppose que spip.net est le premier present
@@ -93,9 +92,9 @@ function inc_aider_dist($aide = '', $skel = '', $env = array(), $aide_spip_direc
 		$url = array_shift($help_server) . '/';
 		$url = parametre_url($url, 'exec', 'aide');
 		$url = parametre_url($url, 'aide', $aide);
-		$url = parametre_url($url, 'var_lang', $spip_lang);
+		$url = parametre_url($url, 'var_lang', $GLOBALS['spip_lang']);
 	} else {
-		$args = "aide=$aide&var_lang=$spip_lang";
+		$args = "aide=$aide&var_lang=" . $GLOBALS['spip_lang'];
 		$url = generer_url_ecrire("aide", $args);
 	}
 	
@@ -116,11 +115,10 @@ function inc_aider_dist($aide = '', $skel = '', $env = array(), $aide_spip_direc
  */
 function aider_icone($url, $clic= '')
 {
-	global $spip_lang, $spip_lang_rtl;
 
 	if (!$clic) {
 		$t = _T('titre_image_aide');
-		$clic = http_img_pack("aide".aide_lang_dir($spip_lang,$spip_lang_rtl)."-16.png",
+		$clic = http_img_pack("aide".aide_lang_dir($GLOBALS['spip_lang'],$GLOBALS['spip_lang_rtl'])."-16.png",
 			_T('info_image_aide'),
 			" title=\"$t\" class='aide'");
 	}

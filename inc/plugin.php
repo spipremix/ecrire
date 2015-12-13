@@ -912,10 +912,9 @@ function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche)
 // precompilation des pipelines
 // http://code.spip.net/@pipeline_precompile
 function pipeline_precompile($prepend_code = array()){
-	global $spip_pipeline, $spip_matrice;
 
 	$content = "";
-	foreach($spip_pipeline as $action=>$pipeline){
+	foreach($GLOBALS['spip_pipeline'] as $action=>$pipeline){
 		$s_inc = "";
 		$s_call = "";
 		$pipe = array_filter(explode('|',$pipeline));
@@ -923,8 +922,8 @@ function pipeline_precompile($prepend_code = array()){
 		foreach ($pipe as $fonc) {
 			$fonc = trim($fonc);
 			$s_call .= '$val = minipipe(\''.$fonc.'\', $val);'."\n";
-			if (isset($spip_matrice[$fonc])){
-				$file = $spip_matrice[$fonc];
+			if (isset($GLOBALS['spip_matrice'][$fonc])){
+				$file = $GLOBALS['spip_matrice'][$fonc];
 				$file = "'$file'";
 				// si un _DIR_XXX: est dans la chaine, on extrait la constante
 				if (preg_match(",(_(DIR|ROOT)_[A-Z_]+):,Ums",$file,$regs)){

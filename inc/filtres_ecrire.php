@@ -37,7 +37,6 @@ include_spip('inc/pipelines_ecrire');
  * @return string
  */
 function parametres_css_prive(){
-	global $visiteur_session;
 
 	$args = array();
 	$args['v'] = $GLOBALS['spip_version_code'];
@@ -47,9 +46,9 @@ function parametres_css_prive(){
 	// un md5 des menus : si un menu change il faut maj la css
 	$args['md5b'] = (function_exists('md5_boutons_plugins')?md5_boutons_plugins():'');
 
-	$c = (is_array($visiteur_session)
-		AND is_array($visiteur_session['prefs']))
-		? $visiteur_session['prefs']['couleur']
+	$c = (is_array($GLOBALS['visiteur_session'])
+		AND is_array($GLOBALS['visiteur_session']['prefs']))
+		? $GLOBALS['visiteur_session']['prefs']['couleur']
 		: 9;
 
 	$couleurs = charger_fonction('couleurs', 'inc');
@@ -82,7 +81,7 @@ function parametres_css_prive(){
  * @return string
  */
 function chercher_rubrique($titre, $id_objet, $id_parent, $objet, $id_secteur, $restreint, $actionable = false, $retour_sans_cadre = false){
-	global $spip_lang_right;
+
 	include_spip('inc/autoriser');
 	if (intval($id_objet) && !autoriser('modifier', $objet, $id_objet))
 		return "";
@@ -116,7 +115,7 @@ function chercher_rubrique($titre, $id_objet, $id_parent, $objet, $id_secteur, $
 	$form .= $confirm;
 	if ($actionable){
 		if (strpos($form,'<select')!==false) {
-			$form .= "<div style='text-align: $spip_lang_right;'>"
+			$form .= "<div style='text-align: " . $GLOBALS['spip_lang_right'] . ";'>"
 				. '<input class="fondo" type="submit" value="'._T('bouton_choisir').'"/>'
 				. "</div>";
 		}
@@ -318,11 +317,11 @@ function auteurs_lister_statuts($quoi = 'tous', $en_base = true) {
  * @return int             Identifiant de la rubrique dans laquelle créer l'objet
  */
 function trouver_rubrique_creer_objet($id_rubrique, $objet){
-	global $connect_id_rubrique;
+
 	if (!$id_rubrique AND defined('_CHOIX_RUBRIQUE_PAR_DEFAUT') AND _CHOIX_RUBRIQUE_PAR_DEFAUT){
-		$in = !count($connect_id_rubrique)
+		$in = !count($GLOBALS['connect_id_rubrique'])
 			? ''
-			: (" AND ".sql_in('id_rubrique', $connect_id_rubrique));
+			: (" AND ".sql_in('id_rubrique', $GLOBALS['connect_id_rubrique']));
 
 		// on tente d'abord l'ecriture a la racine dans le cas des rubriques uniquement
 		if ($objet == 'rubrique') {

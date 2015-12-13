@@ -43,8 +43,7 @@ include_spip('inc/autoriser'); // necessaire si appel de l'espace public
  *     Couples clés / valeurs des champs du formulaire à charger.
 **/
 function precharger_objet($type, $id_objet, $id_rubrique = 0, $lier_trad = 0, $champ_titre = 'titre') {
-	global $connect_id_rubrique, $spip_lang;
-	
+
 	$table = table_objet_sql($type);
 	$_id_objet = id_table_objet($table);
 
@@ -81,8 +80,8 @@ function precharger_objet($type, $id_objet, $id_rubrique = 0, $lier_trad = 0, $c
 		// admin restreint ==> sa premiere rubrique
 		// autre ==> la derniere rubrique cree
 		if (!$row['id_rubrique']) {
-			if ($connect_id_rubrique)
-				$row['id_rubrique'] = $id_rubrique = current($connect_id_rubrique); 
+			if ($GLOBALS['connect_id_rubrique'])
+				$row['id_rubrique'] = $id_rubrique = current($GLOBALS['connect_id_rubrique']);
 			else {
 				$row_rub = sql_fetsel("id_rubrique", "spip_rubriques", "", "", "id_rubrique DESC", 1);
 				$row['id_rubrique'] = $id_rubrique = $row_rub['id_rubrique'];

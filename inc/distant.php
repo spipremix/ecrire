@@ -845,7 +845,6 @@ function recuperer_infos_distantes($source, $max = 0, $charger_si_petite_image =
 
 	# charger les alias des types mime
 	include_spip('base/typedoc');
-	global $mime_alias;
 
 	$a = array();
 	$mime_type = '';
@@ -861,8 +860,8 @@ function recuperer_infos_distantes($source, $max = 0, $charger_si_petite_image =
 			$mime_type = ''; // inconnu
 
 		// Appliquer les alias
-		while (isset($mime_alias[$mime_type]))
-			$mime_type = $mime_alias[$mime_type];
+		while (isset($GLOBALS['mime_alias'][$mime_type]))
+			$mime_type = $GLOBALS['mime_alias'][$mime_type];
 
 		// Si on a un mime-type insignifiant
 		// text/plain,application/octet-stream ou vide

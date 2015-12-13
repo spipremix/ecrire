@@ -97,7 +97,6 @@ function inc_selectionner_dist ($sel, $idom = "", $exclus = 0, $aff_racine = fal
 **/
 function construire_selectionner_hierarchie($idom, $liste, $racine, $url, $name, $url_init = '')
 {
-	global $spip_lang_right;
 
 	$idom1 = $idom . "_champ_recherche";
 	$idom2 = $idom . "_principal";
@@ -111,9 +110,9 @@ function construire_selectionner_hierarchie($idom, $liste, $racine, $url, $name,
 	. ($url_init ?  "\nhref='$url_init'" : '')
 	. "></a>"
 	. "<div class='recherche_rapide_parent'>"
-	. http_img_pack("searching.gif", "*", "style='visibility: hidden;float:$spip_lang_right' id='$idom5'")
+	. http_img_pack("searching.gif", "*", "style='visibility: hidden;float:".$GLOBALS['spip_lang_right']."' id='$idom5'")
 	. ""
-	. "<input style='width: 100px;float:$spip_lang_right;' type='search' id='$idom1'"
+	. "<input style='width: 100px;float:".$GLOBALS['spip_lang_right'].";' type='search' id='$idom1'"
 	  // eliminer Return car il provoque la soumission (balise unique)
 	  // et eliminer Tab pour la navigation au clavier
 	  // ce serait encore mieux de ne le faire que s'il y a encore plusieurs

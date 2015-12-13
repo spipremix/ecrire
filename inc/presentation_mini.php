@@ -215,9 +215,8 @@ function info_maj_spip(){
  * @return string Code HTML
 **/
 function info_copyright() {
-	global $spip_version_affichee, $spip_lang;
 
-	$version = $spip_version_affichee;
+	$version = $GLOBALS['spip_version_affichee'];
 
 	//
 	// Mention, le cas echeant, de la revision SVN courante
@@ -237,7 +236,7 @@ function info_copyright() {
 	return _T('info_copyright',
 		   array('spip' => "<b>SPIP $version</b> ",
 			 'lien_gpl' =>
-			 "<a href='". generer_url_ecrire("aide", "aide=licence&var_lang=$spip_lang") . "' class=\"aide popin\">" . _T('info_copyright_gpl')."</a>"))
+			 "<a href='". generer_url_ecrire("aide", "aide=licence&var_lang=".$GLOBALS['spip_lang']) . "' class=\"aide popin\">" . _T('info_copyright_gpl')."</a>"))
 		. $secu;
 
 }

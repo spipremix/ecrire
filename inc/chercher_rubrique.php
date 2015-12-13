@@ -75,12 +75,11 @@ $GLOBALS['selecteur_rubrique'] = 'inc_chercher_rubrique_dist';
  *     Liste (classe CSS, styles en ligne, Espaces insécables)
 **/
 function style_menu_rubriques($i) {
-	global $browser_name, $spip_lang_left;
 
 	$espace = '';
-	if (preg_match(",mozilla,i", $browser_name)) {
-		$style = "padding-$spip_lang_left: 16px; "
-		. "margin-$spip_lang_left: ".(($i-1)*16)."px;";
+	if (preg_match(",mozilla,i", $GLOBALS['browser_name'])) {
+		$style = "padding-" . $GLOBALS['spip_lang_left'] . ": 16px; "
+		. "margin-" . $GLOBALS['spip_lang_left'] . ": ".(($i-1)*16)."px;";
 	} else {
 		$style = '';
 		for ($count = 0; $count <= $i; $count ++)

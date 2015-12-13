@@ -16,7 +16,6 @@ function inc_log_dist($message, $logname = NULL, $logdir = NULL, $logsuf = NULL)
 	static $test_repertoire = array();
 	static $compteur = array();
 	static $debugverb = ""; // pour ne pas le recalculer au reappel
-	global $nombre_de_logs, $taille_des_logs;
 
 	if (is_null($logname) OR !is_string($logname))
 		$logname = defined('_FILE_LOG') ? _FILE_LOG : 'spip';
@@ -25,8 +24,8 @@ function inc_log_dist($message, $logname = NULL, $logdir = NULL, $logsuf = NULL)
 	AND defined('_MAX_LOG')
 	AND (
 		$compteur[$logname]++ > _MAX_LOG
-		OR !$nombre_de_logs
-		OR !$taille_des_logs
+		OR !$GLOBALS['nombre_de_logs']
+		OR !$GLOBALS['taille_des_logs']
 	))
 		return;
 
@@ -67,8 +66,8 @@ function inc_log_dist($message, $logname = NULL, $logdir = NULL, $logsuf = NULL)
 
 
 	if (@is_readable($logfile)
-	AND (!$s = @filesize($logfile) OR $s > $taille_des_logs * 1024)) {
-		$rotate = $nombre_de_logs;
+	AND (!$s = @filesize($logfile) OR $s > $GLOBALS['taille_des_logs'] * 1024)) {
+		$rotate = $GLOBALS['nombre_de_logs'];
 		$m .= "[-- rotate --]\n";
 	}
 

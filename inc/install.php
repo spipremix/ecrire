@@ -214,22 +214,21 @@ function tester_compatibilite_hebergement() {
 // Une fonction pour faciliter la recherche du login (superflu ?)
 // http://code.spip.net/@login_hebergeur
 function login_hebergeur() {
-	global $HTTP_X_HOST, $REQUEST_URI, $SERVER_NAME, $HTTP_HOST;
 
 	$base_hebergeur = 'localhost'; # par defaut
 
 	// Lycos (ex-Multimachin)
-	if ($HTTP_X_HOST == 'membres.lycos.fr') {
-		preg_match(',^/([^/]*),', $REQUEST_URI, $regs);
+	if ($GLOBALS['HTTP_X_HOST'] == 'membres.lycos.fr') {
+		preg_match(',^/([^/]*),', $GLOBALS['REQUEST_URI'], $regs);
 		$login_hebergeur = $regs[1];
 	}
 	// Altern
-	else if (preg_match(',altern\.com$,', $SERVER_NAME)) {
-		preg_match(',([^.]*\.[^.]*)$,', $HTTP_HOST, $regs);
+	else if (preg_match(',altern\.com$,', $GLOBALS['SERVER_NAME'])) {
+		preg_match(',([^.]*\.[^.]*)$,', $GLOBALS['HTTP_HOST'], $regs);
 		$login_hebergeur = preg_replace('[^\w\d]', '_', $regs[1]);
 	}
 	// Free
-	else if (preg_match(',(.*)\.free\.fr$,', $SERVER_NAME, $regs)) {
+	else if (preg_match(',(.*)\.free\.fr$,', $GLOBALS['SERVER_NAME'], $regs)) {
 		$base_hebergeur = 'sql.free.fr';
 		$login_hebergeur = $regs[1];
 	} else $login_hebergeur = '';

@@ -231,7 +231,6 @@ function deplacer_fichier_upload($source, $dest, $move = false) {
  * @return boolean|string
  */
 function check_upload_error($error, $msg = '', $return = false) {
-	global $spip_lang_right;
 
 	if (!$error) return false;
 
@@ -274,7 +273,7 @@ function check_upload_error($error, $msg = '', $return = false) {
 
 	include_spip('inc/minipres');
 	echo minipres($msg,
-		      "<div style='text-align: $spip_lang_right'><a href='"  . rawurldecode($GLOBALS['redirect']) . "'><button type='button'>" . _T('ecrire:bouton_suivant') . "</button></a></div>");
+		      "<div style='text-align: ".$GLOBALS['spip_lang_right']."'><a href='"  . rawurldecode($GLOBALS['redirect']) . "'><button type='button'>" . _T('ecrire:bouton_suivant') . "</button></a></div>");
 	exit;
 }
 ?>

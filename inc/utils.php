@@ -1767,7 +1767,6 @@ function generer_url_prive($script, $args = "", $no_entities = false) {
  *     Code HTML du formulaire
 **/
 function generer_form_ecrire($script, $corps, $atts = '', $submit = '') {
-	global $spip_lang_right;
 
 	$script1 = explode('&', $script);
 	$script1 = reset($script1);
@@ -1780,7 +1779,7 @@ function generer_form_ecrire($script, $corps, $atts = '', $submit = '') {
 	. "<input type='hidden' name='exec' value='$script1' />"
 	. $corps
 	. (!$submit ? '' :
-	     ("<div style='text-align: $spip_lang_right'><input class='fondo' type='submit' value=\"".entites_html($submit)."\" /></div>"))
+	     ("<div style='text-align: ".$GLOBALS['spip_lang_right']."'><input class='fondo' type='submit' value=\"".entites_html($submit)."\" /></div>"))
 	. "</div></form>\n";
 }
 
@@ -2506,8 +2505,8 @@ function aide($aide = '', $distante = false) {
  * Si l’utiliseur est un administrateur.
  */
 function exec_info_dist() {
-	global $connect_statut;
-	if ($connect_statut == '0minirezo')
+
+	if ($GLOBALS['connect_statut'] == '0minirezo')
 		phpinfo();
 	else
 		echo "pas admin";

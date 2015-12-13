@@ -170,7 +170,7 @@ function redirige_url_ecrire($script = '', $args = '', $equiv = '') {
  *     Code d'erreur
 **/
 function http_status($status) {
-	global $REDIRECT_STATUS, $flag_sapi_name;
+
 	static $status_string = array(
 		200 => '200 OK',
 		204 => '204 No Content',
@@ -183,9 +183,9 @@ function http_status($status) {
 		503 => '503 Service Unavailable'
 	);
 
-	if ($REDIRECT_STATUS && $REDIRECT_STATUS == $status) return;
+	if ($GLOBALS['REDIRECT_STATUS'] && $GLOBALS['REDIRECT_STATUS'] == $status) return;
 
-	$php_cgi = ($flag_sapi_name AND preg_match(",cgi,i", @php_sapi_name()));
+	$php_cgi = ($GLOBALS['flag_sapi_name'] AND preg_match(",cgi,i", @php_sapi_name()));
 	if ($php_cgi)
 		header("Status: ".$status_string[$status]);
 	else

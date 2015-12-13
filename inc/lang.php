@@ -35,7 +35,6 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     false : aucune langue ne correspondait à la demande
 **/
 function changer_langue($lang) {
-	global $spip_lang_rtl, $spip_lang_right, $spip_lang_left;
 
 	$liste_langues = ',' . @$GLOBALS['meta']['langues_proposees']
 	. ',' . @$GLOBALS['meta']['langues_multilingue'] . ',';
@@ -50,9 +49,9 @@ function changer_langue($lang) {
 	OR ($lang = preg_replace(',_.*,', '', $lang)
 	AND strpos($liste_langues,",$lang,")!==false)) {
 
-		$spip_lang_rtl =   lang_dir($lang, '', '_rtl');
-		$spip_lang_right = $spip_lang_rtl ? 'left' : 'right';
-		$spip_lang_left =  $spip_lang_rtl ? 'right' : 'left';
+		$GLOBALS['spip_lang_rtl'] =   lang_dir($lang, '', '_rtl');
+		$GLOBALS['spip_lang_right'] = $GLOBALS['spip_lang_rtl'] ? 'left' : 'right';
+		$GLOBALS['spip_lang_left'] =  $GLOBALS['spip_lang_rtl'] ? 'right' : 'left';
 
 		return $GLOBALS['spip_lang'] = $lang;
 	} else
@@ -270,7 +269,6 @@ function liste_options_langues($nom_select) {
  * @return void
 **/
 function verifier_lang_url() {
-	global $spip_lang;
 
 	// quelle langue est demandee ?
 	$lang_demandee = (test_espace_prive()?$GLOBALS['spip_lang']:$GLOBALS['meta']['langue_site']);
@@ -282,7 +280,7 @@ function verifier_lang_url() {
 		$lang_demandee = $_GET['lang'];
 
 	// Renvoyer si besoin (et si la langue demandee existe)
-	if ($spip_lang != $lang_demandee
+	if ($GLOBALS['spip_lang'] != $lang_demandee
 	AND changer_langue($lang_demandee)
 	AND $lang_demandee != @$_GET['lang']) {
 		$destination = parametre_url(self(),'lang', $lang_demandee, '&');
@@ -298,7 +296,7 @@ function verifier_lang_url() {
 	// Subtilite : si la langue demandee par cookie est la bonne
 	// alors on fait comme si $lang etait passee dans l'URL
 	// (pour criteres {lang}).
-	$GLOBALS['lang'] = $_GET['lang'] = $spip_lang;
+	$GLOBALS['lang'] = $_GET['lang'] = $GLOBALS['spip_lang'];
 }
 
 

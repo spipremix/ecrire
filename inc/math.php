@@ -20,8 +20,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 // http://code.spip.net/@image_math
 function produire_image_math($tex) {
-	global $traiter_math;
-	switch ($traiter_math) {
+
+	switch ($GLOBALS['traiter_math']) {
 		// Attention: mathml desactiv'e pour l'instant
 		case 'mathml':
 			$ext = '.xhtml';
@@ -56,7 +56,7 @@ function produire_image_math($tex) {
 	if (@file_exists($fichier)) {
 
 		// MathML
-		if ($traiter_math == 'mathml') {
+		if ($GLOBALS['traiter_math'] == 'mathml') {
 			return join(file("$fichier"),"");
 		}
 

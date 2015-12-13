@@ -2252,8 +2252,8 @@ function centrer($letexte) {return aligner($letexte, 'center');}
  * @return string Style CSS
 **/
 function style_align($bof) {
-	global $spip_lang_left;
-	return "text-align: $spip_lang_left";
+
+	return "text-align: " . $GLOBALS['spip_lang_left'];
 }
 
 //

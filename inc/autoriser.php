@@ -1450,9 +1450,8 @@ function auteurs_article($id_article, $cond = '')
  * @return bool             true si administrateur de cette rubrique, false sinon.
  */
 function acces_restreint_rubrique($id_rubrique) {
-	global $connect_id_rubrique;
 
-	return (isset($connect_id_rubrique[$id_rubrique]));
+	return (isset($GLOBALS['connect_id_rubrique'][$id_rubrique]));
 }
 
 

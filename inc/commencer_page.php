@@ -41,7 +41,6 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return string Code HTML
 **/
 function inc_commencer_page_dist($titre = "", $rubrique = "accueil", $sous_rubrique = "accueil", $id_rubrique = "", $menu = true, $minipres = false, $alertes = true) {
-	global $connect_id_auteur;
 
 	include_spip('inc/headers');
 
@@ -50,8 +49,8 @@ function inc_commencer_page_dist($titre = "", $rubrique = "accueil", $sous_rubri
 	return init_entete($titre, $id_rubrique, $minipres)
 	. init_body($rubrique, $sous_rubrique, $id_rubrique,$menu)
 	. "<div id='page'>"
-	. auteurs_recemment_connectes($connect_id_auteur)
-	. ($alertes?alertes_auteur($connect_id_auteur):'')
+	. auteurs_recemment_connectes($GLOBALS['connect_id_auteur'])
+	. ($alertes?alertes_auteur($GLOBALS['connect_id_auteur']):'')
 	. '<div class="largeur">';
 }
 
@@ -121,7 +120,6 @@ function init_head($titre = '', $dummy = 0, $minipres = false) {
  * @return string
  */
 function init_body($rubrique = 'accueil', $sous_rubrique = 'accueil', $id_rubrique = '', $menu = true) {
-	global $connect_id_auteur, $auth_can_disconnect;
 
 	$res = pipeline('body_prive',"<body class='"
 			. init_body_class()." "._request('exec')."'"

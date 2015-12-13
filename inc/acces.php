@@ -211,8 +211,8 @@ function effacer_low_sec($id_auteur) {
  * @return void|bool
  */
 function initialiser_sel() {
-	global $htsalt;
-	if (CRYPT_MD5) $htsalt = '$1$'.creer_pass_aleatoire();
+
+	if (CRYPT_MD5) $GLOBALS['htsalt'] = '$1$'.creer_pass_aleatoire();
 	else return "";
 }
 
@@ -281,9 +281,9 @@ function ecrire_acces() {
  *  La chaîne hachée si fonction crypt présente, rien sinon.
  */
 function generer_htpass($pass) {
-	global $htsalt;
+
 	if (function_exists('crypt')) {
-		return crypt($pass, $htsalt);
+		return crypt($pass, $GLOBALS['htsalt']);
 	}
 }
 
