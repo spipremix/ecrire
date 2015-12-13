@@ -8,8 +8,9 @@
  *
  * @see ecrire/action/preferer.php
  * @see prive/formulaires/configurer_preferences.php
- * 
+ *
  * @package SPIP\Core\Auteurs\Preferences
-**/ 
+ **/
 
-header("Location: ../?action=preferer&arg=display:4&redirect=" . urlencode(str_replace('/oo','', $_SERVER['REQUEST_URI'])));
+header("Location: ../?action=preferer&arg=display:4&redirect=" . urlencode(str_replace('/oo', '',
+		$_SERVER['REQUEST_URI'])));

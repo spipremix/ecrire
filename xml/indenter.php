@@ -10,7 +10,9 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 class IndenteurXML {
 
@@ -39,8 +41,7 @@ class IndenteurXML {
 	}
 
 	// http://code.spip.net/@phraserTout
-	function phraserTout($phraseur, $data)
-	{
+	function phraserTout($phraseur, $data) {
 		xml_parsestring($this, $data);
 	}
 
@@ -52,18 +53,20 @@ class IndenteurXML {
 	var $reperes = array();
 	var $entete = '';
 	var $page = '';
-	var $dtc = NULL;
-	var $sax = NULL;
+	var $dtc = null;
+	var $sax = null;
 }
 
 // http://code.spip.net/@xml_indenter_dist
-function xml_indenter_dist($page, $apply = false)
-{
+function xml_indenter_dist($page, $apply = false) {
 	$sax = charger_fonction('sax', 'xml');
 	$f = new IndenteurXML();
 	$sax($page, $apply, $f);
-	if (!$f->err) return $f->entete . $f->res;
+	if (!$f->err) {
+		return $f->entete . $f->res;
+	}
 	spip_log("indentation impossible " . count($f->err) . " erreurs de validation");
+
 	return $f->entete . $f->page;
 }
 

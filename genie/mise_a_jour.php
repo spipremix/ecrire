@@ -16,7 +16,9 @@
  * @package SPIP\Core\Genie\Mise_a_jour
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Verifier si une mise a jour est disponible
@@ -24,20 +26,21 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param int $t
  * @return int
  */
-function genie_mise_a_jour_dist($t){
+function genie_mise_a_jour_dist($t) {
 	include_spip('inc/meta');
 	$maj = info_maj('spip', 'SPIP', $GLOBALS['spip_version_branche']);
-	ecrire_meta('info_maj_spip',$maj?($GLOBALS['spip_version_branche']."|$maj"):"",'non');
+	ecrire_meta('info_maj_spip', $maj ? ($GLOBALS['spip_version_branche'] . "|$maj") : "", 'non');
 
 	mise_a_jour_ecran_securite();
 
-	spip_log("Verification version SPIP : ".($maj?$maj:"version a jour"),"verifie_maj");
+	spip_log("Verification version SPIP : " . ($maj ? $maj : "version a jour"), "verifie_maj");
+
 	return 1;
 }
 
 // TODO : fournir une URL sur spip.net pour maitriser la diffusion d'une nouvelle version de l'ecran via l'update auto
 // ex : http://www.spip.net/auto-update/ecran_securite.php
-define('_URL_ECRAN_SECURITE','http://zone.spip.org/trac/spip-zone/browser/_core_/securite/ecran_securite.php?format=txt');
+define('_URL_ECRAN_SECURITE', 'http://zone.spip.org/trac/spip-zone/browser/_core_/securite/ecran_securite.php?format=txt');
 define('_VERSIONS_SERVEUR', 'http://files.spip.org/');
 define('_VERSIONS_LISTE', 'archives.xml');
 
@@ -48,41 +51,43 @@ define('_VERSIONS_LISTE', 'archives.xml');
  * Cela peut permettre de diffuser un ecran different selon la version de SPIP si besoin
  * ou de ne repondre une 304 que si le md5 est bon
  */
-function mise_a_jour_ecran_securite(){
+function mise_a_jour_ecran_securite() {
 	// TODO : url https avec verification du certificat
 	return;
 
 	// si l'ecran n'est pas deja present ou pas updatable, sortir
 	if (!_URL_ECRAN_SECURITE
-	  OR !file_exists($filename = _DIR_ETC."ecran_securite.php")
-	  OR !is_writable($filename)
-	  OR !$last_modified = filemtime($filename)
-	  OR !$md5 = md5_file($filename))
+		OR !file_exists($filename = _DIR_ETC . "ecran_securite.php")
+		OR !is_writable($filename)
+		OR !$last_modified = filemtime($filename)
+		OR !$md5 = md5_file($filename)
+	) {
 		return false;
+	}
 
 	include_spip('inc/distant');
 	$tmp_file = _DIR_TMP . "ecran_securite.php";
-	$url = parametre_url(_URL_ECRAN_SECURITE,"md5",$md5);
-	$url = parametre_url($url,"vspip",$GLOBALS['spip_version_branche']);
-	$res = recuperer_url($url,array(
+	$url = parametre_url(_URL_ECRAN_SECURITE, "md5", $md5);
+	$url = parametre_url($url, "vspip", $GLOBALS['spip_version_branche']);
+	$res = recuperer_url($url, array(
 		'if_modified_since' => $last_modified,
 		'file' => $tmp_file
 	));
 
 	// si il y a une version plus recente que l'on a recu correctement
-	if ($res['status']==200
-	  AND $res['length']
-	  AND $tmp_file = $res['file']){
+	if ($res['status'] == 200
+		AND $res['length']
+		AND $tmp_file = $res['file']
+	) {
 
-		if ($md5 !== md5_file($tmp_file)){
+		if ($md5 !== md5_file($tmp_file)) {
 			// on essaye de l'inclure pour verifier que ca ne fait pas erreur fatale
 			include_once $tmp_file;
 			// ok, on le copie a la place de l'ecran existant
 			// en backupant l'ecran avant, au cas ou
 			@copy($filename, $filename . "-bck-" . date('Y-m-d-His', $last_modified));
 			@rename($tmp_file, $filename);
-		}
-		else {
+		} else {
 			@unlink($tmp_file);
 		}
 	}
@@ -102,10 +107,10 @@ function mise_a_jour_ecran_securite(){
  *
  * @return string
  */
-function info_maj($dir, $file, $version){
+function info_maj($dir, $file, $version) {
 	include_spip('inc/plugin');
 
-	list($maj,$min,$rev) = preg_split('/\D+/', $version);
+	list($maj, $min, $rev) = preg_split('/\D+/', $version);
 
 	$nom = _DIR_CACHE_XML . _VERSIONS_LISTE;
 	$page = !file_exists($nom) ? '' : file_get_contents($nom);
@@ -115,14 +120,14 @@ function info_maj($dir, $file, $version){
 	// (a revoir quand on arrivera a SPIP V10 ...)
 	$p = substr("0123456789", intval($maj));
 	$p = ',/' . $file . '\D+([' . $p . ']+)\D+(\d+)(\D+(\d+))?.*?[.]zip",i';
-	preg_match_all($p, $page, $m,  PREG_SET_ORDER);
+	preg_match_all($p, $page, $m, PREG_SET_ORDER);
 	$page = $page_majeure = '';
-	
+
 	// branche en cours d'utilisation
 	$branche = implode('.', array_slice(explode('.', $version, 3), 0, 2));
-	
+
 	foreach ($m as $v) {
-		list(, $maj2, $min2,, $rev2) = $v;
+		list(, $maj2, $min2, , $rev2) = $v;
 		$branche_maj = $maj2 . '.' . $min2;
 		$version_maj = $maj2 . '.' . $min2 . '.' . $rev2;
 		// d'abord les mises à jour de la même branche
@@ -140,11 +145,13 @@ function info_maj($dir, $file, $version){
 			$page_majeure = $version_maj;
 		}
 	}
-	if (!$page AND !$page_majeure) return "";
-	
-	$message = $page ? _T('nouvelle_version_spip',array('version'=>$page)) . ($page_majeure ? ' | ' : '' ) : '';
-	$message .= $page_majeure ? _T('nouvelle_version_spip_majeure',array('version'=>$page_majeure)) : '';
-	
+	if (!$page AND !$page_majeure) {
+		return "";
+	}
+
+	$message = $page ? _T('nouvelle_version_spip', array('version' => $page)) . ($page_majeure ? ' | ' : '') : '';
+	$message .= $page_majeure ? _T('nouvelle_version_spip_majeure', array('version' => $page_majeure)) : '';
+
 	return "<a class='info_maj_spip' href='http://www.spip.net/fr_update' title='$page'>" . $message . '</a>';
 }
 
@@ -165,20 +172,25 @@ function info_maj($dir, $file, $version){
  * @return string
  *     Contenu du fichier de cache de l'info de maj de SPIP.
  */
-function info_maj_cache($nom, $dir, $page = ''){
+function info_maj_cache($nom, $dir, $page = '') {
 	$re = '<archives id="a' . $GLOBALS['meta']["alea_ephemere"] . '">';
-	if (preg_match("/$re/", $page)) return $page;
+	if (preg_match("/$re/", $page)) {
+		return $page;
+	}
 
 	$url = _VERSIONS_SERVEUR . $dir . '/' . _VERSIONS_LISTE;
 	$a = file_exists($nom) ? filemtime($nom) : '';
 	include_spip('inc/distant');
-	$res = recuperer_lapage($url, false, 'GET', _COPIE_LOCALE_MAX_SIZE, '',false, $a);
+	$res = recuperer_lapage($url, false, 'GET', _COPIE_LOCALE_MAX_SIZE, '', false, $a);
 	// Si rien de neuf (ou inaccessible), garder l'ancienne
-	if ($res) list(, $page) = $res;
+	if ($res) {
+		list(, $page) = $res;
+	}
 	// Placer l'indicateur de fraicheur
 	$page = preg_replace('/^<archives.*?>/', $re, $page);
 	sous_repertoire(_DIR_CACHE_XML);
 	ecrire_fichier($nom, $page);
+
 	return $page;
 }
 

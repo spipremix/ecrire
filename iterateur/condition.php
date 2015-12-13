@@ -14,16 +14,18 @@
  * Gestion de l'itérateur CONDITION
  *
  * @package SPIP\Core\Iterateur\CONDITION
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('iterateur/data');
 
 
 /**
  * Créer une boucle sur un itérateur CONDITION
- * 
+ *
  * Annonce au compilateur les "champs" disponibles,
  * c'est à dire aucun. Une boucle CONDITION n'a pas de données !
  *
@@ -37,6 +39,7 @@ function iterateur_CONDITION_dist($b) {
 	$b->show = array(
 		'field' => array()
 	);
+
 	return $b;
 }
 
@@ -50,8 +53,8 @@ class IterateurCONDITION extends IterateurData {
 	 * Obtenir les données de la boucle CONDITION
 	 *
 	 * @param array $command
-	**/
+	 **/
 	protected function select($command) {
-		$this->tableau = array(0=>1);
+		$this->tableau = array(0 => 1);
 	}
 }

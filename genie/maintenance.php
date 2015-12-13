@@ -16,12 +16,14 @@
  * @package SPIP\Core\Genie\Maintenance
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Diverses tâches de maintenance
- * 
- * - (re)mettre .htaccess avec 'Deny from all' 
+ *
+ * - (re)mettre .htaccess avec 'Deny from all'
  *   dans les deux répertoires dits inaccessibles par http
  * - Vérifier qu'aucune table ne s'est crashée
  *
@@ -31,7 +33,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param object $t
  * @return bool Toujours à true.
  */
-function genie_maintenance_dist ($t) {
+function genie_maintenance_dist($t) {
 
 	// (re)mettre .htaccess avec deny from all
 	// dans les deux repertoires dits inaccessibles par http
@@ -40,8 +42,9 @@ function genie_maintenance_dist ($t) {
 	verifier_htaccess(_DIR_TMP);
 
 	// Verifier qu'aucune table n'est crashee
-	if (!_request('reinstall'))
+	if (!_request('reinstall')) {
 		verifier_crash_tables();
+	}
 
 	return 1;
 }
@@ -51,7 +54,7 @@ function genie_maintenance_dist ($t) {
  * Vérifier si une table a crashé
  *
  * Pour cela, on vérifie si on peut se connecter à la base de données.
- * 
+ *
  * @see message_crash_tables()
  *
  * @return bool|array
@@ -66,9 +69,12 @@ function verifier_crash_tables() {
 		$crash = array();
 		foreach (array('tables_principales', 'tables_auxiliaires') as $com) {
 			foreach ($GLOBALS[$com] as $table => $desc) {
-				if (!sql_select('*', $table,'','','', 1)
-				AND !defined('spip_interdire_cache')) # cas "LOST CONNECTION"
+				if (!sql_select('*', $table, '', '', '', 1)
+					AND !defined('spip_interdire_cache')
+				) # cas "LOST CONNECTION"
+				{
 					$crash[] = $table;
+				}
 			}
 		}
 		#$crash[] = 'test';
@@ -88,25 +94,24 @@ function verifier_crash_tables() {
 
 /**
  * Vérifier si une table a crashé et crée un message en conséquence.
- * 
+ *
  * S'il y a un crash, on affiche un message avec le nom
  * de la ou des tables qui ont crashé.
- * On génère un lien vers la page permettant la 
+ * On génère un lien vers la page permettant la
  * réparation de la base de données.
- * 
+ *
  * @uses verifier_crash_tables()
  *
  * @return string
  */
 function message_crash_tables() {
 	if ($crash = verifier_crash_tables()) {
-		return 
-		'<strong>' . _T('texte_recuperer_base') . '</strong><br />'
-		. ' <tt>'.join(', ', $crash).'</tt><br />'
-		. generer_form_ecrire('base_repair',
-			_T('texte_crash_base'), '',
-			_T('bouton_tenter_recuperation'))
-		;
+		return
+			'<strong>' . _T('texte_recuperer_base') . '</strong><br />'
+			. ' <tt>' . join(', ', $crash) . '</tt><br />'
+			. generer_form_ecrire('base_repair',
+				_T('texte_crash_base'), '',
+				_T('bouton_tenter_recuperation'));
 	}
 }
 

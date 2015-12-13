@@ -14,9 +14,11 @@
  * Fonctions génériques pour les balises `#LOGO_XXXX`
  *
  * @package SPIP\Core\Compilateur\Balises
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
@@ -27,7 +29,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * `LOGO_ARTICLE` ou `LOGO_SITE`.
  *
  * Ces balises ont quelques options :
- * 
+ *
  * - La balise peut aussi demander explicitement le logo normal ou de survol,
  *   avec `LOGO_ARTICLE_NORMAL` ou `LOGO_ARTICLE_SURVOL`.
  * - On peut demander un logo de rubrique en absence de logo sur l'objet éditorial
@@ -37,20 +39,20 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * - `LOGO_ARTICLE{right}`. Valeurs possibles : top left right center bottom
  * - `LOGO_DOCUMENT{icone}`. Valeurs possibles : auto icone apercu vignette
  * - `LOGO_ARTICLE{200, 0}`. Redimensionnement indiqué
- * 
+ *
  * @balise
  * @uses logo_survol()
  * @example
  *     ```
  *     #LOGO_ARTICLE
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_LOGO__dist ($p) {
+function balise_LOGO__dist($p) {
 
 	preg_match(",^LOGO_([A-Z_]+?)(|_NORMAL|_SURVOL|_RUBRIQUE)$,i", $p->nom_champ, $regs);
 	$type = strtolower($regs[1]);
@@ -75,43 +77,47 @@ function balise_LOGO__dist ($p) {
 	if ($p->param AND !$p->param[0][0]) {
 		$params = $p->param[0];
 		array_shift($params);
-		foreach($params as $a) {
+		foreach ($params as $a) {
 			if ($a[0]->type === 'texte') {
 				$n = $a[0]->texte;
-				if (is_numeric($n))
-					$coord[]= $n;
-				elseif (in_array($n,array('top','left','right','center','bottom')))
+				if (is_numeric($n)) {
+					$coord[] = $n;
+				} elseif (in_array($n, array('top', 'left', 'right', 'center', 'bottom'))) {
 					$align = $n;
-				elseif (in_array($n,array('auto','icone','apercu','vignette')))
+				} elseif (in_array($n, array('auto', 'icone', 'apercu', 'vignette'))) {
 					$mode_logo = $n;
+				}
+			} else {
+				$lien = calculer_liste($a, $p->descr, $p->boucles, $p->id_boucle);
 			}
-			else $lien =  calculer_liste($a, $p->descr, $p->boucles, $p->id_boucle);
 
 		}
 	}
 
-	$coord_x = !$coord  ? 0 : intval(array_shift($coord));
-	$coord_y = !$coord  ? 0 : intval(array_shift($coord));
-	
+	$coord_x = !$coord ? 0 : intval(array_shift($coord));
+	$coord_y = !$coord ? 0 : intval(array_shift($coord));
+
 	if ($p->etoile === '*') {
 		include_spip('balise/url_');
 		$lien = generer_generer_url_arg($type, $p, $_id_objet);
 	}
 
-	$connect = $p->id_boucle ?$p->boucles[$p->id_boucle]->sql_serveur :'';
+	$connect = $p->id_boucle ? $p->boucles[$p->id_boucle]->sql_serveur : '';
 	if ($type == 'document') {
 		$qconnect = _q($connect);
 		$doc = "quete_document($_id_objet, $qconnect)";
-		if ($fichier)
+		if ($fichier) {
 			$code = "quete_logo_file($doc, $qconnect)";
-		else $code = "quete_logo_document($doc, " . ($lien ? $lien : "''") . ", '$align', '$mode_logo', $coord_x, $coord_y, $qconnect)";
+		} else {
+			$code = "quete_logo_document($doc, " . ($lien ? $lien : "''") . ", '$align', '$mode_logo', $coord_x, $coord_y, $qconnect)";
+		}
 		// (x=non-faux ? y : '') pour affecter x en retournant y
-		if ($p->descr['documents'])
-		  $code = '(($doublons["documents"] .= ",". '
-		    . $_id_objet
-		    . ") ? $code : '')";
-	}
-	elseif ($connect) {
+		if ($p->descr['documents']) {
+			$code = '(($doublons["documents"] .= ",". '
+				. $_id_objet
+				. ") ? $code : '')";
+		}
+	} elseif ($connect) {
 		$code = "''";
 		spip_log("Les logos distants ne sont pas prevus");
 	} else {
@@ -120,11 +126,12 @@ function balise_LOGO__dist ($p) {
 
 	// demande de reduction sur logo avec ecriture spip 2.1 : #LOGO_xxx{200, 0}
 	if ($coord_x OR $coord_y) {
-		$code = "filtrer('image_graver',filtrer('image_reduire',".$code.", '$coord_x', '$coord_y'))"; 
-	} 
+		$code = "filtrer('image_graver',filtrer('image_reduire'," . $code . ", '$coord_x', '$coord_y'))";
+	}
 
 	$p->code = $code;
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -150,42 +157,46 @@ function balise_LOGO__dist ($p) {
  *     Suite éventuelle de la balise logo, telle que `_SURVOL`, `_NORMAL` ou `_RUBRIQUE`.
  * @return string
  *     Code compilé retournant le chemin du logo ou le code HTML du logo.
-**/
-function logo_survol($id_objet, $_id_objet, $type, $align, $fichier, $lien, $p, $suite)
-{
+ **/
+function logo_survol($id_objet, $_id_objet, $type, $align, $fichier, $lien, $p, $suite) {
 	$code = "quete_logo('$id_objet', '" .
-		(($suite == '_SURVOL') ? 'off' : 
-		(($suite == '_NORMAL') ? 'on' : 'ON')) .
+		(($suite == '_SURVOL') ? 'off' :
+			(($suite == '_NORMAL') ? 'on' : 'ON')) .
 		"', $_id_objet," .
-		(($suite == '_RUBRIQUE') ? 
-		champ_sql("id_rubrique", $p) :
-		(($type == 'rubrique') ? "quete_parent($_id_objet)" : "''")) .
+		(($suite == '_RUBRIQUE') ?
+			champ_sql("id_rubrique", $p) :
+			(($type == 'rubrique') ? "quete_parent($_id_objet)" : "''")) .
 		", " . intval($fichier) . ")";
 
-	if ($fichier) return $code;
+	if ($fichier) {
+		return $code;
+	}
 
 	// class spip_logos a supprimer ulterieurement (transition douce vers spip_logo)
 	// cf http://core.spip.net/issues/2483
 	$class = "spip_logo ";
-	if ($align) $class .= "spip_logo_$align ";
+	if ($align) {
+		$class .= "spip_logo_$align ";
+	}
 	$class .= "spip_logos";
 	$style = '';
-	if (in_array($align,array('left','right'))){
+	if (in_array($align, array('left', 'right'))) {
 		$style = "float:$align";
 		$align = "";
 	}
 	$code = "\n((!is_array(\$l = $code)) ? '':\n (" .
-		     '"<img class=\"'.$class.'\" alt=\"\"' .
-		    ($style ? " style=\\\"$style\\\"" : '') .
-		    ($align ? " align=\\\"$align\\\"" : '') .
-		    ' src=\"$l[0]\"" . $l[2] .  ($l[1] ? " onmouseover=\"this.src=\'$l[1]\'\" onmouseout=\"this.src=\'$l[0]\'\"" : "") . \' />\'))';
+		'"<img class=\"' . $class . '\" alt=\"\"' .
+		($style ? " style=\\\"$style\\\"" : '') .
+		($align ? " align=\\\"$align\\\"" : '') .
+		' src=\"$l[0]\"" . $l[2] .  ($l[1] ? " onmouseover=\"this.src=\'$l[1]\'\" onmouseout=\"this.src=\'$l[0]\'\"" : "") . \' />\'))';
 
-	if (!$lien) return $code;
+	if (!$lien) {
+		return $code;
+	}
 
-	return ('(strlen($logo='.$code.')?\'<a href="\' .' . $lien . ' . \'">\' . $logo . \'</a>\':\'\')');
+	return ('(strlen($logo=' . $code . ')?\'<a href="\' .' . $lien . ' . \'">\' . $logo . \'</a>\':\'\')');
 
 }
-
 
 
 ?>

@@ -10,25 +10,31 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
-function securiser_redirect_action($redirect){
-	if (tester_url_absolue($redirect) AND !defined('_AUTORISER_ACTION_ABS_REDIRECT')){
+function securiser_redirect_action($redirect) {
+	if (tester_url_absolue($redirect) AND !defined('_AUTORISER_ACTION_ABS_REDIRECT')) {
 		// si l'url est une url du site, on la laisse passer sans rien faire
 		// c'est encore le plus simple
-		$base = $GLOBALS['meta']['adresse_site']."/";
-		if (strlen($base) AND strncmp($redirect,$base,strlen($base))==0)
+		$base = $GLOBALS['meta']['adresse_site'] . "/";
+		if (strlen($base) AND strncmp($redirect, $base, strlen($base)) == 0) {
 			return $redirect;
+		}
 		$base = url_de_base();
-		if (strlen($base) AND strncmp($redirect,$base,strlen($base))==0)
+		if (strlen($base) AND strncmp($redirect, $base, strlen($base)) == 0) {
 			return $redirect;
+		}
+
 		return "";
 	}
+
 	return $redirect;
 }
 
 // http://code.spip.net/@traiter_appels_actions
-function traiter_appels_actions(){
+function traiter_appels_actions() {
 	// cas de l'appel qui renvoie une redirection (302) ou rien (204)
 	if ($action = _request('action')) {
 		include_spip('base/abstract_sql'); // chargement systematique pour les actions
@@ -43,96 +49,107 @@ function traiter_appels_actions(){
 		// si l'action est provoque par un hit {ajax}
 		// il faut transmettre l'env ajax au redirect
 		// on le met avant dans la query string au cas ou l'action fait elle meme sa redirection
-		if (($v=_request('var_ajax'))
-		  AND ($v!=='form')
-		  AND ($args = _request('var_ajax_env'))
-		  AND ($url = _request('redirect'))){
-			$url = parametre_url($url,'var_ajax',$v,'&');
-			$url = parametre_url($url,'var_ajax_env',$args,'&');
-			set_request('redirect',$url);
-		}
-		else if(_request('redirect')){
-			set_request('redirect',securiser_redirect_action(_request('redirect')));
+		if (($v = _request('var_ajax'))
+			AND ($v !== 'form')
+			AND ($args = _request('var_ajax_env'))
+			AND ($url = _request('redirect'))
+		) {
+			$url = parametre_url($url, 'var_ajax', $v, '&');
+			$url = parametre_url($url, 'var_ajax_env', $args, '&');
+			set_request('redirect', $url);
+		} else {
+			if (_request('redirect')) {
+				set_request('redirect', securiser_redirect_action(_request('redirect')));
+			}
 		}
 		$var_f = charger_fonction($action, 'action');
 		$var_f();
 		if (!isset($GLOBALS['redirect'])) {
 			$GLOBALS['redirect'] = _request('redirect');
-			if ($_SERVER['REQUEST_METHOD'] == 'POST')
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$GLOBALS['redirect'] = urldecode($GLOBALS['redirect']);
+			}
 			$GLOBALS['redirect'] = securiser_redirect_action($GLOBALS['redirect']);
 		}
 		if ($url = $GLOBALS['redirect']) {
 			// si l'action est provoque par un hit {ajax}
 			// il faut transmettre l'env ajax au redirect 
 			// qui a pu etre defini par l'action
-			if (($v=_request('var_ajax'))
-			  AND ($v!=='form')
-			  AND ($args = _request('var_ajax_env'))) {
-				$url = parametre_url($url,'var_ajax',$v,'&');
-				$url = parametre_url($url,'var_ajax_env',$args,'&');
+			if (($v = _request('var_ajax'))
+				AND ($v !== 'form')
+				AND ($args = _request('var_ajax_env'))
+			) {
+				$url = parametre_url($url, 'var_ajax', $v, '&');
+				$url = parametre_url($url, 'var_ajax_env', $args, '&');
 				// passer l'ancre en variable pour pouvoir la gerer cote serveur
-				$url = preg_replace(',#([^#&?]+)$,',"&var_ajax_ancre=\\1",$url);
+				$url = preg_replace(',#([^#&?]+)$,', "&var_ajax_ancre=\\1", $url);
 			}
-			$url = str_replace('&amp;','&',$url); // les redirections se font en &, pas en en &amp;
+			$url = str_replace('&amp;', '&', $url); // les redirections se font en &, pas en en &amp;
 			redirige_par_entete($url);
 		}
 		if (!headers_sent()
-			AND !ob_get_length())
-				http_status(204); // No Content
+			AND !ob_get_length()
+		) {
+			http_status(204);
+		} // No Content
 		return true;
 	}
+
 	return false;
 }
 
 
 // http://code.spip.net/@refuser_traiter_formulaire_ajax
-function refuser_traiter_formulaire_ajax(){
-	if ($v=_request('var_ajax')
-	  AND $v=='form'
+function refuser_traiter_formulaire_ajax() {
+	if ($v = _request('var_ajax')
+		AND $v == 'form'
 		AND $form = _request('formulaire_action')
 		AND $args = _request('formulaire_action_args')
-		AND decoder_contexte_ajax($args,$form)!==false) {
+		AND decoder_contexte_ajax($args, $form) !== false
+	) {
 		// on est bien dans le contexte de traitement d'un formulaire en ajax
 		// mais traiter ne veut pas
 		// on le dit a la page qui va resumbit
 		// sans ajax
 		include_spip('inc/actions');
-		ajax_retour('noajax',false);
+		ajax_retour('noajax', false);
 		exit;
 	}
 }
 
 // http://code.spip.net/@traiter_appels_inclusions_ajax
-function traiter_appels_inclusions_ajax(){
+function traiter_appels_inclusions_ajax() {
 	// traiter les appels de bloc ajax (ex: pagination)
 	if ($v = _request('var_ajax')
-	AND $v !== 'form'
-	AND $args = _request('var_ajax_env')) {
+		AND $v !== 'form'
+		AND $args = _request('var_ajax_env')
+	) {
 		include_spip('inc/filtres');
 		include_spip('inc/actions');
 		if ($args = decoder_contexte_ajax($args)
-		AND $fond = $args['fond']) {
+			AND $fond = $args['fond']
+		) {
 			include_spip('public/assembler');
 			$contexte = calculer_contexte();
 			$contexte = array_merge($args, $contexte);
-			$page = recuperer_fond($fond,$contexte,array('trim'=>false));
+			$page = recuperer_fond($fond, $contexte, array('trim' => false));
 			$texte = $page;
-			if ($ancre = _request('var_ajax_ancre')){
+			if ($ancre = _request('var_ajax_ancre')) {
 				// pas n'importe quoi quand meme dans la variable !
-				$ancre = str_replace(array('<','"',"'"),array('&lt;','&quot;',''),$ancre);
-				$texte = "<a href='#$ancre' name='ajax_ancre' style='display:none;'>anchor</a>".$texte;
+				$ancre = str_replace(array('<', '"', "'"), array('&lt;', '&quot;', ''), $ancre);
+				$texte = "<a href='#$ancre' name='ajax_ancre' style='display:none;'>anchor</a>" . $texte;
 			}
-		}
-		else {
+		} else {
 			include_spip('inc/headers');
 			http_status(403);
 			$texte = _L('signature ajax bloc incorrecte');
 		}
 		ajax_retour($texte, false);
+
 		return true; // on a fini le hit
 	}
-	return false;	
+
+	return false;
 }
 
 // au 1er appel, traite les formulaires dynamiques charger/verifier/traiter
@@ -140,21 +157,28 @@ function traiter_appels_inclusions_ajax(){
 // Le 1er renvoie True si il faut faire exit a la sortie
 
 // http://code.spip.net/@traiter_formulaires_dynamiques
-function traiter_formulaires_dynamiques($get = false){
+function traiter_formulaires_dynamiques($get = false) {
 	static $post = array();
 	static $done = false;
 
-	if ($get) return $post; 
-	if ($done) return false;
+	if ($get) {
+		return $post;
+	}
+	if ($done) {
+		return false;
+	}
 	$done = true;
 
 	if (!($form = _request('formulaire_action')
-	AND $args = _request('formulaire_action_args')))
-		return false; // le hit peut continuer normalement
+		AND $args = _request('formulaire_action_args'))
+	) {
+		return false;
+	} // le hit peut continuer normalement
 
 	include_spip('inc/filtres');
-	if (($args = decoder_contexte_ajax($args,$form))===false) {
+	if (($args = decoder_contexte_ajax($args, $form)) === false) {
 		spip_log("signature ajax form incorrecte : $form");
+
 		return false; // continuons le hit comme si de rien etait
 	} else {
 		include_spip('inc/lang');
@@ -163,43 +187,48 @@ function traiter_formulaires_dynamiques($get = false){
 		// changer la langue avec celle qui a cours dans le formulaire
 		// on la depile de $args car c'est un argument implicite masque	
 		changer_langue(array_shift($args));
-			
+
 
 		// inclure mes_fonctions et autres filtres avant verifier/traiter
 		include_spip('public/parametrer');
 		// ainsi que l'API SQL bien utile dans verifier/traiter
 		include_spip('base/abstract_sql');
-		$verifier = charger_fonction("verifier","formulaires/$form/",true);
+		$verifier = charger_fonction("verifier", "formulaires/$form/", true);
 		$post["erreurs_$form"] = pipeline(
-				  'formulaire_verifier',
-					array(
-						'args'=>array('form'=>$form,'args'=>$args),
-						'data'=>$verifier?call_user_func_array($verifier,$args):array())
-					);
+			'formulaire_verifier',
+			array(
+				'args' => array('form' => $form, 'args' => $args),
+				'data' => $verifier ? call_user_func_array($verifier, $args) : array()
+			)
+		);
 		// accessibilite : si des erreurs mais pas de message general l'ajouter
-		if (count($post["erreurs_$form"]) AND !isset($post["erreurs_$form"]['message_erreur'])){
-			$post["erreurs_$form"]['message_erreur'] = singulier_ou_pluriel(count($post["erreurs_$form"]),'avis_1_erreur_saisie','avis_nb_erreurs_saisie');
+		if (count($post["erreurs_$form"]) AND !isset($post["erreurs_$form"]['message_erreur'])) {
+			$post["erreurs_$form"]['message_erreur'] = singulier_ou_pluriel(count($post["erreurs_$form"]),
+				'avis_1_erreur_saisie', 'avis_nb_erreurs_saisie');
 		}
 
 		// si on ne demandait qu'une verif json
-		if (_request('formulaire_action_verifier_json')){
+		if (_request('formulaire_action_verifier_json')) {
 			include_spip('inc/json');
 			include_spip('inc/actions');
-			ajax_retour(json_encode($post["erreurs_$form"]),'text/plain');
+			ajax_retour(json_encode($post["erreurs_$form"]), 'text/plain');
+
 			return true; // on a fini le hit
 		}
 		$retour = "";
-		if ((count($post["erreurs_$form"])==0)){
+		if ((count($post["erreurs_$form"]) == 0)) {
 			$rev = "";
-			if ($traiter = charger_fonction("traiter","formulaires/$form/",true))
-				$rev = call_user_func_array($traiter,$args);
+			if ($traiter = charger_fonction("traiter", "formulaires/$form/", true)) {
+				$rev = call_user_func_array($traiter, $args);
+			}
 
 			$rev = pipeline(
-				  'formulaire_traiter',
-					array(
-						'args'=>array('form'=>$form,'args'=>$args),
-						'data'=>$rev)
-					);
+				'formulaire_traiter',
+				array(
+					'args' => array('form' => $form, 'args' => $args),
+					'data' => $rev
+				)
+			);
 			// le retour de traiter est
 			// un tableau explicite ('editable'=>$editable,'message_ok'=>$message,'redirect'=>$redirect,'id_xx'=>$id_xx)
 			// il permet le pipelinage, en particulier
@@ -207,46 +236,49 @@ function traiter_formulaires_dynamiques($get = false){
 			// si message_erreur est present, on considere que le traitement a echoue
 			$post["message_ok_$form"] = '';
 			// on peut avoir message_ok et message_erreur
-			if (isset($rev['message_ok']))
+			if (isset($rev['message_ok'])) {
 				$post["message_ok_$form"] = $rev['message_ok'];
+			}
 
 			// verifier si traiter n'a pas echoue avec une erreur :
 			if (isset($rev['message_erreur'])) {
 				$post["erreurs_$form"]["message_erreur"] = $rev['message_erreur'];
 				// si il y a une erreur on ne redirige pas
-			}
-			else {
+			} else {
 				// sinon faire ce qu'il faut :
-				if (isset($rev['editable']))
+				if (isset($rev['editable'])) {
 					$post["editable_$form"] = $rev['editable'];
+				}
 				// si une redirection est demandee, appeler redirigae_formulaire qui choisira
 				// le bon mode de redirection (302 et on ne revient pas ici, ou javascript et on continue)
-				if (isset($rev['redirect']) AND $rev['redirect']){
+				if (isset($rev['redirect']) AND $rev['redirect']) {
 					include_spip('inc/headers');
-					list($masque,$message) = redirige_formulaire($rev['redirect'], '','ajaxform');
+					list($masque, $message) = redirige_formulaire($rev['redirect'], '', 'ajaxform');
 					$post["message_ok_$form"] .= $message;
 					$retour .= $masque;
 				}
 			}
 		}
 		// si le formulaire a ete soumis en ajax, on le renvoie direct !
-		if (_request('var_ajax')){
-			if (find_in_path('formulaire_.php','balise/',true)) {
+		if (_request('var_ajax')) {
+			if (find_in_path('formulaire_.php', 'balise/', true)) {
 				include_spip('inc/actions');
 				include_spip('public/assembler');
-				array_unshift($args,$form);
-				$retour .= inclure_balise_dynamique(call_user_func_array('balise_formulaire__dyn',$args),false);
+				array_unshift($args, $form);
+				$retour .= inclure_balise_dynamique(call_user_func_array('balise_formulaire__dyn', $args), false);
 				// on ajoute un br en display none en tete du retour ajax pour regler un bug dans IE6/7
 				// sans cela le formulaire n'est pas actif apres le hit ajax
 				// la classe ajax-form-is-ok sert a s'assurer que le retour ajax s'est bien passe
-				$retour = "<br class='bugajaxie ajax-form-is-ok' style='display:none;'/>".$retour;
-				ajax_retour($retour,false);
+				$retour = "<br class='bugajaxie ajax-form-is-ok' style='display:none;'/>" . $retour;
+				ajax_retour($retour, false);
+
 				return true; // on a fini le hit
 			}
 		}
 		// restaurer la lang en cours
 		changer_langue($old_lang);
 	}
+
 	return false; // le hit peut continuer normalement
 }
 

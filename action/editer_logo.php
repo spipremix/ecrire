@@ -16,19 +16,21 @@
  * @package SPIP\Core\Logo\Edition
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
  * Supprimer le logo d'un objet
- * 
+ *
  * @param string $objet
  * @param int $id_objet
  * @param string $etat
  *     `on` ou `off`
  */
-function logo_supprimer($objet, $id_objet, $etat){
-	$chercher_logo = charger_fonction('chercher_logo','inc');
+function logo_supprimer($objet, $id_objet, $etat) {
+	$chercher_logo = charger_fonction('chercher_logo', 'inc');
 	$objet = objet_type($objet);
 	$primary = id_table_objet($objet);
 	include_spip('inc/chercher_logo');
@@ -42,6 +44,7 @@ function logo_supprimer($objet, $id_objet, $etat){
 
 /**
  * Modifier le logo d'un objet
+ *
  * @param string $objet
  * @param int $id_objet
  * @param string $etat
@@ -52,15 +55,15 @@ function logo_supprimer($objet, $id_objet, $etat){
  * @return string
  *     Erreur, sinon ''
  */
-function logo_modifier($objet, $id_objet, $etat, $source){
-	$chercher_logo = charger_fonction('chercher_logo','inc');
+function logo_modifier($objet, $id_objet, $etat, $source) {
+	$chercher_logo = charger_fonction('chercher_logo', 'inc');
 	$objet = objet_type($objet);
 	$primary = id_table_objet($objet);
 	include_spip('inc/chercher_logo');
 	$type = type_du_logo($primary);
 
 	// nom du logo
-	$nom = $type.$etat.$id_objet;
+	$nom = $type . $etat . $id_objet;
 
 	// supprimer le logo eventueel existant
 	logo_supprimer($objet, $id_objet, $etat);
@@ -68,9 +71,10 @@ function logo_modifier($objet, $id_objet, $etat, $source){
 	include_spip('inc/documents');
 	$erreur = "";
 
-	if (!$source){
+	if (!$source) {
 		spip_log("spip_image_ajouter : source inconnue");
 		$erreur = "source inconnue";
+
 		return $erreur;
 	}
 
@@ -78,11 +82,10 @@ function logo_modifier($objet, $id_objet, $etat, $source){
 
 	$ok = false;
 	// fichier dans upload/
-	if (is_string($source)){
+	if (is_string($source)) {
 		if (file_exists($source)) {
 			$ok = @copy($source, $file_tmp);
-		}
-		elseif(file_exists($f=determine_upload() . $source)){
+		} elseif (file_exists($f = determine_upload() . $source)) {
 			$ok = @copy($f, $file_tmp);
 		}
 	} // Intercepter une erreur a l'envoi
@@ -92,71 +95,80 @@ function logo_modifier($objet, $id_objet, $etat, $source){
 		$ok = deplacer_fichier_upload($source['tmp_name'], $file_tmp);
 	}
 
-	if ($erreur){
+	if ($erreur) {
 		return $erreur;
 	}
-	if (!$ok OR !file_exists($file_tmp)){
+	if (!$ok OR !file_exists($file_tmp)) {
 		spip_log($erreur = "probleme de copie pour $file_tmp ");
+
 		return $erreur;
 	}
 
 	$size = @getimagesize($file_tmp);
-	$type = !$size ? '' : ($size[2]>3 ? '' : $GLOBALS['formats_logos'][$size[2]-1]);
-	if ($type){
-		@rename($file_tmp,$file_tmp.".$type");
-		$file_tmp = $file_tmp.".$type";
+	$type = !$size ? '' : ($size[2] > 3 ? '' : $GLOBALS['formats_logos'][$size[2]-1]);
+	if ($type) {
+		@rename($file_tmp, $file_tmp . ".$type");
+		$file_tmp = $file_tmp . ".$type";
 		$poids = filesize($file_tmp);
 
 		if (defined('_LOGO_MAX_WIDTH') OR defined('_LOGO_MAX_HEIGHT')) {
 
-			if ((defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH AND $size[0]>_LOGO_MAX_WIDTH)
-				OR (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT AND $size[1]>_LOGO_MAX_HEIGHT) ){
-				$max_width = (defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH)? _LOGO_MAX_WIDTH : '*';
-				$max_height = (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT)? _LOGO_MAX_HEIGHT : '*';
+			if ((defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH AND $size[0] > _LOGO_MAX_WIDTH)
+				OR (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT AND $size[1] > _LOGO_MAX_HEIGHT)
+			) {
+				$max_width = (defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH) ? _LOGO_MAX_WIDTH : '*';
+				$max_height = (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT) ? _LOGO_MAX_HEIGHT : '*';
 
 				// pas la peine d'embeter le redacteur avec ca si on a active le calcul des miniatures
 				// on met directement a la taille maxi a la volee
-				if (isset($GLOBALS['meta']['creer_preview']) AND $GLOBALS['meta']['creer_preview']=='oui'){
+				if (isset($GLOBALS['meta']['creer_preview']) AND $GLOBALS['meta']['creer_preview'] == 'oui') {
 					include_spip('inc/filtres');
 					$img = filtrer('image_reduire', $file_tmp, $max_width, $max_height);
 					$img = extraire_attribut($img, 'src');
 					$img = supprimer_timestamp($img);
-					if (@file_exists($img) AND $img!==$file_tmp){
+					if (@file_exists($img) AND $img !== $file_tmp) {
 						spip_unlink($file_tmp);
 						@rename($img, $file_tmp);
 						$size = @getimagesize($file_tmp);
 					}
 				}
 				// verifier au cas ou image_reduire a echoue
-				if ((defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH AND $size[0]>_LOGO_MAX_WIDTH)
-					OR (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT AND $size[1]>_LOGO_MAX_HEIGHT) ){
+				if ((defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH AND $size[0] > _LOGO_MAX_WIDTH)
+					OR (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT AND $size[1] > _LOGO_MAX_HEIGHT)
+				) {
 					spip_unlink($file_tmp);
 					$erreur = _T('info_logo_max_poids',
 						array(
 							'maxi' =>
 								_T('info_largeur_vignette',
-									array('largeur_vignette' => $max_width,
-										'hauteur_vignette' => $max_height)),
+									array(
+										'largeur_vignette' => $max_width,
+										'hauteur_vignette' => $max_height
+									)),
 							'actuel' =>
 								_T('info_largeur_vignette',
-									array('largeur_vignette' => $size[0],
-										'hauteur_vignette' => $size[1]))
+									array(
+										'largeur_vignette' => $size[0],
+										'hauteur_vignette' => $size[1]
+									))
 						));
 				}
 			}
 		}
 
-		if (!$erreur AND defined('_LOGO_MAX_SIZE') AND _LOGO_MAX_SIZE AND $poids>_LOGO_MAX_SIZE*1024){
+		if (!$erreur AND defined('_LOGO_MAX_SIZE') AND _LOGO_MAX_SIZE AND $poids > _LOGO_MAX_SIZE*1024) {
 			spip_unlink($file_tmp);
 			$erreur = _T('info_logo_max_poids',
-				array('maxi' => taille_en_octets(_LOGO_MAX_SIZE*1024),
-					'actuel' => taille_en_octets($poids)));
+				array(
+					'maxi' => taille_en_octets(_LOGO_MAX_SIZE*1024),
+					'actuel' => taille_en_octets($poids)
+				));
 		}
 
-		if (!$erreur)
+		if (!$erreur) {
 			@rename($file_tmp, _DIR_LOGOS . $nom . ".$type");
-	}
-	else {
+		}
+	} else {
 		spip_unlink($file_tmp);
 		$erreur = _T('info_logo_format_interdit',
 			array('formats' => join(', ', $GLOBALS['formats_logos'])));

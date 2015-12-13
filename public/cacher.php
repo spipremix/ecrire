@@ -10,7 +10,9 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Le format souhaite : tmp/cache/ab/cd
@@ -25,39 +27,45 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return string
  */
 function generer_nom_fichier_cache($contexte, $page) {
-	$u = md5(var_export(array($contexte, $page),true));
+	$u = md5(var_export(array($contexte, $page), true));
+
 	return $u . ".cache";
 }
 
 /**
  * ecrire le cache dans un casier
+ *
  * @param string $nom_cache
  * @param $valeur
  * @return bool
  */
-function ecrire_cache($nom_cache, $valeur){
-	$d = substr($nom_cache,0,2);
-	$u = substr($nom_cache,2,2);
+function ecrire_cache($nom_cache, $valeur) {
+	$d = substr($nom_cache, 0, 2);
+	$u = substr($nom_cache, 2, 2);
 	$rep = _DIR_CACHE;
-	$rep = sous_repertoire($rep, '', false,true);
-	$rep = sous_repertoire($rep, $d, false,true);
-	return ecrire_fichier($rep . $u . ".cache",serialize(array("nom_cache"=>$nom_cache,"valeur"=>$valeur)));
+	$rep = sous_repertoire($rep, '', false, true);
+	$rep = sous_repertoire($rep, $d, false, true);
+
+	return ecrire_fichier($rep . $u . ".cache", serialize(array("nom_cache" => $nom_cache, "valeur" => $valeur)));
 }
 
 /**
  * lire le cache depuis un casier
+ *
  * @param string $nom_cache
  * @return mixed
  */
-function lire_cache($nom_cache){
-	$d = substr($nom_cache,0,2);
-	$u = substr($nom_cache,2,2);
-	if (file_exists($f=_DIR_CACHE."$d/$u.cache")
-	  AND lire_fichier($f,$tmp)
-	  AND $tmp = unserialize($tmp)
-	  AND $tmp['nom_cache']==$nom_cache
-	  AND isset($tmp['valeur']))
+function lire_cache($nom_cache) {
+	$d = substr($nom_cache, 0, 2);
+	$u = substr($nom_cache, 2, 2);
+	if (file_exists($f = _DIR_CACHE . "$d/$u.cache")
+		AND lire_fichier($f, $tmp)
+		AND $tmp = unserialize($tmp)
+		AND $tmp['nom_cache'] == $nom_cache
+		AND isset($tmp['valeur'])
+	) {
 		return $tmp['valeur'];
+	}
 
 	return false;
 }
@@ -65,12 +73,14 @@ function lire_cache($nom_cache){
 // Parano : on signe le cache, afin d'interdire un hack d'injection
 // dans notre memcache
 function cache_signature(&$page) {
-	if (!isset($GLOBALS['meta']['cache_signature'])){
+	if (!isset($GLOBALS['meta']['cache_signature'])) {
 		include_spip('inc/acces');
 		include_spip('auth/sha256.inc');
-		ecrire_meta('cache_signature', _nano_sha256($_SERVER["DOCUMENT_ROOT"] . $_SERVER["SERVER_SIGNATURE"] . creer_uniqid()), 'non');
+		ecrire_meta('cache_signature',
+			_nano_sha256($_SERVER["DOCUMENT_ROOT"] . $_SERVER["SERVER_SIGNATURE"] . creer_uniqid()), 'non');
 	}
-	return crc32($GLOBALS['meta']['cache_signature'].$page['texte']);
+
+	return crc32($GLOBALS['meta']['cache_signature'] . $page['texte']);
 }
 
 /**
@@ -90,6 +100,7 @@ function gzip_page($page) {
 	} else {
 		$page['gz'] = false;
 	}
+
 	return $page;
 }
 
@@ -114,7 +125,7 @@ function gunzip_page(&$page) {
 /**
  * gestion des delais d'expiration du cache...
  * $page passee par reference pour accelerer
- * 
+ *
  * @param array $page
  * @param int $date
  * @return int
@@ -128,24 +139,34 @@ function cache_valide(&$page, $date) {
 
 	// Apparition d'un nouvel article post-date ?
 	if (isset($GLOBALS['meta']['post_dates'])
-	  AND $GLOBALS['meta']['post_dates'] == 'non'
-	  AND isset($GLOBALS['meta']['date_prochain_postdate'])
-	  AND $now > $GLOBALS['meta']['date_prochain_postdate']) {
+		AND $GLOBALS['meta']['post_dates'] == 'non'
+		AND isset($GLOBALS['meta']['date_prochain_postdate'])
+		AND $now > $GLOBALS['meta']['date_prochain_postdate']
+	) {
 		spip_log('Un article post-date invalide le cache');
 		include_spip('inc/rubriques');
 		calculer_prochain_postdate(true);
 	}
 
-	if (defined('_VAR_NOCACHE') AND _VAR_NOCACHE) return -1;
-	if (isset($GLOBALS['meta']['cache_inhib']) AND $_SERVER['REQUEST_TIME']<$GLOBALS['meta']['cache_inhib']) return -1;
-	if (defined('_NO_CACHE')) return (_NO_CACHE==0 AND !isset($page['texte']))?1:_NO_CACHE;
+	if (defined('_VAR_NOCACHE') AND _VAR_NOCACHE) {
+		return -1;
+	}
+	if (isset($GLOBALS['meta']['cache_inhib']) AND $_SERVER['REQUEST_TIME'] < $GLOBALS['meta']['cache_inhib']) {
+		return -1;
+	}
+	if (defined('_NO_CACHE')) {
+		return (_NO_CACHE == 0 AND !isset($page['texte'])) ? 1 : _NO_CACHE;
+	}
 
 	// pas de cache ? on le met a jour, sauf pour les bots (on leur calcule la page sans mise en cache)
-	if (!$page OR !isset($page['texte']) OR !isset($page['entetes']['X-Spip-Cache'])) return _IS_BOT?-1:1;
+	if (!$page OR !isset($page['texte']) OR !isset($page['entetes']['X-Spip-Cache'])) {
+		return _IS_BOT ? -1 : 1;
+	}
 
 	// controle de la signature
-	if ($page['sig'] !== cache_signature($page))
-		return _IS_BOT?-1:1;
+	if ($page['sig'] !== cache_signature($page)) {
+		return _IS_BOT ? -1 : 1;
+	}
 
 	// #CACHE{n,statique} => on n'invalide pas avec derniere_modif
 	// cf. ecrire/public/balises.php, balise_CACHE_dist()
@@ -154,25 +175,32 @@ function cache_valide(&$page, $date) {
 		// Cache invalide par la meta 'derniere_modif'
 		// sauf pour les bots, qui utilisent toujours le cache
 		if (!_IS_BOT
-		AND $GLOBALS['derniere_modif_invalide']
-		AND isset($GLOBALS['meta']['derniere_modif'])
-		AND $date < $GLOBALS['meta']['derniere_modif'])
+			AND $GLOBALS['derniere_modif_invalide']
+			AND isset($GLOBALS['meta']['derniere_modif'])
+			AND $date < $GLOBALS['meta']['derniere_modif']
+		) {
 			return 1;
+		}
 
 	}
 
 	// Sinon comparer l'age du fichier a sa duree de cache
 	$duree = intval($page['entetes']['X-Spip-Cache']);
-	$cache_mark = (isset($GLOBALS['meta']['cache_mark'])?$GLOBALS['meta']['cache_mark']:0);
+	$cache_mark = (isset($GLOBALS['meta']['cache_mark']) ? $GLOBALS['meta']['cache_mark'] : 0);
 	if ($duree == 0)  #CACHE{0}
+	{
 		return -1;
-	// sauf pour les bots, qui utilisent toujours le cache
-	else if ((!_IS_BOT AND $date + $duree < $now)
-		# le cache est anterieur a la derniere purge : l'ignorer, meme pour les bots
-	  OR $date<$cache_mark)
-		return _IS_BOT?-1:1;
-	else
-		return 0;
+	} // sauf pour les bots, qui utilisent toujours le cache
+	else {
+		if ((!_IS_BOT AND $date+$duree < $now)
+			# le cache est anterieur a la derniere purge : l'ignorer, meme pour les bots
+			OR $date < $cache_mark
+		) {
+			return _IS_BOT ? -1 : 1;
+		} else {
+			return 0;
+		}
+	}
 }
 
 /**
@@ -192,25 +220,29 @@ function creer_cache(&$page, &$chemin_cache) {
 	// le cas var_nocache ne devrait jamais arriver ici (securite)
 	// le cas spip_interdire_cache correspond a une ereur SQL grave non anticipable
 	if ((defined('_VAR_NOCACHE') AND _VAR_NOCACHE)
-		OR defined('spip_interdire_cache'))
+		OR defined('spip_interdire_cache')
+	) {
 		return;
+	}
 
 	// Si la page c1234 a un invalideur de session 'zz', sauver dans
 	// 'tmp/cache/MD5(chemin_cache)_zz'
 	if (isset($page['invalideurs'])
-	AND isset($page['invalideurs']['session'])) {
+		AND isset($page['invalideurs']['session'])
+	) {
 		// on verifie que le contenu du chemin cache indique seulement
 		// "cache sessionne" ; sa date indique la date de validite
 		// des caches sessionnes
 		if (!$tmp = lire_cache($chemin_cache)) {
-			spip_log('Creation cache sessionne '.$chemin_cache);
+			spip_log('Creation cache sessionne ' . $chemin_cache);
 			$tmp = array(
 				'invalideurs' => array('session' => ''),
 				'lastmodified' => $_SERVER['REQUEST_TIME']
 			);
 			ecrire_cache($chemin_cache, $tmp);
 		}
-		$chemin_cache = generer_nom_fichier_cache(array("chemin_cache"=>$chemin_cache), array("session"=>$page['invalideurs']['session']));
+		$chemin_cache = generer_nom_fichier_cache(array("chemin_cache" => $chemin_cache),
+			array("session" => $page['invalideurs']['session']));
 	}
 
 	// ajouter la date de production dans le cache lui meme
@@ -218,13 +250,13 @@ function creer_cache(&$page, &$chemin_cache) {
 	$page['lastmodified'] = $_SERVER['REQUEST_TIME'];
 
 	// signer le contenu
-	$page['sig']= cache_signature($page);
+	$page['sig'] = cache_signature($page);
 
 	// l'enregistrer, compresse ou non...
-	$ok = ecrire_cache($chemin_cache,gzip_page($page));
+	$ok = ecrire_cache($chemin_cache, gzip_page($page));
 
-	spip_log((_IS_BOT?"Bot:":"")."Creation du cache $chemin_cache pour "
-		. $page['entetes']['X-Spip-Cache']." secondes". ($ok?'':' (erreur!)'),_LOG_INFO_IMPORTANTE);
+	spip_log((_IS_BOT ? "Bot:" : "") . "Creation du cache $chemin_cache pour "
+		. $page['entetes']['X-Spip-Cache'] . " secondes" . ($ok ? '' : ' (erreur!)'), _LOG_INFO_IMPORTANTE);
 
 	// Inserer ses invalideurs
 	include_spip('inc/invalideur');
@@ -245,11 +277,12 @@ function creer_cache(&$page, &$chemin_cache) {
  */
 function nettoyer_petit_cache($prefix, $duree = 300) {
 	// determiner le repertoire a purger : 'tmp/CACHE/rech/'
-	$dircache = sous_repertoire(_DIR_CACHE,$prefix);
-	if (spip_touch($dircache.'purger_'.$prefix, $duree, true)) {
-		foreach (preg_files($dircache,'[.]txt$') as $f) {
-			if ($_SERVER['REQUEST_TIME'] - (@file_exists($f)?@filemtime($f):0) > $duree)
+	$dircache = sous_repertoire(_DIR_CACHE, $prefix);
+	if (spip_touch($dircache . 'purger_' . $prefix, $duree, true)) {
+		foreach (preg_files($dircache, '[.]txt$') as $f) {
+			if ($_SERVER['REQUEST_TIME']-(@file_exists($f) ? @filemtime($f) : 0) > $duree) {
 				spip_unlink($f);
+			}
 		}
 	}
 }
@@ -283,9 +316,9 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 
 	# fonction de cache minimale : dire "non on ne met rien en cache"
 	# $use_cache = -1; return;
-	
+
 	// Second appel, destine a l'enregistrement du cache sur le disque
-	if (isset($chemin_cache)){
+	if (isset($chemin_cache)) {
 		return creer_cache($page, $chemin_cache);
 	}
 
@@ -294,11 +327,13 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 
 	// Cas ignorant le cache car completement dynamique
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'
-	  OR _request('connect')) {
+		OR _request('connect')
+	) {
 		$use_cache = -1;
 		$lastmodified = 0;
 		$chemin_cache = "";
 		$page = array();
+
 		return;
 	}
 
@@ -307,19 +342,23 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 	$lastmodified = 0;
 
 	// charger le cache s'il existe (et si il a bien le bon hash = anticollision)
-	if (!$page = lire_cache($chemin_cache)){
+	if (!$page = lire_cache($chemin_cache)) {
 		$page = array();
 	}
 
 	// s'il est sessionne, charger celui correspondant a notre session
 	if (isset($page['invalideurs'])
-	AND isset($page['invalideurs']['session'])) {
-		$chemin_cache_session = generer_nom_fichier_cache(array("chemin_cache"=>$chemin_cache), array("session"=>spip_session()));
+		AND isset($page['invalideurs']['session'])
+	) {
+		$chemin_cache_session = generer_nom_fichier_cache(array("chemin_cache" => $chemin_cache),
+			array("session" => spip_session()));
 		if ($page_session = lire_cache($chemin_cache_session)
-		AND $page_session['lastmodified'] >= $page['lastmodified'])
+			AND $page_session['lastmodified'] >= $page['lastmodified']
+		) {
 			$page = $page_session;
-		else
+		} else {
 			$page = array();
+		}
 	}
 
 
@@ -329,9 +368,10 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 		if (spip_connect()) {
 			include_spip('inc/invalideur');
 			retire_caches($chemin_cache); # API invalideur inutile
-			supprimer_fichier(_DIR_CACHE.$chemin_cache);
-			if (isset($chemin_cache_session) and $chemin_cache_session)
-				supprimer_fichier(_DIR_CACHE.$chemin_cache_session);
+			supprimer_fichier(_DIR_CACHE . $chemin_cache);
+			if (isset($chemin_cache_session) and $chemin_cache_session) {
+				supprimer_fichier(_DIR_CACHE . $chemin_cache_session);
+			}
 		}
 	}
 
@@ -339,15 +379,16 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 	// on supprime le cache
 	if (defined('_VAR_MODE') && _VAR_MODE &&
 		(isset($_COOKIE['spip_session'])
-		|| isset($_COOKIE['spip_admin'])
-		|| @file_exists(_ACCESS_FILE_NAME))
+			|| isset($_COOKIE['spip_admin'])
+			|| @file_exists(_ACCESS_FILE_NAME))
 	) {
-		$page = array('contexte_implicite'=>$contexte_implicite); // ignorer le cache deja lu
+		$page = array('contexte_implicite' => $contexte_implicite); // ignorer le cache deja lu
 		include_spip('inc/invalideur');
 		retire_caches($chemin_cache); # API invalideur inutile
-		supprimer_fichier(_DIR_CACHE.$chemin_cache);
-		if (isset($chemin_cache_session) and $chemin_cache_session)
-			supprimer_fichier(_DIR_CACHE.$chemin_cache_session);
+		supprimer_fichier(_DIR_CACHE . $chemin_cache);
+		if (isset($chemin_cache_session) and $chemin_cache_session) {
+			supprimer_fichier(_DIR_CACHE . $chemin_cache_session);
+		}
 	}
 
 	// $delais par defaut
@@ -369,11 +410,12 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 		if (!$use_cache) {
 			// $page est un cache utilisable
 			gunzip_page($page);
+
 			return;
 		}
 	} else {
-		$page = array('contexte_implicite'=>$contexte_implicite);
-		$use_cache = cache_valide($page,0); // fichier cache absent : provoque le calcul
+		$page = array('contexte_implicite' => $contexte_implicite);
+		$use_cache = cache_valide($page, 0); // fichier cache absent : provoque le calcul
 	}
 
 	// Si pas valide mais pas de connexion a la base, le garder quand meme
@@ -381,15 +423,18 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 		if (isset($page['texte'])) {
 			gunzip_page($page);
 			$use_cache = 0;
-		}
-		else {
+		} else {
 			spip_log("Erreur base de donnees, impossible utiliser $chemin_cache");
 			include_spip('inc/minipres');
-			return minipres(_T('info_travaux_titre'),  _T('titre_probleme_technique'), array('status'=>503));
+
+			return minipres(_T('info_travaux_titre'), _T('titre_probleme_technique'), array('status' => 503));
 		}
 	}
 
-	if ($use_cache < 0) $chemin_cache = '';
+	if ($use_cache < 0) {
+		$chemin_cache = '';
+	}
+
 	return;
 }
 

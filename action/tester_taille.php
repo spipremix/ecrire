@@ -13,11 +13,13 @@
 /**
  * Gestion de l'action testant, pour la librairie graphique GD2, la taille
  * maximale des images qu'il est capable de traiter
- * 
+ *
  * @package SPIP\Core\Configurer
  */
- 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 include_spip('inc/headers');
 
 /**
@@ -26,18 +28,18 @@ include_spip('inc/headers');
  *
  * Si c'est le cas, on redirige sur la page prévue, testant un autre cas
  * de traitement
- * 
+ *
  * @param string $output
  *     Sortie du buffer
  * @return string
  *     Sortie du buffer
-**/
-function action_tester_taille_error_handler($output)
-{
+ **/
+function action_tester_taille_error_handler($output) {
 	// on est ici, donc echec lors de la creation de l'image
-	if (!empty($GLOBALS['redirect'])){
+	if (!empty($GLOBALS['redirect'])) {
 		return redirige_formulaire($GLOBALS['redirect']);
 	}
+
 	return $output;
 }
 
@@ -48,30 +50,32 @@ function action_tester_taille_error_handler($output)
  * Ce test par dichotomie permet de calculer la taille (en pixels) de la
  * plus grande image traitable. Ce test se relance jusqu'à trouver cette
  * taille.
- * 
+ *
  * La clé `arg` attendue est une chaîne indiquant les valeurs minimum et
  * maximum de taille à tester tel que '3000' (maximum) ou '3000-5000'
  * (minimum-maximum)
- * 
-**/
+ *
+ **/
 function action_tester_taille_dist() {
 
-	if (!autoriser('configurer'))
+	if (!autoriser('configurer')) {
 		return;
+	}
 
 	$taille = _request('arg');
-	$taille = explode('-',$taille);
+	$taille = explode('-', $taille);
 
 	$GLOBALS['taille_max'] = end($taille);
 	$GLOBALS['taille_min'] = 0;
-	if (count($taille)>1)
+	if (count($taille) > 1) {
 		$GLOBALS['taille_min'] = reset($taille);
+	}
 
 	// si l'intervalle est assez petit, on garde la valeur min
-	if ($GLOBALS['taille_max']*$GLOBALS['taille_max']-$GLOBALS['taille_min']*$GLOBALS['taille_min']<50000){
+	if ($GLOBALS['taille_max']*$GLOBALS['taille_max']-$GLOBALS['taille_min']*$GLOBALS['taille_min'] < 50000) {
 		$t = ($GLOBALS['taille_min']*$GLOBALS['taille_min']);
-		if ($GLOBALS['taille_min']!==$GLOBALS['taille_max']) {
-			$t = $t * 0.9; // marge de securite
+		if ($GLOBALS['taille_min'] !== $GLOBALS['taille_max']) {
+			$t = $t*0.9; // marge de securite
 			echo round($t/1000000, 3) . ' Mpx';
 		} else {
 			// c'est un cas "on a reussi la borne max initiale, donc on a pas de limite connue"
@@ -106,18 +110,19 @@ function action_tester_taille_dist() {
 
 	$i = _request('i')+1;
 	$image_source = chemin_image("test.png");
-	$GLOBALS['redirect'] = generer_url_action("tester_taille", "i=$i&arg=".$GLOBALS['taille_min']."-".$GLOBALS['taille_test']);
+	$GLOBALS['redirect'] = generer_url_action("tester_taille",
+		"i=$i&arg=" . $GLOBALS['taille_min'] . "-" . $GLOBALS['taille_test']);
 
 	ob_start('action_tester_taille_error_handler');
-	filtrer('image_recadre',$image_source,$taille,$taille);
-	$GLOBALS['redirect'] = generer_url_action("tester_taille", "i=$i&arg=$taille-".$GLOBALS['taille_max']);
+	filtrer('image_recadre', $image_source, $taille, $taille);
+	$GLOBALS['redirect'] = generer_url_action("tester_taille", "i=$i&arg=$taille-" . $GLOBALS['taille_max']);
 
 	// si la valeur intermediaire a reussi, on teste la valeur maxi qui est peut etre sous estimee
 	// si $GLOBALS['taille_min']==0 (car on est au premier coup)
-	if ($GLOBALS['taille_min']==0){
+	if ($GLOBALS['taille_min'] == 0) {
 		$taille = $GLOBALS['taille_max'];
-		filtrer('image_recadre',$image_source,$taille,$taille);
-		$GLOBALS['redirect'] = generer_url_action("tester_taille", "i=$i&arg=$taille-".$GLOBALS['taille_max']);
+		filtrer('image_recadre', $image_source, $taille, $taille);
+		$GLOBALS['redirect'] = generer_url_action("tester_taille", "i=$i&arg=$taille-" . $GLOBALS['taille_max']);
 	}
 	ob_end_clean();
 

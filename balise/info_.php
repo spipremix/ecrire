@@ -14,9 +14,11 @@
  * Fonctions génériques pour les balises `#INFO_XXXX`
  *
  * @package SPIP\Core\Compilateur\Balises
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Compile la balise dynamique `#INFO_xx` qui génère n'importe quelle
@@ -37,21 +39,22 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_INFO__dist($p){
+function balise_INFO__dist($p) {
 	$info = $p->nom_champ;
-	$type_objet = interprete_argument_balise(1,$p);
-	$id_objet = interprete_argument_balise(2,$p);
+	$type_objet = interprete_argument_balise(1, $p);
+	$id_objet = interprete_argument_balise(2, $p);
 	if ($info === 'INFO_' or !$type_objet or !$id_objet) {
 		$msg = _T('zbug_balise_sans_argument', array('balise' => ' INFO_'));
 		erreur_squelette($msg, $p);
 		$p->interdire_scripts = true;
+
 		return $p;
-	}
-	else {
-		$info_sql = strtolower(substr($info,5));
-		$code = "generer_info_entite($id_objet, $type_objet, '$info_sql'".($p->etoile?","._q($p->etoile):"").")";
+	} else {
+		$info_sql = strtolower(substr($info, 5));
+		$code = "generer_info_entite($id_objet, $type_objet, '$info_sql'" . ($p->etoile ? "," . _q($p->etoile) : "") . ")";
 		$p->code = champ_sql($info, $p, $code);
 		$p->interdire_scripts = true;
+
 		return $p;
 	}
 }

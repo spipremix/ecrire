@@ -14,9 +14,11 @@
  * Gestion de recherche et d'écriture de répertoire ou fichiers
  *
  * @package SPIP\Core\Flock
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
@@ -35,7 +37,7 @@ if (!defined('_TEST_FILE_EXISTS')) {
 #define('_SPIP_LOCK_MODE',1); // utiliser le flock php
 #define('_SPIP_LOCK_MODE',2); // utiliser le nfslock de spip
 
-if (_SPIP_LOCK_MODE==2) {
+if (_SPIP_LOCK_MODE == 2) {
 	include_spip('inc/nfslock');
 }
 
@@ -45,10 +47,10 @@ $GLOBALS['liste_verrous'] = array();
  * Ouvre un fichier et le vérrouille
  *
  * @link http://php.net/manual/fr/function.flock.php pour le type de verrou.
- * @see _SPIP_LOCK_MODE
- * @see spip_fclose_unlock()
+ * @see  _SPIP_LOCK_MODE
+ * @see  spip_fclose_unlock()
  * @uses spip_nfslock() si _SPIP_LOCK_MODE = 2.
- * 
+ *
  * @param string $fichier
  *     Chemin du fichier
  * @param string $mode
@@ -57,22 +59,25 @@ $GLOBALS['liste_verrous'] = array();
  *     Type de verrou (avec _SPIP_LOCK_MODE = 1)
  * @return Resource
  *     Ressource sur le fichier ouvert, sinon false.
-**/
+ **/
 function spip_fopen_lock($fichier, $mode, $verrou) {
-	if (_SPIP_LOCK_MODE==1) {
+	if (_SPIP_LOCK_MODE == 1) {
 		if ($fl = @fopen($fichier, $mode)) {
 			// verrou
 			@flock($fl, $verrou);
 		}
+
 		return $fl;
-	}
-	elseif(_SPIP_LOCK_MODE==2) {
-		if (($verrou = spip_nfslock($fichier)) && ($fl = @fopen($fichier, $mode))){
+	} elseif (_SPIP_LOCK_MODE == 2) {
+		if (($verrou = spip_nfslock($fichier)) && ($fl = @fopen($fichier, $mode))) {
 			$GLOBALS['liste_verrous'][$fl] = array($fichier, $verrou);
+
 			return $fl;
+		} else {
+			return false;
 		}
-		else return false;
 	}
+
 	return @fopen($fichier, $mode);
 }
 
@@ -81,20 +86,20 @@ function spip_fopen_lock($fichier, $mode, $verrou) {
  *
  * @see _SPIP_LOCK_MODE
  * @see spip_fopen_lock()
- * 
+ *
  * @param string $handle
  *     Chemin du fichier
  * @return bool
  *     true si succès, false sinon.
-**/
-function spip_fclose_unlock($handle){
-	if (_SPIP_LOCK_MODE==1){
+ **/
+function spip_fclose_unlock($handle) {
+	if (_SPIP_LOCK_MODE == 1) {
 		@flock($handle, LOCK_UN);
-	}
-	elseif(_SPIP_LOCK_MODE==2) {
-		spip_nfsunlock(reset($GLOBALS['liste_verrous'][$handle]),end($GLOBALS['liste_verrous'][$handle]));
+	} elseif (_SPIP_LOCK_MODE == 2) {
+		spip_nfsunlock(reset($GLOBALS['liste_verrous'][$handle]), end($GLOBALS['liste_verrous'][$handle]));
 		unset($GLOBALS['liste_verrous'][$handle]);
 	}
+
 	return @fclose($handle);
 }
 
@@ -102,12 +107,12 @@ function spip_fclose_unlock($handle){
 /**
  * Retourne le contenu d'un fichier, même si celui ci est compréssé
  * avec une extension en `.gz`
- * 
+ *
  * @param string $fichier
  *     Chemin du fichier
  * @return string
  *     Contenu du fichier
-**/
+ **/
 function spip_file_get_contents($fichier) {
 	if (substr($fichier, -3) != '.gz') {
 		if (function_exists('file_get_contents')) {
@@ -125,7 +130,7 @@ function spip_file_get_contents($fichier) {
 		$contenu = @gzfile($fichier);
 	}
 
-	return is_array($contenu)?join('', $contenu):(string)$contenu;
+	return is_array($contenu) ? join('', $contenu) : (string)$contenu;
 }
 
 
@@ -137,7 +142,7 @@ function spip_file_get_contents($fichier) {
  * @uses spip_fopen_lock()
  * @uses spip_file_get_contents()
  * @uses spip_fclose_unlock()
- * 
+ *
  * @param string $fichier
  *     Chemin du fichier
  * @param string $contenu
@@ -148,13 +153,14 @@ function spip_file_get_contents($fichier) {
  *     - 'phpcheck' => 'oui' : vérifie qu'on a bien du php
  * @return bool
  *     true si l'opération a réussie, false sinon.
-**/
-function lire_fichier ($fichier, &$contenu, $options = array()) {
+ **/
+function lire_fichier($fichier, &$contenu, $options = array()) {
 	$contenu = '';
 	// inutile car si le fichier n'existe pas, le lock va renvoyer false juste apres
 	// economisons donc les acces disque, sauf chez free qui rale pour un rien
-	if (_TEST_FILE_EXISTS AND !@file_exists($fichier))
+	if (_TEST_FILE_EXISTS AND !@file_exists($fichier)) {
 		return false;
+	}
 
 	#spip_timer('lire_fichier');
 
@@ -169,6 +175,7 @@ function lire_fichier ($fichier, &$contenu, $options = array()) {
 		// et eviter un acces disque
 		if (!$contenu AND !@file_exists($fichier)) {
 			spip_fclose_unlock($fl);
+
 			return false;
 		}
 
@@ -177,15 +184,18 @@ function lire_fichier ($fichier, &$contenu, $options = array()) {
 
 		// Verifications
 		$ok = true;
-		if (isset($options['phpcheck']) and $options['phpcheck'] == 'oui')
+		if (isset($options['phpcheck']) and $options['phpcheck'] == 'oui') {
 			$ok &= (preg_match(",[?]>\n?$,", $contenu));
+		}
 
 		#spip_log("$fread $fichier ".spip_timer('lire_fichier'));
-		if (!$ok)
+		if (!$ok) {
 			spip_log("echec lecture $fichier");
+		}
 
 		return $ok;
 	}
+
 	return false;
 }
 
@@ -195,11 +205,11 @@ function lire_fichier ($fichier, &$contenu, $options = array()) {
  *
  * Cette écriture s’exécute de façon sécurisée en posant un verrou sur
  * le fichier avant sa modification. Les fichiers .gz sont compressés.
- * 
+ *
  * @uses raler_fichier() Si le fichier n'a pu peut être écrit
- * @see lire_fichier()
- * @see supprimer_fichier()
- * 
+ * @see  lire_fichier()
+ * @see  supprimer_fichier()
+ *
  * @param string $fichier
  *     Chemin du fichier
  * @param string $contenu
@@ -211,29 +221,31 @@ function lire_fichier ($fichier, &$contenu, $options = array()) {
  *     Écriture avec troncation ?
  * @return bool
  *     - true si l’écriture s’est déroulée sans problème.
-**/
-function ecrire_fichier ($fichier, $contenu, $ignorer_echec = false, $truncate = true) {
+ **/
+function ecrire_fichier($fichier, $contenu, $ignorer_echec = false, $truncate = true) {
 
 	#spip_timer('ecrire_fichier');
 
 	// verrouiller le fichier destination
-	if ($fp = spip_fopen_lock($fichier, 'a',LOCK_EX)) {
-	// ecrire les donnees, compressees le cas echeant
-	// (on ouvre un nouveau pointeur sur le fichier, ce qui a l'avantage
-	// de le recreer si le locker qui nous precede l'avait supprime...)
-		if (substr($fichier, -3) == '.gz')
+	if ($fp = spip_fopen_lock($fichier, 'a', LOCK_EX)) {
+		// ecrire les donnees, compressees le cas echeant
+		// (on ouvre un nouveau pointeur sur le fichier, ce qui a l'avantage
+		// de le recreer si le locker qui nous precede l'avait supprime...)
+		if (substr($fichier, -3) == '.gz') {
 			$contenu = gzencode($contenu);
+		}
 		// si c'est une ecriture avec troncation , on fait plutot une ecriture complete a cote suivie unlink+rename
 		// pour etre sur d'avoir une operation atomique
 		// y compris en NFS : http://www.ietf.org/rfc/rfc1094.txt
 		// sauf sous wintruc ou ca ne marche pas
 		$ok = false;
-		if ($truncate AND _OS_SERVEUR != 'windows'){
-			if (!function_exists('creer_uniqid'))
+		if ($truncate AND _OS_SERVEUR != 'windows') {
+			if (!function_exists('creer_uniqid')) {
 				include_spip('inc/acces');
+			}
 			$id = creer_uniqid();
 			// on ouvre un pointeur sur un fichier temporaire en ecriture +raz
-			if ($fp2 = spip_fopen_lock("$fichier.$id", 'w',LOCK_EX)) {
+			if ($fp2 = spip_fopen_lock("$fichier.$id", 'w', LOCK_EX)) {
 				$s = @fputs($fp2, $contenu, $a = strlen($contenu));
 				$ok = ($s == $a);
 				spip_fclose_unlock($fp2);
@@ -244,23 +256,26 @@ function ecrire_fichier ($fichier, $contenu, $ignorer_echec = false, $truncate =
 				// le rename aussitot, atomique quand on est pas sous windows
 				// au pire on arrive en second en cas de concourance, et le rename echoue
 				// --> on a la version de l'autre process qui doit etre identique
-				@rename("$fichier.$id",$fichier);
+				@rename("$fichier.$id", $fichier);
 				// precaution en cas d'echec du rename
-				if (!_TEST_FILE_EXISTS OR @file_exists("$fichier.$id"))
+				if (!_TEST_FILE_EXISTS OR @file_exists("$fichier.$id")) {
 					@unlink("$fichier.$id");
-				if ($ok)
+				}
+				if ($ok) {
 					$ok = file_exists($fichier);
-			}
-			else
-				// echec mais penser a fermer ..
+				}
+			} else // echec mais penser a fermer ..
+			{
 				spip_fclose_unlock($fp);
+			}
 		}
 		// sinon ou si methode precedente a echoueee
 		// on se rabat sur la methode ancienne
-		if (!$ok){
+		if (!$ok) {
 			// ici on est en ajout ou sous windows, cas desespere
-			if ($truncate)
-				@ftruncate($fp,0);
+			if ($truncate) {
+				@ftruncate($fp, 0);
+			}
 			$s = @fputs($fp, $contenu, $a = strlen($contenu));
 
 			$ok = ($s == $a);
@@ -270,20 +285,23 @@ function ecrire_fichier ($fichier, $contenu, $ignorer_echec = false, $truncate =
 		// liberer le verrou et fermer le fichier
 		@chmod($fichier, _SPIP_CHMOD & 0666);
 		if ($ok) {
-			if (strpos($fichier,".php")!==false){
+			if (strpos($fichier, ".php") !== false) {
 				spip_clear_opcode_cache(realpath($fichier));
 			}
+
 			return $ok;
 		}
 	}
 
-	if (!$ignorer_echec){
+	if (!$ignorer_echec) {
 		include_spip('inc/autoriser');
-		if (autoriser('chargerftp'))
+		if (autoriser('chargerftp')) {
 			raler_fichier($fichier);
+		}
 		spip_unlink($fichier);
 	}
-	spip_log("Ecriture fichier $fichier impossible",_LOG_INFO_IMPORTANTE);
+	spip_log("Ecriture fichier $fichier impossible", _LOG_INFO_IMPORTANTE);
+
 	return false;
 }
 
@@ -292,7 +310,7 @@ function ecrire_fichier ($fichier, $contenu, $ignorer_echec = false, $truncate =
  * de fichier htaccess
  *
  * @uses ecrire_fichier()
- * 
+ *
  * @param string $fichier
  *     Chemin du fichier
  * @param string $contenu
@@ -303,10 +321,12 @@ function ecrire_fichier ($fichier, $contenu, $ignorer_echec = false, $truncate =
  * @param bool $truncate
  *     Écriture avec troncation ?
  */
-function ecrire_fichier_securise ($fichier, $contenu, $ecrire_quand_meme = false, $truncate = true) {
-	if (substr($fichier,-4) !== '.php')
-		spip_log('Erreur de programmation: '.$fichier.' doit finir par .php');
-	$contenu = "<"."?php die ('Acces interdit'); ?".">\n" . $contenu;
+function ecrire_fichier_securise($fichier, $contenu, $ecrire_quand_meme = false, $truncate = true) {
+	if (substr($fichier, -4) !== '.php') {
+		spip_log('Erreur de programmation: ' . $fichier . ' doit finir par .php');
+	}
+	$contenu = "<" . "?php die ('Acces interdit'); ?" . ">\n" . $contenu;
+
 	return ecrire_fichier($fichier, $contenu, $ecrire_quand_meme, $truncate);
 }
 
@@ -314,7 +334,7 @@ function ecrire_fichier_securise ($fichier, $contenu, $ecrire_quand_meme = false
  * Lire un fichier encapsulé en PHP
  *
  * @uses lire_fichier()
- * 
+ *
  * @param string $fichier
  *     Chemin du fichier
  * @param string $contenu
@@ -326,10 +346,11 @@ function ecrire_fichier_securise ($fichier, $contenu, $ecrire_quand_meme = false
  * @return bool
  *     true si l'opération a réussie, false sinon.
  */
-function lire_fichier_securise ($fichier, &$contenu, $options = array()) {
-	if ($res = lire_fichier($fichier,$contenu,$options)){
-		$contenu = substr($contenu,strlen("<"."?php die ('Acces interdit'); ?".">\n"));
+function lire_fichier_securise($fichier, &$contenu, $options = array()) {
+	if ($res = lire_fichier($fichier, $contenu, $options)) {
+		$contenu = substr($contenu, strlen("<" . "?php die ('Acces interdit'); ?" . ">\n"));
 	}
+
 	return $res;
 }
 
@@ -340,12 +361,11 @@ function lire_fichier_securise ($fichier, &$contenu, $options = array()) {
  * Arrête le script PHP par un exit;
  *
  * @uses minipres() Pour afficher le message
- * 
+ *
  * @param string $fichier
  *     Chemin du fichier
-**/
-function raler_fichier($fichier)
-{
+ **/
+function raler_fichier($fichier) {
 	include_spip('inc/minipres');
 	$dir = dirname($fichier);
 	http_status(401);
@@ -357,7 +377,7 @@ function raler_fichier($fichier)
 		. _T('texte_inc_meta_2')
 		. "</a> "
 		. _T('texte_inc_meta_3',
-		     array('repertoire' => joli_repertoire($dir)))
+			array('repertoire' => joli_repertoire($dir)))
 		. "</h4>\n");
 	exit;
 }
@@ -373,10 +393,14 @@ function raler_fichier($fichier)
  * @return bool
  *     - true si récent, false sinon
  */
-function jeune_fichier($fichier, $n)
-{
-	if (!file_exists($fichier)) return false;
-	if (!$c = @filemtime($fichier)) return false;
+function jeune_fichier($fichier, $n) {
+	if (!file_exists($fichier)) {
+		return false;
+	}
+	if (!$c = @filemtime($fichier)) {
+		return false;
+	}
+
 	return (time()-$n <= $c);
 }
 
@@ -393,18 +417,20 @@ function jeune_fichier($fichier, $n)
  *     - void sinon
  */
 function supprimer_fichier($fichier, $lock = true) {
-	if (!@file_exists($fichier))
+	if (!@file_exists($fichier)) {
 		return true;
+	}
 
 	if ($lock) {
 		// verrouiller le fichier destination
-		if (!$fp = spip_fopen_lock($fichier, 'a', LOCK_EX))
+		if (!$fp = spip_fopen_lock($fichier, 'a', LOCK_EX)) {
 			return false;
-	
+		}
+
 		// liberer le verrou
 		spip_fclose_unlock($fp);
 	}
-	
+
 	// supprimer
 	return @unlink($fichier);
 }
@@ -416,9 +442,9 @@ function supprimer_fichier($fichier, $lock = true) {
  *     Chemin du fichier
  */
 function spip_unlink($f) {
-	if (!is_dir($f))
-		supprimer_fichier($f,false);
-	else {
+	if (!is_dir($f)) {
+		supprimer_fichier($f, false);
+	} else {
 		@unlink("$f/.ok");
 		@rmdir($f);
 	}
@@ -426,17 +452,17 @@ function spip_unlink($f) {
 
 /**
  * clearstatcache adapte a la version PHP
+ *
  * @param bool $clear_realpath_cache
  * @param null $filename
  */
-function spip_clearstatcache($clear_realpath_cache = false, $filename = null){
+function spip_clearstatcache($clear_realpath_cache = false, $filename = null) {
 	if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
-   // Below PHP 5.3, clearstatcache does not accept any function parameters.
-   return clearstatcache();
- }
- else {
-	 return clearstatcache($clear_realpath_cache, $filename);
- }
+		// Below PHP 5.3, clearstatcache does not accept any function parameters.
+		return clearstatcache();
+	} else {
+		return clearstatcache($clear_realpath_cache, $filename);
+	}
 
 }
 
@@ -451,19 +477,19 @@ function spip_clearstatcache($clear_realpath_cache = false, $filename = null){
  *   The absolute path of the PHP file to invalidate.
  */
 function spip_clear_opcode_cache($filepath) {
-	spip_clearstatcache(TRUE, $filepath);
+	spip_clearstatcache(true, $filepath);
 
-  // Zend OPcache
-  if (function_exists('opcache_invalidate')) {
-    opcache_invalidate($filepath, TRUE);
-  }
-  // APC.
-  if (function_exists('apc_delete_file')) {
-    // apc_delete_file() throws a PHP warning in case the specified file was
-    // not compiled yet.
-    // @see http://php.net/apc-delete-file
-    @apc_delete_file($filepath);
-  }
+	// Zend OPcache
+	if (function_exists('opcache_invalidate')) {
+		opcache_invalidate($filepath, true);
+	}
+	// APC.
+	if (function_exists('apc_delete_file')) {
+		// apc_delete_file() throws a PHP warning in case the specified file was
+		// not compiled yet.
+		// @see http://php.net/apc-delete-file
+		@apc_delete_file($filepath);
+	}
 }
 
 /**
@@ -477,11 +503,12 @@ function spip_clear_opcode_cache($filepath) {
  * Ne fait rien en dehors de ce cas
  *
  */
-function spip_attend_invalidation_opcode_cache(){
+function spip_attend_invalidation_opcode_cache() {
 	if (function_exists('opcache_get_configuration')
-	  AND @ini_get('opcache.enable')
-	  AND @ini_get('opcache.validate_timestamps')
-	  AND $duree = @ini_get('opcache.revalidate_freq') ) {
+		AND @ini_get('opcache.enable')
+		AND @ini_get('opcache.validate_timestamps')
+		AND $duree = @ini_get('opcache.revalidate_freq')
+	) {
 		sleep($duree+1);
 	}
 }
@@ -496,17 +523,25 @@ function spip_attend_invalidation_opcode_cache(){
  * @return bool Suppression reussie.
  */
 function supprimer_repertoire($dir) {
-	if (!file_exists($dir)) return true;
-	if (!is_dir($dir) || is_link($dir)) return @unlink($dir);
-	
+	if (!file_exists($dir)) {
+		return true;
+	}
+	if (!is_dir($dir) || is_link($dir)) {
+		return @unlink($dir);
+	}
+
 	foreach (scandir($dir) as $item) {
-		if ($item == '.' || $item == '..') continue;
+		if ($item == '.' || $item == '..') {
+			continue;
+		}
 		if (!supprimer_repertoire($dir . "/" . $item)) {
 			@chmod($dir . "/" . $item, 0777);
-			if (!supprimer_repertoire($dir . "/" . $item)) return false;
+			if (!supprimer_repertoire($dir . "/" . $item)) {
+				return false;
+			}
 		};
 	}
-	
+
 	return @rmdir($dir);
 }
 
@@ -522,7 +557,7 @@ function supprimer_repertoire($dir) {
  *     sous_repertoire(_DIR_CACHE, 'demo');
  *     sous_repertoire(_DIR_CACHE . '/demo');
  *     ```
- * 
+ *
  * @param string $base
  *     - Chemin du répertoire parent (avec $subdir)
  *     - sinon chemin du répertoire à créer
@@ -534,8 +569,8 @@ function supprimer_repertoire($dir) {
  * @param bool $tantpis
  *     true pour ne pas raler en cas de non création du répertoire
  * @return string
- *     Chemin du répertoire créé. 
-**/
+ *     Chemin du répertoire créé.
+ **/
 function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false) {
 	static $dirs = array();
 
@@ -546,7 +581,9 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
 
 	if (!strlen($subdir)) {
 		$n = strrpos($base, "/");
-		if ($n === false) return $nobase ? '' : ($base .'/');
+		if ($n === false) {
+			return $nobase ? '' : ($base . '/');
+		}
 		$subdir = substr($base, $n+1);
 		$base = substr($base, 0, $n+1);
 	} else {
@@ -555,50 +592,59 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
 	}
 
 	$baseaff = $nobase ? '' : $base;
-	if (isset($dirs[$base.$subdir]))
-		return $baseaff.$dirs[$base.$subdir];
+	if (isset($dirs[$base . $subdir])) {
+		return $baseaff . $dirs[$base . $subdir];
+	}
 
 
-	if (_CREER_DIR_PLAT AND @file_exists("$base${subdir}.plat"))
-		return $baseaff.($dirs[$base.$subdir] = "${subdir}_");
+	if (_CREER_DIR_PLAT AND @file_exists("$base${subdir}.plat")) {
+		return $baseaff . ($dirs[$base . $subdir] = "${subdir}_");
+	}
 
-	$path = $base.$subdir; # $path = 'IMG/distant/pdf' ou 'IMG/distant_pdf'
+	$path = $base . $subdir; # $path = 'IMG/distant/pdf' ou 'IMG/distant_pdf'
 
-	if (file_exists("$path/.ok"))
-		return $baseaff.($dirs[$base.$subdir] = "$subdir/");
+	if (file_exists("$path/.ok")) {
+		return $baseaff . ($dirs[$base . $subdir] = "$subdir/");
+	}
 
 	@mkdir($path, _SPIP_CHMOD);
 	@chmod($path, _SPIP_CHMOD);
 
 	$ok = false;
 	if ($test = @fopen("$path/dir_test.php", "w")) {
-		@fputs($test, '<'.'?php $ok = true; ?'.'>');
+		@fputs($test, '<' . '?php $ok = true; ?' . '>');
 		@fclose($test);
 		@include("$path/dir_test.php");
 		spip_unlink("$path/dir_test.php");
 	}
 	if ($ok) {
-		@touch ("$path/.ok");
+		@touch("$path/.ok");
 		spip_log("creation $base$subdir/");
-		return $baseaff.($dirs[$base.$subdir] = "$subdir/");
+
+		return $baseaff . ($dirs[$base . $subdir] = "$subdir/");
 	}
 
 	// en cas d'echec c'est peut etre tout simplement que le disque est plein :
 	// l'inode du fichier dir_test existe, mais impossible d'y mettre du contenu
 	// => sauf besoin express (define dans mes_options), ne pas creer le .plat
 	if (_CREER_DIR_PLAT
-	AND $f = @fopen("$base${subdir}.plat", "w"))
+		AND $f = @fopen("$base${subdir}.plat", "w")
+	) {
 		fclose($f);
-	else {
+	} else {
 		spip_log("echec creation $base${subdir}");
-		if ($tantpis) return '';
-		if (!_DIR_RESTREINT)
-			$base = preg_replace(',^' . _DIR_RACINE .',', '',$base);
+		if ($tantpis) {
+			return '';
+		}
+		if (!_DIR_RESTREINT) {
+			$base = preg_replace(',^' . _DIR_RACINE . ',', '', $base);
+		}
 		$base .= $subdir;
-		raler_fichier($base . ($test?'/.ok':'/dir_test.php'));
+		raler_fichier($base . ($test ? '/.ok' : '/dir_test.php'));
 	}
 	spip_log("faux sous-repertoire $base${subdir}");
-	return $baseaff.($dirs[$base.$subdir] = "${subdir}_");
+
+	return $baseaff . ($dirs[$base . $subdir] = "${subdir}_");
 }
 
 
@@ -613,12 +659,12 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
  *     $x = preg_files('ecrire/data/', '[.]lock$');
  *     // $x array()
  *     ```
- * 
+ *
  * @note
  *   Attention, afin de conserver la compatibilite avec les repertoires '.plat'
  *   si `$dir = 'rep/sous_rep_'` au lieu de `rep/sous_rep/` on scanne `rep/` et on
  *   applique un pattern `^rep/sous_rep_`
- * 
+ *
  * @param string $dir
  *     Répertoire à parcourir
  * @param int|string $pattern
@@ -629,40 +675,46 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
  *     false pour ne pas descendre dans les sous répertoires
  * @return array
  *     Chemins des fichiers trouvés.
-**/
+ **/
 function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs = array()) {
 	$nbfiles = 0;
-	if ($pattern == -1)
+	if ($pattern == -1) {
 		$pattern = "^$dir";
+	}
 	$fichiers = array();
 	// revenir au repertoire racine si on a recu dossier/truc
 	// pour regarder dossier/truc/ ne pas oublier le / final
 	$dir = preg_replace(',/[^/]*$,', '', $dir);
-	if ($dir == '') $dir = '.';
+	if ($dir == '') {
+		$dir = '.';
+	}
 
 	if (@is_dir($dir) AND is_readable($dir) AND $d = @opendir($dir)) {
-		while (($f = readdir($d)) !== false && ($nbfiles<$maxfiles)) {
+		while (($f = readdir($d)) !== false && ($nbfiles < $maxfiles)) {
 			if ($f[0] != '.' # ignorer . .. .svn etc
-			AND $f != 'CVS'
-			AND $f != 'remove.txt'
-			AND is_readable($f = "$dir/$f")) {
+				AND $f != 'CVS'
+				AND $f != 'remove.txt'
+				AND is_readable($f = "$dir/$f")
+			) {
 				if (is_file($f)) {
-					if (preg_match(";$pattern;iS", $f))
-					{
+					if (preg_match(";$pattern;iS", $f)) {
 						$fichiers[] = $f;
 						$nbfiles++;
 					}
-				} 
-				else if (is_dir($f) AND is_array($recurs)){
-					$rp = @realpath($f);
-					if (!is_string($rp) OR !strlen($rp)) $rp=$f; # realpath n'est peut etre pas autorise
-					if (!isset($recurs[$rp])) {
-						$recurs[$rp] = true;
-						$beginning = $fichiers;
-						$end = preg_files("$f/", $pattern,
-							$maxfiles-$nbfiles, $recurs);
-						$fichiers = array_merge((array)$beginning, (array)$end);
-						$nbfiles = count($fichiers);
+				} else {
+					if (is_dir($f) AND is_array($recurs)) {
+						$rp = @realpath($f);
+						if (!is_string($rp) OR !strlen($rp)) {
+							$rp = $f;
+						} # realpath n'est peut etre pas autorise
+						if (!isset($recurs[$rp])) {
+							$recurs[$rp] = true;
+							$beginning = $fichiers;
+							$end = preg_files("$f/", $pattern,
+								$maxfiles-$nbfiles, $recurs);
+							$fichiers = array_merge((array)$beginning, (array)$end);
+							$nbfiles = count($fichiers);
+						}
 					}
 				}
 			}
@@ -670,6 +722,7 @@ function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs =
 		closedir($d);
 	}
 	sort($fichiers);
+
 	return $fichiers;
 }
 

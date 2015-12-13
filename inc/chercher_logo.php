@@ -14,15 +14,17 @@
  * Recherche de logo
  *
  * @package SPIP\Core\Logos
-**/
-if (!defined('_ECRIRE_INC_VERSION')) return;
+ **/
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Cherche le logo d'un élément d'objet
  *
  * @global formats_logos Extensions possibles des logos
  * @uses type_du_logo()
- * 
+ *
  * @param int $id
  *     Identifiant de l'objet
  * @param string $_id_objet
@@ -32,7 +34,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return array
  *     - Liste (chemin complet du fichier, répertoire de logos, nom du logo, extension du logo, date de modification)
  *     - array vide aucun logo trouvé.
-**/
+ **/
 function inc_chercher_logo_dist($id, $_id_objet, $mode = 'on') {
 	# attention au cas $id = '0' pour LOGO_SITE_SPIP : utiliser intval()
 
@@ -44,6 +46,7 @@ function inc_chercher_logo_dist($id, $_id_objet, $mode = 'on') {
 			return array($d, _DIR_LOGOS, $nom, $format, @filemtime($d));
 		}
 	}
+
 	# coherence de type pour servir comme filtre (formulaire_login)
 	return array();
 }
@@ -56,22 +59,22 @@ function inc_chercher_logo_dist($id, $_id_objet, $mode = 'on') {
  * déclarées par la globale `$table_logos`
  *
  * @global table_logos Exceptions des types de logo
- * 
+ *
  * @param string $_id_objet
  *     Nom de la clé primaire de l'objet
  * @return string
  *     Type du logo
-**/
+ **/
 function type_du_logo($_id_objet) {
 	return isset($GLOBALS['table_logos'][$_id_objet])
 		? $GLOBALS['table_logos'][$_id_objet]
-		: objet_type(preg_replace(',^id_,','',$_id_objet));
+		: objet_type(preg_replace(',^id_,', '', $_id_objet));
 }
 
 // Exceptions standards (historique)
 $GLOBALS['table_logos'] = array(
-	'id_article' => 'art', 
-	'id_auteur' => 'aut', 
+	'id_article' => 'art',
+	'id_auteur' => 'aut',
 	'id_rubrique' => 'rub',
 	'id_groupe' => 'groupe',
 );

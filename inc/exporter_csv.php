@@ -14,9 +14,11 @@
  * Gestion d'export de données au format CSV
  *
  * @package SPIP\Core\CSV\Export
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/charsets');
 include_spip('inc/filtres');
@@ -25,7 +27,7 @@ include_spip('inc/texte');
 /**
  * Exporter un champ pour un export CSV : pas de retour a la ligne,
  * et echapper les guillements par des doubles guillemets
- * 
+ *
  * @param string $champ
  * @return string
  */
@@ -35,14 +37,15 @@ function exporter_csv_champ($champ) {
 	#$champ = str_replace("\n", ", ", $champ);
 	$champ = preg_replace(',[\s]+,ms', ' ', $champ);
 	$champ = str_replace('"', '""', $champ);
-	return '"'.$champ.'"';
+
+	return '"' . $champ . '"';
 }
 
 /**
  * Exporter une ligne complete au format CSV, avec delimiteur fourni
  *
  * @uses exporter_csv_champ()
- * 
+ *
  * @param array $ligne
  * @param string $delim
  * @param string|null $importer_charset
@@ -50,23 +53,24 @@ function exporter_csv_champ($champ) {
  * @return string
  */
 function exporter_csv_ligne($ligne, $delim = ', ', $importer_charset = null) {
-	$output = join($delim, array_map('exporter_csv_champ', $ligne))."\r\n";
-	if ($importer_charset){
+	$output = join($delim, array_map('exporter_csv_champ', $ligne)) . "\r\n";
+	if ($importer_charset) {
 		$output = unicode2charset(html2unicode(charset2unicode($output)), $importer_charset);
 	}
+
 	return $output;
 }
 
 /**
  * Exporte une ressource sous forme de fichier CSV
- * 
+ *
  * La ressource peut etre un tableau ou une resource SQL issue d'une requete
  * L'extension est choisie en fonction du delimiteur :
  * - si on utilise ',' c'est un vrai csv avec extension csv
  * - si on utilise ';' ou tabulation c'est pour E*cel, et on exporte en iso-truc, avec une extension .xls
  *
  * @uses exporter_csv_ligne()
- * 
+ *
  * @param string $titre
  *   titre utilise pour nommer le fichier
  * @param array|resource $resource
@@ -78,19 +82,22 @@ function exporter_csv_ligne($ligne, $delim = ', ', $importer_charset = null) {
  *   pour envoyer le fichier exporte (permet le telechargement)
  * @return string
  */
-function inc_exporter_csv_dist($titre, $resource, $delim = ', ', $entetes = null, $envoyer = true){
+function inc_exporter_csv_dist($titre, $resource, $delim = ', ', $entetes = null, $envoyer = true) {
 
 	$filename = preg_replace(',[^-_\w]+,', '_', translitteration(textebrut(typo($titre))));
-	
-	if ($delim == 'TAB') $delim = "\t";
-	if (!in_array($delim,array(',',';',"\t")))
+
+	if ($delim == 'TAB') {
+		$delim = "\t";
+	}
+	if (!in_array($delim, array(',', ';', "\t"))) {
 		$delim = ",";
+	}
 
 	$charset = $GLOBALS['meta']['charset'];
 	$importer_charset = null;
-	if ($delim == ',')
+	if ($delim == ',') {
 		$extension = 'csv';
-	else {
+	} else {
 		$extension = 'xls';
 		# Excel n'accepte pas l'utf-8 ni les entites html... on transcode tout ce qu'on peut
 		$importer_charset = $charset = 'iso-8859-1';
@@ -98,17 +105,17 @@ function inc_exporter_csv_dist($titre, $resource, $delim = ', ', $entetes = null
 	$filename = "$filename.$extension";
 
 	if ($entetes AND is_array($entetes) AND count($entetes)) {
-		$output = exporter_csv_ligne($entetes,$delim,$importer_charset);
+		$output = exporter_csv_ligne($entetes, $delim, $importer_charset);
 	}
 
 	// on passe par un fichier temporaire qui permet de ne pas saturer la memoire
 	// avec les gros exports
-	$fichier = sous_repertoire(_DIR_CACHE,"export") . $filename;
+	$fichier = sous_repertoire(_DIR_CACHE, "export") . $filename;
 	$fp = fopen($fichier, 'w');
 	$length = fwrite($fp, $output);
 
-	while ($row=is_array($resource)?array_shift($resource):sql_fetch($resource)){
-		$output = exporter_csv_ligne($row,$delim,$importer_charset);
+	while ($row = is_array($resource) ? array_shift($resource) : sql_fetch($resource)) {
+		$output = exporter_csv_ligne($row, $delim, $importer_charset);
 		$length += fwrite($fp, $output);
 	}
 	fclose($fp);

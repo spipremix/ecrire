@@ -11,27 +11,31 @@
 \***************************************************************************/
 
 /**
- * Gestion de l'action pour s'autoriser webmestre 
- * 
+ * Gestion de l'action pour s'autoriser webmestre
+ *
  * @package SPIP\Core\Autorisations
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/actions');
 
 /**
  * Prouver qu'on a les droits de webmestre via un ftp, et
  * devenir webmestre sans refaire l'install
+ *
  * @return void
  */
 function action_etre_webmestre_dist() {
 	$securiser_action = charger_fonction('securiser_action', 'inc');
 	$time = $securiser_action();
 
-	if (time()-$time<15*60
-		AND $GLOBALS['visiteur_session']['statut']=='0minirezo'
-		AND $GLOBALS['visiteur_session']['webmestre']!=='oui') {
+	if (time()-$time < 15*60
+		AND $GLOBALS['visiteur_session']['statut'] == '0minirezo'
+		AND $GLOBALS['visiteur_session']['webmestre'] !== 'oui'
+	) {
 		$action = _T('info_admin_etre_webmestre');
 		$admin = charger_fonction('admin', 'inc');
 		// lance la verif par ftp et l'appel
@@ -46,12 +50,14 @@ function action_etre_webmestre_dist() {
 
 /**
  * Passe l'administrateur connecté en webmestre.
+ *
  * @return void
  */
 function base_etre_webmestre_dist() {
-	if ($GLOBALS['visiteur_session']['statut']=='0minirezo' AND $GLOBALS['visiteur_session']['webmestre']!=='oui') {
+	if ($GLOBALS['visiteur_session']['statut'] == '0minirezo' AND $GLOBALS['visiteur_session']['webmestre'] !== 'oui') {
 		include_spip('action/editer_auteur');
-		instituer_auteur($GLOBALS['visiteur_session']['id_auteur'], array('webmestre'=>'oui'), true);
+		instituer_auteur($GLOBALS['visiteur_session']['id_auteur'], array('webmestre' => 'oui'), true);
 	}
 }
+
 ?>

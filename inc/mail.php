@@ -17,19 +17,23 @@
  * @package SPIP\Core\Mail
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 if (!function_exists('envoyer_mail')) {
 	define('_FUNCTION_ENVOYER_MAIL', charger_fonction('envoyer_mail', 'inc'));
 	/**
 	 * Envoie un mail.
+	 *
 	 * @uses inc_envoyer_mail_dist()
 	 * @deprecated Utiliser inc_envoyer_mail_dist() via charger_fonction()
-	**/
+	 **/
 	function envoyer_mail() {
 		$args = func_get_args();
-		if (_FUNCTION_ENVOYER_MAIL)
+		if (_FUNCTION_ENVOYER_MAIL) {
 			return call_user_func_array(_FUNCTION_ENVOYER_MAIL, $args);
+		}
 	}
 }
 

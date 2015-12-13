@@ -18,7 +18,9 @@
  * @package SPIP\Core\Session
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 $GLOBALS['visiteur_session'] = array(); # globale decrivant l'auteur
@@ -37,14 +39,16 @@ $GLOBALS['visiteur_session'] = array(); # globale decrivant l'auteur
  * @param int|array|bool $auteur
  * @return bool|null|void
  */
-function inc_session_dist($auteur = false)
-{
-	if (is_numeric($auteur))
+function inc_session_dist($auteur = false) {
+	if (is_numeric($auteur)) {
 		return supprimer_sessions($auteur, $auteur > 0);
-	else if (is_array($auteur))
-		return ajouter_session($auteur);
-	else
-		return verifier_session($auteur);
+	} else {
+		if (is_array($auteur)) {
+			return ajouter_session($auteur);
+		} else {
+			return verifier_session($auteur);
+		}
+	}
 }
 
 
@@ -73,20 +77,20 @@ function inc_session_dist($auteur = false)
  */
 function supprimer_sessions($id_auteur, $toutes = true, $actives = true) {
 
-	spip_log("supprimer sessions auteur $id_auteur","session");
-	if ($toutes OR $id_auteur!==$GLOBALS['visiteur_session']['id_auteur']) {
-		if ($dir = opendir(_DIR_SESSIONS)){
-			$t = time()  - (4*_RENOUVELLE_ALEA);
-			while(($f = readdir($dir)) !== false) {
-				if (preg_match(",^[^\d-]*(-?\d+)_\w{32}\.php[3]?$,", $f, $regs)){
+	spip_log("supprimer sessions auteur $id_auteur", "session");
+	if ($toutes OR $id_auteur !== $GLOBALS['visiteur_session']['id_auteur']) {
+		if ($dir = opendir(_DIR_SESSIONS)) {
+			$t = time()-(4*_RENOUVELLE_ALEA);
+			while (($f = readdir($dir)) !== false) {
+				if (preg_match(",^[^\d-]*(-?\d+)_\w{32}\.php[3]?$,", $f, $regs)) {
 					$f = _DIR_SESSIONS . $f;
-					if (($actives AND $regs[1] == $id_auteur) OR ($t > filemtime($f)))
+					if (($actives AND $regs[1] == $id_auteur) OR ($t > filemtime($f))) {
 						spip_unlink($f);
+					}
 				}
 			}
 		}
-	}
-	else {
+	} else {
 		verifier_session();
 		spip_unlink(fichier_session('alea_ephemere', true));
 	}
@@ -103,7 +107,7 @@ function supprimer_sessions($id_auteur, $toutes = true, $actives = true) {
  * @uses preparer_ecriture_session()
  * @uses fichier_session()
  * @uses ecrire_fichier_session()
- * 
+ *
  * @param array $auteur
  *     Description de la session de l'auteur. Peut contenir (par exemple)
  *     les clés : id_auteur, nom, login, email, statut, lang, ...
@@ -119,43 +123,61 @@ function ajouter_session($auteur) {
 
 	// Si ce n'est pas un inscrit (les inscrits ont toujours des choses en session)
 	// on va vérifier s'il y a vraiment des choses à écrire
-	if (!$id_auteur){
+	if (!$id_auteur) {
 		// On supprime les données de base pour voir le contenu réel de la session
 		$auteur_verif = $auteur;
-		if (isset($auteur_verif['id_auteur'])) unset($auteur_verif['id_auteur']);
-		if (isset($auteur_verif['hash_env'])) unset($auteur_verif['hash_env']);
-		if (isset($auteur_verif['ip_change'])) unset($auteur_verif['ip_change']);
-		if (isset($auteur_verif['date_session'])) unset($auteur_verif['date_session']);
+		if (isset($auteur_verif['id_auteur'])) {
+			unset($auteur_verif['id_auteur']);
+		}
+		if (isset($auteur_verif['hash_env'])) {
+			unset($auteur_verif['hash_env']);
+		}
+		if (isset($auteur_verif['ip_change'])) {
+			unset($auteur_verif['ip_change']);
+		}
+		if (isset($auteur_verif['date_session'])) {
+			unset($auteur_verif['date_session']);
+		}
 
 		// Les variables vraiment nulle ne sont pas à prendre en compte non plus
-		foreach($auteur_verif as $variable=>$valeur){
-			if ($valeur === null){
+		foreach ($auteur_verif as $variable => $valeur) {
+			if ($valeur === null) {
 				unset($auteur_verif[$variable]);
 			}
 		}
 
 		// Si après ça la session est vide alors on supprime l'éventuel fichier et on arrête là
-		if (!$auteur_verif){
-			if (isset($_COOKIE['spip_session']) AND isset($_SESSION[$_COOKIE['spip_session']]))
+		if (!$auteur_verif) {
+			if (isset($_COOKIE['spip_session']) AND isset($_SESSION[$_COOKIE['spip_session']])) {
 				unset($_SESSION[$_COOKIE['spip_session']]);
-			if (isset($_COOKIE['spip_session']))
+			}
+			if (isset($_COOKIE['spip_session'])) {
 				unset($_COOKIE['spip_session']);
+			}
+
 			return false;
 		}
 	}
 
 	if (!isset($_COOKIE['spip_session'])
-	  OR !preg_match(',^'.$id_auteur.'_,', $_COOKIE['spip_session'])){
-		$_COOKIE['spip_session'] = $id_auteur.'_'.md5(uniqid(rand(),true));
+		OR !preg_match(',^' . $id_auteur . '_,', $_COOKIE['spip_session'])
+	) {
+		$_COOKIE['spip_session'] = $id_auteur . '_' . md5(uniqid(rand(), true));
 	}
 
 	// Maintenant on sait qu'on a des choses à écrire
 	// On s'assure d'avoir au moins ces valeurs
 	$auteur['id_auteur'] = $id_auteur;
-	if (!isset($auteur['hash_env'])) $auteur['hash_env'] = hash_env();
-	if (!isset($auteur['ip_change'])) $auteur['ip_change'] = false;
+	if (!isset($auteur['hash_env'])) {
+		$auteur['hash_env'] = hash_env();
+	}
+	if (!isset($auteur['ip_change'])) {
+		$auteur['ip_change'] = false;
+	}
 
-	if (!isset($auteur['date_session'])) $auteur['date_session'] = time();
+	if (!isset($auteur['date_session'])) {
+		$auteur['date_session'] = time();
+	}
 	if (isset($auteur['prefs']) and is_string($auteur['prefs'])) {
 		$auteur['prefs'] = unserialize($auteur['prefs']);
 	}
@@ -163,14 +185,13 @@ function ajouter_session($auteur) {
 	$fichier_session = "";
 
 	// les sessions anonymes sont stockees dans $_SESSION
-	if (!$id_auteur){
+	if (!$id_auteur) {
 		spip_php_session_start();
 		$_SESSION[$_COOKIE['spip_session']] = preparer_ecriture_session($auteur);
-	}
-	else {
+	} else {
 		$fichier_session = fichier_session('alea_ephemere');
 		if (!ecrire_fichier_session($fichier_session, $auteur)) {
-			spip_log('Echec ecriture fichier session '.$fichier_session,"session"._LOG_HS);
+			spip_log('Echec ecriture fichier session ' . $fichier_session, "session" . _LOG_HS);
 			include_spip('inc/minipres');
 			echo minipres();
 			exit;
@@ -179,17 +200,17 @@ function ajouter_session($auteur) {
 
 	// poser le cookie de session SPIP
 	include_spip('inc/cookie');
-	$duree = _RENOUVELLE_ALEA *
-	  (!isset($auteur['cookie'])
-	    ? 2 : (is_numeric($auteur['cookie'])
-			? $auteur['cookie'] : 20));
+	$duree = _RENOUVELLE_ALEA*
+		(!isset($auteur['cookie'])
+			? 2 : (is_numeric($auteur['cookie'])
+				? $auteur['cookie'] : 20));
 
 	spip_setcookie(
 		'spip_session',
 		$_COOKIE['spip_session'],
-		time() + $duree
+		time()+$duree
 	);
-	spip_log("ajoute session $fichier_session cookie $duree","session");
+	spip_log("ajoute session $fichier_session cookie $duree", "session");
 
 	# on en profite pour purger les vieilles sessions anonymes abandonnees
 	# supprimer_sessions(0, true, false);
@@ -200,7 +221,7 @@ function ajouter_session($auteur) {
 
 /**
  * Vérifie si le cookie spip_session indique une session valide
- * 
+ *
  * Si oui, la decrit dans le tableau $visiteur_session et retourne id_auteur
  * La rejoue si IP change puis accepte le changement si $change=true
  *
@@ -210,26 +231,26 @@ function ajouter_session($auteur) {
  * @uses fichier_session()
  * @uses ajouter_session()
  * @uses hash_env()
- * 
+ *
  * @param bool $change
  * @return bool|int|null
  */
 function verifier_session($change = false) {
 	// si pas de cookie, c'est fichu
-	if (!isset($_COOKIE['spip_session']))
+	if (!isset($_COOKIE['spip_session'])) {
 		return false;
+	}
 
 	$fichier_session = "";
 
 	// est-ce une session anonyme ?
-	if (!intval($_COOKIE['spip_session'])){
+	if (!intval($_COOKIE['spip_session'])) {
 		spip_php_session_start();
 		if (!isset($_SESSION[$_COOKIE['spip_session']]) OR !is_array($_SESSION[$_COOKIE['spip_session']])) {
 			return false;
 		}
 		$GLOBALS['visiteur_session'] = $_SESSION[$_COOKIE['spip_session']];
-	}
-	else {
+	} else {
 		// Tester avec alea courant
 		$fichier_session = fichier_session('alea_ephemere', true);
 		if ($fichier_session AND @file_exists($fichier_session)) {
@@ -237,11 +258,13 @@ function verifier_session($change = false) {
 		} else {
 			// Sinon, tester avec alea precedent
 			$fichier_session = fichier_session('alea_ephemere_ancien', true);
-			if (!$fichier_session OR !@file_exists($fichier_session)) return false;
+			if (!$fichier_session OR !@file_exists($fichier_session)) {
+				return false;
+			}
 
 			// Renouveler la session avec l'alea courant
 			include($fichier_session);
-			spip_log('renouvelle session '.$GLOBALS['visiteur_session']['id_auteur'],"session");
+			spip_log('renouvelle session ' . $GLOBALS['visiteur_session']['id_auteur'], "session");
 			spip_unlink($fichier_session);
 			ajouter_session($GLOBALS['visiteur_session']);
 		}
@@ -251,8 +274,9 @@ function verifier_session($change = false) {
 	// c'est un auteur SPIP authentifie (tandis qu'un visiteur_session peut
 	// n'etre qu'identifie, sans aucune authentification).
 
-	if (isset($GLOBALS['visiteur_session']['id_auteur']) AND $GLOBALS['visiteur_session']['id_auteur'])
+	if (isset($GLOBALS['visiteur_session']['id_auteur']) AND $GLOBALS['visiteur_session']['id_auteur']) {
 		$GLOBALS['auteur_session'] = &$GLOBALS['visiteur_session'];
+	}
 
 
 	// Si l'adresse IP change, inc/presentation mettra une balise image
@@ -262,27 +286,34 @@ function verifier_session($change = false) {
 	// sa victime, mais se ferait deconnecter par elle.
 	if (hash_env() != $GLOBALS['visiteur_session']['hash_env']) {
 		if (!$GLOBALS['visiteur_session']['ip_change']) {
-			define('_SESSION_REJOUER',rejouer_session());
+			define('_SESSION_REJOUER', rejouer_session());
 			$GLOBALS['visiteur_session']['ip_change'] = true;
 			ajouter_session($GLOBALS['visiteur_session']);
-		} else if ($change) {
-			spip_log("session non rejouee, vol de cookie ?","session");
+		} else {
+			if ($change) {
+				spip_log("session non rejouee, vol de cookie ?", "session");
+			}
 		}
-	} else if ($change) {
-		spip_log("rejoue session $fichier_session ".$_COOKIE['spip_session'],"session");
-		if ($fichier_session)
-			spip_unlink($fichier_session);
-		$GLOBALS['visiteur_session']['ip_change'] = false;
-		unset($_COOKIE['spip_session']);
-		ajouter_session($GLOBALS['visiteur_session']);
+	} else {
+		if ($change) {
+			spip_log("rejoue session $fichier_session " . $_COOKIE['spip_session'], "session");
+			if ($fichier_session) {
+				spip_unlink($fichier_session);
+			}
+			$GLOBALS['visiteur_session']['ip_change'] = false;
+			unset($_COOKIE['spip_session']);
+			ajouter_session($GLOBALS['visiteur_session']);
+		}
 	}
 
 	// Si la session a ete initiee il y a trop longtemps, elle est annulee
 	if (isset($GLOBALS['visiteur_session'])
-	AND defined('_AGE_SESSION_MAX')
-	AND _AGE_SESSION_MAX > 0
-	AND time() - @$GLOBALS['visiteur_session']['date_session'] > _AGE_SESSION_MAX) {
+		AND defined('_AGE_SESSION_MAX')
+		AND _AGE_SESSION_MAX > 0
+		AND time()-@$GLOBALS['visiteur_session']['date_session'] > _AGE_SESSION_MAX
+	) {
 		unset($GLOBALS['visiteur_session']);
+
 		return false;
 	}
 
@@ -309,7 +340,7 @@ function session_get($nom) {
  * @api
  * @uses ajouter_session()
  * @uses terminer_actualiser_sessions() Ajoute la fonction en fin de hit.
- * 
+ *
  * @param string $nom
  * @param null $val
  * @return void|array
@@ -317,21 +348,24 @@ function session_get($nom) {
 function session_set($nom, $val = null) {
 	static $remove = array();
 	static $actualiser_sessions = false;
-	if ($nom===false) return $remove;
-	if (is_null($val)){
+	if ($nom === false) {
+		return $remove;
+	}
+	if (is_null($val)) {
 		// rien a faire
-		if (!isset($GLOBALS['visiteur_session'][$nom])) return;
+		if (!isset($GLOBALS['visiteur_session'][$nom])) {
+			return;
+		}
 		unset($GLOBALS['visiteur_session'][$nom]);
 		$remove[] = $nom;
-	}
-	else {
+	} else {
 		// On ajoute la valeur dans la globale
 		$GLOBALS['visiteur_session'][$nom] = $val;
 		if ($remove) {
 			$remove = array_diff($remove, array($nom));
 		}
 	}
-	if (!$actualiser_sessions){
+	if (!$actualiser_sessions) {
 		// il faut creer la session si on en a pas, la premiere fois
 		ajouter_session($GLOBALS['visiteur_session']);
 		// in register la fonction qui mettra a jour toutes les sessions en fin de hit
@@ -345,7 +379,7 @@ function session_set($nom, $val = null) {
  *
  * @uses actualiser_sessions()
  */
-function terminer_actualiser_sessions(){
+function terminer_actualiser_sessions() {
 	// se remettre dans le dossier de travail au cas ou Apache a change
 	chdir(_ROOT_CWD);
 	// recuperer les variables a effacer
@@ -357,7 +391,7 @@ function terminer_actualiser_sessions(){
 
 /**
  * Mettre à jour les sessions existantes pour un auteur
- * 
+ *
  * Quand on modifie une fiche auteur on appelle cette fonction qui va
  * mettre à jour les fichiers de session de l'auteur en question.
  * (auteurs identifiés seulement)
@@ -369,7 +403,7 @@ function terminer_actualiser_sessions(){
  * @uses preg_files()
  * @uses preparer_ecriture_session()
  * @uses ecrire_fichier_session()
- * 
+ *
  * @param array $auteur
  * @param array $supprimer_cles
  *     Liste des clés à supprimer des tableaux de sessions
@@ -381,17 +415,18 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 
 	// si l'auteur est celui de la session courante, verifier/creer la session si besoin
 	$fichier_session_courante = "";
-	if ($id_auteur == $id_auteur_courant){
+	if ($id_auteur == $id_auteur_courant) {
 		$auteur = array_merge($GLOBALS['visiteur_session'], $auteur);
 		ajouter_session($auteur);
-		if ($id_auteur){
+		if ($id_auteur) {
 			$fichier_session_courante = fichier_session('alea_ephemere');
 		}
 	}
 
 	// si session anonyme on ne fait rien d'autre ici : les sessions anonymes sont non partagees
-	if (!$id_auteur)
+	if (!$id_auteur) {
 		return;
+	}
 
 	// les préférences sont désérialisées, toujours.
 	if (isset($auteur['prefs']) and is_string($auteur['prefs'])) {
@@ -404,14 +439,15 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 	// .. mettre a jour les sessions de l'auteur cible
 	// attention au $ final pour ne pas risquer d'embarquer un .php.jeton temporaire
 	// cree par une ecriture concurente d'une session (fichier atomique temporaire)
-	$sessions = preg_files(_DIR_SESSIONS, '/'.$id_auteur.'_.*\.php$');
+	$sessions = preg_files(_DIR_SESSIONS, '/' . $id_auteur . '_.*\.php$');
 
 	// 1ere passe : lire et fusionner les sessions
-	foreach($sessions as $session) {
+	foreach ($sessions as $session) {
 		$GLOBALS['visiteur_session'] = array();
 		// a pu etre supprime entre le preg initial et le moment ou l'on arrive la (concurrence)
 		if ($session !== $fichier_session_courante
-		  AND @file_exists($session)){
+			AND @file_exists($session)
+		) {
 			include $session; # $GLOBALS['visiteur_session'] est alors l'auteur cible
 
 			$auteur = array_merge($GLOBALS['visiteur_session'], $auteur);
@@ -426,24 +462,23 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 	$auteur_session = preparer_ecriture_session($auteur);
 
 	// seconde passe : ecrire les sessions qui ne sont pas a jour
-	foreach($sessions as $session) {
+	foreach ($sessions as $session) {
 		$GLOBALS['visiteur_session'] = array();
 		// a pu etre supprime entre le preg initial et le moment ou l'on arrive la (concurrence)
-		if (@file_exists($session)){
+		if (@file_exists($session)) {
 			include $session; # $GLOBALS['visiteur_session'] est alors l'auteur cible
 
 			// est-ce que cette session est a mettre a jour ?
-			if ($auteur_session != $GLOBALS['visiteur_session']){
+			if ($auteur_session != $GLOBALS['visiteur_session']) {
 				ecrire_fichier_session($session, $auteur);
 			}
 		}
 	}
 
-	if ($id_auteur == $id_auteur_courant){
+	if ($id_auteur == $id_auteur_courant) {
 		$GLOBALS['visiteur_session'] = $auteur;
 		$GLOBALS['auteur_session'] = &$GLOBALS['visiteur_session'];
-	}
-	else {
+	} else {
 		// restaurer l'auteur courant
 		$GLOBALS['visiteur_session'] = $sauve;
 	}
@@ -453,14 +488,14 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 
 /**
  * Préparer le tableau de session avant écriture
- * 
+ *
  * Nettoyage de quelques variables sensibles, et appel d'un pipeline
  *
  * @pipeline preparer_fichier_session
  * @param array $auteur
  * @return array
  */
-function preparer_ecriture_session($auteur){
+function preparer_ecriture_session($auteur) {
 	$row = $auteur;
 
 	// ne pas enregistrer ces elements de securite
@@ -471,11 +506,11 @@ function preparer_ecriture_session($auteur){
 	unset($auteur['alea_actuel']);
 	unset($auteur['alea_futur']);
 
-	$auteur = pipeline('preparer_fichier_session',array('args'=>array('row'=>$row),'data'=>$auteur));
+	$auteur = pipeline('preparer_fichier_session', array('args' => array('row' => $row), 'data' => $auteur));
 
 	// ne pas enregistrer les valeurs vraiment nulle dans le fichier
-	foreach($auteur as $variable=>$valeur){
-		if ($valeur === null){
+	foreach ($auteur as $variable => $valeur) {
+		if ($valeur === null) {
 			unset($auteur[$variable]);
 		}
 	}
@@ -495,11 +530,12 @@ function ecrire_fichier_session($fichier, $auteur) {
 	$auteur = preparer_ecriture_session($auteur);
 
 	// enregistrer les autres donnees du visiteur
-	$texte = "<"."?php\n";
-	foreach ($auteur as $var => $val)
-		$texte .= '$GLOBALS[\'visiteur_session\'][\''.$var.'\'] = '
-			. var_export($val,true).";\n";
-	$texte .= "?".">\n";
+	$texte = "<" . "?php\n";
+	foreach ($auteur as $var => $val) {
+		$texte .= '$GLOBALS[\'visiteur_session\'][\'' . $var . '\'] = '
+			. var_export($val, true) . ";\n";
+	}
+	$texte .= "?" . ">\n";
 
 	return ecrire_fichier($fichier, $texte);
 }
@@ -516,21 +552,23 @@ function fichier_session($alea, $tantpis = false) {
 
 	if (!isset($GLOBALS['meta'][$alea])) {
 		include_spip('base/abstract_sql');
-		$GLOBALS['meta'][$alea]  = sql_getfetsel('valeur', 'spip_meta', "nom=" . sql_quote($alea), '','', '', '', '', 'continue');
+		$GLOBALS['meta'][$alea] = sql_getfetsel('valeur', 'spip_meta', "nom=" . sql_quote($alea), '', '', '', '', '',
+			'continue');
 	}
 
 	if (!$GLOBALS['meta'][$alea]) {
 		if (!$tantpis) {
-			spip_log("fichier session ($tantpis): $alea indisponible","session");
+			spip_log("fichier session ($tantpis): $alea indisponible", "session");
 			include_spip('inc/minipres');
 			echo minipres();
 		}
+
 		return ''; // echec mais $tanpis
-	}
-	else {
-		$repertoire = sous_repertoire(_DIR_SESSIONS,'',false,$tantpis);
+	} else {
+		$repertoire = sous_repertoire(_DIR_SESSIONS, '', false, $tantpis);
 		$c = $_COOKIE['spip_session'];
-		return $repertoire . intval($c) .'_' . md5($c.' '.$GLOBALS['meta'][$alea]). '.php';
+
+		return $repertoire . intval($c) . '_' . md5($c . ' ' . $GLOBALS['meta'][$alea]) . '.php';
 	}
 }
 
@@ -547,9 +585,8 @@ function fichier_session($alea, $tantpis = false) {
  *
  * @return string
  */
-function rejouer_session()
-{
-	return '<img src="'.generer_url_action('cookie','change_session=oui', true).'" width="0" height="0" alt="" />';
+function rejouer_session() {
+	return '<img src="' . generer_url_action('cookie', 'change_session=oui', true) . '" width="0" height="0" alt="" />';
 }
 
 
@@ -559,9 +596,12 @@ function rejouer_session()
  * @return string
  */
 function hash_env() {
-  static $res ='';
-  if ($res) return $res;
-  return $res = md5($GLOBALS['ip'] . (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''));
+	static $res = '';
+	if ($res) {
+		return $res;
+	}
+
+	return $res = md5($GLOBALS['ip'] . (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''));
 }
 
 
@@ -571,11 +611,12 @@ function hash_env() {
  * @link http://php.net/manual/fr/function.session-start.php
  * @uses is_php_session_started()
  * @return bool True si une session PHP est ouverte.
-**/
+ **/
 function spip_php_session_start() {
 	if (!is_php_session_started()) {
 		return session_start();
 	}
+
 	return true;
 }
 
@@ -584,16 +625,17 @@ function spip_php_session_start() {
  *
  * @link http://php.net/manual/fr/function.session-status.php#113468
  * @return bool true si une session PHP est active
-**/
+ **/
 function is_php_session_started() {
-	if ( php_sapi_name() !== 'cli' ) {
-		if ( version_compare(phpversion(), '5.4.0', '>=') ) {
-			return session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
+	if (php_sapi_name() !== 'cli') {
+		if (version_compare(phpversion(), '5.4.0', '>=')) {
+			return session_status() === PHP_SESSION_ACTIVE ? true : false;
 		} else {
-			return session_id() === '' ? FALSE : TRUE;
+			return session_id() === '' ? false : true;
 		}
 	}
-	return FALSE;
+
+	return false;
 }
 
 ?>

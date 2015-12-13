@@ -12,11 +12,13 @@
 
 /**
  * Ce fichier gère la balise dynamique `#MENU_LANG_ECRIRE`
- * 
+ *
  * @package SPIP\Core\Compilateur\Balises
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Compile la balise dynamique `#MENU_LANG_ECRIRE` qui affiche
@@ -25,17 +27,17 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * Affiche le menu des langues de l'espace privé
  * et présélectionne celle la globale `$lang`
  * ou de l'arguemnt fourni: `#MENU_LANG_ECRIRE{#ENV{malangue}}`
- * 
+ *
  * @balise
  * @link http://www.spip.net/4626
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée du code compilé
-**/
-function balise_MENU_LANG_ECRIRE ($p) {
-	return calculer_balise_dynamique($p,'MENU_LANG_ECRIRE', array('lang'));
+ **/
+function balise_MENU_LANG_ECRIRE($p) {
+	return calculer_balise_dynamique($p, 'MENU_LANG_ECRIRE', array('lang'));
 }
 
 /**
@@ -43,7 +45,7 @@ function balise_MENU_LANG_ECRIRE ($p) {
  *
  * S'il n'y a qu'une langue proposée, pas besoin du formulaire
  * (éviter une balise ?php inutile)
- * 
+ *
  * @param array $args
  *   Liste des arguments demandés obtenus du contexte (lang)
  *   complétés de ceux fournis à la balise
@@ -52,9 +54,12 @@ function balise_MENU_LANG_ECRIRE ($p) {
  * @return array
  *   Liste (lang) des arguments collectés et fournis.
  */
-function balise_MENU_LANG_ECRIRE_stat ($args, $context_compil) {
+function balise_MENU_LANG_ECRIRE_stat($args, $context_compil) {
 	include_spip('inc/lang');
-	if (strpos($GLOBALS['meta']['langues_proposees'],',') === false) return '';
+	if (strpos($GLOBALS['meta']['langues_proposees'], ',') === false) {
+		return '';
+	}
+
 	return $args;
 }
 
@@ -64,12 +69,12 @@ function balise_MENU_LANG_ECRIRE_stat ($args, $context_compil) {
  * @uses menu_lang_pour_tous()
  * @note
  *   Normalement `$opt` sera toujours non vide suite au test ci-dessus
- * 
+ *
  * @param string $opt
  *     Langue par défaut
  * @return array
  *     Liste : Chemin du squelette, durée du cache, contexte
-**/
+ **/
 function balise_MENU_LANG_ECRIRE_dyn($opt) {
 	return menu_lang_pour_tous('var_lang_ecrire', $opt);
 }
@@ -79,35 +84,39 @@ function balise_MENU_LANG_ECRIRE_dyn($opt) {
  * le formulaire de sélection de changement de langue
  *
  * Le changement de langue se fait par l'appel à l'action `converser`
- * 
+ *
  * @uses lang_select()
- * @see action_converser_dist()
- * 
+ * @see  action_converser_dist()
+ *
  * @param string $nom
  *     Nom de la variable qui sera postée par le formulaire
  * @param string $default
  *     Valeur par défaut de la langue
  * @return array
  *     Liste : Chemin du squelette, durée du cache, contexte
-**/
+ **/
 function menu_lang_pour_tous($nom, $default) {
 	include_spip('inc/lang');
 
 	if ($GLOBALS['spip_lang'] <> $default) {
-		$opt = lang_select($default);	# et remplace
+		$opt = lang_select($default);  # et remplace
 		if ($GLOBALS['spip_lang'] <> $default) {
-			$default = '';	# annule tout choix par defaut
-			if ($opt) lang_select();
+			$default = '';  # annule tout choix par defaut
+			if ($opt) {
+				lang_select();
+			}
 		}
 	}
 
 	# lien a partir de /
-	$cible = parametre_url(self(), 'lang' , '', '&');
-	$post = generer_url_action('converser', 'redirect='. rawurlencode($cible), '&');
+	$cible = parametre_url(self(), 'lang', '', '&');
+	$post = generer_url_action('converser', 'redirect=' . rawurlencode($cible), '&');
 
-	return array('formulaires/menu_lang',
+	return array(
+		'formulaires/menu_lang',
 		3600,
-		array('nom' => $nom,
+		array(
+			'nom' => $nom,
 			'url' => $post,
 			'name' => $nom,
 			'default' => $default,

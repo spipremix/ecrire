@@ -16,7 +16,9 @@
  * @package SPIP\Core\Genie
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Url pour lancer le cron de manière asynchrone si le serveur le permet
@@ -30,21 +32,22 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @see queue_affichage_cron() Dont une partie du code est repris ici.
  * @see action_cron() URL appelée en asynchrone pour excécuter le cron
  */
-function action_super_cron_dist(){
+function action_super_cron_dist() {
 	// Si fsockopen est possible, on lance le cron via un socket
 	// en asynchrone
 	if (function_exists('fsockopen')) {
 		$url = generer_url_action('cron');
 		$parts = parse_url($url);
 		$fp = fsockopen($parts['host'],
-			isset($parts['port'])?$parts['port']:80,
+			isset($parts['port']) ? $parts['port'] : 80,
 			$errno, $errstr, 30);
 		if ($fp) {
-			$out = "GET ".$parts['path']."?".$parts['query']." HTTP/1.1\r\n";
-			$out.= "Host: ".$parts['host']."\r\n";
-			$out.= "Connection: Close\r\n\r\n";
+			$out = "GET " . $parts['path'] . "?" . $parts['query'] . " HTTP/1.1\r\n";
+			$out .= "Host: " . $parts['host'] . "\r\n";
+			$out .= "Connection: Close\r\n\r\n";
 			fwrite($fp, $out);
 			fclose($fp);
+
 			return;
 		}
 	}
@@ -53,4 +56,5 @@ function action_super_cron_dist(){
 
 	return;
 }
+
 ?>

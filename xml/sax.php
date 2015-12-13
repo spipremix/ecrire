@@ -10,52 +10,57 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/charsets');
 include_spip('xml/interfaces');
 
 /**
  * Encoder les entites
+ *
  * @param string $texte
  * @return string
  */
-function xml_entites_html($texte){
+function xml_entites_html($texte) {
 	if (!is_string($texte) OR !$texte
-	OR strpbrk($texte, "&\"'<>")==false
-	) return $texte;
+		OR strpbrk($texte, "&\"'<>") == false
+	) {
+		return $texte;
+	}
 
-	if (!function_exists('spip_htmlspecialchars'))
+	if (!function_exists('spip_htmlspecialchars')) {
 		include_spip("inc/filtres_mini");
-	$texte = spip_htmlspecialchars($texte,ENT_QUOTES);
+	}
+	$texte = spip_htmlspecialchars($texte, ENT_QUOTES);
+
 	return $texte;
 }
 
 // http://code.spip.net/@xml_debutElement
-function xml_debutElement($phraseur, $name, $attrs)
-{
+function xml_debutElement($phraseur, $name, $attrs) {
 	$depth = $phraseur->depth;
 
 	$t = isset($phraseur->ouvrant[$depth]) ? $phraseur->ouvrant[$depth] : ' ';
 	// espace initial signifie: deja integree au resultat
-	if ($t[0] != ' ')
-	  {
-	    $phraseur->res .= '<' . $t . '>';
-	    $phraseur->ouvrant[$depth] = ' ' . $t;
-	  }
+	if ($t[0] != ' ') {
+		$phraseur->res .= '<' . $t . '>';
+		$phraseur->ouvrant[$depth] = ' ' . $t;
+	}
 	$t = $phraseur->contenu[$depth];
 	// n'indenter que s'il y a un separateur avant
-	$phraseur->res .= preg_replace("/[\n\t ]+$/",  "\n$depth", $t);
+	$phraseur->res .= preg_replace("/[\n\t ]+$/", "\n$depth", $t);
 	$phraseur->contenu[$depth] = "";
 	$att = '';
 	$sep = ' ';
 	foreach ($attrs as $k => $v) {
-	  $delim = strpos($v, "'") === false ? "'" : '"';
-	  $val = xml_entites_html($v);
-	  $att .= $sep .  $k . "=" . $delim
-	    . ($delim !== '"' ? str_replace('&quot;', '"', $val) : $val)
-	    . $delim;
-	  $sep = "\n $depth";
+		$delim = strpos($v, "'") === false ? "'" : '"';
+		$val = xml_entites_html($v);
+		$att .= $sep . $k . "=" . $delim
+			. ($delim !== '"' ? str_replace('&quot;', '"', $val) : $val)
+			. $delim;
+		$sep = "\n $depth";
 	}
 	$phraseur->depth .= '  ';
 	$phraseur->contenu[$phraseur->depth] = "";
@@ -64,45 +69,45 @@ function xml_debutElement($phraseur, $name, $attrs)
 }
 
 // http://code.spip.net/@xml_finElement
-function xml_finElement($phraseur, $name, $fusion_bal = false)
-{
+function xml_finElement($phraseur, $name, $fusion_bal = false) {
 	$ouv = $phraseur->ouvrant[$phraseur->depth];
 
-	if ($ouv[0] != ' ')
+	if ($ouv[0] != ' ') {
 		$phraseur->ouvrant[$phraseur->depth] = ' ' . $ouv;
-	else $ouv= "";
+	} else {
+		$ouv = "";
+	}
 	$t = $phraseur->contenu[$phraseur->depth];
 	$phraseur->depth = substr($phraseur->depth, 2);
 	$t = preg_replace("/[\n\t ]+$/", "\n" . $phraseur->depth, $t);
 
-  // fusion <balise></balise> en <balise />.
-  // ATTENTION,  certains clients http croient que fusion ==> pas d'atttributs
-  // en particulier pour les balises Script et A.
-  // en presence d'attributs ne le faire que si la DTD est dispo et d'accord
-  // (param fusion_bal)
+	// fusion <balise></balise> en <balise />.
+	// ATTENTION,  certains clients http croient que fusion ==> pas d'atttributs
+	// en particulier pour les balises Script et A.
+	// en presence d'attributs ne le faire que si la DTD est dispo et d'accord
+	// (param fusion_bal)
 
-	if ($t || (($ouv != $name) AND !$fusion_bal))
-	  $phraseur->res .= ($ouv ? ('<' . $ouv . '>') : '') . $t . "</" . $name . ">";
-	else
-	  $phraseur->res .= ($ouv ? ('<' . $ouv  . ' />') : ("</" .  $name . ">"));
+	if ($t || (($ouv != $name) AND !$fusion_bal)) {
+		$phraseur->res .= ($ouv ? ('<' . $ouv . '>') : '') . $t . "</" . $name . ">";
+	} else {
+		$phraseur->res .= ($ouv ? ('<' . $ouv . ' />') : ("</" . $name . ">"));
+	}
 }
 
 // http://code.spip.net/@xml_textElement
-function xml_textElement($phraseur, $data)
-{
+function xml_textElement($phraseur, $data) {
 	$depth = $phraseur->depth;
-	$phraseur->contenu[$depth] .= preg_match('/^script/',$phraseur->ouvrant[$depth])
-	  ? $data
-	  : xml_entites_html($data);
+	$phraseur->contenu[$depth] .= preg_match('/^script/', $phraseur->ouvrant[$depth])
+		? $data
+		: xml_entites_html($data);
 }
 
-function xml_piElement($phraseur, $target, $data)
-{
+function xml_piElement($phraseur, $target, $data) {
 	$depth = $phraseur->depth;
 
-	if (strtolower($target) != "php")
-	  $phraseur->contenu[$depth] .= $data;
-	else {
+	if (strtolower($target) != "php") {
+		$phraseur->contenu[$depth] .= $data;
+	} else {
 		ob_start();
 		eval($data);
 		$data = ob_get_contents();
@@ -113,72 +118,79 @@ function xml_piElement($phraseur, $target, $data)
 
 
 // http://code.spip.net/@xml_defautElement
-function xml_defaultElement($phraseur, $data)
-{
+function xml_defaultElement($phraseur, $data) {
 	$depth = $phraseur->depth;
 
-	if (!isset($phraseur->contenu[$depth])) $phraseur->contenu[$depth]='';
+	if (!isset($phraseur->contenu[$depth])) {
+		$phraseur->contenu[$depth] = '';
+	}
 	$phraseur->contenu[$depth] .= $data;
 }
 
 // http://code.spip.net/@xml_parsestring
-function xml_parsestring($phraseur, $data)
-{
-	$phraseur->contenu[$phraseur->depth] ='';
+function xml_parsestring($phraseur, $data) {
+	$phraseur->contenu[$phraseur->depth] = '';
 
 	if (!xml_parse($phraseur->sax, $data, true)) {
 		coordonnees_erreur($phraseur,
 			xml_error_string(xml_get_error_code($phraseur->sax))
 			. "<br />\n" .
 			(!$phraseur->depth ? '' :
-			 ('(' .
-			  _T('erreur_balise_non_fermee') .
-			  " <tt>" .
-			  $phraseur->ouvrant[$phraseur->depth] .
-			  "</tt> " .
-			  _T('ligne') .
-			  " " .
-			  $phraseur->reperes[$phraseur->depth] .
-			  ") <br />\n" )));
+				('(' .
+					_T('erreur_balise_non_fermee') .
+					" <tt>" .
+					$phraseur->ouvrant[$phraseur->depth] .
+					"</tt> " .
+					_T('ligne') .
+					" " .
+					$phraseur->reperes[$phraseur->depth] .
+					") <br />\n")));
 	}
 }
 
 // http://code.spip.net/@coordonnees_erreur
-function coordonnees_erreur($phraseur, $msg)
-{
-	$entete_length = substr_count($phraseur->entete,"\n");
-	$phraseur->err[] = array($msg,
-		xml_get_current_line_number($phraseur->sax) + $entete_length,
-		xml_get_current_column_number($phraseur->sax));
+function coordonnees_erreur($phraseur, $msg) {
+	$entete_length = substr_count($phraseur->entete, "\n");
+	$phraseur->err[] = array(
+		$msg,
+		xml_get_current_line_number($phraseur->sax)+$entete_length,
+		xml_get_current_column_number($phraseur->sax)
+	);
 }
 
 // http://code.spip.net/@xml_sax_dist
-function xml_sax_dist($page, $apply = false, $phraseur = NULL, $doctype = '', $charset = null)
-{
-	if (is_null($charset))
+function xml_sax_dist($page, $apply = false, $phraseur = null, $doctype = '', $charset = null) {
+	if (is_null($charset)) {
 		$charset = $GLOBALS['meta']['charset'];
+	}
 	if ($apply) {
 		ob_start();
-		if (is_array($apply))
-		  $r = call_user_func_array($page, $apply);
-		else $r = $page();
+		if (is_array($apply)) {
+			$r = call_user_func_array($page, $apply);
+		} else {
+			$r = $page();
+		}
 		$page = ob_get_contents();
 		ob_end_clean();
 		// fonction sans aucun "echo", ca doit etre le resultat
-		if (!$page) $page = $r;
+		if (!$page) {
+			$page = $r;
+		}
 	}
 
-	if (!$page) return '';
+	if (!$page) {
+		return '';
+	}
 	// charger la DTD et transcoder les entites,
 	// et escamoter le doctype que sax mange en php5 mais pas en  php4
 	if (!$doctype) {
 		if (!$r = analyser_doctype($page)) {
 			$page = _MESSAGE_DOCTYPE . _DOCTYPE_ECRIRE
-			  . preg_replace(_REGEXP_DOCTYPE, '', $page);
-			$r =  analyser_doctype($page);
+				. preg_replace(_REGEXP_DOCTYPE, '', $page);
+			$r = analyser_doctype($page);
 		}
 		list($entete, $avail, $grammaire, $rotlvl) = array_pad($r, 4, null);
-		$page = substr($page,strlen($entete));
+		$page = substr($page, strlen($entete));
 	} else {
 		$avail = 'SYSTEM';
 		$grammaire = $doctype;
@@ -192,23 +204,24 @@ function xml_sax_dist($page, $apply = false, $phraseur = NULL, $doctype = '', $c
 	// compatibilite Tidy espace public
 	if (!$phraseur) {
 		$indenter_xml = charger_fonction('indenter', 'xml');
+
 		return $indenter_xml($page, $apply);
 	}
 
 	$xml_parser = xml_parser_create($charset);
 
 	xml_set_element_handler($xml_parser,
-			array($phraseur, "debutElement"),
-			array($phraseur, "finElement"));
+		array($phraseur, "debutElement"),
+		array($phraseur, "finElement"));
 
 	xml_set_character_data_handler($xml_parser,
-				       array($phraseur, "textElement"));
+		array($phraseur, "textElement"));
 
 	xml_set_processing_instruction_handler($xml_parser,
-				       array($phraseur, 'piElement'));
+		array($phraseur, 'piElement'));
 
 	xml_set_default_handler($xml_parser,
-				array($phraseur, "defaultElement"));
+		array($phraseur, "defaultElement"));
 
 	xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false);
 
@@ -221,6 +234,7 @@ function xml_sax_dist($page, $apply = false, $phraseur = NULL, $doctype = '', $c
 	$phraseur->phraserTout($xml_parser, $page);
 	xml_parser_free($xml_parser);
 	$phraseur->sax = '';
+
 	return $phraseur;
 }
 
@@ -232,22 +246,24 @@ function xml_sax_dist($page, $apply = false, $phraseur = NULL, $doctype = '', $c
 // sinon on se rabat sur ce qu'en connait SPIP en standard.
 
 // http://code.spip.net/@sax_bug
-function sax_bug($data, $dtc, $charset = null)
-{
-	if (is_null($charset))
+function sax_bug($data, $dtc, $charset = null) {
+	if (is_null($charset)) {
 		$charset = $GLOBALS['meta']['charset'];
+	}
 
 	if ($dtc) {
 		$trans = array();
-		
-		foreach($dtc->entites as $k => $v) {
-			if (!strpos(" amp lt gt quot ", $k))
-			    $trans["&$k;"] = $v;
+
+		foreach ($dtc->entites as $k => $v) {
+			if (!strpos(" amp lt gt quot ", $k)) {
+				$trans["&$k;"] = $v;
+			}
 		}
 		$data = strtr($data, $trans);
 	} else {
 		$data = html2unicode($data, true);
 	}
+
 	return unicode2charset($data, $charset);
 }
 
@@ -258,44 +274,55 @@ function sax_bug($data, $dtc, $charset = null)
 // les autres formats RSS n'ont pas de DTD,
 // mais un XML Schema que SPIP ne fait pas encore lire.
 // http://code.spip.net/@analyser_doctype
-function analyser_doctype($data)
-{
+function analyser_doctype($data) {
 	if (!preg_match(_REGEXP_DOCTYPE, $data, $page)) {
 		if (preg_match(_REGEXP_XML, $data, $page)) {
-			list(,$entete, $topelement) = $page;
-			if ($topelement == 'rss')
-			  return array($entete, 'PUBLIC', 
-				       _DOCTYPE_RSS,
-					     'rss-0.91.dtd');
-			else {
+			list(, $entete, $topelement) = $page;
+			if ($topelement == 'rss') {
+				return array(
+					$entete,
+					'PUBLIC',
+					_DOCTYPE_RSS,
+					'rss-0.91.dtd'
+				);
+			} else {
 				$dtd = $topelement . '.dtd';
 				$f = find_in_path($dtd);
-				if (file_exists($f))
-				  return array($entete, 'SYSTEM', $f, $dtd);
+				if (file_exists($f)) {
+					return array($entete, 'SYSTEM', $f, $dtd);
+				}
 			}
 		}
 		spip_log("Dtd pas vu pour " . substr($data, 0, 100));
+
 		return array();
 	}
-	list($entete,, $topelement, $avail,$suite) = $page;
+	list($entete, , $topelement, $avail, $suite) = $page;
 
-	if (!preg_match('/^"([^"]*)"\s*(.*)$/', $suite, $r))
-		if (!preg_match("/^'([^']*)'\s*(.*)$/", $suite, $r))
-			return  array();
-	list(,$rotlvl, $suite) = $r;
+	if (!preg_match('/^"([^"]*)"\s*(.*)$/', $suite, $r)) {
+		if (!preg_match("/^'([^']*)'\s*(.*)$/", $suite, $r)) {
+			return array();
+		}
+	}
+	list(, $rotlvl, $suite) = $r;
 
 	if (!$suite) {
-		if ($avail != 'SYSTEM') return array();
+		if ($avail != 'SYSTEM') {
+			return array();
+		}
 		$grammaire = $rotlvl;
 		$rotlvl = '';
 	} else {
-		if (!preg_match('/^"([^"]*)"\s*$/', $suite, $r))
-			if (!preg_match("/^'([^']*)'\s*$/", $suite, $r))
+		if (!preg_match('/^"([^"]*)"\s*$/', $suite, $r)) {
+			if (!preg_match("/^'([^']*)'\s*$/", $suite, $r)) {
 				return array();
+			}
+		}
 
 		$grammaire = $r[1];
 	}
 
 	return array($entete, $avail, $grammaire, $rotlvl);
 }
+
 ?>

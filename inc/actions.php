@@ -14,15 +14,17 @@
  * Gestion des actions sécurisées
  *
  * @package SPIP\Core\Actions
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Retourne une URL ou un formulaire securisé
  *
  * @uses inc_securiser_action_dist()
- * 
+ *
  * @param string $action
  *     Nom du fichier/action appelé (dans le répertoire action)
  * @param string $arg
@@ -40,8 +42,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return array|string
  *     URL, code HTML du formulaire ou tableau (action, arg, hash)
  */
-function generer_action_auteur($action, $arg, $redirect = '', $mode = false, $att = '', $public = false){
+function generer_action_auteur($action, $arg, $redirect = '', $mode = false, $att = '', $public = false) {
 	$securiser_action = charger_fonction('securiser_action', 'inc');
+
 	return $securiser_action($action, $arg, $redirect, $mode, $att, $public);
 }
 
@@ -74,14 +77,15 @@ function generer_action_auteur($action, $arg, $redirect = '', $mode = false, $at
  * @return string
  *     Code HTML du formulaire
  */
-function redirige_action_auteur($action, $arg, $ret, $gra = '', $mode = false, $atts = '', $public = false){
-	$r = ($public ? _DIR_RESTREINT_ABS : _DIR_RESTREINT) .generer_url_ecrire($ret, $gra, true, true);
+function redirige_action_auteur($action, $arg, $ret, $gra = '', $mode = false, $atts = '', $public = false) {
+	$r = ($public ? _DIR_RESTREINT_ABS : _DIR_RESTREINT) . generer_url_ecrire($ret, $gra, true, true);
+
 	return generer_action_auteur($action, $arg, $r, $mode, $atts, $public);
 }
 
 /**
  * Retourne une URL ou un formulaire sécurisé en méthode POST
- * 
+ *
  * @param string $action
  *     Nom du fichier/action appelé (dans le répertoire action)
  * @param string $arg
@@ -100,9 +104,10 @@ function redirige_action_auteur($action, $arg, $ret, $gra = '', $mode = false, $
  * @return array|string
  *     URL, code HTML du formulaire ou tableau (action, arg, hash)
  */
-function redirige_action_post($action, $arg, $ret, $gra, $corps, $att = ''){
-	$r = _DIR_RESTREINT.generer_url_ecrire($ret, $gra, false, true);
-	return generer_action_auteur($action, $arg, $r, $corps, $att." method='post'");
+function redirige_action_post($action, $arg, $ret, $gra, $corps, $att = '') {
+	$r = _DIR_RESTREINT . generer_url_ecrire($ret, $gra, false, true);
+
+	return generer_action_auteur($action, $arg, $r, $corps, $att . " method='post'");
 }
 
 
@@ -116,32 +121,33 @@ function redirige_action_post($action, $arg, $ret, $gra, $corps, $att = ''){
  *   La valeur speciale false fournit text/html sans entete xml. Elle equivaut a
  *   passer "text/html" comme $content_type
  */
-function ajax_retour($corps, $content_type = null){
+function ajax_retour($corps, $content_type = null) {
 	$xml = false;
-	if (is_null($content_type) OR $content_type===true){
+	if (is_null($content_type) OR $content_type === true) {
 		$xml = true;
 		$content_type = 'text/html';
-	}
-	elseif (!$content_type OR !is_string($content_type) OR strpos($content_type,'/')===false) {
+	} elseif (!$content_type OR !is_string($content_type) OR strpos($content_type, '/') === false) {
 		$content_type = 'text/html';
 	}
-	
+
 	$e = "";
 	if (isset($_COOKIE['spip_admin'])
-	    AND ((_request('var_mode')=='debug') OR !empty($GLOBALS['tableau_des_temps'])))
+		AND ((_request('var_mode') == 'debug') OR !empty($GLOBALS['tableau_des_temps']))
+	) {
 		$e = erreur_squelette();
-	if (isset($GLOBALS['transformer_xml']) OR (isset($GLOBALS['exec']) AND $GLOBALS['exec']=='valider_xml')){
+	}
+	if (isset($GLOBALS['transformer_xml']) OR (isset($GLOBALS['exec']) AND $GLOBALS['exec'] == 'valider_xml')) {
 		$debut = _DOCTYPE_ECRIRE
-		         ."<html><head><title>Debug Spip Ajax</title></head>"
-		         ."<body><div>\n\n"
-		         ."<!-- %%%%%%%%%%%%%%%%%%% Ajax %%%%%%%%%%%%%%%%%%% -->\n";
+			. "<html><head><title>Debug Spip Ajax</title></head>"
+			. "<body><div>\n\n"
+			. "<!-- %%%%%%%%%%%%%%%%%%% Ajax %%%%%%%%%%%%%%%%%%% -->\n";
 
 		$fin = '</div></body></html>';
 
 	} else {
 		$c = $GLOBALS['meta']["charset"];
-		header('Content-Type: '.$content_type.'; charset='.$c);
-		$debut = (($xml AND strlen(trim($corps))) ? '<'."?xml version='1.0' encoding='".$c."'?".">\n" : '');
+		header('Content-Type: ' . $content_type . '; charset=' . $c);
+		$debut = (($xml AND strlen(trim($corps))) ? '<' . "?xml version='1.0' encoding='" . $c . "'?" . ">\n" : '');
 		$fin = "";
 	}
 	echo $debut, $corps, $fin, $e;

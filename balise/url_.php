@@ -14,18 +14,20 @@
  * Fonctions génériques pour les balises `#URL_XXXX`
  *
  * Les balises `URL_$type` sont génériques, sauf quelques cas particuliers.
- * 
+ *
  * @package SPIP\Core\Compilateur\Balises
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Génère le code compilé des balises d'URL
  *
  * Utilise le premier paramètre de la balise d'URL comme identifiant d'objet
  * s'il est donné, sinon le prendra dans un champ d'une boucle englobante.
- * 
+ *
  * @uses generer_generer_url_arg()
  * @param string $type
  *     Type d'objet
@@ -33,9 +35,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     Pile au niveau de la balise
  * @return string
  *     Code compilé
-**/
-function generer_generer_url($type, $p){
-	$_id = interprete_argument_balise(1,$p);
+ **/
+function generer_generer_url($type, $p) {
+	$_id = interprete_argument_balise(1, $p);
 
 	if (!$_id) {
 		$primary = id_table_objet($type);
@@ -58,9 +60,9 @@ function generer_generer_url($type, $p){
  *
  * On communique le type-url distant à `generer_url_entite` mais il ne sert pas
  * car rien ne garantit que le .htaccess soit identique. À approfondir.
- * 
+ *
  * @see generer_url_entite()
- * 
+ *
  * @param string $type
  *     Type d'objet
  * @param Champ $p
@@ -69,30 +71,30 @@ function generer_generer_url($type, $p){
  *     Code compilé permettant d'obtenir l'identifiant de l'objet
  * @return string
  *     Code compilé
-**/
-function generer_generer_url_arg($type, $p, $_id)
-{
+ **/
+function generer_generer_url_arg($type, $p, $_id) {
 	if ($s = trouver_nom_serveur_distant($p)) {
 
 		// si une fonction de generation des url a ete definie pour ce connect l'utiliser
-		if (function_exists($f = 'generer_generer_url_'.$s)){
+		if (function_exists($f = 'generer_generer_url_' . $s)) {
 			return $f($type, $_id, $s);
 		}
 		if (!$GLOBALS['connexions'][strtolower($s)]['spip_connect_version']) {
-			return NULL;
+			return null;
 		}
 		$s = _q($s);
 		# exception des urls de documents sur un serveur distant...
 		if ($type == 'document') {
-			return 
-			"quete_meta('adresse_site', $s) . '/' .\n\t" .
-			"quete_meta('dir_img', $s) . \n\t" .
-			"quete_fichier($_id,$s)";
+			return
+				"quete_meta('adresse_site', $s) . '/' .\n\t" .
+				"quete_meta('dir_img', $s) . \n\t" .
+				"quete_fichier($_id,$s)";
 		}
 		$s = ", '', '', $s, quete_meta('type_urls', $s)";
-	}
-	else 
+	} else {
 		$s = ", '', '', true";
+	}
+
 	return "urlencode_1738(generer_url_entite($_id, '$type'$s))";
 }
 
@@ -103,7 +105,7 @@ function generer_generer_url_arg($type, $p, $_id)
  * S'il existe une fonction spécifique de calcul d'URL pour l'objet demandé,
  * tel que `balise_URL_ARTICLE_dist()`, la fonction l'utilisera. Sinon,
  * on calcule une URL de façon générique.
- * 
+ *
  * @balise
  * @uses generer_generer_url()
  * @example
@@ -123,17 +125,20 @@ function balise_URL__dist($p) {
 		$msg = array('zbug_balise_sans_argument', array('balise' => ' URL_'));
 		erreur_squelette($msg, $p);
 		$p->interdire_scripts = false;
+
 		return $p;
 	} elseif ($f = charger_fonction($nom, 'balise', true)) {
 		return $f($p);
 	} else {
 		$nom = strtolower($nom);
-		$code = generer_generer_url(substr($nom,4), $p);
+		$code = generer_generer_url(substr($nom, 4), $p);
 		$code = champ_sql($nom, $p, $code);
 		$p->code = $code;
-		if (!$p->etoile)
+		if (!$p->etoile) {
 			$p->code = "vider_url($code)";
+		}
 		$p->interdire_scripts = false;
+
 		return $p;
 	}
 }
@@ -143,7 +148,7 @@ function balise_URL__dist($p) {
  *
  * Retourne l'URL (locale) d'un article mais retourne dans le cas
  * d'un article syndiqué (boucle SYNDIC_ARTICLES), son URL distante d'origine.
- * 
+ *
  * @balise
  * @uses generer_generer_url()
  * @link http://www.spip.net/3963
@@ -162,12 +167,16 @@ function balise_URL_ARTICLE_dist($p) {
 	// Cas particulier des boucles (SYNDIC_ARTICLES)
 	if ($p->type_requete == 'syndic_articles') {
 		$code = champ_sql('url', $p);
-	} else  $code = generer_generer_url('article', $p);
+	} else {
+		$code = generer_generer_url('article', $p);
+	}
 
 	$p->code = $code;
-	if (!$p->etoile)
+	if (!$p->etoile) {
 		$p->code = "vider_url($code)";
+	}
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -176,29 +185,32 @@ function balise_URL_ARTICLE_dist($p) {
  *
  * Génère une URL spécifique si la colonne SQL `url_site` est trouvée
  * (par exemple lien hypertexte d'un article), sinon l'URL d'un site syndiqué
- * 
+ *
  * @balise
  * @uses generer_generer_url()
- * @see calculer_url()
+ * @see  calculer_url()
  * @link http://www.spip.net/3861
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_URL_SITE_dist($p)
-{
+function balise_URL_SITE_dist($p) {
 	$code = champ_sql('url_site', $p);
 	if (strpos($code, '@$Pile[0]') !== false) {
 		$code = generer_generer_url('site', $p);
-		if ($code === NULL) return NULL;
+		if ($code === null) {
+			return null;
+		}
 	} else {
-		if (!$p->etoile)
+		if (!$p->etoile) {
 			$code = "calculer_url($code,'','url', \$connect)";
+		}
 	}
 	$p->code = $code;
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -211,7 +223,7 @@ function balise_URL_SITE_dist($p)
  *
  * @balise
  * @link http://www.spip.net/4623
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
@@ -219,8 +231,9 @@ function balise_URL_SITE_dist($p)
  */
 function balise_URL_SITE_SPIP_dist($p) {
 	$p->code = "sinon(\$GLOBALS['meta']['adresse_site'],'.')";
-	$p->code = "spip_htmlspecialchars(".$p->code.")";
+	$p->code = "spip_htmlspecialchars(" . $p->code . ")";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -232,17 +245,17 @@ function balise_URL_SITE_SPIP_dist($p) {
  * - `#URL_PAGE{nom,param=valeur}` génère l'url pour la page `nom` avec des paramètres
  * - `#URL_PAGE` sans argument retourne l'URL courante.
  * - `#URL_PAGE*` retourne l'URL sans convertir les `&` en `&amp;`
- * 
+ *
  * @balise
  * @link http://www.spip.net/4630
  * @see generer_url_public()
  * @example
  *     ```
- *     #URL_PAGE{backend} produit ?page=backend 
+ *     #URL_PAGE{backend} produit ?page=backend
  *     #URL_PAGE{backend,id_rubrique=1} est équivalent à
  *     [(#URL_PAGE{backend}|parametre_url{id_rubrique,1})]
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
@@ -252,31 +265,37 @@ function balise_URL_PAGE_dist($p) {
 
 	$code = interprete_argument_balise(1, $p);
 	$args = interprete_argument_balise(2, $p);
-	if ($args == NULL)
+	if ($args == null) {
 		$args = "''";
+	}
 
 	if ($s = trouver_nom_serveur_distant($p)) {
 		// si une fonction de generation des url a ete definie pour ce connect l'utiliser
 		// elle devra aussi traiter le cas derogatoire type=page
-		if (function_exists($f = 'generer_generer_url_'.$s)){
-			if ($args AND $args !== "''") $code .= ", $args";
+		if (function_exists($f = 'generer_generer_url_' . $s)) {
+			if ($args AND $args !== "''") {
+				$code .= ", $args";
+			}
 			$code = $f('page', $code, $s);
+
 			return $p;
 		}
-		$s = 'connect=' .  addslashes($s);
+		$s = 'connect=' . addslashes($s);
 		$args = (($args AND $args !== "''") ? "$args . '&$s'" : "'$s'");
 	}
 
 	if (!$code) {
 		$noentities = $p->etoile ? "'&'" : '';
 		$code = "url_de_base() . preg_replace(',^./,', '', self($noentities))";
-	} else{
-	  	if (!$args) $args = "''";
+	} else {
+		if (!$args) {
+			$args = "''";
+		}
 		$noentities = $p->etoile ? ", true" : '';
 		$code = "generer_url_public($code, $args$noentities)";
 	}
 	$p->code = $code;
-	spip_log("Calcul url page : connect vaut $s ca donne :" .  $p->code . " args $args", _LOG_INFO);
+	spip_log("Calcul url page : connect vaut $s ca donne :" . $p->code . " args $args", _LOG_INFO);
 
 	#$p->interdire_scripts = true;
 	return $p;
@@ -290,7 +309,7 @@ function balise_URL_PAGE_dist($p) {
  * - `#URL_ECRIRE{nom,param=valeur}` génère l'url pour la page `nom` avec des paramètres
  * - `#URL_ECRIRE` génère l'url pour la page d'accueil de l'espace privé
  * - `#URL_ECRIRE*` retourne l'URL sans convertir les `&` en `&amp;`
- * 
+ *
  * @balise
  * @link http://www.spip.net/5566
  * @see generer_url_ecrire()
@@ -298,7 +317,7 @@ function balise_URL_PAGE_dist($p) {
  *     ```
  *     #URL_ECRIRE{rubriques} -> ecrire/?exec=rubriques
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
@@ -306,19 +325,23 @@ function balise_URL_PAGE_dist($p) {
  */
 function balise_URL_ECRIRE_dist($p) {
 
-	$code = interprete_argument_balise(1,$p);
-	if (!$code)
+	$code = interprete_argument_balise(1, $p);
+	if (!$code) {
 		$fonc = "''";
-	else {
+	} else {
 		$fonc = $code;
-		$args = interprete_argument_balise(2,$p);
-		if ($args === NULL) $args = "''";
+		$args = interprete_argument_balise(2, $p);
+		if ($args === null) {
+			$args = "''";
+		}
 		$noentities = $p->etoile ? ", true" : '';
-		if (($args != "''")  OR $noentities)
+		if (($args != "''") OR $noentities) {
 			$fonc .= ",$args$noentities";
+		}
 	}
-	$p->code = 'generer_url_ecrire(' . $fonc .')';
+	$p->code = 'generer_url_ecrire(' . $fonc . ')';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -332,7 +355,7 @@ function balise_URL_ECRIRE_dist($p) {
  * - le nom de l'action
  * - l'argument transmis à l'action (une chaîne de caractère)
  * - une éventuelle URL de redirection qui sert une fois l'action réalisée
- * 
+ *
  * @balise
  * @see generer_action_auteur()
  * @example
@@ -340,7 +363,7 @@ function balise_URL_ECRIRE_dist($p) {
  *     #URL_ACTION_AUTEUR{converser,arg,redirect}
  *     -> ecrire/?action=converser&arg=arg&hash=xxx&redirect=redirect
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
@@ -349,19 +372,23 @@ function balise_URL_ECRIRE_dist($p) {
 function balise_URL_ACTION_AUTEUR_dist($p) {
 	$p->descr['session'] = true;
 
-	$p->code = interprete_argument_balise(1,$p);
-	$args = interprete_argument_balise(2,$p);
-	if ($args != "''" && $args!==NULL)
-		$p->code .= ",".$args;
-	$redirect = interprete_argument_balise(3,$p);
-	if ($redirect != "''" && $redirect!==NULL) {
-		if ($args == "''" || $args===NULL)
+	$p->code = interprete_argument_balise(1, $p);
+	$args = interprete_argument_balise(2, $p);
+	if ($args != "''" && $args !== null) {
+		$p->code .= "," . $args;
+	}
+	$redirect = interprete_argument_balise(3, $p);
+	if ($redirect != "''" && $redirect !== null) {
+		if ($args == "''" || $args === null) {
 			$p->code .= ",''";
-		$p->code .= ",".$redirect;
+		}
+		$p->code .= "," . $redirect;
 	}
 
 	$p->code = "generer_action_auteur(" . $p->code . ")";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
+
 ?>

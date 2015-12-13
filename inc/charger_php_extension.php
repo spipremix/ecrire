@@ -4,9 +4,11 @@
  * Chargement d'une extension PHP
  *
  * @package SPIP\Core\Outils
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Permet de charger un module PHP dont le nom est donné en argument
@@ -23,13 +25,13 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *
  * @note
  *     La fonction `dl()` n'est plus présente à partir de PHP 5.3.
- * 
+ *
  * @param string $module
  *     Nom du module à charger (tel que 'mysql')
  * @return bool
  *     true en cas de succes
-**/
-function inc_charger_php_extension_dist($module){
+ **/
+function inc_charger_php_extension_dist($module) {
 	if (extension_loaded($module)) {
 		return true;
 	}
@@ -37,9 +39,10 @@ function inc_charger_php_extension_dist($module){
 	// A-t-on le droit de faire un dl() ; si on peut, on memorise la reponse,
 	// lourde a calculer, dans les meta
 	if (!isset($GLOBALS['meta']['dl_allowed'])) {
-		if (!@ini_get('safe_mode') 
-		  && @ini_get('enable_dl')
-		  && @function_exists('dl')) {
+		if (!@ini_get('safe_mode')
+			&& @ini_get('enable_dl')
+			&& @function_exists('dl')
+		) {
 			ob_start();
 			phpinfo(INFO_GENERAL); /* Only general info */
 			$a = strip_tags(ob_get_contents());
@@ -69,7 +72,8 @@ function inc_charger_php_extension_dist($module){
 	}
 
 	$prefix = (PHP_SHLIB_SUFFIX === 'dll') ? 'php_' : '';
-	
+
 	return @dl($prefix . $module_file . PHP_SHLIB_SUFFIX);
 }
+
 ?>

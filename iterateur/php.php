@@ -15,15 +15,17 @@
  * Gestion de l'itérateur PHP
  *
  * @package SPIP\Core\Iterateur\PHP
-**/
+ **/
 
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
  * Créer une boucle sur un itérateur PHP
- * 
+ *
  * Annonce au compilateur les "champs" disponibles, c'est à dire
  * 'cle', 'valeur' et toutes les méthodes de l'itérateur désigné.
  *
@@ -43,13 +45,15 @@ function iterateur_php_dist($b, $iteratorName) {
 		)
 	);
 	foreach (get_class_methods($iteratorName) as $method) {
-		$b->show['field'][ strtolower($method) ] = 'METHOD';
+		$b->show['field'][strtolower($method)] = 'METHOD';
 	}
+
 	/*
 	foreach (get_class_vars($iteratorName) as $property) {
 		$b->show['field'][ strtolower($property) ] = 'PROPERTY';
 	}
 	*/
+
 	return $b;
 }
 

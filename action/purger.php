@@ -14,8 +14,10 @@
  * Gestion de l'action purger pour nettoyer le cache
  *
  * @package SPIP\Core\Cache
-**/
-if (!defined('_ECRIRE_INC_VERSION')) return;
+ **/
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Action de purge du cache
@@ -31,13 +33,12 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @pipeline_appel trig_purger
  * @uses supprime_invalideurs()
  * @uses purger_repertoire()
- * 
+ *
  * @param string|null $arg
  *     Argument attendu. En absence utilise l'argument
  *     de l'action sécurisée.
  */
-function action_purger_dist($arg = null)
-{
+function action_purger_dist($arg = null) {
 	if (is_null($arg)) {
 		$securiser_action = charger_fonction('securiser_action', 'inc');
 		$arg = $securiser_action();
@@ -50,7 +51,7 @@ function action_purger_dist($arg = null)
 	switch ($arg) {
 		case 'inhibe_cache':
 			// inhiber le cache pendant 24h
-			ecrire_meta('cache_inhib',$_SERVER['REQUEST_TIME']+24*3600);
+			ecrire_meta('cache_inhib', $_SERVER['REQUEST_TIME']+24*3600);
 			break;
 		case 'reactive_cache':
 			effacer_meta('cache_inhib');
@@ -60,7 +61,7 @@ function action_purger_dist($arg = null)
 			supprime_invalideurs();
 			@spip_unlink(_CACHE_RUBRIQUES);
 			@spip_unlink(_CACHE_CHEMIN);
-			@spip_unlink(_DIR_TMP."plugin_xml_cache.gz");
+			@spip_unlink(_DIR_TMP . "plugin_xml_cache.gz");
 			// on ne supprime que _CACHE_PLUGINS_OPT qui declenche la reconstruction des 3
 			// _CACHE_PIPELINES _CACHE_PLUGINS_PATH et _CACHE_PLUGINS_FCT
 			// pour eviter des problemes de concurence
@@ -69,10 +70,10 @@ function action_purger_dist($arg = null)
 			//@spip_unlink(_CACHE_PLUGINS_PATH);
 			//@spip_unlink(_CACHE_PLUGINS_FCT);
 			@spip_unlink(_CACHE_PLUGINS_OPT);
-			purger_repertoire(_DIR_CACHE,array('subdir'=>true));
+			purger_repertoire(_DIR_CACHE, array('subdir' => true));
 			purger_repertoire(_DIR_AIDE);
-			purger_repertoire(_DIR_VAR.'cache-css');
-			purger_repertoire(_DIR_VAR.'cache-js');
+			purger_repertoire(_DIR_VAR . 'cache-css');
+			purger_repertoire(_DIR_VAR . 'cache-js');
 			break;
 
 		case 'squelettes':
@@ -80,14 +81,14 @@ function action_purger_dist($arg = null)
 			break;
 
 		case 'vignettes':
-			purger_repertoire(_DIR_VAR,array('subdir'=>true));
+			purger_repertoire(_DIR_VAR, array('subdir' => true));
 			supprime_invalideurs();
-			purger_repertoire(_DIR_CACHE,array('subdir'=>true));
+			purger_repertoire(_DIR_CACHE, array('subdir' => true));
 			break;
 	}
 
 	// le faire savoir aux plugins
-	pipeline('trig_purger',$arg);
+	pipeline('trig_purger', $arg);
 }
 
 ?>

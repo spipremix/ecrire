@@ -12,7 +12,7 @@
 
 /**
  * Ce fichier regroupe la quasi totalité des définitions de `#BALISES` de SPIP.
- * 
+ *
  * Pour chaque balise, il est possible de surcharger, dans son fichier
  * mes_fonctions.php, la fonction `balise_TOTO_dist()` par une fonction
  * `balise_TOTO()` respectant la même API : elle reçoit en entrée un objet
@@ -21,11 +21,13 @@
  *
  * Des balises dites «dynamiques» sont également déclarées dans le
  * répertoire ecrire/balise/
- * 
+ *
  * @package SPIP\Core\Compilateur\Balises
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Retourne le code PHP d'un argument de balise s'il est présent
@@ -37,22 +39,23 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     // #BALISE{premier,deuxieme}
  *     $arg = interprete_argument_balise(1,$p);
  *     ```
- * 
+ *
  * @param int $n
  *     Numéro de l'argument
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return string|null
  *     Code PHP si cet argument est présent, sinon null
-**/
+ **/
 function interprete_argument_balise($n, $p) {
-	if (($p->param) && (!$p->param[0][0]) && (count($p->param[0])>$n))
+	if (($p->param) && (!$p->param[0][0]) && (count($p->param[0]) > $n)) {
 		return calculer_liste($p->param[0][$n],
 			$p->descr,
 			$p->boucles,
 			$p->id_boucle);
-	else
-		return NULL;
+	} else {
+		return null;
+	}
 }
 
 
@@ -65,14 +68,15 @@ function interprete_argument_balise($n, $p) {
  *
  * @balise
  * @link http://www.spip.net/4622
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_NOM_SITE_SPIP_dist($p) {
 	$p->code = "\$GLOBALS['meta']['nom_site']";
+
 	#$p->interdire_scripts = true;
 	return $p;
 }
@@ -83,14 +87,15 @@ function balise_NOM_SITE_SPIP_dist($p) {
  *
  * @balise
  * @link http://www.spip.net/4586
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_EMAIL_WEBMASTER_dist($p) {
 	$p->code = "\$GLOBALS['meta']['email_webmaster']";
+
 	#$p->interdire_scripts = true;
 	return $p;
 }
@@ -101,14 +106,15 @@ function balise_EMAIL_WEBMASTER_dist($p) {
  *
  * @balise
  * @link http://www.spip.net/4338
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_DESCRIPTIF_SITE_SPIP_dist($p) {
 	$p->code = "\$GLOBALS['meta']['descriptif_site']";
+
 	#$p->interdire_scripts = true;
 	return $p;
 }
@@ -124,14 +130,15 @@ function balise_DESCRIPTIF_SITE_SPIP_dist($p) {
  *     ```
  *     <meta http-equiv="Content-Type" content="text/html; charset=#CHARSET" />
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_CHARSET_dist($p) {
 	$p->code = "\$GLOBALS['meta']['charset']";
+
 	#$p->interdire_scripts = true;
 	return $p;
 }
@@ -144,53 +151,55 @@ function balise_CHARSET_dist($p) {
  *     Peut servir à l'écriture de code CSS dans un squelette, mais
  *     pour inclure un fichier css, il vaut mieux utiliser le filtre
  *     `direction_css` si on le souhaite sensible à la langue utilisé.
- * 
+ *
  * @balise
  * @link http://www.spip.net/4625
  * @see lang_dir()
  * @see balise_LANG_RIGHT_dist()
  * @see balise_LANG_DIR_dist()
  * @see direction_css()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_LANG_LEFT_dist($p) {
 	$_lang = champ_sql('lang', $p);
 	$p->code = "lang_dir($_lang, 'left','right')";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
 /**
  * Compile la balise `#LANG_RIGHT` retournant 'right' si la langue s'écrit
  * de gauche à droite, sinon 'left'
- * 
+ *
  * @balise
  * @link http://www.spip.net/4625
  * @see lang_dir()
  * @see balise_LANG_LEFT_dist()
  * @see balise_LANG_DIR_dist()
  * @see direction_css()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_LANG_RIGHT_dist($p) {
 	$_lang = champ_sql('lang', $p);
 	$p->code = "lang_dir($_lang, 'right','left')";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
 /**
  * Compile la balise `#LANG_DIR` retournant 'ltr' si la langue s'écrit
  * de gauche à droite, sinon 'rtl'
- * 
+ *
  * @balise
  * @link http://www.spip.net/4625
  * @see lang_dir()
@@ -202,35 +211,37 @@ function balise_LANG_RIGHT_dist($p) {
  *         xmlns="http://www.w3.org/1999/xhtml"
  *         xml:lang="#LANG" class="[(#LANG_DIR)][ (#LANG)] no-js">
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_LANG_DIR_dist($p) {
 	$_lang = champ_sql('lang', $p);
 	$p->code = "lang_dir($_lang, 'ltr','rtl')";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
 
 /**
  * Compile la balise `#PUCE` affichant une puce
- * 
+ *
  * @balise
  * @link http://www.spip.net/4628
  * @see definir_puce()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_PUCE_dist($p) {
 	$p->code = "definir_puce()";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -248,17 +259,18 @@ function balise_PUCE_dist($p) {
  *     ```
  *     <td>[(#DATE|affdate_jourcourt)]</td>
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
  *     Pile completée du code PHP d'exécution de la balise
  */
-function balise_DATE_dist ($p) {
+function balise_DATE_dist($p) {
 	$d = champ_sql('date', $p);
 #	if ($d === "@\$Pile[0]['date']")
 #		$d = "isset(\$Pile[0]['date']) ? $d : time()";
 	$p->code = $d;
+
 	return $p;
 }
 
@@ -272,18 +284,19 @@ function balise_DATE_dist ($p) {
  * @link http://www.spip.net/3858 Balises DATE_MODIF et DATE_REDAC
  * @link http://www.spip.net/1971 La gestion des dates
  * @see balise_DATE_MODIF_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
  *     Pile completée du code PHP d'exécution de la balise
  */
-function balise_DATE_REDAC_dist ($p) {
+function balise_DATE_REDAC_dist($p) {
 	$d = champ_sql('date_redac', $p);
 #	if ($d === "@\$Pile[0]['date_redac']")
 #		$d = "isset(\$Pile[0]['date_redac']) ? $d : time()";
 	$p->code = $d;
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -296,15 +309,16 @@ function balise_DATE_REDAC_dist ($p) {
  * @link http://www.spip.net/3858 Balises DATE_MODIF et DATE_REDAC
  * @link http://www.spip.net/1971 La gestion des dates
  * @see balise_DATE_REDAC_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
  *     Pile completée du code PHP d'exécution de la balise
  */
-function balise_DATE_MODIF_dist ($p) {
+function balise_DATE_MODIF_dist($p) {
 	$p->code = champ_sql('date_modif', $p);
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -316,7 +330,7 @@ function balise_DATE_MODIF_dist ($p) {
  * @link http://www.spip.net/4337 Balise DATE_NOUVEAUTES
  * @link http://www.spip.net/1971 La gestion des dates
  * @see balise_DATE_REDAC_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
@@ -328,6 +342,7 @@ function balise_DATE_NOUVEAUTES_dist($p) {
 	\$GLOBALS['meta']['dernier_envoi_neuf'] :
 	\"'0000-00-00'\")";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -340,7 +355,7 @@ function balise_DATE_NOUVEAUTES_dist($p) {
  * @deprecated Utiliser `#CHEMIN`
  * @link http://www.spip.net/4627
  * @see balise_CHEMIN_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
@@ -349,7 +364,8 @@ function balise_DATE_NOUVEAUTES_dist($p) {
 function balise_DOSSIER_SQUELETTE_dist($p) {
 	$code = substr(addslashes(dirname($p->descr['sourcefile'])), strlen(_DIR_RACINE));
 	$p->code = "_DIR_RACINE . '$code'" .
-	$p->interdire_scripts = false;
+		$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -358,7 +374,7 @@ function balise_DOSSIER_SQUELETTE_dist($p) {
  *
  * @balise
  * @link http://www.spip.net/4027
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
@@ -367,7 +383,8 @@ function balise_DOSSIER_SQUELETTE_dist($p) {
 function balise_SQUELETTE_dist($p) {
 	$code = addslashes($p->descr['sourcefile']);
 	$p->code = "'$code'" .
-	$p->interdire_scripts = false;
+		$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -380,7 +397,7 @@ function balise_SQUELETTE_dist($p) {
  *     ```
  *     <meta name="generator" content="SPIP[ (#SPIP_VERSION)]" />
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
@@ -389,9 +406,9 @@ function balise_SQUELETTE_dist($p) {
 function balise_SPIP_VERSION_dist($p) {
 	$p->code = "spip_version()";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
-
 
 
 /**
@@ -414,17 +431,19 @@ function balise_SPIP_VERSION_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_NOM_SITE_dist($p) {
 	if (!$p->etoile) {
 		$p->code = "supprimer_numero(calculer_url(" .
-		champ_sql('url_site',$p) ."," .
-		champ_sql('nom_site',$p) .
-		", 'titre', \$connect, false))";
-	} else
-		$p->code = champ_sql('nom_site',$p);
+			champ_sql('url_site', $p) . "," .
+			champ_sql('nom_site', $p) .
+			", 'titre', \$connect, false))";
+	} else {
+		$p->code = champ_sql('nom_site', $p);
+	}
 
 	$p->interdire_scripts = true;
+
 	return $p;
 }
 
@@ -440,10 +459,11 @@ function balise_NOM_SITE_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_NOTES_dist($p) {
 	// Recuperer les notes
 	$p->code = 'calculer_notes()';
+
 	#$p->interdire_scripts = true;
 	return $p;
 }
@@ -465,10 +485,11 @@ function balise_NOTES_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_RECHERCHE_dist($p) {
 	$p->code = 'entites_html(_request("recherche"))';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -480,23 +501,25 @@ function balise_RECHERCHE_dist($p) {
  * @balise
  * @link http://www.spip.net/4333
  * @see balise_TOTAL_BOUCLE_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_COMPTEUR_BOUCLE_dist($p) {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->descr['id_mere'];
 	if ($b === '') {
-		$msg = array('zbug_champ_hors_boucle',
-				array('champ' => '#COMPTEUR_BOUCLE')
-			  );
+		$msg = array(
+			'zbug_champ_hors_boucle',
+			array('champ' => '#COMPTEUR_BOUCLE')
+		);
 		erreur_squelette($msg, $p);
 	} else {
 		$p->code = "\$Numrows['$b']['compteur_boucle']";
 		$p->boucles[$b]->cptrows = true;
 		$p->interdire_scripts = false;
+
 		return $p;
 	}
 }
@@ -509,24 +532,26 @@ function balise_COMPTEUR_BOUCLE_dist($p) {
  * @link http://www.spip.net/4334
  * @see balise_COMPTEUR_BOUCLE_dist()
  * @see balise_GRAND_TOTAL_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_TOTAL_BOUCLE_dist($p) {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->descr['id_mere'];
 	if ($b === '' || !isset($p->boucles[$b])) {
-		$msg = array('zbug_champ_hors_boucle',
-				array('champ' => "#$b" . 'TOTAL_BOUCLE')
-			  );
+		$msg = array(
+			'zbug_champ_hors_boucle',
+			array('champ' => "#$b" . 'TOTAL_BOUCLE')
+		);
 		erreur_squelette($msg, $p);
 	} else {
 		$p->code = "\$Numrows['$b']['total']";
 		$p->boucles[$b]->numrows = true;
 		$p->interdire_scripts = false;
 	}
+
 	return $p;
 }
 
@@ -536,16 +561,16 @@ function balise_TOTAL_BOUCLE_dist($p) {
  *
  * Retourne le calcul `points` réalisé par le critère `recherche`.
  * Cette balise nécessite donc la présence de ce critère.
- * 
+ *
  * @balise
  * @link http://www.spip.net/903 Boucles et balises de recherche
  * @see critere_recherche_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_POINTS_dist($p) {
 	return rindex_pile($p, 'points', 'recherche');
 }
@@ -555,23 +580,24 @@ function balise_POINTS_dist($p) {
  * Compile la balise `#POPULARITE_ABSOLUE` qui affiche la popularité absolue
  *
  * Cela correspond à la popularité quotidienne de l'article
- * 
+ *
  * @balise
  * @link http://www.spip.net/1846 La popularité
  * @see balise_POPULARITE_dist()
  * @see balise_POPULARITE_MAX_dist()
  * @see balise_POPULARITE_SITE_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_POPULARITE_ABSOLUE_dist($p) {
 	$p->code = 'ceil(' .
-	champ_sql('popularite', $p) .
-	')';
+		champ_sql('popularite', $p) .
+		')';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -585,15 +611,16 @@ function balise_POPULARITE_ABSOLUE_dist($p) {
  * @see balise_POPULARITE_ABSOLUE_dist()
  * @see balise_POPULARITE_dist()
  * @see balise_POPULARITE_MAX_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_POPULARITE_SITE_dist($p) {
 	$p->code = 'ceil($GLOBALS["meta"][\'popularite_total\'])';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -602,21 +629,22 @@ function balise_POPULARITE_SITE_dist($p) {
  * parmis les popularités des articles
  *
  * Cela correspond à la popularité quotidienne de l'article
- * 
+ *
  * @balise
  * @link http://www.spip.net/1846 La popularité
  * @see balise_POPULARITE_ABSOLUE_dist()
  * @see balise_POPULARITE_dist()
  * @see balise_POPULARITE_SITE_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_POPULARITE_MAX_dist($p) {
 	$p->code = 'ceil($GLOBALS["meta"][\'popularite_max\'])';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -625,7 +653,7 @@ function balise_POPULARITE_MAX_dist($p) {
  * Compile la balise `#VALEUR` retournant le champ `valeur`
  *
  * Utile dans une boucle DATA pour retourner une valeur.
- * 
+ *
  * @balise
  * @link http://www.spip.net/5546 #CLE et #VALEUR
  * @see table_valeur()
@@ -641,14 +669,15 @@ function balise_POPULARITE_MAX_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_VALEUR_dist($p) {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->id_boucle;
 	$p->code = index_pile($p->id_boucle, 'valeur', $p->boucles, $b);;
-	if (($v = interprete_argument_balise(1,$p))!==NULL){
-		$p->code = 'table_valeur('.$p->code.', '.$v.')';
+	if (($v = interprete_argument_balise(1, $p)) !== null) {
+		$p->code = 'table_valeur(' . $p->code . ', ' . $v . ')';
 	}
 	$p->interdire_scripts = true;
+
 	return $p;
 }
 
@@ -660,7 +689,7 @@ function balise_VALEUR_dist($p) {
  * en retournant `on` si l'élément correspond à la page, une chaîne vide sinon.
  *
  * On peut passer les paramètres à faire retourner par la balise.
- * 
+ *
  * @example
  *     ```
  *     <a href="#URL_ARTICLE"[ class="(#EXPOSE)"]>
@@ -676,16 +705,18 @@ function balise_VALEUR_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_EXPOSE_dist($p) {
 	$on = "'on'";
-	$off= "''";
-	if (($v = interprete_argument_balise(1,$p))!==NULL){
+	$off = "''";
+	if (($v = interprete_argument_balise(1, $p)) !== null) {
 		$on = $v;
-		if (($v = interprete_argument_balise(2,$p))!==NULL)
+		if (($v = interprete_argument_balise(2, $p)) !== null) {
 			$off = $v;
+		}
 
 	}
+
 	return calculer_balise_expose($p, $on, $off);
 }
 
@@ -693,7 +724,7 @@ function balise_EXPOSE_dist($p) {
  * Calcul de la balise expose
  *
  * @see calcul_exposer()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @param string $on
@@ -702,9 +733,8 @@ function balise_EXPOSE_dist($p) {
  *     Texte à afficher si l'élément n'est pas exposé (code à écrire tel que "''")
  * @return Champ
  *     Pile complétée par le code à générer
-**/
-function calculer_balise_expose($p, $on, $off)
-{
+ **/
+function calculer_balise_expose($p, $on, $off) {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->id_boucle;
 	$key = $p->boucles[$b]->primary;
 	$type = $p->boucles[$p->id_boucle]->primary;
@@ -723,16 +753,18 @@ function calculer_balise_expose($p, $on, $off)
 		$parent = 0; // pour if (!$parent) dans calculer_expose
 	} elseif (isset($desc['field']['id_rubrique'])) {
 		$parent = index_pile($p->id_boucle, 'id_rubrique', $p->boucles, $b);
-	} elseif  (isset($desc['field']['id_groupe'])) {
+	} elseif (isset($desc['field']['id_groupe'])) {
 		$parent = index_pile($p->id_boucle, 'id_groupe', $p->boucles, $b);
-	} else $parent = "''";
+	} else {
+		$parent = "''";
+	}
 
 	$p->code = "(calcul_exposer($c, '$type', \$Pile[0], $parent, '$key', $connect) ? $on : $off)";
 
 	$p->interdire_scripts = false;
+
 	return $p;
 }
-
 
 
 /**
@@ -741,7 +773,7 @@ function calculer_balise_expose($p, $on, $off)
  *
  * @note
  *     Cette balise n'a plus d'effet depuis r9343
- * 
+ *
  * @balise
  * @see balise_FIN_SURLIGNE_dist()
  * @deprecated Utiliser les classes CSS `surlignable` ou `pas_surlignable`
@@ -750,10 +782,11 @@ function calculer_balise_expose($p, $on, $off)
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_DEBUT_SURLIGNE_dist($p) {
 	include_spip('inc/surligne');
 	$p->code = "'<!-- " . MARQUEUR_SURLIGNE . " -->'";
+
 	return $p;
 }
 
@@ -764,7 +797,7 @@ function balise_DEBUT_SURLIGNE_dist($p) {
  *
  * @note
  *     Cette balise n'a plus d'effet depuis r9343
- * 
+ *
  * @balise
  * @see balise_DEBUT_SURLIGNE_dist()
  * @deprecated Utiliser les classes CSS `surlignable` ou `pas_surlignable`
@@ -773,13 +806,13 @@ function balise_DEBUT_SURLIGNE_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_FIN_SURLIGNE_dist($p) {
 	include_spip('inc/surligne');
 	$p->code = "'<!-- " . MARQUEUR_FSURLIGNE . "-->'";
+
 	return $p;
 }
-
 
 
 /**
@@ -808,12 +841,12 @@ function balise_FIN_SURLIGNE_dist($p) {
  *
  * @balise
  * @link http://www.spip.net/@introduction
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_INTRODUCTION_dist($p) {
 
 	$type = $p->type_requete;
@@ -829,17 +862,18 @@ function balise_INTRODUCTION_dist($p) {
 	}
 
 	// longueur en parametre, ou valeur par defaut
-	$longueur_defaut = objet_info($type,'introduction_longueur');
-	if (!$longueur_defaut)
+	$longueur_defaut = objet_info($type, 'introduction_longueur');
+	if (!$longueur_defaut) {
 		$longueur_defaut = 600;
+	}
 
 	$_suite = 'null';
 	$_longueur = $longueur_defaut;
-	if (($v = interprete_argument_balise(1,$p))!==NULL) {
-		$_longueur = 'is_numeric('.$v.')?intval('.$v.'):'.$longueur_defaut;
-		$_suite = '!is_numeric('.$v.')?'.$v.':null';
+	if (($v = interprete_argument_balise(1, $p)) !== null) {
+		$_longueur = 'is_numeric(' . $v . ')?intval(' . $v . '):' . $longueur_defaut;
+		$_suite = '!is_numeric(' . $v . ')?' . $v . ':null';
 	}
-	if (($v2 = interprete_argument_balise(2,$p))!==NULL) {
+	if (($v2 = interprete_argument_balise(2, $p)) !== null) {
 		$_suite = $v2;
 	}
 
@@ -858,28 +892,30 @@ function balise_INTRODUCTION_dist($p) {
  *
  * La langue courante est celle du site ou celle qui a été passée dans l'URL par le visiteur.
  * L'étoile `#LANG*` n'affiche rien si aucune langue n'est trouvée dans le SQL ou le contexte.
- * 
+ *
  * @balise
  * @link http://www.spip.net/3864
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
-function balise_LANG_dist ($p) {
+ **/
+function balise_LANG_dist($p) {
 	$_lang = champ_sql('lang', $p);
-	if (!$p->etoile)
+	if (!$p->etoile) {
 		$p->code = "spip_htmlentities($_lang ? $_lang : \$GLOBALS['spip_lang'])";
-	else
+	} else {
 		$p->code = "spip_htmlentities($_lang)";
+	}
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
 /**
  * Compile la balise `#LESAUTEURS` chargée d'afficher la liste des auteurs d'un objet
- * 
+ *
  * - Soit le champ `lesauteurs` existe dans la table et à ce moment là,
  *   la balise retourne son contenu,
  * - soit la balise appelle le modele `lesauteurs.html` en lui passant
@@ -889,13 +925,13 @@ function balise_LANG_dist ($p) {
  * @link http://www.spip.net/3966 Description de la balise
  * @link http://www.spip.net/902 Description de la boucle ARTICLES
  * @link http://www.spip.net/911 Description de la boucle SYNDIC_ARTICLES
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_LESAUTEURS_dist ($p) {
+function balise_LESAUTEURS_dist($p) {
 	// Cherche le champ 'lesauteurs' dans la pile
 	$_lesauteurs = champ_sql('lesauteurs', $p, false);
 
@@ -904,16 +940,16 @@ function balise_LESAUTEURS_dist ($p) {
 	// dans le cas contraire on prend le champ 'lesauteurs'
 	// (cf extension sites/)
 	if ($_lesauteurs
-	AND $_lesauteurs != '@$Pile[0][\'lesauteurs\']') {
+		AND $_lesauteurs != '@$Pile[0][\'lesauteurs\']'
+	) {
 		$p->code = "safehtml($_lesauteurs)";
 		// $p->interdire_scripts = true;
 	} else {
-		if(!$p->id_boucle){
+		if (!$p->id_boucle) {
 			$connect = '';
 			$objet = 'article';
 			$id_table_objet = 'id_article';
-		}
-		else{
+		} else {
 			$b = $p->nom_boucle ? $p->nom_boucle : $p->id_boucle;
 			$connect = $p->boucles[$b]->sql_serveur;
 			$type_boucle = $p->boucles[$b]->type_requete;
@@ -923,13 +959,13 @@ function balise_LESAUTEURS_dist ($p) {
 		$c = memoriser_contexte_compil($p);
 
 		$p->code = sprintf(CODE_RECUPERER_FOND, "'modeles/lesauteurs'",
-				   "array('objet'=>'".$objet.
-					   "','id_objet' => ".champ_sql($id_table_objet, $p) .
-					   ",'$id_table_objet' => ".champ_sql($id_table_objet, $p) .
-					   ($objet=='article'?"":",'id_article' => ".champ_sql('id_article', $p)).
-					   ")",
-				   "'trim'=>true, 'compil'=>array($c)",
-				   _q($connect));
+			"array('objet'=>'" . $objet .
+			"','id_objet' => " . champ_sql($id_table_objet, $p) .
+			",'$id_table_objet' => " . champ_sql($id_table_objet, $p) .
+			($objet == 'article' ? "" : ",'id_article' => " . champ_sql('id_article', $p)) .
+			")",
+			"'trim'=>true, 'compil'=>array($c)",
+			_q($connect));
 		$p->interdire_scripts = false; // securite apposee par recuperer_fond()
 	}
 
@@ -939,13 +975,13 @@ function balise_LESAUTEURS_dist ($p) {
 
 /**
  * Compile la balise `#RANG` chargée d'afficher le numéro de l'objet
- * 
+ *
  * Affiche le « numero de l'objet ». Soit `1` quand on a un titre `1. Premier article`.
- * 
+ *
  * Ceci est transitoire afin de préparer une migration vers un vrai système de
  * tri des articles dans une rubrique (et plus si affinités).
  * La balise permet d'extraire le numero masqué par le filtre `supprimer_numero`.
- * 
+ *
  * La balise recupère le champ declaré dans la définition `table_titre`
  * de l'objet, ou à defaut du champ `titre`
  *
@@ -962,52 +998,55 @@ function balise_LESAUTEURS_dist ($p) {
 function balise_RANG_dist($p) {
 	$b = index_boucle($p);
 	if ($b === '') {
-		$msg = array('zbug_champ_hors_boucle',
-				array('champ' => '#RANG')
-			  );
+		$msg = array(
+			'zbug_champ_hors_boucle',
+			array('champ' => '#RANG')
+		);
 		erreur_squelette($msg, $p);
-	}
-	else {
+	} else {
 		// chercher d'abord un champ sql rang (mais pas dans le env : defaut '' si on trouve pas de champ sql)
 		// dans la boucle immediatement englobante uniquement
 		// sinon on compose le champ calcule
 		$_rang = champ_sql('rang', $p, '', false);
 
 		// si pas trouve de champ sql rang :
-		if (!$_rang OR $_rang == "''"){
+		if (!$_rang OR $_rang == "''") {
 			$boucle = &$p->boucles[$b];
-			$trouver_table = charger_fonction('trouver_table','base');
+			$trouver_table = charger_fonction('trouver_table', 'base');
 			$desc = $trouver_table($boucle->id_table);
 			$_titre = ''; # où extraire le numero ?
-			if (isset($desc['titre'])){
-				$t=$desc['titre'];
-			  if (preg_match(';(^|,)([^,]*titre)(,|$);',$t,$m)){
-				  $m = preg_replace(",as\s+titre$,i","",$m[2]);
-				  $m = trim($m);
-				  if ($m!="''"){
-					  if (!preg_match(",\W,",$m))
-						  $m = $boucle->id_table . ".$m";
-					  $m .= " AS titre_rang";
+			if (isset($desc['titre'])) {
+				$t = $desc['titre'];
+				if (preg_match(';(^|,)([^,]*titre)(,|$);', $t, $m)) {
+					$m = preg_replace(",as\s+titre$,i", "", $m[2]);
+					$m = trim($m);
+					if ($m != "''") {
+						if (!preg_match(",\W,", $m)) {
+							$m = $boucle->id_table . ".$m";
+						}
+						$m .= " AS titre_rang";
 
-					  $boucle->select[] = $m;
-					  $_titre = '$Pile[$SP][\'titre_rang\']';
-				  }
-			  }
+						$boucle->select[] = $m;
+						$_titre = '$Pile[$SP][\'titre_rang\']';
+					}
+				}
 			}
-			if (!$_titre)
+			if (!$_titre) {
 				$_titre = champ_sql('titre', $p);
+			}
 			$_rang = "recuperer_numero($_titre)";
 		}
 		$p->code = $_rang;
 		$p->interdire_scripts = false;
 	}
+
 	return $p;
 }
 
 
 /**
  * Compile la balise `#POPULARITE` qui affiche la popularité relative.
- * 
+ *
  * C'est à dire le pourcentage de la fréquentation de l'article
  * (la popularité absolue) par rapport à la popularité maximum.
  *
@@ -1016,17 +1055,18 @@ function balise_RANG_dist($p) {
  * @see balise_POPULARITE_ABSOLUE_dist()
  * @see balise_POPULARITE_MAX_dist()
  * @see balise_POPULARITE_SITE_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
-function balise_POPULARITE_dist ($p) {
+ **/
+function balise_POPULARITE_dist($p) {
 	$_popularite = champ_sql('popularite', $p);
 	$p->code = "(ceil(min(100, 100 * $_popularite
 	/ max(1 , 0 + \$GLOBALS['meta']['popularite_max']))))";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1038,7 +1078,7 @@ function balise_POPULARITE_dist ($p) {
  * l'absence peut-être due à une faute de frappe dans le contexte inclus.
  */
 define('CODE_PAGINATION',
-	'%s($Numrows["%s"]["grand_total"],
+'%s($Numrows["%s"]["grand_total"],
  		%s,
 		isset($Pile[0][%4$s])?$Pile[0][%4$s]:intval(_request(%4$s)),
 		%5$s, %6$s, %7$s, %8$s, array(%9$s))');
@@ -1078,10 +1118,12 @@ function balise_PAGINATION_dist($p, $liste = 'true') {
 
 	// s'il n'y a pas de nom de boucle, on ne peut pas paginer
 	if ($b === '') {
-		$msg = array('zbug_champ_hors_boucle',
+		$msg = array(
+			'zbug_champ_hors_boucle',
 			array('champ' => $liste ? 'PAGINATION' : 'ANCRE_PAGINATION')
-			  );
+		);
 		erreur_squelette($msg, $p);
+
 		return $p;
 	}
 
@@ -1089,11 +1131,13 @@ function balise_PAGINATION_dist($p, $liste = 'true') {
 	// dans un boucle recursive ou qu'on a oublie le critere {pagination}
 	if (!$p->boucles[$b]->mode_partie) {
 		if (!$p->boucles[$b]->table_optionnelle) {
-			$msg = array('zbug_pagination_sans_critere',
-					array('champ' => '#PAGINATION')
-				  );
+			$msg = array(
+				'zbug_pagination_sans_critere',
+				array('champ' => '#PAGINATION')
+			);
 			erreur_squelette($msg, $p);
 		}
+
 		return $p;
 	}
 
@@ -1101,34 +1145,35 @@ function balise_PAGINATION_dist($p, $liste = 'true') {
 	// si false, le compilo va bloquer sur des syntaxes avec un filtre sans argument qui suit la balise
 	// si true, les arguments simples (sans truc=chose) vont degager
 	$_contexte = argumenter_inclure($p->param, true, $p, $p->boucles, $p->id_boucle, false, false);
-	if (count($_contexte)){
-		list($key,$val) = each($_contexte);
-		if (is_numeric($key)){
+	if (count($_contexte)) {
+		list($key, $val) = each($_contexte);
+		if (is_numeric($key)) {
 			array_shift($_contexte);
-			$__modele = interprete_argument_balise(1,$p);
+			$__modele = interprete_argument_balise(1, $p);
 		}
 	}
 
-	if (count($_contexte)){
-		$code_contexte = implode(',',$_contexte);
-	}
-	else
+	if (count($_contexte)) {
+		$code_contexte = implode(',', $_contexte);
+	} else {
 		$code_contexte = '';
+	}
 
 	$connect = $p->boucles[$b]->sql_serveur;
 	$pas = $p->boucles[$b]->total_parties;
 	$f_pagination = chercher_filtre('pagination');
 	$type = $p->boucles[$b]->modificateur['debut_nom'];
-	$modif = ($type[0]!=="'") ? "'debut'.$type"
-	  : ("'debut" .substr($type,1));
+	$modif = ($type[0] !== "'") ? "'debut'.$type"
+		: ("'debut" . substr($type, 1));
 
-	$p->code = sprintf(CODE_PAGINATION, $f_pagination, $b, $type, $modif, $pas, $liste, ((isset($__modele) and $__modele) ? $__modele : "''"), _q($connect), $code_contexte);
+	$p->code = sprintf(CODE_PAGINATION, $f_pagination, $b, $type, $modif, $pas, $liste,
+		((isset($__modele) and $__modele) ? $__modele : "''"), _q($connect), $code_contexte);
 
 	$p->boucles[$b]->numrows = true;
 	$p->interdire_scripts = false;
+
 	return $p;
 }
-
 
 
 /**
@@ -1138,10 +1183,10 @@ function balise_PAGINATION_dist($p, $liste = 'true') {
  * Cette ancre peut ainsi être placée au-dessus la liste des éléments
  * de la boucle alors qu'on mettra les liens de pagination en-dessous de
  * cette liste paginée.
- * 
+ *
  * Cette balise nécessite le critère `pagination` sur la boucle où elle
  * est utilisée.
- * 
+ *
  * @balise
  * @link http://www.spip.net/3367 Le système de pagination
  * @link http://www.spip.net/4328 Balise ANCRE_PAGINATION
@@ -1152,11 +1197,13 @@ function balise_PAGINATION_dist($p, $liste = 'true') {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_ANCRE_PAGINATION_dist($p) {
-	if ($f = charger_fonction('PAGINATION', 'balise', true))
-		return $f($p, $liste='false');
-	else return NULL; // ou une erreur ?
+	if ($f = charger_fonction('PAGINATION', 'balise', true)) {
+		return $f($p, $liste = 'false');
+	} else {
+		return null;
+	} // ou une erreur ?
 }
 
 
@@ -1170,18 +1217,19 @@ function balise_ANCRE_PAGINATION_dist($p) {
  *
  * @balise
  * @see balise_GRAND_TOTAL_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_GRAND_TOTAL_dist($p) {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->descr['id_mere'];
 	if ($b === '' || !isset($p->boucles[$b])) {
-		$msg = array('zbug_champ_hors_boucle',
-				array('champ' => "#$b" . 'TOTAL_BOUCLE')
-			   );
+		$msg = array(
+			'zbug_champ_hors_boucle',
+			array('champ' => "#$b" . 'TOTAL_BOUCLE')
+		);
 		erreur_squelette($msg, $p);
 	} else {
 		$p->code = "(isset(\$Numrows['$b']['grand_total'])
@@ -1189,6 +1237,7 @@ function balise_GRAND_TOTAL_dist($p) {
 		$p->boucles[$b]->numrows = true;
 		$p->interdire_scripts = false;
 	}
+
 	return $p;
 }
 
@@ -1202,23 +1251,24 @@ function balise_GRAND_TOTAL_dist($p) {
  * @note
  *     Attention dans un `INCLURE()` ou une balise dynamique, on n'a pas le droit de
  *     mettre en cache `#SELF` car il peut correspondre à une autre page (attaque XSS)
- *     (Dans ce cas faire <INCLURE{self=#SELF}> pour différencier les caches.)  
- * 
+ *     (Dans ce cas faire <INCLURE{self=#SELF}> pour différencier les caches.)
+ *
  * @balise
  * @link http://www.spip.net/4574
  * @example
  *     ```
  *     <a href="[(#SELF|parametre_url{id_mot,#ID_MOT})]">...
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_SELF_dist($p) {
 	$p->code = 'self()';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1230,7 +1280,7 @@ function balise_SELF_dist($p) {
  * Signature : `#CHEMIN{chemin/vers/fichier.ext}`
  *
  * Retourne une chaîne vide si le fichier n'est pas trouvé.
- * 
+ *
  * @balise
  * @link http://www.spip.net/4332
  * @see find_in_path() Recherche de chemin
@@ -1239,21 +1289,23 @@ function balise_SELF_dist($p) {
  *     [<script type="text/javascript" src="(#CHEMIN{javascript/jquery.flot.js})"></script>]
  *     [<link rel="stylesheet" href="(#CHEMIN{css/perso.css}|direction_css)" type="text/css" />]
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_CHEMIN_dist($p) {
-	$arg = interprete_argument_balise(1,$p);
+	$arg = interprete_argument_balise(1, $p);
 	if (!$arg) {
-		$msg = array('zbug_balise_sans_argument',	array('balise' => ' CHEMIN'));
+		$msg = array('zbug_balise_sans_argument', array('balise' => ' CHEMIN'));
 		erreur_squelette($msg, $p);
-	} else
-	  $p->code = 'find_in_path(' . $arg .')';
+	} else {
+		$p->code = 'find_in_path(' . $arg . ')';
+	}
 
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1261,29 +1313,31 @@ function balise_CHEMIN_dist($p) {
  * Compile la balise `#CHEMIN_IMAGE` qui cherche une image dans le thème
  * de l'espace privé utilisé par SPIP et retourne son chemin complet depuis
  * la racine
- * 
+ *
  * Signature : `#CHEMIN_IMAGE{image.png}`
  *
  * Retourne une chaîne vide si le fichier n'est pas trouvé.
- * 
+ *
  * @balise
  * @see chemin_image()
  * @example
  *     ```
  *     #CHEMIN_IMAGE{article-24.png}
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_CHEMIN_IMAGE_dist($p) {
-	$arg = interprete_argument_balise(1,$p);
+	$arg = interprete_argument_balise(1, $p);
 	if (!$arg) {
 		$msg = array('zbug_balise_sans_argument', array('balise' => ' CHEMIN_IMAGE'));
 		erreur_squelette($msg, $p);
-	} else $p->code = 'chemin_image(' . $arg .')';
+	} else {
+		$p->code = 'chemin_image(' . $arg . ')';
+	}
 
 	#$p->interdire_scripts = true;
 	return $p;
@@ -1312,7 +1366,7 @@ function balise_CHEMIN_IMAGE_dist($p) {
  * utilisée pour désactiver les filtres par défaut, par exemple avec
  * `[(#ENV*{toto})]` , il *faut* s'assurer de la sécurité
  * anti-javascript, par exemple en filtrant avec `safehtml` : `[(#ENV*{toto}|safehtml)]`
- * 
+ *
  *
  * @param Champ $p
  *     Pile ; arbre de syntaxe abstrait positionné au niveau de la balise.
@@ -1321,22 +1375,22 @@ function balise_CHEMIN_IMAGE_dist($p) {
  *     Par defaut prend dans le contexte du squelette.
  * @return Champ
  *     Pile completée du code PHP d'exécution de la balise
-**/
-function balise_ENV_dist($p, $src = NULL) {
+ **/
+function balise_ENV_dist($p, $src = null) {
 
 	// cle du tableau desiree
-	$_nom = interprete_argument_balise(1,$p);
+	$_nom = interprete_argument_balise(1, $p);
 	// valeur par defaut
-	$_sinon = interprete_argument_balise(2,$p);
-	
+	$_sinon = interprete_argument_balise(2, $p);
+
 	// $src est un tableau de donnees sources eventuellement transmis
 	// en absence, on utilise l'environnement du squelette $Pile[0]
-	
+
 	if (!$_nom) {
 		// cas de #ENV sans argument : on retourne le serialize() du tableau
 		// une belle fonction [(#ENV|affiche_env)] serait pratique
 		if ($src) {
-			$p->code = '(is_array($a = ('.$src.')) ? serialize($a) : "")';
+			$p->code = '(is_array($a = (' . $src . ')) ? serialize($a) : "")';
 		} else {
 			$p->code = '@serialize($Pile[0])';
 		}
@@ -1350,6 +1404,7 @@ function balise_ENV_dist($p, $src = NULL) {
 			$p->code = "table_valeur($src, (string)$_nom, null)";
 		}
 	}
+
 	#$p->interdire_scripts = true;
 
 	return $p;
@@ -1375,18 +1430,18 @@ function balise_ENV_dist($p, $src = NULL) {
  *
  * @balise
  * @link http://www.spip.net/4335
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
  *     Pile completée du code PHP d'exécution de la balise
  */
 function balise_CONFIG_dist($p) {
-	if (!$arg = interprete_argument_balise(1,$p)) {
+	if (!$arg = interprete_argument_balise(1, $p)) {
 		$arg = "''";
 	}
-	$_sinon = interprete_argument_balise(2,$p);
-	$_unserialize = sinon(interprete_argument_balise(3,$p),"false");
+	$_sinon = interprete_argument_balise(2, $p);
+	$_unserialize = sinon(interprete_argument_balise(3, $p), "false");
 
 	$p->code = '(include_spip(\'inc/config\')?lire_config(' . $arg . ',' .
 		($_sinon && $_sinon != "''" ? $_sinon : 'null') . ',' . $_unserialize . "):'')";
@@ -1407,7 +1462,7 @@ function balise_CONFIG_dist($p) {
  * (connect.php), sinon retourne son nom.
  *
  * @balise
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise.
  * @return Champ
@@ -1416,6 +1471,7 @@ function balise_CONFIG_dist($p) {
 function balise_CONNECT_dist($p) {
 	$p->code = '($connect ? $connect : NULL)';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1442,7 +1498,7 @@ function balise_CONNECT_dist($p) {
  *     Pile au niveau de la balise.
  * @return Champ
  *     Pile completée du code PHP d'exécution de la balise
-**/
+ **/
 function balise_SESSION_dist($p) {
 	$p->descr['session'] = true;
 
@@ -1451,6 +1507,7 @@ function balise_SESSION_dist($p) {
 		: 'balise_ENV_dist';
 
 	$p = $f($p, '$GLOBALS["visiteur_session"]');
+
 	return $p;
 }
 
@@ -1458,7 +1515,7 @@ function balise_SESSION_dist($p) {
 /**
  * Compile la balise `#SESSION_SET` qui d’insérer dans la session
  * des données supplémentaires
- * 
+ *
  * @balise
  * @link http://www.spip.net/3984
  * @see balise_AUTORISER_dist()
@@ -1472,14 +1529,16 @@ function balise_SESSION_dist($p) {
  *     Pile au niveau de la balise.
  * @return Champ
  *     Pile completée du code PHP d'exécution de la balise
-**/
+ **/
 function balise_SESSION_SET_dist($p) {
-	$_nom = interprete_argument_balise(1,$p);
-	$_val = interprete_argument_balise(2,$p);
+	$_nom = interprete_argument_balise(1, $p);
+	$_val = interprete_argument_balise(2, $p);
 	if (!$_nom OR !$_val) {
 		$err_b_s_a = array('zbug_balise_sans_argument', array('balise' => 'SESSION_SET'));
 		erreur_squelette($err_b_s_a, $p);
-	} else 	$p->code = '(include_spip("inc/session") AND session_set('.$_nom.','.$_val.'))';
+	} else {
+		$p->code = '(include_spip("inc/session") AND session_set(' . $_nom . ',' . $_val . '))';
+	}
 
 	$p->interdire_scripts = false;
 
@@ -1513,17 +1572,19 @@ function balise_SESSION_SET_dist($p) {
  *     Pile au niveau de la balise.
  * @return Champ
  *     Pile completée du code PHP d'exécution de la balise
-**/
+ **/
 function balise_EVAL_dist($p) {
-	$php = interprete_argument_balise(1,$p);
+	$php = interprete_argument_balise(1, $p);
 	if ($php) {
 		# optimisation sur les #EVAL{une expression sans #BALISE}
 		# attention au commentaire "// x signes" qui precede
 		if (preg_match(",^([[:space:]]*//[^\n]*\n)'([^']+)'$,ms",
-		$php,$r))
-			$p->code = /* $r[1]. */'('.$r[2].')';
-		else
+			$php, $r)) {
+			$p->code = /* $r[1]. */
+				'(' . $r[2] . ')';
+		} else {
 			$p->code = "eval('return '.$php.';')";
+		}
 	} else {
 		$msg = array('zbug_balise_sans_argument', array('balise' => ' EVAL'));
 		erreur_squelette($msg, $p);
@@ -1553,22 +1614,24 @@ function balise_EVAL_dist($p) {
  *     ```
  *     #CHAMP_SQL{notes}
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
-function balise_CHAMP_SQL_dist($p){
+ **/
+function balise_CHAMP_SQL_dist($p) {
 
 	if ($p->param
-	AND isset($p->param[0][1][0])
-	AND $champ = ($p->param[0][1][0]->texte))
+		AND isset($p->param[0][1][0])
+		AND $champ = ($p->param[0][1][0]->texte)
+	) {
 		$p->code = champ_sql($champ, $p);
-	else {
+	} else {
 		$err_b_s_a = array('zbug_balise_sans_argument', array('balise' => ' URL_'));
 		erreur_squelette($err_b_s_a, $p);
 	}
+
 	#$p->interdire_scripts = true;
 	return $p;
 }
@@ -1578,7 +1641,7 @@ function balise_CHAMP_SQL_dist($p){
  * qui lui est transmis
  *
  * Cela permet d'appliquer un filtre à une chaîne de caractère
- * 
+ *
  * @balise
  * @link http://www.spip.net/4026
  * @example
@@ -1589,17 +1652,19 @@ function balise_CHAMP_SQL_dist($p){
  *     #VAL{'1,2'} renvoie '1,2'
  *     [(#VAL{a_suivre}|bouton_spip_rss)]
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
-function balise_VAL_dist($p){
-	$p->code = interprete_argument_balise(1,$p);
-	if (!strlen($p->code))
+ **/
+function balise_VAL_dist($p) {
+	$p->code = interprete_argument_balise(1, $p);
+	if (!strlen($p->code)) {
 		$p->code = "''";
+	}
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1607,16 +1672,16 @@ function balise_VAL_dist($p){
  * Compile la balise `#NOOP`, alias (déprécié) de `#VAL`
  *
  * Alias pour regler #948. Ne plus utiliser.
- * 
+ *
  * @balise
  * @see balise_VAL_dist()
  * @deprecated Utiliser #VAL
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_NOOP_dist($p) { return balise_VAL_dist($p); }
 
 
@@ -1624,7 +1689,7 @@ function balise_NOOP_dist($p) { return balise_VAL_dist($p); }
  * Compile la balise `#REM` servant à commenter du texte
  *
  * Retourne toujours une chaîne vide.
- * 
+ *
  * @balise
  * @link http://www.spip.net/4578
  * @example
@@ -1634,20 +1699,21 @@ function balise_NOOP_dist($p) { return balise_VAL_dist($p); }
  *       non affiché dans le code généré
  *     ]
  *     ```
- * 
+ *
  * @note
  *     La balise `#REM` n'empêche pas l'exécution des balises SPIP contenues
  *     dedans (elle ne sert pas à commenter du code pour empêcher son
  *     exécution).
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_REM_dist($p) {
-	$p->code="''";
+	$p->code = "''";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1657,29 +1723,32 @@ function balise_REM_dist($p) {
  *
  * Doit être placée en tête de fichier et ne fonctionne pas dans une
  * inclusion.
- * 
+ *
  * @balise
  * @link http://www.spip.net/4631
  * @example
  *     ```
- *     #HTTP_HEADER{Content-Type: text/csv; charset=#CHARSET} 
+ *     #HTTP_HEADER{Content-Type: text/csv; charset=#CHARSET}
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_HTTP_HEADER_dist($p) {
 
-	$header = interprete_argument_balise(1,$p);
+	$header = interprete_argument_balise(1, $p);
 	if (!$header) {
 		$err_b_s_a = array('zbug_balise_sans_argument', array('balise' => 'HTTP_HEADER'));
 		erreur_squelette($err_b_s_a, $p);
-	} else 	$p->code = "'<'.'?php header(\"' . "
-		. $header
-		. " . '\"); ?'.'>'";
+	} else {
+		$p->code = "'<'.'?php header(\"' . "
+			. $header
+			. " . '\"); ?'.'>'";
+	}
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1690,7 +1759,7 @@ function balise_HTTP_HEADER_dist($p) {
  *
  * Le filtrage se fait au niveau du squelette, sans s'appliquer aux `<INCLURE>`.
  * Plusieurs filtres peuvent être indiqués, séparés par des barres verticales `|`
- * 
+ *
  * @balise
  * @link http://www.spip.net/4894
  * @example
@@ -1698,23 +1767,25 @@ function balise_HTTP_HEADER_dist($p) {
  *     #FILTRE{compacte_head}
  *     #FILTRE{supprimer_tags|filtrer_entites|trim}
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_FILTRE_dist($p) {
 	if ($p->param) {
 		$args = array();
-		foreach ($p->param as $i => $ignore)
-			$args[] = interprete_argument_balise($i+1,$p);
+		foreach ($p->param as $i => $ignore) {
+			$args[] = interprete_argument_balise($i+1, $p);
+		}
 		$p->code = "'<' . '"
-			.'?php header("X-Spip-Filtre: \'.'
-				.join('.\'|\'.', $args)
+			. '?php header("X-Spip-Filtre: \'.'
+			. join('.\'|\'.', $args)
 			. " . '\"); ?'.'>'";
 
 		$p->interdire_scripts = false;
+
 		return $p;
 	}
 }
@@ -1744,12 +1815,12 @@ function balise_FILTRE_dist($p) {
  * @note
  *   En absence de cette balise la durée est du cache est donné
  *   par la constante `_DUREE_CACHE_DEFAUT`
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_CACHE_dist($p) {
 
 	if ($p->param) {
@@ -1757,18 +1828,19 @@ function balise_CACHE_dist($p) {
 
 		// noter la duree du cache dans un entete proprietaire
 
-		$code = "'<'.'".'?php header("X-Spip-Cache: '
-		. $duree
-		. '"); ?'."'.'>'";
+		$code = "'<'.'" . '?php header("X-Spip-Cache: '
+			. $duree
+			. '"); ?' . "'.'>'";
 
 		// Remplir le header Cache-Control
 		// cas #CACHE{0}
-		if ($duree == 0)
+		if ($duree == 0) {
 			$code .= ".'<'.'"
-			.'?php header("Cache-Control: no-cache, must-revalidate"); ?'
-			."'.'><'.'"
-			.'?php header("Pragma: no-cache"); ?'
-			."'.'>'";
+				. '?php header("Cache-Control: no-cache, must-revalidate"); ?'
+				. "'.'><'.'"
+				. '?php header("Pragma: no-cache"); ?'
+				. "'.'>'";
+		}
 
 		// recuperer les parametres suivants
 		$i = 1;
@@ -1776,21 +1848,27 @@ function balise_CACHE_dist($p) {
 			$pa = ($p->param[0][$i][0]->texte);
 
 			if ($pa == 'cache-client'
-			AND $duree > 0) {
-				$code .= ".'<'.'".'?php header("Cache-Control: max-age='
-				. $duree
-				. '"); ?'."'.'>'";
-			// il semble logique, si on cache-client, de ne pas invalider
+				AND $duree > 0
+			) {
+				$code .= ".'<'.'" . '?php header("Cache-Control: max-age='
+					. $duree
+					. '"); ?' . "'.'>'";
+				// il semble logique, si on cache-client, de ne pas invalider
 				$pa = 'statique';
 			}
 
 			if ($pa == 'statique'
-			AND $duree > 0)
-				$code .= ".'<'.'".'?php header("X-Spip-Statique: oui"); ?'."'.'>'";
+				AND $duree > 0
+			) {
+				$code .= ".'<'.'" . '?php header("X-Spip-Statique: oui"); ?' . "'.'>'";
+			}
 		}
-	} else $code = "''";
+	} else {
+		$code = "''";
+	}
 	$p->code = $code;
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1798,7 +1876,7 @@ function balise_CACHE_dist($p) {
 /**
  * Compile la balise `#INSERT_HEAD` permettant d'insérer du contenu dans
  * le `<head>` d'une page HTML
- * 
+ *
  * La balise permet aux plugins d'insérer des styles, js ou autre
  * dans l'entête sans modification du squelette.
  * Les css doivent être inserées de préférence par `#INSERT_HEAD_CSS`
@@ -1808,7 +1886,7 @@ function balise_CACHE_dist($p) {
  * que le pipeline `insert_head_css` a bien été vu
  * et dans le cas contraire l'appelera. Ceal permet de ne pas oublier
  * les css de `#INSERT_HEAD_CSS` même si cette balise n'est pas presente.
- * 
+ *
  * Il faut mettre ce php avant le `insert_head` car le compresseur y mets
  * ensuite un php du meme type pour collecter
  * CSS et JS, et on ne veut pas qu'il rate les css insérées en fallback
@@ -1824,16 +1902,17 @@ function balise_CACHE_dist($p) {
  */
 function balise_INSERT_HEAD_dist($p) {
 	$p->code = "'<'.'"
-		.'?php header("X-Spip-Filtre: insert_head_css_conditionnel"); ?'
-		."'.'>'";
+		. '?php header("X-Spip-Filtre: insert_head_css_conditionnel"); ?'
+		. "'.'>'";
 	$p->code .= ". pipeline('insert_head','<!-- insert_head -->')";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
 /**
  * Compile la balise `#INSERT_HEAD_CSS` homologue de `#INSERT_HEAD` pour les CSS
- * 
+ *
  * Et par extension pour le JS inline qui doit préférentiellement
  * être inséré avant les CSS car bloquant sinon.
  *
@@ -1848,6 +1927,7 @@ function balise_INSERT_HEAD_dist($p) {
 function balise_INSERT_HEAD_CSS_dist($p) {
 	$p->code = "pipeline('insert_head_css','<!-- insert_head_css -->')";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -1856,17 +1936,18 @@ function balise_INSERT_HEAD_CSS_dist($p) {
  *
  * @balise
  * @see balise_INCLURE_dist()
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_INCLUDE_dist($p) {
-	if(function_exists('balise_INCLURE'))
+	if (function_exists('balise_INCLURE')) {
 		return balise_INCLURE($p);
-	else
+	} else {
 		return balise_INCLURE_dist($p);
+	}
 }
 
 /**
@@ -1876,7 +1957,7 @@ function balise_INCLUDE_dist($p) {
  *
  * L'argument `env` permet de transmettre tout l'environnement du squelette
  * en cours au squelette inclus.
- * 
+ *
  * On parle d’inclusion « statique » car le résultat de compilation est
  * ajouté au squelette en cours, dans le même fichier de cache.
  * Cette balise est donc différente d’une inclusion « dynamique » avec
@@ -1887,18 +1968,18 @@ function balise_INCLUDE_dist($p) {
  * ainsi le produit du squelette peut être utilisé en entrée de filtres
  * à suivre. On peut faire un `#INCLURE{fichier}` sans squelette
  * (Incompatible avec les balises dynamiques).
- * 
+ *
  * @balise
  * @example
  *     ```
  *     [(#INCLURE{fond=inclure/documents,id_article, env})]
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_INCLURE_dist($p) {
 	$id_boucle = $p->id_boucle;
 	// la lang n'est pas passe de facon automatique par argumenter
@@ -1909,7 +1990,9 @@ function balise_INCLURE_dist($p) {
 
 	// erreur de syntaxe = fond absent
 	// (2 messages d'erreur SPIP pour le prix d'un, mais pas d'erreur PHP
-	if (!$_contexte) $contexte = array();
+	if (!$_contexte) {
+		$contexte = array();
+	}
 
 	if (isset($_contexte['fond'])) {
 
@@ -1918,7 +2001,9 @@ function balise_INCLURE_dist($p) {
 		if (preg_match('/^.fond.\s*=>(.*)$/s', $f, $r)) {
 			$f = $r[1];
 			unset($_contexte['fond']);
-		} else spip_log("compilation de #INCLURE a revoir");
+		} else {
+			spip_log("compilation de #INCLURE a revoir");
+		}
 
 		// #INCLURE{doublons}
 		if (isset($_contexte['doublons'])) {
@@ -1934,23 +2019,25 @@ function balise_INCLURE_dist($p) {
 
 		$_options = array();
 		if (isset($_contexte['ajax'])) {
-			$_options[] = preg_replace(",=>(.*)$,ims",'=> ($v=(\\1))?$v:true',$_contexte['ajax']);
+			$_options[] = preg_replace(",=>(.*)$,ims", '=> ($v=(\\1))?$v:true', $_contexte['ajax']);
 			unset($_contexte['ajax']);
 		}
-		if ($p->etoile) $_options[] = "'etoile'=>true";
-		$_options[] = "'compil'=>array(" . memoriser_contexte_compil($p) .")";
+		if ($p->etoile) {
+			$_options[] = "'etoile'=>true";
+		}
+		$_options[] = "'compil'=>array(" . memoriser_contexte_compil($p) . ")";
 
-		$_l = 'array(' . join(",\n\t", $_contexte) .')';
-		if ($flag_env) $_l = "array_merge(\$Pile[0],$_l)";
+		$_l = 'array(' . join(",\n\t", $_contexte) . ')';
+		if ($flag_env) {
+			$_l = "array_merge(\$Pile[0],$_l)";
+		}
 
-		$p->code = sprintf(CODE_RECUPERER_FOND, $f, $_l, join(',',$_options),"_request('connect')");
+		$p->code = sprintf(CODE_RECUPERER_FOND, $f, $_l, join(',', $_options), "_request('connect')");
 
-	}
-	elseif (!isset($_contexte[1])) {
-			$msg = array('zbug_balise_sans_argument', array('balise' => ' INCLURE'));
-			erreur_squelette($msg, $p);
-	}
-	else {
+	} elseif (!isset($_contexte[1])) {
+		$msg = array('zbug_balise_sans_argument', array('balise' => ' INCLURE'));
+		erreur_squelette($msg, $p);
+	} else {
 		$p->code = 'charge_scripts(' . $_contexte[1] . ',false)';
 	}
 
@@ -1968,41 +2055,44 @@ function balise_INCLURE_dist($p) {
  *
  * Des arguments supplémentaires peuvent être transmis :
  * `[(#MODELE{nom, argument=xx, argument})]`
- * 
+ *
  * @balise
  * @see balise_INCLURE_dist()
  * @example
  *     ```
  *     #MODELE{article_traductions}
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_MODELE_dist($p) {
 
 	$_contexte = argumenter_inclure($p->param, true, $p, $p->boucles, $p->id_boucle, false);
 
 	// erreur de syntaxe = fond absent
 	// (2 messages d'erreur SPIP pour le prix d'un, mais pas d'erreur PHP
-	if (!$_contexte) $contexte = array();
+	if (!$_contexte) {
+		$contexte = array();
+	}
 
 	if (!isset($_contexte[1])) {
 		$msg = array('zbug_balise_sans_argument', array('balise' => ' MODELE'));
 		erreur_squelette($msg, $p);
-	}
-	else {
+	} else {
 		$nom = $_contexte[1];
 		unset($_contexte[1]);
 
-		if (preg_match("/^\s*'[^']*'/s", $nom))
-			$nom = "'modeles/" . substr($nom,1);
-		else $nom = "'modeles/' . $nom";
+		if (preg_match("/^\s*'[^']*'/s", $nom)) {
+			$nom = "'modeles/" . substr($nom, 1);
+		} else {
+			$nom = "'modeles/' . $nom";
+		}
 
 		$flag_env = false;
-		if (isset($_contexte['env'])){
+		if (isset($_contexte['env'])) {
 			$flag_env = true;
 			unset($_contexte['env']);
 		}
@@ -2011,28 +2101,31 @@ function balise_MODELE_dist($p) {
 		// Reserver la cle primaire de la boucle courante si elle existe
 		if (isset($p->boucles[$p->id_boucle]->primary)) {
 			$primary = $p->boucles[$p->id_boucle]->primary;
-			if (!strpos($primary,',')) {
+			if (!strpos($primary, ',')) {
 				$id = champ_sql($primary, $p);
-				$_contexte[] = "'$primary'=>".$id;
-				$_contexte[] = "'id'=>".$id;
+				$_contexte[] = "'$primary'=>" . $id;
+				$_contexte[] = "'id'=>" . $id;
 			}
 		}
 		$_contexte[] = "'recurs'=>(++\$recurs)";
 		$connect = '';
-		if (isset($p->boucles[$p->id_boucle]))
+		if (isset($p->boucles[$p->id_boucle])) {
 			$connect = $p->boucles[$p->id_boucle]->sql_serveur;
+		}
 
 		$_options = memoriser_contexte_compil($p);
 		$_options = "'compil'=>array($_options), 'trim'=>true";
-	  if (isset($_contexte['ajax'])){
-		  $_options .= ", ".preg_replace(",=>(.*)$,ims",'=> ($v=(\\1))?$v:true',$_contexte['ajax']);
+		if (isset($_contexte['ajax'])) {
+			$_options .= ", " . preg_replace(",=>(.*)$,ims", '=> ($v=(\\1))?$v:true', $_contexte['ajax']);
 			unset($_contexte['ajax']);
-	  }
+		}
 
-		$_l = 'array(' . join(",\n\t", $_contexte) .')';
-		if ($flag_env) $_l = "array_merge(\$Pile[0],$_l)";
+		$_l = 'array(' . join(",\n\t", $_contexte) . ')';
+		if ($flag_env) {
+			$_l = "array_merge(\$Pile[0],$_l)";
+		}
 
-		$page = sprintf(CODE_RECUPERER_FOND, $nom, $_l , $_options, _q($connect));
+		$page = sprintf(CODE_RECUPERER_FOND, $nom, $_l, $_options, _q($connect));
 
 		$p->code = "\n\t(((\$recurs=(isset(\$Pile[0]['recurs'])?\$Pile[0]['recurs']:0))>=5)? '' :\n\t$page)\n";
 
@@ -2056,15 +2149,15 @@ function balise_MODELE_dist($p) {
  *     #SET{nb,5}
  *     #GET{nb} // affiche 5
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
-function balise_SET_dist($p){
-	$_nom = interprete_argument_balise(1,$p);
-	$_val = interprete_argument_balise(2,$p);
+ **/
+function balise_SET_dist($p) {
+	$_nom = interprete_argument_balise(1, $p);
+	$_val = interprete_argument_balise(2, $p);
 
 	if (!$_nom OR !$_val) {
 		$err_b_s_a = array('zbug_balise_sans_argument', array('balise' => 'SET'));
@@ -2072,7 +2165,9 @@ function balise_SET_dist($p){
 	}
 	// affectation $_zzz inutile, mais permet de contourner un bug OpCode cache sous PHP 5.5.4
 	// cf https://bugs.php.net/bug.php?id=65845
-	else  $p->code = "vide(\$Pile['vars'][\$_zzz=(string)$_nom] = $_val)";
+	else {
+		$p->code = "vide(\$Pile['vars'][\$_zzz=(string)$_nom] = $_val)";
+	}
 
 	$p->interdire_scripts = false; // la balise ne renvoie rien
 	return $p;
@@ -2085,7 +2180,7 @@ function balise_SET_dist($p){
  * Signature : `#GET{cle[,defaut]}`
  *
  * La clé peut obtenir des sous clés séparés par des `/`
- * 
+ *
  * @balise
  * @link http://www.spip.net/3990 Balises #SET et #GET
  * @see balise_SET_dist()
@@ -2098,24 +2193,25 @@ function balise_SET_dist($p){
  *     #SET{nb,#ARRAY{boucles,3}}
  *     #GET{nb/boucles} affiche 3, équivalent à #GET{nb}|table_valeur{boucles}
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_GET_dist($p) {
 	$p->interdire_scripts = false; // le contenu vient de #SET, donc il est de confiance
-	if (function_exists('balise_ENV'))
+	if (function_exists('balise_ENV')) {
 		return balise_ENV($p, '$Pile["vars"]');
-	else
+	} else {
 		return balise_ENV_dist($p, '$Pile["vars"]');
+	}
 }
 
 
 /**
  * Compile la balise `#DOUBLONS` qui redonne les doublons enregistrés
- * 
+ *
  * - `#DOUBLONS{mots}` ou `#DOUBLONS{mots,famille}`
  *   donne l'état des doublons `(MOTS)` à cet endroit
  *   sous forme de tableau d'id_mot comme `array(1,2,3,...)`
@@ -2125,29 +2221,30 @@ function balise_GET_dist($p) {
  *
  * @balise
  * @link http://www.spip.net/4123
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_DOUBLONS_dist($p) {
-	if ($type = interprete_argument_balise(1,$p)) {
-		if ($famille = interprete_argument_balise(2,$p))
+	if ($type = interprete_argument_balise(1, $p)) {
+		if ($famille = interprete_argument_balise(2, $p)) {
 			$type .= '.' . $famille;
-		$p->code = '(isset($doublons['.$type.']) ? $doublons['.$type.'] : "")';
-		if (!$p->etoile)
+		}
+		$p->code = '(isset($doublons[' . $type . ']) ? $doublons[' . $type . '] : "")';
+		if (!$p->etoile) {
 			$p->code = 'array_filter(array_map("intval",explode(",",'
 				. $p->code . ')))';
-	}
-	else
+		}
+	} else {
 		$p->code = '$doublons';
+	}
 
 	$p->interdire_scripts = false;
 
 	return $p;
 }
-
 
 
 /**
@@ -2167,18 +2264,19 @@ function balise_DOUBLONS_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_PIPELINE_dist($p) {
-	$_pipe = interprete_argument_balise(1,$p);
+	$_pipe = interprete_argument_balise(1, $p);
 	if (!$_pipe) {
 		$err_b_s_a = array('zbug_balise_sans_argument', array('balise' => 'PIPELINE'));
 		erreur_squelette($err_b_s_a, $p);
 	} else {
-		$_flux = interprete_argument_balise(2,$p);
-		$_flux = $_flux?$_flux:"''";
+		$_flux = interprete_argument_balise(2, $p);
+		$_flux = $_flux ? $_flux : "''";
 		$p->code = "pipeline( $_pipe , $_flux )";
 		$p->interdire_scripts = false;
 	}
+
 	return $p;
 }
 
@@ -2190,7 +2288,7 @@ function balise_PIPELINE_dist($p) {
  * qui redéfinissent cette balise, le nom du champ SQL (ou le nom d'un contrôleur)
  * correspondant à ce qui est édité. Cela sert particulièrement au plugin Crayons.
  * Ainsi en absence du plugin, la balise est toujours reconnue (mais n'a aucune action).
- * 
+ *
  * @balise
  * @link http://www.spip.net/4584
  * @example
@@ -2202,13 +2300,13 @@ function balise_PIPELINE_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_EDIT_dist($p) {
 	$p->code = "''";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
-
 
 
 /**
@@ -2228,11 +2326,12 @@ function balise_EDIT_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_TOTAL_UNIQUE_dist($p) {
-	$_famille = interprete_argument_balise(1,$p);
+	$_famille = interprete_argument_balise(1, $p);
 	$_famille = $_famille ? $_famille : "''";
 	$p->code = "unique('', $_famille, true)";
+
 	return $p;
 }
 
@@ -2241,7 +2340,7 @@ function balise_TOTAL_UNIQUE_dist($p) {
  *
  * Crée un `array` PHP à partir d'arguments calculés.
  * Chaque paire d'arguments représente la clé et la valeur du tableau.
- * 
+ *
  * @balise
  * @link http://www.spip.net/4009
  * @example
@@ -2254,17 +2353,20 @@ function balise_TOTAL_UNIQUE_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_ARRAY_dist($p) {
 	$_code = array();
-	$n=1;
+	$n = 1;
 	do {
-		$_key = interprete_argument_balise($n++,$p);
-		$_val = interprete_argument_balise($n++,$p);
-		if ($_key AND $_val) $_code[] = "$_key => $_val";
+		$_key = interprete_argument_balise($n++, $p);
+		$_val = interprete_argument_balise($n++, $p);
+		if ($_key AND $_val) {
+			$_code[] = "$_key => $_val";
+		}
 	} while ($_key && $_val);
-	$p->code = 'array(' . join(', ',$_code).')';
+	$p->code = 'array(' . join(', ', $_code) . ')';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -2275,7 +2377,7 @@ function balise_ARRAY_dist($p) {
  * @link http://www.spip.net/5547
  * @example
  *    ```
- *    #LISTE{a,b,c,d,e} 
+ *    #LISTE{a,b,c,d,e}
  *    ```
  *
  * @param Champ $p
@@ -2285,11 +2387,13 @@ function balise_ARRAY_dist($p) {
  */
 function balise_LISTE_dist($p) {
 	$_code = array();
-	$n=1;
-	while ($_val = interprete_argument_balise($n++,$p))
+	$n = 1;
+	while ($_val = interprete_argument_balise($n++, $p)) {
 		$_code[] = $_val;
-	$p->code = 'array(' . join(', ',$_code).')';
+	}
+	$p->code = 'array(' . join(', ', $_code) . ')';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -2304,10 +2408,10 @@ function balise_LISTE_dist($p) {
  * Cette balise créée un cache par session.
  *
  * Signature : `#AUTORISER{faire[,type[,id[,auteur[,options]]]}`
- * 
+ *
  * @note
  *     La priorité des opérateurs exige && plutot que AND
- * 
+ *
  * @balise
  * @link http://www.spip.net/3896
  * @see autoriser()
@@ -2322,17 +2426,20 @@ function balise_LISTE_dist($p) {
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_AUTORISER_dist($p) {
 	$_code = array();
 	$p->descr['session'] = true; // faire un cache par session
 
-	$n=1;
-	while ($_v = interprete_argument_balise($n++,$p))
+	$n = 1;
+	while ($_v = interprete_argument_balise($n++, $p)) {
 		$_code[] = $_v;
+	}
 
-	$p->code = '((function_exists("autoriser")||include_spip("inc/autoriser"))&&autoriser(' . join(', ',$_code).')?" ":"")';
+	$p->code = '((function_exists("autoriser")||include_spip("inc/autoriser"))&&autoriser(' . join(', ',
+			$_code) . ')?" ":"")';
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -2350,20 +2457,21 @@ function balise_AUTORISER_dist($p) {
  *     #PLUGIN{prefixe, x} Renvoie l'information x du plugin (s'il est actif)
  *     #PLUGIN{prefixe, tout} Renvoie toutes les informations du plugin (s'il est actif)
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_PLUGIN_dist($p) {
-	$plugin = interprete_argument_balise(1,$p);
+	$plugin = interprete_argument_balise(1, $p);
 	$plugin = isset($plugin) ? str_replace('\'', '"', $plugin) : '""';
-	$type_info = interprete_argument_balise(2,$p);
+	$type_info = interprete_argument_balise(2, $p);
 	$type_info = isset($type_info) ? str_replace('\'', '"', $type_info) : '"est_actif"';
 
 	$f = chercher_filtre('info_plugin');
-	$p->code = $f.'('.$plugin.', '.$type_info.')';
+	$p->code = $f . '(' . $plugin . ', ' . $type_info . ')';
+
 	return $p;
 }
 
@@ -2378,17 +2486,18 @@ function balise_PLUGIN_dist($p) {
  *     ```
  *     #AIDER{titre}
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
+ **/
 function balise_AIDER_dist($p) {
-	$_motif = interprete_argument_balise(1,$p);
+	$_motif = interprete_argument_balise(1, $p);
 	$s = "'" . addslashes($p->descr['sourcefile']) . "'";
-	$aider = charger_fonction('aider','inc');
+	$aider = charger_fonction('aider', 'inc');
 	$p->code = "((\$aider=charger_fonction('aider','inc'))?\$aider($_motif,$s, \$Pile[0]):'')";
+
 	return $p;
 }
 
@@ -2400,7 +2509,7 @@ function balise_AIDER_dist($p) {
  * Accèpte 2 arguments optionnels :
  * - L'url de l'action (par défaut `#ENV{action}`
  * - Le nom du formulaire (par défaut `#ENV{form}`
- * 
+ *
  * @balise
  * @see form_hidden()
  * @example
@@ -2408,17 +2517,19 @@ function balise_AIDER_dist($p) {
  *     <form method='post' action='#ENV{action}'><div>
  *     #ACTION_FORMULAIRE
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
-**/
-function balise_ACTION_FORMULAIRE($p){
-	if (!$_url = interprete_argument_balise(1,$p))
+ **/
+function balise_ACTION_FORMULAIRE($p) {
+	if (!$_url = interprete_argument_balise(1, $p)) {
 		$_url = "@\$Pile[0]['action']";
-	if (!$_form = interprete_argument_balise(2,$p))
+	}
+	if (!$_form = interprete_argument_balise(2, $p)) {
 		$_form = "@\$Pile[0]['form']";
+	}
 
 	// envoyer le nom du formulaire que l'on traite
 	// transmettre les eventuels args de la balise formulaire
@@ -2432,13 +2543,14 @@ function balise_ACTION_FORMULAIRE($p){
 	'</div>'";
 
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
 
 /**
  * Compile la balise `#BOUTON_ACTION` qui génère un bouton d'action en post, ajaxable
- * 
+ *
  * Cette balise s'utilise à la place des liens `action_auteur`, sous la forme
  *
  * - `#BOUTON_ACTION{libelle,url}`
@@ -2454,42 +2566,45 @@ function balise_ACTION_FORMULAIRE($p){
  *        [(#BOUTON_ACTION{<:bouton_tenter_recuperation:>,#URL_ECRIRE{base_repair}})]
  *     ]
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_BOUTON_ACTION_dist($p){
+function balise_BOUTON_ACTION_dist($p) {
 
 	$args = array();
-	for ($k=1;$k<=6;$k++){
-		$_a = interprete_argument_balise($k,$p);
-		if (!$_a) $_a="''";
-	  $args[] = $_a;
+	for ($k = 1; $k <= 6; $k++) {
+		$_a = interprete_argument_balise($k, $p);
+		if (!$_a) {
+			$_a = "''";
+		}
+		$args[] = $_a;
 	}
 	// supprimer les args vides
-	while(end($args)=="''" AND count($args)>2)
+	while (end($args) == "''" AND count($args) > 2) {
 		array_pop($args);
-	$args = implode(",",$args);
+	}
+	$args = implode(",", $args);
 
 	$bouton_action = chercher_filtre("bouton_action");
 	$p->code = "$bouton_action($args)";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
 
-
 /**
  * Compile la balise `#SLOGAN_SITE_SPIP` qui retourne le slogan du site
- * 
+ *
  * @balise
  * @example
  *     ```
  *     [<p id="slogan">(#SLOGAN_SITE_SPIP)</p>]
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
@@ -2497,6 +2612,7 @@ function balise_BOUTON_ACTION_dist($p){
  */
 function balise_SLOGAN_SITE_SPIP_dist($p) {
 	$p->code = "\$GLOBALS['meta']['slogan_site']";
+
 	#$p->interdire_scripts = true;
 	return $p;
 }
@@ -2507,7 +2623,7 @@ function balise_SLOGAN_SITE_SPIP_dist($p) {
  *
  * Renvoie `' '` si le webmestre souhaite que SPIP génère du code (X)HTML5 sur
  * le site public, et `''` si le code doit être strictement compatible HTML4
- * 
+ *
  * @balise
  * @uses html5_permis()
  * @example
@@ -2515,7 +2631,7 @@ function balise_SLOGAN_SITE_SPIP_dist($p) {
  *     [(#HTML5) required="required"]
  *     <input[ (#HTML5|?{type="email",type="text"})] ... />
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
@@ -2524,15 +2640,15 @@ function balise_SLOGAN_SITE_SPIP_dist($p) {
 function balise_HTML5_dist($p) {
 	$p->code = html5_permis() ? "' '" : "''";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
-
 
 
 /**
  * Compile la balise `#TRI` permettant d'afficher un lien de changement d'ordre de tri
  * d'une colonne de la boucle
- * 
+ *
  * La balise `#TRI{champ[,libelle]}` champ prend `>` ou `<` pour afficher
  * le lien de changement de sens croissant ou decroissant (`>` `<` indiquent
  * un sens par une flèche)
@@ -2542,7 +2658,7 @@ function balise_HTML5_dist($p) {
  *     ```
  *     <th>[(#TRI{titre,<:info_titre:>,ajax})]</th>
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @param string $liste
@@ -2560,6 +2676,7 @@ function balise_TRI_dist($p, $liste = 'true') {
 				array('champ' => '#TRI')
 			), $p->id_boucle);
 		$p->code = "''";
+
 		return $p;
 	}
 	$boucle = $p->boucles[$b];
@@ -2572,44 +2689,47 @@ function balise_TRI_dist($p, $liste = 'true') {
 				array('champ' => '#TRI')
 			), $p->id_boucle);
 		$p->code = "''";
+
 		return $p;
 	}
 
-	$_champ = interprete_argument_balise(1,$p);
+	$_champ = interprete_argument_balise(1, $p);
 	// si pas de champ, renvoyer le critere de tri utilise
-	if (!$_champ){
+	if (!$_champ) {
 		$p->code = $boucle->modificateur['tri_champ'];
+
 		return $p;
 	}
 	// forcer la jointure si besoin, et si le champ est statique
-	if (preg_match(",^'([\w.]+)'$,i",$_champ,$m)){
-		index_pile($b, $m[1], $p->boucles,'',null,true,false);
+	if (preg_match(",^'([\w.]+)'$,i", $_champ, $m)) {
+		index_pile($b, $m[1], $p->boucles, '', null, true, false);
 	}
 
-	$_libelle = interprete_argument_balise(2,$p);
-	$_libelle = $_libelle?$_libelle:$_champ;
+	$_libelle = interprete_argument_balise(2, $p);
+	$_libelle = $_libelle ? $_libelle : $_champ;
 
-	$_class = interprete_argument_balise(3,$p);
+	$_class = interprete_argument_balise(3, $p);
 	// si champ = ">" c'est un lien vers le tri croissant : de gauche a droite ==> 1
 	// si champ = "<" c'est un lien vers le tri decroissant : (sens inverse) == -1
 	$_issens = "in_array($_champ,array('>','<'))";
 	$_sens = "(strpos('< >',$_champ)-1)";
 
-	$_variable = "((\$s=$_issens)?'sens':'tri').".$boucle->modificateur['tri_nom'];
+	$_variable = "((\$s=$_issens)?'sens':'tri')." . $boucle->modificateur['tri_nom'];
 	$_url = "parametre_url(self(),$_variable,\$s?$_sens:$_champ)";
-	$_url = "parametre_url($_url,'var_memotri',strncmp(".$boucle->modificateur['tri_nom'].",'session',7)==0?$_variable:'')";
-	$_on = "\$s?(".$boucle->modificateur['tri_sens']."==$_sens".'):('.$boucle->modificateur['tri_champ']."==$_champ)";
+	$_url = "parametre_url($_url,'var_memotri',strncmp(" . $boucle->modificateur['tri_nom'] . ",'session',7)==0?$_variable:'')";
+	$_on = "\$s?(" . $boucle->modificateur['tri_sens'] . "==$_sens" . '):(' . $boucle->modificateur['tri_champ'] . "==$_champ)";
 
-	$p->code = "lien_ou_expose($_url,$_libelle,$_on".($_class?",$_class":"").")";
+	$p->code = "lien_ou_expose($_url,$_libelle,$_on" . ($_class ? ",$_class" : "") . ")";
 	//$p->code = "''";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
 
 /**
  * Compile la balise `#SAUTER{n}` qui permet de sauter en avant n resultats dans une boucle
- * 
+ *
  * La balise modifie le compteur courant de la boucle, mais pas les autres
  * champs qui restent les valeurs de la boucle avant le saut. Il est donc
  * preferable d'utiliser la balise juste avant la fermeture `</BOUCLE>`
@@ -2617,28 +2737,28 @@ function balise_TRI_dist($p, $liste = 'true') {
  * L'argument `n` doit être supérieur à zéro sinon la balise ne fait rien
  *
  * @balise
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_SAUTER_dist($p){
+function balise_SAUTER_dist($p) {
 	$id_boucle = $p->id_boucle;
 
 	if (empty($p->boucles[$id_boucle])) {
 		$msg = array('zbug_champ_hors_boucle', array('champ' => '#SAUTER'));
 		erreur_squelette($msg, $p);
-	}
-	else {
+	} else {
 		$boucle = $p->boucles[$id_boucle];
-		$_saut = interprete_argument_balise(1,$p);
+		$_saut = interprete_argument_balise(1, $p);
 		$_compteur = "\$Numrows['$id_boucle']['compteur_boucle']";
 		$_total = "\$Numrows['$id_boucle']['total']";
 
 		$p->code = "vide($_compteur=\$iter->skip($_saut,$_total))";
 	}
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -2654,18 +2774,18 @@ function balise_SAUTER_dist($p){
  *     #PUBLIE : porte sur la boucle en cours
  *     [(#PUBLIE{article, 3}|oui) ... ] : pour l'objet indiqué
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
  */
 function balise_PUBLIE_dist($p) {
-	if (!$_type = interprete_argument_balise(1,$p)){
+	if (!$_type = interprete_argument_balise(1, $p)) {
 		$_type = _q($p->type_requete);
-		$_id = champ_sql($p->boucles[$p->id_boucle]->primary,$p);
+		$_id = champ_sql($p->boucles[$p->id_boucle]->primary, $p);
 	} else {
-		$_id = interprete_argument_balise(2,$p);
+		$_id = interprete_argument_balise(2, $p);
 	}
 
 	$connect = '';
@@ -2673,8 +2793,9 @@ function balise_PUBLIE_dist($p) {
 		$connect = $p->boucles[$p->id_boucle]->sql_serveur;
 	}
 
-	$p->code = "(objet_test_si_publie(".$_type.",intval(".$_id."),"._q($connect).")?' ':'')";
+	$p->code = "(objet_test_si_publie(" . $_type . ",intval(" . $_id . ")," . _q($connect) . ")?' ':'')";
 	$p->interdire_scripts = false;
+
 	return $p;
 }
 
@@ -2697,17 +2818,17 @@ function balise_PUBLIE_dist($p) {
  *     ```
  *     <link rel="stylesheet" type="text/css" href="#PRODUIRE{fond=css/macss.css,couleur=ffffff}" />
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_PRODUIRE_dist($p){
-	$balise_inclure = charger_fonction('INCLURE','balise');
+function balise_PRODUIRE_dist($p) {
+	$balise_inclure = charger_fonction('INCLURE', 'balise');
 	$p = $balise_inclure($p);
 
-	$p->code = str_replace('recuperer_fond(','produire_fond_statique(',$p->code);
+	$p->code = str_replace('recuperer_fond(', 'produire_fond_statique(', $p->code);
 
 	return $p;
 }
@@ -2721,16 +2842,20 @@ function balise_PRODUIRE_dist($p){
  *     ```
  *     #LARGEUR_ECRAN{pleine_largeur}
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée par le code à générer
  */
-function balise_LARGEUR_ECRAN_dist($p){
-	$_class = interprete_argument_balise(1,$p);
-	if (!$_class) $_class='null';
+function balise_LARGEUR_ECRAN_dist($p) {
+	$_class = interprete_argument_balise(1, $p);
+	if (!$_class) {
+		$_class = 'null';
+	}
 	$p->code = "(is_string($_class)?vide(\$GLOBALS['largeur_ecran']=$_class):(isset(\$GLOBALS['largeur_ecran'])?\$GLOBALS['largeur_ecran']:''))";
+
 	return $p;
 }
+
 ?>

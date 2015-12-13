@@ -10,7 +10,9 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/charsets');
 
@@ -18,6 +20,7 @@ include_spip('inc/charsets');
  * Based on an example by ramdac at ramdac dot org
  * Returns a multi-dimensional array from a CSV file optionally using the
  * first row as a header to create the underlying data as associative arrays.
+ *
  * @param string $file Filepath including filename
  * @param bool $head Use first row as header.
  * @param string $delim Specify a delimiter other than a comma.
@@ -31,13 +34,15 @@ include_spip('inc/charsets');
  * @param string $texte
  * @return array
  */
-function importer_csv_importcharset($texte){
+function importer_csv_importcharset($texte) {
 	// le plus frequent, en particulier avec les trucs de ms@@@
 	$charset_source = 'iso-8859-1';
 	// mais open-office sait faire mieux, donc mefiance !
-	if (is_utf8($texte))
+	if (is_utf8($texte)) {
 		$charset_source = 'utf-8';
-	return importer_charset($texte,$charset_source);
+	}
+
+	return importer_charset($texte, $charset_source);
 }
 
 /**
@@ -47,7 +52,7 @@ function importer_csv_importcharset($texte){
  * @param string $key
  * @return string
  */
-function importer_csv_nettoie_key($key){
+function importer_csv_nettoie_key($key) {
 	return translitteration($key);
 }
 
@@ -66,41 +71,46 @@ function importer_csv_nettoie_key($key){
 function inc_importer_csv_dist($file, $head = false, $delim = ", ", $enclos = '"', $len = 10000) {
 	$return = false;
 	if (@file_exists($file)
-		AND $handle = fopen($file, "r")){
+		AND $handle = fopen($file, "r")
+	) {
 		if ($head) {
 			$header = fgetcsv($handle, $len, $delim, $enclos);
-			if ($header){
-				$header = array_map('importer_csv_importcharset',$header);
-				$header = array_map('importer_csv_nettoie_key',$header);
+			if ($header) {
+				$header = array_map('importer_csv_importcharset', $header);
+				$header = array_map('importer_csv_nettoie_key', $header);
 				$header_type = array();
 				foreach ($header as $heading) {
-					if (!isset($header_type[$heading]))
+					if (!isset($header_type[$heading])) {
 						$header_type[$heading] = "scalar";
-					else
+					} else {
 						$header_type[$heading] = "array";
+					}
 				}
 			}
 		}
-		while (($data = fgetcsv($handle, $len, $delim, $enclos)) !== FALSE) {
-			$data = array_map('importer_csv_importcharset',$data);
+		while (($data = fgetcsv($handle, $len, $delim, $enclos)) !== false) {
+			$data = array_map('importer_csv_importcharset', $data);
 			if ($head AND isset($header)) {
 				$row = array();
-				foreach ($header as $key=>$heading) {
-					if ($header_type[$heading]=="array"){
-						if (!isset($row[$heading]))
+				foreach ($header as $key => $heading) {
+					if ($header_type[$heading] == "array") {
+						if (!isset($row[$heading])) {
 							$row[$heading] = array();
-						if (isset($data[$key]) AND strlen($data[$key]))
-							$row[$heading][]= $data[$key];
+						}
+						if (isset($data[$key]) AND strlen($data[$key])) {
+							$row[$heading][] = $data[$key];
+						}
+					} else {
+						$row[$heading] = (isset($data[$key])) ? $data[$key] : '';
 					}
-					else
-						$row[$heading]=(isset($data[$key])) ? $data[$key] : '';
 				}
-				$return[]=$row;
+				$return[] = $row;
 			} else {
-				$return[]=$data;
+				$return[] = $data;
 			}
 		}
 	}
+
 	return $return;
 }
 

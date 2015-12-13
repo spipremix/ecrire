@@ -14,29 +14,30 @@
  * Gestion d'une action ajoutant une variable dans une session SPIP
  *
  * @package SPIP\Core\Sessions
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Action pour poser une variable de session SPIP
  *
  * Poster sur cette action en indiquant les clés `var` et `val`
- * 
+ *
  * Utilisé par exemple par le script javascript 'autosave' pour sauvegarder
  * les formulaires en cours d'édition
  *
  * @todo
  *   Envoyer en réponse : json contenant toutes les variables publiques de la session
-**/
-function action_session_dist()
-{
+ **/
+function action_session_dist() {
 	if ($var = _request('var')
-	AND preg_match(',^[a-z_0-9-]+$,i', $var)
+		AND preg_match(',^[a-z_0-9-]+$,i', $var)
 	) {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			include_spip('inc/session');
-			session_set('session_'.$var, $val=_request('val'));
+			session_set('session_' . $var, $val = _request('val'));
 			#spip_log("autosave:$var:$val",'autosave');
 		}
 	}

@@ -13,10 +13,12 @@
 
 /**
  * Ce fichier gère la balise dynamique `#CONFIGURER_METAS`
- * 
+ *
  * @package SPIP\Core\Compilateur\Balises
-**/
-if (!defined('_ECRIRE_INC_VERSION')) return;
+ **/
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
@@ -32,16 +34,16 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * utiliser `#FORMULAIRE_CONFIGURER_NOM` qui appelle le formulaire `nom.html`
  * et dans ce formulaire indiquer un champ hidden spécifiant la table d'enregistrement
  * tel que :
- * 
+ *
  *     Chaque saisie à la racine de la table spip_nom :
  *     <input type="hidden" name="_meta_casier" value="/nom" />
- *     
+ *
  *     Toutes les saisies dans la clé 'config' de spip_nom :
  *     <input type="hidden" name="_meta_casier" value="/nom/config" />
- *     
+ *
  *     Chaque saisie à la racine de la table spip_meta :
  *     <input type="hidden" name="_meta_casier" value="" />
- *     
+ *
  *     Toutes les saisies dans la clé 'config' de spip_meta :
  *     <input type="hidden" name="_meta_casier" value="config" />
  *
@@ -56,7 +58,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée du code compilé
-**/
+ **/
 function balise_CONFIGURER_METAS_dist($p) {
 	return calculer_balise_dynamique($p, $p->nom_champ, array());
 }
@@ -70,17 +72,22 @@ function balise_CONFIGURER_METAS_dist($p) {
  *
  * @see balise_CONFIGURER_METAS_dist()
  * @param string $form
- *     Nom du formulaire 
+ *     Nom du formulaire
  * @return array
  *     Liste : Chemin du squelette, durée du cache, contexte
-**/
+ **/
 function balise_CONFIGURER_METAS_dyn($form) {
 
 	include_spip('balise/formulaire_');
-	if (!existe_formulaire($form)) return '';
+	if (!existe_formulaire($form)) {
+		return '';
+	}
 	$args = func_get_args();
 	$contexte = balise_FORMULAIRE__contexte('configurer_metas', $args);
-	if (!is_array($contexte)) return $contexte;
+	if (!is_array($contexte)) {
+		return $contexte;
+	}
+
 	return array('formulaires/' . $form, 3600, $contexte);
 }
 

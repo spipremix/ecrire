@@ -24,18 +24,19 @@
  * des rôles différents. Chaque ligne de la table lien correspond alors à
  * un des rôles.
  *
- *  @package SPIP\Core\Roles
+ * @package SPIP\Core\Roles
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
-
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
- * Vérifie qu'un objet dispose de rôles fonctionnels 
+ * Vérifie qu'un objet dispose de rôles fonctionnels
  *
  * Retourne une description des rôles si c'est le cas
- * 
+ *
  * @param string $objet
  *     Objet source qui possède la table de liaison
  * @param string $objet_destination
@@ -45,7 +46,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return bool|array
  *     false si rôles indisponibles on non déclarés
  *     array : description des roles applicables dans 3 index : colonne, titres, roles
-**/
+ **/
 function roles_presents($objet, $objet_destination = '') {
 	$desc = lister_tables_objets_sql(table_objet_sql($objet));
 
@@ -63,7 +64,7 @@ function roles_presents($objet, $objet_destination = '') {
 	// on cherche ensuite si la colonne existe bien dans la table de liaison (par défaut 'role')
 	$colonne = isset($desc['roles_colonne']) ? $desc['roles_colonne'] : 'role';
 	$trouver_table = charger_fonction('trouver_table', 'base');
-	list(,$table_lien) = $lien;
+	list(, $table_lien) = $lien;
 	$desc_lien = $trouver_table($table_lien);
 	if (!isset($desc_lien['field'][$colonne])) {
 		return false;
@@ -81,11 +82,10 @@ function roles_presents($objet, $objet_destination = '') {
 		// pour l'objet
 		if (isset($application[$objet_destination])) {
 			$application = $application[$objet_destination];
-		// sinon pour tous les objets
+			// sinon pour tous les objets
 		} elseif (isset($application['*'])) {
 			$application = $application['*'];
-		}
-		// sinon tant pis
+		} // sinon tant pis
 		else {
 			return false;
 		}
@@ -93,8 +93,8 @@ function roles_presents($objet, $objet_destination = '') {
 
 	// tout est ok
 	return array(
-		'titres'  => $titres,
-		'roles'   => $application,
+		'titres' => $titres,
+		'roles' => $application,
 		'colonne' => $colonne
 	);
 }
@@ -108,11 +108,12 @@ function roles_presents($objet, $objet_destination = '') {
  *     Objet sur quoi on veut lier
  * @return string
  *     Nom de la colonne, sinon vide
-**/
+ **/
 function roles_colonne($objet, $objet_destination) {
 	if ($roles = roles_presents($objet, $objet_destination)) {
 		return $roles['colonne'];
 	}
+
 	return '';
 }
 
@@ -126,14 +127,14 @@ function roles_colonne($objet, $objet_destination) {
  * on retrouve le rôle en question dans le tableau de qualification.
  * Si le rôle n'est pas défini dedans, on prend le rôle par défaut
  * déclaré.
- *  
- * @param string $objet               Objet source de la liaison
- * @param string $objet_destination   Objet de destination de la liaison
- * @param array  $qualif              tableau de qualifications array(champ => valeur)
+ *
+ * @param string $objet Objet source de la liaison
+ * @param string $objet_destination Objet de destination de la liaison
+ * @param array $qualif tableau de qualifications array(champ => valeur)
  * @return array
  *     Liste (role, colonne, (array)condition) si role possible
  *     Liste ('', '', array()) sinon.
-**/
+ **/
 function roles_trouver_dans_qualif($objet, $objet_destination, $qualif = array()) {
 	// si des rôles sont possibles, on les utilise
 	$role = $colonne_role = ''; # role défini
@@ -143,7 +144,8 @@ function roles_trouver_dans_qualif($objet, $objet_destination, $qualif = array()
 		$colonne_role = $roles['colonne'];
 		// qu'il n'est pas défini
 		if (!isset($qualif[$colonne_role])
-		  OR !($role = $qualif[$colonne_role])) {
+			OR !($role = $qualif[$colonne_role])
+		) {
 			$role = $roles['roles']['defaut'];
 		}
 		// where
@@ -157,9 +159,9 @@ function roles_trouver_dans_qualif($objet, $objet_destination, $qualif = array()
  * Gérer l'ajout dans la condition where du rôle
  *
  * On ajoute la condition uniquement si la liaison entre les 2 objets a une colonne de rôle !
- * 
- * @param string $objet_source   Objet source (qui possède la table de liens)
- * @param string $objet          Objet de destination
+ *
+ * @param string $objet_source Objet source (qui possède la table de liens)
+ * @param string $objet Objet de destination
  * @param array $cond
  *     Tableau de conditions where
  *     qui peut avoir un index spécial 'role' définissant le role à appliquer
@@ -170,7 +172,7 @@ function roles_trouver_dans_qualif($objet, $objet_destination, $qualif = array()
  *     pas de rôle par défaut si aucun n'est défini.
  * @return array
  *     Liste (Tableau de conditions where complété du role, Colonne du role, role utilisé)
-**/
+ **/
 function roles_creer_condition_role($objet_source, $objet, $cond, $tous_si_absent = false) {
 	// role par défaut, colonne
 	list($role_defaut, $colonne_role) = roles_trouver_dans_qualif($objet_source, $objet);
@@ -182,26 +184,27 @@ function roles_creer_condition_role($objet_source, $objet, $cond, $tous_si_absen
 	if ($colonne_role) {
 		// on ajoute la condition du role aux autres conditions.
 		if ($role != '*') {
-			$cond[] = "$colonne_role=" .sql_quote($role);
+			$cond[] = "$colonne_role=" . sql_quote($role);
 		}
 	}
+
 	return array($cond, $colonne_role, $role);
 }
 
 /**
  * Liste des identifiants dont on ne peut ajouter de rôle
- * 
+ *
  * Lister les id objet_source associés à l'objet id_objet
  * via la table de lien objet_lien, et détermine dans cette liste
  * lesquels ont les rôles complets, c'est à dire qu'on ne peut leur
  * affecteur d'autres rôles parmi ceux qui existe pour cette liaison.
  *
  * @see lister_objets_lies()
- * 
+ *
  * @param string $objet_source Objet dont on veut récupérer la liste des identifiants
- * @param string $objet        Objet sur lequel est liée la source
- * @param int $id_objet        Identifiant d'objet sur lequel est liée la source
- * @param string $objet_lien   Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
+ * @param string $objet Objet sur lequel est liée la source
+ * @param int $id_objet Identifiant d'objet sur lequel est liée la source
+ * @param string $objet_lien Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
  * @return array               Liste des identifiants
  */
 function roles_complets($objet_source, $objet, $id_objet, $objet_lien) {
@@ -231,15 +234,14 @@ function roles_complets($objet_source, $objet, $id_objet, $objet_lien) {
 }
 
 
-
 /**
  * Liste les roles attribués entre 2 objets/id_objet sur une table de liaison donnée
- * 
+ *
  * @param string $id_objet_source Identifiant de l'objet qu'on lie
- * @param string $objet_source    Objet qu'on lie
- * @param string $objet           Objet sur lequel est liée la source
- * @param int $id_objet           Identifiant d'objet sur lequel est liée la source
- * @param string $objet_lien      Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
+ * @param string $objet_source Objet qu'on lie
+ * @param string $objet Objet sur lequel est liée la source
+ * @param int $id_objet Identifiant d'objet sur lequel est liée la source
+ * @param string $objet_lien Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
  * @return array                  Liste des roles
  */
 function roles_presents_sur_id($id_objet_source, $objet_source, $objet, $id_objet, $objet_lien) {
@@ -258,7 +260,6 @@ function roles_presents_sur_id($id_objet_source, $objet_source, $objet, $id_obje
 }
 
 
-
 /**
  * Lister des rôles présents sur une liaion, pour un objet sur un autre,
  * classés par identifiant de l'objet
@@ -272,9 +273,9 @@ function roles_presents_sur_id($id_objet_source, $objet_source, $objet, $id_obje
  * aux fonctions utilisant celle ci.
  *
  * @param string $objet_source Objet dont on veut récupérer la liste des identifiants
- * @param string $objet        Objet sur lequel est liée la source
- * @param int $id_objet        Identifiant d'objet sur lequel est liée la source
- * @param string $objet_lien   Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
+ * @param string $objet Objet sur lequel est liée la source
+ * @param int $id_objet Identifiant d'objet sur lequel est liée la source
+ * @param string $objet_lien Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
  * @return array|bool
  *     - Tableau d'index
  *       - roles : tableau de description des roles,
@@ -291,17 +292,16 @@ function roles_presents_liaisons($objet_source, $objet, $id_objet, $objet_lien) 
 	}
 
 	// pas de roles sur ces objets, on sort
-	$roles = roles_presents($objet_lien, ($objet_lien==$objet) ? $objet_source : $objet);
+	$roles = roles_presents($objet_lien, ($objet_lien == $objet) ? $objet_source : $objet);
 	if (!$roles) {
 		return $done[$hash] = false;
 	}
 
 	// inspiré de lister_objets_lies()
-	if ($objet_lien==$objet){
-		$res = objet_trouver_liens(array($objet=>$id_objet),array($objet_source=>'*'));
-	}
-	else{
-		$res = objet_trouver_liens(array($objet_source=>'*'),array($objet=>$id_objet));
+	if ($objet_lien == $objet) {
+		$res = objet_trouver_liens(array($objet => $id_objet), array($objet_source => '*'));
+	} else {
+		$res = objet_trouver_liens(array($objet_source => '*'), array($objet => $id_objet));
 	}
 
 	// types de roles possibles
@@ -333,13 +333,13 @@ function roles_presents_liaisons($objet_source, $objet, $id_objet, $objet_lien) 
  * On retourne cette liste dans le datalist de saisie libre role.
  *
  * @param string $objet_source Objet dont on veut récupérer la liste des identifiants
- * @param string $objet        Objet sur lequel est liée la source
- * @param string $objet_lien   Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
+ * @param string $objet Objet sur lequel est liée la source
+ * @param string $objet_lien Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
  * @return array|bool
  *     - Tableau de roles : tableau de description des roles,
  *     - false si pas de role déclarés
  */
-function roles_connus_en_base($objet_source, $objet, $objet_lien){
+function roles_connus_en_base($objet_source, $objet, $objet_lien) {
 	static $done = array();
 
 	// stocker le résultat
@@ -348,21 +348,22 @@ function roles_connus_en_base($objet_source, $objet, $objet_lien){
 		return $done[$hash];
 	}
 
-	if (!$lien = objet_associable($objet_lien)){
+	if (!$lien = objet_associable($objet_lien)) {
 		return $done[$hash] = false;
 	}
 
 	// pas de roles sur ces objets, on sort
-	$roles = roles_presents($objet_lien, ($objet_lien==$objet) ? $objet_source : $objet);
+	$roles = roles_presents($objet_lien, ($objet_lien == $objet) ? $objet_source : $objet);
 	if (!$roles) {
 		return $done[$hash] = false;
 	}
 
-	list($primary,$l) = $lien;
+	list($primary, $l) = $lien;
 	$colone_role = $roles['colonne'];
 
-	$all = sql_allfetsel("DISTINCT $colone_role",$l,"objet=".sql_quote(($objet_source==$objet_lien)?$objet:$objet_source));
-	$done[$hash] = array_map("reset",$all);
+	$all = sql_allfetsel("DISTINCT $colone_role", $l,
+		"objet=" . sql_quote(($objet_source == $objet_lien) ? $objet : $objet_source));
+	$done[$hash] = array_map("reset", $all);
 
 	return $done[$hash];
 }

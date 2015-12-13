@@ -14,16 +14,18 @@
  * Gestion de l'itérateur POUR
  *
  * @package SPIP\Core\Iterateur\POUR
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('iterateur/data');
 
 
 /**
  * Créer une boucle sur un itérateur POUR
- * 
+ *
  * Annonce au compilateur les "champs" disponibles,
  * c'est à dire 'cle' et 'valeur'.
  *
@@ -40,6 +42,7 @@ function iterateur_POUR_dist($b) {
 			'valeur' => 'STRING',
 		)
 	);
+
 	return $b;
 }
 

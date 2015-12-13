@@ -14,12 +14,15 @@
  * Action des changements de langue des objets éditoriaux
  *
  * @package SPIP\Core\Edition
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Modifier la langue d'un objet
+ *
  * @param string $objet
  * @param int $id
  * @param int $id_rubrique
@@ -32,18 +35,21 @@ function action_instituer_langue_objet_dist($objet, $id, $id_rubrique, $changer_
 		$id_table_objet = id_table_objet($objet);
 
 		if ($changer_lang != "herit") {
-			sql_updateq($table_objet_sql, array('lang'=>$changer_lang, 'langue_choisie'=>'oui'), "$id_table_objet=".intval($id));
+			sql_updateq($table_objet_sql, array('lang' => $changer_lang, 'langue_choisie' => 'oui'),
+				"$id_table_objet=" . intval($id));
 			include_spip('inc/rubriques');
-			if ($table_objet_sql == 'spip_rubriques')
+			if ($table_objet_sql == 'spip_rubriques') {
 				calculer_langues_rubriques();
+			}
 			$langues = calculer_langues_utilisees();
 			ecrire_meta('langues_utilisees', $langues);
-		}
-		else {
+		} else {
 			$langue_parent = sql_getfetsel("lang", "spip_rubriques", "id_rubrique=" . intval($id_rubrique));
-			if (!$langue_parent)
+			if (!$langue_parent) {
 				$langue_parent = $GLOBALS['meta']['langue_site'];
-			sql_updateq($table_objet_sql, array('lang'=>$langue_parent, 'langue_choisie'=>'non'), "$id_table_objet=".intval($id));
+			}
+			sql_updateq($table_objet_sql, array('lang' => $langue_parent, 'langue_choisie' => 'non'),
+				"$id_table_objet=" . intval($id));
 			$changer_lang = $langue_parent;
 			if ($table_objet_sql == 'spip_rubriques') {
 				include_spip('inc/rubriques');
@@ -51,5 +57,6 @@ function action_instituer_langue_objet_dist($objet, $id, $id_rubrique, $changer_
 			}
 		}
 	}
+
 	return $changer_lang;
 }

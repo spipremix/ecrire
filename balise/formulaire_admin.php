@@ -12,11 +12,13 @@
 
 /**
  * Ce fichier gère la balise dynamique `#FORMULAIRE_ADMIN`
- * 
+ *
  * @package SPIP\Core\Formulaires
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Compile la balise dynamique `#FORMULAIRE_ADMIN` qui des boutons
@@ -26,7 +28,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * endroit spécifique du site. Si cette balise n'est pas présente, les boutons
  * seront automatiquement ajoutés par SPIP si l'auteur a activé le
  * cookie de correspondance.
- * 
+ *
  * @balise
  * @see f_admin()
  * @example
@@ -38,14 +40,14 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée du code compilé
-**/
-function balise_FORMULAIRE_ADMIN ($p) {
-	return calculer_balise_dynamique($p,'FORMULAIRE_ADMIN', array());
+ **/
+function balise_FORMULAIRE_ADMIN($p) {
+	return calculer_balise_dynamique($p, 'FORMULAIRE_ADMIN', array());
 }
 
 /**
  * Calculs de paramètres de contexte automatiques pour la balise FORMULAIRE_ADMIN
- * 
+ *
  * On ne peut rien dire au moment de l'execution du squelette
  *
  * @param array $args
@@ -67,41 +69,44 @@ function balise_FORMULAIRE_ADMIN_stat($args, $context_compil) {
  * @note
  *   Les boutons admin sont mis d'autorité si absents
  *   donc une variable statique contrôle si FORMULAIRE_ADMIN a été vu.
- * 
+ *
  *   Toutefois, si c'est le debuger qui appelle, il peut avoir recopié
  *   le code dans ses données et il faut le lui refournir.
  *   Pas question de recompiler: ca fait boucler !
  *   Le debuger transmet donc ses données, et cette balise y retrouve son petit.
- * 
+ *
  * @param string $float
  *     Classe CSS éventuelle
  * @param string|array $debug
  *     Informations sur la page contenant une erreur de compilation
  * @return array
  *     Liste : Chemin du squelette, durée du cache, contexte
-**/
+ **/
 function balise_FORMULAIRE_ADMIN_dyn($float = '', $debug = '') {
 
 	static $dejafait = false;
 
-	if (!@$_COOKIE['spip_admin'])
+	if (!@$_COOKIE['spip_admin']) {
 		return '';
+	}
 
 	if (!is_array($debug)) {
-		if ($dejafait)
+		if ($dejafait) {
 			return '';
+		}
 	} else {
 		if ($dejafait) {
 			if (empty($debug['sourcefile'])) {
 				return '';
 			}
-			foreach($debug['sourcefile'] as $k => $v) {
+			foreach ($debug['sourcefile'] as $k => $v) {
 				if (strpos($v, 'administration.') !== false) {
 					if (isset($debug['resultat'][$k . 'tout'])) {
 						return $debug['resultat'][$k . 'tout'];
 					}
 				}
 			}
+
 			return '';
 		}
 	}
@@ -117,24 +122,26 @@ function balise_FORMULAIRE_ADMIN_dyn($float = '', $debug = '') {
 	$env = admin_objet();
 
 	// Pas de "modifier ce..." ? -> donner "acces a l'espace prive"
-	if (!$env)
+	if (!$env) {
 		$env['ecrire'] = _DIR_RESTREINT_ABS;
+	}
 
 	$env['divclass'] = $float;
 	$env['lang'] = admin_lang();
 	$env['calcul'] = (_request('var_mode') ? 'recalcul' : 'calcul');
 	$env['debug'] = ((defined('_VAR_PREVIEW') AND _VAR_PREVIEW) ? "" : admin_debug());
 	$env['analyser'] = (!$env['debug'] AND !$GLOBALS['xhtml']) ? '' : admin_valider();
-	$env['inclure'] = ((defined('_VAR_INCLURE') AND _VAR_INCLURE)?'inclure':'');
+	$env['inclure'] = ((defined('_VAR_INCLURE') AND _VAR_INCLURE) ? 'inclure' : '');
 
-	if (!$GLOBALS['use_cache'])
+	if (!$GLOBALS['use_cache']) {
 		$env['use_cache'] = ' *';
-		
+	}
+
 	if (isset($debug['validation'])) {
 		$env['xhtml_error'] = $debug['validation'];
 	}
-	
-	$env['_pipelines']['formulaire_admin']=array();
+
+	$env['_pipelines']['formulaire_admin'] = array();
 
 	return array('formulaires/administration', 0, $env);
 }
@@ -149,46 +156,49 @@ function balise_FORMULAIRE_ADMIN_dyn($float = '', $debug = '') {
  * @note
  *   Attention à l'ordre dans la boucle:
  *   on ne veut pas la rubrique si un autre bouton est possible
- * 
+ *
  * @return array
  *     Tableau de l'environnement calculé
-**/
-function admin_objet()
-{
+ **/
+function admin_objet() {
 	include_spip('inc/urls');
 	$env = array();
 
-	$trouver_table = charger_fonction('trouver_table','base');
+	$trouver_table = charger_fonction('trouver_table', 'base');
 	$objets = urls_liste_objets(false);
 	$objets = array_diff($objets, array('rubrique'));
 	$objets = array_reverse($objets);
 	array_unshift($objets, 'rubrique');
 	foreach ($objets as $obj) {
 		$type = $obj;
-		if ($type==objet_type($type,false)
+		if ($type == objet_type($type, false)
 			AND $_id_type = id_table_objet($type)
 			AND isset($GLOBALS['contexte'][$_id_type])
 			AND $id = $GLOBALS['contexte'][$_id_type]
 			AND !is_array($id)
-			AND $id=intval($id)) {
-			$id = sql_getfetsel($_id_type, table_objet_sql($type), "$_id_type=".intval($id));
+			AND $id = intval($id)
+		) {
+			$id = sql_getfetsel($_id_type, table_objet_sql($type), "$_id_type=" . intval($id));
 			if ($id) {
 				$env[$_id_type] = $id;
 				$env['objet'] = $type;
 				$env['id_objet'] = $id;
-				$env['voir_'.$obj] =
-				  str_replace('&amp;', '&', generer_url_entite($id,$obj,'','',false));
+				$env['voir_' . $obj] =
+					str_replace('&amp;', '&', generer_url_entite($id, $obj, '', '', false));
 				if ($desc = $trouver_table(table_objet_sql($type))
 					AND isset($desc['field']['id_rubrique'])
-					AND $type != 'rubrique') {
+					AND $type != 'rubrique'
+				) {
 					unset($env['id_rubrique']);
 					unset($env['voir_rubrique']);
-					if (admin_preview($type, $id, $desc))
-						$env['preview']=parametre_url(self(),'var_mode','preview','&');
+					if (admin_preview($type, $id, $desc)) {
+						$env['preview'] = parametre_url(self(), 'var_mode', 'preview', '&');
+					}
 				}
 			}
 		}
 	}
+
 	return $env;
 }
 
@@ -205,27 +215,32 @@ function admin_objet()
  * @return string|array
  *     - Chaine vide si on est déjà en prévisu ou si pas de previsualisation possible
  *     - Tableau d'un élément sinon.
-**/
-function admin_preview($type, $id, $desc = null)
-{
-	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW) return '';
+ **/
+function admin_preview($type, $id, $desc = null) {
+	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW) {
+		return '';
+	}
 
 	if (!$desc) {
-		$trouver_table = charger_fonction('trouver_table','base');
+		$trouver_table = charger_fonction('trouver_table', 'base');
 		$desc = $trouver_table(table_objet_sql($type));
 	}
-	if (!$desc OR !isset($desc['field']['statut']))
+	if (!$desc OR !isset($desc['field']['statut'])) {
 		return '';
+	}
 
 	include_spip('inc/autoriser');
-	if (!autoriser('previsualiser')) return '';
+	if (!autoriser('previsualiser')) {
+		return '';
+	}
 
 	$notpub = sql_in("statut", array('prop', 'prive'));
 
-	if  ($type == 'article' AND $GLOBALS['meta']['post_dates'] != 'oui')
-		$notpub .= " OR (statut='publie' AND date>".sql_quote(date('Y-m-d H:i:s')).")";
+	if ($type == 'article' AND $GLOBALS['meta']['post_dates'] != 'oui') {
+		$notpub .= " OR (statut='publie' AND date>" . sql_quote(date('Y-m-d H:i:s')) . ")";
+	}
 
-	return sql_fetsel('1', table_objet_sql($type), id_table_objet($type)."=".$id." AND ($notpub)");
+	return sql_fetsel('1', table_objet_sql($type), id_table_objet($type) . "=" . $id . " AND ($notpub)");
 }
 
 
@@ -234,15 +249,20 @@ function admin_preview($type, $id, $desc = null)
  *
  * @return string
  *     Code de langue
-**/
-function admin_lang()
-{
-	$alang = sql_getfetsel('lang', 'spip_auteurs', "login=" . sql_quote(preg_replace(',^@,','',@$_COOKIE['spip_admin'])));
-	if (!$alang) return '';
+ **/
+function admin_lang() {
+	$alang = sql_getfetsel('lang', 'spip_auteurs',
+		"login=" . sql_quote(preg_replace(',^@,', '', @$_COOKIE['spip_admin'])));
+	if (!$alang) {
+		return '';
+	}
 
 	$l = lang_select($alang);
 	$alang = $GLOBALS['spip_lang'];
-	if ($l) lang_select();
+	if ($l) {
+		lang_select();
+	}
+
 	return $alang;
 }
 
@@ -250,24 +270,22 @@ function admin_lang()
  * Retourne une URL vers un validateur
  *
  * @return string
-**/
-function admin_valider()
-{
+ **/
+function admin_valider() {
 
 	return ((!isset($GLOBALS['xhtml']) OR $GLOBALS['xhtml'] !== 'true') ?
 		(parametre_url(self(), 'var_mode', 'debug', '&')
-			.'&var_mode_affiche=validation') :
+			. '&var_mode_affiche=validation') :
 		('http://validator.w3.org/check?uri='
-		 . rawurlencode("http://" . $_SERVER['HTTP_HOST'] . nettoyer_uri())));
+			. rawurlencode("http://" . $_SERVER['HTTP_HOST'] . nettoyer_uri())));
 }
 
 /**
  * Retourne une URL vers le mode debug, si l'utilisateur a le droit, et si c'est utile
  *
  * @return string
-**/
-function admin_debug()
-{
+ **/
+function admin_debug() {
 	return ((
 			(isset($GLOBALS['forcer_debug']) AND $GLOBALS['forcer_debug'])
 			OR (isset($GLOBALS['bouton_admin_debug']) AND $GLOBALS['bouton_admin_debug'])
@@ -276,8 +294,8 @@ function admin_debug()
 				AND isset($_COOKIE['spip_debug']) AND $_COOKIE['spip_debug']
 			)
 		) AND autoriser('debug')
-	  )
-	  ? parametre_url(self(),'var_mode', 'debug', '&'): '';
+	)
+		? parametre_url(self(), 'var_mode', 'debug', '&') : '';
 }
 
 ?>

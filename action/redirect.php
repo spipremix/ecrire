@@ -15,9 +15,11 @@
  * recalculant au passage son URL
  *
  * @package SPIP\Core\Redirections
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Script utile pour recalculer une URL symbolique dès son changement
@@ -32,47 +34,55 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  *      |parametre_url{var_mode,calcul}
  *      |icone_horizontale{<:icone_voir_en_ligne:>,racine})]
  *   ```
-**/
-function action_redirect_dist()
-{
+ **/
+function action_redirect_dist() {
 	$type = _request('type');
 	$id = intval(_request('id'));
 
 	if ($m = _request('var_mode')) {
 		// forcer la mise a jour de l'url de cet objet !
-		if (!defined('_VAR_URLS')) define('_VAR_URLS',true);
+		if (!defined('_VAR_URLS')) {
+			define('_VAR_URLS', true);
+		}
 	}
 
 	if (preg_match('/^\w+$/', $type)) {
 		$h = generer_url_entite_absolue($id, $type, '', '', true);
+	} else {
+		if ($page = _request('page')
+			AND preg_match('/^\w+$/', $page)
+		) {
+			$h = generer_url_public($page, '', true);
+		} else {
+			return;
+		}
 	}
-	else if ($page = _request('page')
-	AND preg_match('/^\w+$/', $page)) {
-		$h = generer_url_public($page, '', true);
-	}
-	else return;
 
-	if ($m > '')
+	if ($m > '') {
 		$h = parametre_url($h, 'var_mode', $m);
+	}
 
 	if ($m == 'preview'
-	AND defined('_PREVIEW_TOKEN')
-	AND _PREVIEW_TOKEN
-	AND autoriser('previsualiser')
-	AND $aut = $GLOBALS['visiteur_session']['id_auteur'] ) {
+		AND defined('_PREVIEW_TOKEN')
+		AND _PREVIEW_TOKEN
+		AND autoriser('previsualiser')
+		AND $aut = $GLOBALS['visiteur_session']['id_auteur']
+	) {
 		include_spip('inc/securiser_action');
 		$token = _action_auteur('previsualiser', $aut, null, 'alea_ephemere');
 		$h = parametre_url($h, 'var_previewtoken', "$aut*$token");
 	}
 
 	$status = '302';
-	if (_request('status') AND _request('status')=='301')
+	if (_request('status') AND _request('status') == '301') {
 		$status = '301';
+	}
 
-	if ($h)
-		redirige_par_entete(str_replace('&amp;', '&', $h),'',$status);
-	else
-		redirige_par_entete('/','',$status);
+	if ($h) {
+		redirige_par_entete(str_replace('&amp;', '&', $h), '', $status);
+	} else {
+		redirige_par_entete('/', '', $status);
+	}
 }
 
 ?>

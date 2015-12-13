@@ -14,13 +14,15 @@
  * Fonctions d'aides pour les fonctions d'objets de modification de contenus
  *
  * @package SPIP\Core\Objets\Modifications
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Collecte des champs postés
- * 
+ *
  * Fonction générique pour la collecte des posts
  * dans action/editer_xxx
  *
@@ -34,36 +36,36 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param bool $tous
  *     true : Recupère tous les champs de white_list meme ceux n'ayant pas ete postés
  * @return array
- *     Tableau des champs et valeurs collectées 
+ *     Tableau des champs et valeurs collectées
  */
-function collecter_requests($white_list, $black_list = array(), $set = null, $tous = false){
+function collecter_requests($white_list, $black_list = array(), $set = null, $tous = false) {
 	$c = $set;
-	if (!$c){
+	if (!$c) {
 		$c = array();
-		foreach($white_list as $champ) {
+		foreach ($white_list as $champ) {
 			// on ne collecte que les champs reellement envoyes par defaut.
 			// le cas d'un envoi de valeur NULL peut du coup poser probleme.
 			$val = _request($champ);
-			if ($tous OR $val !== NULL) {
+			if ($tous OR $val !== null) {
 				$c[$champ] = $val;
 			}
 		}
 		// on ajoute toujours la lang en saisie possible
 		// meme si pas prevu au depart pour l'objet concerne
-		if ($l = _request('changer_lang')){
+		if ($l = _request('changer_lang')) {
 			$c['lang'] = $l;
 		}
 	}
-	foreach($black_list as $champ) {
+	foreach ($black_list as $champ) {
 		unset($c[$champ]);
 	}
-	
+
 	return $c;
 }
 
 /**
  * Modifie le contenu d'un objet
- * 
+ *
  * Fonction generique pour l'API de modification de contenu, qui se
  * charge entre autres choses d'appeler les pipelines pre_edition
  * et post_edition
@@ -96,20 +98,22 @@ function collecter_requests($white_list, $black_list = array(), $set = null, $to
 function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur = '') {
 	if (!$id_objet = intval($id_objet)) {
 		spip_log('Erreur $id_objet non defini', 'warn');
+
 		return _T('erreur_technique_enregistrement_impossible');
 	}
 
 	include_spip('inc/filtres');
 
-	$table_objet = table_objet($objet,$serveur);
-	$spip_table_objet = table_objet_sql($objet,$serveur);
-	$id_table_objet = id_table_objet($objet,$serveur);
+	$table_objet = table_objet($objet, $serveur);
+	$spip_table_objet = table_objet_sql($objet, $serveur);
+	$id_table_objet = id_table_objet($objet, $serveur);
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table($spip_table_objet, $serveur);
 
 	// Appels incomplets (sans $c)
 	if (!is_array($c)) {
-		spip_log('erreur appel objet_modifier_champs('.$objet.'), manque $c');
+		spip_log('erreur appel objet_modifier_champs(' . $objet . '), manque $c');
+
 		return _T('erreur_technique_enregistrement_impossible');
 	}
 
@@ -137,9 +141,11 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 	// TODO: ici aussi on peut valider les contenus
 	// en fonction du type
 	$champs = array();
-	foreach($desc['field'] as $champ => $ignore)
-		if (isset($c[$champ]))
+	foreach ($desc['field'] as $champ => $ignore) {
+		if (isset($c[$champ])) {
 			$champs[$champ] = $c[$champ];
+		}
+	}
 
 	// Nettoyer les valeurs
 	$champs = array_map('corriger_caracteres', $champs);
@@ -151,7 +157,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 				'table' => $spip_table_objet, // compatibilite
 				'table_objet' => $table_objet,
 				'spip_table_objet' => $spip_table_objet,
-				'type' =>$objet,
+				'type' => $objet,
 				'id_objet' => $id_objet,
 				'champs' => isset($options['champs']) ? $options['champs'] : array(), // [doc] c'est quoi ?
 				'serveur' => $serveur,
@@ -161,13 +167,15 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 		)
 	);
 
-	if (!$champs) return false;
+	if (!$champs) {
+		return false;
+	}
 
 
 	// marquer le fait que l'objet est travaille par toto a telle date
 	if ($GLOBALS['meta']['articles_modif'] != 'non') {
 		include_spip('inc/drapeau_edition');
-		signale_edition ($id_objet, $GLOBALS['visiteur_session'], $objet);
+		signale_edition($id_objet, $GLOBALS['visiteur_session'], $objet);
 	}
 
 	// Verifier si les mises a jour sont pertinentes, datees, en conflit etc
@@ -179,20 +187,21 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 	// cas hypothetique : normalement inc/editer verifie en amont le conflit edition
 	// et gere l'interface
 	// ici on ne renvoie donc qu'un messsage d'erreur, au cas ou on y arrive quand meme
-	if ($conflits)
+	if ($conflits) {
 		return _T('titre_conflit_edition');
+	}
 
 	if ($champs) {
 		// cas particulier de la langue : passer par instituer_langue_objet
-		if (isset($champs['lang'])){
-			if ($changer_lang=$champs['lang']){
+		if (isset($champs['lang'])) {
+			if ($changer_lang = $champs['lang']) {
 				$id_rubrique = 0;
-				if ($desc['field']['id_rubrique']){
-					$parent = ($objet=='rubrique')?'id_parent':'id_rubrique';
-					$id_rubrique = sql_getfetsel($parent, $spip_table_objet, "$id_table_objet=".intval($id_objet));
+				if ($desc['field']['id_rubrique']) {
+					$parent = ($objet == 'rubrique') ? 'id_parent' : 'id_rubrique';
+					$id_rubrique = sql_getfetsel($parent, $spip_table_objet, "$id_table_objet=" . intval($id_objet));
 				}
-				$instituer_langue_objet = charger_fonction('instituer_langue_objet','action');
-				$champs['lang'] = $instituer_langue_objet($objet,$id_objet, $id_rubrique, $changer_lang);
+				$instituer_langue_objet = charger_fonction('instituer_langue_objet', 'action');
+				$champs['lang'] = $instituer_langue_objet($objet, $id_objet, $id_rubrique, $changer_lang);
 			}
 			// on laisse 'lang' dans $champs,
 			// ca permet de passer dans le pipeline post_edition et de journaliser
@@ -204,21 +213,24 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 
 		// faut-il ajouter date_modif ?
 		if (isset($options['date_modif']) AND $options['date_modif']
-		AND !isset($champs[$options['date_modif']]))
+			AND !isset($champs[$options['date_modif']])
+		) {
 			$champs[$options['date_modif']] = date('Y-m-d H:i:s');
+		}
 
 		// allez on commit la modif
-		sql_updateq($spip_table_objet, $champs, "$id_table_objet=".intval($id_objet), $serveur);
+		sql_updateq($spip_table_objet, $champs, "$id_table_objet=" . intval($id_objet), $serveur);
 
 		// on verifie si elle est bien passee
-		$moof = sql_fetsel(array_keys($champs), $spip_table_objet, "$id_table_objet=".intval($id_objet), array(), array(), '', array(), $serveur);
+		$moof = sql_fetsel(array_keys($champs), $spip_table_objet, "$id_table_objet=" . intval($id_objet), array(), array(),
+			'', array(), $serveur);
 		// si difference entre les champs, reperer les champs mal enregistres
 		if ($moof != $champs) {
 			$liste = array();
-			foreach($moof as $k=>$v) {
+			foreach ($moof as $k => $v) {
 				if ($v !== $champs[$k]
-				// ne pas alerter si le champ est numerique est que les valeurs sont equivalentes
-				AND (!is_numeric($v) OR intval($v)!=intval($champs[$k]))
+					// ne pas alerter si le champ est numerique est que les valeurs sont equivalentes
+					AND (!is_numeric($v) OR intval($v) != intval($champs[$k]))
 				) {
 					$liste[] = $k;
 					$conflits[$k]['post'] = $champs[$k];
@@ -236,19 +248,23 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 			}
 			// si un champ n'a pas ete correctement enregistre, loger et retourner une erreur
 			// c'est un cas exceptionnel
-			if (count($liste)){
-				spip_log("Erreur enregistrement en base $objet/$id_objet champs :".var_export($conflits,true),'modifier.'._LOG_CRITIQUE);
-				return _T('erreur_technique_enregistrement_champs',array('champs'=>"<i>'".implode("'</i>,<i>'",$liste)."'</i>"));
+			if (count($liste)) {
+				spip_log("Erreur enregistrement en base $objet/$id_objet champs :" . var_export($conflits, true),
+					'modifier.' . _LOG_CRITIQUE);
+
+				return _T('erreur_technique_enregistrement_champs',
+					array('champs' => "<i>'" . implode("'</i>,<i>'", $liste) . "'</i>"));
 			}
 		}
 
 		// Invalider les caches
 		if (isset($options['invalideur']) and $options['invalideur']) {
 			include_spip('inc/invalideur');
-			if (is_array($options['invalideur']))
-				array_map('suivre_invalideur',$options['invalideur']);
-			else
+			if (is_array($options['invalideur'])) {
+				array_map('suivre_invalideur', $options['invalideur']);
+			} else {
 				suivre_invalideur($options['invalideur']);
+			}
 		}
 
 		// Notifications, gestion des revisions...
@@ -259,7 +275,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 					'table' => $spip_table_objet,
 					'table_objet' => $table_objet,
 					'spip_table_objet' => $spip_table_objet,
-					'type' =>$objet,
+					'type' => $objet,
 					'id_objet' => $id_objet,
 					'champs' => isset($options['champs']) ? $options['champs'] : array(), // [doc] kesako ?
 					'serveur' => $serveur,
@@ -274,7 +290,8 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 	// message a affiner :-)
 	include_spip('inc/filtres_mini');
 	$qui = isset($GLOBALS['visiteur_session']['nom']) AND $GLOBALS['visiteur_session']['nom'] ? $GLOBALS['visiteur_session']['nom'] : $GLOBALS['ip'];
-	journal(_L($qui.' a &#233;dit&#233; l&#8217;'.$objet.' '.$id_objet.' ('.join('+',array_diff(array_keys($champs), array('date_modif'))).')'), array(
+	journal(_L($qui . ' a &#233;dit&#233; l&#8217;' . $objet . ' ' . $id_objet . ' (' . join('+',
+			array_diff(array_keys($champs), array('date_modif'))) . ')'), array(
 		'faire' => 'modifier',
 		'quoi' => $objet,
 		'id' => $id_objet
@@ -285,7 +302,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 
 /**
  * Modifie un contenu
- * 
+ *
  * Dépreciée :
  * Fonction générique pour l'API de modification de contenu
  *
@@ -306,18 +323,19 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
  */
 function modifier_contenu($type, $id, $options, $c = null, $serveur = '') {
 	$res = objet_modifier_champs($type, $id, $options, $c, $serveur);
-	return ($res===''?true:false);
+
+	return ($res === '' ? true : false);
 }
 
 /**
  * Crée une modification d'un objet
- * 
+ *
  * Wrapper pour remplacer tous les obsoletes revision_xxx
  *
  * @deprecated
  *     Utiliser objet_modifier();
  * @uses objet_modifier()
- * 
+ *
  * @param string $objet
  *     Nom de l'objet
  * @param int $id_objet
@@ -326,10 +344,11 @@ function modifier_contenu($type, $id, $options, $c = null, $serveur = '') {
  *     Couples des champs/valeurs modifiées
  * @return mixed|string
  */
-function revision_objet($objet, $id_objet, $c = null){
+function revision_objet($objet, $id_objet, $c = null) {
 	$objet = objet_type($objet); // securite
 	include_spip('action/editer_objet');
-	return objet_modifier($objet,$id_objet,$c);
+
+	return objet_modifier($objet, $id_objet, $c);
 }
 
 

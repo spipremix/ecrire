@@ -12,11 +12,13 @@
 
 /**
  * Affichage des étapes d'installation de SPIP
- * 
+ *
  * @package SPIP\Core\Exec
  */
- 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/minipres');
 include_spip('inc/install');
@@ -30,17 +32,16 @@ define('_FILE_TMP', '_install');
  *
  * Affiche l'étape d'installation en cours, en fonction du paramètre
  * d'url `etape`
- * 
+ *
  * @uses inc_auth_dist()
  * @uses verifier_visiteur()
  *
  * @uses install_etape__dist()
  *   Affiche l'écran d'accueil de l'installation,
  *   si aucune étape n'est encore définie.
- * 
-**/
-function exec_install_dist()
-{
+ *
+ **/
+function exec_install_dist() {
 	$etape = _request('etape');
 	$deja = (_FILE_CONNECT AND analyse_fichier_connection(_FILE_CONNECT));
 
@@ -59,7 +60,7 @@ function exec_install_dist()
 	}
 	if ($deja) {
 		// Rien a faire ici
-	  	echo minipres();
+		echo minipres();
 	} else {
 		include_spip('base/create');
 		$fonc = charger_fonction("etape_$etape", 'install');

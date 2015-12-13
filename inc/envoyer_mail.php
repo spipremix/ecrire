@@ -14,8 +14,10 @@
  * Gestion des emails et de leur envoi
  *
  * @package SPIP\Core\Mail
-**/
-if (!defined('_ECRIRE_INC_VERSION')) return;
+ **/
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/charsets');
 include_spip('inc/texte');
@@ -50,15 +52,15 @@ function nettoyer_caracteres_mail($t) {
 
 	if ($GLOBALS['meta']['charset'] <> 'utf-8') {
 		$t = str_replace(
-			array("&#8217;","&#8220;","&#8221;"),
-			array("'",      '"',      '"'),
-		$t);
+			array("&#8217;", "&#8220;", "&#8221;"),
+			array("'", '"', '"'),
+			$t);
 	}
 
 	$t = str_replace(
 		array("&mdash;", "&endash;"),
-		array("--","-" ),
-	$t);
+		array("--", "-"),
+		$t);
 
 	return $t;
 }
@@ -93,8 +95,12 @@ function nettoyer_caracteres_mail($t) {
  */
 function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $headers = "") {
 
-	if (!email_valide($destinataire)) return false;
-	if ($destinataire == _T('info_mail_fournisseur')) return false; // tres fort
+	if (!email_valide($destinataire)) {
+		return false;
+	}
+	if ($destinataire == _T('info_mail_fournisseur')) {
+		return false;
+	} // tres fort
 
 	// Fournir si possible un Message-Id: conforme au RFC1036,
 	// sinon SpamAssassin denoncera un MSGID_FROM_MTA_HEADER
@@ -106,12 +112,12 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
 	}
 
 	$parts = "";
-	if (is_array($corps)){
+	if (is_array($corps)) {
 		$texte = $corps['texte'];
-		$from = (isset($corps['from'])?$corps['from']:$from);
-		$headers = (isset($corps['headers'])?$corps['headers']:$headers);
+		$from = (isset($corps['from']) ? $corps['from'] : $from);
+		$headers = (isset($corps['headers']) ? $corps['headers'] : $headers);
 		if (is_array($headers)) {
-			$headers = implode("\n",$headers);
+			$headers = implode("\n", $headers);
 		}
 		if ($corps['pieces_jointes'] AND function_exists('mail_embarquer_pieces_jointes')) {
 			$parts = mail_embarquer_pieces_jointes($corps['pieces_jointes']);
@@ -120,11 +126,14 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
 		$texte = $corps;
 	}
 
-	if (!$from) $from = $email_envoi;
+	if (!$from) {
+		$from = $email_envoi;
+	}
 
 	// ceci est la RegExp NO_REAL_NAME faisant hurler SpamAssassin
-	if (preg_match('/^["\s]*\<?\S+\@\S+\>?\s*$/', $from))
-		$from .= ' (' . str_replace(')','', translitteration(str_replace('@', ' at ', $from))) . ')';
+	if (preg_match('/^["\s]*\<?\S+\@\S+\>?\s*$/', $from)) {
+		$from .= ' (' . str_replace(')', '', translitteration(str_replace('@', ' at ', $from))) . ')';
+	}
 
 	// nettoyer les &eacute; &#8217, &emdash; etc...
 	// les 'cliquer ici' etc sont a eviter;  voir:
@@ -142,23 +151,24 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
 		mb_internal_encoding('utf-8');
 	}
 
-	if (function_exists('wordwrap') && (preg_match(',multipart/mixed,',$headers) == 0))
+	if (function_exists('wordwrap') && (preg_match(',multipart/mixed,', $headers) == 0)) {
 		$texte = wordwrap($texte);
+	}
 
 	list($headers, $texte) = mail_normaliser_headers($headers, $from, $destinataire, $texte, $parts);
 
 	if (_OS_SERVEUR == 'windows') {
-		$texte = preg_replace ("@\r*\n@","\r\n", $texte);
-		$headers = preg_replace ("@\r*\n@","\r\n", $headers);
-		$sujet = preg_replace ("@\r*\n@","\r\n", $sujet);
+		$texte = preg_replace("@\r*\n@", "\r\n", $texte);
+		$headers = preg_replace("@\r*\n@", "\r\n", $headers);
+		$sujet = preg_replace("@\r*\n@", "\r\n", $sujet);
 	}
 
-	spip_log("mail $destinataire\n$sujet\n$headers",'mails');
+	spip_log("mail $destinataire\n$sujet\n$headers", 'mails');
 	// mode TEST : forcer l'email
 	if (defined('_TEST_EMAIL_DEST')) {
-		if (!_TEST_EMAIL_DEST)
+		if (!_TEST_EMAIL_DEST) {
 			return false;
-		else {
+		} else {
 			$texte = "Dest : $destinataire\r\n" . $texte;
 			$destinataire = _TEST_EMAIL_DEST;
 		}
@@ -166,26 +176,28 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
 
 	return @mail($destinataire, $sujet, $texte, $headers);
 }
+
 /**
  * Formater correctement l'entête d'un email
- * 
+ *
  * @param string $headers
- * @param string $from   
- * @param string $to     
- * @param string $texte  
- * @param string $parts  
+ * @param string $from
+ * @param string $to
+ * @param string $texte
+ * @param string $parts
  * @return array
  */
-function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "")
-{
+function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "") {
 	$charset = $GLOBALS['meta']['charset'];
 
 	// Ajouter le Content-Type et consort s'il n'y est pas deja
-	if (strpos($headers, "Content-Type: ") === false)
+	if (strpos($headers, "Content-Type: ") === false) {
 		$type =
-		"Content-Type: text/plain;charset=\"$charset\";\n".
-		"Content-Transfer-Encoding: 8bit\n";
-	else $type = '';
+			"Content-Type: text/plain;charset=\"$charset\";\n" .
+			"Content-Transfer-Encoding: 8bit\n";
+	} else {
+		$type = '';
+	}
 
 	// calculer un identifiant unique
 	preg_match('/@\S+/', $from, $domain);
@@ -193,7 +205,7 @@ function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "")
 
 	// Si multi-part, s'en servir comme borne ...
 	if ($parts) {
-		$texte = "--$uniq\n$type\n" . $texte ."\n";
+		$texte = "--$uniq\n$type\n" . $texte . "\n";
 		foreach ($parts as $part) {
 			$n = strlen($part[1]) . ($part[0] ? "\n" : '');
 			$e = join("\n", $part[0]);
@@ -211,11 +223,13 @@ function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "")
 
 	// indispensable pour les sites qui collent d'office From: serveur-http
 	// sauf si deja mis par l'envoyeur
-	$rep = (strpos($headers,"Reply-To:")!==FALSE) ? '' : "Reply-To: $from\n";
+	$rep = (strpos($headers, "Reply-To:") !== false) ? '' : "Reply-To: $from\n";
 
 	// Nettoyer les en-tetes envoyees
 	// Ajouter le \n final
-	if (strlen($headers = trim($headers))) $headers .= "\n";
+	if (strlen($headers = trim($headers))) {
+		$headers .= "\n";
+	}
 
 	// Et mentionner l'indeboulonable nomenclature ratee 
 
@@ -223,4 +237,5 @@ function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "")
 
 	return array($headers, $texte);
 }
+
 ?>

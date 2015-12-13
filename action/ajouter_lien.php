@@ -14,9 +14,11 @@
  * Gestion de l'action ajouter_lien
  *
  * @package SPIP\Core\Liens
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Action pour lier 2 objets entre eux
@@ -25,23 +27,23 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * tel que `mot-7-rubrique-3`.
  *
  * @uses objet_associer()
- * 
+ *
  * @param null|string $arg
  *     Clé des arguments. En absence utilise l'argument
  *     de l'action sécurisée.
  * @return void
  */
-function action_ajouter_lien_dist($arg = null){
-	if (is_null($arg)){
-		$securiser_action = charger_fonction('securiser_action','inc');
+function action_ajouter_lien_dist($arg = null) {
+	if (is_null($arg)) {
+		$securiser_action = charger_fonction('securiser_action', 'inc');
 		$arg = $securiser_action();
 	}
 
-	$arg = explode("-",$arg);
-	list($objet_source,$ids,$objet_lie,$idl) = $arg;
+	$arg = explode("-", $arg);
+	list($objet_source, $ids, $objet_lie, $idl) = $arg;
 
 	include_spip('action/editer_liens');
-	objet_associer(array($objet_source=>$ids), array($objet_lie=>$idl));
+	objet_associer(array($objet_source => $ids), array($objet_lie => $idl));
 }
 
 

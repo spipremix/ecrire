@@ -12,33 +12,33 @@
 
 /**
  * Gestion d'affichage de la page de réparation de la base de données
- * 
+ *
  * ## REMARQUE IMPORTANTE : SÉCURITÉ
- * 
+ *
  * Ce systeme de réparation doit pouvoir fonctionner même si
  * la table spip_auteurs est en panne : index.php n'appelle donc pas
  * inc_auth ; seule l'authentification FTP est exigée.
  *
  * @package SPIP\Core\Exec
  */
- 
-if (!defined('_ECRIRE_INC_VERSION')) return;
 
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
  * Réparer la base de données
  */
-function exec_base_repair_dist()
-{
+function exec_base_repair_dist() {
 	$ok = false;
-	if (!spip_connect())
-		$message =  _T('titre_probleme_technique');
-	else {
+	if (!spip_connect()) {
+		$message = _T('titre_probleme_technique');
+	} else {
 		$version_sql = sql_version();
-		if (!$version_sql)
+		if (!$version_sql) {
 			$message = _T('avis_erreur_connexion_mysql');
-		else {
+		} else {
 			$message = _T('texte_requetes_echouent');
 			$ok = true;
 		}
@@ -52,4 +52,5 @@ function exec_base_repair_dist()
 		echo minipres(_T('titre_reparation'), "<p>$message</p>");
 	}
 }
+
 ?>

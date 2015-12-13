@@ -14,11 +14,13 @@
  * Fonctions déclarées dans des pipelines (espace public)
  *
  * @package SPIP\Core\Pipelines
-**/
-if (!defined('_ECRIRE_INC_VERSION')) return;
-if (test_espace_prive())
+ **/
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
+if (test_espace_prive()) {
 	include_spip('inc/pipelines_ecrire');
-
+}
 
 
 /**
@@ -29,7 +31,7 @@ if (test_espace_prive())
  * des js chargée peut être complété par le pipeline 'jquery_plugins'
  *
  * Cette fonction est appelée par le pipeline insert_head
- * 
+ *
  * @internal
  *     Ne pas vérifier ici qu'on ne doublonne pas `#INSERT_HEAD`
  *     car cela empêche un double appel (multi calcul en cache cool,
@@ -38,28 +40,30 @@ if (test_espace_prive())
  * @see f_jQuery_prive()
  * @pipeline insert_head
  * @pipeline_appel jquery_plugins
- * 
- * @param string $texte    Contenu qui sera inséré dans le head HTML
+ *
+ * @param string $texte Contenu qui sera inséré dans le head HTML
  * @return string          Contenu qui sera inséré dans le head HTML
-**/
-function f_jQuery ($texte) {
+ **/
+function f_jQuery($texte) {
 	$x = '';
 	$jquery_plugins = pipeline('jquery_plugins',
 		array(
-		'javascript/jquery.js',
-		'javascript/jquery.form.js',
-		'javascript/jquery.autosave.js',
-		'javascript/jquery.placeholder-label.js',
-		'javascript/ajaxCallback.js',
-		'javascript/jquery.cookie.js'
+			'javascript/jquery.js',
+			'javascript/jquery.form.js',
+			'javascript/jquery.autosave.js',
+			'javascript/jquery.placeholder-label.js',
+			'javascript/ajaxCallback.js',
+			'javascript/jquery.cookie.js'
 		));
-	foreach (array_unique($jquery_plugins) as $script)
-		if ($script = find_in_path($script)){
+	foreach (array_unique($jquery_plugins) as $script) {
+		if ($script = find_in_path($script)) {
 			$script = timestamp($script);
 			$x .= "\n<script src=\"$script\" type=\"text/javascript\"></script>\n";
 		}
+	}
 
-	$texte = $x.$texte;
+	$texte = $x . $texte;
+
 	return $texte;
 }
 
@@ -74,19 +78,24 @@ function f_jQuery ($texte) {
  * Cette fonction est appelée par le pipeline affichage_final
  *
  * @pipeline affichage_final
- * 
- * @param string $texte   Contenu de la page envoyée au navigateur
+ *
+ * @param string $texte Contenu de la page envoyée au navigateur
  * @return string         Contenu de la page envoyée au navigateur
-**/
-function f_surligne ($texte) {
-	if (!$GLOBALS['html']) return $texte;
+ **/
+function f_surligne($texte) {
+	if (!$GLOBALS['html']) {
+		return $texte;
+	}
 	$rech = _request('var_recherche');
 	if (!$rech
-	  AND (!defined('_SURLIGNE_RECHERCHE_REFERERS')
-	       OR !_SURLIGNE_RECHERCHE_REFERERS
-	       OR !isset($_SERVER['HTTP_REFERER'])))
+		AND (!defined('_SURLIGNE_RECHERCHE_REFERERS')
+			OR !_SURLIGNE_RECHERCHE_REFERERS
+			OR !isset($_SERVER['HTTP_REFERER']))
+	) {
 		return $texte;
+	}
 	include_spip('inc/surligne');
+
 	return surligner_mots($texte, $rech);
 }
 
@@ -97,13 +106,13 @@ function f_surligne ($texte) {
  * définie à true.
  *
  * Cette fonction est appelée par le pipeline affichage_final
- * 
+ *
  * @pipeline affichage_final
- * 
- * @param string $texte   Contenu de la page envoyée au navigateur
+ *
+ * @param string $texte Contenu de la page envoyée au navigateur
  * @return string         Contenu de la page envoyée au navigateur
  **/
-function f_tidy ($texte) {
+function f_tidy($texte) {
 	/**
 	 * Indentation à faire ?
 	 *
@@ -112,16 +121,20 @@ function f_tidy ($texte) {
 	 */
 
 	if ($GLOBALS['xhtml'] # tidy demande
-	AND $GLOBALS['html'] # verifie que la page avait l'entete text/html
-	AND strlen($texte)
-	AND !headers_sent()) {
+		AND $GLOBALS['html'] # verifie que la page avait l'entete text/html
+		AND strlen($texte)
+		AND !headers_sent()
+	) {
 		# Compatibilite ascendante
-		if (!is_string($GLOBALS['xhtml'])) $GLOBALS['xhtml'] ='tidy';
+		if (!is_string($GLOBALS['xhtml'])) {
+			$GLOBALS['xhtml'] = 'tidy';
+		}
 
 		if (!$f = charger_fonction($GLOBALS['xhtml'], 'inc', true)) {
 			spip_log("tidy absent, l'indenteur SPIP le remplace");
 			$f = charger_fonction('sax', 'xml');
 		}
+
 		return $f($texte);
 	}
 
@@ -139,20 +152,22 @@ function f_tidy ($texte) {
  * si cela n'a pas été fait.
  *
  * @pipeline_appel insert_head
- * 
- * @param string $texte   Contenu de la page envoyée au navigateur
+ *
+ * @param string $texte Contenu de la page envoyée au navigateur
  * @return string         Contenu de la page envoyée au navigateur
-**/
+ **/
 function f_insert_head($texte) {
-	if (!$GLOBALS['html']) return $texte;
+	if (!$GLOBALS['html']) {
+		return $texte;
+	}
 	include_spip('public/admin'); // pour strripos
 
 	($pos = stripos($texte, '</head>'))
-	    || ($pos = stripos($texte, '<body>'))
-	    || ($pos = 0);
+	|| ($pos = stripos($texte, '<body>'))
+	|| ($pos = 0);
 
-	if (false === strpos(substr($texte, 0,$pos), '<!-- insert_head -->')) {
-		$insert = "\n".pipeline('insert_head','<!-- f_insert_head -->')."\n";
+	if (false === strpos(substr($texte, 0, $pos), '<!-- insert_head -->')) {
+		$insert = "\n" . pipeline('insert_head', '<!-- f_insert_head -->') . "\n";
 		$texte = substr_replace($texte, $insert, $pos, 0);
 	}
 
@@ -162,25 +177,26 @@ function f_insert_head($texte) {
 
 /**
  * Insérer au besoin les boutons admins
- * 
+ *
  * Cette fonction est appelée par le pipeline affichage_final
  *
  * @pipeline affichage_final
  * @uses affiche_boutons_admin()
- * 
- * @param string $texte   Contenu de la page envoyée au navigateur
+ *
+ * @param string $texte Contenu de la page envoyée au navigateur
  * @return string         Contenu de la page envoyée au navigateur
-**/
+ **/
 function f_admin($texte) {
 	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW AND $GLOBALS['html']) {
 		include_spip('inc/filtres'); // pour http_img_pack
 		$x = "<div class='spip-previsu' "
-		     . http_style_background('preview-32.png')
-		     . ">"
-		     . _T('previsualisation')
-		     . "</div>";
-		if (!$pos = stripos($texte, '</body>'))
+			. http_style_background('preview-32.png')
+			. ">"
+			. _T('previsualisation')
+			. "</div>";
+		if (!$pos = stripos($texte, '</body>')) {
 			$pos = strlen($texte);
+		}
 		$texte = substr_replace($texte, $x, $pos, 0);
 	}
 
@@ -188,9 +204,10 @@ function f_admin($texte) {
 		include_spip('public/admin');
 		$texte = affiche_boutons_admin($texte);
 	}
-	if (_request('var_mode')=='noajax'){
-		$texte = preg_replace(',(class=[\'"][^\'"]*)ajax([^\'"]*[\'"]),Uims',"\\1\\2",$texte);
+	if (_request('var_mode') == 'noajax') {
+		$texte = preg_replace(',(class=[\'"][^\'"]*)ajax([^\'"]*[\'"]),Uims', "\\1\\2", $texte);
 	}
+
 	return $texte;
 }
 
@@ -199,37 +216,40 @@ function f_admin($texte) {
  *
  * Appelle f_afficher_blocs_ecrire() sur les inclusions dans l'espace privé.
  * Ne change rien dans l'espace public.
- * 
- * Cette fonction est appelée par le pipeline recuperer_fond 
+ *
+ * Cette fonction est appelée par le pipeline recuperer_fond
  *
  * @uses f_afficher_blocs_ecrire()
  * @pipeline recuperer_fond
- * 
- * @param  array $flux  Description et contenu de l'inclusion
+ *
+ * @param  array $flux Description et contenu de l'inclusion
  * @return array $flux  Description et contenu de l'inclusion
-**/
+ **/
 function f_recuperer_fond($flux) {
-	if (!test_espace_prive()) return $flux;
+	if (!test_espace_prive()) {
+		return $flux;
+	}
+
 	return f_afficher_blocs_ecrire($flux);
 }
 
 /**
  * Gérer le lancement du cron si des tâches sont en attente
- * 
+ *
  * @pipeline affichage_final
  * @uses queue_sleep_time_to_next_job()
  * @uses queue_affichage_cron()
- * 
- * @param string $texte   Contenu de la page envoyée au navigateur
+ *
+ * @param string $texte Contenu de la page envoyée au navigateur
  * @return string         Contenu de la page envoyée au navigateur
  */
-function f_queue(&$texte){
+function f_queue(&$texte) {
 
 	// eviter une inclusion si rien a faire
-	if (_request('action')=='cron'
-		OR queue_sleep_time_to_next_job()>0
-		OR defined('_DEBUG_BLOCK_QUEUE'))
-	{
+	if (_request('action') == 'cron'
+		OR queue_sleep_time_to_next_job() > 0
+		OR defined('_DEBUG_BLOCK_QUEUE')
+	) {
 		return $texte;
 	}
 
@@ -243,8 +263,8 @@ function f_queue(&$texte){
 	}
 
 	// inserer avant le </body> fermant si on peut, a la fin de la page sinon
-	if (($p=strpos($texte,'</body>'))!==FALSE) {
-		$texte = substr($texte,0,$p).$code.substr($texte,$p);
+	if (($p = strpos($texte, '</body>')) !== false) {
+		$texte = substr($texte, 0, $p) . $code . substr($texte, $p);
 	} else {
 		$texte .= $code;
 	}

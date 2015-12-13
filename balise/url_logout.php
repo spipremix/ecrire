@@ -14,26 +14,28 @@
  * Ce fichier gère la balise dynamique `#URL_LOGOUT`
  *
  * @package SPIP\Core\Compilateur\Balises
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Compile la balise dynamique `#URL_LOGOUT` qui génère une URL permettant
  * de déconnecter l'auteur actuellement connecté
- * 
+ *
  * @balise
  * @example
  *     ```
  *     [<a href="(#URL_LOGOUT)">déconnexion</a>]
  *     ```
- * 
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée du code compilé
-**/
-function balise_URL_LOGOUT ($p) {
+ **/
+function balise_URL_LOGOUT($p) {
 	return calculer_balise_dynamique($p, 'URL_LOGOUT', array());
 }
 
@@ -49,8 +51,9 @@ function balise_URL_LOGOUT ($p) {
  * @return array
  *   Liste (url) des arguments collectés.
  */
-function balise_URL_LOGOUT_stat ($args, $context_compil) {
+function balise_URL_LOGOUT_stat($args, $context_compil) {
 	$url = isset($args[0]) ? $args[0] : '';
+
 	return array($url);
 }
 
@@ -63,11 +66,14 @@ function balise_URL_LOGOUT_stat ($args, $context_compil) {
  *     URL de destination après déconnexion
  * @return string
  *     URL de déconnexion ou chaîne vide.
-**/
+ **/
 function balise_URL_LOGOUT_dyn($cible) {
 
-	if (!$GLOBALS['visiteur_session']['login'] AND !$GLOBALS['visiteur_session']['statut']) return '';
+	if (!$GLOBALS['visiteur_session']['login'] AND !$GLOBALS['visiteur_session']['statut']) {
+		return '';
+	}
 
-	return generer_url_action('logout',"logout=public&url=" . rawurlencode($cible ? $cible : self('&')));
+	return generer_url_action('logout', "logout=public&url=" . rawurlencode($cible ? $cible : self('&')));
 }
+
 ?>

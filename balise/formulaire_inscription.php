@@ -12,11 +12,13 @@
 
 /**
  * Ce fichier gère la balise dynamique `#FORMULAIRE_INSCRIPTION`
- * 
+ *
  * @package SPIP\Core\Inscription
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('base/abstract_sql');
 include_spip('inc/filtres');
@@ -39,8 +41,8 @@ include_spip('inc/filtres');
  *     Pile au niveau de la balise
  * @return Champ
  *     Pile complétée du code compilé
-**/
-function balise_FORMULAIRE_INSCRIPTION ($p) {
+ **/
+function balise_FORMULAIRE_INSCRIPTION($p) {
 	return calculer_balise_dynamique($p, 'FORMULAIRE_INSCRIPTION', array());
 }
 
@@ -53,13 +55,13 @@ function balise_FORMULAIRE_INSCRIPTION ($p) {
  * - '1comite' si les rédacteurs peuvent s'inscrire,
  * - '6forum' sinon si les forums sur abonnements sont actifs,
  * - rien sinon.
- * 
+ *
  * @example
  *     ```
  *     #FORMULAIRE_INSCRIPTION
  *     [(#FORMULAIRE_INSCRIPTION{mode_inscription, #ID_RUBRIQUE})]
  *     ```
- * 
+ *
  * @param array $args
  *   - args[0] un statut d'auteur (rédacteur par defaut)
  *   - args[1] indique la rubrique éventuelle de proposition
@@ -73,6 +75,7 @@ function balise_FORMULAIRE_INSCRIPTION_stat($args, $context_compil) {
 	list($mode, $id) = array_pad($args, 2, null);
 	include_spip('action/inscrire_auteur');
 	$mode = tester_statut_inscription($mode, $id);
+
 	return $mode ? array($mode, $id) : '';
 }
 

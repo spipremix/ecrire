@@ -14,13 +14,15 @@
  * Gestion des actions sécurisées
  *
  * @package SPIP\Core\Actions
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Génère ou vérifie une action sécurisée
- * 
+ *
  * Interface d'appel:
  *
  * - au moins un argument: retourne une URL ou un formulaire securisés
@@ -47,16 +49,16 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param bool $public
  * @return array|string
  */
-function inc_securiser_action_dist($action = '', $arg = '', $redirect = "", $mode = false, $att = '', $public = false)
-{
-	if ($action)
+function inc_securiser_action_dist($action = '', $arg = '', $redirect = "", $mode = false, $att = '', $public = false) {
+	if ($action) {
 		return securiser_action_auteur($action, $arg, $redirect, $mode, $att, $public);
-	else {
+	} else {
 		$arg = _request('arg');
 		$hash = _request('hash');
-		$action = _request('action')?_request('action'):_request('formulaire_action');
-		if ($a = verifier_action_auteur("$action-$arg", $hash))
+		$action = _request('action') ? _request('action') : _request('formulaire_action');
+		if ($a = verifier_action_auteur("$action-$arg", $hash)) {
 			return $arg;
+		}
 		include_spip('inc/minipres');
 		echo minipres();
 		exit;
@@ -73,7 +75,7 @@ function inc_securiser_action_dist($action = '', $arg = '', $redirect = "", $mod
  *
  * @uses calculer_action_auteur()
  * @uses generer_form_action()
- * 
+ *
  * @param string $action
  * @param string $arg
  * @param string $redirect
@@ -93,21 +95,24 @@ function inc_securiser_action_dist($action = '', $arg = '', $redirect = "", $mod
 function securiser_action_auteur($action, $arg, $redirect = "", $mode = false, $att = '', $public = false) {
 
 	// mode URL ou array
-	if (!is_string($mode)){
-		$hash = calculer_action_auteur("$action-$arg",is_numeric($att)?$att:null);
+	if (!is_string($mode)) {
+		$hash = calculer_action_auteur("$action-$arg", is_numeric($att) ? $att : null);
 
 		$r = rawurlencode($redirect);
-		if ($mode===-1)
-			return array('action'=>$action,'arg'=>$arg,'hash'=>$hash);
-		else
-			return generer_url_action($action, "arg=".rawurlencode($arg)."&hash=$hash" . (!$r ? '' : "&redirect=$r"), $mode, $public);
+		if ($mode === -1) {
+			return array('action' => $action, 'arg' => $arg, 'hash' => $hash);
+		} else {
+			return generer_url_action($action, "arg=" . rawurlencode($arg) . "&hash=$hash" . (!$r ? '' : "&redirect=$r"),
+				$mode, $public);
+		}
 	}
 
 	// mode formulaire
 	$hash = calculer_action_auteur("$action-$arg");
 	$att .= " style='margin: 0px; border: 0px'";
-	if ($redirect)
-		$redirect = "\n\t\t<input name='redirect' type='hidden' value='". str_replace("'", '&#39;', $redirect) ."' />";
+	if ($redirect) {
+		$redirect = "\n\t\t<input name='redirect' type='hidden' value='" . str_replace("'", '&#39;', $redirect) . "' />";
+	}
 	$mode .= $redirect . "
 <input name='hash' type='hidden' value='$hash' />
 <input name='arg' type='hidden' value='$arg' />";
@@ -125,37 +130,43 @@ function caracteriser_auteur($id_auteur = null) {
 	static $caracterisation = array();
 
 	if (is_null($id_auteur) AND !isset($GLOBALS['visiteur_session']['id_auteur'])) {
-	// si l'auteur courant n'est pas connu alors qu'il peut demander une action
-	// c'est une connexion par php_auth ou 1 instal, on se rabat sur le cookie.
-	// S'il n'avait pas le droit de realiser cette action, le hash sera faux.
+		// si l'auteur courant n'est pas connu alors qu'il peut demander une action
+		// c'est une connexion par php_auth ou 1 instal, on se rabat sur le cookie.
+		// S'il n'avait pas le droit de realiser cette action, le hash sera faux.
 		if (isset($_COOKIE['spip_session'])
-		AND (preg_match('/^(\d+)/',$_COOKIE['spip_session'],$r))) {
-			  return array($r[1], '');
-			  // Necessaire aux forums anonymes.
-			  // Pour le reste, ca echouera.
-		} else return array('0','');
+			AND (preg_match('/^(\d+)/', $_COOKIE['spip_session'], $r))
+		) {
+			return array($r[1], '');
+			// Necessaire aux forums anonymes.
+			// Pour le reste, ca echouera.
+		} else {
+			return array('0', '');
+		}
 	}
 	// Eviter l'acces SQL si le pass est connu de PHP
-	if (is_null($id_auteur)){
-		$id_auteur = isset($GLOBALS['visiteur_session']['id_auteur'])?$GLOBALS['visiteur_session']['id_auteur']:0;
-		if (isset($GLOBALS['visiteur_session']['pass']) AND $GLOBALS['visiteur_session']['pass'])
+	if (is_null($id_auteur)) {
+		$id_auteur = isset($GLOBALS['visiteur_session']['id_auteur']) ? $GLOBALS['visiteur_session']['id_auteur'] : 0;
+		if (isset($GLOBALS['visiteur_session']['pass']) AND $GLOBALS['visiteur_session']['pass']) {
 			return $caracterisation[$id_auteur] = array($id_auteur, $GLOBALS['visiteur_session']['pass']);
+		}
 	}
 
-	if (isset($caracterisation[$id_auteur])) return $caracterisation[$id_auteur];
+	if (isset($caracterisation[$id_auteur])) {
+		return $caracterisation[$id_auteur];
+	}
 
 	if ($id_auteur) {
 		include_spip('base/abstract_sql');
 		$t = sql_fetsel("id_auteur, pass", "spip_auteurs", "id_auteur=$id_auteur");
-		if ($t)
+		if ($t) {
 			return $caracterisation[$id_auteur] = array($t['id_auteur'], $t['pass']);
+		}
 		include_spip('inc/minipres');
 		echo minipres();
 		exit;
-	}
-	// Visiteur anonyme, pour ls forums par exemple
+	} // Visiteur anonyme, pour ls forums par exemple
 	else {
-		return array('0','');
+		return array('0', '');
 	}
 }
 
@@ -172,8 +183,8 @@ function caracteriser_auteur($id_auteur = null) {
  */
 function _action_auteur($action, $id_auteur, $pass, $alea) {
 	static $sha = array();
-	if (!isset($sha[$id_auteur.$pass.$alea])){
-		if (!isset($GLOBALS['meta'][$alea]) AND _request('exec')!=='install') {
+	if (!isset($sha[$id_auteur . $pass . $alea])) {
+		if (!isset($GLOBALS['meta'][$alea]) AND _request('exec') !== 'install') {
 			include_spip('base/abstract_sql');
 			$GLOBALS['meta'][$alea] = sql_getfetsel('valeur', 'spip_meta', "nom=" . sql_quote($alea));
 			if (!($GLOBALS['meta'][$alea])) {
@@ -184,12 +195,13 @@ function _action_auteur($action, $id_auteur, $pass, $alea) {
 			}
 		}
 		include_spip('auth/sha256.inc');
-		$sha[$id_auteur.$pass.$alea] = _nano_sha256($id_auteur.$pass.@$GLOBALS['meta'][$alea]);
+		$sha[$id_auteur . $pass . $alea] = _nano_sha256($id_auteur . $pass . @$GLOBALS['meta'][$alea]);
 	}
-	if (function_exists('sha1'))
-		return sha1($action.$sha[$id_auteur.$pass.$alea]);
-	else
-		return md5($action.$sha[$id_auteur.$pass.$alea]);
+	if (function_exists('sha1')) {
+		return sha1($action . $sha[$id_auteur . $pass . $alea]);
+	} else {
+		return md5($action . $sha[$id_auteur . $pass . $alea]);
+	}
 }
 
 /**
@@ -201,6 +213,7 @@ function _action_auteur($action, $id_auteur, $pass, $alea) {
  */
 function calculer_action_auteur($action, $id_auteur = null) {
 	list($id_auteur, $pass) = caracteriser_auteur($id_auteur);
+
 	return _action_auteur($action, $id_auteur, $pass, 'alea_ephemere');
 }
 
@@ -215,10 +228,13 @@ function calculer_action_auteur($action, $id_auteur = null) {
  */
 function verifier_action_auteur($action, $hash) {
 	list($id_auteur, $pass) = caracteriser_auteur();
-	if ($hash == _action_auteur($action, $id_auteur, $pass, 'alea_ephemere'))
+	if ($hash == _action_auteur($action, $id_auteur, $pass, 'alea_ephemere')) {
 		return true;
-	if ($hash == _action_auteur($action, $id_auteur, $pass, 'alea_ephemere_ancien'))
+	}
+	if ($hash == _action_auteur($action, $id_auteur, $pass, 'alea_ephemere_ancien')) {
 		return true;
+	}
+
 	return false;
 }
 
@@ -235,17 +251,20 @@ function verifier_action_auteur($action, $hash) {
  * @return string
  */
 function secret_du_site() {
-	if (!isset($GLOBALS['meta']['secret_du_site'])){
+	if (!isset($GLOBALS['meta']['secret_du_site'])) {
 		include_spip('base/abstract_sql');
 		$GLOBALS['meta']['secret_du_site'] = sql_getfetsel('valeur', 'spip_meta', "nom='secret_du_site'");
 	}
 	if (!isset($GLOBALS['meta']['secret_du_site'])
-	  OR (strlen($GLOBALS['meta']['secret_du_site'])<64)) {
+		OR (strlen($GLOBALS['meta']['secret_du_site']) < 64)
+	) {
 		include_spip('inc/acces');
 		include_spip('auth/sha256.inc');
-		ecrire_meta('secret_du_site', _nano_sha256($_SERVER["DOCUMENT_ROOT"] . $_SERVER["SERVER_SIGNATURE"] . creer_uniqid()), 'non');
+		ecrire_meta('secret_du_site',
+			_nano_sha256($_SERVER["DOCUMENT_ROOT"] . $_SERVER["SERVER_SIGNATURE"] . creer_uniqid()), 'non');
 		lire_metas(); // au cas ou ecrire_meta() ne fonctionne pas
 	}
+
 	return $GLOBALS['meta']['secret_du_site'];
 }
 
@@ -256,10 +275,11 @@ function secret_du_site() {
  * @return string
  */
 function calculer_cle_action($action) {
-	if (function_exists('sha1'))
+	if (function_exists('sha1')) {
 		return sha1($action . secret_du_site());
-	else
+	} else {
 		return md5($action . secret_du_site());
+	}
 }
 
 /**

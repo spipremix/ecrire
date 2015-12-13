@@ -14,8 +14,10 @@
  * Gestion le l'affichage du sélecteur de rubrique AJAX
  *
  * @package SPIP\Core\Rubriques
-**/
-if (!defined('_ECRIRE_INC_VERSION')) return;
+ **/
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/actions');
 
@@ -24,21 +26,25 @@ include_spip('inc/actions');
  *
  * @uses inc_selectionner_dist()
  * @uses ajax_retour()
-**/
-function exec_selectionner_dist()
-{
+ **/
+function exec_selectionner_dist() {
 	$id = intval(_request('id'));
 	$exclus = intval(_request('exclus'));
 	$type = _request('type');
 	$rac = _request('racine');
-	$do  = _request('do');
+	$do = _request('do');
 	if (preg_match('/^\w*$/', $do)) {
-		if (!$do) $do = 'aff';
+		if (!$do) {
+			$do = 'aff';
+		}
 
 		$selectionner = charger_fonction('selectionner', 'inc');
 
-		$r = $selectionner($id, "choix_parent", $exclus, $rac, $type!='breve', $do);
-	} else $r = '';
+		$r = $selectionner($id, "choix_parent", $exclus, $rac, $type != 'breve', $do);
+	} else {
+		$r = '';
+	}
 	ajax_retour($r);
 }
+
 ?>

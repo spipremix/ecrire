@@ -10,11 +10,13 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 /**
  * Evaluer la page produite par un squelette
- * 
+ *
  * Évalue une page pour la transformer en texte statique
  * Elle peut contenir un < ?xml a securiser avant eval
  * ou du php d'origine inconnue
@@ -36,12 +38,13 @@ if (empty($page['process_ins']) OR $page['process_ins'] != 'html') {
 	// restaurer l'etat des notes avant calcul
 	if (isset($page['notes'])
 		AND $page['notes']
-		AND $notes = charger_fonction("notes","inc",true)){
-		$notes($page['notes'],'restaurer_etat');
+		AND $notes = charger_fonction("notes", "inc", true)
+	) {
+		$notes($page['notes'], 'restaurer_etat');
 	}
 	ob_start();
-	if (strpos($page['texte'],'?xml')!==false) {
-		$page['texte'] = str_replace('<'.'?xml', "<\1?xml", $page['texte']);
+	if (strpos($page['texte'], '?xml') !== false) {
+		$page['texte'] = str_replace('<' . '?xml', "<\1?xml", $page['texte']);
 	}
 
 	$res = eval('?' . '>' . $page['texte']);
@@ -53,15 +56,15 @@ if (empty($page['process_ins']) OR $page['process_ins'] != 'html') {
 	if (false === $res) {
 		$page['codephp'] = $page['texte'];
 		$page['texte'] = '<!-- erreur -->';
-	}
-	else {
+	} else {
 		$page['texte'] = $eval;
 	}
 
 	$page['process_ins'] = 'html';
 
-	if (strpos($page['texte'],'?xml')!==false)
-		$page['texte'] = str_replace("<\1?xml", '<'.'?xml', $page['texte']);
+	if (strpos($page['texte'], '?xml') !== false) {
+		$page['texte'] = str_replace("<\1?xml", '<' . '?xml', $page['texte']);
+	}
 }
 
 page_base_href($page['texte']);

@@ -12,10 +12,13 @@
 
 /**
  * Gestion d'affichage ajax d'une rubrique sélectionnée dans le mini navigateur
+ *
  * @package SPIP\Core\Exec
  */
- 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/actions');
 
@@ -24,20 +27,24 @@ include_spip('inc/actions');
  *
  * @uses inc_informer_dist()
  * @uses ajax_retour()
-**/
-function exec_informer_dist()
-{
+ **/
+function exec_informer_dist() {
 	$id = intval(_request('id'));
 	$col = intval(_request('col'));
 	$exclus = intval(_request('exclus'));
 	$do = _request('do');
 
 	if (preg_match('/^\w*$/', $do)) {
-		if (!$do) $do = 'aff';
-	
+		if (!$do) {
+			$do = 'aff';
+		}
+
 		$informer = charger_fonction('informer', 'inc');
 		$res = $informer($id, $col, $exclus, _request('rac'), _request('type'), $do);
-	} else $res = '';
+	} else {
+		$res = '';
+	}
 	ajax_retour($res);
 }
+
 ?>

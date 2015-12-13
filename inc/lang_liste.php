@@ -11,7 +11,6 @@
 \***************************************************************************/
 
 
-
 /*
  Ce fichier contient les codes de langue de base de SPIP.
  La plupart sont des codes ISO 639-1, dont vous pouvez lire
@@ -19,7 +18,9 @@
  http://www.loc.gov/standards/iso639-2/langcodes.html
 */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 $GLOBALS['codes_langues'] = array(
 	'aa' => "Afar",
@@ -50,7 +51,7 @@ $GLOBALS['codes_langues'] = array(
 	'cpf_dom' => "Krey&ograve;l",
 	'cpf_hat' => "Krey&ograve;l (Peyi Dayiti)",
 	'cs' => "&#269;e&#353;tina",
-	'cy' => "Cymraeg",	# welsh, gallois
+	'cy' => "Cymraeg",  # welsh, gallois
 	'da' => "dansk",
 	'de' => "Deutsch",
 	'dz' => "Bhutani",
@@ -175,8 +176,8 @@ $GLOBALS['codes_langues'] = array(
 	'sh_latn' => 'srpskohrvastski',
 	'sh_cyrl' => '&#1057;&#1088;&#1087;&#1089;&#1082;&#1086;&#1093;&#1088;&#1074;&#1072;&#1090;&#1089;&#1082;&#1080;',
 	'si' => "Sinhalese",
-	'sk' => "sloven&#269;ina",	// (Slovakia)
-	'sl' => "sloven&#353;&#269;ina",	// (Slovenia)
+	'sk' => "sloven&#269;ina",  // (Slovakia)
+	'sl' => "sloven&#353;&#269;ina",  // (Slovenia)
 	'sm' => "Samoan",
 	'sn' => "Shona",
 	'so' => "Somali",

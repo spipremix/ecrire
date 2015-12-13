@@ -18,21 +18,23 @@
  *
  * @see ecrire/oo/index.php
  * @see prive/formulaires/configurer_preferences.php
- * 
+ *
  * @package SPIP\Core\Auteurs\Preferences
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
  * Action de sauvegarde des préférences d'un auteur
  *
  * Définit une préférence d'un auteur pour l'affichage dans l'espace privé.
- * 
+ *
  * @deprecated
  * @see prive/formulaires/configurer_preferences.php
-**/
+ **/
 function action_preferer_dist() {
 	//
 	// Preferences de presentation de l'espace prive
@@ -40,41 +42,46 @@ function action_preferer_dist() {
 	if ($_GET['arg'] !== 'display:4') {
 		$securiser_action = charger_fonction('securiser_action', 'inc');
 		$arg = $securiser_action();
-	} else $arg = $_GET['arg'];
+	} else {
+		$arg = $_GET['arg'];
+	}
 
-	if (!preg_match(",^(.+):(.*)$,", $arg, $r))
+	if (!preg_match(",^(.+):(.*)$,", $arg, $r)) {
 		spip_log("action_preferer_dist: $arg pas compris");
-	else {
-	$prefs_mod = false;
+	} else {
+		$prefs_mod = false;
 
-	list(, $op, $val) = $r;
-	if ($op == 'couleur') {
-		$GLOBALS['visiteur_session']['prefs']['couleur'] = $val;
-		$prefs_mod = true;
-	}
-	elseif ($op == 'display') {
-		$GLOBALS['visiteur_session']['prefs']['display'] = $val;
-		$prefs_mod = true;
-	}
-	elseif ($op == 'display_outils') {
-		$GLOBALS['visiteur_session']['prefs']['display_outils'] = $val;
-		$prefs_mod = true;
-	}
+		list(, $op, $val) = $r;
+		if ($op == 'couleur') {
+			$GLOBALS['visiteur_session']['prefs']['couleur'] = $val;
+			$prefs_mod = true;
+		} elseif ($op == 'display') {
+			$GLOBALS['visiteur_session']['prefs']['display'] = $val;
+			$prefs_mod = true;
+		} elseif ($op == 'display_outils') {
+			$GLOBALS['visiteur_session']['prefs']['display_outils'] = $val;
+			$prefs_mod = true;
+		}
 
-	if ($prefs_mod AND intval($GLOBALS['visiteur_session']['id_auteur']))
-		sql_updateq('spip_auteurs', array('prefs' => serialize($GLOBALS['visiteur_session']['prefs'])), "id_auteur=" .intval($GLOBALS['visiteur_session']['id_auteur']));
-	
-	if ($op == 'spip_ecran') {
-		// Poser un cookie,
-		// car ce reglage depend plus du navigateur que de l'utilisateur
-		$GLOBALS['spip_ecran'] = $val;
-		include_spip('inc/cookie');
-		spip_setcookie('spip_ecran', $val, time() + 365 * 24 * 3600);
-	}
+		if ($prefs_mod AND intval($GLOBALS['visiteur_session']['id_auteur'])) {
+			sql_updateq('spip_auteurs', array('prefs' => serialize($GLOBALS['visiteur_session']['prefs'])),
+				"id_auteur=" . intval($GLOBALS['visiteur_session']['id_auteur']));
+		}
 
-	// Si modif des couleurs en ajax, redirect inutile on a change de CSS
-	if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') exit;
+		if ($op == 'spip_ecran') {
+			// Poser un cookie,
+			// car ce reglage depend plus du navigateur que de l'utilisateur
+			$GLOBALS['spip_ecran'] = $val;
+			include_spip('inc/cookie');
+			spip_setcookie('spip_ecran', $val, time()+365*24*3600);
+		}
+
+		// Si modif des couleurs en ajax, redirect inutile on a change de CSS
+		if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+			exit;
+		}
 
 	}
 }
+
 ?>

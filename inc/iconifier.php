@@ -16,28 +16,31 @@
  * @package SPIP\Core\Logos
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 include_spip('inc/actions');
 
 /**
  * Retourne le formulaire de gestion de logo sur les objets.
- * 
+ *
  * @param string $objet
  * @param integer $id
  * @param string $script
  * @param bool $visible
  * @param bool $flag_modif
- * 
+ *
  * @return string|array
  *     - Contenu du squelette calculé
  *     - ou tableau d'information sur le squelette.
  */
-function inc_iconifier_dist($objet, $id,  $script, $visible = false, $flag_modif = true) {
+function inc_iconifier_dist($objet, $id, $script, $visible = false, $flag_modif = true) {
 	// compat avec anciens appels
 	$objet = objet_type($objet);
-	
-	return recuperer_fond('prive/objets/editer/logo',array('objet'=>$objet,'id_objet'=>$id,'editable'=>$flag_modif));
+
+	return recuperer_fond('prive/objets/editer/logo',
+		array('objet' => $objet, 'id_objet' => $id, 'editable' => $flag_modif));
 }
 
 ?>

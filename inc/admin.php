@@ -14,15 +14,17 @@
  * Gestion d'administration d'un SPIP
  *
  * @param SPIP\Core\Admin
-**/
+ **/
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')) {
+	return;
+}
 
 
 /**
  * Teste qu'un utilisateur a des droits sur les fichiers du site et
  * exécute l'action (en base) demandée si c'est le cas.
- * 
+ *
  * Demande / vérifie le droit de création de répertoire par le demandeur;
  * Mémorise dans les meta que ce script est en cours d'exécution.
  * Si elle y est déjà c'est qu'il y a eu suspension du script, on reprend.
@@ -30,7 +32,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @uses debut_admin()
  * @uses admin_verifie_session()
  * @uses fin_admin()
- * 
+ *
  * @param string $script
  *     Script d'action (en base) à exécuter si on a des droits d'accès aux fichiers
  * @param string $titre
@@ -42,24 +44,29 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return string
  *     Code HTML de la page (pour vérifier les droits),
  *     sinon code HTML de la page après le traitement effectué.
-**/
-function inc_admin_dist($script, $titre, $comment = '', $anonymous = false)
-{
+ **/
+function inc_admin_dist($script, $titre, $comment = '', $anonymous = false) {
 	$reprise = true;
 	if (!isset($GLOBALS['meta'][$script])
-	OR  !isset($GLOBALS['meta']['admin'])) {
+		OR !isset($GLOBALS['meta']['admin'])
+	) {
 		$reprise = false;
-		$res = debut_admin($script, $titre, $comment); 
-		if ($res) return $res;
+		$res = debut_admin($script, $titre, $comment);
+		if ($res) {
+			return $res;
+		}
 		spip_log("meta: $script " . join(',', $_POST));
 		ecrire_meta($script, serialize($_POST));
-	} 
+	}
 
-	$res = admin_verifie_session($script,$anonymous);
-	if ($res) return $res;
+	$res = admin_verifie_session($script, $anonymous);
+	if ($res) {
+		return $res;
+	}
 	$base = charger_fonction($script, 'base');
-	$base($titre,$reprise);
+	$base($titre, $reprise);
 	fin_admin($script);
+
 	return '';
 }
 
@@ -83,7 +90,7 @@ function inc_admin_dist($script, $titre, $comment = '', $anonymous = false)
  *   se passe mal, on la stoppe
  *
  * @uses fichier_admin()
- * 
+ *
  * @param string $script
  *     Script d'action (en base)
  * @param bool $anonymous
@@ -94,27 +101,32 @@ function inc_admin_dist($script, $titre, $comment = '', $anonymous = false)
 function admin_verifie_session($script, $anonymous = false) {
 
 	include_spip('base/abstract_sql');
-	$pref = sprintf("_%d_",$GLOBALS['visiteur_session']['id_auteur']);
+	$pref = sprintf("_%d_", $GLOBALS['visiteur_session']['id_auteur']);
 	$signal = fichier_admin($script, "$script$pref");
 	$valeur = sql_getfetsel('valeur', 'spip_meta', "nom='admin'");
-	if ($valeur === NULL) {
+	if ($valeur === null) {
 		ecrire_meta('admin', $signal, 'non');
 	} else {
 		if (!$anonymous AND ($valeur != $signal)) {
 			if (!preg_match('/^(.*)_(\d+)_/', $GLOBALS['meta']["admin"], $l)
-				OR intval($l[2])!=$GLOBALS['visiteur_session']['id_auteur']) {
+				OR intval($l[2]) != $GLOBALS['visiteur_session']['id_auteur']
+			) {
 				include_spip('inc/minipres');
 				spip_log("refus de lancer $script, priorite a $valeur");
-				return minipres(_T('info_travaux_texte'), '', array('status'=>503));
+
+				return minipres(_T('info_travaux_texte'), '', array('status' => 503));
 			}
 		}
 	}
 	$journal = "spip";
 	if (autoriser('configurer')) // c'est une action webmestre, soit par ftp soit par statut webmestre
+	{
 		$journal = 'webmestre';
+	}
 	// on pourrait statuer automatiquement les webmestres a l'init d'une action auth par ftp ... ?
 
-	spip_log("admin $pref" . ($valeur ? " (reprise)" : ' (init)'),$journal);
+	spip_log("admin $pref" . ($valeur ? " (reprise)" : ' (init)'), $journal);
+
 	return '';
 }
 
@@ -123,16 +135,15 @@ function admin_verifie_session($script, $anonymous = false) {
  *
  * Dans le répertoire temporaire si on est admin, sinon dans le répertoire
  * de transfert des admins restreints
- * 
+ *
  * @return string
  *     Chemin du répertoire.
-**/
-function dir_admin()
-{
+ **/
+function dir_admin() {
 	if (autoriser('configurer')) {
 		return _DIR_TMP;
 	} else {
-		return  _DIR_TRANSFERT . $GLOBALS['visiteur_session']['login'] . '/';
+		return _DIR_TRANSFERT . $GLOBALS['visiteur_session']['login'] . '/';
 	}
 }
 
@@ -149,11 +160,11 @@ function dir_admin()
  *     Préfixe au nom du fichier calculé
  * @return string
  *     Nom du fichier
-**/
+ **/
 function fichier_admin($action, $pref = 'admin_') {
 
-	return $pref . 
-	  substr(md5($action.(time() & ~2047).$GLOBALS['visiteur_session']['login']), 0, 10);
+	return $pref .
+	substr(md5($action . (time() & ~2047) . $GLOBALS['visiteur_session']['login']), 0, 10);
 }
 
 /**
@@ -164,10 +175,10 @@ function fichier_admin($action, $pref = 'admin_') {
  * de tester la création du répertoire (toutes sauf repair ou delete_all).
  * On considère qu'un webmestre a déjà du prouver ses droits sur les fichiers.
  * Dans ce cas, on quitte sans rien faire également.
- * 
+ *
  * @uses dir_admin()
  * @uses fichier_admin()
- * 
+ *
  * @param string $script
  *     Script d'action (en base) à exécuter ensuite
  * @param string $action
@@ -177,49 +188,53 @@ function fichier_admin($action, $pref = 'admin_') {
  * @return string
  *     Code HTML de la page (pour vérifier les droits),
  *     sinon chaîne vide si déjà fait.
-**/
+ **/
 function debut_admin($script, $action = '', $corps = '') {
 
 	if ((!$action) || !(autoriser('webmestre') OR autoriser('chargerftp'))) {
 		include_spip('inc/minipres');
+
 		return minipres();
 	} else {
 		$dir = dir_admin();
 		$signal = fichier_admin($script);
 		if (@file_exists($dir . $signal)) {
-			spip_log ("Action admin: $action");
+			spip_log("Action admin: $action");
+
 			return '';
 		}
 		include_spip('inc/minipres');
 
-	// Si on est un super-admin, un bouton de validation suffit
-	// sauf dans les cas destroy
+		// Si on est un super-admin, un bouton de validation suffit
+		// sauf dans les cas destroy
 		if ((autoriser('webmestre') OR $script === 'repair')
-		AND $script != 'delete_all') {
+			AND $script != 'delete_all'
+		) {
 			if (_request('validation_admin') == $signal) {
-				spip_log ("Action super-admin: $action");
+				spip_log("Action super-admin: $action");
+
 				return '';
 			}
-			$corps .= '<input type="hidden" name="validation_admin" value="'.$signal.'" />';
+			$corps .= '<input type="hidden" name="validation_admin" value="' . $signal . '" />';
 			$suivant = _T('bouton_valider');
 			$js = '';
 		} else {
 			// cet appel permet d'assurer un copier-coller du nom du repertoire a creer dans tmp (esj)
 			// l'insertion du script a cet endroit n'est pas xhtml licite mais evite de l'embarquer dans toutes les pages minipres
-			$corps .= http_script('',  "spip_barre.js");
+			$corps .= http_script('', "spip_barre.js");
 
 			$corps .= "<fieldset><legend>"
-			. _T('info_authentification_ftp')
-			. aide("ftp_auth")
-			. "</legend>\n<label for='fichier'>"
-			. _T('info_creer_repertoire')
-			. "</label>\n"
-            . "<span id='signal' class='formo'>".$signal."</span>"
-            . "<input type='hidden' id='fichier' name='fichier' value='" 
-			. $signal
-			. "' />"
-			. _T('info_creer_repertoire_2', array('repertoire' => joli_repertoire($dir)))
-			. "</fieldset>";
+				. _T('info_authentification_ftp')
+				. aide("ftp_auth")
+				. "</legend>\n<label for='fichier'>"
+				. _T('info_creer_repertoire')
+				. "</label>\n"
+				. "<span id='signal' class='formo'>" . $signal . "</span>"
+				. "<input type='hidden' id='fichier' name='fichier' value='"
+				. $signal
+				. "' />"
+				. _T('info_creer_repertoire_2', array('repertoire' => joli_repertoire($dir)))
+				. "</fieldset>";
 
 			$suivant = _T('bouton_recharger_page');
 
@@ -234,10 +249,12 @@ function debut_admin($script, $action = '', $corps = '') {
 		// admin/xxx correspond
 		// a exec/base_xxx de preference
 		// et exec/xxx sinon (compat)
-		if (tester_url_ecrire("base_$script"))
+		if (tester_url_ecrire("base_$script")) {
 			$script = "base_$script";
+		}
 		$form = copy_request($script, $corps, $suivant);
 		$info_action = _T('info_action', array('action' => "$action"));
+
 		return minipres($info_action, $form, $js);
 	}
 }
@@ -248,7 +265,7 @@ function debut_admin($script, $action = '', $corps = '') {
  *
  * @param string $action
  *     Nom de l'action (en base) qui a été exécutée
-**/
+ **/
 function fin_admin($action) {
 	$signal = dir_admin() . fichier_admin($action);
 	spip_unlink($signal);
@@ -273,16 +290,18 @@ function fin_admin($action) {
  *     Texte du bouton de validation
  * @return string
  *     Code HTML du formulaire
-**/
-function copy_request($script, $suite, $submit = '')
-{
+ **/
+function copy_request($script, $suite, $submit = '') {
 	include_spip('inc/filtres');
-	foreach(array_merge($_POST,$_GET) as $n => $c) {
-		if (!in_array($n,array('fichier','exec','validation_admin')) AND !is_array($c))
-		$suite .= "\n<input type='hidden' name='".spip_htmlspecialchars($n)."' value='" .
-			entites_html($c) .
-			"'  />";
+	foreach (array_merge($_POST, $_GET) as $n => $c) {
+		if (!in_array($n, array('fichier', 'exec', 'validation_admin')) AND !is_array($c)) {
+			$suite .= "\n<input type='hidden' name='" . spip_htmlspecialchars($n) . "' value='" .
+				entites_html($c) .
+				"'  />";
+		}
 	}
-	return  generer_form_ecrire($script, $suite, '', $submit);
+
+	return generer_form_ecrire($script, $suite, '', $submit);
 }
+
 ?>
