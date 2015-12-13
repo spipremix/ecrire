@@ -438,16 +438,16 @@ class Boucle {
 	 */
 	public $where = array();
 
-	var $join = array();
-	var $having = array();
-	var $limit;
-	var $group = array();
-	var $order = array();
-	var $default_order = array();
-	var $date = 'date';
-	var $hash = "";
-	var $in = "";
-	var $sous_requete = false;
+	public $join = array();
+	public $having = array();
+	public $limit;
+	public $group = array();
+	public $order = array();
+	public $default_order = array();
+	public $date = 'date';
+	public $hash = "";
+	public $in = "";
+	public $sous_requete = false;
 
 	/**
 	 * Code PHP qui sera ajouté en tout début de la fonction de boucle
@@ -500,8 +500,8 @@ class Boucle {
 	 */
 	public $return;
 
-	var $numrows = false;
-	var $cptrows = false;
+	public $numrows = false;
+	public $cptrows = false;
 
 	/**
 	 * Description du squelette
@@ -531,7 +531,7 @@ class Boucle {
 	public $ligne = 0;
 
 
-	var $modificateur = array(); // table pour stocker les modificateurs de boucle tels que tout, plat ..., utilisable par les plugins egalement
+	public $modificateur = array(); // table pour stocker les modificateurs de boucle tels que tout, plat ..., utilisable par les plugins egalement
 
 	/**
 	 * Type d'itérateur utilisé pour cette boucle
@@ -544,9 +544,9 @@ class Boucle {
 	public $iterateur = ''; // type d'iterateur
 
 	// obsoletes, conserves provisoirement pour compatibilite
-	var $tout = false;
-	var $plat = false;
-	var $lien = false;
+	public $tout = false;
+	public $plat = false;
+	public $lien = false;
 }
 
 /**
@@ -599,7 +599,7 @@ class Critere {
 	 *
 	 * @var array
 	 */
-	var $param = array();
+	public $param = array();
 
 	/**
 	 * Numéro de ligne dans le code source du squelette
@@ -894,7 +894,7 @@ class Polyglotte {
 	 *
 	 * @var array
 	 */
-	var $traductions = array();
+	public $traductions = array();
 
 	/**
 	 * Numéro de ligne dans le code source du squelette

@@ -17,44 +17,44 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 class IndenteurXML {
 
 	// http://code.spip.net/@debutElement
-	function debutElement($phraseur, $name, $attrs) {
+	public function debutElement($phraseur, $name, $attrs) {
 		xml_debutElement($this, $name, $attrs);
 	}
 
 	// http://code.spip.net/@finElement
-	function finElement($phraseur, $name) {
+	public function finElement($phraseur, $name) {
 		xml_finElement($this, $name);
 	}
 
 	// http://code.spip.net/@textElement
-	function textElement($phraseur, $data) {
+	public function textElement($phraseur, $data) {
 		xml_textElement($this, $data);
 	}
 
-	function piElement($phraseur, $target, $data) {
+	public function piElement($phraseur, $target, $data) {
 		xml_PiElement($this, $target, $data);
 	}
 
 	// http://code.spip.net/@defautElement
-	function defaultElement($phraseur, $data) {
+	public function defaultElement($phraseur, $data) {
 		xml_defaultElement($this, $data);
 	}
 
 	// http://code.spip.net/@phraserTout
-	function phraserTout($phraseur, $data) {
+	public function phraserTout($phraseur, $data) {
 		xml_parsestring($this, $data);
 	}
 
-	var $depth = "";
-	var $res = "";
-	var $err = array();
-	var $contenu = array();
-	var $ouvrant = array();
-	var $reperes = array();
-	var $entete = '';
-	var $page = '';
-	var $dtc = null;
-	var $sax = null;
+	public $depth = "";
+	public $res = "";
+	public $err = array();
+	public $contenu = array();
+	public $ouvrant = array();
+	public $reperes = array();
+	public $entete = '';
+	public $page = '';
+	public $dtc = null;
+	public $sax = null;
 }
 
 // http://code.spip.net/@xml_indenter_dist

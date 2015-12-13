@@ -26,25 +26,25 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  */
 class Bouton {
 	/** @var string L'icone à mettre dans le bouton */
-	var $icone;
+	public $icone;
 
 	/** @var string Le nom de l'entrée d'i18n associé */
-	var $libelle;
+	public $libelle;
 
 	/** @var null|string L'URL de la page (null => ?exec=nom) */
-	var $url = null;
+	public $url = null;
 
 	/** @var null|string|array Arguments supplementaires de l'URL */
-	var $urlArg = null;
+	public $urlArg = null;
 
 	/** @var null|string URL du javascript */
-	var $url2 = null;
+	public $url2 = null;
 
 	/** @var null|string Pour ouvrir dans une fenetre a part */
-	var $target = null;
+	public $target = null;
 
 	/** @var null|mixed Sous-barre de boutons / onglets */
-	var $sousmenu = null;
+	public $sousmenu = null;
 
 	/**
 	 * Définit un bouton
@@ -62,7 +62,7 @@ class Bouton {
 	 * @param null|mixed $target
 	 *    Pour ouvrir une fenêtre à part
 	 */
-	function __construct($icone, $libelle, $url = null, $urlArg = null, $url2 = null, $target = null) {
+	public function __construct($icone, $libelle, $url = null, $urlArg = null, $url2 = null, $target = null) {
 		$this->icone = $icone;
 		$this->libelle = $libelle;
 		$this->url = $url;
