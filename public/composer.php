@@ -505,13 +505,13 @@ function executer_balise_dynamique($nom, $args, $context_compil) {
  *     Liste des identifiants ayant un logo (séparés par une virgule)
 **/
 function lister_objets_avec_logos ($type) {
-	global $formats_logos;
+
 	$logos = array();
 	$chercher_logo = charger_fonction('chercher_logo', 'inc');
 	$type = '/'
 	. type_du_logo($type)
 	. "on(\d+)\.("
-	. join('|',$formats_logos)
+	. join('|',$GLOBALS['formats_logos'])
 	. ")$/";
 
 	if ($d = @opendir(_DIR_LOGOS)) {

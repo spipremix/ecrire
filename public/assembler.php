@@ -29,9 +29,8 @@ function assembler($fond, $connect = ''){
 	// flag_preserver est modifie ici, et utilise en globale
 	// use_cache sert a informer le bouton d'admin pr savoir s'il met un *
 	// contexte est utilise en globale dans le formulaire d'admin
-	global $flag_preserver, $use_cache, $contexte;
 
-	$contexte = calculer_contexte();
+	$GLOBALS['contexte'] = calculer_contexte();
 	$page = array('contexte_implicite'=>calculer_contexte_implicite());
 	$page['contexte_implicite']['cache'] = $fond . preg_replace(',\.[a-zA-Z0-9]*$,', '', preg_replace('/[?].*$/', '', $GLOBALS['REQUEST_URI']));
 	// Cette fonction est utilisee deux fois
@@ -39,9 +38,9 @@ function assembler($fond, $connect = ''){
 	// Les quatre derniers parametres sont modifies par la fonction:
 	// emplacement, validite, et, s'il est valide, contenu & age
 	if ($cacher)
-		$res = $cacher($GLOBALS['contexte'], $use_cache, $chemin_cache, $page, $lastmodified);
+		$res = $cacher($GLOBALS['contexte'], $GLOBALS['use_cache'], $chemin_cache, $page, $lastmodified);
 	else
-		$use_cache = -1;
+		$GLOBALS['use_cache'] = -1;
 	// Si un resultat est retourne, c'est un message d'impossibilite
 	if ($res) {return array('texte' => $res);}
 
@@ -77,10 +76,10 @@ function assembler($fond, $connect = ''){
 		$page['texte'] = "";
 	} else {
 		// si la page est prise dans le cache
-		if (!$use_cache)  {
+		if (!$GLOBALS['use_cache'])  {
 			// Informer les boutons d'admin du contexte
 			// (fourni par urls_decoder_url ci-dessous lors de la mise en cache)
-			$contexte = $page['contexte'];
+			$GLOBALS['contexte'] = $page['contexte'];
 
 			// vider les globales url propres qui ne doivent plus etre utilisees en cas
 			// d'inversion url => objet
@@ -95,7 +94,7 @@ function assembler($fond, $connect = ''){
 			// et calculer la page
 			if (!test_espace_prive()) {
 				include_spip('inc/urls');
-				list($fond,$contexte,$url_redirect) = urls_decoder_url(nettoyer_uri(),$fond,$contexte,true);
+				list($fond,$GLOBALS['contexte'],$url_redirect) = urls_decoder_url(nettoyer_uri(),$fond,$GLOBALS['contexte'],true);
 			}
 			// squelette par defaut
 			if (!strlen($fond))
@@ -103,7 +102,7 @@ function assembler($fond, $connect = ''){
 
 			// produire la page : peut mettre a jour $lastmodified
 			$produire_page = charger_fonction('produire_page','public');
-			$page = $produire_page($fond, $contexte, $use_cache, $chemin_cache, NULL, $page, $lastmodified, $connect);
+			$page = $produire_page($fond, $GLOBALS['contexte'], $GLOBALS['use_cache'], $chemin_cache, NULL, $page, $lastmodified, $connect);
 			if ($page === '') {
 				$erreur = _T('info_erreur_squelette2',
 					array('fichier'=>spip_htmlspecialchars($fond).'.'._EXTENSION_SQUELETTES));
@@ -117,18 +116,18 @@ function assembler($fond, $connect = ''){
 
 		auto_content_type($page);
 
-		$flag_preserver |=  headers_sent();
+		$GLOBALS['flag_preserver'] |=  headers_sent();
 
 		// Definir les entetes si ce n'est fait 
-		if (!$flag_preserver) {
+		if (!$GLOBALS['flag_preserver']) {
 			if ($GLOBALS['flag_ob']) {
 				// Si la page est vide, produire l'erreur 404 ou message d'erreur pour les inclusions
 				if (trim($page['texte']) === ''
 				AND _VAR_MODE != 'debug'
 				AND !isset($page['entetes']['Location']) // cette page realise une redirection, donc pas d'erreur
 				) {
-					$contexte['fond_erreur'] = $fond;
-				  $page = message_page_indisponible($page, $contexte);
+					$GLOBALS['contexte']['fond_erreur'] = $fond;
+				  $page = message_page_indisponible($page, $GLOBALS['contexte']);
 				}
 				// pas de cache client en mode 'observation'
 				if (defined('_VAR_MODE') AND _VAR_MODE) {
@@ -217,16 +216,15 @@ function calculer_contexte_implicite(){
 
 // http://code.spip.net/@auto_content_type
 function auto_content_type($page){
-	global $flag_preserver;
-	if (!isset($flag_preserver)){
-		$flag_preserver = ($page && preg_match("/header\s*\(\s*.content\-type:/isx",$page['texte']) || (isset($page['entetes']['Content-Type'])));
+
+	if (!isset($GLOBALS['flag_preserver'])){
+		$GLOBALS['flag_preserver'] = ($page && preg_match("/header\s*\(\s*.content\-type:/isx",$page['texte']) || (isset($page['entetes']['Content-Type'])));
 	}
 }
 
 // http://code.spip.net/@inclure_page
 function inclure_page($fond, $contexte, $connect = ''){
 	static $cacher, $produire_page;
-	global $lastmodified;
 
 	// enlever le fond de contexte inclus car sinon il prend la main
 	// dans les sous inclusions -> boucle infinie d'inclusion identique
@@ -253,8 +251,8 @@ function inclure_page($fond, $contexte, $connect = ''){
 			$produire_page = charger_fonction('produire_page','public');
 		$page = $produire_page($fond, $contexte, $use_cache, $chemin_cache, $contexte, $page, $lastinclude, $connect);
 	}
-	// dans tous les cas, mettre a jour $lastmodified
-	$lastmodified = max($lastmodified, $lastinclude);
+	// dans tous les cas, mettre a jour $GLOBALS['lastmodified']
+	$GLOBALS['lastmodified'] = max($GLOBALS['lastmodified'], $lastinclude);
 
 	return $page;
 }

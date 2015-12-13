@@ -190,7 +190,6 @@ function index_compose($conditionnel, $defaut) {
  *     Les éléments de la liste sont vides si on ne trouve rien.
 **/
 function index_tables_en_pile($idb, $nom_champ, &$boucles, &$joker) {
-	global $exceptions_des_tables;
 
 	$r = $boucles[$idb]->type_requete;
 	// boucle recursive, c'est foutu...
@@ -203,7 +202,7 @@ function index_tables_en_pile($idb, $nom_champ, &$boucles, &$joker) {
 
 	$desc = $boucles[$idb]->show;
 	// le nom du champ est il une exception de la table ? un alias ?
-	$excep = isset($exceptions_des_tables[$r]) ? $exceptions_des_tables[$r] : '';
+	$excep = isset($GLOBALS['exceptions_des_tables'][$r]) ? $GLOBALS['exceptions_des_tables'][$r] : '';
 	if ($excep) {
 		$excep = isset($excep[$nom_champ]) ? $excep[$nom_champ] : '';
 	}
@@ -645,16 +644,15 @@ function balise_distante_interdite($p) {
 //
 // http://code.spip.net/@champs_traitements
 function champs_traitements ($p) {
-	global $table_des_traitements;
 
-	if (isset($table_des_traitements[$p->nom_champ])) {
-		$ps = $table_des_traitements[$p->nom_champ];
+	if (isset($GLOBALS['table_des_traitements'][$p->nom_champ])) {
+		$ps = $GLOBALS['table_des_traitements'][$p->nom_champ];
 	} else {
 		// quand on utilise un traitement catch-all *
 		// celui-ci ne s'applique pas sur les balises calculees qui peuvent gerer
 		// leur propre securite
 		if (!$p->balise_calculee)
-			$ps = $table_des_traitements['*'];
+			$ps = $GLOBALS['table_des_traitements']['*'];
 		else
 			$ps = false;
 	}
@@ -778,9 +776,9 @@ function compose_filtres(&$p, $code) {
 // et comparateurs
 function filtre_logique($fonc, $code, $arg)
 {
-	global $table_criteres_infixes;
+
 	switch (true) {
-		case in_array($fonc, $table_criteres_infixes):
+		case in_array($fonc, $GLOBALS['table_criteres_infixes']):
 			return "($code $fonc $arg)";
 		case ($fonc == 'and') OR ($fonc == 'et'):
 			return "((($code) AND ($arg)) ?' ' :'')";

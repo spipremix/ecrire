@@ -41,11 +41,11 @@ define('_CODE_QUOTE', ",^(\n//[^\n]*\n)? *'(.*)' *$,");
  * @return void
 **/
 function critere_racine_dist($idb, &$boucles, $crit){
-	global $exceptions_des_tables;
+
 	$not = $crit->not;
 	$boucle = &$boucles[$idb];
-	$id_parent = isset($exceptions_des_tables[$boucle->id_table]['id_parent']) ?
-		$exceptions_des_tables[$boucle->id_table]['id_parent'] :
+	$id_parent = isset($GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent']) ?
+		$GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent'] :
 		'id_parent';
 
 	$c = array("'='", "'$boucle->id_table."."$id_parent'", 0);
@@ -435,15 +435,15 @@ function critere_origine_traduction_dist($idb, &$boucles, $crit){
  * @return void
 **/
 function critere_meme_parent_dist($idb, &$boucles, $crit){
-	global $exceptions_des_tables;
+
 	$boucle = &$boucles[$idb];
 	$arg = kwote(calculer_argument_precedent($idb, 'id_parent', $boucles));
-	$id_parent = isset($exceptions_des_tables[$boucle->id_table]['id_parent']) ?
-		$exceptions_des_tables[$boucle->id_table]['id_parent'] :
+	$id_parent = isset($GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent']) ?
+		$GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent'] :
 		'id_parent';
 	$mparent = $boucle->id_table.'.'.$id_parent;
 
-	if ($boucle->type_requete=='rubriques' OR isset($exceptions_des_tables[$boucle->id_table]['id_parent'])){
+	if ($boucle->type_requete=='rubriques' OR isset($GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent'])){
 		$boucle->where[] = array("'='", "'$mparent'", $arg);
 
 	}
@@ -618,7 +618,7 @@ function critere_par_dist($idb, &$boucles, $crit){
 
 // http://code.spip.net/@critere_parinverse
 function critere_parinverse($idb, &$boucles, $crit, $sens = ''){
-	global $exceptions_des_jointures;
+
 	$boucle = &$boucles[$idb];
 	if ($crit->not) $sens = $sens ? "" : " . ' DESC'";
 	$collecte = (isset($boucle->modificateur['collecte'])) ? " . ".$boucle->modificateur['collecte'] : "";
@@ -692,8 +692,8 @@ function critere_parinverse($idb, &$boucles, $crit, $sens = ''){
 						$order = "'alea'";
 					}
 						// par titre_mot ou type_mot voire d'autres
-					else if (isset($exceptions_des_jointures[$par])){
-						list($table, $champ) = $exceptions_des_jointures[$par];
+					else if (isset($GLOBALS['exceptions_des_jointures'][$par])){
+						list($table, $champ) = $GLOBALS['exceptions_des_jointures'][$par];
 						$order = critere_par_joint($table, $champ, $boucle, $idb);
 						if (!$order)
 							return (array('zbug_critere_inconnu', array('critere' => $crit->op." $par")));
@@ -1443,9 +1443,6 @@ function calculer_critere_DEFAUT_args($idb, &$boucles, $crit, $args){
 **/
 function calculer_critere_infixe($idb, &$boucles, $crit){
 
-	global $table_criteres_infixes;
-	global $exceptions_des_jointures, $exceptions_des_tables;
-
 	$boucle = &$boucles[$idb];
 	$type = $boucle->type_requete;
 	$table = $boucle->id_table;
@@ -1463,9 +1460,9 @@ function calculer_critere_infixe($idb, &$boucles, $crit){
 		$col = $boucle->primary;
 
 	// Cas particulier : id_parent => verifier les exceptions de tables
-	if ( (in_array($col,array('id_parent','id_secteur')) AND isset($exceptions_des_tables[$table][$col]))
-	  OR (isset($exceptions_des_tables[$table][$col]) AND is_string($exceptions_des_tables[$table][$col])) )
-		$col = $exceptions_des_tables[$table][$col];
+	if ( (in_array($col,array('id_parent','id_secteur')) AND isset($GLOBALS['exceptions_des_tables'][$table][$col]))
+	  OR (isset($GLOBALS['exceptions_des_tables'][$table][$col]) AND is_string($GLOBALS['exceptions_des_tables'][$table][$col])) )
+		$col = $GLOBALS['exceptions_des_tables'][$table][$col];
 
 	// et possibilite de gerer un critere secteur sur des tables de plugins (ie forums)
 	else if (($col=='id_secteur') AND ($critere_secteur = charger_fonction("critere_secteur_$type", "public", true))){
@@ -1475,8 +1472,8 @@ function calculer_critere_infixe($idb, &$boucles, $crit){
 	// cas id_article=xx qui se mappe en id_objet=xx AND objet=article
 	// sauf si exception declaree : sauter cette etape
 	else if (
-		!isset($exceptions_des_jointures[table_objet_sql($table)][$col])
-		AND !isset($exceptions_des_jointures[$col])
+		!isset($GLOBALS['exceptions_des_jointures'][table_objet_sql($table)][$col])
+		AND !isset($GLOBALS['exceptions_des_jointures'][$col])
 		    AND count(trouver_champs_decomposes($col, $desc))>1
 	){
 		$e = decompose_champ_id_objet($col);
@@ -1523,7 +1520,7 @@ function calculer_critere_infixe($idb, &$boucles, $crit){
 	// et int sinon si la valeur est numerique
 	// sinon introduire le vrai type du champ si connu dans le sql_quote (ou int NOT NULL sinon)
 	// Ne pas utiliser intval, PHP tronquant les Bigint de SQL
-	if ($op=='=' OR in_array($op, $table_criteres_infixes)){
+	if ($op=='=' OR in_array($op, $GLOBALS['table_criteres_infixes'])){
 
 		// defaire le quote des int et les passer dans sql_quote avec le bon type de champ si on le connait, int sinon
 		// prendre en compte le debug ou la valeur arrive avec un commentaire PHP en debut
@@ -1599,23 +1596,23 @@ function calculer_critere_infixe($idb, &$boucles, $crit){
  *     Chaîne vide si on ne trouve pas le champ par jointure...
 **/
 function calculer_critere_infixe_externe($boucle, $crit, $op, $desc, $col, $col_alias, $table){
-	global $exceptions_des_jointures;
+
 	$where = '';
 
 	$calculer_critere_externe = 'calculer_critere_externe_init';
 	// gestion par les plugins des jointures tordues
 	// pas automatiques mais necessaires
 	$table_sql = table_objet_sql($table);
-	if (isset($exceptions_des_jointures[$table_sql])
-	  AND is_array($exceptions_des_jointures[$table_sql])
+	if (isset($GLOBALS['exceptions_des_jointures'][$table_sql])
+	  AND is_array($GLOBALS['exceptions_des_jointures'][$table_sql])
 	  AND
 			(
-			isset($exceptions_des_jointures[$table_sql][$col])
+			isset($GLOBALS['exceptions_des_jointures'][$table_sql][$col])
 			OR
-			isset($exceptions_des_jointures[$table_sql][''])
+			isset($GLOBALS['exceptions_des_jointures'][$table_sql][''])
 			)
 		){
-		$t = $exceptions_des_jointures[$table_sql];
+		$t = $GLOBALS['exceptions_des_jointures'][$table_sql];
 		$index = isset($t[$col])
 			? $t[$col] : (isset($t['']) ? $t[''] : array());
 
@@ -1631,8 +1628,8 @@ function calculer_critere_infixe_externe($boucle, $crit, $op, $desc, $col, $col_
 		else
 			$t = ''; // jointure non declaree. La trouver.
 	}
-	elseif (isset($exceptions_des_jointures[$col]))
-		list($t, $col) = $exceptions_des_jointures[$col];
+	elseif (isset($GLOBALS['exceptions_des_jointures'][$col]))
+		list($t, $col) = $GLOBALS['exceptions_des_jointures'][$col];
 	else
 		$t = ''; // jointure non declaree. La trouver.
 
@@ -2330,7 +2327,7 @@ function critere_POUR_tableau_dist($idb, &$boucles, $crit){
  * @param Critere $crit   Paramètres du critère dans cette boucle
  */
 function critere_noeud_dist($idb, &$boucles, $crit){
-	global $exceptions_des_tables;
+
 	$not = $crit->not;
 	$boucle = &$boucles[$idb];
 	$primary = $boucle->primary;
@@ -2342,8 +2339,8 @@ function critere_noeud_dist($idb, &$boucles, $crit){
 	$table = $boucle->type_requete;
 	$table_sql = table_objet_sql(objet_type($table));
 
-	$id_parent = isset($exceptions_des_tables[$boucle->id_table]['id_parent']) ?
-		$exceptions_des_tables[$boucle->id_table]['id_parent'] :
+	$id_parent = isset($GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent']) ?
+		$GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent'] :
 		'id_parent';
 
 	$in = "IN";
