@@ -321,7 +321,7 @@ function objet_traiter_liaisons($operation, $objets_source, $objets_lies, $set =
 					spip_log("objet_traiter_liaisons [Echec] : $operation sur $objet/$primary/$l/$id", _LOG_ERREUR);
 					$echec = true;
 				} else {
-					$modifs = ($modifs ? (is_array($res) ? array_merge($modifs, $res) : $modifs+$res) : $res);
+					$modifs = ($modifs ? (is_array($res) ? array_merge($modifs, $res) : $modifs + $res) : $res);
 				}
 			}
 		} else {

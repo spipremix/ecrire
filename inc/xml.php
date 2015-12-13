@@ -120,7 +120,7 @@ function spip_xml_parse(&$texte, $strict = true, $clean = true, $profondeur = -1
 			return importer_charset($texte, $charset);
 		}//$texte;
 		if (substr($tag, -1) == '/') { // self closing tag
-			$tag = rtrim(substr($tag, 0, strlen($tag)-1));
+			$tag = rtrim(substr($tag, 0, strlen($tag) - 1));
 			$out[$tag][] = "";
 		} else {
 			$closing_tag = preg_split(",\s|\t|\n|\r,", trim($tag));
@@ -134,12 +134,12 @@ function spip_xml_parse(&$texte, $strict = true, $clean = true, $profondeur = -1
 				$d = 0;
 				while (
 					$p !== false
-					and ($morceau = substr($txt, $d, $p-$d))
+					and ($morceau = substr($txt, $d, $p - $d))
 					and (($nopen += preg_match_all("{<" . preg_quote($closing_tag) . "(\s*>|\s[^>]*[^/>]>)}is", $morceau,
 							$matches, PREG_SET_ORDER)) > $nclose)
 				) {
 					$nclose++;
-					$d = $p+$ncclos;
+					$d = $p + $ncclos;
 					$p = strpos($txt, "</$closing_tag>", $d);
 				}
 			}
@@ -153,13 +153,13 @@ function spip_xml_parse(&$texte, $strict = true, $clean = true, $profondeur = -1
 				}//$texte // un tag qui constitue du texte a reporter dans $before
 			}
 			$content = substr($txt, 0, $p);
-			$txt = substr($txt, $p+$ncclos);
+			$txt = substr($txt, $p + $ncclos);
 			if ($profondeur == 0 or strpos($content, "<") === false) // eviter une recursion si pas utile
 			{
 				$out[$tag][] = importer_charset($content, $charset);
 			}//$content;
 			else {
-				$out[$tag][] = spip_xml_parse($content, $strict, $clean, $profondeur-1);
+				$out[$tag][] = spip_xml_parse($content, $strict, $clean, $profondeur - 1);
 			}
 		}
 		$chars = preg_split(_SPIP_XML_TAG_SPLIT, $txt, 2, PREG_SPLIT_DELIM_CAPTURE);
@@ -217,12 +217,12 @@ function spip_xml_decompose_tag($tag) {
 	$p = strpos($tag, '=');
 	while ($p !== false) {
 		$attr = trim(substr($tag, 0, $p));
-		$tag = ltrim(substr($tag, $p+1));
+		$tag = ltrim(substr($tag, $p + 1));
 		$quote = $tag{0};
 		$p = strpos($tag, $quote, 1);
-		$cont = substr($tag, 1, $p-1);
+		$cont = substr($tag, 1, $p - 1);
 		$liste[$attr] = $cont;
-		$tag = substr($tag, $p+1);
+		$tag = substr($tag, $p + 1);
 		$p = strpos($tag, '=');
 	}
 

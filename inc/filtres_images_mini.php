@@ -71,9 +71,9 @@ function couleur_html_to_hex($couleur) {
 function couleur_foncer($couleur, $coeff = 0.5) {
 	$couleurs = _couleur_hex_to_dec($couleur);
 
-	$red = $couleurs["red"]-round(($couleurs["red"])*$coeff);
-	$green = $couleurs["green"]-round(($couleurs["green"])*$coeff);
-	$blue = $couleurs["blue"]-round(($couleurs["blue"])*$coeff);
+	$red = $couleurs["red"] - round(($couleurs["red"]) * $coeff);
+	$green = $couleurs["green"] - round(($couleurs["green"]) * $coeff);
+	$blue = $couleurs["blue"] - round(($couleurs["blue"]) * $coeff);
 
 	$couleur = _couleur_dec_to_hex($red, $green, $blue);
 
@@ -95,9 +95,9 @@ function couleur_foncer($couleur, $coeff = 0.5) {
 function couleur_eclaircir($couleur, $coeff = 0.5) {
 	$couleurs = _couleur_hex_to_dec($couleur);
 
-	$red = $couleurs["red"]+round((255-$couleurs["red"])*$coeff);
-	$green = $couleurs["green"]+round((255-$couleurs["green"])*$coeff);
-	$blue = $couleurs["blue"]+round((255-$couleurs["blue"])*$coeff);
+	$red = $couleurs["red"] + round((255 - $couleurs["red"]) * $coeff);
+	$green = $couleurs["green"] + round((255 - $couleurs["green"]) * $coeff);
+	$blue = $couleurs["blue"] + round((255 - $couleurs["blue"]) * $coeff);
 
 	$couleur = _couleur_dec_to_hex($red, $green, $blue);
 
@@ -310,8 +310,8 @@ function image_reduire($img, $taille = -1, $taille_y = -1, $force = false, $cher
 function image_reduire_par($img, $val = 1, $force = false) {
 	list($hauteur, $largeur) = taille_image($img);
 
-	$l = round($largeur/$val);
-	$h = round($hauteur/$val);
+	$l = round($largeur / $val);
+	$h = round($hauteur / $val);
 
 	if ($l > $h) {
 		$h = 0;

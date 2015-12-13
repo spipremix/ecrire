@@ -443,7 +443,7 @@ function calculer_chaine_jointures(
 				}
 				// essayer de rejoindre l'arrivee a partir de cette etape intermediaire
 				// sans repasser par la meme cle milieu, ni une cle deja vue !
-				$r = calculer_chaine_jointures($boucle, array($v, $def), $arrivee, $new, $exclure_fin, $max_liens-1);
+				$r = calculer_chaine_jointures($boucle, array($v, $def), $arrivee, $new, $exclure_fin, $max_liens - 1);
 				if ($r) {
 					array_unshift($r, $jointure_directe_possible);
 

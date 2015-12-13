@@ -78,7 +78,7 @@ function inc_log_dist($message, $logname = null, $logdir = null, $logsuf = null)
 
 
 	if (@is_readable($logfile)
-		and (!$s = @filesize($logfile) or $s > $GLOBALS['taille_des_logs']*1024)
+		and (!$s = @filesize($logfile) or $s > $GLOBALS['taille_des_logs'] * 1024)
 	) {
 		$rotate = $GLOBALS['nombre_de_logs'];
 		$m .= "[-- rotate --]\n";
@@ -95,7 +95,7 @@ function inc_log_dist($message, $logname = null, $logdir = null, $logsuf = null)
 	) {
 		spip_unlink($logfile . '.' . $rotate);
 		while ($rotate--) {
-			@rename($logfile . ($rotate ? '.' . $rotate : ''), $logfile . '.' . ($rotate+1));
+			@rename($logfile . ($rotate ? '.' . $rotate : ''), $logfile . '.' . ($rotate + 1));
 		}
 	}
 

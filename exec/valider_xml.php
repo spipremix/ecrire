@@ -166,7 +166,7 @@ function valider_resultats($res, $mode) {
 		$class = 'row_' . alterner($i, 'even', 'odd');
 		list($nb, $texte, $erreurs, $script, $appel, $temps) = $l;
 		if ($texte < 0) {
-			$texte = (0-$texte);
+			$texte = (0 - $texte);
 			$color = ";color: red";
 		} else {
 			$color = '';
@@ -245,13 +245,13 @@ function valider_script($transformer_xml, $script, $dir, $ext) {
 
 	if (strpos($val->page, "id='minipres'")) {
 		if (!$g = charger_fonction($script . '_args', $dir, true)) {
-			$res = 0-strlen($val->page);
+			$res = 0 - strlen($val->page);
 		} else {
 			$args = array(1, 'id_article', 1);
 			$val = $transformer_xml($g, $args);
 			$appel = 'id_article=1&type=id_article&id=1';
 			if (strpos($val->page, "id='minipres'")) {
-				$res = 0-strlen($val->page);
+				$res = 0 - strlen($val->page);
 			} else {
 				$res = strlen($val->page);
 			}

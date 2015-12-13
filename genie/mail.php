@@ -37,7 +37,7 @@ function genie_mail_dist($t) {
 
 	$now = time();
 	if (!isset($GLOBALS['meta']['dernier_envoi_neuf'])) {
-		ecrire_meta('dernier_envoi_neuf', date('Y-m-d H:i:s', $now-(3600*24*$jours_neuf)));
+		ecrire_meta('dernier_envoi_neuf', date('Y-m-d H:i:s', $now - (3600 * 24 * $jours_neuf)));
 	}
 
 	$page = recuperer_fond('nouveautes',

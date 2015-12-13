@@ -346,14 +346,14 @@ function queue_schedule($force_jobs = null) {
 	}
 
 	if (!defined('_JQ_MAX_JOBS_TIME_TO_EXECUTE')) {
-		$max_time = ini_get('max_execution_time')/2;
+		$max_time = ini_get('max_execution_time') / 2;
 		// valeur conservatrice si on a pas reussi a lire le max_execution_time
 		if (!$max_time) {
 			$max_time = 5;
 		}
 		define('_JQ_MAX_JOBS_TIME_TO_EXECUTE', min($max_time, 15)); // une valeur maxi en temps.
 	}
-	$end_time = $time+_JQ_MAX_JOBS_TIME_TO_EXECUTE;
+	$end_time = $time + _JQ_MAX_JOBS_TIME_TO_EXECUTE;
 
 	spip_log("JQ schedule $time / $end_time", 'jq' . _LOG_DEBUG);
 
@@ -376,7 +376,7 @@ function queue_schedule($force_jobs = null) {
 	}
 
 	register_shutdown_function('queue_error_handler'); // recuperer les erreurs auant que possible
-	$res = sql_allfetsel('*', 'spip_jobs', $cond, '', 'priorite DESC,date', '0,' . (_JQ_MAX_JOBS_EXECUTE+1));
+	$res = sql_allfetsel('*', 'spip_jobs', $cond, '', 'priorite DESC,date', '0,' . (_JQ_MAX_JOBS_EXECUTE + 1));
 	do {
 		if ($row = array_shift($res)) {
 			$nbj++;
@@ -431,7 +431,7 @@ function queue_close_job(&$row, $time, $result = 0) {
 		include_spip('inc/genie');
 		if ($result < 0) // relancer tout de suite, mais en baissant la priorite
 		{
-			queue_genie_replan_job($row['fonction'], $periode, 0-$result, null, $row['priorite']-1);
+			queue_genie_replan_job($row['fonction'], $periode, 0 - $result, null, $row['priorite'] - 1);
 		} else // relancer avec la periode prevue
 		{
 			queue_genie_replan_job($row['fonction'], $periode, $time);
@@ -511,7 +511,7 @@ function queue_update_next_job_time($next_time = null) {
 	// traiter les jobs morts au combat (_JQ_PENDING depuis plus de 180s)
 	// pour cause de timeout ou autre erreur fatale
 	$res = sql_allfetsel("*", "spip_jobs",
-		"status=" . intval(_JQ_PENDING) . " AND date<" . sql_quote(date('Y-m-d H:i:s', $time-180)));
+		"status=" . intval(_JQ_PENDING) . " AND date<" . sql_quote(date('Y-m-d H:i:s', $time - 180)));
 	if (is_array($res)) {
 		foreach ($res as $row) {
 			queue_close_job($row, $time);
@@ -561,7 +561,7 @@ function queue_set_next_job_time($next) {
 	// toujours relire la valeur pour comparer, pour tenir compte des maj concourrantes
 	// et ne mettre a jour que si il y a un interet a le faire
 	// permet ausis d'initialiser le nom de fichier a coup sur
-	$curr_next = $_SERVER['REQUEST_TIME']+max(0, queue_sleep_time_to_next_job(true));
+	$curr_next = $_SERVER['REQUEST_TIME'] + max(0, queue_sleep_time_to_next_job(true));
 	if (
 		($curr_next <= $time and $next > $time) // le prochain job est dans le futur mais pas la date planifiee actuelle
 		or $curr_next > $next // le prochain job est plus tot que la date planifiee actuelle
@@ -642,7 +642,7 @@ function queue_affichage_cron() {
 
 			if ($fp) {
 				$timeout = 200; // ms
-				stream_set_timeout($fp, 0, $timeout*1000);
+				stream_set_timeout($fp, 0, $timeout * 1000);
 				$query = $parts['path'] . ($parts['query'] ? "?" . $parts['query'] : "");
 				$out = "GET " . $query . " HTTP/1.1\r\n";
 				$out .= "Host: " . $parts['host'] . "\r\n";

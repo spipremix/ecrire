@@ -21,7 +21,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 if (!defined('_DATA_SOURCE_MAX_SIZE')) {
-	define('_DATA_SOURCE_MAX_SIZE', 2*1048576);
+	define('_DATA_SOURCE_MAX_SIZE', 2 * 1048576);
 }
 
 
@@ -183,7 +183,7 @@ class IterateurDATA implements Iterator {
 				'time' => time(),
 				'ttl' => $ttl
 			),
-			3600+$ttl);
+			3600 + $ttl);
 		# conserver le cache 1h de plus que la validite demandee,
 		# pour le cas ou le serveur distant ne reponde plus
 	}
@@ -286,7 +286,7 @@ class IterateurDATA implements Iterator {
 			$ttl = intval($this->command['datacache']);
 		}
 		if ($cache
-			and ($cache['time']+(isset($ttl) ? $ttl : $cache['ttl'])
+			and ($cache['time'] + (isset($ttl) ? $ttl : $cache['ttl'])
 				> time())
 			and !(_request('var_mode') === 'recalcul'
 				and include_spip('inc/autoriser')
@@ -322,7 +322,7 @@ class IterateurDATA implements Iterator {
 							throw new Exception("404");
 						}
 						if (!isset($ttl)) {
-							$ttl = 24*3600;
+							$ttl = 24 * 3600;
 						}
 					} else {
 						if (@is_dir($src)) {

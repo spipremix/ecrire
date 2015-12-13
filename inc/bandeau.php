@@ -105,10 +105,10 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 				}
 				$position = (isset($infos['position']) and strlen($infos['position'])) ? intval($infos['position']) : count($boutons_admin[$parent]->sousmenu);
 				if ($position < 0) {
-					$position = count($boutons_admin[$parent]->sousmenu)+1+$position;
+					$position = count($boutons_admin[$parent]->sousmenu) + 1 + $position;
 				}
 				$boutons_admin[$parent]->sousmenu = array_slice($boutons_admin[$parent]->sousmenu, 0, $position)
-					+array(
+					+ array(
 						$id => new Bouton(
 							($icones and !empty($infos['icone'])) ? find_in_theme($infos['icone']) : '',  // icone
 							$infos['titre'],  // titre
@@ -116,7 +116,7 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 							(isset($infos['parametres']) and $infos['parametres']) ? $infos['parametres'] : null
 						)
 					)
-					+array_slice($boutons_admin[$parent]->sousmenu, $position, 100);
+					+ array_slice($boutons_admin[$parent]->sousmenu, $position, 100);
 			}
 			if (!$parent
 				// provisoire, eviter les vieux boutons
@@ -125,7 +125,7 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 			) {
 				$position = (isset($infos['position']) and $infos['position']) ? $infos['position'] : count($boutons_admin);
 				$boutons_admin = array_slice($boutons_admin, 0, $position)
-					+array(
+					+ array(
 						$id => new Bouton(
 							($icones and isset($infos['icone']) and $infos['icone']) ? find_in_theme($infos['icone']) : '',  // icone
 							$infos['titre'],  // titre
@@ -133,7 +133,7 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 							(isset($infos['parametres']) and $infos['parametres']) ? $infos['parametres'] : null
 						)
 					)
-					+array_slice($boutons_admin, $position, 100);
+					+ array_slice($boutons_admin, $position, 100);
 			}
 		}
 	}

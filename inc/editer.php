@@ -266,7 +266,7 @@ function formulaires_editer_objet_charger(
 	}
 	$att_text = " class='textarea' "
 		. " rows='"
-		. ($config['lignes']+15)
+		. ($config['lignes'] + 15)
 		. "' cols='40'";
 	if (isset($contexte['texte'])) {
 		list($contexte['texte'], $contexte['_texte_trop_long']) = editer_texte_recolle($contexte['texte'], $att_text);
@@ -311,22 +311,22 @@ function formulaires_editer_objet_charger(
  */
 function coupe_trop_long($texte) {
 	$aider = charger_fonction('aider', 'inc');
-	if (strlen($texte) > 28*1024) {
+	if (strlen($texte) > 28 * 1024) {
 		$texte = str_replace("\r\n", "\n", $texte);
-		$pos = strpos($texte, "\n\n", 28*1024);  // coupe para > 28 ko
-		if ($pos > 0 and $pos < 32*1024) {
+		$pos = strpos($texte, "\n\n", 28 * 1024);  // coupe para > 28 ko
+		if ($pos > 0 and $pos < 32 * 1024) {
 			$debut = substr($texte, 0, $pos) . "\n\n<!--SPIP-->\n";
-			$suite = substr($texte, $pos+2);
+			$suite = substr($texte, $pos + 2);
 		} else {
-			$pos = strpos($texte, " ", 28*1024);  // sinon coupe espace
-			if (!($pos > 0 and $pos < 32*1024)) {
-				$pos = 28*1024;  // au pire (pas d'espace trouv'e)
+			$pos = strpos($texte, " ", 28 * 1024);  // sinon coupe espace
+			if (!($pos > 0 and $pos < 32 * 1024)) {
+				$pos = 28 * 1024;  // au pire (pas d'espace trouv'e)
 				$decalage = 0; // si y'a pas d'espace, il ne faut pas perdre le caract`ere
 			} else {
 				$decalage = 1;
 			}
-			$debut = substr($texte, 0, $pos+$decalage); // Il faut conserver l'espace s'il y en a un
-			$suite = substr($texte, $pos+$decalage);
+			$debut = substr($texte, 0, $pos + $decalage); // Il faut conserver l'espace s'il y en a un
+			$suite = substr($texte, $pos + $decalage);
 		}
 
 		return (array($debut, $suite));
@@ -343,7 +343,7 @@ function coupe_trop_long($texte) {
  * @return array
  */
 function editer_texte_recolle($texte, $att_text) {
-	if ((strlen($texte) < 29*1024)
+	if ((strlen($texte) < 29 * 1024)
 		or (include_spip('inc/layer') and ($GLOBALS['browser_name'] != "MSIE"))
 	) {
 		return array($texte, "");
@@ -353,7 +353,7 @@ function editer_texte_recolle($texte, $att_text) {
 	$textes_supplement = "<br /><span style='color: red'>" . _T('info_texte_long') . "</span>\n";
 	$nombre = 0;
 
-	while (strlen($texte) > 29*1024) {
+	while (strlen($texte) > 29 * 1024) {
 		$nombre++;
 		list($texte1, $texte) = coupe_trop_long($texte);
 		$textes_supplement .= "<br />" .

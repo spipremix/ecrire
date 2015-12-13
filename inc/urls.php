@@ -92,7 +92,7 @@ function urls_decoder_url($url, $fond = '', $contexte = array(), $assembler = fa
 			// ne prendre que le segment d'url qui correspond, en fonction de la profondeur calculee
 			$url = ltrim($qs[0], '/');
 			$url = explode('/', $url);
-			while (count($url) > $GLOBALS['profondeur_url']+1) {
+			while (count($url) > $GLOBALS['profondeur_url'] + 1) {
 				array_shift($url);
 			}
 			$qs[0] = implode('/', $url);
@@ -106,7 +106,7 @@ function urls_decoder_url($url, $fond = '', $contexte = array(), $assembler = fa
 	if (strpos($url, "://") === false) {
 		$GLOBALS['profondeur_url'] = substr_count(ltrim(resolve_path("/$url"), '/'), '/');
 	} else {
-		$GLOBALS['profondeur_url'] = max(0, substr_count($url, "/")-substr_count($current_base, "/"));
+		$GLOBALS['profondeur_url'] = max(0, substr_count($url, "/") - substr_count($current_base, "/"));
 	}
 
 	$url_redirect = "";

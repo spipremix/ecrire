@@ -125,7 +125,7 @@ function inc_recherche_to_array_dist($recherche, $options = array()) {
 						$champs_vus[$champ] = $t[$champ];
 					}
 					if ($options['score']) {
-						$score += $n*$poids;
+						$score += $n * $poids;
 					}
 					if ($options['matches']) {
 						$matches[$champ] = $regs;

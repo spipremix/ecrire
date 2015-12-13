@@ -105,7 +105,7 @@ function logo_modifier($objet, $id_objet, $etat, $source) {
 	}
 
 	$size = @getimagesize($file_tmp);
-	$type = !$size ? '' : ($size[2] > 3 ? '' : $GLOBALS['formats_logos'][$size[2]-1]);
+	$type = !$size ? '' : ($size[2] > 3 ? '' : $GLOBALS['formats_logos'][$size[2] - 1]);
 	if ($type) {
 		@rename($file_tmp, $file_tmp . ".$type");
 		$file_tmp = $file_tmp . ".$type";
@@ -156,11 +156,11 @@ function logo_modifier($objet, $id_objet, $etat, $source) {
 			}
 		}
 
-		if (!$erreur and defined('_LOGO_MAX_SIZE') and _LOGO_MAX_SIZE and $poids > _LOGO_MAX_SIZE*1024) {
+		if (!$erreur and defined('_LOGO_MAX_SIZE') and _LOGO_MAX_SIZE and $poids > _LOGO_MAX_SIZE * 1024) {
 			spip_unlink($file_tmp);
 			$erreur = _T('info_logo_max_poids',
 				array(
-					'maxi' => taille_en_octets(_LOGO_MAX_SIZE*1024),
+					'maxi' => taille_en_octets(_LOGO_MAX_SIZE * 1024),
 					'actuel' => taille_en_octets($poids)
 				));
 		}

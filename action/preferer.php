@@ -73,7 +73,7 @@ function action_preferer_dist() {
 			// car ce reglage depend plus du navigateur que de l'utilisateur
 			$GLOBALS['spip_ecran'] = $val;
 			include_spip('inc/cookie');
-			spip_setcookie('spip_ecran', $val, time()+365*24*3600);
+			spip_setcookie('spip_ecran', $val, time() + 365 * 24 * 3600);
 		}
 
 		// Si modif des couleurs en ajax, redirect inutile on a change de CSS

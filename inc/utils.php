@@ -723,7 +723,7 @@ function _T($texte, $args = array(), $options = array()) {
 		if (!$GLOBALS['test_i18n'] and (_request('var_mode') != 'traduction')) {
 			$text = str_replace('_', ' ',
 				(($n = strpos($text, ':')) === false ? $texte :
-					substr($texte, $n+1)));
+					substr($texte, $n + 1)));
 		}
 		$o['class'] = null;
 
@@ -811,9 +811,9 @@ function spip_timer($t = 'rien', $raw = false) {
 	} // plus precis !
 	$b = reset($b);
 	if (!isset($time[$t])) {
-		$time[$t] = $a+$b;
+		$time[$t] = $a + $b;
 	} else {
-		$p = ($a+$b-$time[$t])*1000;
+		$p = ($a + $b - $time[$t]) * 1000;
 		unset($time[$t]);
 #			echo "'$p'";exit;
 		if ($raw) {
@@ -822,8 +822,8 @@ function spip_timer($t = 'rien', $raw = false) {
 		if ($p < 1000) {
 			$s = '';
 		} else {
-			$s = sprintf("%d ", $x = floor($p/1000));
-			$p -= ($x*1000);
+			$s = sprintf("%d ", $x = floor($p / 1000));
+			$p -= ($x * 1000);
 		}
 
 		return $s . sprintf($s ? "%07.3f ms" : "%.3f ms", $p);
@@ -837,7 +837,7 @@ function spip_timer($t = 'rien', $raw = false) {
 function spip_touch($fichier, $duree = 0, $touch = true) {
 	if ($duree) {
 		clearstatcache();
-		if ((@$f = filemtime($fichier)) and ($f >= time()-$duree)) {
+		if ((@$f = filemtime($fichier)) and ($f >= time() - $duree)) {
 			return false;
 		}
 	}
@@ -1013,7 +1013,7 @@ function queue_sleep_time_to_next_job($force = null) {
 		$_SERVER['REQUEST_TIME'] = time();
 	}
 
-	return $queue_next_job_time-$_SERVER['REQUEST_TIME'];
+	return $queue_next_job_time - $_SERVER['REQUEST_TIME'];
 }
 
 
@@ -1494,7 +1494,7 @@ function find_all_in_path($dir, $pattern, $recurs = false) {
 	foreach (creer_chemin() as $d) {
 		$f = $d . $dir;
 		if (@is_dir($f)) {
-			$liste = preg_files($f, $pattern, $maxfiles-count($liste_fichiers), $recurs === true ? array() : $recurs);
+			$liste = preg_files($f, $pattern, $maxfiles - count($liste_fichiers), $recurs === true ? array() : $recurs);
 			foreach ($liste as $chemin) {
 				$nom = basename($chemin);
 				// ne prendre que les fichiers pas deja trouves
@@ -1805,7 +1805,7 @@ function url_de_($http, $host, $request, $prof = 0) {
 	$myself = ltrim($request, '/');
 	# supprimer la chaine de GET
 	list($myself) = explode('?', $myself);
-	$url = join('/', array_slice(explode('/', $myself), 0, -1-$prof)) . '/';
+	$url = join('/', array_slice(explode('/', $myself), 0, -1 - $prof)) . '/';
 
 	$url = $http . '://' . rtrim($host, '/') . '/' . ltrim($url, '/');
 
@@ -2374,7 +2374,7 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 
 	// Duree de validite de l'alea pour les cookies et ce qui s'ensuit.
 	if (!defined('_RENOUVELLE_ALEA')) {
-		define('_RENOUVELLE_ALEA', 12*3600);
+		define('_RENOUVELLE_ALEA', 12 * 3600);
 	}
 
 	// charger les meta si possible et renouveller l'alea au besoin
@@ -2417,7 +2417,7 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 		} else {
 			$GLOBALS['profondeur_url'] = max(0,
 				substr_count($uri[0], '/')
-				-substr_count($uri_ref, '/'));
+				- substr_count($uri_ref, '/'));
 		}
 	}
 	// s'il y a un cookie ou PHP_AUTH, initialiser visiteur_session
@@ -2576,7 +2576,7 @@ function spip_initialisation_suite() {
 	// il y aura d'autres problemes et l'utilisateur n'ira pas tres loin, mais ce sera plus comprehensible qu'une page blanche
 	if (test_espace_prive() and _MEMORY_LIMIT_MIN > 8) {
 		if ($memory = trim(ini_get('memory_limit'))) {
-			$unit = strtolower(substr($memory, strlen($memory/1), 1));
+			$unit = strtolower(substr($memory, strlen($memory / 1), 1));
 			switch ($unit) {
 				// Le modifieur 'G' est disponible depuis PHP 5.1.0
 				case 'g':
@@ -2586,7 +2586,7 @@ function spip_initialisation_suite() {
 				case 'k':
 					$memory *= 1024;
 			}
-			if ($memory < _MEMORY_LIMIT_MIN*1024*1024) {
+			if ($memory < _MEMORY_LIMIT_MIN * 1024 * 1024) {
 				@ini_set('memory_limit', $m = _MEMORY_LIMIT_MIN . 'M');
 				if (trim(ini_get('memory_limit')) != $m) {
 					if (!defined('_INTERDIRE_COMPACTE_HEAD_ECRIRE')) {
@@ -3100,9 +3100,9 @@ function trouver_fond($nom, $dir = '', $pathinfo = false) {
 		$p['extension'] = _EXTENSION_SQUELETTES;
 	}
 	if (!isset($p['extension']) or !$p['filename']) {
-		$p['filename'] = ($p['basename'] ? substr($p['basename'], 0, -strlen($p['extension'])-1) : '');
+		$p['filename'] = ($p['basename'] ? substr($p['basename'], 0, -strlen($p['extension']) - 1) : '');
 	}
-	$p['fond'] = ($f ? substr($f, 0, -strlen($p['extension'])-1) : '');
+	$p['fond'] = ($f ? substr($f, 0, -strlen($p['extension']) - 1) : '');
 
 	return $p;
 }

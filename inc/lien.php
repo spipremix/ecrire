@@ -336,7 +336,7 @@ function traiter_modeles($texte, $doublons = false, $echap = '', $connect = '', 
 				);
 				$n = strlen($r[0]);
 				$a -= $n;
-				$cherche = $n+strlen($regs[0]);
+				$cherche = $n + strlen($regs[0]);
 			} else {
 				$lien = false;
 				$cherche = strlen($mod);
@@ -387,7 +387,7 @@ function traiter_modeles($texte, $doublons = false, $echap = '', $connect = '', 
 					$rempl = code_echappement($modele, $echap);
 					$texte = substr($texte, 0, $a)
 						. $rempl
-						. substr($texte, $a+$cherche);
+						. substr($texte, $a + $cherche);
 				}
 			}
 

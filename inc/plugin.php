@@ -89,7 +89,7 @@ function fast_find_plugin_dirs($dir, $max_prof = 100) {
 	}
 
 	foreach ($subdirs as $d) {
-		$fichiers = array_merge($fichiers, fast_find_plugin_dirs("$d/", $max_prof-1));
+		$fichiers = array_merge($fichiers, fast_find_plugin_dirs("$d/", $max_prof - 1));
 	}
 
 	return $fichiers;
@@ -634,7 +634,7 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 		if (isset($GLOBALS['meta']['plugin_attente'])
 			and $a = unserialize($GLOBALS['meta']['plugin_attente'])
 		) {
-			$plugin_valides = $plugin_valides+liste_chemin_plugin($a);
+			$plugin_valides = $plugin_valides + liste_chemin_plugin($a);
 		}
 
 		if ($operation == 'ajoute') {

@@ -481,7 +481,7 @@ class IterDecorator extends FilterIterator {
 		if (($saut = intval($saut)) <= 0) {
 			return $this->pos;
 		}
-		$seek = $this->pos+$saut;
+		$seek = $this->pos + $saut;
 		// si le saut fait depasser le maxi, on libere la resource
 		// et on sort
 		if (is_null($max)) {
@@ -526,7 +526,7 @@ class IterDecorator extends FilterIterator {
 			}
 
 			if (isset($this->limit)
-				and $this->fetched > $this->offset+$this->limit
+				and $this->fetched > $this->offset + $this->limit
 			) {
 				return false;
 			}

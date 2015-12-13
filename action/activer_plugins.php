@@ -62,7 +62,7 @@ function enregistre_modif_plugin() {
 
 	foreach ($plugins_interessants as $plug => $score) {
 		if ($score > 1) {
-			$plugins_interessants2[$plug] = $score-1;
+			$plugins_interessants2[$plug] = $score - 1;
 		}
 	}
 	foreach ($plugin as $plug) {

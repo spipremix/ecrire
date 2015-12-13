@@ -144,7 +144,7 @@ function traiter_echap_cadre_dist($regs) {
 	$lignes = explode("\n", trim($echap));
 	$n = 0;
 	foreach ($lignes as $l) {
-		$n += floor(strlen($l)/60)+1;
+		$n += floor(strlen($l) / 60) + 1;
 	}
 	$n = max($n, 2);
 	$echap = "\n<textarea readonly='readonly' cols='40' rows='$n' class='spip_cadre' dir='ltr'>$echap</textarea>";
@@ -323,17 +323,17 @@ function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
 	if (!($length = strlen($texte)) or $taille <= 0) {
 		return '';
 	}
-	$offset = 400+2*$taille;
+	$offset = 400 + 2 * $taille;
 	while ($offset < $length
 		and strlen(preg_replace(",<(!--|\w|/)[^>]+>,Uims", "", substr($texte, 0, $offset))) < $taille) {
-		$offset = 2*$offset;
+		$offset = 2 * $offset;
 	}
 	if ($offset < $length
 		&& ($p_tag_ouvrant = strpos($texte, '<', $offset)) !== null
 	) {
 		$p_tag_fermant = strpos($texte, '>', $offset);
 		if ($p_tag_fermant && ($p_tag_fermant < $p_tag_ouvrant)) {
-			$offset = $p_tag_fermant+1;
+			$offset = $p_tag_fermant + 1;
 		} // prolonger la coupe jusqu'au tag fermant suivant eventuel
 	}
 	$texte = substr($texte, 0, $offset); /* eviter de travailler sur 10ko pour extraire 150 caracteres */
@@ -373,18 +373,18 @@ function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
 
 
 	// couper au mot precedent
-	$long = spip_substr($texte, 0, max($taille-4, 1));
+	$long = spip_substr($texte, 0, max($taille - 4, 1));
 	$u = $GLOBALS['meta']['pcre_u'];
 	$court = preg_replace("/([^\s][\s]+)[^\s]*\n?$/" . $u, "\\1", $long);
 	$points = $suite;
 
 	// trop court ? ne pas faire de (...)
-	if (spip_strlen($court) < max(0.75*$taille, 2)) {
+	if (spip_strlen($court) < max(0.75 * $taille, 2)) {
 		$points = '';
 		$long = spip_substr($texte, 0, $taille);
 		$texte = preg_replace("/([^\s][\s]+)[^\s]*\n?$/" . $u, "\\1", $long);
 		// encore trop court ? couper au caractere
-		if (spip_strlen($texte) < 0.75*$taille) {
+		if (spip_strlen($texte) < 0.75 * $taille) {
 			$texte = $long;
 		}
 	} else {

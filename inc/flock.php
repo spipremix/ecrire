@@ -401,7 +401,7 @@ function jeune_fichier($fichier, $n) {
 		return false;
 	}
 
-	return (time()-$n <= $c);
+	return (time() - $n <= $c);
 }
 
 /**
@@ -509,7 +509,7 @@ function spip_attend_invalidation_opcode_cache() {
 		and @ini_get('opcache.validate_timestamps')
 		and $duree = @ini_get('opcache.revalidate_freq')
 	) {
-		sleep($duree+1);
+		sleep($duree + 1);
 	}
 }
 
@@ -584,8 +584,8 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
 		if ($n === false) {
 			return $nobase ? '' : ($base . '/');
 		}
-		$subdir = substr($base, $n+1);
-		$base = substr($base, 0, $n+1);
+		$subdir = substr($base, $n + 1);
+		$base = substr($base, 0, $n + 1);
 	} else {
 		$base .= '/';
 		$subdir = str_replace("/", "", $subdir);
@@ -711,7 +711,7 @@ function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs =
 							$recurs[$rp] = true;
 							$beginning = $fichiers;
 							$end = preg_files("$f/", $pattern,
-								$maxfiles-$nbfiles, $recurs);
+								$maxfiles - $nbfiles, $recurs);
 							$fichiers = array_merge((array)$beginning, (array)$end);
 							$nbfiles = count($fichiers);
 						}

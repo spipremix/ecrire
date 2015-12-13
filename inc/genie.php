@@ -87,7 +87,7 @@ function inc_genie_dist($taches = array()) {
 	// on reroute en ajoutant simplement le job a la queue, ASAP
 	foreach ($taches as $function => $period) {
 		$force_jobs[] = queue_add_job($function, _T('tache_cron_asap', array('function' => $function)),
-			array(time()-abs($period)), "genie/");
+			array(time() - abs($period)), "genie/");
 	}
 
 	// et on passe la main a la gestion de la queue !
@@ -108,14 +108,14 @@ function taches_generales($taches_generales = array()) {
 
 	// verifier que toutes les taches cron sont planifiees
 	// c'est une tache cron !
-	$taches_generales['queue_watch'] = 3600*24;
+	$taches_generales['queue_watch'] = 3600 * 24;
 
 	// MAJ des rubriques publiques (cas de la publication post-datee)
 	// est fait au coup par coup a present
 	//	$taches_generales['rubriques'] = 3600;
 
 	// Optimisation de la base
-	$taches_generales['optimiser'] = 3600*48;
+	$taches_generales['optimiser'] = 3600 * 48;
 
 	// cache (chaque 10 minutes => 1/16eme du repertoire cache,
 	// soit toutes les 2h40 sur le meme rep)
@@ -126,14 +126,14 @@ function taches_generales($taches_generales = array()) {
 		and $GLOBALS['meta']['jours_neuf']
 		and ($GLOBALS['meta']['quoi_de_neuf'] == 'oui')
 	) {
-		$taches_generales['mail'] = 3600*24*$GLOBALS['meta']['jours_neuf'];
+		$taches_generales['mail'] = 3600 * 24 * $GLOBALS['meta']['jours_neuf'];
 	}
 
 	// maintenance (ajax, verifications diverses)
-	$taches_generales['maintenance'] = 3600*2;
+	$taches_generales['maintenance'] = 3600 * 2;
 
 	// verifier si une mise a jour de spip est disponible (2 fois par semaine suffit largement)
-	$taches_generales['mise_a_jour'] = 3*24*3600;
+	$taches_generales['mise_a_jour'] = 3 * 24 * 3600;
 
 	return pipeline('taches_generales_cron', $taches_generales);
 }
@@ -150,7 +150,7 @@ function genie_invalideur_dist($t) {
 
 	// si le cache est trop gonfle, redemander la main pour poursuivre
 	if ($encore) {
-		return (0-$t);
+		return (0 - $t);
 	}
 
 	return 1;
@@ -179,7 +179,7 @@ function genie_queue_watch_dist() {
 	$programmees = array_map('reset', $programmees);
 	foreach ($taches as $tache => $periode) {
 		if (!in_array($tache, $programmees)) {
-			queue_genie_replan_job($tache, $periode, time()-round(rand(1, $periode)), 0);
+			queue_genie_replan_job($tache, $periode, time() - round(rand(1, $periode)), 0);
 		}
 	}
 	$deja_la = false;
@@ -213,11 +213,11 @@ function queue_genie_replan_job($function, $period, $last = 0, $time = null, $pr
 	if (is_null($time)) {
 		$time = time();
 		if ($last) {
-			$time = max($last+$period, $time);
+			$time = max($last + $period, $time);
 		}
 	}
 	if (!$last) {
-		$last = $time-$period;
+		$last = $time - $period;
 	}
 	spip_log("replan_job $function $period $last $time $priority", 'queue');
 	include_spip('inc/queue');

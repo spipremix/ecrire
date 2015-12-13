@@ -41,7 +41,7 @@ function genie_optimiser_dist($t) {
 	// sachant qu'on a un delai de 48h, on renvoie aujourd'hui a 4h du mat
 	// avec une periode de flou entre 2h et 6h pour ne pas saturer un hebergeur
 	// qui aurait beaucoup de sites SPIP
-	return -(mktime(2, 0, 0)+rand(0, 3600*4));
+	return -(mktime(2, 0, 0) + rand(0, 3600 * 4));
 }
 
 /**
@@ -84,7 +84,7 @@ function optimiser_base_une_table() {
 	}
 
 	if ($tables) {
-		$table_op = intval($GLOBALS['meta']['optimiser_table']+1)%sizeof($tables);
+		$table_op = intval($GLOBALS['meta']['optimiser_table'] + 1) % sizeof($tables);
 		ecrire_meta('optimiser_table', $table_op);
 		$q = $tables[$table_op];
 		spip_log("debut d'optimisation de la table $q");
@@ -153,7 +153,7 @@ function optimiser_sansref($table, $id, $sel, $and = '') {
 function optimiser_base_disparus($attente = 86400) {
 
 	# format = 20060610110141, si on veut forcer une optimisation tout de suite
-	$mydate = sql_quote(date("Y-m-d H:i:s", time()-$attente));
+	$mydate = sql_quote(date("Y-m-d H:i:s", time() - $attente));
 
 	$n = 0;
 
@@ -199,7 +199,7 @@ function optimiser_base_disparus($attente = 86400) {
 
 	# supprimer les auteurs 'nouveau' qui n'ont jamais donne suite
 	# au mail de confirmation (45 jours pour repondre, ca devrait suffire)
-	sql_delete("spip_auteurs", "statut='nouveau' AND maj < " . sql_quote(date('Y-m-d', time()-45*24*3600)));
+	sql_delete("spip_auteurs", "statut='nouveau' AND maj < " . sql_quote(date('Y-m-d', time() - 45 * 24 * 3600)));
 
 	/**
 	 * Permet aux plugins de compléter l'optimisation suite aux éléments disparus

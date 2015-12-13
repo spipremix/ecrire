@@ -27,7 +27,7 @@ if ($var_auth !== '') {
 		// autrement on insiste
 		if (is_array($var_auth)) {
 			$var_auth = '../?' . $_SERVER['QUERY_STRING'];
-			spip_setcookie('spip_session', $_COOKIE['spip_session'], time()+3600*24*14);
+			spip_setcookie('spip_session', $_COOKIE['spip_session'], time() + 3600 * 24 * 14);
 		}
 		include_spip('inc/headers');
 		redirige_formulaire($var_auth);

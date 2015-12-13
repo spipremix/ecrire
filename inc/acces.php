@@ -31,7 +31,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  *     Mot de passe
  **/
 function creer_pass_aleatoire($longueur = 8, $sel = "") {
-	$seed = (int)round((microtime()+1)*time());
+	$seed = (int)round((microtime() + 1) * time());
 
 	mt_srand($seed);
 	srand($seed);
@@ -48,13 +48,13 @@ function creer_pass_aleatoire($longueur = 8, $sel = "") {
 		$r = unpack("Cr", pack("H2", $s . $s));
 		$x = $r['r'] & 63;
 		if ($x < 10) {
-			$x = chr($x+48);
+			$x = chr($x + 48);
 		} else {
 			if ($x < 36) {
-				$x = chr($x+55);
+				$x = chr($x + 55);
 			} else {
 				if ($x < 62) {
-					$x = chr($x+61);
+					$x = chr($x + 61);
 				} else {
 					if ($x == 63) {
 						$x = '/';
@@ -83,7 +83,7 @@ function creer_uniqid() {
 	static $seeded;
 
 	if (!$seeded) {
-		$seed = (int)round((microtime()+1)*time());
+		$seed = (int)round((microtime() + 1) * time());
 		mt_srand($seed);
 		srand($seed);
 		$seeded = true;

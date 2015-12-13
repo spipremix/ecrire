@@ -160,7 +160,7 @@ function spip_nfslock($fichier, $max_age = 0) {
 		} /* something bogus is going on */
 
 
-		if ($old_stat != false && (($old_stat['ctime']+$max_age) < $our_tmp['ctime'])) {
+		if ($old_stat != false && (($old_stat['ctime'] + $max_age) < $our_tmp['ctime'])) {
 			spip_unlink($lock_file); /* break the stale lock */
 			$tries++;
 			/* It is CRITICAL that we sleep after breaking
@@ -168,7 +168,7 @@ function spip_nfslock($fichier, $max_age = 0) {
 			 * another process and unlink it's newly-
 			 * created file.
 			 */
-			sleep(1+rand(0, 4));
+			sleep(1 + rand(0, 4));
 			continue;
 		}
 
@@ -177,7 +177,7 @@ function spip_nfslock($fichier, $max_age = 0) {
 		 */
 
 		$tries++;
-		sleep(1+rand(0, 4));
+		sleep(1 + rand(0, 4));
 	}
 
 	/*
@@ -276,11 +276,11 @@ function spip_nfsunlock($fichier, $birth, $max_age = 0, $test = false) {
 		if (!$test) {
 			spip_unlink($lock_file);
 		}      /* so the lock is ours to remove */
-		if ($our_tmp['ctime'] >= $birth+$max_age) {  /* the lock has expired */
+		if ($our_tmp['ctime'] >= $birth + $max_age) {  /* the lock has expired */
 			if (!$test) {
 				return false;
 			} //(NFSL_LOST);
-			sleep(1+(random(0, 4)));    /* so sleep a bit */
+			sleep(1 + (random(0, 4)));    /* so sleep a bit */
 		}
 
 		return true;//(NFSL_OK);			/* success */
@@ -293,7 +293,7 @@ function spip_nfsunlock($fichier, $birth, $max_age = 0, $test = false) {
 	 *    someone else has grabbed the file, so return NFSL_LOST.
 	 */
 
-	if ($our_tmp['ctime'] < $birth+$max_age)  /* lock was stolen */ {
+	if ($our_tmp['ctime'] < $birth + $max_age)  /* lock was stolen */ {
 		return false;
 	} //(NFSL_STOLEN);
 

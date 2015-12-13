@@ -909,7 +909,7 @@ function calculer_liste($tableau, $descr, &$boucles, $id_boucle = '') {
 				}
 			}
 
-			return '(' . substr($res, 2+$descr['niv']) . ')';
+			return '(' . substr($res, 2 + $descr['niv']) . ')';
 		}
 	} else {
 		$nom = $descr['nom'] . $id_boucle . ($descr['niv'] ? $descr['niv'] : '');

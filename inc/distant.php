@@ -164,8 +164,8 @@ function prepare_donnees_post($donnees, $boundary = '') {
 		// un double retour a la ligne signifie la fin de l'entete et le debut des donnees
 		$p = strpos($donnees, "\n\n");
 		if ($p !== false) {
-			$entete = str_replace("\n", "\r\n", substr($donnees, 0, $p+1));
-			$donnees = substr($donnees, $p+2);
+			$entete = str_replace("\n", "\r\n", substr($donnees, 0, $p + 1));
+			$donnees = substr($donnees, $p + 2);
 		}
 		$chaine = str_replace("\n", "\r\n", $donnees);
 	} else {
@@ -482,7 +482,7 @@ function recuperer_url_cache($url, $options = array()) {
 	$res = false;
 	$is_cached = file_exists($cache);
 	if ($is_cached
-		and (filemtime($cache) > $_SERVER['REQUEST_TIME']-$options['delai_cache'])
+		and (filemtime($cache) > $_SERVER['REQUEST_TIME'] - $options['delai_cache'])
 	) {
 		lire_fichier($cache, $res);
 		if ($res = unserialize($res)) {

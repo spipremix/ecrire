@@ -84,7 +84,7 @@ function style_menu_rubriques($i) {
 	$espace = '';
 	if (preg_match(",mozilla,i", $GLOBALS['browser_name'])) {
 		$style = "padding-" . $GLOBALS['spip_lang_left'] . ": 16px; "
-			. "margin-" . $GLOBALS['spip_lang_left'] . ": " . (($i-1)*16) . "px;";
+			. "margin-" . $GLOBALS['spip_lang_left'] . ": " . (($i - 1) * 16) . "px;";
 	} else {
 		$style = '';
 		for ($count = 0; $count <= $i; $count++) {
@@ -155,7 +155,7 @@ function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $excl
 	if (isset($enfants[$root])) {
 		foreach ($enfants[$root] as $sousrub) {
 			$sous .= sous_menu_rubriques($id_rubrique, $sousrub,
-				$niv+1, $data, $enfants, $exclus, $restreint, $type);
+				$niv + 1, $data, $enfants, $exclus, $restreint, $type);
 		}
 	}
 

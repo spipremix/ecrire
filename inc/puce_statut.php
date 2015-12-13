@@ -379,22 +379,22 @@ function puce_statut_changement_rapide(
 		return $inser_puce;
 	}
 
-	$unit = 8/*widh de img*/+4/*padding*/
+	$unit = 8/*widh de img*/ + 4/*padding*/
 	;
 	$margin = 4; /* marge a gauche + droite */
-	$zero = 1 /*border*/+$margin/2+2 /*padding*/
+	$zero = 1 /*border*/ + $margin / 2 + 2 /*padding*/
 	;
-	$clip = $zero+($unit*$coord[$statut]);
+	$clip = $zero + ($unit * $coord[$statut]);
 
 	if ($ajax) {
-		$width = $unit*count($desc['statut_textes_instituer'])+$margin;
+		$width = $unit * count($desc['statut_textes_instituer']) + $margin;
 		$out = "<span class='puce_objet_fixe $type'>"
 			. $inser_puce
 			. "</span>"
 			. "<span class='puce_objet_popup $type statutdecal$type$id' style='width:{$width}px;margin-left:-{$clip}px;'>";
 		$i = 0;
 		foreach ($desc['statut_textes_instituer'] as $s => $t) {
-			$out .= afficher_script_statut($id, $type, -$zero-$i++*$unit, statut_image($type, $s), $s, _T($t));
+			$out .= afficher_script_statut($id, $type, -$zero - $i++ * $unit, statut_image($type, $s), $s, _T($t));
 		}
 		$out .= "</span>";
 

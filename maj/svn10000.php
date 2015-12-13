@@ -305,7 +305,7 @@ $GLOBALS['maj'][14558] = array(array('upgrade_types_documents'));
 
 // refaire les upgrade dont les numeros sont inferieurs a ceux de la branche 2.0
 // etre sur qu'ils sont bien unipotents(?)...
-$GLOBALS['maj'][14559] = $GLOBALS['maj'][13904]+$GLOBALS['maj'][13929]+$GLOBALS['maj'][14558];
+$GLOBALS['maj'][14559] = $GLOBALS['maj'][13904] + $GLOBALS['maj'][13929] + $GLOBALS['maj'][14558];
 
 // La version 14588 etait une mauvaise piste:
 // Retour en arriere pour ceux qui l'ont subi, ne rien faire sinon
@@ -472,7 +472,7 @@ function maj_liens_insertq_multi_check($table, $couples, $desc = array()) {
 	$n_before = sql_countsel($table);
 	sql_insertq_multi($table, $couples, $desc);
 	$n_after = sql_countsel($table);
-	if (($n_after-$n_before) == count($couples)) {
+	if (($n_after - $n_before) == count($couples)) {
 		return;
 	}
 	// si ecart, on recommence l'insertion ligne par ligne...

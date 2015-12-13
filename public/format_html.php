@@ -98,9 +98,9 @@ function format_liste_html($fonc, $args, $prof) {
 
 // Concatenation sans separateur: verifier qu'on ne cree pas de faux lexemes
 function format_suite_html($args) {
-	for ($i = 0; $i < count($args)-1; $i++) {
+	for ($i = 0; $i < count($args) - 1; $i++) {
 		list($texte, $type) = $args[$i];
-		list($texte2, $type2) = $args[$i+1];
+		list($texte2, $type2) = $args[$i + 1];
 		if (!$texte or !$texte2) {
 			continue;
 		}
@@ -109,7 +109,7 @@ function format_suite_html($args) {
 			// si un texte se termine par ( et est suivi d'un champ
 			// ou assimiles, forcer la notation pleine
 			if ($c1 == '(' and substr($texte2, 0, 1) == '#') {
-				$args[$i+1][0] = '[(' . $texte2 . ')]';
+				$args[$i + 1][0] = '[(' . $texte2 . ')]';
 			}
 		} else {
 			if ($type == 'texte') {

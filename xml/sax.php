@@ -153,7 +153,7 @@ function coordonnees_erreur($phraseur, $msg) {
 	$entete_length = substr_count($phraseur->entete, "\n");
 	$phraseur->err[] = array(
 		$msg,
-		xml_get_current_line_number($phraseur->sax)+$entete_length,
+		xml_get_current_line_number($phraseur->sax) + $entete_length,
 		xml_get_current_column_number($phraseur->sax)
 	);
 }

@@ -32,7 +32,7 @@ function action_etre_webmestre_dist() {
 	$securiser_action = charger_fonction('securiser_action', 'inc');
 	$time = $securiser_action();
 
-	if (time()-$time < 15*60
+	if (time() - $time < 15 * 60
 		and $GLOBALS['visiteur_session']['statut'] == '0minirezo'
 		and $GLOBALS['visiteur_session']['webmestre'] !== 'oui'
 	) {

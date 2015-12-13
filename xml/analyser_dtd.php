@@ -203,7 +203,7 @@ function analyser_dtd_lexeme($dtd, &$dtc, $grammaire) {
 		if (($n[0] == 'PUBLIC')
 			and !tester_url_absolue($n[1])
 		) {
-			$n[1] = substr($grammaire, 0, strrpos($grammaire, '/')+1) . $n[1];
+			$n[1] = substr($grammaire, 0, strrpos($grammaire, '/') + 1) . $n[1];
 		}
 		analyser_dtd($n[1], $n[0], $dtc);
 	}

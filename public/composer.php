@@ -304,9 +304,9 @@ function filtre_introduction_dist($descriptif, $texte, $longueur, $connect, $sui
 	$texte = preg_replace(",(</?)intro>,i", "\\1intro>", $texte); // minuscules
 	while ($fin = strpos($texte, "</intro>")) {
 		$zone = substr($texte, 0, $fin);
-		$texte = substr($texte, $fin+strlen("</intro>"));
+		$texte = substr($texte, $fin + strlen("</intro>"));
 		if ($deb = strpos($zone, "<intro>") or substr($zone, 0, 7) == "<intro>") {
-			$zone = substr($zone, $deb+7);
+			$zone = substr($zone, $deb + 7);
 		}
 		$intro .= $zone;
 	}
@@ -326,12 +326,12 @@ function filtre_introduction_dist($descriptif, $texte, $longueur, $connect, $sui
 		$texte = $intro;
 	} else {
 		if (strpos("\n" . $texte, "\n|") === false
-			and strlen($texte) > 2.5*$longueur
+			and strlen($texte) > 2.5 * $longueur
 		) {
 			if (strpos($texte, "<multi") !== false) {
 				$texte = extraire_multi($texte);
 			}
-			$texte = couper($texte, 2*$longueur);
+			$texte = couper($texte, 2 * $longueur);
 		}
 	}
 
@@ -469,7 +469,7 @@ function executer_balise_dynamique($nom, $args, $context_compil) {
 
 	// Calculer un nom générique (ie. 'formulaire_' dans 'formulaire_editer_article')
 	if (false !== ($p = strpos($nom, "_"))) {
-		$nomfonction_generique = substr($nom, 0, $p+1);
+		$nomfonction_generique = substr($nom, 0, $p + 1);
 	}
 
 	if (!$fonction_balise = charger_fonction($nomfonction, 'balise', true)) {
@@ -927,7 +927,7 @@ function calculer_select(
 				")"
 			);
 			if (isset($afrom[$cle])) {
-				$afrom[$t] = $afrom[$t]+$afrom[$cle];
+				$afrom[$t] = $afrom[$t] + $afrom[$cle];
 				unset($afrom[$cle]);
 			}
 			$equiv[] = $carr;

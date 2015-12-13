@@ -1777,7 +1777,7 @@ function balise_FILTRE_dist($p) {
 	if ($p->param) {
 		$args = array();
 		foreach ($p->param as $i => $ignore) {
-			$args[] = interprete_argument_balise($i+1, $p);
+			$args[] = interprete_argument_balise($i + 1, $p);
 		}
 		$p->code = "'<' . '"
 			. '?php header("X-Spip-Filtre: \'.'

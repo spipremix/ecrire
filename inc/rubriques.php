@@ -359,7 +359,7 @@ function propager_les_secteurs() {
 			while ($row = array_shift($rows)) {
 				if ($row['id_secteur'] !== $id_secteur) {
 					if (count($ids)) {
-						sql_updateq("spip_rubriques", array("id_secteur" => $id_secteur, 'profondeur' => $prof+1),
+						sql_updateq("spip_rubriques", array("id_secteur" => $id_secteur, 'profondeur' => $prof + 1),
 							sql_in('id_rubrique', $ids));
 					}
 					$id_secteur = $row['id_secteur'];
@@ -368,7 +368,7 @@ function propager_les_secteurs() {
 				$ids[] = $row['id'];
 			}
 			if (count($ids)) {
-				sql_updateq("spip_rubriques", array("id_secteur" => $id_secteur, 'profondeur' => $prof+1),
+				sql_updateq("spip_rubriques", array("id_secteur" => $id_secteur, 'profondeur' => $prof + 1),
 					sql_in('id_rubrique', $ids));
 			}
 		}
@@ -380,17 +380,17 @@ function propager_les_secteurs() {
 			and $rows = sql_allfetsel(
 				"id_rubrique as id",
 				"spip_rubriques",
-				"profondeur=" . intval($prof+1) . " AND id_parent NOT IN (" . sql_get_select("zzz.id_rubrique",
+				"profondeur=" . intval($prof + 1) . " AND id_parent NOT IN (" . sql_get_select("zzz.id_rubrique",
 					"spip_rubriques AS zzz", "zzz.profondeur=" . intval($prof)) . ")", '', '', '0,100')) {
 			$rows = array_map('reset', $rows);
-			sql_updateq("spip_rubriques", array('profondeur' => $prof+2), sql_in("id_rubrique", $rows));
+			sql_updateq("spip_rubriques", array('profondeur' => $prof + 2), sql_in("id_rubrique", $rows));
 		}
 
 		// ici on a fini de valider $prof+1, toutes les rubriques de prondeur 0 a $prof+1 sont OK
 		// si pas de rubrique a profondeur $prof+1 pas la peine de continuer
 		// si il reste des rubriques non vues, c'est une branche morte ou reference circulaire (base foireuse)
 		// on arrete les frais
-		if (sql_countsel("spip_rubriques", "profondeur=" . intval($prof+1))) {
+		if (sql_countsel("spip_rubriques", "profondeur=" . intval($prof + 1))) {
 			$prof++;
 			$continuer = true;
 		}
@@ -398,10 +398,10 @@ function propager_les_secteurs() {
 
 	// loger si la table des rubriques semble foireuse
 	// et mettre un id_secteur=0 sur ces rubriques pour eviter toute selection par les boucles
-	if (sql_countsel("spip_rubriques", "profondeur>" . intval($prof+1))) {
-		spip_log("Les rubriques de profondeur>" . ($prof+1) . " semblent suspectes (branches morte ou reference circulaire dans les parents)",
+	if (sql_countsel("spip_rubriques", "profondeur>" . intval($prof + 1))) {
+		spip_log("Les rubriques de profondeur>" . ($prof + 1) . " semblent suspectes (branches morte ou reference circulaire dans les parents)",
 			_LOG_CRITIQUE);
-		sql_update("spip_rubriques", array('id_secteur' => 0), "profondeur>" . intval($prof+1));
+		sql_update("spip_rubriques", array('id_secteur' => 0), "profondeur>" . intval($prof + 1));
 	}
 
 	// reparer les articles

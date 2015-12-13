@@ -48,7 +48,7 @@ function exec_admin_plugin_dist($retour = '') {
 		$new = actualise_plugins_actifs();
 		if ($new and _request('actualise') < 2) {
 			include_spip('inc/headers');
-			redirige_par_entete(parametre_url(self(), 'actualise', _request('actualise')+1, '&'));
+			redirige_par_entete(parametre_url(self(), 'actualise', _request('actualise') + 1, '&'));
 		} else {
 			admin_plug_args(_request('voir'), _request('erreur'), _request('format'));
 		}
@@ -120,7 +120,7 @@ function admin_plug_args($quoi, $erreur, $format) {
 
 	// la mise a jour de cette meta a ete faite par ecrire_plugin_actifs
 	$actifs = unserialize($GLOBALS['meta']['plugin']);
-	$lcpa = $actifs+unserialize($GLOBALS['meta']['plugin_attente']);
+	$lcpa = $actifs + unserialize($GLOBALS['meta']['plugin_attente']);
 
 	// Les affichages se basent sur le repertoire, pas sur le nom
 	$actifs = liste_chemin_plugin($actifs, '');

@@ -144,7 +144,7 @@ function critere_doublons_dist($idb, &$boucles, $crit) {
 			$x = strpos($boucle->hash, $init_comment);
 			$len = strlen($init_comment);
 			$boucle->hash =
-				substr($boucle->hash, 0, $x+$len) . $init_code . substr($boucle->hash, $x+$len);
+				substr($boucle->hash, 0, $x + $len) . $init_code . substr($boucle->hash, $x + $len);
 
 			return;
 		}
@@ -609,8 +609,8 @@ function critere_collecte_dist($idb, &$boucles, $crit) {
 		$boucle = $boucles[$idb];
 		$boucle->modificateur['collate'] = "($_coll ?' COLLATE '.$_coll:'')";
 		$n = count($boucle->order);
-		if ($n && (strpos($boucle->order[$n-1], 'COLLATE') === false)) {
-			$boucle->order[$n-1] .= " . " . $boucle->modificateur['collate'];
+		if ($n && (strpos($boucle->order[$n - 1], 'COLLATE') === false)) {
+			$boucle->order[$n - 1] .= " . " . $boucle->modificateur['collate'];
 		}
 	} else {
 		return (array('zbug_critere_inconnu', array('critere' => $crit->op . " " . count($boucles[$idb]->order))));
@@ -827,11 +827,11 @@ function critere_inverse_dist($idb, &$boucles, $crit) {
 				$boucle->default_order[] = ' DESC';
 			}
 		} else {
-			$t = $boucle->order[$n-1] . " . $order";
+			$t = $boucle->order[$n - 1] . " . $order";
 			if (preg_match("/^(.*)'\s*\.\s*'([^']*')$/", $t, $r)) {
 				$t = $r[1] . $r[2];
 			}
-			$boucle->order[$n-1] = $t;
+			$boucle->order[$n - 1] = $t;
 		}
 	}
 }
@@ -1029,7 +1029,7 @@ function calculer_parties(&$boucles, $id_boucle, $debut, $mode) {
 	$nombre_boucle = "\$Numrows['$id_boucle']['total']";
 	// {1/3}
 	if ($op1 == '/') {
-		$pmoins1 = is_numeric($debut) ? ($debut-1) : "($debut-1)";
+		$pmoins1 = is_numeric($debut) ? ($debut - 1) : "($debut-1)";
 		$totpos = is_numeric($total_parties) ? ($total_parties) :
 			"($total_parties ? $total_parties : 1)";
 		$fin = "ceil(($nombre_boucle * $debut )/$totpos) - 1";
@@ -1043,13 +1043,13 @@ function calculer_parties(&$boucles, $id_boucle, $debut, $mode) {
 		// cas {x,n-1}
 		if ($op2 == '-') {
 			$fin = '$debut_boucle + ' . $nombre_boucle . ' - '
-				. (is_numeric($total_parties) ? ($total_parties+1) :
+				. (is_numeric($total_parties) ? ($total_parties + 1) :
 					($total_parties . ' - 1'));
 		} else {
 			// {x,1} ou {pagination}
 			$fin = '$debut_boucle'
 				. (is_numeric($total_parties) ?
-					(($total_parties == 1) ? "" : (' + ' . ($total_parties-1))) :
+					(($total_parties == 1) ? "" : (' + ' . ($total_parties - 1))) :
 					('+' . $total_parties . ' - 1'));
 		}
 
@@ -2104,14 +2104,14 @@ function calculer_critere_infixe_ops($idb, &$boucles, $crit) {
 // http://code.spip.net/@calculer_vieux_in
 function calculer_vieux_in($params) {
 	$deb = $params[0][0];
-	$k = count($params)-1;
+	$k = count($params) - 1;
 	$last = $params[$k];
-	$j = count($last)-1;
+	$j = count($last) - 1;
 	$last = $last[$j];
 	$n = isset($last->texte) ? strlen($last->texte) : 0;
 
 	if (!((isset($deb->texte[0]) and $deb->texte[0] == '(')
-		&& (isset($last->texte[$n-1]) and $last->texte[$n-1] == ')'))
+		&& (isset($last->texte[$n - 1]) and $last->texte[$n - 1] == ')'))
 	) {
 		return $params;
 	}
@@ -2119,7 +2119,7 @@ function calculer_vieux_in($params) {
 	// attention, on peut avoir k=0,j=0 ==> recalculer
 	$last = $params[$k][$j];
 	$n = strlen($last->texte);
-	$params[$k][$j]->texte = substr($last->texte, 0, $n-1);
+	$params[$k][$j]->texte = substr($last->texte, 0, $n - 1);
 	$newp = array();
 	foreach ($params as $v) {
 		if ($v[0]->type != 'texte') {

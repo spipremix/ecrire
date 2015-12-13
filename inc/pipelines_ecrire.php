@@ -91,7 +91,7 @@ function affichage_final_prive_title_auto($texte) {
 			. "] " . $match
 			. "</title>";
 
-		$texte = substr_replace($texte, $titre, $p+6, 0);
+		$texte = substr_replace($texte, $titre, $p + 6, 0);
 	}
 
 	return $texte;

@@ -51,7 +51,7 @@ function action_purger_dist($arg = null) {
 	switch ($arg) {
 		case 'inhibe_cache':
 			// inhiber le cache pendant 24h
-			ecrire_meta('cache_inhib', $_SERVER['REQUEST_TIME']+24*3600);
+			ecrire_meta('cache_inhib', $_SERVER['REQUEST_TIME'] + 24 * 3600);
 			break;
 		case 'reactive_cache':
 			effacer_meta('cache_inhib');

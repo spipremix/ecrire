@@ -124,7 +124,7 @@ function lire_config($cfg = '', $def = null, $unserialize = true) {
 		$methode = substr($cfg, 0, $p);
 		$lire_config = charger_fonction($methode, 'lire_config');
 
-		return $lire_config(substr($cfg, $p+2), $def, $unserialize);
+		return $lire_config(substr($cfg, $p + 2), $def, $unserialize);
 	}
 
 	list($table, $casier, $sous_casier) = expliquer_config($cfg);
@@ -189,7 +189,7 @@ function ecrire_config($cfg, $store) {
 		$methode = substr($cfg, 0, $p);
 		$ecrire_config = charger_fonction($methode, 'ecrire_config');
 
-		return $ecrire_config(substr($cfg, $p+2), $store);
+		return $ecrire_config(substr($cfg, $p + 2), $store);
 	}
 
 	list($table, $casier, $sous_casier) = expliquer_config($cfg);
@@ -345,7 +345,7 @@ function lister_configurer($exclure = array()) {
 		}
 
 	}
-	$exclure = $exclure+$deja;
+	$exclure = $exclure + $deja;
 
 	$icone_defaut = "images/configuration-16.png";
 	$liste = array();

@@ -61,7 +61,7 @@ function maj_1_934() {
 		// il faut donc verifier qu'on a bien le bon nom de repertoire
 		$dir_img = substr(_DIR_IMG, strlen(_DIR_RACINE));
 	}
-	$n = strlen($dir_img)+1;
+	$n = strlen($dir_img) + 1;
 	spip_query("UPDATE spip_documents SET `fichier`=substring(fichier,$n) WHERE `fichier` LIKE " . _q($dir_img . '%'));
 }
 

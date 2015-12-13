@@ -58,7 +58,7 @@ function inc_prepare_recherche_dist(
 ) {
 	static $cache = array();
 	$delai_fraicheur = min(_DELAI_CACHE_resultats,
-		time()-(isset($GLOBALS['meta']['derniere_modif']) ? $GLOBALS['meta']['derniere_modif'] : 0));
+		time() - (isset($GLOBALS['meta']['derniere_modif']) ? $GLOBALS['meta']['derniere_modif'] : 0));
 
 	// si recherche n'est pas dans le contexte, on va prendre en globals
 	// ca permet de faire des inclure simple.
@@ -123,7 +123,7 @@ function inc_prepare_recherche_dist(
 		$whered = str_replace(array("resultats.recherche", "resultats.table_objet", "resultats.serveur"),
 			array("recherche", "table_objet", "serveur"), $where);
 		sql_delete('spip_resultats',
-			'NOT(' . sql_date_proche('maj', (0-($delai_fraicheur+100)), " SECOND") . ") OR ($whered)");
+			'NOT(' . sql_date_proche('maj', (0 - ($delai_fraicheur + 100)), " SECOND") . ") OR ($whered)");
 
 		// inserer les resultats dans la table de cache des resultats
 		if (count($points)) {

@@ -568,5 +568,5 @@ function quete_debut_pagination($primary, $valeur, $pas, $iter) {
 	}
 
 	// sinon, calculer le bon numero de page
-	return floor($pos/$pas)*$pas;
+	return floor($pos / $pas) * $pas;
 }

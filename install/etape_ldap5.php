@@ -33,9 +33,9 @@ function etape_ldap5_save() {
 
 	if ($p = strpos($conn, "'');")) {
 		ecrire_fichier(_FILE_CONNECT_TMP,
-			substr($conn, 0, $p+1)
+			substr($conn, 0, $p + 1)
 			. _FILE_LDAP
-			. substr($conn, $p+1));
+			. substr($conn, $p + 1));
 	}
 
 	$adresse_ldap = addcslashes(_request('adresse_ldap'), "'\\");

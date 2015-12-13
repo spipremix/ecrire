@@ -292,7 +292,7 @@ function aide_fixe_img($contenu, $server) {
 		$p = strpos($contenu, $r[0]);
 		$i = $server . '/' . $r[3];
 		$html .= substr($contenu, 0, $p) . $r[1] . $i;
-		$contenu = substr($contenu, $p+strlen($r[0]));
+		$contenu = substr($contenu, $p + strlen($r[0]));
 	}
 	$html .= $contenu;
 

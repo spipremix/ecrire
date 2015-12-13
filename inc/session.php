@@ -80,7 +80,7 @@ function supprimer_sessions($id_auteur, $toutes = true, $actives = true) {
 	spip_log("supprimer sessions auteur $id_auteur", "session");
 	if ($toutes or $id_auteur !== $GLOBALS['visiteur_session']['id_auteur']) {
 		if ($dir = opendir(_DIR_SESSIONS)) {
-			$t = time()-(4*_RENOUVELLE_ALEA);
+			$t = time() - (4 * _RENOUVELLE_ALEA);
 			while (($f = readdir($dir)) !== false) {
 				if (preg_match(",^[^\d-]*(-?\d+)_\w{32}\.php[3]?$,", $f, $regs)) {
 					$f = _DIR_SESSIONS . $f;
@@ -200,7 +200,7 @@ function ajouter_session($auteur) {
 
 	// poser le cookie de session SPIP
 	include_spip('inc/cookie');
-	$duree = _RENOUVELLE_ALEA*
+	$duree = _RENOUVELLE_ALEA *
 		(!isset($auteur['cookie'])
 			? 2 : (is_numeric($auteur['cookie'])
 				? $auteur['cookie'] : 20));
@@ -208,7 +208,7 @@ function ajouter_session($auteur) {
 	spip_setcookie(
 		'spip_session',
 		$_COOKIE['spip_session'],
-		time()+$duree
+		time() + $duree
 	);
 	spip_log("ajoute session $fichier_session cookie $duree", "session");
 
@@ -310,7 +310,7 @@ function verifier_session($change = false) {
 	if (isset($GLOBALS['visiteur_session'])
 		and defined('_AGE_SESSION_MAX')
 		and _AGE_SESSION_MAX > 0
-		and time()-@$GLOBALS['visiteur_session']['date_session'] > _AGE_SESSION_MAX
+		and time() - @$GLOBALS['visiteur_session']['date_session'] > _AGE_SESSION_MAX
 	) {
 		unset($GLOBALS['visiteur_session']);
 

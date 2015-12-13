@@ -97,9 +97,9 @@ function cvtautosave_formulaire_traiter($flux) {
 	if (isset($GLOBALS['visiteur_session']) and $GLOBALS['visiteur_session']) {
 		// delai par defaut avant purge d'un backup de form : 72H
 		if (!defined('_AUTOSAVE_GB_DELAY')) {
-			define('_AUTOSAVE_GB_DELAY', 72*3600);
+			define('_AUTOSAVE_GB_DELAY', 72 * 3600);
 		}
-		$time_too_old = time()-_AUTOSAVE_GB_DELAY;
+		$time_too_old = time() - _AUTOSAVE_GB_DELAY;
 		// purger aussi toutes les vieilles autosave
 		$session = $GLOBALS['visiteur_session'];
 		foreach ($session as $k => $v) {

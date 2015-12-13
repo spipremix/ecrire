@@ -98,13 +98,13 @@ function action_cookie_dist($set_cookie_admin = null, $change_session = null) {
 			// Suppression cookie d'admin ?
 			if ($set_cookie_admin == "non") {
 				if ($cook) {
-					spip_setcookie('spip_admin', $cook, time()-3600*24);
+					spip_setcookie('spip_admin', $cook, time() - 3600 * 24);
 				}
 			} // Ajout de cookie d'admin
 			else {
 				if ($set_cookie_admin) {
 					spip_setcookie('spip_admin', $set_cookie_admin,
-						time()+14*24*3600);
+						time() + 14 * 24 * 3600);
 				}
 			}
 		}

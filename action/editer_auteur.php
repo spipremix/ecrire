@@ -51,7 +51,7 @@ function action_editer_auteur_dist($arg = null) {
 			# cf. GROS HACK
 			# recuperer l'eventuel logo charge avant la creation
 			# ils ont un id = 0-id_auteur de la session
-			$id_hack = 0-$GLOBALS['visiteur_session']['id_auteur'];
+			$id_hack = 0 - $GLOBALS['visiteur_session']['id_auteur'];
 			$chercher_logo = charger_fonction('chercher_logo', 'inc');
 			foreach (array('on', 'off') as $type) {
 				if ($logo = $chercher_logo($id_hack, 'id_auteur', $type)) {

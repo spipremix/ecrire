@@ -322,7 +322,7 @@ function auth_trace($row, $date = null) {
 		$date = date('Y-m-d H:i:s');
 	}
 
-	if (abs(strtotime($date)-$connect_quand) >= 60) {
+	if (abs(strtotime($date) - $connect_quand) >= 60) {
 		sql_updateq("spip_auteurs", array("en_ligne" => $date), "id_auteur=" . $row['id_auteur']);
 		$row['en_ligne'] = $date;
 	}
@@ -532,7 +532,7 @@ function auth_loger($auteur) {
 	include_spip('inc/cookie');
 	if ($auteur['statut'] == '0minirezo') {
 		spip_setcookie('spip_admin', '@' . $auteur['login'],
-			time()+7*24*3600);
+			time() + 7 * 24 * 3600);
 	} // sinon le supprimer ...
 	else {
 		spip_setcookie('spip_admin', '', 1);

@@ -259,7 +259,7 @@ function debusquer_navigation($tableau, $caption = array(), $id = 'debug-nav') {
 			}
 		}
 
-		$j = ($i+1);
+		$j = ($i + 1);
 		$res .= "<tr id='req$j'><td style='text-align: right'>"
 			. $j
 			. "&nbsp;</td><td style='text-align: left'>"
@@ -370,10 +370,10 @@ function trouve_boucle_debug($n, $nom, $debut = 0, $boucle = "") {
 					$incl = $GLOBALS['debug_objets']['squelette'][trouve_squelette_inclus($v[0])];
 				}
 				$y = substr_count($incl, "\n")
-					+substr_count($r[1], "\n")
-					+substr_count($r[3], "\n");
+					+ substr_count($r[1], "\n")
+					+ substr_count($r[3], "\n");
 			}
-			if ($n <= ($y+$debut)) {
+			if ($n <= ($y + $debut)) {
 				if ($v[1][0] == '?') {
 					return trouve_boucle_debug($n, $nom, $debut, substr($v[1], 1));
 				} elseif ($v[1][0] == '!') {
@@ -382,13 +382,13 @@ function trouve_boucle_debug($n, $nom, $debut = 0, $boucle = "") {
 					}
 				}
 
-				return array($nom, $boucle, $v[2]-1+$n-$debut);
+				return array($nom, $boucle, $v[2] - 1 + $n - $debut);
 			}
 			$debut += $y;
 		}
 	}
 
-	return array($nom, $boucle, $n-$debut);
+	return array($nom, $boucle, $n - $debut);
 }
 
 // http://code.spip.net/@trouve_squelette_inclus
@@ -491,7 +491,7 @@ function ancre_texte($texte, $fautifs = array(), $nocpt = false) {
 			$indexmesg = $ancre;
 			$err = $bg = '';
 		}
-		$res .= sprintf((($i%10) ? $format : $format10), $i, $bg, $indexmesg, $err, $i, $ligne);
+		$res .= sprintf((($i % 10) ? $format : $format10), $i, $bg, $indexmesg, $err, $i, $ligne);
 		$i++;
 	}
 
@@ -610,7 +610,7 @@ function emboite_texte($res, $fonc = '', $self = '') {
 				$encore2[$msg] = $ref = 1;
 			}
 			$err .= "<tr  style='background-color: "
-				. $colors[$i%2]
+				. $colors[$i % 2]
 				. "'><td $style><a href='#debut_err'>"
 				. $i
 				. "</a></td><td $style>"
@@ -710,7 +710,7 @@ function debusquer_navigation_boucles($boucles, $nom_skel, $self, $nom_source) {
 			$self2 = $self . "&amp;var_mode_objet=" . $objet;
 
 			$res .= "\n<tr style='background-color: " .
-				($i%2 ? '#e0e0f0' : '#f8f8ff') .
+				($i % 2 ? '#e0e0f0' : '#f8f8ff') .
 				"'><td  align='right'>$i</td><td>\n" .
 				"<a  class='debug_link_boucle' href='" .
 				$self2 .

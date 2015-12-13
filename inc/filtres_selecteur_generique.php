@@ -222,10 +222,10 @@ function test_enfants_rubrique($id_rubrique, $types = array()) {
 		}
 
 		if (count($has)) {
-			$has_child = $has_child+array_combine($has, array_pad(array(), count($has), true));
+			$has_child = $has_child + array_combine($has, array_pad(array(), count($has), true));
 		}
 		if (count($fratrie)) {
-			$has_child = $has_child+array_combine($fratrie, array_pad(array(), count($fratrie), false));
+			$has_child = $has_child + array_combine($fratrie, array_pad(array(), count($fratrie), false));
 		}
 	}
 

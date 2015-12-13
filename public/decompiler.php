@@ -123,7 +123,7 @@ function decompiler_liste($sources, $fmt = '', $prof = 0) {
 			) {
 				$args[] = $v[0]->avant . $v[0]->texte . $v[0]->apres;
 			} else {
-				$args[] = decompiler_($v, $fmt, 0-$prof);
+				$args[] = decompiler_($v, $fmt, 0 - $prof);
 			}
 		}
 		if (($r !== '') or $args) {
@@ -163,7 +163,7 @@ function decompiler_criteres($boucle, $fmt = '', $prof = 0) {
 					if (isset($p->type)
 						and function_exists($d = 'decompiler_' . $p->type)
 					) {
-						$r = $d($p, $fmt, (0-$prof), @$v[$k+1]);
+						$r = $d($p, $fmt, (0 - $prof), @$v[$k + 1]);
 						$res2[] = array($p->type, $r);
 					} else {
 						spip_log("critere $i / $k mal forme");
@@ -183,14 +183,14 @@ function decompiler_($liste, $fmt = '', $prof = 0) {
 	if (!is_array($liste)) {
 		return '';
 	}
-	$prof2 = ($prof < 0) ? ($prof-1) : ($prof+1);
+	$prof2 = ($prof < 0) ? ($prof - 1) : ($prof + 1);
 	$contenu = array();
 	foreach ($liste as $k => $p) {
 		if (!isset($p->type)) {
 			continue;
 		} #??????
 		$d = 'decompiler_' . $p->type;
-		$next = isset($liste[$k+1]) ? $liste[$k+1] : false;
+		$next = isset($liste[$k + 1]) ? $liste[$k + 1] : false;
 		// Forcer le champ etendu si son source (pas les reecritures)
 		// contenait des args et s'il est suivi d'espaces,
 		// le champ simple les eliminant est un bug helas perenne.
@@ -202,7 +202,7 @@ function decompiler_($liste, $fmt = '', $prof = 0) {
 			and !$p->avant
 			and $p->fonctions
 		) {
-			$n = strlen($next->texte)-strlen(ltrim($next->texte));
+			$n = strlen($next->texte) - strlen(ltrim($next->texte));
 			if ($n) {
 				$champ = new Texte;
 				$champ->texte = substr($next->texte, 0, $n);

@@ -64,7 +64,7 @@ function trace_query_chrono($m1, $m2, $query, $result, $serveur = '') {
 
 	list($usec, $sec) = explode(" ", $m1);
 	list($usec2, $sec2) = explode(" ", $m2);
-	$dt = $sec2+$usec2-$sec-$usec;
+	$dt = $sec2 + $usec2 - $sec - $usec;
 	$tt += $dt;
 	$nb++;
 
@@ -137,7 +137,7 @@ function chrono_requete($temps) {
 		$t[$v[2]][] = "<span class='spip-debug-arg'> "
 			. "<a title='$titre' href='$href'>$i</a>"
 			. '</span>'
-			. ((count($t[$v[2]])%10 == 9) ? "<br />" : '');
+			. ((count($t[$v[2]]) % 10 == 9) ? "<br />" : '');
 		$i++;
 	}
 

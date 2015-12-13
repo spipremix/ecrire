@@ -83,8 +83,8 @@ function analyse_csv($t) {
 
 	// retrait des lignes vides finales
 	while (count($lignes) > 0
-		and preg_match("/^$sep*$/", $lignes[count($lignes)-1])) {
-		unset($lignes[count($lignes)-1]);
+		and preg_match("/^$sep*$/", $lignes[count($lignes) - 1])) {
+		unset($lignes[count($lignes) - 1]);
 	}
 	//  calcul du  nombre de colonne a chaque ligne
 	$nbcols = array();
@@ -103,15 +103,15 @@ function analyse_csv($t) {
 	if ($mil <> $max) {
 		foreach ($nbcols as $k => $v) {
 			if ($v < $max) {
-				$lignes[$k] .= str_repeat($sep, $max-$v);
+				$lignes[$k] .= str_repeat($sep, $max - $v);
 			}
 		}
 	}
 	// et retirer les colonnes integralement vides
 	while (true) {
-		$nbcols = ($entete[strlen($entete)-1] === $sep);
+		$nbcols = ($entete[strlen($entete) - 1] === $sep);
 		foreach ($lignes as $v) {
-			$nbcols &= ($v[strlen($v)-1] === $sep);
+			$nbcols &= ($v[strlen($v) - 1] === $sep);
 		}
 		if (!$nbcols) {
 			break;

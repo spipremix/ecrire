@@ -470,7 +470,7 @@ function creer_contexte_de_modele($args) {
 				$args = explode('=', $val);
 				if (count($args) >= 2) // Flashvars=arg1=machin&arg2=truc genere plus de deux args
 				{
-					$contexte[trim($args[0])] = substr($val, strlen($args[0])+1);
+					$contexte[trim($args[0])] = substr($val, strlen($args[0]) + 1);
 				} else // notation abregee
 				{
 					$contexte[trim($val)] = trim($val);
@@ -665,7 +665,7 @@ function page_base_href(&$texte) {
 			$base = url_absolue('./');
 			$bbase = "\n<base href=\"$base\" />";
 			if (($pos = strpos($head, '<head>')) !== false) {
-				$head = substr_replace($head, $bbase, $pos+6, 0);
+				$head = substr_replace($head, $bbase, $pos + 6, 0);
 			} elseif (preg_match(",<head[^>]*>,i", $head, $r)) {
 				$head = str_replace($r[0], $r[0] . $bbase, $head);
 			}

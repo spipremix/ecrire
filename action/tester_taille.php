@@ -72,11 +72,11 @@ function action_tester_taille_dist() {
 	}
 
 	// si l'intervalle est assez petit, on garde la valeur min
-	if ($GLOBALS['taille_max']*$GLOBALS['taille_max']-$GLOBALS['taille_min']*$GLOBALS['taille_min'] < 50000) {
-		$t = ($GLOBALS['taille_min']*$GLOBALS['taille_min']);
+	if ($GLOBALS['taille_max'] * $GLOBALS['taille_max'] - $GLOBALS['taille_min'] * $GLOBALS['taille_min'] < 50000) {
+		$t = ($GLOBALS['taille_min'] * $GLOBALS['taille_min']);
 		if ($GLOBALS['taille_min'] !== $GLOBALS['taille_max']) {
-			$t = $t*0.9; // marge de securite
-			echo round($t/1000000, 3) . ' Mpx';
+			$t = $t * 0.9; // marge de securite
+			echo round($t / 1000000, 3) . ' Mpx';
 		} else {
 			// c'est un cas "on a reussi la borne max initiale, donc on a pas de limite connue"
 			$t = 0;
@@ -86,7 +86,7 @@ function action_tester_taille_dist() {
 		die();
 	}
 
-	$taille = $GLOBALS['taille_test'] = round(($GLOBALS['taille_max']+$GLOBALS['taille_min'])/2);
+	$taille = $GLOBALS['taille_test'] = round(($GLOBALS['taille_max'] + $GLOBALS['taille_min']) / 2);
 
 	include_spip('inc/filtres');
 	// des inclusions representatives d'un hit prive et/ou public pour la conso memoire
@@ -108,7 +108,7 @@ function action_tester_taille_dist() {
 	include_spip('inc/header');
 	propre("<doc1>"); // charger propre avec le trairement d'un modele
 
-	$i = _request('i')+1;
+	$i = _request('i') + 1;
 	$image_source = chemin_image("test.png");
 	$GLOBALS['redirect'] = generer_url_action("tester_taille",
 		"i=$i&arg=" . $GLOBALS['taille_min'] . "-" . $GLOBALS['taille_test']);

@@ -174,7 +174,7 @@ function quete_rubrique_fond($contexte) {
 
 	if (isset($c['id_rubrique']) and $r = $c['id_rubrique']) {
 		unset($c['id_rubrique']);
-		$c = array('id_rubrique' => $r)+$c;
+		$c = array('id_rubrique' => $r) + $c;
 	}
 
 	foreach ($c as $_id => $id) {

@@ -94,7 +94,7 @@ function cache_signature(&$page) {
  * @return array
  */
 function gzip_page($page) {
-	if (function_exists('gzcompress') and strlen($page['texte']) > 16*1024) {
+	if (function_exists('gzcompress') and strlen($page['texte']) > 16 * 1024) {
 		$page['gz'] = true;
 		$page['texte'] = gzcompress($page['texte']);
 	} else {
@@ -192,7 +192,7 @@ function cache_valide(&$page, $date) {
 		return -1;
 	} // sauf pour les bots, qui utilisent toujours le cache
 	else {
-		if ((!_IS_BOT and $date+$duree < $now)
+		if ((!_IS_BOT and $date + $duree < $now)
 			# le cache est anterieur a la derniere purge : l'ignorer, meme pour les bots
 			or $date < $cache_mark
 		) {
@@ -280,7 +280,7 @@ function nettoyer_petit_cache($prefix, $duree = 300) {
 	$dircache = sous_repertoire(_DIR_CACHE, $prefix);
 	if (spip_touch($dircache . 'purger_' . $prefix, $duree, true)) {
 		foreach (preg_files($dircache, '[.]txt$') as $f) {
-			if ($_SERVER['REQUEST_TIME']-(@file_exists($f) ? @filemtime($f) : 0) > $duree) {
+			if ($_SERVER['REQUEST_TIME'] - (@file_exists($f) ? @filemtime($f) : 0) > $duree) {
 				spip_unlink($f);
 			}
 		}
@@ -396,7 +396,7 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 	// qui sont a cache nul par defaut
 	if (!isset($GLOBALS['delais'])) {
 		if (!defined('_DUREE_CACHE_DEFAUT')) {
-			define('_DUREE_CACHE_DEFAUT', 24*3600);
+			define('_DUREE_CACHE_DEFAUT', 24 * 3600);
 		}
 		$GLOBALS['delais'] = _DUREE_CACHE_DEFAUT;
 	}

@@ -120,7 +120,7 @@ function sous_enfant_rub($collection2) {
 		$pagination = chercher_filtre('pagination');
 		$pagination = '<p class="pagination">' . $pagination($nb, '_rubrique' . $collection2, $debut, $limite, true,
 				'prive') . '</p>';
-		$limite = $debut+$limite;
+		$limite = $debut + $limite;
 	}
 
 	$result = sql_select("id_rubrique, id_parent, titre, lang", "spip_rubriques", "id_parent=$collection2", '',
@@ -190,7 +190,7 @@ function afficher_enfant_rub($id_rubrique = 0) {
 		$les_enfants = reset($les_enfants);
 		$les_enfants2 = "";
 	} else {
-		$n = ceil($n/2);
+		$n = ceil($n / 2);
 		$les_enfants2 = implode('', array_slice($les_enfants, $n));
 		$les_enfants = implode('', array_slice($les_enfants, 0, $n));
 	}

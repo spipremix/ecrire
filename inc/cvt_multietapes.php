@@ -212,7 +212,7 @@ function cvtmulti_formulaire_verifier($flux) {
 				array_unshift($args, $e);
 				$erreurs[$e] = call_user_func_array($verifier, $args);
 			}
-			if ($derniere_etape_ok == $e-1 and !count($erreurs[$e])) {
+			if ($derniere_etape_ok == $e - 1 and !count($erreurs[$e])) {
 				$derniere_etape_ok = $e;
 			}
 			// possibilite de poster dans _retour_etape_x
@@ -226,7 +226,7 @@ function cvtmulti_formulaire_verifier($flux) {
 		if ($derniere_etape_ok == $etapes and !$etape_demandee) {
 			return $flux;
 		} else {
-			$etape = $derniere_etape_ok+1;
+			$etape = $derniere_etape_ok + 1;
 			if ($etape_demandee > 0 and $etape_demandee < $etape) {
 				$etape = $etape_demandee;
 			}

@@ -91,7 +91,7 @@ function exec_rechercher_args($id, $type, $exclus, $rac, $do) {
 		$id_rubrique = $row["id_rubrique"];
 		$rub[$id_rubrique]["titre"] = typo($row["titre"]);
 		$rub[$id_rubrique]["id_parent"] = $row["id_parent"];
-		$points[$id_rubrique] = $points[$id_rubrique]+3;
+		$points[$id_rubrique] = $points[$id_rubrique] + 3;
 	}
 	$res = sql_select("id_rubrique, id_parent, titre", "spip_rubriques", "$where_titre$where_exclus");
 

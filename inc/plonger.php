@@ -20,7 +20,7 @@ include_spip('inc/texte');
 function inc_plonger_dist($id_rubrique, $idom = "", $list = array(), $col = 1, $exclu = 0, $do = 'aff') {
 
 	if ($list) {
-		$id_rubrique = $list[$col-1];
+		$id_rubrique = $list[$col - 1];
 	}
 
 	$ret = '';
@@ -54,7 +54,7 @@ function inc_plonger_dist($id_rubrique, $idom = "", $list = array(), $col = 1, $
 	}
 	$next = isset($list[$col]) ? $list[$col] : 0;
 	if ($ordre) {
-		$rec = generer_url_ecrire('plonger', "rac=$idom&exclus=$exclu&do=$do&col=" . ($col+1));
+		$rec = generer_url_ecrire('plonger', "rac=$idom&exclus=$exclu&do=$do&col=" . ($col + 1));
 		$info = generer_url_ecrire('informer', "type=rubrique&rac=$idom&do=$do&id=");
 		$args = "'$idom',this,$col,'" . $GLOBALS['spip_lang_left'] . "','$info',event";
 		while (list($id, $titrebrut) = each($ordre)) {
@@ -97,20 +97,20 @@ function inc_plonger_dist($id_rubrique, $idom = "", $list = array(), $col = 1, $
 		}
 	}
 
-	$idom2 = $idom . "_col_" . ($col+1);
-	$left = ($col*150);
+	$idom2 = $idom . "_col_" . ($col + 1);
+	$left = ($col * 150);
 
 	return http_img_pack("searching.gif", "*",
 		"style='visibility: hidden; position: absolute; " . $GLOBALS['spip_lang_left'] . ": "
-		. ($left-30)
+		. ($left - 30)
 		. "px; top: 2px; z-index: 2;' id='img_$idom2'")
 	. "<div style='width: 150px; height: 100%; overflow: auto; position: absolute; top: 0px; " . $GLOBALS['spip_lang_left'] . ": "
-	. ($left-150)
+	. ($left - 150)
 	. "px;'>"
 	. $ret
 	. "\n</div>\n<div id='$idom2'>"
 	. ($next
-		? inc_plonger_dist($id_rubrique, $idom, $list, $col+1, $exclu)
+		? inc_plonger_dist($id_rubrique, $idom, $list, $col + 1, $exclu)
 		: "")
 	. "\n</div>";
 }

@@ -1098,12 +1098,12 @@ function taille_en_octets($taille) {
 	}
 	if ($taille < _KILOBYTE) {
 		$taille = _T('taille_octets', array('taille' => $taille));
-	} elseif ($taille < _KILOBYTE*_KILOBYTE) {
-		$taille = _T('taille_ko', array('taille' => round($taille/_KILOBYTE, 1)));
-	} elseif ($taille < _KILOBYTE*_KILOBYTE*_KILOBYTE) {
-		$taille = _T('taille_mo', array('taille' => round($taille/_KILOBYTE/_KILOBYTE, 1)));
+	} elseif ($taille < _KILOBYTE * _KILOBYTE) {
+		$taille = _T('taille_ko', array('taille' => round($taille / _KILOBYTE, 1)));
+	} elseif ($taille < _KILOBYTE * _KILOBYTE * _KILOBYTE) {
+		$taille = _T('taille_mo', array('taille' => round($taille / _KILOBYTE / _KILOBYTE, 1)));
 	} else {
-		$taille = _T('taille_go', array('taille' => round($taille/_KILOBYTE/_KILOBYTE/_KILOBYTE, 2)));
+		$taille = _T('taille_go', array('taille' => round($taille / _KILOBYTE / _KILOBYTE / _KILOBYTE, 2)));
 	}
 
 	return $taille;
@@ -1515,9 +1515,9 @@ function recup_date($numdate, $forcer_jour = true) {
 		$mois = $regs[2];
 		$annee = $regs[3];
 		if ($annee < 90) {
-			$annee = 2000+$annee;
+			$annee = 2000 + $annee;
 		} elseif ($annee < 100) {
-			$annee = 1900+$annee;
+			$annee = 1900 + $annee;
 		}
 		list($heures, $minutes, $secondes) = recup_heure($numdate);
 
@@ -1630,7 +1630,7 @@ function date_relative($date, $decalage_maxi = 0, $ref_date = null) {
 	if (!$date) {
 		return;
 	}
-	$decal = date("U", $ref_time)-date("U", strtotime($date));
+	$decal = date("U", $ref_time) - date("U", strtotime($date));
 
 	if ($decalage_maxi and ($decal > $decalage_maxi or $decal < 0)) {
 		return '';
@@ -1638,33 +1638,33 @@ function date_relative($date, $decalage_maxi = 0, $ref_date = null) {
 
 	if ($decal < 0) {
 		$il_y_a = "date_dans";
-		$decal = -1*$decal;
+		$decal = -1 * $decal;
 	} else {
 		$il_y_a = "date_il_y_a";
 	}
 
-	if ($decal > 3600*24*30*6) {
+	if ($decal > 3600 * 24 * 30 * 6) {
 		return affdate_court($date);
 	}
 
-	if ($decal > 3600*24*30) {
-		$mois = floor($decal/(3600*24*30));
+	if ($decal > 3600 * 24 * 30) {
+		$mois = floor($decal / (3600 * 24 * 30));
 		if ($mois < 2) {
 			$delai = "$mois " . _T("date_un_mois");
 		} else {
 			$delai = "$mois " . _T("date_mois");
 		}
 	} else {
-		if ($decal > 3600*24*7) {
-			$semaines = floor($decal/(3600*24*7));
+		if ($decal > 3600 * 24 * 7) {
+			$semaines = floor($decal / (3600 * 24 * 7));
 			if ($semaines < 2) {
 				$delai = "$semaines " . _T("date_une_semaine");
 			} else {
 				$delai = "$semaines " . _T("date_semaines");
 			}
 		} else {
-			if ($decal > 3600*24) {
-				$jours = floor($decal/(3600*24));
+			if ($decal > 3600 * 24) {
+				$jours = floor($decal / (3600 * 24));
 				if ($jours < 2) {
 					return $il_y_a == "date_dans" ? _T("date_demain") : _T("date_hier");
 				} else {
@@ -1672,7 +1672,7 @@ function date_relative($date, $decalage_maxi = 0, $ref_date = null) {
 				}
 			} else {
 				if ($decal >= 3600) {
-					$heures = floor($decal/3600);
+					$heures = floor($decal / 3600);
 					if ($heures < 2) {
 						$delai = "$heures " . _T("date_une_heure");
 					} else {
@@ -1680,7 +1680,7 @@ function date_relative($date, $decalage_maxi = 0, $ref_date = null) {
 					}
 				} else {
 					if ($decal >= 60) {
-						$minutes = floor($decal/60);
+						$minutes = floor($decal / 60);
 						if ($minutes < 2) {
 							$delai = "$minutes " . _T("date_une_minute");
 						} else {
@@ -1728,21 +1728,21 @@ function date_relativecourt($date, $decalage_maxi = 0) {
 	if (!$date) {
 		return;
 	}
-	$decal = date("U", strtotime(date('Y-m-d'))-strtotime(date('Y-m-d', strtotime($date))));
+	$decal = date("U", strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($date))));
 
 	if ($decalage_maxi and ($decal > $decalage_maxi or $decal < 0)) {
 		return '';
 	}
 
-	if ($decal < -24*3600) {
+	if ($decal < -24 * 3600) {
 		$retour = date_relative($date, $decalage_maxi);
 	} elseif ($decal < 0) {
 		$retour = _T("date_demain");
 	} else {
-		if ($decal < (3600*24)) {
+		if ($decal < (3600 * 24)) {
 			$retour = _T("date_aujourdhui");
 		} else {
-			if ($decal < (3600*24*2)) {
+			if ($decal < (3600 * 24 * 2)) {
 				$retour = _T("date_hier");
 			} else {
 				$retour = date_relative($date, $decalage_maxi);
@@ -1842,7 +1842,7 @@ function affdate_base($numdate, $vue, $options = array()) {
 				return $annee;
 			}
 			$a = ((isset($options['annee_courante']) and $options['annee_courante']) ? $options['annee_courante'] : date('Y'));
-			if ($annee < ($a-100) or $annee > ($a+100)) {
+			if ($annee < ($a - 100) or $annee > ($a + 100)) {
 				return $annee;
 			}
 			if ($annee != $a) {
@@ -1858,7 +1858,7 @@ function affdate_base($numdate, $vue, $options = array()) {
 				return $annee;
 			}
 			$a = ((isset($options['annee_courante']) and $options['annee_courante']) ? $options['annee_courante'] : date('Y'));
-			if ($annee < ($a-100) or $annee > ($a+100)) {
+			if ($annee < ($a - 100) or $annee > ($a + 100)) {
 				return $annee;
 			}
 			if ($annee != $a) {
@@ -1904,7 +1904,7 @@ function affdate_base($numdate, $vue, $options = array()) {
 				return '';
 			}
 			$nom = mktime(1, 1, 1, $mois, $njour, $annee);
-			$nom = 1+date('w', $nom);
+			$nom = 1 + date('w', $nom);
 			$param = ((isset($options['param']) and $options['param']) ? '_' . $options['param'] : '');
 
 			return _T('date_jour_' . $nom . $param);
@@ -2511,7 +2511,7 @@ function date_ical($date, $addminutes = 0) {
 	list($heures, $minutes, $secondes) = recup_heure($date);
 	list($annee, $mois, $jour) = recup_date($date);
 
-	return date("Ymd\THis", mktime($heures, $minutes+$addminutes, $secondes, $mois, $jour, $annee));
+	return date("Ymd\THis", mktime($heures, $minutes + $addminutes, $secondes, $mois, $jour, $annee));
 }
 
 
@@ -2626,7 +2626,7 @@ function date_debut_semaine($annee, $mois, $jour) {
 	if ($w_day == 0) {
 		$w_day = 7;
 	} // Gaffe: le dimanche est zero
-	$debut = $jour-$w_day+1;
+	$debut = $jour - $w_day + 1;
 
 	return date("Ymd", mktime(0, 0, 0, $mois, $debut, $annee));
 }
@@ -2648,9 +2648,9 @@ function date_fin_semaine($annee, $mois, $jour) {
 	if ($w_day == 0) {
 		$w_day = 7;
 	} // Gaffe: le dimanche est zero
-	$debut = $jour-$w_day+1;
+	$debut = $jour - $w_day + 1;
 
-	return date("Ymd", mktime(0, 0, 0, $mois, $debut+6, $annee));
+	return date("Ymd", mktime(0, 0, 0, $mois, $debut + 6, $annee));
 }
 
 
@@ -2701,7 +2701,7 @@ function post_autobr($texte, $delim = "\n_ ") {
 	$debut = '';
 	$suite = $texte;
 	while ($t = strpos('-' . $suite, "\n", 1)) {
-		$debut .= substr($suite, 0, $t-1);
+		$debut .= substr($suite, 0, $t - 1);
 		$suite = substr($suite, $t);
 		$car = substr($suite, 0, 1);
 		if (($car <> '-') and ($car <> '_') and ($car <> "\n") and ($car <> "|") and ($car <> "}")
@@ -2981,7 +2981,7 @@ function alterner($i) {
 	}
 
 	// renvoyer le i-ieme argument, modulo le nombre d'arguments
-	return $args[(intval($i)-1)%($num-1)+1];
+	return $args[(intval($i) - 1) % ($num - 1) + 1];
 }
 
 
@@ -3160,7 +3160,7 @@ function tester_config($id, $mode = '') {
  * @return int $a+$b
  **/
 function plus($a, $b) {
-	return $a+$b;
+	return $a + $b;
 }
 
 /**
@@ -3179,7 +3179,7 @@ function plus($a, $b) {
  * @return int $a-$b
  **/
 function moins($a, $b) {
-	return $a-$b;
+	return $a - $b;
 }
 
 /**
@@ -3199,7 +3199,7 @@ function moins($a, $b) {
  * @return int $a*$b
  **/
 function mult($a, $b) {
-	return $a*$b;
+	return $a * $b;
 }
 
 /**
@@ -3219,7 +3219,7 @@ function mult($a, $b) {
  * @return int $a/$b (ou 0 si $b est nul)
  **/
 function div($a, $b) {
-	return $b ? $a/$b : 0;
+	return $b ? $a / $b : 0;
 }
 
 /**
@@ -3240,7 +3240,7 @@ function div($a, $b) {
  * @return int ($nb % $mod) + $add
  **/
 function modulo($nb, $mod, $add = 0) {
-	return ($mod ? $nb%$mod : 0)+$add;
+	return ($mod ? $nb % $mod : 0) + $add;
 }
 
 
@@ -3619,7 +3619,7 @@ function valeur_numerique($expr) {
  *      Retourne `$a*$b/$c`
  **/
 function regledetrois($a, $b, $c) {
-	return round($a*$b/$c);
+	return round($a * $b / $c);
 }
 
 
@@ -3669,7 +3669,7 @@ function form_hidden($action) {
 
 	// d'abord avec celles de l'url
 	if (false !== ($p = strpos($action, '?'))) {
-		foreach (preg_split('/&(amp;)?/S', substr($action, $p+1)) as $c) {
+		foreach (preg_split('/&(amp;)?/S', substr($action, $p + 1)) as $c) {
 			$c = explode('=', $c, 2);
 			$var = array_shift($c);
 			$val = array_shift($c);
@@ -3734,9 +3734,9 @@ function filtre_bornes_pagination_dist($courante, $nombre, $max = 10) {
 		return array(1, $nombre);
 	}
 
-	$premiere = max(1, $courante-floor(($max-1)/2));
-	$derniere = min($nombre, $premiere+$max-2);
-	$premiere = $derniere == $nombre ? $derniere-$max+1 : $premiere;
+	$premiere = max(1, $courante - floor(($max - 1) / 2));
+	$derniere = min($nombre, $premiere + $max - 2);
+	$premiere = $derniere == $nombre ? $derniere - $max + 1 : $premiere;
 
 	return array($premiere, $derniere);
 }
@@ -3892,8 +3892,8 @@ function filtre_pagination_dist(
 		'total' => $total,
 		'position' => intval($position),
 		'pas' => $pas,
-		'nombre_pages' => floor(($total-1)/$pas)+1,
-		'page_courante' => floor(intval($position)/$pas)+1,
+		'nombre_pages' => floor(($total - 1) / $pas) + 1,
+		'page_courante' => floor(intval($position) / $pas) + 1,
 		'ancre' => $ancre,
 		'bloc_ancre' => $bloc_ancre
 	);
@@ -4043,8 +4043,8 @@ function direction_css($css, $voulue = '') {
 	foreach ($regs[1] as $k => $import_css) {
 		$css_direction = direction_css("$d/$import_css", $voulue);
 		// si la css_direction est dans le meme path que la css d'origine, on tronque le path, elle sera passee en absolue
-		if (substr($css_direction, 0, strlen($d)+1) == "$d/") {
-			$css_direction = substr($css_direction, strlen($d)+1);
+		if (substr($css_direction, 0, strlen($d) + 1) == "$d/") {
+			$css_direction = substr($css_direction, strlen($d) + 1);
 		} // si la css_direction commence par $dir_var on la fait passer pour une absolue
 		elseif (substr($css_direction, 0, strlen($dir_var)) == $dir_var) {
 			$css_direction = substr($css_direction, strlen($dir_var));
@@ -4823,7 +4823,7 @@ function _xor($message, $key = null) {
 	$keylen = strlen($key);
 	$messagelen = strlen($message);
 	for ($i = 0; $i < $messagelen; $i++) {
-		$message[$i] = ~($message[$i] ^ $key[$i%$keylen]);
+		$message[$i] = ~($message[$i] ^ $key[$i % $keylen]);
 	}
 
 	return $message;
@@ -5587,7 +5587,7 @@ function filtre_print_dist($u, $join = "<br />", $indent = 0) {
 		// sinon on passe a la ligne et on indente
 		$i_str = str_pad("", $indent, " ");
 		foreach ($u as $k => $v) {
-			$out .= $join . $i_str . "$k: " . filtre_print_dist($v, $join, $indent+2);
+			$out .= $join . $i_str . "$k: " . filtre_print_dist($v, $join, $indent + 2);
 		}
 
 		return $out;

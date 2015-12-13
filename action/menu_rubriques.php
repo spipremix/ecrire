@@ -89,9 +89,9 @@ function menu_rubriques($complet = true) {
 	$total_lignes = $i = sizeof($arr_low);
 
 	if ($i > 0) {
-		$nb_col = min(8, ceil($total_lignes/30));
+		$nb_col = min(8, ceil($total_lignes / 30));
 		if ($nb_col <= 1) {
-			$nb_col = ceil($total_lignes/10);
+			$nb_col = ceil($total_lignes / 10);
 		}
 		foreach ($arr_low as $id_rubrique => $titre_rubrique) {
 			if (autoriser('voir', 'rubrique', $id_rubrique)) {
@@ -152,13 +152,13 @@ function bandeau_rubrique($id_rubrique, $titre_rubrique, $zdecal) {
 
 	$nb_col = 1;
 	if ($nb_rub = count($arr_rub)) {
-		$nb_col = min(10, max(1, ceil($nb_rub/10)));
+		$nb_col = min(10, max(1, ceil($nb_rub / 10)));
 	}
 	$ret = "<li class='haschild'>$nav<ul class='cols_$nb_col'>";
 	foreach ($arr_rub as $id_rub => $titre_rub) {
 		if (autoriser('voir', 'rubrique', $id_rub)) {
 			$titre = supprimer_numero(typo($titre_rub));
-			$ret .= bandeau_rubrique($id_rub, $titre, $zdecal+$i);
+			$ret .= bandeau_rubrique($id_rub, $titre, $zdecal + $i);
 			$i++;
 		}
 	}

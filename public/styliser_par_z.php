@@ -122,8 +122,8 @@ function public_styliser_par_z_dist($flux) {
 			// echafaudage :
 			// si c'est un fond de contenu d'un objet en base
 			// generer un fond automatique a la volee pour les webmestres
-			elseif (strncmp($fond, "$z_contenu/", strlen($z_contenu)+1) == 0) {
-				$type = substr($fond, strlen($z_contenu)+1);
+			elseif (strncmp($fond, "$z_contenu/", strlen($z_contenu) + 1) == 0) {
+				$type = substr($fond, strlen($z_contenu) + 1);
 				if (($type == 'page') and isset($flux['args']['contexte'][$page])) {
 					$type = $flux['args']['contexte'][$page];
 				}

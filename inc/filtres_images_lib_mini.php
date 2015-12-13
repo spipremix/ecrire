@@ -202,7 +202,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 		$term_fonction = "jpeg";
 	}
 
-	$nom_fichier = substr($fichier, 0, strlen($fichier)-(strlen($terminaison)+1));
+	$nom_fichier = substr($fichier, 0, strlen($fichier) - (strlen($terminaison) + 1));
 	$fichier_dest = $nom_fichier;
 	if (($find_in_path and $f = find_in_path($fichier) and $fichier = $f)
 		or @file_exists($f = $fichier)
@@ -1053,8 +1053,8 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 
 			return;
 		}
-		if (_IMG_GD_MAX_PIXELS && $srcWidth*$srcHeight > _IMG_GD_MAX_PIXELS) {
-			spip_log("vignette gd1/gd2 impossible : " . $srcWidth*$srcHeight . "pixels");
+		if (_IMG_GD_MAX_PIXELS && $srcWidth * $srcHeight > _IMG_GD_MAX_PIXELS) {
+			spip_log("vignette gd1/gd2 impossible : " . $srcWidth * $srcHeight . "pixels");
 
 			return;
 		}
@@ -1159,18 +1159,18 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
  * @return array Liste [ largeur, hauteur, ratio de réduction ]
  **/
 function _image_ratio($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
-	$ratioWidth = $srcWidth/$maxWidth;
-	$ratioHeight = $srcHeight/$maxHeight;
+	$ratioWidth = $srcWidth / $maxWidth;
+	$ratioHeight = $srcHeight / $maxHeight;
 
 	if ($ratioWidth <= 1 and $ratioHeight <= 1) {
 		$destWidth = $srcWidth;
 		$destHeight = $srcHeight;
 	} elseif ($ratioWidth < $ratioHeight) {
-		$destWidth = $srcWidth/$ratioHeight;
+		$destWidth = $srcWidth / $ratioHeight;
 		$destHeight = $maxHeight;
 	} else {
 		$destWidth = $maxWidth;
-		$destHeight = $srcHeight/$ratioWidth;
+		$destHeight = $srcHeight / $ratioWidth;
 	}
 
 	return array(
@@ -1197,18 +1197,18 @@ function _image_ratio($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
  * @return array Liste [ largeur, hauteur, ratio de réduction ]
  **/
 function ratio_passe_partout($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
-	$ratioWidth = $srcWidth/$maxWidth;
-	$ratioHeight = $srcHeight/$maxHeight;
+	$ratioWidth = $srcWidth / $maxWidth;
+	$ratioHeight = $srcHeight / $maxHeight;
 
 	if ($ratioWidth <= 1 and $ratioHeight <= 1) {
 		$destWidth = $srcWidth;
 		$destHeight = $srcHeight;
 	} elseif ($ratioWidth > $ratioHeight) {
-		$destWidth = $srcWidth/$ratioHeight;
+		$destWidth = $srcWidth / $ratioHeight;
 		$destHeight = $maxHeight;
 	} else {
 		$destWidth = $maxWidth;
-		$destHeight = $srcHeight/$ratioWidth;
+		$destHeight = $srcHeight / $ratioWidth;
 	}
 
 	return array(
@@ -1414,10 +1414,10 @@ class phpthumb_functions {
 			$totalcolors[$key] = ImageColorsTotal($gd_image);
 
 			$icXOR[$key] = '';
-			for ($y = $ImageHeights[$key]-1; $y >= 0; $y--) {
+			for ($y = $ImageHeights[$key] - 1; $y >= 0; $y--) {
 				for ($x = 0; $x < $ImageWidths[$key]; $x++) {
 					$argb = phpthumb_functions::GetPixelColor($gd_image, $x, $y);
-					$a = round(255*((127-$argb['alpha'])/127));
+					$a = round(255 * ((127 - $argb['alpha']) / 127));
 					$r = $argb['red'];
 					$g = $argb['green'];
 					$b = $argb['blue'];
@@ -1435,7 +1435,7 @@ class phpthumb_functions {
 					}
 				}
 				// mask bits are 32-bit aligned per scanline
-				while (strlen($icANDmask[$key][$y])%32) {
+				while (strlen($icANDmask[$key][$y]) % 32) {
 					$icANDmask[$key][$y] .= '0';
 				}
 			}
@@ -1449,7 +1449,7 @@ class phpthumb_functions {
 		}
 
 		foreach ($gd_image_array as $key => $gd_image) {
-			$biSizeImage = $ImageWidths[$key]*$ImageHeights[$key]*($bpp[$key]/8);
+			$biSizeImage = $ImageWidths[$key] * $ImageHeights[$key] * ($bpp[$key] / 8);
 
 			// BITMAPINFOHEADER - 40 bytes
 			$BitmapInfoHeader[$key] = '';
@@ -1457,7 +1457,7 @@ class phpthumb_functions {
 			$BitmapInfoHeader[$key] .= phpthumb_functions::LittleEndian2String($ImageWidths[$key], 4);    // LONG   biWidth;
 			// The biHeight member specifies the combined
 			// height of the XOR and AND masks.
-			$BitmapInfoHeader[$key] .= phpthumb_functions::LittleEndian2String($ImageHeights[$key]*2, 4); // LONG   biHeight;
+			$BitmapInfoHeader[$key] .= phpthumb_functions::LittleEndian2String($ImageHeights[$key] * 2, 4); // LONG   biHeight;
 			$BitmapInfoHeader[$key] .= "\x01\x00";                    // WORD   biPlanes;
 			$BitmapInfoHeader[$key] .= chr($bpp[$key]) . "\x00";              // wBitCount;
 			$BitmapInfoHeader[$key] .= "\x00\x00\x00\x00";                // DWORD  biCompression;
@@ -1473,7 +1473,7 @@ class phpthumb_functions {
 		$icondata .= "\x01\x00";                    // idType;	   // Resource Type (1 for icons)
 		$icondata .= phpthumb_functions::LittleEndian2String(count($gd_image_array), 2);  // idCount;	  // How many images?
 
-		$dwImageOffset = 6+(count($gd_image_array)*16);
+		$dwImageOffset = 6 + (count($gd_image_array) * 16);
 		foreach ($gd_image_array as $key => $gd_image) {
 			// ICONDIRENTRY   idEntries[1]; // An entry for each image (idCount of 'em)
 
@@ -1485,7 +1485,7 @@ class phpthumb_functions {
 			$icondata .= "\x01\x00";                  // wPlanes;		 // Color Planes
 			$icondata .= chr($bpp[$key]) . "\x00";            // wBitCount;	   // Bits per pixel
 
-			$dwBytesInRes = 40+strlen($icXOR[$key])+strlen($icAND[$key]);
+			$dwBytesInRes = 40 + strlen($icXOR[$key]) + strlen($icAND[$key]);
 			$icondata .= phpthumb_functions::LittleEndian2String($dwBytesInRes,
 				4);     // dwBytesInRes;	// How many bytes in this resource?
 

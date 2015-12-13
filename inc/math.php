@@ -89,9 +89,9 @@ function traiter_math($letexte, $source = '') {
 
 		$texte_debut = substr($texte_a_voir, 0, $debut);
 		$texte_milieu = substr($texte_a_voir,
-			$debut+strlen("<math>"), $fin-$debut-strlen("<math>"));
+			$debut + strlen("<math>"), $fin - $debut - strlen("<math>"));
 		$texte_fin = substr($texte_a_voir,
-			$fin+strlen("</math>"), strlen($texte_a_voir));
+			$fin + strlen("</math>"), strlen($texte_a_voir));
 
 		// Les doubles $$x^2$$ en mode 'div'
 		while ((preg_match(",[$][$]([^$]+)[$][$],", $texte_milieu, $regs))) {
@@ -99,7 +99,7 @@ function traiter_math($letexte, $source = '') {
 			$pos = strpos($texte_milieu, $regs[0]);
 			$texte_milieu = substr($texte_milieu, 0, $pos)
 				. code_echappement($echap, $source)
-				. substr($texte_milieu, $pos+strlen($regs[0]));
+				. substr($texte_milieu, $pos + strlen($regs[0]));
 		}
 
 		// Les simples $x^2$ en mode 'span'
@@ -108,7 +108,7 @@ function traiter_math($letexte, $source = '') {
 			$pos = strpos($texte_milieu, $regs[0]);
 			$texte_milieu = substr($texte_milieu, 0, $pos)
 				. code_echappement($echap, $source)
-				. substr($texte_milieu, $pos+strlen($regs[0]));
+				. substr($texte_milieu, $pos + strlen($regs[0]));
 		}
 
 		$texte_a_voir = $texte_debut . $texte_milieu . $texte_fin;

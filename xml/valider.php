@@ -27,7 +27,7 @@ class ValidateurXML {
 	function validerElement($phraseur, $name, $attrs) {
 		if (!($p = isset($this->dtc->elements[$name]))) {
 			if ($p = strpos($name, ':')) {
-				$name = substr($name, $p+1);
+				$name = substr($name, $p + 1);
 				$p = isset($this->dtc->elements[$name]);
 			}
 			if (!$p) {
@@ -50,7 +50,7 @@ class ValidateurXML {
 					#spip_log("rejeton $name fils " . @join(',',$fils));
 					if (!($p = @in_array($name, $fils))) {
 						if ($p = strpos($name, ':')) {
-							$p = substr($name, $p+1);
+							$p = substr($name, $p + 1);
 							$p = @in_array($p, $fils);
 						}
 					}
@@ -226,7 +226,7 @@ class ValidateurXML {
 		$vide = ($regle == 'EMPTY');
 		// controler que les balises devant etre vides le sont 
 		if ($vide) {
-			if ($n <> ($k+$c)) {
+			if ($n <> ($k + $c)) {
 				coordonnees_erreur($this, " <p><b>$name</b> " . _T('zxml_nonvide_balise'));
 			}
 			// pour les regles PCDATA ou iteration de disjonction, tout est fait
