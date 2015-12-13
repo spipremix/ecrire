@@ -840,5 +840,3 @@ function lien_propage_date_modif($objet, $ids) {
 
 	$done[$hash] = true;
 }
-
-?>

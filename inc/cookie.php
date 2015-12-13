@@ -162,5 +162,3 @@ function exec_test_ajax_dist() {
 			break;
 	}
 }
-
-?>

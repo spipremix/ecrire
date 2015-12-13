@@ -63,5 +63,3 @@ function exec_403_dist($message = '') {
 		echo fin_gauche(), fin_page();
 	}
 }
-
-?>

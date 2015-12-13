@@ -56,5 +56,3 @@ function action_instituer_langue_rubrique_dist() {
 		suivre_invalideur("id='rubrique/$id_rubrique'");
 	}
 }
-
-?>

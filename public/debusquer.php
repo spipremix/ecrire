@@ -831,5 +831,3 @@ function debusquer_entete($titre, $corps) {
 	inclure_balise_dynamique(balise_FORMULAIRE_ADMIN_dyn('spip-admin-float', $GLOBALS['debug_objets']), false) .
 	'</div></body></html>';
 }
-
-?>

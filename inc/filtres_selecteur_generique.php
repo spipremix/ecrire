@@ -231,5 +231,3 @@ function test_enfants_rubrique($id_rubrique, $types = array()) {
 
 	return $has_child[$id_rubrique] ? ' ' : '';
 }
-
-?>

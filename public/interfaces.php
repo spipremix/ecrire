@@ -1003,5 +1003,3 @@ function declarer_interfaces() {
 }
 
 declarer_interfaces();
-
-?>

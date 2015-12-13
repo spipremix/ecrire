@@ -267,5 +267,3 @@ function debloquer_edition($id_auteur, $id_objet, $type = 'article') {
 		}
 	}
 }
-
-?>

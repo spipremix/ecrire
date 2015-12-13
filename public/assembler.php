@@ -692,5 +692,3 @@ function envoyer_entetes($entetes) {
 		@header(strlen($v) ? "$k: $v" : $k);
 	}
 }
-
-?>

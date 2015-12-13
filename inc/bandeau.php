@@ -180,5 +180,3 @@ function bandeau_creer_url($url, $args = "", $contexte = null) {
 function inc_bandeau_dist() {
 	return recuperer_fond('prive/squelettes/inclure/barre-nav', $_GET);
 }
-
-?>

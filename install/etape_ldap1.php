@@ -95,5 +95,3 @@ function install_etape_ldap1_dist() {
 
 	echo install_fin_html();
 }
-
-?>

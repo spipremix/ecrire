@@ -390,5 +390,3 @@ function balise_URL_ACTION_AUTEUR_dist($p) {
 
 	return $p;
 }
-
-?>

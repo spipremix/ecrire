@@ -196,5 +196,3 @@ function filtre_audio_x_pn_realaudio($id) {
 	<param name='console' value='Console$id' />
 	<param name='nojava' value='true' />";
 }
-
-?>

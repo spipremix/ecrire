@@ -193,5 +193,3 @@ function info_maj_cache($nom, $dir, $page = '') {
 
 	return $page;
 }
-
-?>

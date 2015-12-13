@@ -57,5 +57,3 @@ function action_desinstaller_plugin_dist() {
 		redirige_par_entete($redirect);
 	}
 }
-
-?>

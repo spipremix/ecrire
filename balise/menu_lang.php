@@ -79,5 +79,3 @@ function balise_MENU_LANG_dyn($opt) {
 
 	return menu_lang_pour_tous('var_lang', $opt);
 }
-
-?>

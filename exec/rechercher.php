@@ -182,5 +182,3 @@ function proposer_item($ids, $titles, $rac, $type, $do) {
 
 	return $ret;
 }
-
-?>

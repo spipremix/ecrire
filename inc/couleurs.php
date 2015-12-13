@@ -138,5 +138,3 @@ function inc_couleurs_dist($choix = null, $ajouter = false) {
 
 	return $couleurs_spip;
 }
-
-?>

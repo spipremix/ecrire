@@ -161,4 +161,3 @@ function verif_butineur() {
 }
 
 verif_butineur();
-?>

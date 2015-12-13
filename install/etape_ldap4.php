@@ -105,5 +105,3 @@ function install_ldap_correspondances() {
 	return !$champs ? '' : fieldset(_T('ldap_correspondance_1'), $champs, '',
 		_T('ldap_correspondance_2') . '<br /><br />');
 }
-
-?>

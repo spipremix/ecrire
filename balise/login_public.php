@@ -83,5 +83,3 @@ function balise_LOGIN_PUBLIC_dyn($url, $login) {
 
 	return balise_FORMULAIRE__dyn('login', $url, $login, false);
 }
-
-?>

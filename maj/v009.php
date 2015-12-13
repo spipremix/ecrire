@@ -148,5 +148,3 @@ function maj_v009_dist($version_installee, $version_cible) {
 		maj_version(0.999);
 	}
 }
-
-?>

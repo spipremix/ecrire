@@ -34,5 +34,3 @@ function action_purger_queue_dist() {
 	}
 
 }
-
-?>

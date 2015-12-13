@@ -59,5 +59,3 @@ function base_etre_webmestre_dist() {
 		instituer_auteur($GLOBALS['visiteur_session']['id_auteur'], array('webmestre' => 'oui'), true);
 	}
 }
-
-?>

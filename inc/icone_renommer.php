@@ -85,5 +85,3 @@ function inc_icone_renommer_dist($fond, $fonction) {
 
 	return array($fond, $fonction);
 }
-
-?>

@@ -84,5 +84,3 @@ function action_redirect_dist() {
 		redirige_par_entete('/', '', $status);
 	}
 }
-
-?>

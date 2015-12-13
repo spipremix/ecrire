@@ -637,5 +637,3 @@ function is_php_session_started() {
 
 	return false;
 }
-
-?>

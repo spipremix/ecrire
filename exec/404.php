@@ -47,5 +47,3 @@ function exec_404_dist() {
 
 	echo fin_gauche(), fin_page();
 }
-
-?>

@@ -69,5 +69,3 @@ function xml_indenter_dist($page, $apply = false) {
 
 	return $f->entete . $f->page;
 }
-
-?>

@@ -1096,5 +1096,3 @@ function calculer_nom_fonction_squel($skel, $mime_type = 'html', $connect = '') 
 	. (!$connect ? '' : preg_replace('/\W/', "_", $connect)) . '_'
 	. md5($GLOBALS['spip_version_code'] . ' * ' . $skel . (isset($GLOBALS['marqueur_skel']) ? '*' . $GLOBALS['marqueur_skel'] : ''));
 }
-
-?>

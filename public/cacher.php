@@ -437,5 +437,3 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 
 	return;
 }
-
-?>

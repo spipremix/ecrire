@@ -416,5 +416,3 @@ function propre($t, $connect = null, $env = array()) {
 
 	return $t;
 }
-
-?>

@@ -458,4 +458,3 @@ function html_lang_attributes() {
 // initialise les globales (liste des langue, langue du site, spip_lang...)
 init_langues();
 utiliser_langue_site();
-?>

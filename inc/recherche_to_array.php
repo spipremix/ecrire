@@ -250,6 +250,3 @@ function inc_recherche_to_array_dist($recherche, $options = array()) {
 
 	return $results;
 }
-
-
-?>

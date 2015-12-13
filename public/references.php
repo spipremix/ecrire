@@ -925,5 +925,3 @@ function rindex_pile($p, $champ, $motif) {
 
 	return $p;
 }
-
-?>

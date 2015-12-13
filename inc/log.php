@@ -107,5 +107,3 @@ function inc_log_dist($message, $logname = null, $logdir = null, $logsuf = null)
 	}
 	$debugverb = "";
 }
-
-?>

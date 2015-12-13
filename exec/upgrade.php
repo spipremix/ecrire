@@ -90,5 +90,3 @@ function exec_upgrade_dist() {
 		}
 	}
 }
-
-?>

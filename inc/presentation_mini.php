@@ -291,5 +291,3 @@ function formulaire_recherche($page, $complement = "") {
 
 	return "<div class='spip_recherche'>" . generer_form_ecrire($page, $form . $complement, " method='get'") . "</div>";
 }
-
-?>

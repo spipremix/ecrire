@@ -69,5 +69,3 @@ function action_supprimer_rubrique_dist($id_rubrique = null) {
 		suivre_invalideur("id='rubrique/$id_rubrique'");
 	}
 }
-
-?>

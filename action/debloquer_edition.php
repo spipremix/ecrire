@@ -45,5 +45,3 @@ function action_debloquer_edition_dist() {
 		}
 	}
 }
-
-?>

@@ -345,5 +345,3 @@ function remplace_en_base($recherche = '', $remplace = null, $tables = null, $op
 		}
 	}
 }
-
-?>

@@ -35,5 +35,3 @@ function action_annuler_job_dist() {
 		job_queue_remove($id_job);
 	}
 }
-
-?>

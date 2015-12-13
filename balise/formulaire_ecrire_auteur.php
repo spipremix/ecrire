@@ -98,5 +98,3 @@ function balise_FORMULAIRE_ECRIRE_AUTEUR_stat($args, $context_compil) {
 	// OK
 	return $args;
 }
-
-?>

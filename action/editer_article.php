@@ -561,5 +561,3 @@ function insert_article($id_rubrique) {
 function instituer_article($id_article, $c, $calcul_rub = true) {
 	return article_instituer($id_article, $c, $calcul_rub);
 }
-
-?>

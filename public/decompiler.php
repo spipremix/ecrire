@@ -227,5 +227,3 @@ function public_decompiler($liste, $fmt = '', $prof = 0, $quoi = '') {
 
 	return $f($liste, $fmt, $prof);
 }
-
-?>

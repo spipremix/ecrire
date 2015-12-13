@@ -80,5 +80,3 @@ function install_verifier_htaccess() {
 
 	return "<div class='error'><h3>$titre</h3><p>$averti</p></div>";
 }
-
-?>

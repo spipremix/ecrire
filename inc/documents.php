@@ -304,5 +304,3 @@ function check_upload_error($error, $msg = '', $return = false) {
 		"<div style='text-align: " . $GLOBALS['spip_lang_right'] . "'><a href='" . rawurldecode($GLOBALS['redirect']) . "'><button type='button'>" . _T('ecrire:bouton_suivant') . "</button></a></div>");
 	exit;
 }
-
-?>

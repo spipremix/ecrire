@@ -238,5 +238,3 @@ function spip_htmlentities($string, $flags = null, $encoding = 'ISO-8859-1', $do
 
 	return htmlentities($string, $flags, $encoding, $double_encode);
 }
-
-?>

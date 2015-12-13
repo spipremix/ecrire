@@ -704,5 +704,3 @@ function queue_affichage_cron() {
 
 	return $texte;
 }
-
-?>

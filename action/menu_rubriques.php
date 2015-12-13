@@ -230,5 +230,3 @@ function gen_liste_rubriques() {
 
 	return true;
 }
-
-?>

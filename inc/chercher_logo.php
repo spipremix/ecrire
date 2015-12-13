@@ -78,5 +78,3 @@ $GLOBALS['table_logos'] = array(
 	'id_rubrique' => 'rub',
 	'id_groupe' => 'groupe',
 );
-
-?>

@@ -106,5 +106,3 @@ function xmlObjToArr($obj, $utiliser_namespace = false) {
 
 	return $tableau;
 }
-
-?>

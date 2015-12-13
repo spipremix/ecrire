@@ -89,6 +89,3 @@ function action_referencer_traduction_dist($objet, $id_objet, $id_trad) {
 
 	return true;
 }
-
-
-?>

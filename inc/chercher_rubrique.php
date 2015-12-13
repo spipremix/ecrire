@@ -352,5 +352,3 @@ function construire_selecteur($url, $js, $idom, $name, $init = '', $id = 0) {
 		. $idom
 		. "'\nstyle='display: none;'></div>";
 }
-
-?>

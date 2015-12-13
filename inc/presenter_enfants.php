@@ -207,5 +207,3 @@ function afficher_enfant_rub($id_rubrique = 0) {
 
 	return $res;
 }
-
-?>

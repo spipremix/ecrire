@@ -585,5 +585,3 @@ function lister_objets_lies($objet_source, $objet, $id_objet, $objet_lien) {
 
 	return $l;
 }
-
-?>

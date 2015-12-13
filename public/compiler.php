@@ -1572,5 +1572,3 @@ function requeteur_data_dist(&$boucles, &$boucle, &$id) {
 		erreur_squelette($msg, $boucle);
 	}
 }
-
-?>

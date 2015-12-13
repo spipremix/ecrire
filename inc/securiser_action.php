@@ -292,5 +292,3 @@ function calculer_cle_action($action) {
 function verifier_cle_action($action, $cle) {
 	return ($cle == calculer_cle_action($action));
 }
-
-?>

@@ -276,5 +276,3 @@ function generer_url_ecrire_objet($objet, $id, $args = '', $ancre = '', $public 
 
 	return generer_url_ecrire(objet_info($objet, 'url_voir'), $a . ($args ? "&$args" : '')) . ($ancre ? "#$ancre" : '');
 }
-
-?>

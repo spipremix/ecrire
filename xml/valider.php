@@ -364,5 +364,3 @@ function xml_valider_dist($page, $apply = false, $process = false, $doctype = ''
 
 	return $sax($page, $apply, $f, $doctype, $charset);
 }
-
-?>

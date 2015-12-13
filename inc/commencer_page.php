@@ -189,5 +189,3 @@ function init_body_class() {
 function auteurs_recemment_connectes($id_auteur) {
 	return recuperer_fond('prive/objets/liste/auteurs_enligne');
 }
-
-?>

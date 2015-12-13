@@ -41,5 +41,3 @@ function exec_info_plugin_dist() {
 		ajax_retour(affiche_bloc_plugin($plug, $info, $dir));
 	}
 }
-
-?>

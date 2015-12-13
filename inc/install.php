@@ -576,5 +576,3 @@ function install_propager($hidden) {
 
 	return $res;
 }
-
-?>

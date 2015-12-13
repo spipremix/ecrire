@@ -114,5 +114,3 @@ function inc_plonger_dist($id_rubrique, $idom = "", $list = array(), $col = 1, $
 		: "")
 	. "\n</div>";
 }
-
-?>

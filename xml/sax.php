@@ -324,5 +324,3 @@ function analyser_doctype($data) {
 
 	return array($entete, $avail, $grammaire, $rotlvl);
 }
-
-?>

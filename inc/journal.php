@@ -32,5 +32,3 @@ function inc_journal_dist($phrase, $opt = array()) {
 	}
 	spip_log($phrase, 'journal');
 }
-
-?>

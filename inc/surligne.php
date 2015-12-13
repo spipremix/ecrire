@@ -120,5 +120,3 @@ function surligner_mots($page, $surcharge_surligne = '') {
 
 	return $page;
 }
-
-?>

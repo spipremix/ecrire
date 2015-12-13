@@ -339,5 +339,3 @@ function v019_pre193($version_installee, $version_cible) {
 		maj_version('1.926');
 	}
 }
-
-?>

@@ -190,5 +190,3 @@ function quete_rubrique_fond($contexte) {
 
 	return $quete[$s] = false;
 }
-
-?>

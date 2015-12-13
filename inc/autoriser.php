@@ -1574,5 +1574,3 @@ function autoriser_inscrireauteur_dist($faire, $quoi, $id, $qui, $opt) {
 
 	return false;
 }
-
-?>

@@ -211,5 +211,3 @@ if (isset($GLOBALS['_INC_PUBLIC']) AND $GLOBALS['_INC_PUBLIC']) {
 		save_path_cache();
 	}
 }
-
-?>

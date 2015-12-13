@@ -305,5 +305,3 @@ function inc_traduire_dist($ori, $lang) {
 
 	return $text;
 }
-
-?>

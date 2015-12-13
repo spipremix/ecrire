@@ -81,5 +81,3 @@ function balise_LOGIN_PRIVE_dyn($url, $login) {
 
 	return balise_FORMULAIRE__dyn('login', $url, $login, true);
 }
-
-?>

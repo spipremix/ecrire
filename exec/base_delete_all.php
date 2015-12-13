@@ -52,5 +52,3 @@ function exec_base_delete_all_dist() {
 		}
 	}
 }
-
-?>

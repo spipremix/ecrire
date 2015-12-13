@@ -334,6 +334,3 @@ function maj_v014_dist($version_installee, $version_cible) {
 		maj_version(1.473);
 	}
 }
-
-
-?>

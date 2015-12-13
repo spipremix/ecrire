@@ -187,6 +187,3 @@ function generer_select_where_explicites($table, $primary, $rows, $serveur) {
 		return array("$select AS points ", sql_in("$table.$primary", array_map('reset', $rows), '', $serveur));
 	}
 }
-
-
-?>

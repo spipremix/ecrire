@@ -62,6 +62,3 @@ function inc_precharger_article_dist($id_article, $id_rubrique = 0, $lier_trad =
 function inc_precharger_traduction_article_dist($id_article, $id_rubrique = 0, $lier_trad = 0) {
 	return precharger_traduction_objet('article', $id_article, $id_rubrique, $lier_trad, 'titre');
 }
-
-
-?>

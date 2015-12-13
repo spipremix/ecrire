@@ -186,6 +186,3 @@ function precharger_traduction_objet($type, $id_objet, $id_rubrique = 0, $lier_t
 
 	return $row;
 }
-
-
-?>

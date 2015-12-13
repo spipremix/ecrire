@@ -74,5 +74,3 @@ function action_confirmer_inscription_dist() {
 	}
 
 }
-
-?>

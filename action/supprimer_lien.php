@@ -46,6 +46,3 @@ function action_supprimer_lien_dist($arg = null) {
 	include_spip('action/editer_liens');
 	objet_dissocier(array($objet_source => $ids), array($objet_lie => $idl));
 }
-
-
-?>

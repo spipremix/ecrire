@@ -271,5 +271,3 @@ function f_queue(&$texte) {
 
 	return $texte;
 }
-
-?>

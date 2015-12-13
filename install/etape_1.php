@@ -77,6 +77,3 @@ function install_etape_1_dist() {
 	echo install_connexion_form($db, $login, $pass, $predef, "\n<input type='hidden' name='chmod' value='$chmod' />", 2);
 	echo install_fin_html();
 }
-
-
-?>

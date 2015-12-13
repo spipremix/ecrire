@@ -74,5 +74,3 @@ function exec_puce_statut_args($id, $type) {
 	$puce_statut = charger_fonction('puce_statut', 'inc');
 	ajax_retour($puce_statut($id, $statut, $id_rubrique, $type, true));
 }
-
-?>

@@ -90,5 +90,3 @@ function action_purger_dist($arg = null) {
 	// le faire savoir aux plugins
 	pipeline('trig_purger', $arg);
 }
-
-?>

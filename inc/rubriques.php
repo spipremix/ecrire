@@ -844,5 +844,3 @@ function creer_rubrique_nommee($titre, $id_parent = 0, $serveur = '') {
 
 	return intval($id_parent);
 }
-
-?>

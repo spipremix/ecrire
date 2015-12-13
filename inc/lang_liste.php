@@ -221,5 +221,3 @@ $GLOBALS['codes_langues'] = array(
 	'zu' => "Zulu"
 
 );
-
-?>

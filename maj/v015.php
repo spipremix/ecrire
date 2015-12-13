@@ -27,5 +27,3 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  **/
 function maj_v015_dist($version_installee, $version_cible) {
 }
-
-?>

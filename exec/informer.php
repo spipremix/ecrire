@@ -46,5 +46,3 @@ function exec_informer_dist() {
 	}
 	ajax_retour($res);
 }
-
-?>

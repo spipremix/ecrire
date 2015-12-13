@@ -152,5 +152,3 @@ function install_etape_3b_dist() {
 	redirige_par_entete(parametre_url(self(), 'etape', '4', '&'));
 
 }
-
-?>

@@ -411,5 +411,3 @@ function valider_dir($files, $ext, $dir) {
 
 	return $res;
 }
-
-?>

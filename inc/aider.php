@@ -326,6 +326,3 @@ function aide_section($aide, $contenu, $prof = 2) {
 #	spip_log("aide inconnue $r dans " . substr($contenu, 0, 150));
 	return '';
 }
-
-
-?>

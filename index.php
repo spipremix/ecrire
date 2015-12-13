@@ -168,5 +168,3 @@ if ($var_f = tester_url_ecrire($exec)) {
 	$var_f = charger_fonction('404');
 	$var_f($exec);
 }
-
-?>

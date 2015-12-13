@@ -61,5 +61,3 @@ function genie_mail_dist($t) {
 
 	return 1;
 }
-
-?>

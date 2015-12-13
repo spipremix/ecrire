@@ -359,5 +359,3 @@ function install_etape_3_dist() {
 	echo $res;
 	echo install_fin_html();
 }
-
-?>

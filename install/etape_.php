@@ -42,5 +42,3 @@ function install_etape__dist() {
 		echo minipres('AUTO', $res);
 	}
 }
-
-?>

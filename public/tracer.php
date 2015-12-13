@@ -164,5 +164,3 @@ function chrono_requete($temps) {
 
 	return array($temps, $navigation);
 }
-
-?>

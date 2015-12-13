@@ -58,5 +58,3 @@ function balise_INFO__dist($p) {
 		return $p;
 	}
 }
-
-?>

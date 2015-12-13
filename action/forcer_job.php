@@ -38,5 +38,3 @@ function action_forcer_job_dist() {
 	}
 
 }
-
-?>

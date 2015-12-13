@@ -762,5 +762,3 @@ function ask_php_auth($pb, $raison, $retour = '', $url = '', $re = '', $lien = '
 	echo minipres($pb, $corps);
 	exit;
 }
-
-?>

@@ -177,5 +177,3 @@ function install_etape_2_form($hidden, $checked, $res, $etape) {
 
 		. bouton_suivant()));
 }
-
-?>

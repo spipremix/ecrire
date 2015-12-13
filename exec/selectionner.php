@@ -46,5 +46,3 @@ function exec_selectionner_dist() {
 	}
 	ajax_retour($r);
 }
-
-?>

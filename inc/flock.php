@@ -725,5 +725,3 @@ function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs =
 
 	return $fichiers;
 }
-
-?>

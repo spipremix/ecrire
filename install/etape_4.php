@@ -68,5 +68,3 @@ function install_etape_4_dist() {
 	echo generer_form_ecrire('install', $suite);
 	echo install_fin_html();
 }
-
-?>

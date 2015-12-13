@@ -51,5 +51,3 @@ function action_instituer_objet_dist($arg = null) {
 	}
 
 }
-
-?>

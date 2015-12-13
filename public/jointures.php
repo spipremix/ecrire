@@ -601,5 +601,3 @@ function trouver_jointure_champ($champ, &$boucle, $jointures = false, $cond = fa
 
 	return '';
 }
-
-?>

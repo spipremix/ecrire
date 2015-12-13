@@ -97,5 +97,3 @@ function calculer_taille_dossier($dir) {
 
 	return $taille;
 }
-
-?>

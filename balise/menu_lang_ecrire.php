@@ -123,5 +123,3 @@ function menu_lang_pour_tous($nom, $default) {
 		)
 	);
 }
-
-?>

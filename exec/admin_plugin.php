@@ -311,5 +311,3 @@ function liste_librairies() {
 
 	return $libs;
 }
-
-?>

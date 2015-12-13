@@ -133,5 +133,3 @@ function inc_exporter_csv_dist($titre, $resource, $delim = ', ', $entetes = null
 
 	return $fichier;
 }
-
-?>

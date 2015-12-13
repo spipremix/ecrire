@@ -3262,5 +3262,3 @@ function avertir_auteurs($nom, $message, $statut = '') {
 	$alertes[$statut][$nom] = $message;
 	ecrire_meta("message_alertes_auteurs", serialize($alertes));
 }
-
-?>

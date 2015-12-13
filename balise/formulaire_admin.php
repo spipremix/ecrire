@@ -297,5 +297,3 @@ function admin_debug() {
 	)
 		? parametre_url(self(), 'var_mode', 'debug', '&') : '';
 }
-
-?>

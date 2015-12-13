@@ -88,6 +88,3 @@ function etape_ldap5_suite() {
 
 	echo install_fin_html();
 }
-
-
-?>

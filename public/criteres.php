@@ -2549,5 +2549,3 @@ function critere_feuille_dist($idb, &$boucles, $crit) {
 	critere_noeud_dist($idb, $boucles, $crit);
 	$crit->not = $not;
 }
-
-?>

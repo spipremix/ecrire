@@ -338,6 +338,3 @@ function auth_ldap_modifier_pass($login, $new_pass, $id_auteur, $serveur = '') {
 
 	return $success;
 }
-
-
-?>

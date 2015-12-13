@@ -612,5 +612,3 @@ function appliquer_adresse_site($adresse_site) {
 
 	return $adresse_site;
 }
-
-?>

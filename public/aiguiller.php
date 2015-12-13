@@ -281,5 +281,3 @@ function traiter_formulaires_dynamiques($get = false) {
 
 	return false; // le hit peut continuer normalement
 }
-
-?>

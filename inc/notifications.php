@@ -215,5 +215,3 @@ function notifier_proposition_article($id_article) {
 		notifications_envoyer_mails($adresse_suivi, $texte);
 	}
 }
-
-?>

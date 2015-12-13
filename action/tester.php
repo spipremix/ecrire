@@ -171,5 +171,3 @@ function action_tester_dist() {
 	# image echec
 	redirige_par_entete(chemin_image('puce-rouge-anim.gif'));
 }
-
-?>

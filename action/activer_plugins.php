@@ -90,5 +90,3 @@ function action_activer_plugins_dist() {
 	lire_metas();
 	enregistre_modif_plugin();
 }
-
-?>

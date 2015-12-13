@@ -284,5 +284,3 @@ function icone_horizontale($texte, $lien, $fond, $fonction = "", $dummy = "", $j
 
 	return $retour;
 }
-
-?>

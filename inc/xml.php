@@ -267,6 +267,3 @@ function spip_xml_match_nodes($regexp, &$arbre, &$matches, $init = true) {
 
 	return (count($matches));
 }
-
-
-?>

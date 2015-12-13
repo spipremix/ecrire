@@ -422,5 +422,3 @@ function traiter_raccourci_glossaire($texte) {
 function glossaire_std($terme) {
 	return $terme;
 }
-
-?>

@@ -116,5 +116,3 @@ function traiter_math($letexte, $source = '') {
 
 	return $texte_a_voir;
 }
-
-?>

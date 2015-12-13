@@ -63,5 +63,3 @@ function affiche_boutons_admin($contenu) {
 
 	return $contenu;
 }
-
-?>

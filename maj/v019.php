@@ -553,4 +553,3 @@ $GLOBALS['maj'][1957] = array(
 $GLOBALS['maj'][1958] = array(
 	array('sql_alter', "TABLE spip_referers_articles DROP date")
 );
-?>

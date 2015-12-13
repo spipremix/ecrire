@@ -152,5 +152,3 @@ function ajax_retour($corps, $content_type = null) {
 	}
 	echo $debut, $corps, $fin, $e;
 }
-
-?>

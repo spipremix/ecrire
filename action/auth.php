@@ -47,6 +47,3 @@ function action_auth_dist() {
 		auth_loger($res);
 	}
 }
-
-
-?>

@@ -329,5 +329,3 @@ function insere_invalideur($inval, $fichier) { }
 //
 // http://code.spip.net/@applique_invalideur
 function applique_invalideur($depart) { }
-
-?>

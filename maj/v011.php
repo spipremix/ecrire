@@ -33,6 +33,3 @@ function maj_v011_dist($version_installee, $version_cible) {
 		maj_version(1.1);
 	}
 }
-
-
-?>

@@ -61,6 +61,3 @@ function maj_v016_dist($version_installee, $version_cible) {
 		maj_version(1.604, $u);
 	}
 }
-
-
-?>

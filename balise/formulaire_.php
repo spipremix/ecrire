@@ -333,5 +333,3 @@ function formulaire__identifier($form, $args, $p) {
 
 	return $args === $p;
 }
-
-?>

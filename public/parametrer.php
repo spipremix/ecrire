@@ -267,5 +267,3 @@ function tester_redirection($fond, $contexte, $connect) {
 
 	return false;
 }
-
-?>

@@ -422,5 +422,3 @@ function z_sanitize_var_zajax() {
 
 	return $z_ajax;
 }
-
-?>

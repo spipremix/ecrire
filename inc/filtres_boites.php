@@ -178,6 +178,3 @@ function boite_fermer() {
 	. '<b class="bottom"><b class="bl"></b><b class="br"></b></b>'
 	. '</div>';
 }
-
-
-?>

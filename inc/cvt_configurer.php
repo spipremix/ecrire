@@ -263,6 +263,3 @@ function cvtconf_configurer_lire_meta($form, &$valeurs) {
 		}
 	}
 }
-
-
-?>

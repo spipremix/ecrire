@@ -128,6 +128,3 @@ function analyse_csv($t) {
 
 	return array(explode($sep, $entete), $lignes, $caption);
 }
-
-
-?>

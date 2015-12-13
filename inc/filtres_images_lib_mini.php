@@ -1506,5 +1506,3 @@ class phpthumb_functions {
 	}
 
 }
-
-?>

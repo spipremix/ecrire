@@ -172,5 +172,3 @@ function mini_hier($id_rubrique) {
 
 	return explode(',', "0,$liste");
 }
-
-?>

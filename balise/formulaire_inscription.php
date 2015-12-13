@@ -78,5 +78,3 @@ function balise_FORMULAIRE_INSCRIPTION_stat($args, $context_compil) {
 
 	return $mode ? array($mode, $id) : '';
 }
-
-?>

@@ -45,5 +45,3 @@ function action_confirmer_email_dist() {
 	}
 
 }
-
-?>

@@ -56,5 +56,3 @@ function action_super_cron_dist() {
 
 	return;
 }
-
-?>

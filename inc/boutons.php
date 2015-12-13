@@ -141,6 +141,3 @@ function barre_onglets($rubrique, $ongletCourant, $class = "barre_onglet") {
 
 	return !$res ? '' : (debut_onglet($class) . $res . fin_onglet());
 }
-
-
-?>

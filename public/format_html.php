@@ -132,5 +132,3 @@ function format_suite_html($args) {
 function format_texte_html($texte) {
 	return $texte;
 }
-
-?>

@@ -101,5 +101,3 @@ function urls_page_dist($i, &$entite, $args = '', $ancre = '') {
 	}
 	/* Fin du bloc compatibilite url-propres */
 }
-
-?>

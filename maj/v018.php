@@ -237,6 +237,3 @@ function maj_v018_dist($version_installee, $version_cible) {
 		maj_version(1.826);
 	}
 }
-
-
-?>

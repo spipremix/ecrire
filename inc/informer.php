@@ -72,5 +72,3 @@ function inc_informer_dist($id, $col, $exclus, $rac, $type, $do = 'aff') {
 	. "</div>"
 	. "</div>";
 }
-
-?>

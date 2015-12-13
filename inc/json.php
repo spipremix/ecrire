@@ -84,6 +84,3 @@ function json_export($var) {
 		return $var;
 	}
 }
-
-
-?>

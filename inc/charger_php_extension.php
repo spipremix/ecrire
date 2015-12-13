@@ -75,5 +75,3 @@ function inc_charger_php_extension_dist($module) {
 
 	return @dl($prefix . $module_file . PHP_SHLIB_SUFFIX);
 }
-
-?>

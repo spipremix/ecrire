@@ -54,6 +54,3 @@ function maj_v010_dist($version_installee, $version_cible) {
 		maj_version(1.05);
 	}
 }
-
-
-?>

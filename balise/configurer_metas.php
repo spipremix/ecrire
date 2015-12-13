@@ -90,5 +90,3 @@ function balise_CONFIGURER_METAS_dyn($form) {
 
 	return array('formulaires/' . $form, 3600, $contexte);
 }
-
-?>

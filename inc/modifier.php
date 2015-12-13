@@ -350,6 +350,3 @@ function revision_objet($objet, $id_objet, $c = null) {
 
 	return objet_modifier($objet, $id_objet, $c);
 }
-
-
-?>

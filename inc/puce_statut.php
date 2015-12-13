@@ -434,5 +434,3 @@ function puce_statut($statut, $atts = '') {
 
 	return http_img_pack($src, statut_titre('article', $statut), $atts);
 }
-
-?>

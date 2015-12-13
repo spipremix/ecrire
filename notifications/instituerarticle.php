@@ -58,5 +58,3 @@ function notifications_instituerarticle_dist($quoi, $id_article, $options) {
 		notifications_envoyer_mails($destinataires, $texte);
 	}
 }
-
-?>

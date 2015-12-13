@@ -65,5 +65,3 @@ function inc_lister_objets_dist($vue, $contexte = array(), $force = false) {
 
 	return $res;
 }
-
-?>

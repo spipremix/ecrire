@@ -323,5 +323,3 @@ function image_reduire_par($img, $val = 1, $force = false) {
 
 	return $img;
 }
-
-?>

@@ -83,5 +83,3 @@ ob_end_flush();
 function exec_fond_dist() {
 
 }
-
-?>

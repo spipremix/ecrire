@@ -227,6 +227,3 @@ function queue_genie_replan_job($function, $period, $last = 0, $time = null, $pr
 	queue_add_job($function, _T('tache_cron_secondes', array('function' => $function, 'nb' => $period)), array($last),
 		"genie/", 'function_only', $time, $priority);
 }
-
-
-?>

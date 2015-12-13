@@ -123,5 +123,3 @@ function exec_fond_monobloc_dist() {
 		echo fin_gauche(), fin_page();
 	}
 }
-
-?>

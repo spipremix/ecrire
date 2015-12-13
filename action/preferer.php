@@ -83,5 +83,3 @@ function action_preferer_dist() {
 
 	}
 }
-
-?>

@@ -36,4 +36,3 @@ if ($var_auth !== '') {
 
 // En somme, est prive' ce qui est publiquement nomme'...
 include 'public.php';
-?>

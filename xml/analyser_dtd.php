@@ -412,5 +412,3 @@ function expanserEntite($val, $macros = array()) {
 
 	return trim(preg_replace('/\s+/', ' ', $val));
 }
-
-?>

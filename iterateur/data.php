@@ -851,5 +851,3 @@ function XMLObjectToArray($object) {
 
 	return $xml_array;
 }
-
-?>

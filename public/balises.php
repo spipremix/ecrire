@@ -2857,5 +2857,3 @@ function balise_LARGEUR_ECRAN_dist($p) {
 
 	return $p;
 }
-
-?>

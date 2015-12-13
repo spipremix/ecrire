@@ -497,5 +497,3 @@ function instituer_auteur($id_auteur, $c, $force_webmestre = false) {
 function revision_auteur($id_auteur, $c = false) {
 	return auteur_modifier($id_auteur, $c);
 }
-
-?>

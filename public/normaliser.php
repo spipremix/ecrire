@@ -213,5 +213,3 @@ function normaliser_inclure($champ) {
 	}
 	spip_log("inclure sans fond ni fichier");
 }
-
-?>

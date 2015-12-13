@@ -67,5 +67,3 @@ function exec_install_dist() {
 		$fonc();
 	}
 }
-
-?>

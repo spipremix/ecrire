@@ -95,5 +95,3 @@ function action_converser_post($lang, $ecrire = false) {
 		}
 	}
 }
-
-?>

@@ -146,5 +146,3 @@ function verifier_jeton_logout($jeton, $session) {
 
 	return false;
 }
-
-?>

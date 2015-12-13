@@ -428,5 +428,3 @@ function auth_spip_synchroniser_distant($id_auteur, $champs, $options = array(),
 		}
 	}
 }
-
-?>

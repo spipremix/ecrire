@@ -220,5 +220,3 @@ class IterateurSQL implements Iterator {
 		return $this->total;
 	}
 }
-
-?>

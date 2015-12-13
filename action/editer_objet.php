@@ -490,5 +490,3 @@ function objet_editer_heritage($objet, $id, $id_rubrique, $statut, $champs, $con
 		calculer_rubriques_if($id_rubrique, $champs, $statut, $postdate);
 	}
 }
-
-?>

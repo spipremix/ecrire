@@ -52,5 +52,3 @@ function exec_base_repair_dist() {
 		echo minipres(_T('titre_reparation'), "<p>$message</p>");
 	}
 }
-
-?>

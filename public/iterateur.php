@@ -617,6 +617,3 @@ class IterDecorator extends FilterIterator {
 	}
 
 }
-
-
-?>

@@ -58,5 +58,3 @@ class DTC {
 	var $regles = array();
 	var $pcdata = array();
 }
-
-?>

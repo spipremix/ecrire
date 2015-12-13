@@ -210,5 +210,3 @@ function minipres($titre = '', $corps = "", $options = array()) {
 		ajax_retour("<div>" . $titre . redirige_formulaire($url) . "</div>", false);
 	}
 }
-
-?>

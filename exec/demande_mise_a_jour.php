@@ -55,5 +55,3 @@ function exec_demande_mise_a_jour_dist() {
 	echo fin_grand_cadre(true);
 	echo fin_page();
 }
-
-?>

@@ -268,5 +268,3 @@ function trouver_objet_exec($exec) {
 
 	return $objet_exec[$exec];
 }
-
-?>

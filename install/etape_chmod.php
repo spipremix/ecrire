@@ -159,5 +159,3 @@ function install_etape_chmod_dist() {
 		}
 	}
 }
-
-?>

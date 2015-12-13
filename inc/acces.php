@@ -407,5 +407,3 @@ function gerer_htaccess() {
 }
 
 initialiser_sel();
-
-?>

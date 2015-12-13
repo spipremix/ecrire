@@ -45,5 +45,3 @@ function typographie_en_dist($letexte) {
 
 	return $letexte;
 }
-
-?>

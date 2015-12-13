@@ -47,5 +47,3 @@ function exec_plonger_dist() {
 
 	ajax_retour($r);
 }
-
-?>

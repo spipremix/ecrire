@@ -197,6 +197,3 @@ function logo_survol($id_objet, $_id_objet, $type, $align, $fichier, $lien, $p, 
 	return ('(strlen($logo=' . $code . ')?\'<a href="\' .' . $lien . ' . \'">\' . $logo . \'</a>\':\'\')');
 
 }
-
-
-?>

@@ -237,5 +237,3 @@ function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "") {
 
 	return array($headers, $texte);
 }
-
-?>

@@ -271,6 +271,3 @@ function cvtmulti_styliser($flux) {
 
 	return $flux;
 }
-
-
-?>

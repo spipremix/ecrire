@@ -5926,5 +5926,3 @@ function filtre_compacte_dist($source, $format = null) {
 
 	return $source;
 }
-
-?>

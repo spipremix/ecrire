@@ -481,5 +481,3 @@ if (!headers_sent()) {
 
 $methode = (isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : ((php_sapi_name() == 'cli') ? 'cli' : ''));
 spip_log($methode . ' ' . self() . ' - ' . _FILE_CONNECT, _LOG_DEBUG);
-
-?>

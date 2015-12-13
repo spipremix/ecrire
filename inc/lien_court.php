@@ -31,5 +31,3 @@ function inc_lien_court($url) {
 
 	return $url;
 }
-
-?>

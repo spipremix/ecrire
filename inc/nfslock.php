@@ -323,5 +323,3 @@ function spip_nfsunlock($fichier, $birth, $max_age = 0, $test = false) {
 function spip_nfslock_test($fichier, $birth, $max_age = 0) {
 	return spip_nfsunlock($fichier, $birth, $max_age, true);
 }
-
-?>

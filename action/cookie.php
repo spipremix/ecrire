@@ -115,5 +115,3 @@ function action_cookie_dist($set_cookie_admin = null, $change_session = null) {
 		redirige_par_entete($redirect, true);
 	}
 }
-
-?>
