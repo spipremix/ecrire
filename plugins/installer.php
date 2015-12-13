@@ -55,7 +55,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function plugins_installer_dist($plug, $action, $dir_type = '_DIR_PLUGINS') {
 	$get_infos = charger_fonction('get_infos', 'plugins');
 	$infos = $get_infos($plug, false, constant($dir_type));
-	if (!isset($infos['install']) OR !$infos['install']) {
+	if (!isset($infos['install']) or !$infos['install']) {
 		return false;
 	}
 	// passer en chemin absolu si possible, c'est plus efficace
@@ -117,7 +117,7 @@ function plugins_installer_dist($plug, $action, $dir_type = '_DIR_PLUGINS') {
 // http://code.spip.net/@spip_plugin_install
 function spip_plugin_install($action, $infos, $version_cible) {
 	$prefix = $infos['prefix'];
-	if (isset($infos['meta']) AND (($table = $infos['meta']) !== 'meta')) {
+	if (isset($infos['meta']) and (($table = $infos['meta']) !== 'meta')) {
 		$nom_meta = "base_version";
 	} else {
 		$nom_meta = $prefix . "_base_version";
@@ -126,8 +126,8 @@ function spip_plugin_install($action, $infos, $version_cible) {
 	switch ($action) {
 		case 'test':
 			return (isset($GLOBALS[$table])
-				AND isset($GLOBALS[$table][$nom_meta])
-				AND spip_version_compare($GLOBALS[$table][$nom_meta], $version_cible, '>='));
+				and isset($GLOBALS[$table][$nom_meta])
+				and spip_version_compare($GLOBALS[$table][$nom_meta], $version_cible, '>='));
 			break;
 		case 'install':
 			if (function_exists($upgrade = $prefix . "_upgrade")) {
@@ -180,7 +180,7 @@ function spip_version_compare($v1, $v2, $op = null) {
 	$etoile = false;
 	foreach ($v1 as $k => $v) {
 		if (!isset($v2[$k])) {
-			$v2[] = ($etoile AND (is_numeric($v) OR $v == 'pl' OR $v == 'p')) ? $v : '0';
+			$v2[] = ($etoile and (is_numeric($v) or $v == 'pl' or $v == 'p')) ? $v : '0';
 		} else {
 			if ($v2[$k] == '*') {
 				$etoile = true;
@@ -235,5 +235,3 @@ function liste_plugin_actifs() {
 
 	return $liste;
 }
-
-?>

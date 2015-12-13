@@ -89,7 +89,7 @@ function plugins_afficher_liste_dist(
 		$actif = isset($fast_liste_plugins_actifs[$plug]);
 		$checked = isset($fast_liste_plugins_checked[$plug]);
 		$block_actif = $block_actif | $actif;
-		$expose = ($exposed AND ($exposed == $plug OR $exposed == $dir_plugins . $plug OR $exposed == substr($dir_plugins,
+		$expose = ($exposed and ($exposed == $plug or $exposed == $dir_plugins . $plug or $exposed == substr($dir_plugins,
 					strlen(_DIR_RACINE)) . $plug));
 		$block .= $ligne_plug($url_page, $plug, $checked, $actif, $expose, "item", $dir_plugins) . "\n";
 	}
@@ -113,5 +113,3 @@ function affiche_block_initiale($initiale, $block, $block_actif) {
 
 	return "";
 }
-
-?>

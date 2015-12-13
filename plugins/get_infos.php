@@ -47,7 +47,7 @@ function plugins_get_infos_dist($plug = false, $reload = false, $dir = _DIR_PLUG
 		}
 	}
 
-	if (defined('_VAR_MODE') AND _VAR_MODE == 'recalcul') {
+	if (defined('_VAR_MODE') and _VAR_MODE == 'recalcul') {
 		$reload = true;
 	}
 
@@ -106,9 +106,9 @@ function plugins_get_infos_un($plug, $reload, $dir, &$cache) {
 
 	// si le cache est valide
 	if ((intval($reload) <= 0)
-		AND ($time > 0)
-		AND ($time <= $pcache['filemtime'])
-		AND $md5 == $pcache['md5_file']
+		and ($time > 0)
+		and ($time <= $pcache['filemtime'])
+		and $md5 == $pcache['md5_file']
 	) {
 		return false;
 	}
@@ -136,5 +136,3 @@ function plugins_get_infos_un($plug, $reload, $dir, &$cache) {
 
 	return $diff;
 }
-
-?>

@@ -117,5 +117,3 @@ function tree_open_close_dir(&$current, $target, $deplie = array()) {
 
 	return $output;
 }
-
-?>

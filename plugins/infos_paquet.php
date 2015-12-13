@@ -60,12 +60,12 @@ function plugins_infos_paquet($desc, $plug = '', $dir_plugins = _DIR_PLUGINS) {
 			$vspip = $GLOBALS['spip_version_branche'];
 			foreach ($vxml->versions as $_compatibilite => $_version) {
 				if (($_version['balise'] == 'spip')
-					AND (plugin_version_compatible($_compatibilite, $vspip, 'spip'))
+					and (plugin_version_compatible($_compatibilite, $vspip, 'spip'))
 				) {
 					// on merge les sous-balises de la balise spip compatible avec celles de la
 					// balise paquet
 					foreach ($_version as $_index => $_balise) {
-						if ($_index AND $_index != 'balise') {
+						if ($_index and $_index != 'balise') {
 							$tree[$_index] = array_merge($tree[$_index], $_balise);
 						}
 					}
@@ -122,7 +122,7 @@ function paquet_debutElement($phraseur, $name, $attrs) {
 	if ($phraseur->err) {
 		return;
 	}
-	if (($name == 'paquet') OR ($name == 'spip')) {
+	if (($name == 'paquet') or ($name == 'spip')) {
 		if ($name == 'spip') {
 			$n = $attrs['compatibilite'];
 			$attrs = array();
@@ -159,7 +159,7 @@ function paquet_debutElement($phraseur, $name, $attrs) {
  */
 function paquet_textElement($phraseur, $data) {
 	xml_textElement($phraseur, $data);
-	if ($phraseur->err OR !(trim($data))) {
+	if ($phraseur->err or !(trim($data))) {
 		return;
 	}
 	$phraseur->versions[$phraseur->contenu['compatible']][''] .= $data;
@@ -179,7 +179,7 @@ function paquet_finElement($phraseur, $name) {
 	}
 	$n = $phraseur->contenu['compatible'];
 
-	if (isset($phraseur->versions[$n][$name][0]) AND is_array($phraseur->versions[$n][$name][0])) {
+	if (isset($phraseur->versions[$n][$name][0]) and is_array($phraseur->versions[$n][$name][0])) {
 		$attrs = $phraseur->versions[$n][$name][0];
 		unset($phraseur->versions[$n][$name][0]);
 	} else {
@@ -422,5 +422,3 @@ function info_paquet_genie($phraseur, $attrs, $texte) {
 	$n = $phraseur->contenu['compatible'];
 	$phraseur->versions[$n]['genie'][] = $attrs;
 }
-
-?>

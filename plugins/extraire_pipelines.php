@@ -44,6 +44,3 @@ function plugins_extraire_pipelines_dist(&$arbre) {
 
 	return $pipeline;
 }
-
-
-?>

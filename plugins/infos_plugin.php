@@ -248,5 +248,3 @@ function info_plugin_normalise_chemin($chemins) {
 
 	return $res;
 }
-
-?>

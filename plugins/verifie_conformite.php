@@ -30,14 +30,14 @@ function plugins_verifie_conformite_dist($plug, &$arbre, $dir_plugins = _DIR_PLU
 		$vspip = $GLOBALS['spip_version_branche'];
 		foreach ($matches as $tag => $sous) {
 			list($tagname, $atts) = spip_xml_decompose_tag($tag);
-			if ($tagname == 'plugin' AND is_array($sous)) {
+			if ($tagname == 'plugin' and is_array($sous)) {
 				// On rajoute la condition sur $n :
 				// -- en effet si $n==1 on a pas plus a choisir la balise que l'on ait
 				//    un attribut spip ou pas. Cela permet de traiter tous les cas mono-balise
 				//    de la meme facon.
 				if (!isset($atts['spip'])
-					OR $n == 1
-					OR plugin_version_compatible($atts['spip'], $vspip, 'spip')
+					or $n == 1
+					or plugin_version_compatible($atts['spip'], $vspip, 'spip')
 				) {
 					// on prend la derniere declaration avec ce nom
 					$p = end($sous);
@@ -76,7 +76,7 @@ function plugins_verifie_conformite_dist($plug, &$arbre, $dir_plugins = _DIR_PLU
 		$arbre['prefix'] = array("");
 	} else {
 		$prefix = trim(end($arbre['prefix']));
-		if (strtoupper($prefix) == 'SPIP' AND $plug != "./") {
+		if (strtoupper($prefix) == 'SPIP' and $plug != "./") {
 			$arbre['erreur'][] = _T('erreur_plugin_prefix_interdit');
 		}
 		if (isset($arbre['etat'])) {
@@ -164,7 +164,7 @@ function plugins_verifie_conformite_dist($plug, &$arbre, $dir_plugins = _DIR_PLU
 				}
 			}
 		}
-		if ($compat_spip AND !$spip_trouve) {
+		if ($compat_spip and !$spip_trouve) {
 			$necessite[] = array('id' => 'spip', 'version' => $compat_spip);
 		}
 		$arbre['necessite'] = $necessite;
@@ -224,5 +224,3 @@ function plugins_verifie_conformite_dist($plug, &$arbre, $dir_plugins = _DIR_PLU
 		$arbre['traduire'] = $traduire;
 	}
 }
-
-?>

@@ -48,6 +48,3 @@ function plugins_extraire_boutons_dist($arbre) {
 
 	return $ret;
 }
-
-
-?>

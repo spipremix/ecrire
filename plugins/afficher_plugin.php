@@ -69,17 +69,17 @@ function plugins_afficher_plugin_dist(
 	}
 
 	// numerotons les occurrences d'un meme prefix
-	$versions[$prefix] = $id = isset($versions[$prefix]) ? $versions[$prefix]+1 : '';
+	$versions[$prefix] = $id = isset($versions[$prefix]) ? $versions[$prefix] + 1 : '';
 
 	$class_li .= ($actif ? " actif" : "") . ($expose ? " on" : "");
 
 	return "<li id='$prefix$id' class='$class_li'>"
-	. ((!$checkable AND !$checked)
+	. ((!$checkable and !$checked)
 		? '' : plugin_checkbox(++$id_input, $dir_plugins . $plug_file, $checked))
 	. plugin_resume($info, $dir_plugins, $plug_file, $url_page)
 	. $cfg
 	. $erreur
-	. (($dir_plugins !== _DIR_PLUGINS_DIST AND plugin_est_installe($plug_file))
+	. (($dir_plugins !== _DIR_PLUGINS_DIST and plugin_est_installe($plug_file))
 		? plugin_desintalle($plug_file, $nom, $dir_plugins) : '')
 	. "<div class='details'>" // pour l'ajax de exec/info_plugin
 	. (!$expose ? '' : affiche_bloc_plugin($plug_file, $info, $dir_plugins))
@@ -223,7 +223,7 @@ function plugin_etat_en_clair($etat) {
 // http://code.spip.net/@plugin_propre
 function plugin_propre($texte, $module = '') {
 	// retirer le retour a la racine du module, car le find_in_path se fait depuis la racine
-	if (_DIR_RACINE AND strncmp($module, _DIR_RACINE, strlen(_DIR_RACINE)) == 0) {
+	if (_DIR_RACINE and strncmp($module, _DIR_RACINE, strlen(_DIR_RACINE)) == 0) {
 		$module = substr($module, strlen(_DIR_RACINE));
 	}
 	if (preg_match("|^\w+_[\w_]+$|", $texte)) {
@@ -252,7 +252,7 @@ function affiche_bloc_plugin($plug_file, $info, $dir_plugins = null) {
 	}
 
 	if (isset($info['documentation'])
-		AND $lien = $info['documentation']
+		and $lien = $info['documentation']
 	) {
 		$description .= "<p><em class='site'><a href='$lien' class='spip_out'>" . _T('en_savoir_plus') . '</a></em></p>';
 	}
@@ -308,7 +308,7 @@ function affiche_bloc_plugin($plug_file, $info, $dir_plugins = null) {
 	$infotech[] = "<dt>" . _T('repertoire_plugins') . "</dt><dd>" . joli_repertoire("$dir_plugins$plug_file") . "</dd>";
 	// source zip le cas echeant
 	$infotech[] = (lire_fichier($dir_plugins . $plug_file . '/install.log', $log)
-		AND preg_match(',^source:(.*)$,m', $log, $r))
+		and preg_match(',^source:(.*)$,m', $log, $r))
 		? '<dt>' . _T('plugin_source') . '</dt><dd>' . trim($r[1]) . "</dd>"
 		: '';
 
@@ -342,5 +342,3 @@ function formater_credits($infos, $sep = ', ') {
 
 	return $texte;
 }
-
-?>
