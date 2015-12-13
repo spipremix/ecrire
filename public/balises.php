@@ -661,7 +661,7 @@ function balise_POPULARITE_MAX_dist($p) {
  *     ```
  *     #VALEUR renvoie le champ valeur
  *     #VALEUR{x} renvoie #VALEUR|table_valeur{x},
- *        équivalent à #X (si X n'est pas une balise spéficique à SPIP)
+ *        équivalent à #X (si X n'est pas une balise spécifique à SPIP)
  *     #VALEUR{a/b} renvoie #VALEUR|table_valeur{a/b}
  *     ```
  *
