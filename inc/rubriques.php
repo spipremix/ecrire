@@ -822,8 +822,7 @@ function creer_rubrique_nommee($titre, $id_parent = 0, $serveur = '') {
 					'titre' => $titre,
 					'id_parent' => $id_parent,
 					'statut' => 'prepa'
-				)
-				, $desc = array(), $serveur);
+				), $desc = array(), $serveur);
 			if ($id_parent > 0) {
 				$data = sql_fetsel("id_secteur,lang", "spip_rubriques", "id_rubrique=$id_parent",
 					$groupby = array(), $orderby = array(), $limit = '', $having = array(), $serveur);

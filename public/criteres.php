@@ -1956,8 +1956,7 @@ function calculer_lien_externe_init(&$boucle, $joints, $col, $desc, $cond, $chec
 				array(id_table_objet($desc['table_objet']), 'id_objet', 'objet', $desc['type'])
 			),
 			array(reset($intermediaire), $arrivee, $primary_arrivee)
-		)
-		, $cond, $desc, $boucle->id_table, array($col));
+		), $cond, $desc, $boucle->id_table, array($col));
 
 	return $res;
 }

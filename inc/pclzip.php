@@ -759,10 +759,8 @@ class PclZip {
 						PCLZIP_OPT_BY_INDEX => 'optional',
 						PCLZIP_OPT_EXTRACT_AS_STRING => 'optional',
 						PCLZIP_OPT_EXTRACT_IN_OUTPUT => 'optional',
-						PCLZIP_OPT_REPLACE_NEWER => 'optional'
-					,
-						PCLZIP_OPT_STOP_ON_ERROR => 'optional'
-					,
+						PCLZIP_OPT_REPLACE_NEWER => 'optional',
+						PCLZIP_OPT_STOP_ON_ERROR => 'optional',
 						PCLZIP_OPT_EXTRACT_DIR_RESTRICTION => 'optional',
 						PCLZIP_OPT_TEMP_FILE_THRESHOLD => 'optional',
 						PCLZIP_OPT_TEMP_FILE_ON => 'optional',
@@ -919,10 +917,8 @@ class PclZip {
 						PCLZIP_CB_PRE_EXTRACT => 'optional',
 						PCLZIP_CB_POST_EXTRACT => 'optional',
 						PCLZIP_OPT_SET_CHMOD => 'optional',
-						PCLZIP_OPT_REPLACE_NEWER => 'optional'
-					,
-						PCLZIP_OPT_STOP_ON_ERROR => 'optional'
-					,
+						PCLZIP_OPT_REPLACE_NEWER => 'optional',
+						PCLZIP_OPT_STOP_ON_ERROR => 'optional',
 						PCLZIP_OPT_EXTRACT_DIR_RESTRICTION => 'optional',
 						PCLZIP_OPT_TEMP_FILE_THRESHOLD => 'optional',
 						PCLZIP_OPT_TEMP_FILE_ON => 'optional',

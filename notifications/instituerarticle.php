@@ -48,8 +48,7 @@ function notifications_instituerarticle_dist($quoi, $id_article, $options) {
 
 		$destinataires = pipeline('notifications_destinataires',
 			array(
-				'args' => array('quoi' => $quoi, 'id' => $id_article, 'options' => $options)
-			,
+				'args' => array('quoi' => $quoi, 'id' => $id_article, 'options' => $options),
 				'data' => $destinataires
 			)
 		);

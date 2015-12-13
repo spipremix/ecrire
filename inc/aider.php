@@ -205,7 +205,7 @@ function aide_fichier($path, $help_server) {
 		// Fusionner les aides ayant meme nom de section
 		$vus = array();
 		foreach ($sections as $section) {
-			list($tout, $prof, $sujet,) = $section;
+			list($tout, $prof, $sujet, ) = $section;
 			if (in_array($sujet, $vus)) {
 				continue;
 			}

@@ -161,7 +161,7 @@ function picker_identifie_id_rapide($ref, $rubriques_ou_objets = false, $article
 		return json_export(false);
 	}
 	// Sinon on récupère les infos utiles
-	@list($type, , $id, , , ,) = $match;
+	@list($type, , $id, , , , ) = $match;
 
 	// On regarde si le type trouvé fait partie des objets sélectionnables
 	if (!in_array(table_objet($type), $objets)) {
