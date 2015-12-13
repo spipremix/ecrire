@@ -601,7 +601,7 @@ function phraser_criteres($params, &$result) {
 					// une maniere tres sale de supprimer les "' autour de {critere "xxx","yyy"}
 					if (preg_match(',^(["\'])(.*)\1$,', $m[4])) {
 						$c = null;
-						eval ('$c = ' . $m[4] . ';');
+						eval('$c = ' . $m[4] . ';');
 						if (isset($c)) {
 							$m[4] = $c;
 						}

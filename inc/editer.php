@@ -612,7 +612,7 @@ function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
 	foreach ($champs as $key => $val) {
 		if (isset($ctr[$prefix . $key]) AND $m = $ctr[$prefix . $key]) {
 			if (is_scalar($val) and $m == md5($val)) {
-				unset ($champs[$key]);
+				unset($champs[$key]);
 			}
 		}
 	}
@@ -763,4 +763,3 @@ function signaler_conflits_edition($conflits, $redirect = '') {
 		. $redirect
 	);
 }
-

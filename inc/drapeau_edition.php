@@ -55,12 +55,12 @@ function lire_tableau_edition() {
 	// parcourir le tableau et virer les vieux
 	foreach ($edition as $objet => $data) {
 		if (!is_array($data)) {
-			unset ($edition[$objet]);
+			unset($edition[$objet]);
 		} // vieille version
 		else {
 			foreach ($data as $id => $tab) {
 				if (!is_array($tab)) {
-					unset ($edition[$objet][$tab]);
+					unset($edition[$objet][$tab]);
 				} // vieille version
 				else {
 					foreach ($tab as $n => $duo) {
@@ -230,7 +230,7 @@ function debloquer_tous($id_auteur) {
 	foreach ($edition as $objet => $data) {
 		foreach ($data as $id => $auteurs) {
 			if (isset($auteurs[$id_auteur])) {
-				unset ($edition[$objet][$id][$id_auteur]);
+				unset($edition[$objet][$id][$id_auteur]);
 				ecrire_tableau_edition($edition);
 			}
 		}
@@ -260,7 +260,7 @@ function debloquer_edition($id_auteur, $id_objet, $type = 'article') {
 				if ($id == $id_objet
 					AND isset($auteurs[$id_auteur])
 				) {
-					unset ($edition[$objet][$id][$id_auteur]);
+					unset($edition[$objet][$id][$id_auteur]);
 					ecrire_tableau_edition($edition);
 				}
 			}

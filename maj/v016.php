@@ -54,7 +54,7 @@ function maj_v016_dist($version_installee, $version_cible) {
 		while ($row = sql_fetch($u)) {
 			$prefs = unserialize($row['prefs']);
 			$l = $prefs['spip_lang'];
-			unset ($prefs['spip_lang']);
+			unset($prefs['spip_lang']);
 			spip_query("UPDATE spip_auteurs SET lang=" . _q($l) . ", prefs='" . addslashes(serialize($prefs)) . "' WHERE id_auteur=" . $row['id_auteur']);
 		}
 		$u = spip_query("SELECT lang FROM spip_auteurs");

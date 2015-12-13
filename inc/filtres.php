@@ -520,7 +520,7 @@ function largeur($img) {
 	if (!$img) {
 		return;
 	}
-	list ($h, $l) = taille_image($img);
+	list($h, $l) = taille_image($img);
 
 	return $l;
 }
@@ -542,7 +542,7 @@ function hauteur($img) {
 	if (!$img) {
 		return;
 	}
-	list ($h, $l) = taille_image($img);
+	list($h, $l) = taille_image($img);
 
 	return $h;
 }

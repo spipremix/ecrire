@@ -130,4 +130,3 @@ function action_tester_taille_dist() {
 	// on est ici, donc pas de plantage
 	echo redirige_formulaire($GLOBALS['redirect']);
 }
-

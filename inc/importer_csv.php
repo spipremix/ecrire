@@ -113,4 +113,3 @@ function inc_importer_csv_dist($file, $head = false, $delim = ", ", $enclos = '"
 
 	return $return;
 }
-

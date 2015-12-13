@@ -118,7 +118,7 @@ function index_pile(
 		// modifie $joker si tous les champs sont autorisés.
 		// $t = le select pour le champ, si on l'a trouvé (ou si joker)
 		// $c = le nom du champ demandé
-		list ($t, $c) = index_tables_en_pile($idb, $nom_champ, $boucles, $joker);
+		list($t, $c) = index_tables_en_pile($idb, $nom_champ, $boucles, $joker);
 		if ($t) {
 			if ($select AND !in_array($t, $boucles[$idb]->select)) {
 				$boucles[$idb]->select[] = $t;

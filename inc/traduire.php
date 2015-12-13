@@ -161,7 +161,7 @@ function surcharger_langue($fichiers) {
 			$GLOBALS['idx_lang'] = $GLOBALS['idx_lang'] . '@temporaire';
 			include($fichier);
 			$surcharges[$fichier] = $GLOBALS[$GLOBALS['idx_lang']];
-			unset ($GLOBALS[$GLOBALS['idx_lang']]);
+			unset($GLOBALS[$GLOBALS['idx_lang']]);
 			$GLOBALS['idx_lang'] = $idx_lang_normal;
 		}
 		if (is_array($surcharges[$fichier])) {

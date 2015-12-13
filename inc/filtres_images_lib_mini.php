@@ -209,7 +209,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 	) {
 		// on passe la balise img a taille image qui exraira les attributs si possible
 		// au lieu de faire un acces disque sur le fichier
-		list ($ret["hauteur"], $ret["largeur"]) = taille_image($find_in_path ? $f : $img);
+		list($ret["hauteur"], $ret["largeur"]) = taille_image($find_in_path ? $f : $img);
 		$date_src = @filemtime($f);
 	} elseif (@file_exists($f = "$fichier.src")
 		AND lire_fichier($f, $valeurs)
@@ -238,7 +238,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 	$cache = "cache-gd2";
 	if (substr($effet, 0, 7) == 'reduire') {
 		list(, $maxWidth, $maxHeight) = explode('-', $effet);
-		list ($destWidth, $destHeight) = _image_ratio($ret['largeur'], $ret['hauteur'], $maxWidth, $maxHeight);
+		list($destWidth, $destHeight) = _image_ratio($ret['largeur'], $ret['hauteur'], $maxWidth, $maxHeight);
 		$ret['largeur_dest'] = $destWidth;
 		$ret['hauteur_dest'] = $destHeight;
 		$effet = "L{$destWidth}xH$destHeight";
@@ -584,7 +584,7 @@ function _image_gd_output($img, $valeurs, $qualite = _IMG_GD_QUALITE) {
 	) {
 		if (@file_exists($valeurs['fichier_dest'])) {
 			// dans tous les cas mettre a jour la taille de l'image finale
-			list ($valeurs["hauteur_dest"], $valeurs["largeur_dest"]) = taille_image($valeurs['fichier_dest']);
+			list($valeurs["hauteur_dest"], $valeurs["largeur_dest"]) = taille_image($valeurs['fichier_dest']);
 			$valeurs['date'] = @filemtime($valeurs['fichier_dest']); // pour la retrouver apres disparition
 			ecrire_fichier($valeurs['fichier_dest'] . '.src', serialize($valeurs), true);
 		}
@@ -939,7 +939,7 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 	// calculer la taille
 	if (($srcWidth = $valeurs['largeur']) && ($srcHeight = $valeurs['hauteur'])) {
 		if (!($destWidth = $valeurs['largeur_dest']) || !($destHeight = $valeurs['hauteur_dest'])) {
-			list ($destWidth, $destHeight) = _image_ratio($valeurs['largeur'], $valeurs['hauteur'], $maxWidth, $maxHeight);
+			list($destWidth, $destHeight) = _image_ratio($valeurs['largeur'], $valeurs['hauteur'], $maxWidth, $maxHeight);
 		}
 	} elseif ($process == 'convert' OR $process == 'imagick') {
 		$destWidth = $maxWidth;

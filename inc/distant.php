@@ -1318,4 +1318,3 @@ function lance_requete(
 
 	return $f;
 }
-

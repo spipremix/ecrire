@@ -128,7 +128,7 @@ function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000,
 	if (!$img) {
 		return $img;
 	}
-	list ($h, $l) = taille_image($img);
+	list($h, $l) = taille_image($img);
 	$select = true;
 	if ($l < $width_min OR $l > $width_max OR $h < $height_min OR $h > $height_max) {
 		$select = false;
@@ -204,7 +204,7 @@ function image_passe_partout(
 	if (!$img) {
 		return '';
 	}
-	list ($hauteur, $largeur) = taille_image($img);
+	list($hauteur, $largeur) = taille_image($img);
 	if ($taille_x == -1) {
 		$taille_x = isset($GLOBALS['meta']['taille_preview']) ? $GLOBALS['meta']['taille_preview'] : 150;
 	}
@@ -308,7 +308,7 @@ function image_reduire($img, $taille = -1, $taille_y = -1, $force = false, $cher
  *     Code HTML de l'image ou du texte.
  **/
 function image_reduire_par($img, $val = 1, $force = false) {
-	list ($hauteur, $largeur) = taille_image($img);
+	list($hauteur, $largeur) = taille_image($img);
 
 	$l = round($largeur/$val);
 	$h = round($hauteur/$val);

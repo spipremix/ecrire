@@ -578,8 +578,7 @@ function nettoyer_uri($reset = null) {
 	$uri1 = $GLOBALS['REQUEST_URI'];
 	do {
 		$uri = $uri1;
-		$uri1 = preg_replace
-		(',([?&])(PHPSESSID|(var_[^=&]*))=[^&]*(&|$),i',
+		$uri1 = preg_replace(',([?&])(PHPSESSID|(var_[^=&]*))=[^&]*(&|$),i',
 			'\1', $uri);
 	} while ($uri <> $uri1);
 

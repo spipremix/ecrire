@@ -45,4 +45,3 @@ function iterateur_POUR_dist($b) {
 
 	return $b;
 }
-

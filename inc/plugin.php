@@ -1114,4 +1114,3 @@ function ecrire_fichier_php($nom, $contenu, $comment = '') {
 	ecrire_fichier($nom,
 		'<' . '?php' . "\n" . $comment . "\nif (defined('_ECRIRE_INC_VERSION')) {\n" . $contenu . "}\n?" . '>');
 }
-
