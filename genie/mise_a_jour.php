@@ -57,10 +57,10 @@ function mise_a_jour_ecran_securite() {
 
 	// si l'ecran n'est pas deja present ou pas updatable, sortir
 	if (!_URL_ECRAN_SECURITE
-		OR !file_exists($filename = _DIR_ETC . "ecran_securite.php")
-		OR !is_writable($filename)
-		OR !$last_modified = filemtime($filename)
-		OR !$md5 = md5_file($filename)
+		or !file_exists($filename = _DIR_ETC . "ecran_securite.php")
+		or !is_writable($filename)
+		or !$last_modified = filemtime($filename)
+		or !$md5 = md5_file($filename)
 	) {
 		return false;
 	}
@@ -76,8 +76,8 @@ function mise_a_jour_ecran_securite() {
 
 	// si il y a une version plus recente que l'on a recu correctement
 	if ($res['status'] == 200
-		AND $res['length']
-		AND $tmp_file = $res['file']
+		and $res['length']
+		and $tmp_file = $res['file']
 	) {
 
 		if ($md5 !== md5_file($tmp_file)) {
@@ -132,20 +132,20 @@ function info_maj($dir, $file, $version) {
 		$version_maj = $maj2 . '.' . $min2 . '.' . $rev2;
 		// d'abord les mises à jour de la même branche
 		if ((spip_version_compare($version, $version_maj, '<'))
-			AND (spip_version_compare($page, $version_maj, '<'))
-			AND spip_version_compare($branche, $branche_maj, '=')
+			and (spip_version_compare($page, $version_maj, '<'))
+			and spip_version_compare($branche, $branche_maj, '=')
 		) {
 			$page = $version_maj;
 		}
 		// puis les mises à jours majeures
 		if ((spip_version_compare($version, $version_maj, '<'))
-			AND (spip_version_compare($page, $version_maj, '<'))
-			AND spip_version_compare($branche, $branche_maj, '<')
+			and (spip_version_compare($page, $version_maj, '<'))
+			and spip_version_compare($branche, $branche_maj, '<')
 		) {
 			$page_majeure = $version_maj;
 		}
 	}
-	if (!$page AND !$page_majeure) {
+	if (!$page and !$page_majeure) {
 		return "";
 	}
 

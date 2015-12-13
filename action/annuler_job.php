@@ -30,7 +30,7 @@ function action_annuler_job_dist() {
 	$id_job = $securiser_action();
 
 	if ($id_job = intval($id_job)
-		AND autoriser('annuler', 'job', $id_job)
+		and autoriser('annuler', 'job', $id_job)
 	) {
 		job_queue_remove($id_job);
 	}

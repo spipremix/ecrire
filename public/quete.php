@@ -55,7 +55,7 @@ function quete_parent_lang($table, $id, $connect = '') {
 		if (!isset($cache_quete[$connect][$table]['_select'])) {
 			$trouver_table = charger_fonction('trouver_table', 'base');
 			if (!$desc = $trouver_table($table,
-					$connect) OR !isset($desc['field']['id_rubrique'])
+					$connect) or !isset($desc['field']['id_rubrique'])
 			) // pas de parent rubrique, on passe
 			{
 				$cache_quete[$connect][$table]['_select'] = false;
@@ -148,13 +148,13 @@ function quete_profondeur($id, $connect = '') {
  *     Morceau de la requête SQL testant la date
  */
 function quete_condition_postdates($champ_date, $serveur = '', $ignore_previsu = false) {
-	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW AND !$ignore_previsu) {
+	if (defined('_VAR_PREVIEW') and _VAR_PREVIEW and !$ignore_previsu) {
 		return "1=1";
 	}
 
 	return
 		(isset($GLOBALS['meta']['date_prochain_postdate'])
-			AND $GLOBALS['meta']['date_prochain_postdate'] > time())
+			and $GLOBALS['meta']['date_prochain_postdate'] > time())
 			? "$champ_date<" . sql_quote(date('Y-m-d H:i:s', $GLOBALS['meta']['date_prochain_postdate']), $serveur)
 			: "1=1";
 }
@@ -184,7 +184,7 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 	}
 
 	$liste = $publie;
-	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW AND !$ignore_previsu) {
+	if (defined('_VAR_PREVIEW') and _VAR_PREVIEW and !$ignore_previsu) {
 		$liste = $previsu;
 	}
 	$not = false;
@@ -208,12 +208,12 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 			$v = reset($v);
 			$v = preg_replace(",\W,", "", $v);
 			if ($filtre == "auteur"
-				AND isset($GLOBALS['visiteur_session']['id_auteur'])
-				AND intval($GLOBALS['visiteur_session']['id_auteur'])
-				AND (strpos($mstatut, ".") !== false)
-				AND $objet = explode(".", $mstatut)
-				AND $id_table = reset($objet)
-				AND $objet = objet_type($id_table)
+				and isset($GLOBALS['visiteur_session']['id_auteur'])
+				and intval($GLOBALS['visiteur_session']['id_auteur'])
+				and (strpos($mstatut, ".") !== false)
+				and $objet = explode(".", $mstatut)
+				and $id_table = reset($objet)
+				and $objet = objet_type($id_table)
 			) {
 				$primary = id_table_objet($objet);
 				$where[] = "($mstatut<>" . sql_quote($v) . " OR $id_table.$primary IN (" . sql_get_select("ssss.id_objet",
@@ -349,7 +349,7 @@ function quete_logo($type, $onoff, $id, $id_rubrique, $flag) {
 					$id = $id_rubrique;
 					$id_rubrique = 0;
 				} else {
-					if ($id AND $type == 'id_rubrique') {
+					if ($id and $type == 'id_rubrique') {
 						$id = quete_parent($id);
 					} else {
 						return '';
@@ -381,8 +381,8 @@ function quete_logo_file($row, $connect = null) {
 	}
 	// si c'est une vignette type doc, la renvoyer direct
 	if (strcmp($logo, _DIR_PLUGINS) == 0
-		OR strcmp($logo, _DIR_PLUGINS_DIST) == 0
-		OR strcmp($logo, _DIR_RACINE . 'prive/') == 0
+		or strcmp($logo, _DIR_PLUGINS_DIST) == 0
+		or strcmp($logo, _DIR_RACINE . 'prive/') == 0
 	) {
 		return $logo;
 	}
@@ -420,7 +420,7 @@ function quete_logo_document($row, $lien, $align, $mode_logo, $x, $y, $connect =
 		$logo = vignette_logo_document($row, $connect);
 	}
 	// si on veut explicitement la vignette, ne rien renvoyer si il n'y en a pas
-	if ($mode_logo == 'vignette' AND !$logo) {
+	if ($mode_logo == 'vignette' and !$logo) {
 		return '';
 	}
 	if ($mode_logo == 'icone') {
@@ -451,7 +451,7 @@ function vignette_logo_document($row, $connect = '') {
 		return "$site/$dir$fichier";
 	}
 	$f = get_spip_doc($fichier);
-	if ($f AND @file_exists($f)) {
+	if ($f and @file_exists($f)) {
 		return $f;
 	}
 	if ($row['mode'] !== 'vignette') {
@@ -496,7 +496,7 @@ function calcul_exposer($id, $prim, $reference, $parent, $type, $connect = '') {
 				foreach ($enfants[$type] as $t) {
 					if (isset($reference[$t])
 						// cas de la reference donnee dynamiquement par la pagination
-						OR isset($reference["@$t"])
+						or isset($reference["@$t"])
 					) {
 						$type = $t;
 						$principal = isset($reference[$type]) ? $reference[$type] : $reference["@$type"];
@@ -554,12 +554,12 @@ function calcul_exposer($id, $prim, $reference, $parent, $type, $connect = '') {
 function quete_debut_pagination($primary, $valeur, $pas, $iter) {
 	// on ne devrait pas arriver ici si la cle primaire est inexistante
 	// ou composee, mais verifions
-	if (!$primary OR preg_match('/[,\s]/', $primary)) {
+	if (!$primary or preg_match('/[,\s]/', $primary)) {
 		return 0;
 	}
 
 	$pos = 0;
-	while ($row = $iter->fetch() AND $row[$primary] != $valeur) {
+	while ($row = $iter->fetch() and $row[$primary] != $valeur) {
 		$pos++;
 	}
 	// si on a pas trouve

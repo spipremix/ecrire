@@ -87,11 +87,11 @@ function public_debusquer_dist($message = '', $lieu = '', $opt = array()) {
 		set_request('var_mode', 'debug');
 		$GLOBALS['bouton_admin_debug'] = true;
 		// Permettre a la compil de continuer
-		if (is_object($lieu) AND (!isset($lieu->code) OR !$lieu->code)) {
+		if (is_object($lieu) and (!isset($lieu->code) or !$lieu->code)) {
 			$lieu->code = "''";
 		}
 		// forcer l'appel au debusqueur en cas de boucles infernales
-		$urgence = (_DEBUG_MAX_SQUELETTE_ERREURS AND count($tableau_des_erreurs) > _DEBUG_MAX_SQUELETTE_ERREURS);
+		$urgence = (_DEBUG_MAX_SQUELETTE_ERREURS and count($tableau_des_erreurs) > _DEBUG_MAX_SQUELETTE_ERREURS);
 		if (!$urgence) {
 			return;
 		}
@@ -116,7 +116,7 @@ function public_debusquer_dist($message = '', $lieu = '', $opt = array()) {
 	// sauf si l'on se trouve deja dans un flux compresse (plugin compresseur
 	// actif par exemple)
 	if (ob_get_length()
-		AND
+		and
 		!in_array('ob_gzhandler', ob_get_status())
 	) {
 		ob_end_clean();
@@ -132,7 +132,7 @@ function public_debusquer_dist($message = '', $lieu = '', $opt = array()) {
 		. '<br />'
 		. debusquer_squelette($fonc, $mode, $self);
 
-	if (!_DIR_RESTREINT OR headers_sent()) {
+	if (!_DIR_RESTREINT or headers_sent()) {
 		return $res;
 	}
 	if ($tableau_des_erreurs) {
@@ -163,7 +163,7 @@ function debusquer_compose_message($msg) {
 	if (is_array($msg)) {
 		// si c'est un texte, c'est une traduction a faire, mais
 		// sqlite renvoit aussi des erreurs alpha num (mais avec 3 arguments)
-		if (!is_numeric($msg[0]) AND count($msg) == 2) {
+		if (!is_numeric($msg[0]) and count($msg) == 2) {
 			// message avec argument: instancier
 			$msg = _T($msg[0], $msg[1], 'spip-debug-arg');
 		} else {
@@ -320,14 +320,14 @@ function debusquer_requete($message) {
 	// il serait plus prudent certainement d'avoir une fonction d'analyse par moteur
 	if (preg_match(',err(no|code):?[[:space:]]*([0-9]+),i', $msg, $regs)) {
 		$errno = $regs[2];
-	} elseif (is_numeric($errno) and ($errno == 1030 OR $errno <= 1026)
-		AND preg_match(',[^[:alnum:]]([0-9]+)[^[:alnum:]],', $msg, $regs)
+	} elseif (is_numeric($errno) and ($errno == 1030 or $errno <= 1026)
+		and preg_match(',[^[:alnum:]]([0-9]+)[^[:alnum:]],', $msg, $regs)
 	) {
 		$errno = $regs[1];
 	}
 
 	// Erreur systeme
-	if (is_numeric($errno) and $errno > 0 AND $errno < 200) {
+	if (is_numeric($errno) and $errno > 0 and $errno < 200) {
 		$retour = "<tt><br /><br /><blink>"
 			. _T('info_erreur_systeme', array('errsys' => $errno))
 			. "</blink><br />\n<b>"

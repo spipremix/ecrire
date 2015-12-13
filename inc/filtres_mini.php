@@ -37,8 +37,8 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function resolve_path($url) {
 	list($url, $query) = array_pad(explode('?', $url, 2), 2, null);
 	while (preg_match(',/\.?/,', $url, $regs)    # supprime // et /./
-		OR preg_match(',/[^/]*/\.\./,S', $url, $regs)  # supprime /toto/../
-		OR preg_match(',^/\.\./,S', $url, $regs))    # supprime les /../ du haut
+		or preg_match(',/[^/]*/\.\./,S', $url, $regs)  # supprime /toto/../
+		or preg_match(',^/\.\./,S', $url, $regs))    # supprime les /../ du haut
 	{
 		$url = str_replace($regs[0], '/', $url);
 	}

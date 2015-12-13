@@ -102,7 +102,7 @@ if (!defined('_NOM_CONFIG')) {
 
 // Son emplacement absolu si on le trouve
 if (@file_exists($f = _ROOT_RACINE . _NOM_PERMANENTS_INACCESSIBLES . _NOM_CONFIG . '.php')
-	OR (@file_exists($f = _ROOT_RESTREINT . _NOM_CONFIG . '.php'))
+	or (@file_exists($f = _ROOT_RESTREINT . _NOM_CONFIG . '.php'))
 ) {
 	/** Emplacement absolu du fichier d'option */
 	define('_FILE_OPTIONS', $f);
@@ -125,7 +125,7 @@ if (!defined('MODULES_IDIOMES')) {
 
 // Inclure l'ecran de securite
 if (!defined('_ECRAN_SECURITE')
-	AND @file_exists($f = _ROOT_RACINE . _NOM_PERMANENTS_INACCESSIBLES . 'ecran_securite.php')
+	and @file_exists($f = _ROOT_RACINE . _NOM_PERMANENTS_INACCESSIBLES . 'ecran_securite.php')
 ) {
 	include $f;
 }
@@ -137,7 +137,7 @@ if (!defined('_ECRAN_SECURITE')
 if (!defined('_IS_BOT')) {
 	define('_IS_BOT',
 		isset($_SERVER['HTTP_USER_AGENT'])
-		AND preg_match(
+		and preg_match(
 		// mots generiques
 			',bot|slurp|crawler|spider|webvac|yandex|'
 			// UA plus cibles
@@ -397,7 +397,7 @@ spip_initialisation_core(
 // qui ne sera pas execute car _ECRIRE_INC_VERSION est defini
 // donc il faut avoir tout fini ici avant de charger les plugins
 
-if (@is_readable(_CACHE_PLUGINS_OPT) AND @is_readable(_CACHE_PLUGINS_PATH)) {
+if (@is_readable(_CACHE_PLUGINS_OPT) and @is_readable(_CACHE_PLUGINS_PATH)) {
 	// chargement optimise precompile
 	include_once(_CACHE_PLUGINS_OPT);
 } else {
@@ -429,10 +429,10 @@ if (test_espace_prive()) {
 // Installer Spip si pas installe... sauf si justement on est en train
 //
 if (!(_FILE_CONNECT
-	OR autoriser_sans_cookie(_request('exec'))
-	OR _request('action') == 'cookie'
-	OR _request('action') == 'converser'
-	OR _request('action') == 'test_dirs')
+	or autoriser_sans_cookie(_request('exec'))
+	or _request('action') == 'cookie'
+	or _request('action') == 'converser'
+	or _request('action') == 'test_dirs')
 ) {
 
 	// Si on peut installer, on lance illico
@@ -451,8 +451,8 @@ if (!(_FILE_CONNECT
 
 // memoriser un tri sessionne eventuel
 if (isset($_REQUEST['var_memotri'])
-	AND $t = $_REQUEST['var_memotri']
-	AND (strncmp($t, 'trisession', 10) == 0 OR strncmp($t, 'senssession', 11) == 0)
+	and $t = $_REQUEST['var_memotri']
+	and (strncmp($t, 'trisession', 10) == 0 or strncmp($t, 'senssession', 11) == 0)
 ) {
 	if (!function_exists('session_set')) {
 		include_spip('inc/session');
@@ -471,7 +471,7 @@ if (!defined('_HEADER_COMPOSED_BY')) {
 }
 if (!headers_sent()) {
 	header("Vary: Cookie, Accept-Encoding");
-	if (!isset($GLOBALS['spip_header_silencieux']) OR !$GLOBALS['spip_header_silencieux']) {
+	if (!isset($GLOBALS['spip_header_silencieux']) or !$GLOBALS['spip_header_silencieux']) {
 		header(_HEADER_COMPOSED_BY . " $spip_version_affichee @ www.spip.net" . (isset($GLOBALS['meta']['plugin_header']) ? (" + " . $GLOBALS['meta']['plugin_header']) : ""));
 	} else // header minimal
 	{

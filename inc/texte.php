@@ -104,7 +104,7 @@ function traiter_raccourcis($letexte) {
 function echappe_js($t, $class = ' class = "echappe-js"') {
 	foreach (array('script', 'iframe') as $tag) {
 		if (stripos($t, "<$tag") !== false
-			AND preg_match_all(',<' . $tag . '.*?($|</' . $tag . '.),isS', $t, $r, PREG_SET_ORDER)
+			and preg_match_all(',<' . $tag . '.*?($|</' . $tag . '.),isS', $t, $r, PREG_SET_ORDER)
 		) {
 			foreach ($r as $regs) {
 				$t = str_replace($regs[0],
@@ -144,7 +144,7 @@ function interdire_scripts($arg) {
 	static $dejavu = array();
 
 	// Attention, si ce n'est pas une chaine, laisser intact
-	if (!$arg OR !is_string($arg) OR !strstr($arg, '<')) {
+	if (!$arg or !is_string($arg) or !strstr($arg, '<')) {
 		return $arg;
 	}
 
@@ -263,7 +263,7 @@ function typo($letexte, $echapper = true, $connect = null, $env = array()) {
 
 	// Dans l'espace prive on se mefie de tout contenu dangereux
 	// https://core.spip.net/issues/3371
-	if (isset($env['espace_prive']) AND $env['espace_prive']) {
+	if (isset($env['espace_prive']) and $env['espace_prive']) {
 		$letexte = echapper_html_suspect($letexte);
 	}
 

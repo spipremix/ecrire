@@ -115,7 +115,7 @@ function install_etape_chmod_dist() {
 		}
 	}
 
-	if ($bad_dirs OR $absent_dirs) {
+	if ($bad_dirs or $absent_dirs) {
 
 		if (!_FILE_CONNECT) {
 			$titre = _T('dirs_preliminaire');
@@ -151,7 +151,7 @@ function install_etape_chmod_dist() {
 		echo minipres($titre, $res . generer_form_ecrire('install', $t));
 
 	} else {
-		$deja = (_FILE_CONNECT AND analyse_fichier_connection(_FILE_CONNECT));
+		$deja = (_FILE_CONNECT and analyse_fichier_connection(_FILE_CONNECT));
 		if (!$deja) {
 			redirige_url_ecrire("install", "etape=1&chmod=" . $chmod);
 		} else {

@@ -33,7 +33,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  **/
 function action_session_dist() {
 	if ($var = _request('var')
-		AND preg_match(',^[a-z_0-9-]+$,i', $var)
+		and preg_match(',^[a-z_0-9-]+$,i', $var)
 	) {
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			include_spip('inc/session');

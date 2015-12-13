@@ -184,14 +184,14 @@ function normaliser_args_inclumodel($p) {
 function normaliser_inclure($champ) {
 	normaliser_args_inclumodel($champ);
 	$l = $champ->param[0];
-	if (is_array($l) AND !$l[0]) {
+	if (is_array($l) and !$l[0]) {
 		foreach ($l as $k => $p) {
-			if ($p AND $p[0]->type == 'texte' AND !strpos($p[0]->texte, '=')) {
+			if ($p and $p[0]->type == 'texte' and !strpos($p[0]->texte, '=')) {
 				$p[0]->texte = trim($p[0]->texte);
 			}
 		}
 		foreach ($l as $k => $p) {
-			if (!$p OR $p[0]->type != 'texte' OR
+			if (!$p or $p[0]->type != 'texte' or
 				!preg_match('/^fond\s*=\s*(.*)$/', $p[0]->texte, $r)
 			) {
 				continue;

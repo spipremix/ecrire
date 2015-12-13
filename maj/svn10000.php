@@ -174,7 +174,7 @@ function maj_12008() {
 	// Recopier les donnees
 	foreach (array('article', 'breve', 'rubrique', 'auteur', 'forum') as $l) {
 		if ($s = sql_select('*', 'spip_documents_' . $l . 's')
-			OR $s = sql_select('*', 'spip_documents_' . $l)
+			or $s = sql_select('*', 'spip_documents_' . $l)
 		) {
 			$tampon = array();
 			while ($t = sql_fetch($s)) {
@@ -676,8 +676,8 @@ function ranger_cache_gd2() {
 	$base = _DIR_VAR . "cache-gd2/";
 	$dir = opendir($base);
 	while (($f = readdir($dir)) !== false) {
-		if (!is_dir($base . $f) AND strncmp($f, ".", 1) !== 0
-			AND preg_match(",[0-9a-f]{32}\.\w+,", $f)
+		if (!is_dir($base . $f) and strncmp($f, ".", 1) !== 0
+			and preg_match(",[0-9a-f]{32}\.\w+,", $f)
 		) {
 			$sub = substr($f, 0, 2);
 			$sub = sous_repertoire($base, $sub);

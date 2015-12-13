@@ -120,7 +120,7 @@ function spip_file_get_contents($fichier) {
 			// on essaye : si ca retourne du contenu alors c'est bon
 			// sinon on fait un file() pour avoir le coeur net
 			$contenu = @file_get_contents($fichier);
-			if (!$contenu AND _OS_SERVEUR == 'windows') {
+			if (!$contenu and _OS_SERVEUR == 'windows') {
 				$contenu = @file($fichier);
 			}
 		} else {
@@ -158,7 +158,7 @@ function lire_fichier($fichier, &$contenu, $options = array()) {
 	$contenu = '';
 	// inutile car si le fichier n'existe pas, le lock va renvoyer false juste apres
 	// economisons donc les acces disque, sauf chez free qui rale pour un rien
-	if (_TEST_FILE_EXISTS AND !@file_exists($fichier)) {
+	if (_TEST_FILE_EXISTS and !@file_exists($fichier)) {
 		return false;
 	}
 
@@ -173,7 +173,7 @@ function lire_fichier($fichier, &$contenu, $options = array()) {
 		// on ne verifie que si la tentative de lecture a echoue
 		// pour discriminer un contenu vide d'un fichier absent
 		// et eviter un acces disque
-		if (!$contenu AND !@file_exists($fichier)) {
+		if (!$contenu and !@file_exists($fichier)) {
 			spip_fclose_unlock($fl);
 
 			return false;
@@ -239,7 +239,7 @@ function ecrire_fichier($fichier, $contenu, $ignorer_echec = false, $truncate = 
 		// y compris en NFS : http://www.ietf.org/rfc/rfc1094.txt
 		// sauf sous wintruc ou ca ne marche pas
 		$ok = false;
-		if ($truncate AND _OS_SERVEUR != 'windows') {
+		if ($truncate and _OS_SERVEUR != 'windows') {
 			if (!function_exists('creer_uniqid')) {
 				include_spip('inc/acces');
 			}
@@ -258,7 +258,7 @@ function ecrire_fichier($fichier, $contenu, $ignorer_echec = false, $truncate = 
 				// --> on a la version de l'autre process qui doit etre identique
 				@rename("$fichier.$id", $fichier);
 				// precaution en cas d'echec du rename
-				if (!_TEST_FILE_EXISTS OR @file_exists("$fichier.$id")) {
+				if (!_TEST_FILE_EXISTS or @file_exists("$fichier.$id")) {
 					@unlink("$fichier.$id");
 				}
 				if ($ok) {
@@ -505,9 +505,9 @@ function spip_clear_opcode_cache($filepath) {
  */
 function spip_attend_invalidation_opcode_cache() {
 	if (function_exists('opcache_get_configuration')
-		AND @ini_get('opcache.enable')
-		AND @ini_get('opcache.validate_timestamps')
-		AND $duree = @ini_get('opcache.revalidate_freq')
+		and @ini_get('opcache.enable')
+		and @ini_get('opcache.validate_timestamps')
+		and $duree = @ini_get('opcache.revalidate_freq')
 	) {
 		sleep($duree+1);
 	}
@@ -597,7 +597,7 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
 	}
 
 
-	if (_CREER_DIR_PLAT AND @file_exists("$base${subdir}.plat")) {
+	if (_CREER_DIR_PLAT and @file_exists("$base${subdir}.plat")) {
 		return $baseaff . ($dirs[$base . $subdir] = "${subdir}_");
 	}
 
@@ -628,7 +628,7 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
 	// l'inode du fichier dir_test existe, mais impossible d'y mettre du contenu
 	// => sauf besoin express (define dans mes_options), ne pas creer le .plat
 	if (_CREER_DIR_PLAT
-		AND $f = @fopen("$base${subdir}.plat", "w")
+		and $f = @fopen("$base${subdir}.plat", "w")
 	) {
 		fclose($f);
 	} else {
@@ -689,12 +689,12 @@ function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs =
 		$dir = '.';
 	}
 
-	if (@is_dir($dir) AND is_readable($dir) AND $d = @opendir($dir)) {
+	if (@is_dir($dir) and is_readable($dir) and $d = @opendir($dir)) {
 		while (($f = readdir($d)) !== false && ($nbfiles < $maxfiles)) {
 			if ($f[0] != '.' # ignorer . .. .svn etc
-				AND $f != 'CVS'
-				AND $f != 'remove.txt'
-				AND is_readable($f = "$dir/$f")
+				and $f != 'CVS'
+				and $f != 'remove.txt'
+				and is_readable($f = "$dir/$f")
 			) {
 				if (is_file($f)) {
 					if (preg_match(";$pattern;iS", $f)) {
@@ -702,9 +702,9 @@ function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs =
 						$nbfiles++;
 					}
 				} else {
-					if (is_dir($f) AND is_array($recurs)) {
+					if (is_dir($f) and is_array($recurs)) {
 						$rp = @realpath($f);
-						if (!is_string($rp) OR !strlen($rp)) {
+						if (!is_string($rp) or !strlen($rp)) {
 							$rp = $f;
 						} # realpath n'est peut etre pas autorise
 						if (!isset($recurs[$rp])) {

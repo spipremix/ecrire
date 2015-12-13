@@ -46,7 +46,7 @@ function collecter_requests($white_list, $black_list = array(), $set = null, $to
 			// on ne collecte que les champs reellement envoyes par defaut.
 			// le cas d'un envoi de valeur NULL peut du coup poser probleme.
 			$val = _request($champ);
-			if ($tous OR $val !== null) {
+			if ($tous or $val !== null) {
 				$c[$champ] = $val;
 			}
 		}
@@ -128,9 +128,9 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 	unset($c['id_secteur']);
 
 	// Gerer les champs non vides
-	if (isset($options['nonvide']) AND is_array($options['nonvide'])) {
+	if (isset($options['nonvide']) and is_array($options['nonvide'])) {
 		foreach ($options['nonvide'] as $champ => $sinon) {
-			if (isset($c[$champ]) AND $c[$champ] === '') {
+			if (isset($c[$champ]) and $c[$champ] === '') {
 				$c[$champ] = $sinon;
 			}
 		}
@@ -180,7 +180,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 
 	// Verifier si les mises a jour sont pertinentes, datees, en conflit etc
 	include_spip('inc/editer');
-	if (!isset($options['data']) OR is_null($options['data'])){
+	if (!isset($options['data']) or is_null($options['data'])){
 		$options['data'] = &$_POST;
 	}
 	$conflits = controler_md5($champs, $options['data'], $objet, $id_objet, $serveur);
@@ -212,8 +212,8 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 		// la modif peut avoir lieu
 
 		// faut-il ajouter date_modif ?
-		if (isset($options['date_modif']) AND $options['date_modif']
-			AND !isset($champs[$options['date_modif']])
+		if (isset($options['date_modif']) and $options['date_modif']
+			and !isset($champs[$options['date_modif']])
 		) {
 			$champs[$options['date_modif']] = date('Y-m-d H:i:s');
 		}
@@ -230,7 +230,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 			foreach ($moof as $k => $v) {
 				if ($v !== $champs[$k]
 					// ne pas alerter si le champ est numerique est que les valeurs sont equivalentes
-					AND (!is_numeric($v) OR intval($v) != intval($champs[$k]))
+					and (!is_numeric($v) or intval($v) != intval($champs[$k]))
 				) {
 					$liste[] = $k;
 					$conflits[$k]['post'] = $champs[$k];
@@ -289,7 +289,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 	// journaliser l'affaire
 	// message a affiner :-)
 	include_spip('inc/filtres_mini');
-	$qui = isset($GLOBALS['visiteur_session']['nom']) AND $GLOBALS['visiteur_session']['nom'] ? $GLOBALS['visiteur_session']['nom'] : $GLOBALS['ip'];
+	$qui = isset($GLOBALS['visiteur_session']['nom']) and $GLOBALS['visiteur_session']['nom'] ? $GLOBALS['visiteur_session']['nom'] : $GLOBALS['ip'];
 	journal(_L($qui . ' a &#233;dit&#233; l&#8217;' . $objet . ' ' . $id_objet . ' (' . join('+',
 			array_diff(array_keys($champs), array('date_modif'))) . ')'), array(
 		'faire' => 'modifier',

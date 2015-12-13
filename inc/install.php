@@ -144,7 +144,7 @@ function analyse_fichier_connection($file) {
 function bases_referencees($exclu = '') {
 	$tables = array();
 	foreach (preg_files(_DIR_CONNECT, '.php$') as $f) {
-		if ($f != $exclu AND analyse_fichier_connection($f)) {
+		if ($f != $exclu and analyse_fichier_connection($f)) {
 			$tables[] = basename($f, '.php');
 		}
 	}
@@ -172,8 +172,8 @@ function tester_compatibilite_hebergement() {
 		$m = '5.1.0';
 		$min = explode('.', $m);
 		if ($php[0] < $min[0]
-			OR ($php[0] == $min[0] AND $php[1] < $min[1])
-			OR ($php[0] == $min[0] AND $php[1] == $min[1] AND $php[2] < $min[2])
+			or ($php[0] == $min[0] and $php[1] < $min[1])
+			or ($php[0] == $min[0] and $php[1] == $min[1] and $php[2] < $min[2])
 		) {
 			$err[] = _T('install_php_version', array('version' => $p, 'minimum' => $m));
 		}
@@ -361,7 +361,7 @@ function fieldset_champs($champs = array()) {
 			$fieldset .= "<label for='" . $nom . "'>" . $contenu['label'] . "</label>\n";
 			$fieldset .= "<input " . $class . "type='" . $type . "' id='" . $nom . "' name='" . $nom . "'\nvalue='" . $contenu['valeur'] . "'"
 				. (preg_match(',^(pass|login),', $nom) ? " autocomplete='off'" : '')
-				. ((isset($contenu['required']) AND $contenu['required']) ? " required='required'" : "")
+				. ((isset($contenu['required']) and $contenu['required']) ? " required='required'" : "")
 				. " />\n";
 		}
 	}
@@ -378,12 +378,12 @@ function install_select_serveur() {
 	}
 	while (($f = readdir($d)) !== false) {
 		if ((preg_match('/^(.*)[.]php$/', $f, $s))
-			AND is_readable($f = $dir . $f)
+			and is_readable($f = $dir . $f)
 		) {
 			require_once($f);
 			$s = $s[1];
 			$v = 'spip_versions_' . $s;
-			if (function_exists($v) AND $v()) {
+			if (function_exists($v) and $v()) {
 				$titre = _T("install_select_type_$s");
 				// proposer mysql par defaut si dispo
 				$checked = ($s == 'mysql' ? " checked='checked'" : "");
@@ -545,8 +545,8 @@ function install_etape_liste_bases($server_db, $login_db, $disabled = array()) {
 			. ($dis ? "<i>$nom</i>" : $nom)
 			. "</label>";
 
-		if (!$checked AND !$dis AND
-			(($nom == $login_db) OR
+		if (!$checked and !$dis and
+			(($nom == $login_db) or
 				($GLOBALS['table_prefix'] == $nom))
 		) {
 			$checked = "<input$base checked='checked' />\n$label";

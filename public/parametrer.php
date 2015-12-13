@@ -58,7 +58,7 @@ function public_parametrer_dist($fond, $contexte = '', $cache = '', $connect = '
 		$lang = $GLOBALS['meta']['langue_site'];
 	}
 
-	$select = ((!isset($GLOBALS['forcer_lang']) OR !$GLOBALS['forcer_lang']) AND $lang <> $GLOBALS['spip_lang']);
+	$select = ((!isset($GLOBALS['forcer_lang']) or !$GLOBALS['forcer_lang']) and $lang <> $GLOBALS['spip_lang']);
 	if ($select) {
 		$select = lang_select($lang);
 	}
@@ -171,8 +171,8 @@ function public_parametrer_dist($fond, $contexte = '', $cache = '', $connect = '
 			$GLOBALS['debug_objets']['courant'] = $courant;
 			$GLOBALS['debug_objets']['profile'][$sourcefile] = $profile;
 			if ($GLOBALS['debug_objets']['sourcefile']
-				AND (_request('var_mode_objet') == $fonc)
-				AND (_request('var_mode_affiche') == 'resultat')
+				and (_request('var_mode_objet') == $fonc)
+				and (_request('var_mode_affiche') == 'resultat')
 			) {
 				erreur_squelette();
 			}
@@ -183,7 +183,7 @@ function public_parametrer_dist($fond, $contexte = '', $cache = '', $connect = '
 			// si aucun #CACHE{} spécifié
 			// le contexte implicite qui conditionne le cache assure qu'on retombe pas sur le meme
 			// entre public et prive
-			if (test_espace_prive() OR strncmp($fond, 'modeles/', 8) == 0) {
+			if (test_espace_prive() or strncmp($fond, 'modeles/', 8) == 0) {
 				$page['entetes']['X-Spip-Cache'] = 0;
 			} else {
 				$page['entetes']['X-Spip-Cache'] = isset($GLOBALS['delais']) ? $GLOBALS['delais'] : 36000;
@@ -194,7 +194,7 @@ function public_parametrer_dist($fond, $contexte = '', $cache = '', $connect = '
 
 		// faire remonter le fichier source
 		static $js_inclus = false;
-		if (defined('_VAR_INCLURE') AND _VAR_INCLURE) {
+		if (defined('_VAR_INCLURE') and _VAR_INCLURE) {
 			$page['sourcefile'] = $sourcefile;
 			$page['texte'] =
 				"<div class='inclure_blocs'><h6>" . $page['sourcefile'] . "</h6>" . $page['texte'] . "</div>"
@@ -231,7 +231,7 @@ function public_parametrer_dist($fond, $contexte = '', $cache = '', $connect = '
  */
 function tester_redirection($fond, $contexte, $connect) {
 	if ($fond == 'article'
-		AND $id_article = intval($contexte['id_article'])
+		and $id_article = intval($contexte['id_article'])
 	) {
 		include_spip('public/quete'); // pour quete_virtuel et ses dependances
 		$m = quete_virtuel($id_article, $connect);

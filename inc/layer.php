@@ -133,7 +133,7 @@ function verif_butineur() {
 					$GLOBALS['browser_version'] = $match[1];
 					$GLOBALS['browser_barre'] = ($GLOBALS['browser_version'] >= 5.0);
 				} else {
-					if (preg_match(",mozilla,i", $GLOBALS['browser_name']) AND $GLOBALS['browser_version'] >= 5) {
+					if (preg_match(",mozilla,i", $GLOBALS['browser_name']) and $GLOBALS['browser_version'] >= 5) {
 						// Numero de version pour Mozilla "authentique"
 						if (preg_match(",rv:([0-9]+\.[0-9]+),", $GLOBALS['browser_description'], $match)) {
 							$GLOBALS['browser_rev'] = doubleval($match[1]);

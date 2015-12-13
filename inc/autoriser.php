@@ -142,7 +142,7 @@ function autoriser_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 
 	// Qui ? visiteur_session ?
 	// si null ou '' (appel depuis #AUTORISER) on prend l'auteur loge
-	if ($qui === null OR $qui === '') {
+	if ($qui === null or $qui === '') {
 		$qui = $GLOBALS['visiteur_session'] ? $GLOBALS['visiteur_session'] : array();
 		$qui = array_merge(array('statut' => '', 'id_auteur' => 0, 'webmestre' => 'non'), $qui);
 	} elseif (is_numeric($qui)) {
@@ -151,7 +151,7 @@ function autoriser_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 
 	// Admins restreints, on construit ici (pas generique mais...)
 	// le tableau de toutes leurs rubriques (y compris les sous-rubriques)
-	if (_ADMINS_RESTREINTS AND is_array($qui)) {
+	if (_ADMINS_RESTREINTS and is_array($qui)) {
 		$qui['restreint'] = isset($qui['id_auteur']) ? liste_rubriques_auteur($qui['id_auteur']) : array();
 	}
 
@@ -163,7 +163,7 @@ function autoriser_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 
 	// Si une exception a ete decretee plus haut dans le code, l'appliquer
 	if (isset($GLOBALS['autoriser_exception'][$faire][$type][$id])
-		AND autoriser_exception($faire, $type, $id, 'verifier')
+		and autoriser_exception($faire, $type, $id, 'verifier')
 	) {
 		return true;
 	}
@@ -249,7 +249,7 @@ function autoriser_exception($faire, $type, $id, $autoriser = true) {
 function autoriser_defaut_dist($faire, $type, $id, $qui, $opt) {
 	return
 		$qui['statut'] == '0minirezo'
-		AND !$qui['restreint'];
+		and !$qui['restreint'];
 }
 
 
@@ -313,13 +313,13 @@ function autoriser_previsualiser_dist($faire, $type, $id, $qui, $opt) {
 
 	// A-t-on un token valable ?
 	if (is_array($GLOBALS['visiteur_session'])
-		AND $token = session_get('previewtoken')
-		AND preg_match('/^(\d+)\*(.*)$/', $token, $r)
-		AND $action = 'previsualiser'
-		AND (include_spip('inc/securiser_action'))
-		AND (
+		and $token = session_get('previewtoken')
+		and preg_match('/^(\d+)\*(.*)$/', $token, $r)
+		and $action = 'previsualiser'
+		and (include_spip('inc/securiser_action'))
+		and (
 			$r[2] == _action_auteur($action, $r[1], null, 'alea_ephemere')
-			OR $r[2] == _action_auteur($action, $r[1], null, 'alea_ephemere_ancien')
+			or $r[2] == _action_auteur($action, $r[1], null, 'alea_ephemere_ancien')
 		)
 	) {
 		return true;
@@ -485,7 +485,7 @@ function autoriser_dater_dist($faire, $type, $id, $qui, $opt) {
 	}
 
 	if ($statut == 'publie'
-		OR ($statut == 'prop' AND $type == 'article' AND $GLOBALS['meta']["post_dates"] == "non")
+		or ($statut == 'prop' and $type == 'article' and $GLOBALS['meta']["post_dates"] == "non")
 	) {
 		return autoriser('modifier', $type, $id);
 	}
@@ -525,9 +525,9 @@ function autoriser_instituer_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_rubrique_publierdans_dist($faire, $type, $id, $qui, $opt) {
 	return
 		($qui['statut'] == '0minirezo')
-		AND (
-			!$qui['restreint'] OR !$id
-			OR in_array($id, $qui['restreint'])
+		and (
+			!$qui['restreint'] or !$id
+			or in_array($id, $qui['restreint'])
 		);
 }
 
@@ -545,8 +545,8 @@ function autoriser_rubrique_publierdans_dist($faire, $type, $id, $qui, $opt) {
  **/
 function autoriser_rubrique_creer_dist($faire, $type, $id, $qui, $opt) {
 	return
-		((!$id AND autoriser('defaut', null, null, $qui, $opt))
-			OR $id AND autoriser('creerrubriquedans', 'rubrique', $id, $qui, $opt)
+		((!$id and autoriser('defaut', null, null, $qui, $opt))
+			or $id and autoriser('creerrubriquedans', 'rubrique', $id, $qui, $opt)
 		);
 }
 
@@ -564,9 +564,9 @@ function autoriser_rubrique_creer_dist($faire, $type, $id, $qui, $opt) {
  **/
 function autoriser_rubrique_creerrubriquedans_dist($faire, $type, $id, $qui, $opt) {
 	return
-		($id OR ($qui['statut'] == '0minirezo' AND !$qui['restreint']))
-		AND autoriser('voir', 'rubrique', $id)
-		AND autoriser('publierdans', 'rubrique', $id);
+		($id or ($qui['statut'] == '0minirezo' and !$qui['restreint']))
+		and autoriser('voir', 'rubrique', $id)
+		and autoriser('publierdans', 'rubrique', $id);
 }
 
 /**
@@ -584,8 +584,8 @@ function autoriser_rubrique_creerrubriquedans_dist($faire, $type, $id, $qui, $op
 function autoriser_rubrique_creerarticledans_dist($faire, $type, $id, $qui, $opt) {
 	return
 		$id
-		AND autoriser('voir', 'rubrique', $id)
-		AND autoriser('creer', 'article');
+		and autoriser('voir', 'rubrique', $id)
+		and autoriser('creer', 'article');
 }
 
 
@@ -665,14 +665,14 @@ function autoriser_article_modifier_dist($faire, $type, $id, $qui, $opt) {
 
 	return
 		$r
-		AND
+		and
 		(
 			autoriser('publierdans', 'rubrique', $r['id_rubrique'], $qui, $opt)
-			OR (
-				(!isset($opt['statut']) OR $opt['statut'] !== 'publie')
-				AND in_array($qui['statut'], array('0minirezo', '1comite'))
-				AND in_array($r['statut'], array('prop', 'prepa', 'poubelle'))
-				AND auteurs_article($id, "id_auteur=" . $qui['id_auteur'])
+			or (
+				(!isset($opt['statut']) or $opt['statut'] !== 'publie')
+				and in_array($qui['statut'], array('0minirezo', '1comite'))
+				and in_array($r['statut'], array('prop', 'prepa', 'poubelle'))
+				and auteurs_article($id, "id_auteur=" . $qui['id_auteur'])
 			)
 		);
 }
@@ -690,7 +690,7 @@ function autoriser_article_modifier_dist($faire, $type, $id, $qui, $opt) {
  * @return bool          true s'il a le droit, false sinon
  **/
 function autoriser_article_creer_dist($faire, $type, $id, $qui, $opt) {
-	return (sql_countsel('spip_rubriques') > 0 AND in_array($qui['statut'], array('0minirezo', '1comite')));
+	return (sql_countsel('spip_rubriques') > 0 and in_array($qui['statut'], array('0minirezo', '1comite')));
 }
 
 /**
@@ -728,10 +728,10 @@ function autoriser_article_voir_dist($faire, $type, $id, $qui, $opt) {
 		// seuls les propose et publies sont visibles
 		in_array($statut, array('prop', 'publie'))
 		// sinon si on est auteur, on a le droit de le voir, evidemment !
-		OR
-		($id AND $qui['id_auteur']
-			AND (function_exists('auteurs_article') OR include_spip('inc/auth'))
-			AND auteurs_article($id, "id_auteur=" . $qui['id_auteur']));
+		or
+		($id and $qui['id_auteur']
+			and (function_exists('auteurs_article') or include_spip('inc/auth'))
+			and auteurs_article($id, "id_auteur=" . $qui['id_auteur']));
 }
 
 
@@ -749,7 +749,7 @@ function autoriser_article_voir_dist($faire, $type, $id, $qui, $opt) {
  **/
 function autoriser_voir_dist($faire, $type, $id, $qui, $opt) {
 	# securite, mais on aurait pas du arriver ici !
-	if (function_exists($f = 'autoriser_' . $type . '_voir') OR function_exists($f = 'autoriser_' . $type . '_voir_dist')) {
+	if (function_exists($f = 'autoriser_' . $type . '_voir') or function_exists($f = 'autoriser_' . $type . '_voir_dist')) {
 		return $f($faire, $type, $id, $qui, $opt);
 	}
 
@@ -787,8 +787,8 @@ function autoriser_webmestre_dist($faire, $type, $id, $qui, $opt) {
 		(defined('_ID_WEBMESTRES') ?
 			in_array($qui['id_auteur'], explode(':', _ID_WEBMESTRES))
 			: $qui['webmestre'] == 'oui')
-		AND $qui['statut'] == '0minirezo'
-		AND !$qui['restreint'];
+		and $qui['statut'] == '0minirezo'
+		and !$qui['restreint'];
 }
 
 /**
@@ -806,7 +806,7 @@ function autoriser_webmestre_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_configurer_dist($faire, $type, $id, $qui, $opt) {
 	return
 		$qui['statut'] == '0minirezo'
-		AND !$qui['restreint'];
+		and !$qui['restreint'];
 }
 
 /**
@@ -859,7 +859,7 @@ function autoriser_detruire_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_auteur_previsualiser_dist($faire, $type, $id, $qui, $opt) {
 	// les admins peuvent "previsualiser" une page auteur
 	if ($qui['statut'] == '0minirezo'
-		AND !$qui['restreint']
+		and !$qui['restreint']
 	) {
 		return true;
 	}
@@ -927,8 +927,8 @@ function autoriser_auteur_modifier_dist($faire, $type, $id, $qui, $opt) {
 		if (isset($opt['webmestre']) and $opt['webmestre']) {
 			return false;
 		} elseif ((isset($opt['statut']) and $opt['statut'])
-			OR (isset($opt['restreintes']) and $opt['restreintes'])
-			OR $opt['email']
+			or (isset($opt['restreintes']) and $opt['restreintes'])
+			or $opt['email']
 		) {
 			return false;
 		} elseif ($id == $qui['id_auteur']) {
@@ -943,8 +943,8 @@ function autoriser_auteur_modifier_dist($faire, $type, $id, $qui, $opt) {
 	if ($qui['restreint']) {
 		if (isset($opt['webmestre']) and $opt['webmestre']) {
 			return false;
-		} elseif ((isset($opt['statut']) AND ($opt['statut'] == '0minirezo'))
-			OR (isset($opt['restreintes']) and $opt['restreintes'])
+		} elseif ((isset($opt['statut']) and ($opt['statut'] == '0minirezo'))
+			or (isset($opt['restreintes']) and $opt['restreintes'])
 		) {
 			return false;
 		} else {
@@ -957,7 +957,7 @@ function autoriser_auteur_modifier_dist($faire, $type, $id, $qui, $opt) {
 			} else {
 				if ($id_auteur = intval($id)) {
 					$t = sql_fetsel("statut", "spip_auteurs", "id_auteur=$id_auteur");
-					if ($t AND $t['statut'] != '0minirezo') {
+					if ($t and $t['statut'] != '0minirezo') {
 						return true;
 					} else {
 						return false;
@@ -977,10 +977,10 @@ function autoriser_auteur_modifier_dist($faire, $type, $id, $qui, $opt) {
 	}
 	// et toucher au statut webmestre si il ne l'est pas lui meme
 	// ou si les webmestres sont fixes par constante (securite)
-	elseif (isset($opt['webmestre']) AND $opt['webmestre'] AND (defined('_ID_WEBMESTRES') OR !autoriser('webmestre'))) {
+	elseif (isset($opt['webmestre']) and $opt['webmestre'] and (defined('_ID_WEBMESTRES') or !autoriser('webmestre'))) {
 		return false;
 	} // et modifier un webmestre si il ne l'est pas lui meme
-	elseif (intval($id) AND autoriser('webmestre', '', 0, $id) AND !autoriser('webmestre')) {
+	elseif (intval($id) and autoriser('webmestre', '', 0, $id) and !autoriser('webmestre')) {
 		return false;
 	} else {
 		return true;
@@ -1064,10 +1064,10 @@ function liste_rubriques_auteur($id_auteur, $raz = false) {
 
 	$rubriques = array();
 	if (
-		(!isset($GLOBALS['meta']['version_installee']) OR $GLOBALS['meta']['version_installee'] > 16428)
-		AND $r = sql_allfetsel('id_objet', 'spip_auteurs_liens',
+		(!isset($GLOBALS['meta']['version_installee']) or $GLOBALS['meta']['version_installee'] > 16428)
+		and $r = sql_allfetsel('id_objet', 'spip_auteurs_liens',
 			"id_auteur=" . intval($id_auteur) . " AND objet='rubrique' AND id_objet!=0")
-		AND count($r)
+		and count($r)
 	) {
 		$r = array_map('reset', $r);
 
@@ -1087,7 +1087,7 @@ function liste_rubriques_auteur($id_auteur, $raz = false) {
 
 	// Affecter l'auteur session le cas echeant
 	if (isset($GLOBALS['visiteur_session']['id_auteur'])
-		AND $GLOBALS['visiteur_session']['id_auteur'] == $id_auteur
+		and $GLOBALS['visiteur_session']['id_auteur'] == $id_auteur
 	) {
 		$GLOBALS['visiteur_session']['restreint'] = $rubriques;
 	}
@@ -1157,8 +1157,8 @@ function autoriser_rubrique_iconifier_dist($faire, $type, $id, $qui, $opt) {
  * @return bool          true s'il a le droit, false sinon
  **/
 function autoriser_auteur_iconifier_dist($faire, $type, $id, $qui, $opt) {
-	return (($id == $qui['id_auteur']) OR
-		(($qui['statut'] == '0minirezo') AND !$qui['restreint']));
+	return (($id == $qui['id_auteur']) or
+		(($qui['statut'] == '0minirezo') and !$qui['restreint']));
 }
 
 /**
@@ -1222,7 +1222,7 @@ function autoriser_niet_dist($faire, $type, $id, $qui, $opt) { return false; }
  * @return bool          false
  **/
 function autoriser_base_reparer_dist($faire, $type, $id, $qui, $opt) {
-	if (!autoriser('detruire') OR _request('reinstall')) {
+	if (!autoriser('detruire') or _request('reinstall')) {
 		return false;
 	}
 
@@ -1323,7 +1323,7 @@ function autoriser_configurerpreferences_dist($faire, $type, $id, $qui, $opt) {
  **/
 function autoriser_menudeveloppement_menugrandeentree_dist($faire, $type, $id, $qui, $opt) {
 	return (isset($GLOBALS['visiteur_session']['prefs']['activer_menudev'])
-		AND $GLOBALS['visiteur_session']['prefs']['activer_menudev'] == 'oui');
+		and $GLOBALS['visiteur_session']['prefs']['activer_menudev'] == 'oui');
 }
 
 /**
@@ -1568,7 +1568,7 @@ function autoriser_inscrireauteur_dist($faire, $quoi, $id, $qui, $opt) {
 			return ($GLOBALS['meta']['accepter_inscriptions'] == 'oui');
 
 		case 'info_visiteurs' :
-			return ($GLOBALS['meta']['accepter_visiteurs'] == 'oui' OR $GLOBALS['meta']['forums_publics'] == 'abo');
+			return ($GLOBALS['meta']['accepter_visiteurs'] == 'oui' or $GLOBALS['meta']['forums_publics'] == 'abo');
 
 	}
 

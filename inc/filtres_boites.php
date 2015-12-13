@@ -131,7 +131,7 @@ function boite_ouvrir($titre, $class = '', $head_class = '', $id = "") {
 	$class = "box $class";
 	$head_class = "clearfix hd $head_class";
 	// dans l'espace prive, titrer en h3 si pas de balise <hn>
-	if (test_espace_prive() AND strlen($titre) AND strpos($titre, '<h') === false) {
+	if (test_espace_prive() and strlen($titre) and strpos($titre, '<h') === false) {
 		$titre = "<h3>$titre</h3>";
 	}
 

@@ -58,7 +58,7 @@ function inc_notifications_dist($quoi, $id = 0, $options = array()) {
 function notifications_nettoyer_emails(&$emails, $exclure = array()) {
 	// filtrer et unifier
 	$emails = array_unique(array_filter(array_map('email_valide', array_map('trim', $emails))));
-	if ($exclure AND count($exclure)) {
+	if ($exclure and count($exclure)) {
 		// nettoyer les exclusions d'abord
 		notifications_nettoyer_emails($exclure);
 		// faire un diff
@@ -92,10 +92,10 @@ function notifications_envoyer_mails($emails, $texte, $sujet = "", $from = "", $
 
 	// tester si le mail est deja en html
 	if (strpos($texte, "<") !== false // eviter les tests suivants si possible
-		AND $ttrim = trim($texte)
-		AND substr($ttrim, 0, 1) == "<"
-		AND substr($ttrim, -1, 1) == ">"
-		AND stripos($ttrim, "</html>") !== false
+		and $ttrim = trim($texte)
+		and substr($ttrim, 0, 1) == "<"
+		and substr($ttrim, -1, 1) == ">"
+		and stripos($ttrim, "</html>") !== false
 	) {
 
 		if (!strlen($sujet)) {

@@ -63,12 +63,12 @@ function assembler($fond, $connect = '') {
 	// une perennite valide a meme reponse qu'une requete HEAD (par defaut les
 	// pages sont dynamiques)
 	if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
-		AND (!defined('_VAR_MODE') OR !_VAR_MODE)
-		AND $chemin_cache
-		AND isset($page['entetes'])
-		AND isset($page['entetes']['Cache-Control'])
-		AND strstr($page['entetes']['Cache-Control'], 'max-age=')
-		AND !strstr($_SERVER['SERVER_SOFTWARE'], 'IIS/')
+		and (!defined('_VAR_MODE') or !_VAR_MODE)
+		and $chemin_cache
+		and isset($page['entetes'])
+		and isset($page['entetes']['Cache-Control'])
+		and strstr($page['entetes']['Cache-Control'], 'max-age=')
+		and !strstr($_SERVER['SERVER_SOFTWARE'], 'IIS/')
 	) {
 		$since = preg_replace('/;.*/', '',
 			$_SERVER['HTTP_IF_MODIFIED_SINCE']);
@@ -124,7 +124,7 @@ function assembler($fond, $connect = '') {
 			}
 		}
 
-		if ($page AND $chemin_cache) {
+		if ($page and $chemin_cache) {
 			$page['cache'] = $chemin_cache;
 		}
 
@@ -137,14 +137,14 @@ function assembler($fond, $connect = '') {
 			if ($GLOBALS['flag_ob']) {
 				// Si la page est vide, produire l'erreur 404 ou message d'erreur pour les inclusions
 				if (trim($page['texte']) === ''
-					AND _VAR_MODE != 'debug'
-					AND !isset($page['entetes']['Location']) // cette page realise une redirection, donc pas d'erreur
+					and _VAR_MODE != 'debug'
+					and !isset($page['entetes']['Location']) // cette page realise une redirection, donc pas d'erreur
 				) {
 					$GLOBALS['contexte']['fond_erreur'] = $fond;
 					$page = message_page_indisponible($page, $GLOBALS['contexte']);
 				}
 				// pas de cache client en mode 'observation'
-				if (defined('_VAR_MODE') AND _VAR_MODE) {
+				if (defined('_VAR_MODE') and _VAR_MODE) {
 					$page['entetes']["Cache-Control"] = "no-cache,must-revalidate";
 					$page['entetes']["Pragma"] = "no-cache";
 				}
@@ -156,8 +156,8 @@ function assembler($fond, $connect = '') {
 	// eviter d'etre incoherent en envoyant un lastmodified identique
 	// a celui qu'on a refuse d'honorer plus haut (cf. #655)
 	if ($lastmodified
-		AND !isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
-		AND !isset($page['entetes']["Last-Modified"])
+		and !isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
+		and !isset($page['entetes']["Last-Modified"])
 	) {
 		$page['entetes']["Last-Modified"] = gmdate("D, d M Y H:i:s", $lastmodified) . " GMT";
 	}
@@ -314,10 +314,10 @@ function public_produire_page_dist(
 	$page = $parametrer($fond, $contexte, $chemin_cache, $connect);
 	// et on l'enregistre sur le disque
 	if ($chemin_cache
-		AND $use_cache > -1
-		AND is_array($page)
-		AND count($page)
-		AND $page['entetes']['X-Spip-Cache'] > 0
+		and $use_cache > -1
+		and is_array($page)
+		and count($page)
+		and $page['entetes']['X-Spip-Cache'] > 0
 	) {
 		if (is_null($cacher)) {
 			$cacher = charger_fonction('cacher', 'public', true);
@@ -383,7 +383,7 @@ function inclure_balise_dynamique($texte, $echo = true, $contexte_compil = array
 			// mais pas toutes
 			unset($page['entetes']['X-Spip-Cache']);
 			unset($page['entetes']['Content-Type']);
-			if (isset($GLOBALS['page']) AND is_array($GLOBALS['page'])) {
+			if (isset($GLOBALS['page']) and is_array($GLOBALS['page'])) {
 				if (!is_array($GLOBALS['page']['entetes'])) {
 					$GLOBALS['page']['entetes'] = array();
 				}
@@ -393,8 +393,8 @@ function inclure_balise_dynamique($texte, $echo = true, $contexte_compil = array
 		}
 		// _pipelines au pluriel array('nom_pipeline' => $args...) avec une syntaxe permettant plusieurs pipelines
 		if (isset($page['contexte']['_pipelines'])
-			AND is_array($page['contexte']['_pipelines'])
-			AND count($page['contexte']['_pipelines'])
+			and is_array($page['contexte']['_pipelines'])
+			and count($page['contexte']['_pipelines'])
 		) {
 			foreach ($page['contexte']['_pipelines'] as $pipe => $args) {
 				$args['contexte'] = $page['contexte'];
@@ -411,7 +411,7 @@ function inclure_balise_dynamique($texte, $echo = true, $contexte_compil = array
 		}
 	}
 
-	if (defined('_VAR_MODE') AND _VAR_MODE == 'debug') {
+	if (defined('_VAR_MODE') and _VAR_MODE == 'debug') {
 		// compatibilite : avant on donnait le numero de ligne ou rien.
 		$ligne = intval(isset($contexte_compil[3]) ? $contexte_compil[3] : $contexte_compil);
 		$GLOBALS['debug_objets']['resultat'][$ligne] = $texte;
@@ -530,7 +530,7 @@ function inclure_modele($type, $id, $params, $lien, $connect = '', $env = array(
 	}
 
 	// Si ca marche pas en precisant le sous-type, prendre le type
-	if (!$fond AND !trouve_modele($fond = $type)) {
+	if (!$fond and !trouve_modele($fond = $type)) {
 		spip_log("Modele $type introuvable", _LOG_INFO_IMPORTANTE);
 
 		return false;
@@ -586,7 +586,7 @@ function inclure_modele($type, $id, $params, $lien, $connect = '', $env = array(
 
 	$compteur--;
 
-	return (isset($arg_list['ajax']) AND $arg_list['ajax'] == 'ajax')
+	return (isset($arg_list['ajax']) and $arg_list['ajax'] == 'ajax')
 		? encoder_contexte_ajax($contexte, '', $retour)
 		: $retour;
 }
@@ -612,7 +612,7 @@ function evaluer_fond($fond, $contexte = array(), $connect = null) {
 	// il faut bien lever ce drapeau apres avoir evalue le fond
 	// pour ne pas faire descendre le flag vers les inclusions appelees
 	if (isset($page['invalideurs'])
-		AND isset($page['invalideurs']['session'])
+		and isset($page['invalideurs']['session'])
 	) {
 		$GLOBALS['cache_utilise_session'] = $page['invalideurs']['session'];
 	}
@@ -632,17 +632,17 @@ function page_base_href(&$texte) {
 		{
 			$set_html_base = ((
 				$GLOBALS['profondeur_url'] >= (_DIR_RESTREINT ? 1 : 2)
-				AND _request(_SPIP_PAGE) !== 'login'
-				AND !_request('action')) ? true : false);
+				and _request(_SPIP_PAGE) !== 'login'
+				and !_request('action')) ? true : false);
 		} else {
 			$set_html_base = _SET_HTML_BASE;
 		}
 	}
 
 	if ($set_html_base
-		AND isset($GLOBALS['html']) AND $GLOBALS['html']
-		AND $GLOBALS['profondeur_url'] > 0
-		AND ($poshead = strpos($texte, '</head>')) !== false
+		and isset($GLOBALS['html']) and $GLOBALS['html']
+		and $GLOBALS['profondeur_url'] > 0
+		and ($poshead = strpos($texte, '</head>')) !== false
 	) {
 		$head = substr($texte, 0, $poshead);
 		$insert = false;

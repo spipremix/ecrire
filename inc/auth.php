@@ -132,7 +132,7 @@ function auth_mode() {
 	if (isset($_COOKIE['spip_session'])) {
 		$session = charger_fonction('session', 'inc');
 		if ($id_auteur = $session()
-			OR $id_auteur === 0 // reprise sur restauration
+			or $id_auteur === 0 // reprise sur restauration
 		) {
 			$GLOBALS['auth_can_disconnect'] = true;
 			$GLOBALS['connect_login'] = session_get('login');
@@ -145,14 +145,14 @@ function auth_mode() {
 	// (ignorer les login d'intranet independants de spip)
 	if (!$GLOBALS['ignore_auth_http']) {
 		if (
-			(isset($_SERVER['PHP_AUTH_USER']) AND isset($_SERVER['PHP_AUTH_PW'])
-				AND $r = lire_php_auth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
-			OR
+			(isset($_SERVER['PHP_AUTH_USER']) and isset($_SERVER['PHP_AUTH_PW'])
+				and $r = lire_php_auth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
+			or
 			// Si auth http differtente de basic, PHP_AUTH_PW
 			// est indisponible mais tentons quand meme pour
 			// autocreation via LDAP
 			(isset($_SERVER['REMOTE_USER'])
-				AND $r = lire_php_auth($_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'], ''))
+				and $r = lire_php_auth($_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'], ''))
 		) {
 			if (!$id_auteur) {
 				$_SERVER['PHP_AUTH_PW'] = '';
@@ -356,7 +356,7 @@ function auth_administrer($fonction, $args, $defaut = false) {
 	$auth_methode = array_shift($args);
 	$auth_methode = $auth_methode ? $auth_methode : 'spip'; // valeur par defaut au cas ou
 	if ($auth = charger_fonction($auth_methode, 'auth', true)
-		AND function_exists($f = "auth_{$auth_methode}_$fonction")
+		and function_exists($f = "auth_{$auth_methode}_$fonction")
 	) {
 		return call_user_func_array($f, $args);
 	} else {
@@ -419,8 +419,8 @@ function auth_retrouver_login($login, $serveur = '') {
  */
 function auth_informer_login($login, $serveur = '') {
 	if (!$login
-		OR !$login = auth_retrouver_login($login, $serveur)
-		OR !$row = sql_fetsel('*', 'spip_auteurs', 'login=' . sql_quote($login, $serveur, 'text'), '', '', '', '', $serveur)
+		or !$login = auth_retrouver_login($login, $serveur)
+		or !$row = sql_fetsel('*', 'spip_auteurs', 'login=' . sql_quote($login, $serveur, 'text'), '', '', '', '', $serveur)
 	) {
 		return array();
 	}
@@ -458,7 +458,7 @@ function auth_identifier_login($login, $password, $serveur = '') {
 	foreach ($GLOBALS['liste_des_authentifications'] as $methode) {
 		if ($auth = charger_fonction($methode, 'auth', true)) {
 			$auteur = $auth($login, $password, $serveur);
-			if (is_array($auteur) AND count($auteur)) {
+			if (is_array($auteur) and count($auteur)) {
 				spip_log("connexion de $login par methode $methode");
 				$auteur['auth'] = $methode;
 
@@ -512,7 +512,7 @@ function auth_terminer_identifier_login($auth_methode, $login, $serveur = '') {
  * @return bool
  */
 function auth_loger($auteur) {
-	if (!is_array($auteur) OR !count($auteur)) {
+	if (!is_array($auteur) or !count($auteur)) {
 		return false;
 	}
 
@@ -676,7 +676,7 @@ function auth_synchroniser_distant(
 	$serveur = ''
 ) {
 	$args = func_get_args();
-	if ($auth_methode === true OR (isset($options['all']) AND $options['all'] == true)) {
+	if ($auth_methode === true or (isset($options['all']) and $options['all'] == true)) {
 		$options['all'] = true; // ajouter une option all=>true pour chaque auth
 		$args = array(true, $id_auteur, $champs, $options, $serveur);
 		foreach ($GLOBALS['liste_des_authentifications'] as $methode) {
@@ -704,7 +704,7 @@ function lire_php_auth($login, $pw, $serveur = '') {
 
 	if (!$row) {
 		if (spip_connect_ldap($serveur)
-			AND $auth_ldap = charger_fonction('ldap', 'auth', true)
+			and $auth_ldap = charger_fonction('ldap', 'auth', true)
 		) {
 			return $auth_ldap($login, $pw, $serveur, true);
 		}
@@ -714,7 +714,7 @@ function lire_php_auth($login, $pw, $serveur = '') {
 	// su pas de source definie
 	// ou auth/xxx introuvable, utiliser 'spip'
 	if (!$auth_methode = $row['source']
-		OR !$auth = charger_fonction($auth_methode, 'auth', true)
+		or !$auth = charger_fonction($auth_methode, 'auth', true)
 	) {
 		$auth = charger_fonction('spip', 'auth', true);
 	}
@@ -724,7 +724,7 @@ function lire_php_auth($login, $pw, $serveur = '') {
 		$auteur = $auth($login, $pw, $serveur, true);
 	}
 	// verifier que ce n'est pas un message d'erreur
-	if (is_array($auteur) AND count($auteur)) {
+	if (is_array($auteur) and count($auteur)) {
 		return $auteur;
 	}
 

@@ -91,7 +91,7 @@ function queue_add_job(
 	// avec les memes args et file
 	if (
 		$no_duplicate
-		AND
+		and
 		$id_job = sql_getfetsel('id_job', 'spip_jobs',
 			$duplicate_where =
 				$duplicate_where . 'fonction=' . sql_quote($function)
@@ -107,7 +107,7 @@ function queue_add_job(
 	// doit s'effacer
 	if (
 		$no_duplicate
-		AND
+		and
 		$id_prev = sql_getfetsel('id_job', 'spip_jobs', "id_job<" . intval($id_job) . " AND $duplicate_where")
 	) {
 		sql_delete('spip_jobs', 'id_job=' . intval($id_job));
@@ -121,7 +121,7 @@ function queue_add_job(
 	// une option de debug pour verifier que les arguments en base sont bons
 	// ie cas d'un char non acceptables sur certains type de champs
 	// qui coupe la valeur
-	if (defined('_JQ_INSERT_CHECK_ARGS') AND $id_job) {
+	if (defined('_JQ_INSERT_CHECK_ARGS') and $id_job) {
 		$args = sql_getfetsel('args', 'spip_jobs', 'id_job=' . intval($id_job));
 		if ($args !== $arguments) {
 			spip_log('arguments job errones / longueur ' . strlen($args) . " vs " . strlen($arguments) . ' / valeur : ' . var_export($arguments,
@@ -168,7 +168,7 @@ function queue_remove_job($id_job) {
 	include_spip('base/abstract_sql');
 
 	if ($row = sql_fetsel('fonction,inclure,date', 'spip_jobs', 'id_job=' . intval($id_job))
-		AND $res = sql_delete('spip_jobs', 'id_job=' . intval($id_job))
+		and $res = sql_delete('spip_jobs', 'id_job=' . intval($id_job))
 	) {
 		queue_unlink_job($id_job);
 		// est-ce une tache cron qu'il faut relancer ?
@@ -196,7 +196,7 @@ function queue_remove_job($id_job) {
 function queue_link_job($id_job, $objets) {
 	include_spip('base/abstract_sql');
 
-	if (is_array($objets) AND count($objets)) {
+	if (is_array($objets) and count($objets)) {
 		if (is_array(reset($objets))) {
 			foreach ($objets as $k => $o) {
 				$objets[$k]['id_job'] = $id_job;
@@ -333,7 +333,7 @@ function queue_schedule($force_jobs = null) {
 	}
 
 	// rien a faire si le prochain job est encore dans le futur
-	if (queue_sleep_time_to_next_job() > 0 AND (!$force_jobs OR !count($force_jobs))) {
+	if (queue_sleep_time_to_next_job() > 0 and (!$force_jobs or !count($force_jobs))) {
 		spip_log("queue_sleep_time_to_next_job", 'jq' . _LOG_DEBUG);
 
 		return;
@@ -368,7 +368,7 @@ function queue_schedule($force_jobs = null) {
 	//	- de date
 	// lorsqu'un job cron n'a pas fini, sa priorite est descendue
 	// pour qu'il ne bloque pas les autres jobs en attente
-	if (is_array($force_jobs) AND count($force_jobs)) {
+	if (is_array($force_jobs) and count($force_jobs)) {
 		$cond = "status=" . intval(_JQ_SCHEDULED) . " AND " . sql_in("id_job", $force_jobs);
 	} else {
 		$now = date('Y-m-d H:i:s', $time);
@@ -397,7 +397,7 @@ function queue_schedule($force_jobs = null) {
 			}
 		}
 		spip_log("JQ schedule job end time " . $time, 'jq' . _LOG_DEBUG);
-	} while ($nbj < _JQ_MAX_JOBS_EXECUTE AND $row AND $time < $end_time);
+	} while ($nbj < _JQ_MAX_JOBS_EXECUTE and $row and $time < $end_time);
 	spip_log("JQ schedule end time " . time(), 'jq' . _LOG_DEBUG);
 
 	if ($row = array_shift($res)) {
@@ -519,12 +519,12 @@ function queue_update_next_job_time($next_time = null) {
 	}
 
 	// chercher la date du prochain job si pas connu
-	if (is_null($next) OR is_null(queue_sleep_time_to_next_job())) {
+	if (is_null($next) or is_null(queue_sleep_time_to_next_job())) {
 		$date = sql_getfetsel('date', 'spip_jobs', "status=" . intval(_JQ_SCHEDULED), '', 'date', '0,1');
 		$next = strtotime($date);
 	}
 	if (!is_null($next_time)) {
-		if (is_null($next) OR $next > $next_time) {
+		if (is_null($next) or $next > $next_time) {
 			$next = $next_time;
 		}
 	}
@@ -563,10 +563,10 @@ function queue_set_next_job_time($next) {
 	// permet ausis d'initialiser le nom de fichier a coup sur
 	$curr_next = $_SERVER['REQUEST_TIME']+max(0, queue_sleep_time_to_next_job(true));
 	if (
-		($curr_next <= $time AND $next > $time) // le prochain job est dans le futur mais pas la date planifiee actuelle
-		OR $curr_next > $next // le prochain job est plus tot que la date planifiee actuelle
+		($curr_next <= $time and $next > $time) // le prochain job est dans le futur mais pas la date planifiee actuelle
+		or $curr_next > $next // le prochain job est plus tot que la date planifiee actuelle
 	) {
-		if (function_exists("cache_set") AND defined('_MEMOIZE_MEMORY') AND _MEMOIZE_MEMORY) {
+		if (function_exists("cache_set") and defined('_MEMOIZE_MEMORY') and _MEMOIZE_MEMORY) {
 			cache_set(_JQ_NEXT_JOB_TIME_FILENAME, intval($next));
 		} else {
 			ecrire_fichier(_JQ_NEXT_JOB_TIME_FILENAME, intval($next));
@@ -595,12 +595,12 @@ function queue_affichage_cron() {
 
 	$time_to_next = queue_sleep_time_to_next_job();
 	// rien a faire si le prochain job est encore dans le futur
-	if ($time_to_next > 0 OR defined('_DEBUG_BLOCK_QUEUE')) {
+	if ($time_to_next > 0 or defined('_DEBUG_BLOCK_QUEUE')) {
 		return $texte;
 	}
 
 	// ne pas relancer si on vient de lancer dans la meme seconde par un hit concurent
-	if (file_exists($lock = _DIR_TMP . "cron.lock") AND !(@filemtime($lock) < $_SERVER['REQUEST_TIME'])) {
+	if (file_exists($lock = _DIR_TMP . "cron.lock") and !(@filemtime($lock) < $_SERVER['REQUEST_TIME'])) {
 		return $texte;
 	}
 
@@ -616,7 +616,7 @@ function queue_affichage_cron() {
 
 	$url_cron = generer_url_action('cron', '', false, true);
 
-	if (!defined('_HTML_BG_CRON_FORCE') OR !_HTML_BG_CRON_FORCE) {
+	if (!defined('_HTML_BG_CRON_FORCE') or !_HTML_BG_CRON_FORCE) {
 
 		// methode la plus rapide :
 		// Si fsockopen est possible, on lance le cron via un socket en asynchrone
@@ -652,7 +652,7 @@ function queue_affichage_cron() {
 				$t = 0;
 				// on lit la reponse si possible pour fermer proprement la connexion
 				// avec un timeout total de 200ms pour ne pas se bloquer
-				while (!feof($fp) AND $t < $timeout) {
+				while (!feof($fp) and $t < $timeout) {
 					@fgets($fp, 1024);
 					$t += spip_timer('read', true);
 					spip_timer('read');
@@ -691,7 +691,7 @@ function queue_affichage_cron() {
 	// si c'est un bot
 	// inutile de faire un appel par image background,
 	// on force un appel direct en fin de hit
-	if ((defined('_IS_BOT') AND _IS_BOT)) {
+	if ((defined('_IS_BOT') and _IS_BOT)) {
 		define('_DIRECT_CRON_FORCE', true);
 
 		return $texte;

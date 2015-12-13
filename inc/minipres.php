@@ -151,7 +151,7 @@ function minipres($titre = '', $corps = "", $options = array()) {
 	// compat signature old
 	// minipres($titre='', $corps="", $onload='', $all_inline = false)
 	$args = func_get_args();
-	if (isset($args[2]) AND is_string($args[2])) {
+	if (isset($args[2]) and is_string($args[2])) {
 		$options = array('onload' => $args[2]);
 	}
 	if (isset($args[3])) {
@@ -171,8 +171,8 @@ function minipres($titre = '', $corps = "", $options = array()) {
 			$options['status'] = 403;
 		}
 		if (!$titre = _request('action')
-			AND !$titre = _request('exec')
-			AND !$titre = _request('page')
+			and !$titre = _request('exec')
+			and !$titre = _request('page')
 		) {
 			$titre = '?';
 		}

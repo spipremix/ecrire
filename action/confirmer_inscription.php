@@ -33,8 +33,8 @@ function action_confirmer_inscription_dist() {
 
 	include_spip('action/inscrire_auteur');
 	if ($auteur = auteur_verifier_jeton($jeton)
-		AND $auteur['email'] == $email
-		AND $auteur['statut'] == 'nouveau'
+		and $auteur['email'] == $email
+		and $auteur['statut'] == 'nouveau'
 	) {
 
 		// OK c'est un nouvel inscrit qui confirme :

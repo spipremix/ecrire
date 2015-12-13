@@ -31,7 +31,7 @@ include_spip('inc/cookie');
  */
 function action_converser_dist() {
 	$update_session = false;
-	if (_request('arg') AND spip_connect()) {
+	if (_request('arg') and spip_connect()) {
 		$securiser_action = charger_fonction('securiser_action', 'inc');
 		$securiser_action();
 		$update_session = true;

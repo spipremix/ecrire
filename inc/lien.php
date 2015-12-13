@@ -199,7 +199,7 @@ function traiter_lien_implicite($ref, $texte = '', $pour = 'url', $connect = '')
 
 	// dans le cas d'un lien vers un doc, ajouter le type='mime/type'
 	if ($type == 'document'
-		AND $mime = sql_getfetsel('mime_type', 'spip_types_documents',
+		and $mime = sql_getfetsel('mime_type', 'spip_types_documents',
 			"extension IN (" . sql_get_select("extension", "spip_documents", "id_document=" . sql_quote($id)) . ")",
 			'', '', '', '', $connect)
 	) {
@@ -235,7 +235,7 @@ function typer_raccourci($lien) {
 					if ($f == 'aut') {
 						$f = 'auteur';
 					} else {
-						if ($f == 'doc' OR $f == 'im' OR $f == 'img' OR $f == 'image' OR $f == 'emb') {
+						if ($f == 'doc' or $f == 'im' or $f == 'img' or $f == 'image' or $f == 'emb') {
 							$f = 'document';
 						} else {
 							if (preg_match('/^br..?ve$/S', $f)) {
@@ -266,7 +266,7 @@ function typer_raccourci($lien) {
 function traiter_raccourci_titre($id, $type, $connect = null) {
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table(table_objet($type));
-	if (!($desc AND $s = $desc['titre'])) {
+	if (!($desc and $s = $desc['titre'])) {
 		return array();
 	}
 	$_id = $desc['key']['PRIMARY KEY'];
@@ -310,7 +310,7 @@ function traiter_modeles($texte, $doublons = false, $echap = '', $connect = '', 
 		$doublons = array('documents' => array('doc', 'emb', 'img'));
 	}
 	// detecter les modeles (rapide)
-	if (strpos($texte, "<") !== false AND
+	if (strpos($texte, "<") !== false and
 		preg_match_all('/<[a-z_-]{3,}\s*[0-9|]+/iS', $texte, $matches, PREG_SET_ORDER)
 	) {
 		include_spip('public/assembler');
@@ -323,7 +323,7 @@ function traiter_modeles($texte, $doublons = false, $echap = '', $connect = '', 
 				substr($texte, $a), $regs);
 			$regs[] = ""; // s'assurer qu'il y a toujours un 5e arg, eventuellement vide
 			list(, $mod, $type, $id, $params, $fin) = $regs;
-			if ($fin AND
+			if ($fin and
 				preg_match('/<a\s[^<>]*>\s*$/i',
 					substr($texte, 0, $a), $r)
 			) {
@@ -392,7 +392,7 @@ function traiter_modeles($texte, $doublons = false, $echap = '', $connect = '', 
 			}
 
 			// hack pour tout l'espace prive
-			if (((!_DIR_RESTREINT) OR ($doublons)) AND ($id)) {
+			if (((!_DIR_RESTREINT) or ($doublons)) and ($id)) {
 				foreach ($doublons ? $doublons : array('documents' => array('doc', 'emb', 'img')) as $quoi => $modeles) {
 					if (in_array($type, $modeles)) {
 						$GLOBALS["doublons_{$quoi}_inclus"][] = $id;

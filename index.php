@@ -64,16 +64,16 @@ utiliser_langue_visiteur();
 $forcer_lang = true;
 
 
-if (_request('action') OR _request('var_ajax') OR _request('formulaire_action')) {
+if (_request('action') or _request('var_ajax') or _request('formulaire_action')) {
 	// Charger l'aiguilleur qui va mettre sur la bonne voie les traitements derogatoires
 	include_spip('public/aiguiller');
 	if (
 		// cas des appels actions ?action=xxx
 		traiter_appels_actions()
-		OR
+		or
 		// cas des hits ajax sur les inclusions ajax
 		traiter_appels_inclusions_ajax()
-		OR
+		or
 		// cas des formulaires charger/verifier/traiter
 		traiter_formulaires_dynamiques()
 	) {
@@ -87,9 +87,9 @@ if (_request('action') OR _request('var_ajax') OR _request('formulaire_action'))
 
 // Controle de la version, sauf si on est deja en train de s'en occuper
 if (!$reinstall == 'oui'
-	AND !_AJAX
-	AND isset($GLOBALS['meta']['version_installee'])
-	AND ($GLOBALS['spip_version_base'] != (str_replace(',', '.', $GLOBALS['meta']['version_installee'])))
+	and !_AJAX
+	and isset($GLOBALS['meta']['version_installee'])
+	and ($GLOBALS['spip_version_base'] != (str_replace(',', '.', $GLOBALS['meta']['version_installee'])))
 ) {
 	$exec = 'demande_mise_a_jour';
 }
@@ -105,9 +105,9 @@ elseif (isset($GLOBALS['meta']["admin"])) {
 		list(, $var_f, $n) = $l;
 	}
 	if (_AJAX
-		OR !(
+		or !(
 			isset($_COOKIE['spip_admin'])
-			OR (isset($GLOBALS['visiteur_session']) AND $GLOBALS['visiteur_session']['statut'] == '0minirezo')
+			or (isset($GLOBALS['visiteur_session']) and $GLOBALS['visiteur_session']['statut'] == '0minirezo')
 		)
 	) {
 		spip_log("Quand la meta admin vaut " .
@@ -145,8 +145,8 @@ $GLOBALS['spip_ecran'] = isset($_COOKIE['spip_ecran']) ? $_COOKIE['spip_ecran'] 
 // (elle a ete changee dans une autre session, et on retombe sur un vieux cookie)
 // on appelle directement la fonction, car un appel d'action peut conduire a une boucle infinie
 // si le cookie n'est pas pose correctement dans l'action
-if (!$var_auth AND isset($_COOKIE['spip_lang_ecrire'])
-	AND $_COOKIE['spip_lang_ecrire'] <> $GLOBALS['visiteur_session']['lang']
+if (!$var_auth and isset($_COOKIE['spip_lang_ecrire'])
+	and $_COOKIE['spip_lang_ecrire'] <> $GLOBALS['visiteur_session']['lang']
 ) {
 	include_spip('action/converser');
 	action_converser_post($GLOBALS['visiteur_session']['lang'], true);

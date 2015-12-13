@@ -273,7 +273,7 @@ function balise_URL_PAGE_dist($p) {
 		// si une fonction de generation des url a ete definie pour ce connect l'utiliser
 		// elle devra aussi traiter le cas derogatoire type=page
 		if (function_exists($f = 'generer_generer_url_' . $s)) {
-			if ($args AND $args !== "''") {
+			if ($args and $args !== "''") {
 				$code .= ", $args";
 			}
 			$code = $f('page', $code, $s);
@@ -281,7 +281,7 @@ function balise_URL_PAGE_dist($p) {
 			return $p;
 		}
 		$s = 'connect=' . addslashes($s);
-		$args = (($args AND $args !== "''") ? "$args . '&$s'" : "'$s'");
+		$args = (($args and $args !== "''") ? "$args . '&$s'" : "'$s'");
 	}
 
 	if (!$code) {
@@ -335,7 +335,7 @@ function balise_URL_ECRIRE_dist($p) {
 			$args = "''";
 		}
 		$noentities = $p->etoile ? ", true" : '';
-		if (($args != "''") OR $noentities) {
+		if (($args != "''") or $noentities) {
 			$fonc .= ",$args$noentities";
 		}
 	}

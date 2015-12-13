@@ -55,7 +55,7 @@ function f_jQuery_prive($texte) {
 	}
 	// inserer avant le premier script externe ou a la fin
 	if (preg_match(",<script[^><]*src=,", $texte, $match)
-		AND $p = strpos($texte, $match[0])
+		and $p = strpos($texte, $match[0])
 	) {
 		$texte = substr_replace($texte, $x, $p, 0);
 	} else {
@@ -76,11 +76,11 @@ function f_jQuery_prive($texte) {
  */
 function affichage_final_prive_title_auto($texte) {
 	if (strpos($texte, '<title>') === false
-		AND
+		and
 		(preg_match(",<h1[^>]*>(.+)</h1>,Uims", $texte, $match)
-			OR preg_match(",<h[23][^>]*>(.+)</h[23]>,Uims", $texte, $match))
-		AND $match = textebrut(trim($match[1]))
-		AND ($p = strpos($texte, '<head>')) !== false
+			or preg_match(",<h[23][^>]*>(.+)</h[23]>,Uims", $texte, $match))
+		and $match = textebrut(trim($match[1]))
+		and ($p = strpos($texte, '<head>')) !== false
 	) {
 		if (!$nom_site_spip = textebrut(typo($GLOBALS['meta']["nom_site"]))) {
 			$nom_site_spip = _T('info_mon_site_spip');
@@ -147,7 +147,7 @@ function f_afficher_blocs_ecrire($flux) {
 			$flux['data']['texte'] = pipeline('affiche_droite',
 					array('args' => $flux['args']['contexte'], 'data' => $flux['data']['texte'])) . liste_objets_bloques($exec,
 					$flux['args']['contexte']);
-		} elseif ($fond == "prive/squelettes/hierarchie/$typepage" AND $o[$exec]) {
+		} elseif ($fond == "prive/squelettes/hierarchie/$typepage" and $o[$exec]) {
 			// id non defini sur les formulaire de nouveaux objets
 			$id = isset($flux['args']['contexte'][$o[$exec]['id_table_objet']]) ? intval($flux['args']['contexte'][$o[$exec]['id_table_objet']]) : 0;
 			$flux['data']['texte'] = pipeline('affiche_hierarchie',
@@ -158,10 +158,10 @@ function f_afficher_blocs_ecrire($flux) {
 					$flux['data']['texte']);
 			}
 			if ($o[$exec]
-				AND $objet = $o[$exec]['type']
-				AND $o[$exec]['edition'] == false
-				AND isset($flux['args']['contexte'][$o[$exec]['id_table_objet']])
-				AND $id = intval($flux['args']['contexte'][$o[$exec]['id_table_objet']])
+				and $objet = $o[$exec]['type']
+				and $o[$exec]['edition'] == false
+				and isset($flux['args']['contexte'][$o[$exec]['id_table_objet']])
+				and $id = intval($flux['args']['contexte'][$o[$exec]['id_table_objet']])
 			) {
 				// inserer le formulaire de traduction
 				$flux['data']['texte'] = str_replace("<!--affiche_milieu-->", recuperer_fond('prive/objets/editer/traductions',
@@ -181,10 +181,10 @@ function f_afficher_blocs_ecrire($flux) {
 			$flux['data']['texte'] = pipeline('affiche_pied',
 				array('args' => $flux['args']['contexte'], 'data' => $flux['data']['texte']));
 		} elseif (strncmp($fond, "prive/objets/contenu/", 21) == 0
-			AND $objet = basename($fond)
-			AND $objet == substr($fond, 21)
-			AND isset($o[$objet])
-			AND $o[$objet]
+			and $objet = basename($fond)
+			and $objet == substr($fond, 21)
+			and isset($o[$objet])
+			and $o[$objet]
 		) {
 			$id = intval($flux['args']['contexte'][$o[$exec]['id_table_objet']]);
 			$flux['data']['texte'] = pipeline('afficher_contenu_objet', array(
@@ -208,7 +208,7 @@ function f_queue_affiche_milieu($flux) {
 	$args = $flux['args'];
 	$res = "";
 	foreach ($args as $key => $arg) {
-		if (preg_match(",^id_,", $key) AND is_numeric($arg) AND $arg = intval($arg)) {
+		if (preg_match(",^id_,", $key) and is_numeric($arg) and $arg = intval($arg)) {
 			$objet = preg_replace(',^id_,', '', $key);
 			$res .= recuperer_fond('modeles/object_jobs_list', array('id_objet' => $arg, 'objet' => $objet),
 				array('ajax' => true));
@@ -245,7 +245,7 @@ function trouver_objet_exec($exec) {
 		$objet_exec[$exec] = false;
 		$infos = lister_tables_objets_sql();
 		foreach ($infos as $t => $info) {
-			if ($exec == $info['url_edit'] AND $info['editable']) {
+			if ($exec == $info['url_edit'] and $info['editable']) {
 				return $objet_exec[$exec] = array(
 					'edition' => $exec == $info['url_voir'] ? '' : true,
 					'table_objet_sql' => $t,

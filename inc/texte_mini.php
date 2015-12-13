@@ -86,7 +86,7 @@ function code_echappement($rempl, $source = '', $no_transform = false, $mode = n
 	}
 
 	// Tester si on echappe en span ou en div
-	if (is_null($mode) OR !in_array($mode, array('div', 'span'))) {
+	if (is_null($mode) or !in_array($mode, array('div', 'span'))) {
 		$mode = preg_match(',</?(' . _BALISES_BLOCS . ')[>[:space:]],iS', $rempl) ? 'div' : 'span';
 	}
 
@@ -195,8 +195,8 @@ function echappe_html(
 		}
 	}
 
-	if (($preg OR strpos($letexte, "<") !== false)
-		AND preg_match_all($preg ? $preg : _PROTEGE_BLOCS, $letexte, $matches, PREG_SET_ORDER)
+	if (($preg or strpos($letexte, "<") !== false)
+		and preg_match_all($preg ? $preg : _PROTEGE_BLOCS, $letexte, $matches, PREG_SET_ORDER)
 	) {
 		foreach ($matches as $regs) {
 			// echappements tels quels ?
@@ -227,7 +227,7 @@ function echappe_html(
 	// (derogatoire car on ne peut pas faire passer < ? ... ? >
 	// dans une callback autonommee
 	if (strpos($preg ? $preg : _PROTEGE_BLOCS, 'script') !== false) {
-		if (strpos($letexte, "<" . "?") !== false AND preg_match_all(',<[?].*($|[?]>),UisS',
+		if (strpos($letexte, "<" . "?") !== false and preg_match_all(',<[?].*($|[?]>),UisS',
 				$letexte, $matches, PREG_SET_ORDER)
 		) {
 			foreach ($matches as $regs) {
@@ -251,10 +251,10 @@ function echappe_retour($letexte, $source = '', $filtre = "") {
 		# spip_log(spip_htmlspecialchars($letexte));  ## pour les curieux
 		$max_prof = 5;
 		while (strpos($letexte, "<") !== false
-			AND
+			and
 			preg_match_all(',<(span|div)\sclass=[\'"]base64' . $source . '[\'"]\s(.*)>\s*</\1>,UmsS',
 				$letexte, $regs, PREG_SET_ORDER)
-			AND $max_prof--) {
+			and $max_prof--) {
 			foreach ($regs as $reg) {
 				$rempl = base64_decode(extraire_attribut($reg[0], 'title'));
 				// recherche d'attributs supplementaires
@@ -320,12 +320,12 @@ function echappe_retour_modeles($letexte, $interdire_scripts = false) {
  *     Texte coupé
  **/
 function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
-	if (!($length = strlen($texte)) OR $taille <= 0) {
+	if (!($length = strlen($texte)) or $taille <= 0) {
 		return '';
 	}
 	$offset = 400+2*$taille;
 	while ($offset < $length
-		AND strlen(preg_replace(",<(!--|\w|/)[^>]+>,Uims", "", substr($texte, 0, $offset))) < $taille) {
+		and strlen(preg_replace(",<(!--|\w|/)[^>]+>,Uims", "", substr($texte, 0, $offset))) < $taille) {
 		$offset = 2*$offset;
 	}
 	if ($offset < $length
@@ -459,7 +459,7 @@ function echapper_faux_tags($letexte) {
  * @return string
  */
 function echapper_html_suspect($texte) {
-	if (strpos($texte, '<') === false OR strpos($texte, '=') === false) {
+	if (strpos($texte, '<') === false or strpos($texte, '=') === false) {
 		return $texte;
 	}
 
@@ -493,7 +493,7 @@ function echapper_html_suspect($texte) {
 function safehtml($t) {
 	static $safehtml;
 
-	if (!$t OR !is_string($t)) {
+	if (!$t or !is_string($t)) {
 		return $t;
 	}
 	# attention safehtml nettoie deux ou trois caracteres de plus. A voir

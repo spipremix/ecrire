@@ -129,12 +129,12 @@ function securiser_action_auteur($action, $arg, $redirect = "", $mode = false, $
 function caracteriser_auteur($id_auteur = null) {
 	static $caracterisation = array();
 
-	if (is_null($id_auteur) AND !isset($GLOBALS['visiteur_session']['id_auteur'])) {
+	if (is_null($id_auteur) and !isset($GLOBALS['visiteur_session']['id_auteur'])) {
 		// si l'auteur courant n'est pas connu alors qu'il peut demander une action
 		// c'est une connexion par php_auth ou 1 instal, on se rabat sur le cookie.
 		// S'il n'avait pas le droit de realiser cette action, le hash sera faux.
 		if (isset($_COOKIE['spip_session'])
-			AND (preg_match('/^(\d+)/', $_COOKIE['spip_session'], $r))
+			and (preg_match('/^(\d+)/', $_COOKIE['spip_session'], $r))
 		) {
 			return array($r[1], '');
 			// Necessaire aux forums anonymes.
@@ -146,7 +146,7 @@ function caracteriser_auteur($id_auteur = null) {
 	// Eviter l'acces SQL si le pass est connu de PHP
 	if (is_null($id_auteur)) {
 		$id_auteur = isset($GLOBALS['visiteur_session']['id_auteur']) ? $GLOBALS['visiteur_session']['id_auteur'] : 0;
-		if (isset($GLOBALS['visiteur_session']['pass']) AND $GLOBALS['visiteur_session']['pass']) {
+		if (isset($GLOBALS['visiteur_session']['pass']) and $GLOBALS['visiteur_session']['pass']) {
 			return $caracterisation[$id_auteur] = array($id_auteur, $GLOBALS['visiteur_session']['pass']);
 		}
 	}
@@ -184,7 +184,7 @@ function caracteriser_auteur($id_auteur = null) {
 function _action_auteur($action, $id_auteur, $pass, $alea) {
 	static $sha = array();
 	if (!isset($sha[$id_auteur . $pass . $alea])) {
-		if (!isset($GLOBALS['meta'][$alea]) AND _request('exec') !== 'install') {
+		if (!isset($GLOBALS['meta'][$alea]) and _request('exec') !== 'install') {
 			include_spip('base/abstract_sql');
 			$GLOBALS['meta'][$alea] = sql_getfetsel('valeur', 'spip_meta', "nom=" . sql_quote($alea));
 			if (!($GLOBALS['meta'][$alea])) {
@@ -256,7 +256,7 @@ function secret_du_site() {
 		$GLOBALS['meta']['secret_du_site'] = sql_getfetsel('valeur', 'spip_meta', "nom='secret_du_site'");
 	}
 	if (!isset($GLOBALS['meta']['secret_du_site'])
-		OR (strlen($GLOBALS['meta']['secret_du_site']) < 64)
+		or (strlen($GLOBALS['meta']['secret_du_site']) < 64)
 	) {
 		include_spip('inc/acces');
 		include_spip('auth/sha256.inc');

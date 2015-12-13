@@ -130,17 +130,17 @@ function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000,
 	}
 	list($h, $l) = taille_image($img);
 	$select = true;
-	if ($l < $width_min OR $l > $width_max OR $h < $height_min OR $h > $height_max) {
+	if ($l < $width_min or $l > $width_max or $h < $height_min or $h > $height_max) {
 		$select = false;
 	}
 
 	$class = extraire_attribut($img, 'class');
 	$p = strpos($class, 'filtre_inactif');
-	if (($select == false) AND ($p === false)) {
+	if (($select == false) and ($p === false)) {
 		$class .= " filtre_inactif";
 		$img = inserer_attribut($img, 'class', $class);
 	}
-	if (($select == true) AND ($p !== false)) {
+	if (($select == true) and ($p !== false)) {
 		// no_image_filtrer : historique, a virer
 		$class = preg_replace(",\s*(filtre_inactif|no_image_filtrer),", "", $class);
 		$img = inserer_attribut($img, 'class', $class);
@@ -212,13 +212,13 @@ function image_passe_partout(
 		$taille_y = $taille_x;
 	}
 
-	if ($taille_x == 0 AND $taille_y > 0) {
+	if ($taille_x == 0 and $taille_y > 0) {
 		$taille_x = 1;
 	} # {0,300} -> c'est 300 qui compte
-	elseif ($taille_x > 0 AND $taille_y == 0) {
+	elseif ($taille_x > 0 and $taille_y == 0) {
 		$taille_y = 1;
 	} # {300,0} -> c'est 300 qui compte
-	elseif ($taille_x == 0 AND $taille_y == 0) {
+	elseif ($taille_x == 0 and $taille_y == 0) {
 		return '';
 	}
 
@@ -271,19 +271,19 @@ function image_reduire($img, $taille = -1, $taille_y = -1, $force = false, $cher
 	// Determiner la taille x,y maxi
 	// prendre le reglage de previsu par defaut
 	if ($taille == -1) {
-		$taille = (isset($GLOBALS['meta']['taille_preview']) AND intval($GLOBALS['meta']['taille_preview'])) ? intval($GLOBALS['meta']['taille_preview']) : 150;
+		$taille = (isset($GLOBALS['meta']['taille_preview']) and intval($GLOBALS['meta']['taille_preview'])) ? intval($GLOBALS['meta']['taille_preview']) : 150;
 	}
 	if ($taille_y == -1) {
 		$taille_y = $taille;
 	}
 
-	if ($taille == 0 AND $taille_y > 0) {
+	if ($taille == 0 and $taille_y > 0) {
 		$taille = 10000;
 	} # {0,300} -> c'est 300 qui compte
-	elseif ($taille > 0 AND $taille_y == 0) {
+	elseif ($taille > 0 and $taille_y == 0) {
 		$taille_y = 10000;
 	} # {300,0} -> c'est 300 qui compte
-	elseif ($taille == 0 AND $taille_y == 0) {
+	elseif ($taille == 0 and $taille_y == 0) {
 		return '';
 	}
 

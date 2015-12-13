@@ -50,14 +50,14 @@ function spip_setcookie($name = '', $value = '', $expire = 0, $path = 'AUTO', $d
 	if ($path == 'AUTO') {
 		$path = defined('_COOKIE_PATH') ? _COOKIE_PATH : preg_replace(',^\w+://[^/]*,', '', url_de_base());
 	}
-	if (!$domain AND defined('_COOKIE_DOMAIN')) {
+	if (!$domain and defined('_COOKIE_DOMAIN')) {
 		$domain = _COOKIE_DOMAIN;
 	}
 
 	#spip_log("cookie('$name', '$value', '$expire', '$path', '$domain', '$secure', '$httponly'");
 
 	$a =
-		($httponly AND strnatcmp(phpversion(), '5.2.0') >= 0) ?
+		($httponly and strnatcmp(phpversion(), '5.2.0') >= 0) ?
 			@setcookie($name, $value, $expire, $path, $domain, $secure, $httponly)
 			: ($secure ?
 			@setcookie($name, $value, $expire, $path, $domain, $secure)

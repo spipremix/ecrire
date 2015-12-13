@@ -79,7 +79,7 @@ function chercher_module_lang($module, $lang = '') {
 	}
 
 	// 2) directement dans le chemin (old style, uniquement pour local)
-	return (($module == 'local') OR strpos($module, '/'))
+	return (($module == 'local') or strpos($module, '/'))
 		? (($f = find_in_path($module . $lang . '.php')) ? array($f) : false)
 		: false;
 }
@@ -102,7 +102,7 @@ function chercher_module_lang($module, $lang = '') {
  * @param string $module Nom du module de langue
  **/
 function charger_langue($lang, $module = 'spip') {
-	if ($lang AND $fichiers_lang = chercher_module_lang($module, $lang)) {
+	if ($lang and $fichiers_lang = chercher_module_lang($module, $lang)) {
 		$GLOBALS['idx_lang'] = 'i18n_' . $module . '_' . $lang;
 		include(array_shift($fichiers_lang));
 		surcharger_langue($fichiers_lang);
@@ -211,7 +211,7 @@ function inc_traduire_dist($ori, $lang) {
 	static $deja_vu = array();
 	static $local = array();
 
-	if (isset($deja_vu[$lang][$ori]) AND (_request('var_mode') != 'traduction')) {
+	if (isset($deja_vu[$lang][$ori]) and (_request('var_mode') != 'traduction')) {
 		return $deja_vu[$lang][$ori];
 	}
 
@@ -265,7 +265,7 @@ function inc_traduire_dist($ori, $lang) {
 	// on essaie d'abord la langue du site, puis a defaut la langue fr
 	$langue_retenue = $lang;
 	if (!strlen($text)
-		AND $lang !== _LANGUE_PAR_DEFAUT
+		and $lang !== _LANGUE_PAR_DEFAUT
 	) {
 		if ($lang !== $GLOBALS['meta']['langue_site']) {
 			$text = inc_traduire_dist($ori, $GLOBALS['meta']['langue_site']);
@@ -283,8 +283,8 @@ function inc_traduire_dist($ori, $lang) {
 
 	// Si on n'est pas en utf-8, la chaine peut l'etre...
 	// le cas echeant on la convertit en entites html &#xxx;
-	if ((!isset($GLOBALS['meta']['charset']) OR $GLOBALS['meta']['charset'] !== 'utf-8')
-		AND preg_match(',[\x7f-\xff],S', $text)
+	if ((!isset($GLOBALS['meta']['charset']) or $GLOBALS['meta']['charset'] !== 'utf-8')
+		and preg_match(',[\x7f-\xff],S', $text)
 	) {
 		include_spip('inc/charsets');
 		$text = charset2unicode($text, 'utf-8');

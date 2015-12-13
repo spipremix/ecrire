@@ -85,7 +85,7 @@ function chercher_filtre($fonc, $default = null) {
 		$f = chercher_filtre($nom);
 		// cas du sous-type MIME sans filtre associe, passer au type:
 		// si filtre_text_plain pas defini, passe a filtre_text
-		if (!$f AND $nom !== $fonc) {
+		if (!$f and $nom !== $fonc) {
 			$f = chercher_filtre(preg_replace(',\W.*$,', '', $fonc));
 		}
 
@@ -93,12 +93,12 @@ function chercher_filtre($fonc, $default = null) {
 	}
 	foreach (
 		array('filtre_' . $fonc, 'filtre_' . $fonc . '_dist', $fonc) as $f) {
-		if (isset($GLOBALS['spip_matrice'][$f]) AND is_string($g = $GLOBALS['spip_matrice'][$f])) {
+		if (isset($GLOBALS['spip_matrice'][$f]) and is_string($g = $GLOBALS['spip_matrice'][$f])) {
 			find_in_path($g, '', true);
 		}
 		if (function_exists($f)
-			OR (preg_match("/^(\w*)::(\w*)$/", $f, $regs)
-				AND is_callable(array($regs[1], $regs[2]))
+			or (preg_match("/^(\w*)::(\w*)$/", $f, $regs)
+				and is_callable(array($regs[1], $regs[2]))
 			)
 		) {
 			return $f;
@@ -189,21 +189,21 @@ function version_svn_courante($dir) {
 
 	// version installee par paquet ZIP
 	if (lire_fichier($dir . '/svn.revision', $c)
-		AND preg_match(',Revision: (\d+),', $c, $d)
+		and preg_match(',Revision: (\d+),', $c, $d)
 	) {
 		return intval($d[1]);
 	}
 
 	// version installee par SVN
 	if (lire_fichier($dir . '/.svn/entries', $c)
-		AND (
+		and (
 			(preg_match_all(
 					',committed-rev="([0-9]+)",', $c, $r1, PREG_PATTERN_ORDER)
-				AND $v = max($r1[1])
+				and $v = max($r1[1])
 			)
-			OR
+			or
 			(preg_match(',^\d.*dir[\r\n]+(\d+),ms', $c, $r1) # svn >= 1.4
-				AND $v = $r1[1]
+				and $v = $r1[1]
 			))
 	) {
 		return -$v;
@@ -371,10 +371,10 @@ function image_filtrer($args) {
 	statut_effacer_images_temporaires(true); // activer la suppression des images temporaires car le compilo finit la chaine par un image_graver
 	// Cas du nom de fichier local
 	if (strpos(substr($texte, strlen(_DIR_RACINE)), '..') === false
-		AND !preg_match(',^/|[<>]|\s,S', $texte)
-		AND (
+		and !preg_match(',^/|[<>]|\s,S', $texte)
+		and (
 			file_exists(preg_replace(',[?].*$,', '', $texte))
-			OR tester_url_absolue($texte)
+			or tester_url_absolue($texte)
 		)
 	) {
 		array_unshift($args, "<img src='$texte' />");
@@ -389,20 +389,20 @@ function image_filtrer($args) {
 		$texte, $tags, PREG_SET_ORDER)) {
 		foreach ($tags as $tag) {
 			$class = extraire_attribut($tag[3], 'class');
-			if (!$class OR
+			if (!$class or
 				(strpos($class, 'filtre_inactif') == false
 					// compat historique a virer en 3.2
-					AND strpos($class, 'no_image_filtrer') === false)
+					and strpos($class, 'no_image_filtrer') === false)
 			) {
 				array_unshift($args, $tag[3]);
 				if ($reduit = call_user_func_array($filtre, $args)) {
 					// En cas de span spip_documents, modifier le style=...width:
 					if ($tag[1]) {
 						$w = extraire_attribut($reduit, 'width');
-						if (!$w AND preg_match(",width:\s*(\d+)px,S", extraire_attribut($reduit, 'style'), $regs)) {
+						if (!$w and preg_match(",width:\s*(\d+)px,S", extraire_attribut($reduit, 'style'), $regs)) {
 							$w = $regs[1];
 						}
-						if ($w AND ($style = extraire_attribut($tag[1], 'style'))) {
+						if ($w and ($style = extraire_attribut($tag[1], 'style'))) {
 							$style = preg_replace(",width:\s*\d+px,S", "width:${w}px", $style);
 							$replace = inserer_attribut($tag[1], 'style', $style);
 							$texte = str_replace($tag[1], $replace, $texte);
@@ -473,9 +473,9 @@ function taille_image($img) {
 	if (isset($hauteur_img[$logo])) {
 		$srcHeight = $hauteur_img[$logo];
 	}
-	if (!$srcWidth OR !$srcHeight) {
+	if (!$srcWidth or !$srcHeight) {
 		if (file_exists($logo)
-			AND $srcsize = @getimagesize($logo)
+			and $srcsize = @getimagesize($logo)
 		) {
 			if (!$srcWidth) {
 				$largeur_img[$logo] = $srcWidth = $srcsize[0];
@@ -487,8 +487,8 @@ function taille_image($img) {
 		// $logo peut etre une reference a une image temporaire dont a n'a que le log .src
 		// on s'y refere, l'image sera reconstruite en temps utile si necessaire
 		elseif (@file_exists($f = "$logo.src")
-			AND lire_fichier($f, $valeurs)
-			AND $valeurs = unserialize($valeurs)
+			and lire_fichier($f, $valeurs)
+			and $valeurs = unserialize($valeurs)
 		) {
 			if (!$srcWidth) {
 				$largeur_img[$logo] = $srcWidth = $valeurs["largeur_dest"];
@@ -628,8 +628,8 @@ function proteger_amp($texte) {
  * @return mixed|string
  */
 function entites_html($texte, $tout = false, $quote = true) {
-	if (!is_string($texte) OR !$texte
-		OR strpbrk($texte, "&\"'<>") == false
+	if (!is_string($texte) or !$texte
+		or strpbrk($texte, "&\"'<>") == false
 	) {
 		return $texte;
 	}
@@ -1263,7 +1263,7 @@ function securiser_acces($id_auteur, $cle, $dir, $op = '', $args = '') {
  *     Retourne $texte, sinon $sinon.
  **/
 function sinon($texte, $sinon = '') {
-	if ($texte OR (!is_array($texte) AND strlen($texte))) {
+	if ($texte or (!is_array($texte) and strlen($texte))) {
 		return $texte;
 	} else {
 		return $sinon;
@@ -1548,13 +1548,13 @@ function recup_date($numdate, $forcer_jour = true) {
 		$jour = substr($jour, 1);
 	}
 
-	if ($forcer_jour AND $jour == '0') {
+	if ($forcer_jour and $jour == '0') {
 		$jour = '1';
 	}
-	if ($forcer_jour AND $mois == '0') {
+	if ($forcer_jour and $mois == '0') {
 		$mois = '1';
 	}
-	if ($annee OR $mois OR $jour OR $heures OR $minutes OR $secondes) {
+	if ($annee or $mois or $jour or $heures or $minutes or $secondes) {
 		return array($annee, $mois, $jour, $heures, $minutes, $secondes);
 	}
 }
@@ -1632,7 +1632,7 @@ function date_relative($date, $decalage_maxi = 0, $ref_date = null) {
 	}
 	$decal = date("U", $ref_time)-date("U", strtotime($date));
 
-	if ($decalage_maxi AND ($decal > $decalage_maxi OR $decal < 0)) {
+	if ($decalage_maxi and ($decal > $decalage_maxi or $decal < 0)) {
 		return '';
 	}
 
@@ -1730,7 +1730,7 @@ function date_relativecourt($date, $decalage_maxi = 0) {
 	}
 	$decal = date("U", strtotime(date('Y-m-d'))-strtotime(date('Y-m-d', strtotime($date))));
 
-	if ($decalage_maxi AND ($decal > $decalage_maxi OR $decal < 0)) {
+	if ($decalage_maxi and ($decal > $decalage_maxi or $decal < 0)) {
 		return '';
 	}
 
@@ -1792,7 +1792,7 @@ function affdate_base($numdate, $vue, $options = array()) {
 	}
 
 	$mois = intval($mois);
-	if ($mois > 0 AND $mois < 13) {
+	if ($mois > 0 and $mois < 13) {
 		$nommois = _T('date_mois_' . $mois);
 		if ($jour) {
 			$jourmois = _T('date_de_mois_' . $mois, array('j' => $jour, 'nommois' => $nommois));
@@ -1817,16 +1817,16 @@ function affdate_base($numdate, $vue, $options = array()) {
 			$saison = '';
 			if ($mois > 0) {
 				$saison = ($options['param'] == 'sud') ? 3 : 1;
-				if (($mois == 3 AND $jour >= 21) OR $mois > 3) {
+				if (($mois == 3 and $jour >= 21) or $mois > 3) {
 					$saison = ($options['param'] == 'sud') ? 4 : 2;
 				}
-				if (($mois == 6 AND $jour >= 21) OR $mois > 6) {
+				if (($mois == 6 and $jour >= 21) or $mois > 6) {
 					$saison = ($options['param'] == 'sud') ? 1 : 3;
 				}
-				if (($mois == 9 AND $jour >= 21) OR $mois > 9) {
+				if (($mois == 9 and $jour >= 21) or $mois > 9) {
 					$saison = ($options['param'] == 'sud') ? 2 : 4;
 				}
-				if (($mois == 12 AND $jour >= 21) OR $mois > 12) {
+				if (($mois == 12 and $jour >= 21) or $mois > 12) {
 					$saison = ($options['param'] == 'sud') ? 3 : 1;
 				}
 			}
@@ -1841,8 +1841,8 @@ function affdate_base($numdate, $vue, $options = array()) {
 			if ($avjc) {
 				return $annee;
 			}
-			$a = ((isset($options['annee_courante']) AND $options['annee_courante']) ? $options['annee_courante'] : date('Y'));
-			if ($annee < ($a-100) OR $annee > ($a+100)) {
+			$a = ((isset($options['annee_courante']) and $options['annee_courante']) ? $options['annee_courante'] : date('Y'));
+			if ($annee < ($a-100) or $annee > ($a+100)) {
 				return $annee;
 			}
 			if ($annee != $a) {
@@ -1857,8 +1857,8 @@ function affdate_base($numdate, $vue, $options = array()) {
 			if ($avjc) {
 				return $annee;
 			}
-			$a = ((isset($options['annee_courante']) AND $options['annee_courante']) ? $options['annee_courante'] : date('Y'));
-			if ($annee < ($a-100) OR $annee > ($a+100)) {
+			$a = ((isset($options['annee_courante']) and $options['annee_courante']) ? $options['annee_courante'] : date('Y'));
+			if ($annee < ($a-100) or $annee > ($a+100)) {
 				return $annee;
 			}
 			if ($annee != $a) {
@@ -1883,7 +1883,7 @@ function affdate_base($numdate, $vue, $options = array()) {
 			}
 
 		case 'nom_mois':
-			$param = ((isset($options['param']) AND $options['param']) ? '_' . $options['param'] : '');
+			$param = ((isset($options['param']) and $options['param']) ? '_' . $options['param'] : '');
 			if ($param and $mois) {
 				return _T('date_mois_' . $mois . $param);
 			}
@@ -1900,12 +1900,12 @@ function affdate_base($numdate, $vue, $options = array()) {
 			return $journum;
 
 		case 'nom_jour':
-			if (!$mois OR !$njour) {
+			if (!$mois or !$njour) {
 				return '';
 			}
 			$nom = mktime(1, 1, 1, $mois, $njour, $annee);
 			$nom = 1+date('w', $nom);
-			$param = ((isset($options['param']) AND $options['param']) ? '_' . $options['param'] : '');
+			$param = ((isset($options['param']) and $options['param']) ? '_' . $options['param'] : '');
 
 			return _T('date_jour_' . $nom . $param);
 
@@ -1950,7 +1950,7 @@ function affdate_base($numdate, $vue, $options = array()) {
  *     Nom du jour
  **/
 function nom_jour($numdate, $forme = '') {
-	if (!($forme == 'abbr' OR $forme == 'initiale')) {
+	if (!($forme == 'abbr' or $forme == 'initiale')) {
 		$forme = '';
 	}
 
@@ -2306,7 +2306,7 @@ function affdate_debut_fin($date_debut, $date_fin, $horaire = 'oui', $forme = ''
 	$date_fin = strtotime($date_fin);
 	$d = date("Y-m-d", $date_debut);
 	$f = date("Y-m-d", $date_fin);
-	$h = ($horaire === 'oui' OR $horaire === true);
+	$h = ($horaire === 'oui' or $horaire === true);
 	$hd = _T('date_fmt_heures_minutes_court', array('h' => date("H", $date_debut), 'm' => date("i", $date_debut)));
 	$hf = _T('date_fmt_heures_minutes_court', array('h' => date("H", $date_fin), 'm' => date("i", $date_fin)));
 
@@ -2704,9 +2704,9 @@ function post_autobr($texte, $delim = "\n_ ") {
 		$debut .= substr($suite, 0, $t-1);
 		$suite = substr($suite, $t);
 		$car = substr($suite, 0, 1);
-		if (($car <> '-') AND ($car <> '_') AND ($car <> "\n") AND ($car <> "|") AND ($car <> "}")
-			AND !preg_match(',^\s*(\n|</?(quote|div|dl|dt|dd)|$),S', ($suite))
-			AND !preg_match(',</?(quote|div|dl|dt|dd)> *$,iS', $debut)
+		if (($car <> '-') and ($car <> '_') and ($car <> "\n") and ($car <> "|") and ($car <> "}")
+			and !preg_match(',^\s*(\n|</?(quote|div|dl|dt|dd)|$),S', ($suite))
+			and !preg_match(',</?(quote|div|dl|dt|dd)> *$,iS', $debut)
 		) {
 			$debut .= $delim;
 		} else {
@@ -2775,7 +2775,7 @@ define('_EXTRAIRE_MULTI', "@<multi>(.*?)</multi>@sS");
 function extraire_multi($letexte, $lang = null, $options = array()) {
 
 	if ($letexte
-		AND preg_match_all(_EXTRAIRE_MULTI, $letexte, $regs, PREG_SET_ORDER)
+		and preg_match_all(_EXTRAIRE_MULTI, $letexte, $regs, PREG_SET_ORDER)
 	) {
 		if (!$lang) {
 			$lang = $GLOBALS['spip_lang'];
@@ -2852,7 +2852,7 @@ function extraire_trads($bloc) {
 //	while (preg_match("/^(.*?)[{\[]([a-z_]+)[}\]]/siS", $bloc, $regs)) {
 	while (preg_match("/^(.*?)[\[]([a-z_]+)[\]]/siS", $bloc, $regs)) {
 		$texte = trim($regs[1]);
-		if ($texte OR $lang) {
+		if ($texte or $lang) {
 			$trads[$lang] = $texte;
 		}
 		$bloc = substr($bloc, strlen($regs[0]));
@@ -3084,7 +3084,7 @@ function inserer_attribut($balise, $attribut, $val, $proteger = true, $vider = f
 
 	// echapper les ' pour eviter tout bug
 	$val = str_replace("'", "&#039;", $val);
-	if ($vider AND strlen($val) == 0) {
+	if ($vider and strlen($val) == 0) {
 		$insert = '';
 	} else {
 		$insert = " $attribut='$val'";
@@ -3325,7 +3325,7 @@ function afficher_enclosures($tags) {
 	$s = array();
 	foreach (extraire_balises($tags, 'a') as $tag) {
 		if (extraire_attribut($tag, 'rel') == 'enclosure'
-			AND $t = extraire_attribut($tag, 'href')
+			and $t = extraire_attribut($tag, 'href')
 		) {
 			$s[] = preg_replace(',>[^<]+</a>,S',
 				'>'
@@ -3570,7 +3570,7 @@ function extraire_balises($texte, $tag = 'a') {
  *     - `$def` si on n'a pas transmis de tableau
  **/
 function in_any($val, $vals, $def = '') {
-	if (!is_array($vals) AND $v = unserialize($vals)) {
+	if (!is_array($vals) and $v = unserialize($vals)) {
 		$vals = $v;
 	}
 
@@ -3646,7 +3646,7 @@ function form_hidden($action) {
 	$contexte = array();
 	include_spip('inc/urls');
 	if ($p = urls_decoder_url($action, '')
-		AND reset($p)
+		and reset($p)
 	) {
 		$fond = array_shift($p);
 		if ($fond != '404') {
@@ -3656,10 +3656,10 @@ function form_hidden($action) {
 		}
 	}
 	// defaire ce qu'a injecte urls_decoder_url : a revoir en modifiant la signature de urls_decoder_url
-	if (defined('_DEFINIR_CONTEXTE_TYPE') AND _DEFINIR_CONTEXTE_TYPE) {
+	if (defined('_DEFINIR_CONTEXTE_TYPE') and _DEFINIR_CONTEXTE_TYPE) {
 		unset($contexte['type']);
 	}
-	if (defined('_DEFINIR_CONTEXTE_TYPE_PAGE') AND _DEFINIR_CONTEXTE_TYPE_PAGE) {
+	if (defined('_DEFINIR_CONTEXTE_TYPE_PAGE') and _DEFINIR_CONTEXTE_TYPE_PAGE) {
 		unset($contexte['type-page']);
 	}
 
@@ -3730,7 +3730,7 @@ function form_hidden($action) {
  *     Liste (première page, dernière page).
  **/
 function filtre_bornes_pagination_dist($courante, $nombre, $max = 10) {
-	if ($max <= 0 OR $max >= $nombre) {
+	if ($max <= 0 or $max >= $nombre) {
 		return array(1, $nombre);
 	}
 
@@ -3801,7 +3801,7 @@ function filtre_end($array) {
  *
  **/
 function filtre_push($array, $val) {
-	if (!is_array($array) OR !array_push($array, $val)) {
+	if (!is_array($array) or !array_push($array, $val)) {
 		return '';
 	}
 
@@ -3824,7 +3824,7 @@ function filtre_push($array, $val) {
  *     - `true` si la valeur existe dans le tableau, `false` sinon.
  **/
 function filtre_find($array, $val) {
-	return (is_array($array) AND in_array($val, $array));
+	return (is_array($array) and in_array($val, $array));
 }
 
 
@@ -3968,7 +3968,7 @@ function direction_css($css, $voulue = '') {
 
 	// si on a precise le sens voulu en argument, le prendre en compte
 	if ($voulue = strtolower($voulue)) {
-		if ($voulue != 'rtl' AND $voulue != 'ltr') {
+		if ($voulue != 'rtl' and $voulue != 'ltr') {
 			$voulue = lang_dir($voulue);
 		}
 	} else {
@@ -3988,7 +3988,7 @@ function direction_css($css, $voulue = '') {
 		// url absolue
 		preg_match(",^http:,i", $css)
 		// ou qui contient un ?
-		OR (($p = strpos($css, '?')) !== false)
+		or (($p = strpos($css, '?')) !== false)
 	) {
 		$distant = true;
 		$cssf = parse_url($css);
@@ -4020,7 +4020,7 @@ function direction_css($css, $voulue = '') {
 		}
 	} else {
 		if ((@filemtime($f) > @filemtime($css))
-			AND (_VAR_MODE != 'recalcul')
+			and (_VAR_MODE != 'recalcul')
 		) {
 			return $f;
 		}
@@ -4101,13 +4101,13 @@ function url_absolue_css($css) {
 		. preg_replace(",(.*?)(_rtl|_ltr)?$,", "\\1-urlabs-" . substr(md5("$css-urlabs"), 0, 4) . "\\2", $f)
 		. '.css';
 
-	if ((@filemtime($f) > @filemtime($css)) AND (_VAR_MODE != 'recalcul')) {
+	if ((@filemtime($f) > @filemtime($css)) and (_VAR_MODE != 'recalcul')) {
 		return $f;
 	}
 
 	if ($url_absolue_css == $css) {
 		if (strncmp($GLOBALS['meta']['adresse_site'], $css, $l = strlen($GLOBALS['meta']['adresse_site'])) != 0
-			OR !lire_fichier(_DIR_RACINE . substr($css, $l), $contenu)
+			or !lire_fichier(_DIR_RACINE . substr($css, $l), $contenu)
 		) {
 			include_spip('inc/distant');
 			if (!$contenu = recuperer_page($css)) {
@@ -4201,7 +4201,7 @@ function table_valeur($table, $cle, $defaut = '') {
  *     - string : expression trouvée.
  **/
 function match($texte, $expression, $modif = "UimsS", $capte = 0) {
-	if (intval($modif) AND $capte == 0) {
+	if (intval($modif) and $capte == 0) {
 		$capte = $modif;
 		$modif = "UimsS";
 	}
@@ -4268,7 +4268,7 @@ function traiter_doublons_documents(&$doublons, $letexte) {
 	$t = $letexte . $GLOBALS['les_notes'];
 
 	if (strstr($t, 'spip_document_') // evite le preg_match_all si inutile
-		AND preg_match_all(
+		and preg_match_all(
 			',<[^>]+\sclass=["\']spip_document_([0-9]+)[\s"\'],imsS',
 			$t, $matches, PREG_PATTERN_ORDER)
 	) {
@@ -4331,7 +4331,7 @@ function env_to_params($env, $ignore_params = array()) {
 	$texte = "";
 	if ($env) {
 		foreach ($env as $i => $j) {
-			if (is_string($j) AND !in_array($i, $ignore_params)) {
+			if (is_string($j) and !in_array($i, $ignore_params)) {
 				$texte .= "<param name='" . $i . "'\n\tvalue='" . $j . "' />";
 			}
 		}
@@ -4370,7 +4370,7 @@ function env_to_attributs($env, $ignore_params = array()) {
 	$texte = "";
 	if ($env) {
 		foreach ($env as $i => $j) {
-			if (is_string($j) AND !in_array($i, $ignore_params)) {
+			if (is_string($j) and !in_array($i, $ignore_params)) {
 				$texte .= $i . "='" . $j . "' ";
 			}
 		}
@@ -4451,19 +4451,19 @@ function charge_scripts($files, $script = true) {
  * @return string
  */
 function http_img_pack($img, $alt, $atts = '', $title = '', $options = array()) {
-	if (!isset($options['chemin_image']) OR $options['chemin_image'] == true) {
+	if (!isset($options['chemin_image']) or $options['chemin_image'] == true) {
 		$img = chemin_image($img);
 	}
 	if (stripos($atts, 'width') === false) {
 		// utiliser directement l'info de taille presente dans le nom
-		if ((!isset($options['utiliser_suffixe_size']) OR $options['utiliser_suffixe_size'] == true)
-			AND preg_match(',-([0-9]+)[.](png|gif)$,', $img, $regs)
+		if ((!isset($options['utiliser_suffixe_size']) or $options['utiliser_suffixe_size'] == true)
+			and preg_match(',-([0-9]+)[.](png|gif)$,', $img, $regs)
 		) {
 			$largeur = $hauteur = intval($regs[1]);
 		} else {
 			$taille = taille_image($img);
 			list($hauteur, $largeur) = $taille;
-			if (!$hauteur OR !$largeur) {
+			if (!$hauteur or !$largeur) {
 				return "";
 			}
 		}
@@ -4678,7 +4678,7 @@ function filtre_puce_statut_dist($statut, $objet, $id_objet = 0, $id_parent = 0)
  */
 function encoder_contexte_ajax($c, $form = '', $emboite = null, $ajaxid = '') {
 	if (is_string($c)
-		AND @unserialize($c) !== false
+		and @unserialize($c) !== false
 	) {
 		$c = unserialize($c);
 	}
@@ -4705,13 +4705,13 @@ function encoder_contexte_ajax($c, $form = '', $emboite = null, $ajaxid = '') {
 	// par defaut, sauf si cette configuration a ete forcee
 	// OU que la longueur de l''argument generee est plus long
 	// que ce que telere Suhosin.
-	$cache_contextes_ajax = (defined('_CACHE_CONTEXTES_AJAX') AND _CACHE_CONTEXTES_AJAX);
+	$cache_contextes_ajax = (defined('_CACHE_CONTEXTES_AJAX') and _CACHE_CONTEXTES_AJAX);
 	if (!$cache_contextes_ajax) {
 		$env = $c;
 		if (function_exists('gzdeflate') && function_exists('gzinflate')) {
 			$env = gzdeflate($env);
 			// http://core.spip.net/issues/2667 | https://bugs.php.net/bug.php?id=61287
-			if (substr(phpversion(), 0, 5) == '5.4.0' AND !@gzinflate($env)) {
+			if (substr(phpversion(), 0, 5) == '5.4.0' and !@gzinflate($env)) {
 				$cache_contextes_ajax = true;
 				spip_log("Contextes AJAX forces en fichiers ! Erreur PHP 5.4.0", _LOG_AVERTISSEMENT);
 			}
@@ -4750,7 +4750,7 @@ function encoder_contexte_ajax($c, $form = '', $emboite = null, $ajaxid = '') {
 	$r = self();
 	$r = ' data-origin="' . $r . '"';
 	$class = 'ajaxbloc';
-	if ($ajaxid AND is_string($ajaxid)) {
+	if ($ajaxid and is_string($ajaxid)) {
 		$class .= ' ajax-id-' . $ajaxid;
 	}
 
@@ -4777,9 +4777,9 @@ function decoder_contexte_ajax($c, $form = '') {
 	if (!function_exists('calculer_cle_action')) {
 		include_spip("inc/securiser_action");
 	}
-	if (((defined('_CACHE_CONTEXTES_AJAX') AND _CACHE_CONTEXTES_AJAX) OR strlen($c) == 32)
-		AND $dir = sous_repertoire(_DIR_CACHE, 'contextes')
-		AND lire_fichier("$dir/c$c", $contexte)
+	if (((defined('_CACHE_CONTEXTES_AJAX') and _CACHE_CONTEXTES_AJAX) or strlen($c) == 32)
+		and $dir = sous_repertoire(_DIR_CACHE, 'contextes')
+		and lire_fichier("$dir/c$c", $contexte)
 	) {
 		$c = $contexte;
 	} else {
@@ -5224,13 +5224,13 @@ function bando_images_background() {
 
 	$res = "";
 	foreach ($boutons as $page => $detail) {
-		if ($detail->icone AND strlen(trim($detail->icone))) {
+		if ($detail->icone and strlen(trim($detail->icone))) {
 			$res .= "\n.navigation_avec_icones #bando1_$page {background-image:url(" . $detail->icone . ");}";
 		}
 		$selecteur = (in_array($page, array('outils_rapides', 'outils_collaboratifs')) ? "" : ".navigation_avec_icones ");
 		if (is_array($detail->sousmenu)) {
 			foreach ($detail->sousmenu as $souspage => $sousdetail) {
-				if ($sousdetail->icone AND strlen(trim($sousdetail->icone))) {
+				if ($sousdetail->icone and strlen(trim($sousdetail->icone))) {
 					$res .= "\n$selecteur.bando2_$souspage {background-image:url(" . $sousdetail->icone . ");}";
 				}
 			}
@@ -5309,7 +5309,7 @@ function tri_champ_order($t, $from = null) {
 		$trouver_table = charger_fonction('trouver_table', 'base');
 		foreach ($from as $idt => $table_sql) {
 			if ($desc = $trouver_table($table_sql)
-				AND isset($desc['field'][$champ])
+				and isset($desc['field'][$champ])
 			) {
 				$champ = "$idt.$champ";
 				break;
@@ -5377,7 +5377,7 @@ function generer_info_entite($id_objet, $type_objet, $info, $etoile = "") {
 	}
 
 	// si on a deja note que l'objet n'existe pas, ne pas aller plus loin
-	if (isset($objets[$type_objet]) AND $objets[$type_objet] === false) {
+	if (isset($objets[$type_objet]) and $objets[$type_objet] === false) {
 		return '';
 	}
 
@@ -5391,8 +5391,8 @@ function generer_info_entite($id_objet, $type_objet, $info, $etoile = "") {
 
 	// On ne fait la requete que si on a pas deja l'objet ou si on demande le titre mais qu'on ne l'a pas encore
 	if (!isset($objets[$type_objet][$id_objet])
-		OR
-		($demande_titre AND !isset($objets[$type_objet][$id_objet]['titre']))
+		or
+		($demande_titre and !isset($objets[$type_objet][$id_objet]['titre']))
 	) {
 		if (!$trouver_table) {
 			$trouver_table = charger_fonction('trouver_table', 'base');
@@ -5458,19 +5458,19 @@ function appliquer_traitement_champ($texte, $champ, $table_objet = '', $env = ar
 
 	$champ = strtoupper($champ);
 	$traitements = isset($GLOBALS['table_des_traitements'][$champ]) ? $GLOBALS['table_des_traitements'][$champ] : false;
-	if (!$traitements OR !is_array($traitements)) {
+	if (!$traitements or !is_array($traitements)) {
 		return $texte;
 	}
 
 	$traitement = '';
-	if ($table_objet AND (!isset($traitements[0]) OR count($traitements) > 1)) {
+	if ($table_objet and (!isset($traitements[0]) or count($traitements) > 1)) {
 		// necessaire pour prendre en charge les vieux appels avec un table_objet_sql en 3e arg
 		$table_objet = table_objet($table_objet);
 		if (isset($traitements[$table_objet])) {
 			$traitement = $traitements[$table_objet];
 		}
 	}
-	if (!$traitement AND isset($traitements[0])) {
+	if (!$traitement and isset($traitements[0])) {
 		$traitement = $traitements[0];
 	}
 	// (sinon prendre le premier de la liste par defaut ?)
@@ -5505,7 +5505,7 @@ function generer_lien_entite($id_objet, $objet, $longueur = 80, $connect = null)
 	// le raccourcis n'est plus valide
 	$titre = isset($titre['titre']) ? typo($titre['titre']) : '';
 	// on essaye avec generer_info_entite ?
-	if (!strlen($titre) AND !$connect) {
+	if (!strlen($titre) and !$connect) {
 		$titre = generer_info_entite($id_objet, $objet, 'titre');
 	}
 	if (!strlen($titre)) {
@@ -5578,8 +5578,8 @@ function filtre_print_dist($u, $join = "<br />", $indent = 0) {
 		$array_values = array_map('is_array', $u);
 		$object_values = array_map('is_object', $u);
 		if (array_sum($numeric_keys) == count($numeric_keys)
-			AND !array_sum($array_values)
-			AND !array_sum($object_values)
+			and !array_sum($array_values)
+			and !array_sum($object_values)
 		) {
 			return join(", ", array_map('filtre_print_dist', $u));
 		}
@@ -5660,10 +5660,10 @@ function objet_icone($objet, $taille = 24) {
  */
 function insert_head_css_conditionnel($flux) {
 	if (strpos($flux, '<!-- insert_head_css -->') === false
-		AND $p = strpos($flux, '<!-- insert_head -->')
+		and $p = strpos($flux, '<!-- insert_head -->')
 	) {
 		// plutot avant le premier js externe (jquery) pour etre non bloquant
-		if ($p1 = stripos($flux, '<script src=') AND $p1 < $p) {
+		if ($p1 = stripos($flux, '<script src=') and $p1 < $p) {
 			$p = $p1;
 		}
 		$flux = substr_replace($flux, pipeline('insert_head_css', '<!-- insert_head_css -->'), $p, 0);
@@ -5714,9 +5714,9 @@ function produire_fond_statique($fond, $contexte = array(), $options = array(), 
 	// le dernier fichier produit est toujours suffixe par .last
 	// et recopie sur le fichier cible uniquement si il change
 	if (!file_exists($filename)
-		OR !file_exists($filename . ".last")
-		OR (isset($cache['lastmodified']) AND $cache['lastmodified'] AND filemtime($filename . ".last") < $cache['lastmodified'])
-		OR (defined('_VAR_MODE') AND _VAR_MODE == 'recalcul')
+		or !file_exists($filename . ".last")
+		or (isset($cache['lastmodified']) and $cache['lastmodified'] and filemtime($filename . ".last") < $cache['lastmodified'])
+		or (defined('_VAR_MODE') and _VAR_MODE == 'recalcul')
 	) {
 		$contenu = $cache['texte'];
 		// passer les urls en absolu si c'est une css
@@ -5739,7 +5739,7 @@ function produire_fond_statique($fond, $contexte = array(), $options = array(), 
 		ecrire_fichier($filename . ".last", $comment . $contenu);
 		// regarder si on recopie
 		if (!file_exists($filename)
-			OR md5_file($filename) !== md5_file($filename . ".last")
+			or md5_file($filename) !== md5_file($filename . ".last")
 		) {
 			@copy($filename . ".last", $filename);
 			spip_clearstatcache(true, $filename); // eviter que PHP ne reserve le vieux timestamp
@@ -5760,8 +5760,8 @@ function produire_fond_statique($fond, $contexte = array(), $options = array(), 
  */
 function timestamp($fichier) {
 	if (!$fichier
-		OR !file_exists($fichier)
-		OR !$m = filemtime($fichier)
+		or !file_exists($fichier)
+		or !$m = filemtime($fichier)
 	) {
 		return $fichier;
 	}
@@ -5878,7 +5878,7 @@ function sinon_interdire_acces($ok = false, $url = '', $statut = 0, $message = n
 	}
 
 	// ecriture simplifiee avec message en 3eme argument (= statut 403)
-	if (!is_numeric($statut) AND is_null($message)) {
+	if (!is_numeric($statut) and is_null($message)) {
 		$message = $statut;
 		$statut = 0;
 	}
@@ -5889,7 +5889,7 @@ function sinon_interdire_acces($ok = false, $url = '', $statut = 0, $message = n
 
 	// Si on est dans l'espace privé, on génère du 403 Forbidden par defaut ou du 404
 	if (test_espace_prive()) {
-		if (!$statut OR !in_array($statut, array(404, 403))) {
+		if (!$statut or !in_array($statut, array(404, 403))) {
 			$statut = 403;
 		}
 		http_status(403);

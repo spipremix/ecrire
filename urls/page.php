@@ -56,7 +56,7 @@ function urls_page_dist($i, &$entite, $args = '', $ancre = '') {
 	}
 
 	// traiter les injections du type domaine.org/spip.php/cestnimportequoi/ou/encore/plus/rubrique23
-	if ($GLOBALS['profondeur_url'] > 0 AND $entite == 'sommaire') {
+	if ($GLOBALS['profondeur_url'] > 0 and $entite == 'sommaire') {
 		return array(array(), '404');
 	}
 

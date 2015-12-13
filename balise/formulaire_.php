@@ -38,12 +38,12 @@ function protege_champ($texte) {
 		$texte = array_map('protege_champ', $texte);
 	} else {
 		// ne pas corrompre une valeur serialize
-		if ((preg_match(",^[abis]:\d+[:;],", $texte) AND @unserialize($texte) != false) OR is_null($texte)) {
+		if ((preg_match(",^[abis]:\d+[:;],", $texte) and @unserialize($texte) != false) or is_null($texte)) {
 			return $texte;
 		}
 		if (is_string($texte)
-			AND $texte
-			AND strpbrk($texte, "&\"'<>") !== false
+			and $texte
+			and strpbrk($texte, "&\"'<>") !== false
 		) {
 			$texte = spip_htmlspecialchars($texte, ENT_QUOTES);
 		} elseif (is_bool($texte)) {
@@ -154,9 +154,9 @@ function balise_FORMULAIRE__contexte($form, $args) {
 
 	$je_suis_poste = false;
 	if ($post_form = _request('formulaire_action')
-		AND $post_form == $form
-		AND $p = _request('formulaire_action_args')
-		AND is_array($p = decoder_contexte_ajax($p, $post_form))
+		and $post_form == $form
+		and $p = _request('formulaire_action_args')
+		and is_array($p = decoder_contexte_ajax($p, $post_form))
 	) {
 		// enlever le faux attribut de langue masque
 		array_shift($p);
@@ -201,8 +201,8 @@ function balise_FORMULAIRE__contexte($form, $args) {
 	// ou si on le demande explicitement par le parametre _forcer_request = true
 	$dispo = ($je_suis_poste || (isset($valeurs['_forcer_request']) && $valeurs['_forcer_request']));
 	foreach (array_keys($valeurs) as $champ) {
-		if ($champ[0] !== '_' AND !in_array($champ, array('message_ok', 'message_erreur', 'editable'))) {
-			if ($dispo AND (($v = _request($champ)) !== null)) {
+		if ($champ[0] !== '_' and !in_array($champ, array('message_ok', 'message_erreur', 'editable'))) {
+			if ($dispo and (($v = _request($champ)) !== null)) {
 				$valeurs[$champ] = $v;
 			}
 			// nettoyer l'url des champs qui vont etre saisis

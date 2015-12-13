@@ -30,7 +30,7 @@ $GLOBALS['delais'] = 0;// pas de cache !
 // Securite
 if (strstr($fond, '/')) {
 	if (!include_spip('inc/autoriser')
-		OR !autoriser('webmestre')
+		or !autoriser('webmestre')
 	) {
 		include_spip('inc/minipres');
 		echo minipres();

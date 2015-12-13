@@ -82,7 +82,7 @@ function phraser_inclure($texte, $ligne, $result) {
 		$texte = substr($texte, $p+strlen($match[0]));
 		// on assimile {var=val} a une liste de un argument sans fonction
 		phraser_args($texte, "/>", "", $result, $champ);
-		if (!$champ->texte OR count($champ->param) > 1) {
+		if (!$champ->texte or count($champ->param) > 1) {
 			if (!function_exists('normaliser_inclure')) {
 				include_spip('public/normaliser');
 			}
@@ -120,7 +120,7 @@ function phraser_polyglotte($texte, $ligne, $result) {
 			$texte = substr($texte, $p+strlen($match[0]));
 			while (preg_match("/^[[:space:]]*([^[{]*)[[:space:]]*[[{]([a-z_]+)[]}](.*)$/si", $bloc, $regs)) {
 				$trad = $regs[1];
-				if ($trad OR $lang) {
+				if ($trad or $lang) {
 					$champ->traductions[$lang] = $trad;
 				}
 				$lang = $regs[2];
@@ -400,7 +400,7 @@ function phraser_arg(&$texte, $sep, $result, &$pointeur_champ) {
 				$result[] = $champ;
 			}
 		}
-		if (isset($args[0]) AND $args[0] == ',') {
+		if (isset($args[0]) and $args[0] == ',') {
 			$args = ltrim(substr($args, 1));
 			if ($collecte) {
 				$res[] = $collecte;
@@ -537,7 +537,7 @@ function phraser_vieux(&$champ) {
 				include_spip('public/normaliser');
 			}
 			phraser_vieux_modele($champ);
-		} elseif ($nom == 'INCLURE' OR $nom == 'INCLUDE') {
+		} elseif ($nom == 'INCLURE' or $nom == 'INCLUDE') {
 			if (!function_exists('phraser_vieux_inclu')) {
 				include_spip('public/normaliser');
 			}
@@ -582,7 +582,7 @@ function phraser_criteres($params, &$result) {
 			// plus d'un argument et pas le critere IN:
 			// detecter comme on peut si c'est le critere implicite LIMIT debut, fin
 			if ($var->type != 'texte'
-				OR preg_match("/^(n|n-|(n-)?\d+)$/S", $param)
+				or preg_match("/^(n|n-|(n-)?\d+)$/S", $param)
 			) {
 				$op = ',';
 				$not = "";
@@ -644,7 +644,7 @@ function phraser_criteres($params, &$result) {
 				// les separateurs
 				if ($var->apres) {
 					$result->separateur[] = $param;
-				} elseif (($param == 'tout') OR ($param == 'tous')) {
+				} elseif (($param == 'tout') or ($param == 'tous')) {
 					$result->modificateur['tout'] = true;
 				} elseif ($param == 'plat') {
 					$result->modificateur['plat'] = true;
@@ -656,11 +656,11 @@ function phraser_criteres($params, &$result) {
 				// Les autres critères de la boucle hierarchie doivent être
 				// traités normalement.
 				elseif (strcasecmp($type, 'hierarchie') == 0
-					AND !preg_match(",^id_rubrique\b,", $param)
-					AND preg_match(",^id_\w+\s*$,", $param)
+					and !preg_match(",^id_rubrique\b,", $param)
+					and preg_match(",^id_\w+\s*$,", $param)
 				) {
 					$result->modificateur['tout'] = true;
-				} elseif (strcasecmp($type, 'hierarchie') == 0 AND $param == "id_rubrique") {
+				} elseif (strcasecmp($type, 'hierarchie') == 0 and $param == "id_rubrique") {
 					// rien a faire sur {id_rubrique} tout seul
 				} else {
 					// pas d'emplacement statique, faut un dynamique
@@ -682,7 +682,7 @@ function phraser_criteres($params, &$result) {
 					} elseif (preg_match(',^([!]?)(' . CHAMP_SQL_PLUS_FONC .
 						')[[:space:]]*(\??)(!?)(<=?|>=?|==?|\b(?:IN|LIKE)\b)(.*)$,is', $param, $m)) {
 						$a2 = trim($m[8]);
-						if ($a2 AND ($a2[0] == "'" OR $a2[0] == '"') AND ($a2[0] == substr($a2, -1))) {
+						if ($a2 and ($a2[0] == "'" or $a2[0] == '"') and ($a2[0] == substr($a2, -1))) {
 							$a2 = substr($a2, 1, -1);
 						}
 						$crit = phraser_critere_infixe($m[2], $a2, $v,
@@ -770,8 +770,8 @@ function public_phraser_html_dist($texte, $id_parent, &$boucles, $descr, $ligne 
 # attention: reperer la premiere des 2 balises: pre_boucle ou boucle
 
 		if (!preg_match("," . BALISE_PRE_BOUCLE . '[0-9_],', $texte, $r)
-			OR ($n = strpos($texte, $r[0])) === false
-			OR ($n > $pos_boucle)
+			or ($n = strpos($texte, $r[0])) === false
+			or ($n > $pos_boucle)
 		) {
 			$debut = substr($texte, 0, $pos_boucle);
 			$milieu = substr($texte, $pos_boucle);

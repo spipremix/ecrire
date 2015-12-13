@@ -62,7 +62,7 @@ function balise_FORMULAIRE_ECRIRE_AUTEUR_stat($args, $context_compil) {
 	include_spip('inc/filtres');
 	// Pas d'id_auteur ni d'id_article ? Erreur de contexte
 	$id = intval($args[1]);
-	if (!$args[0] AND !$id) {
+	if (!$args[0] and !$id) {
 		$msg = array(
 			'zbug_champ_hors_motif',
 			array(
@@ -77,7 +77,7 @@ function balise_FORMULAIRE_ECRIRE_AUTEUR_stat($args, $context_compil) {
 	}
 	// Si on est dans un contexte article,
 	// sortir tous les mails des auteurs de l'article
-	if (!$args[0] AND $id) {
+	if (!$args[0] and $id) {
 		$r = '';
 		$s = sql_allfetsel('email',
 			'spip_auteurs AS A LEFT JOIN spip_auteurs_liens AS L ON (A.id_auteur=L.id_auteur AND L.objet=\'article\')',
@@ -91,7 +91,7 @@ function balise_FORMULAIRE_ECRIRE_AUTEUR_stat($args, $context_compil) {
 	}
 
 	// On ne peut pas ecrire a un auteur dont le mail n'est pas valide
-	if (!$args[2] OR !email_valide($args[2])) {
+	if (!$args[2] or !email_valide($args[2])) {
 		return '';
 	}
 

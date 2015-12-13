@@ -244,8 +244,8 @@ function spip_nfsunlock($fichier, $birth, $max_age = 0, $test = false) {
 	$tpath = _DIR_TMP . "stime.$id";
 	$tmpfd = @fopen($tpath, 'w');
 	if ((!$tmpfd)
-		OR (@fputs($tmpfd, "zz", 2) != 2)
-		OR !($our_tmp = fstat($tmpfd))
+		or (@fputs($tmpfd, "zz", 2) != 2)
+		or !($our_tmp = fstat($tmpfd))
 	) {
 		/* The open failed, or we can't write the file, or we can't stat it */
 		@fclose($tmpfd);

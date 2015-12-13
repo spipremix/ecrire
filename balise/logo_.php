@@ -74,7 +74,7 @@ function balise_LOGO__dist($p) {
 	$align = $lien = '';
 	$mode_logo = '';
 
-	if ($p->param AND !$p->param[0][0]) {
+	if ($p->param and !$p->param[0][0]) {
 		$params = $p->param[0];
 		array_shift($params);
 		foreach ($params as $a) {
@@ -125,7 +125,7 @@ function balise_LOGO__dist($p) {
 	}
 
 	// demande de reduction sur logo avec ecriture spip 2.1 : #LOGO_xxx{200, 0}
-	if ($coord_x OR $coord_y) {
+	if ($coord_x or $coord_y) {
 		$code = "filtrer('image_graver',filtrer('image_reduire'," . $code . ", '$coord_x', '$coord_y'))";
 	}
 

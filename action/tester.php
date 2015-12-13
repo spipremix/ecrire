@@ -62,7 +62,7 @@ function action_tester_dist() {
 			# alors que la valeur deduite sert a identifier
 			# les formats disponibles en ecriture... (cf. inc_logos)
 
-			$gd_formats = Array();
+			$gd_formats = array();
 			if (function_exists('ImageCreateFromJPEG')) {
 				$srcImage = @ImageCreateFromJPEG(_ROOT_IMG_PACK . "test.jpg");
 				if ($srcImage) {
@@ -100,7 +100,7 @@ function action_tester_dist() {
 			if (_PNMSCALE_COMMAND == '') {
 				return;
 			}
-			$netpbm_formats = Array();
+			$netpbm_formats = array();
 
 			$jpegtopnm_command = str_replace("pnmscale",
 				"jpegtopnm", _PNMSCALE_COMMAND);
@@ -162,7 +162,7 @@ function action_tester_dist() {
 		$image['fichier_dest'] = _DIR_VAR . "test_$arg";
 
 		if ($preview = _image_creer_vignette($image, $taille_preview, $taille_preview, $arg, true)
-			AND ($preview['width']*$preview['height'] > 0)
+			and ($preview['width']*$preview['height'] > 0)
 		) {
 			redirige_par_entete($preview['fichier']);
 		}

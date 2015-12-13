@@ -51,7 +51,7 @@ function roles_presents($objet, $objet_destination = '') {
 	$desc = lister_tables_objets_sql(table_objet_sql($objet));
 
 	// pas de liste de roles, on sort 
-	if (!isset($desc['roles_titres']) OR !($titres = $desc['roles_titres'])) {
+	if (!isset($desc['roles_titres']) or !($titres = $desc['roles_titres'])) {
 		return false;
 	}
 
@@ -144,7 +144,7 @@ function roles_trouver_dans_qualif($objet, $objet_destination, $qualif = array()
 		$colonne_role = $roles['colonne'];
 		// qu'il n'est pas défini
 		if (!isset($qualif[$colonne_role])
-			OR !($role = $qualif[$colonne_role])
+			or !($role = $qualif[$colonne_role])
 		) {
 			$role = $roles['roles']['defaut'];
 		}

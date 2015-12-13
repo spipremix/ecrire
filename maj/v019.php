@@ -154,7 +154,7 @@ function maj_1_938() {
 		$repli = false;
 		// verifier que la colonne id_type est toujours la (update post 1.938)
 		$desc = sql_showtable('spip_documents');
-		if (!$desc OR !isset($desc['field']['id_type'])) {
+		if (!$desc or !isset($desc['field']['id_type'])) {
 			$repli = true;
 		}
 

@@ -111,7 +111,7 @@ function urls_decoder_url($url, $fond = '', $contexte = array(), $assembler = fa
 
 	$url_redirect = "";
 	$renommer = generer_url_entite('', '', '', '', true);
-	if (!$renommer AND !function_exists('recuperer_parametres_url')) {
+	if (!$renommer and !function_exists('recuperer_parametres_url')) {
 		$renommer = charger_fonction('page', 'urls');
 	} // fallback pour decoder l'url
 	if ($renommer) {
@@ -121,7 +121,7 @@ function urls_decoder_url($url, $fond = '', $contexte = array(), $assembler = fa
 			if ($url_redirect == $url) {
 				$url_redirect = "";
 			} // securite pour eviter une redirection infinie
-			if ($assembler AND strlen($url_redirect)) {
+			if ($assembler and strlen($url_redirect)) {
 				spip_log("Redirige $url vers $url_redirect");
 				include_spip('inc/headers');
 				redirige_par_entete($url_redirect, '', 301);
@@ -130,7 +130,7 @@ function urls_decoder_url($url, $fond = '', $contexte = array(), $assembler = fa
 				$fond = $nfond;
 			} else {
 				if ($fond == ''
-					OR $fond == 'type_urls' /* compat avec htaccess 2.0.0 */
+					or $fond == 'type_urls' /* compat avec htaccess 2.0.0 */
 				) {
 					$fond = $type;
 				}
@@ -138,10 +138,10 @@ function urls_decoder_url($url, $fond = '', $contexte = array(), $assembler = fa
 			if (isset($ncontexte)) {
 				$contexte = $ncontexte;
 			}
-			if (defined('_DEFINIR_CONTEXTE_TYPE') AND _DEFINIR_CONTEXTE_TYPE) {
+			if (defined('_DEFINIR_CONTEXTE_TYPE') and _DEFINIR_CONTEXTE_TYPE) {
 				$contexte['type'] = $type;
 			}
-			if (defined('_DEFINIR_CONTEXTE_TYPE_PAGE') AND _DEFINIR_CONTEXTE_TYPE_PAGE) {
+			if (defined('_DEFINIR_CONTEXTE_TYPE_PAGE') and _DEFINIR_CONTEXTE_TYPE_PAGE) {
 				$contexte['type-page'] = $type;
 			}
 		}
@@ -216,8 +216,8 @@ function nettoyer_url_page($url, $contexte = array()) {
 	$raccourci_url_page_spip = ',^(?:[^?]*/)?(?:spip[.]php)?[?](' . $url_objets . ')([0-9]+)=?(&.*)?$,';
 
 	if (preg_match($raccourci_url_page_html, $url, $regs)
-		OR preg_match($raccourci_url_page_id, $url, $regs)
-		OR preg_match($raccourci_url_page_spip, $url, $regs)
+		or preg_match($raccourci_url_page_id, $url, $regs)
+		or preg_match($raccourci_url_page_spip, $url, $regs)
 	) {
 		$regs = array_pad($regs, 4, null);
 		$type = objet_type($regs[1]);
@@ -251,7 +251,7 @@ function generer_url_ecrire_objet($objet, $id, $args = '', $ancre = '', $public 
 	if (!isset($furls[$objet])) {
 		if (function_exists($f = 'generer_url_ecrire_' . $objet)
 			// ou definie par un plugin
-			OR $f = charger_fonction($f, 'urls', true)
+			or $f = charger_fonction($f, 'urls', true)
 		) {
 			$furls[$objet] = $f;
 		} else {
@@ -263,10 +263,10 @@ function generer_url_ecrire_objet($objet, $id, $args = '', $ancre = '', $public 
 	}
 	// si pas de flag public fourni
 	// le calculer en fonction de la declaration de statut
-	if (is_null($public) AND !$connect) {
+	if (is_null($public) and !$connect) {
 		$public = objet_test_si_publie($objet, $id, $connect);
 	}
-	if ($public OR $connect) {
+	if ($public or $connect) {
 		return generer_url_entite_absolue($id, $objet, $args, $ancre, $connect);
 	}
 	$a = id_table_objet($objet) . "=" . intval($id);

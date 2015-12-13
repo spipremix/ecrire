@@ -55,9 +55,9 @@ function nombre_de_fichiers_repertoire($dir, $nb_estim_taille = 20) {
 	}
 	$total = 0;
 	while (($fichier = @readdir($h)) !== false) {
-		if ($fichier[0] != '.' AND !is_dir("$dir/$fichier")) {
+		if ($fichier[0] != '.' and !is_dir("$dir/$fichier")) {
 			$total++;
-			if ($nb AND rand(1, 10) == 1) {
+			if ($nb and rand(1, 10) == 1) {
 				$taille += filesize("$dir/$fichier");
 				$nb--;
 			}
@@ -178,8 +178,8 @@ function purger_repertoire($dir, $options = array()) {
 		}
 		$chemin = "$dir/$fichier";
 		if (is_file($chemin)) {
-			if ((!isset($options['atime']) OR (@fileatime($chemin) < $options['atime']))
-				AND (!isset($options['mtime']) OR (@filemtime($chemin) < $options['mtime']))
+			if ((!isset($options['atime']) or (@fileatime($chemin) < $options['atime']))
+				and (!isset($options['mtime']) or (@filemtime($chemin) < $options['mtime']))
 			) {
 				supprimer_fichier($chemin);
 				$total++;
@@ -197,7 +197,7 @@ function purger_repertoire($dir, $options = array()) {
 			}
 		}
 
-		if (isset($options['limit']) AND $total >= $options['limit']) {
+		if (isset($options['limit']) and $total >= $options['limit']) {
 			break;
 		}
 	}
@@ -230,7 +230,7 @@ function appliquer_quota_cache() {
 
 	// Nombre max de fichiers a supprimer
 	if ($GLOBALS['quota_cache'] > 0
-		AND $taille > 0
+		and $taille > 0
 	) {
 		$trop = $total_cache-($GLOBALS['quota_cache']/16)*1024*1024;
 		$trop = 3*intval($trop/$taille);
@@ -250,7 +250,7 @@ function appliquer_quota_cache() {
 			// mais pas si on ne peut pas purger car les fichiers sont trops recents
 			if (
 				$total_cache/$GLOBALS['quota_cache'] > 1.5
-				AND $n*50 > $trop
+				and $n*50 > $trop
 			) {
 				$encore = true;
 				spip_log("Il faut encore purger", "invalideur");

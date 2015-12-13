@@ -63,7 +63,7 @@ function action_inscrire_auteur_dist($statut, $mail_complet, $nom, $options = ar
 	$row = sql_fetch($res);
 	sql_free($res);
 	if ($row) {
-		if (isset($options['force_nouveau']) AND $options['force_nouveau'] == true) {
+		if (isset($options['force_nouveau']) and $options['force_nouveau'] == true) {
 			$desc['id_auteur'] = $row['id_auteur'];
 			$desc = inscription_nouveau($desc);
 		} else {
@@ -129,11 +129,11 @@ function test_inscription_dist($statut, $mail, $nom, $options) {
 	$res = array('email' => $r, 'nom' => $nom, 'prefs' => $statut);
 	if (isset($options['login'])) {
 		$login = trim(corriger_caracteres($options['login']));
-		if ((strlen($login) >= _LOGIN_TROP_COURT) AND (strlen($nom) <= 64)) {
+		if ((strlen($login) >= _LOGIN_TROP_COURT) and (strlen($nom) <= 64)) {
 			$res['login'] = $login;
 		}
 	}
-	if (!isset($res['login']) AND ((strlen($nom) < _LOGIN_TROP_COURT) OR (strlen($nom) > 64))) {
+	if (!isset($res['login']) and ((strlen($nom) < _LOGIN_TROP_COURT) or (strlen($nom) > 64))) {
 		return 'ecrire:info_login_trop_court';
 	}
 
@@ -150,7 +150,7 @@ function test_inscription_dist($statut, $mail, $nom, $options) {
  * @return mixed|string
  */
 function inscription_nouveau($desc) {
-	if (!isset($desc['login']) OR !strlen($desc['login'])) {
+	if (!isset($desc['login']) or !strlen($desc['login'])) {
 		$desc['login'] = test_login($desc['nom'], $desc['email']);
 	}
 
@@ -278,7 +278,7 @@ function tester_statut_inscription($statut_tmp, $id) {
 		return autoriser('inscrireauteur', $statut_tmp, $id) ? $statut_tmp : '';
 	} elseif (
 		autoriser('inscrireauteur', $statut_tmp = "1comite", $id)
-		OR autoriser('inscrireauteur', $statut_tmp = "6forum", $id)
+		or autoriser('inscrireauteur', $statut_tmp = "6forum", $id)
 	) {
 		return $statut_tmp;
 	}

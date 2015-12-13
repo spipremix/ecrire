@@ -27,7 +27,7 @@ function notifications_instituerarticle_dist($quoi, $id_article, $options) {
 	$modele = "";
 	if ($options['statut'] == 'publie') {
 		if ($GLOBALS['meta']["post_dates"] == 'non'
-			AND strtotime($options['date']) > time()
+			and strtotime($options['date']) > time()
 		) {
 			$modele = "notifications/article_valide";
 		} else {
@@ -35,7 +35,7 @@ function notifications_instituerarticle_dist($quoi, $id_article, $options) {
 		}
 	}
 
-	if ($options['statut'] == 'prop' AND $options['statut_ancien'] != 'publie') {
+	if ($options['statut'] == 'prop' and $options['statut_ancien'] != 'publie') {
 		$modele = "notifications/article_propose";
 	}
 

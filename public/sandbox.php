@@ -74,7 +74,7 @@ function sandbox_composer_filtre($fonc, $code, $arglist, &$p) {
 			$refl = new ReflectionFunction($f);
 		}
 		$refs = $refl->getParameters();
-		if (isset($refs[0]) AND $refs[0]->name == 'Pile') {
+		if (isset($refs[0]) and $refs[0]->name == 'Pile') {
 			$code = "$f(\$Pile,$code$arglist)";
 		} else {
 			$code = "$f($code$arglist)";
@@ -132,7 +132,7 @@ function sandbox_composer_inclure_php($fichier, &$p, $_contexte) {
 function sandbox_composer_interdire_scripts($code, &$p) {
 	// Securite
 	if ($p->interdire_scripts
-		AND $p->etoile != '**'
+		and $p->etoile != '**'
 	) {
 		if (!preg_match("/^sinon[(](.*),'([^']*)'[)]$/", $code, $r)) {
 			$code = "interdire_scripts($code)";
@@ -176,7 +176,7 @@ function sandbox_filtrer_squelette($skel, $corps, $filtres) {
 	foreach ($series_filtres as $filtres) {
 		if (count($filtres)) {
 			foreach ($filtres as $filtre) {
-				if ($filtre AND $f = chercher_filtre($filtre)) {
+				if ($filtre and $f = chercher_filtre($filtre)) {
 					$corps = $f($corps);
 				}
 			}

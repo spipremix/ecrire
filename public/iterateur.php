@@ -82,7 +82,7 @@ class IterFactory {
 			$class = "Iterateur" . $iterateur;
 			if (!class_exists($class)) {
 				if (!include_spip("iterateur/" . strtolower($iterateur))
-					OR !class_exists($class)
+					or !class_exists($class)
 				) {
 					die("Iterateur $iterateur non trouv&#233;");
 					// si l'iterateur n'existe pas, on se rabat sur le generique
@@ -202,7 +202,7 @@ class IterDecorator extends FilterIterator {
 	// et proprietes disponibles
 	public function get_select($nom) {
 		if (is_object($this->iter)
-			AND method_exists($this->iter, $nom)
+			and method_exists($this->iter, $nom)
 		) {
 			try {
 				return $this->iter->$nom();
@@ -221,7 +221,7 @@ class IterDecorator extends FilterIterator {
 		// cle et valeur par defaut
 		// ICI PLANTAGE SI ON NE CONTROLE PAS $nom
 		if (in_array($nom, array('cle', 'valeur'))
-			AND method_exists($this, $nom)
+			and method_exists($this, $nom)
 		) {
 			return $this->$nom();
 		}
@@ -254,7 +254,7 @@ class IterDecorator extends FilterIterator {
 				} else {
 					$op = $v;
 				}
-				if ((!$op) OR ($op == 1) OR ($op == '0=0')) {
+				if ((!$op) or ($op == 1) or ($op == '0=0')) {
 					unset($where[$k]);
 					$menage = true;
 				}
@@ -294,7 +294,7 @@ class IterDecorator extends FilterIterator {
 		}
 
 		// critere {2,7}
-		if (isset($this->command['limit']) AND $this->command['limit']) {
+		if (isset($this->command['limit']) and $this->command['limit']) {
 			$limit = explode(',', $this->command['limit']);
 			$this->offset = $limit[0];
 			$this->limit = $limit[1];
@@ -444,7 +444,7 @@ class IterDecorator extends FilterIterator {
 	 *   success or fail if not implemented
 	 */
 	public function seek($n = 0, $continue = null) {
-		if ($this->func_filtre OR !method_exists($this->iter, 'seek') OR !$this->iter->seek($n)) {
+		if ($this->func_filtre or !method_exists($this->iter, 'seek') or !$this->iter->seek($n)) {
 			$this->seek_loop($n);
 		}
 		$this->pos = $n;
@@ -462,7 +462,7 @@ class IterDecorator extends FilterIterator {
 			$this->rewind();
 		}
 
-		while ($this->pos < $n AND $this->valid()) {
+		while ($this->pos < $n and $this->valid()) {
 			$this->next();
 		}
 
@@ -488,7 +488,7 @@ class IterDecorator extends FilterIterator {
 			$max = $this->count();
 		}
 
-		if ($seek >= $max OR $seek >= $this->count()) {
+		if ($seek >= $max or $seek >= $this->count()) {
 			// sortie plus rapide que de faire next() jusqu'a la fin !
 			$this->free();
 
@@ -514,9 +514,9 @@ class IterDecorator extends FilterIterator {
 		} else {
 
 			while ($this->valid()
-				AND (
+				and (
 					!$this->accept()
-					OR (isset($this->offset) AND $this->fetched++ < $this->offset)
+					or (isset($this->offset) and $this->fetched++ < $this->offset)
 				)) {
 				$this->next();
 			}
@@ -526,7 +526,7 @@ class IterDecorator extends FilterIterator {
 			}
 
 			if (isset($this->limit)
-				AND $this->fetched > $this->offset+$this->limit
+				and $this->fetched > $this->offset+$this->limit
 			) {
 				return false;
 			}
@@ -597,7 +597,7 @@ class IterDecorator extends FilterIterator {
 	public function count() {
 		if (is_null($this->total)) {
 			if (method_exists($this->iter, 'count')
-				AND !$this->func_filtre
+				and !$this->func_filtre
 			) {
 				return $this->total = $this->iter->count();
 			} else {

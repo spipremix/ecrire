@@ -65,11 +65,11 @@ function action_cookie_dist($set_cookie_admin = null, $change_session = null) {
 	}
 
 	// tentative de connexion en auth_http
-	if (_request('essai_auth_http') AND !$GLOBALS['ignore_auth_http']) {
+	if (_request('essai_auth_http') and !$GLOBALS['ignore_auth_http']) {
 		include_spip('inc/auth');
 		if (@$_SERVER['PHP_AUTH_USER']
-			AND @$_SERVER['PHP_AUTH_PW']
-			AND $auteur = lire_php_auth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])
+			and @$_SERVER['PHP_AUTH_PW']
+			and $auteur = lire_php_auth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])
 		) {
 			auth_loger($auteur);
 			redirige_par_entete(parametre_url($redirect, 't', time(), '&'));

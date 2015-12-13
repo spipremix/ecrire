@@ -32,9 +32,9 @@ function action_instituer_langue_rubrique_dist() {
 	list($id_rubrique, $id_parent) = preg_split('/\W/', $arg);
 
 	if ($changer_lang
-		AND $id_rubrique > 0
-		AND $GLOBALS['meta']['multi_rubriques'] == 'oui'
-		AND ($GLOBALS['meta']['multi_secteurs'] == 'non' OR $id_parent == 0)
+		and $id_rubrique > 0
+		and $GLOBALS['meta']['multi_rubriques'] == 'oui'
+		and ($GLOBALS['meta']['multi_secteurs'] == 'non' or $id_parent == 0)
 	) {
 		if ($changer_lang != "herit") {
 			sql_updateq('spip_rubriques', array('lang' => $changer_lang, 'langue_choisie' => 'oui'),

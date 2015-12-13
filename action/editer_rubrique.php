@@ -234,9 +234,9 @@ function rubrique_instituer($id_rubrique, $c) {
 			$old_parent = $s['id_parent'];
 
 			if (!($id_parent != $old_parent
-				AND autoriser('publierdans', 'rubrique', $id_parent)
-				AND autoriser('creerrubriquedans', 'rubrique', $id_parent)
-				AND autoriser('publierdans', 'rubrique', $old_parent)
+				and autoriser('publierdans', 'rubrique', $id_parent)
+				and autoriser('creerrubriquedans', 'rubrique', $id_parent)
+				and autoriser('publierdans', 'rubrique', $old_parent)
 			)
 			) {
 				if ($s['statut'] != 'new') {

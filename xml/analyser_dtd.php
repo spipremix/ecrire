@@ -34,7 +34,7 @@ function charger_dtd($grammaire, $avail, $rotlvl) {
 		if (!$grammaire) {
 			return array();
 		}
-		if (($avail == 'SYSTEM') AND filemtime($file) < filemtime($grammaire)) {
+		if (($avail == 'SYSTEM') and filemtime($file) < filemtime($grammaire)) {
 			$r = false;
 		}
 	}
@@ -95,7 +95,7 @@ function analyser_dtd($loc, $avail, &$dtc) {
 	// si DTD locale, ignorer ce repertoire pour le moment
 	if ($avail == 'SYSTEM') {
 		$file = $loc;
-		if (_DIR_RACINE AND strncmp($file, _DIR_RACINE, strlen(_DIR_RACINE)) == 0) {
+		if (_DIR_RACINE and strncmp($file, _DIR_RACINE, strlen(_DIR_RACINE)) == 0) {
 			$file = substr($file, strlen(_DIR_RACINE));
 		}
 		$file = find_in_path($file);
@@ -201,7 +201,7 @@ function analyser_dtd_lexeme($dtd, &$dtc, $grammaire) {
 		// en cas d'inclusion, l'espace de nom est le meme
 		// mais gaffe aux DTD dont l'URL est relative a l'engloblante
 		if (($n[0] == 'PUBLIC')
-			AND !tester_url_absolue($n[1])
+			and !tester_url_absolue($n[1])
 		) {
 			$n[1] = substr($grammaire, 0, strrpos($grammaire, '/')+1) . $n[1];
 		}
@@ -253,7 +253,7 @@ function analyser_dtd_entity($dtd, &$dtc, $grammaire) {
 
 	list($t, $term, $nom, $type, $k1, $k2, $k3, $k4, $k5, $k6, $c, $q, $alt, $dtd) = $m;
 
-	if (isset($dtc->macros[$nom]) AND $dtc->macros[$nom]) {
+	if (isset($dtc->macros[$nom]) and $dtc->macros[$nom]) {
 		return $dtd;
 	}
 	if (isset($dtc->entites[$nom])) {
@@ -274,14 +274,14 @@ function analyser_dtd_entity($dtd, &$dtc, $grammaire) {
 	} elseif (!$type) {
 		$dtc->macros[$nom] = $val;
 	} else {
-		if (($type == 'SYSTEM') AND !$alt) {
+		if (($type == 'SYSTEM') and !$alt) {
 			$alt = $val;
 		}
 		if (!$alt) {
 			$dtc->macros[$nom] = $val;
 		} else {
 			if (($type == 'PUBLIC')
-				AND (strpos($alt, '/') === false)
+				and (strpos($alt, '/') === false)
 			) {
 				$alt = preg_replace(',/[^/]+$,', '/', $grammaire)
 					. $alt;
@@ -326,7 +326,7 @@ function analyser_dtd_element($dtd, &$dtc, $grammaire) {
 	} else {
 		$last = substr($val, -1);
 		if (preg_match('/ \w/', $val)
-			OR (!empty($last) AND strpos('*+', $last) === false)
+			or (!empty($last) and strpos('*+', $last) === false)
 		) {
 			$dtc->regles[$nom] = "/^$val$/";
 		} else {

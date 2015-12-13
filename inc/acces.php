@@ -265,8 +265,8 @@ function ecrire_acces() {
 	// par exemple acces_restreint ;
 	// si .htaccess existe, outrepasser spip_meta
 	if ((!isset($GLOBALS['meta']['creer_htpasswd'])
-			OR ($GLOBALS['meta']['creer_htpasswd'] != 'oui'))
-		AND !@file_exists($htaccess)
+			or ($GLOBALS['meta']['creer_htpasswd'] != 'oui'))
+		and !@file_exists($htaccess)
 	) {
 		spip_unlink($htpasswd);
 		spip_unlink($htpasswd . "-admin");
@@ -286,7 +286,7 @@ function ecrire_acces() {
 	$p2 = ''; // login:htpass pour les admins
 	$s = sql_select("login, htpass, statut", "spip_auteurs", sql_in("statut", array('1comite', '0minirezo', 'nouveau')));
 	while ($t = sql_fetch($s)) {
-		if (strlen($t['login']) AND strlen($t['htpass'])) {
+		if (strlen($t['login']) and strlen($t['htpass'])) {
 			$p1 .= $t['login'] . ':' . $t['htpass'] . "\n";
 			if ($t['statut'] == '0minirezo') {
 				$p2 .= $t['login'] . ':' . $t['htpass'] . "\n";
@@ -331,7 +331,7 @@ function generer_htpass($pass) {
  */
 function verifier_htaccess($rep, $force = false) {
 	$htaccess = rtrim($rep, "/") . "/" . _ACCESS_FILE_NAME;
-	if (((@file_exists($htaccess)) OR defined('_TEST_DIRS')) AND !$force) {
+	if (((@file_exists($htaccess)) or defined('_TEST_DIRS')) and !$force) {
 		return true;
 	}
 
@@ -347,7 +347,7 @@ function verifier_htaccess($rep, $force = false) {
 </IfModule>
 ";
 	// support des vieilles versions Apache 1.x mais uniquement si elles l'annoncent (pas en mode PROD)
-	if (function_exists('apache_get_version') AND $v = apache_get_version() AND strncmp($v, "Apache/1.", 9) == 0) {
+	if (function_exists('apache_get_version') and $v = apache_get_version() and strncmp($v, "Apache/1.", 9) == 0) {
 		$deny = "deny from all\n";
 	}
 
@@ -364,7 +364,7 @@ function verifier_htaccess($rep, $force = false) {
 			$ht = recuperer_lapage($t, false, 'HEAD', 0);
 			// htaccess inoperant si on a recupere des entetes HTTP
 			// (ignorer la reussite si connexion par fopen)
-			$ht = !(isset($ht[0]) AND $ht[0]);
+			$ht = !(isset($ht[0]) and $ht[0]);
 		}
 	}
 	spip_log("Creation de $htaccess " . ($ht ? " reussie" : " manquee"));

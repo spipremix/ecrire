@@ -150,7 +150,7 @@ function install_bases($adresse_db, $login_db, $pass_db, $server_db, $choix_db, 
 			$r = sql_fetch($r, $server_db);
 		}
 		$version_installee = !$r ? 0 : (double)$r['valeur'];
-		if (!$version_installee OR ($GLOBALS['spip_version_base'] < $version_installee)) {
+		if (!$version_installee or ($GLOBALS['spip_version_base'] < $version_installee)) {
 			$fupdateq('spip_meta', array('valeur' => $GLOBALS['spip_version_base'], 'impt' => 'non'),
 				"nom='version_installee'", '', $server_db);
 			spip_log("nouvelle version installee: " . $GLOBALS['spip_version_base']);
@@ -186,7 +186,7 @@ function install_bases($adresse_db, $login_db, $pass_db, $server_db, $choix_db, 
 	// d'une installation qui ne l'a pas cree correctement.
 	// Le supprimer pour que _FILE_CONNECT_TMP prime.
 
-	if (_FILE_CONNECT AND file_exists(_FILE_CONNECT)) {
+	if (_FILE_CONNECT and file_exists(_FILE_CONNECT)) {
 		spip_unlink(_FILE_CONNECT);
 	}
 
@@ -351,7 +351,7 @@ function install_etape_3_dist() {
 				_request('nom'),
 				_request('pass'),
 				$hidden, $auteur_obligatoire)
-			. (($ldap_present OR !function_exists('ldap_connect'))
+			. (($ldap_present or !function_exists('ldap_connect'))
 				? '' : install_propose_ldap());
 	}
 

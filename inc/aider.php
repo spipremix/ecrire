@@ -86,8 +86,8 @@ $GLOBALS['aider_index'] = array(
 function inc_aider_dist($aide = '', $skel = '', $env = array(), $aide_spip_directe = false) {
 
 	if (($skel = basename($skel))
-		AND isset($GLOBALS['aider_index'][$skel])
-		AND isset($GLOBALS['aider_index'][$skel][$aide])
+		and isset($GLOBALS['aider_index'][$skel])
+		and isset($GLOBALS['aider_index'][$skel][$aide])
 	) {
 		$aide = $GLOBALS['aider_index'][$skel][$aide];
 	}
@@ -173,7 +173,7 @@ function aide_fichier($path, $help_server) {
 	$fichier_aide = _DIR_AIDE . substr($md5, 0, 16) . "-" . $path;
 	$lastm = @filemtime($fichier_aide);
 	$lastversion = @filemtime(_DIR_RESTREINT . 'inc_version.php');
-	$here = @(is_readable($fichier_aide) AND ($lastm >= $lastversion));
+	$here = @(is_readable($fichier_aide) and ($lastm >= $lastversion));
 	$contenu = '';
 
 	if ($here) {

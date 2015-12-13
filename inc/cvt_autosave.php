@@ -39,8 +39,8 @@ function autosave_clean_value($val) {
  */
 function cvtautosave_formulaire_charger($flux) {
 	if (is_array($flux['data'])
-		AND isset($flux['data']['_autosave_id'])
-		AND $cle_autosave = $flux['data']['_autosave_id']
+		and isset($flux['data']['_autosave_id'])
+		and $cle_autosave = $flux['data']['_autosave_id']
 	) {
 
 		$form = $flux['args']['form'];
@@ -52,7 +52,7 @@ function cvtautosave_formulaire_charger($flux) {
 		// si on a un backup en session et qu'on est au premier chargement, non poste
 		// on restitue les donnees
 		if (isset($GLOBALS['visiteur_session']['session_autosave_' . $cle_autosave])
-			AND !$je_suis_poste
+			and !$je_suis_poste
 		) {
 			parse_str($GLOBALS['visiteur_session']['session_autosave_' . $cle_autosave], $vars);
 			foreach ($vars as $key => $val) {
@@ -94,7 +94,7 @@ function cvtautosave_formulaire_traiter($flux) {
 		session_set('session_autosave_' . $cle_autosave, null);
 	}
 
-	if (isset($GLOBALS['visiteur_session']) AND $GLOBALS['visiteur_session']) {
+	if (isset($GLOBALS['visiteur_session']) and $GLOBALS['visiteur_session']) {
 		// delai par defaut avant purge d'un backup de form : 72H
 		if (!defined('_AUTOSAVE_GB_DELAY')) {
 			define('_AUTOSAVE_GB_DELAY', 72*3600);

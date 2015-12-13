@@ -172,8 +172,8 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 			$source = preg_replace(',[?][0-9]+$,', '', $source);
 		}
 		if (strpos($source, "?") !== false
-			AND strncmp($source, _DIR_IMG, strlen(_DIR_IMG)) == 0
-			AND file_exists($f = preg_replace(',[?].*$,', '', $source))
+			and strncmp($source, _DIR_IMG, strlen(_DIR_IMG)) == 0
+			and file_exists($f = preg_replace(',[?].*$,', '', $source))
 		) {
 			$source = $f;
 		}
@@ -204,18 +204,18 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 
 	$nom_fichier = substr($fichier, 0, strlen($fichier)-(strlen($terminaison)+1));
 	$fichier_dest = $nom_fichier;
-	if (($find_in_path AND $f = find_in_path($fichier) AND $fichier = $f)
-		OR @file_exists($f = $fichier)
+	if (($find_in_path and $f = find_in_path($fichier) and $fichier = $f)
+		or @file_exists($f = $fichier)
 	) {
 		// on passe la balise img a taille image qui exraira les attributs si possible
 		// au lieu de faire un acces disque sur le fichier
 		list($ret["hauteur"], $ret["largeur"]) = taille_image($find_in_path ? $f : $img);
 		$date_src = @filemtime($f);
 	} elseif (@file_exists($f = "$fichier.src")
-		AND lire_fichier($f, $valeurs)
-		AND $valeurs = unserialize($valeurs)
-		AND isset($valeurs["hauteur_dest"])
-		AND isset($valeurs["largeur_dest"])
+		and lire_fichier($f, $valeurs)
+		and $valeurs = unserialize($valeurs)
+		and isset($valeurs["hauteur_dest"])
+		and isset($valeurs["largeur_dest"])
 	) {
 		$ret["hauteur"] = $valeurs["hauteur_dest"];
 		$ret["largeur"] = $valeurs["largeur_dest"];
@@ -226,7 +226,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 	}
 
 	// pas de taille mesurable
-	if (!($ret["hauteur"] OR $ret["largeur"])) {
+	if (!($ret["hauteur"] or $ret["largeur"])) {
 		return false;
 	}
 
@@ -272,7 +272,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 
 	$creer = true;
 	// si recalcul des images demande, recalculer chaque image une fois
-	if (defined('_VAR_IMAGES') AND _VAR_IMAGES AND !isset($images_recalcul[$fichier_dest])) {
+	if (defined('_VAR_IMAGES') and _VAR_IMAGES and !isset($images_recalcul[$fichier_dest])) {
 		$images_recalcul[$fichier_dest] = true;
 	} else {
 		if (@file_exists($f = $fichier_dest)) {
@@ -281,9 +281,9 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 			}
 		} else {
 			if (@file_exists($f = "$fichier_dest.src")
-				AND lire_fichier($f, $valeurs)
-				AND $valeurs = unserialize($valeurs)
-				AND $valeurs["date"] >= $date_src
+				and lire_fichier($f, $valeurs)
+				and $valeurs = unserialize($valeurs)
+				and $valeurs["date"] >= $date_src
 			) {
 				$creer = false;
 			}
@@ -575,7 +575,7 @@ function _image_gd_output($img, $valeurs, $qualite = _IMG_GD_QUALITE) {
 	#un flag pour reperer les images gravees
 	$lock =
 		!statut_effacer_images_temporaires('get') // si la fonction n'a pas ete activee, on grave tout
-	OR (@file_exists($valeurs['fichier_dest']) AND !@file_exists($valeurs['fichier_dest'] . '.src'));
+	or (@file_exists($valeurs['fichier_dest']) and !@file_exists($valeurs['fichier_dest'] . '.src'));
 	if (
 		function_exists($fonction)
 		&& ($ret = $fonction($img, $valeurs['fichier_dest'], $qualite)) # on a reussi a creer l'image
@@ -607,9 +607,9 @@ function reconstruire_image_intermediaire($fichier_manquant) {
 	$fichier = $fichier_manquant;
 	while (
 		!@file_exists($fichier)
-		AND lire_fichier($src = "$fichier.src", $source)
-		AND $valeurs = unserialize($source)
-		AND ($fichier = $valeurs['fichier']) # l'origine est connue (on ne verifie pas son existence, qu'importe ...)
+		and lire_fichier($src = "$fichier.src", $source)
+		and $valeurs = unserialize($source)
+		and ($fichier = $valeurs['fichier']) # l'origine est connue (on ne verifie pas son existence, qu'importe ...)
 	) {
 		spip_unlink($src); // si jamais on a un timeout pendant la reconstruction, elle se fera naturellement au hit suivant
 		$reconstruire[] = $valeurs['reconstruction'];
@@ -643,17 +643,17 @@ function reconstruire_image_intermediaire($fichier_manquant) {
  **/
 function ramasse_miettes($fichier) {
 	if (!lire_fichier($src = "$fichier.src", $source)
-		OR !$valeurs = unserialize($source)
+		or !$valeurs = unserialize($source)
 	) {
 		return;
 	}
 	spip_unlink($src); # on supprime la reference a sa source pour marquer cette image comme non intermediaire
 	while (
 		($fichier = $valeurs['fichier']) # l'origine est connue (on ne verifie pas son existence, qu'importe ...)
-		AND (substr($fichier, 0, strlen(_DIR_VAR)) == _DIR_VAR) # et est dans local
-		AND (lire_fichier($src = "$fichier.src",
+		and (substr($fichier, 0, strlen(_DIR_VAR)) == _DIR_VAR) # et est dans local
+		and (lire_fichier($src = "$fichier.src",
 			$source)) # le fichier a une source connue (c'est donc une image calculee intermediaire)
-		AND ($valeurs = unserialize($source))  # et valide
+		and ($valeurs = unserialize($source))  # et valide
 	) {
 		# on efface le fichier
 		spip_unlink($fichier);
@@ -725,7 +725,7 @@ if (!function_exists("imagepalettetotruecolor")) {
 	 *     - false si la transformation ne peut être faite.
 	 **/
 	function imagepalettetotruecolor(&$img) {
-		if (!$img OR !function_exists('imagecreatetruecolor')) {
+		if (!$img or !function_exists('imagecreatetruecolor')) {
 			return false;
 		} elseif (!imageistruecolor($img)) {
 			$w = imagesx($img);
@@ -780,7 +780,7 @@ function _image_tag_changer_taille($tag, $width, $height, $style = false) {
 
 	// enlever le width et height du style
 	$style = preg_replace(",(^|;)\s*(width|height)\s*:\s*[^;]+,ims", "", $style);
-	if ($style AND $style{0} == ';') {
+	if ($style and $style{0} == ';') {
 		$style = substr($style, 1);
 	}
 
@@ -921,7 +921,7 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 
 	$format_sortie = $valeurs['format_dest'];
 
-	if (($process == 'AUTO') AND isset($GLOBALS['meta']['image_process'])) {
+	if (($process == 'AUTO') and isset($GLOBALS['meta']['image_process'])) {
 		$process = $GLOBALS['meta']['image_process'];
 	}
 
@@ -931,7 +931,7 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 		: false;
 
 	// si le doc n'est pas une image, refuser
-	if (!$force AND !$img) {
+	if (!$force and !$img) {
 		return;
 	}
 	$destination = "$destdir/$destfile";
@@ -941,7 +941,7 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 		if (!($destWidth = $valeurs['largeur_dest']) || !($destHeight = $valeurs['hauteur_dest'])) {
 			list($destWidth, $destHeight) = _image_ratio($valeurs['largeur'], $valeurs['hauteur'], $maxWidth, $maxHeight);
 		}
-	} elseif ($process == 'convert' OR $process == 'imagick') {
+	} elseif ($process == 'convert' or $process == 'imagick') {
 		$destWidth = $maxWidth;
 		$destHeight = $maxHeight;
 	} else {
@@ -951,7 +951,7 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 	}
 
 	// Si l'image est de la taille demandee (ou plus petite), simplement la retourner
-	if ($srcWidth AND $srcWidth <= $maxWidth AND $srcHeight <= $maxHeight) {
+	if ($srcWidth and $srcWidth <= $maxWidth and $srcHeight <= $maxHeight) {
 		$vignette = $destination . '.' . $format;
 		@copy($image, $vignette);
 	} // imagemagick en ligne de commande
@@ -1047,7 +1047,7 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 			}
 		}
 	} // gd ou gd2
-	elseif ($process == 'gd1' OR $process == 'gd2') {
+	elseif ($process == 'gd1' or $process == 'gd2') {
 		if (!function_exists('gd_info')) {
 			spip_log("Librairie GD absente !", _LOG_ERREUR);
 
@@ -1078,7 +1078,7 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 
 		// Initialisation de l'image destination
 		$destImage = null;
-		if ($process == 'gd2' AND $destFormat != "gif") {
+		if ($process == 'gd2' and $destFormat != "gif") {
 			$destImage = ImageCreateTrueColor($destWidth, $destHeight);
 		}
 		if (!$destImage) {
@@ -1087,7 +1087,7 @@ function _image_creer_vignette($valeurs, $maxWidth, $maxHeight, $process = 'AUTO
 
 		// Recopie de l'image d'origine avec adaptation de la taille 
 		$ok = false;
-		if (($process == 'gd2') AND function_exists('ImageCopyResampled')) {
+		if (($process == 'gd2') and function_exists('ImageCopyResampled')) {
 			if ($format == "gif") {
 				// Si un GIF est transparent, 
 				// fabriquer un PNG transparent  
@@ -1162,7 +1162,7 @@ function _image_ratio($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 	$ratioWidth = $srcWidth/$maxWidth;
 	$ratioHeight = $srcHeight/$maxHeight;
 
-	if ($ratioWidth <= 1 AND $ratioHeight <= 1) {
+	if ($ratioWidth <= 1 and $ratioHeight <= 1) {
 		$destWidth = $srcWidth;
 		$destHeight = $srcHeight;
 	} elseif ($ratioWidth < $ratioHeight) {
@@ -1200,7 +1200,7 @@ function ratio_passe_partout($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
 	$ratioWidth = $srcWidth/$maxWidth;
 	$ratioHeight = $srcHeight/$maxHeight;
 
-	if ($ratioWidth <= 1 AND $ratioHeight <= 1) {
+	if ($ratioWidth <= 1 and $ratioHeight <= 1) {
 		$destWidth = $srcWidth;
 		$destHeight = $srcHeight;
 	} elseif ($ratioWidth > $ratioHeight) {
@@ -1251,21 +1251,21 @@ function ratio_passe_partout($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
  **/
 function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process = 'AUTO') {
 	$image = false;
-	if (($process == 'AUTO') AND isset($GLOBALS['meta']['image_process'])) {
+	if (($process == 'AUTO') and isset($GLOBALS['meta']['image_process'])) {
 		$process = $GLOBALS['meta']['image_process'];
 	}
 	# determiner le format de sortie
 	$format_sortie = false; // le choix par defaut sera bon
 	if ($process == "netpbm") {
 		$format_sortie = "jpg";
-	} elseif ($process == 'gd1' OR $process == 'gd2') {
+	} elseif ($process == 'gd1' or $process == 'gd2') {
 		$image = _image_valeurs_trans($img, "reduire-{$taille}-{$taille_y}", $format_sortie, $fonction);
 
 		// on verifie que l'extension choisie est bonne (en principe oui)
 		$gd_formats = explode(',', $GLOBALS['meta']["gd_formats"]);
 		if (is_array($image)
-			AND (!in_array($image['format_dest'], $gd_formats)
-				OR ($image['format_dest'] == 'gif' AND !function_exists('ImageGif'))
+			and (!in_array($image['format_dest'], $gd_formats)
+				or ($image['format_dest'] == 'gif' and !function_exists('ImageGif'))
 			)
 		) {
 			if ($image['format_source'] == 'jpg') {
@@ -1282,7 +1282,7 @@ function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $che
 			$format_sortie = "";
 			foreach ($formats_sortie as $fmt) {
 				if (in_array($fmt, $gd_formats)) {
-					if ($fmt <> "gif" OR function_exists('ImageGif')) {
+					if ($fmt <> "gif" or function_exists('ImageGif')) {
 						$format_sortie = $fmt;
 					}
 					break;
@@ -1296,11 +1296,11 @@ function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $che
 		$image = _image_valeurs_trans($img, "reduire-{$taille}-{$taille_y}", $format_sortie, $fonction);
 	}
 
-	if (!is_array($image) OR !$image['largeur'] OR !$image['hauteur']) {
+	if (!is_array($image) or !$image['largeur'] or !$image['hauteur']) {
 		spip_log("image_reduire_src:pas de version locale de $img");
 		// on peut resizer en mode html si on dispose des elements
 		if ($srcw = extraire_attribut($img, 'width')
-			AND $srch = extraire_attribut($img, 'height')
+			and $srch = extraire_attribut($img, 'height')
 		) {
 			list($w, $h) = _image_ratio($srcw, $srch, $taille, $taille_y);
 

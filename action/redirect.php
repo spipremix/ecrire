@@ -50,7 +50,7 @@ function action_redirect_dist() {
 		$h = generer_url_entite_absolue($id, $type, '', '', true);
 	} else {
 		if ($page = _request('page')
-			AND preg_match('/^\w+$/', $page)
+			and preg_match('/^\w+$/', $page)
 		) {
 			$h = generer_url_public($page, '', true);
 		} else {
@@ -63,10 +63,10 @@ function action_redirect_dist() {
 	}
 
 	if ($m == 'preview'
-		AND defined('_PREVIEW_TOKEN')
-		AND _PREVIEW_TOKEN
-		AND autoriser('previsualiser')
-		AND $aut = $GLOBALS['visiteur_session']['id_auteur']
+		and defined('_PREVIEW_TOKEN')
+		and _PREVIEW_TOKEN
+		and autoriser('previsualiser')
+		and $aut = $GLOBALS['visiteur_session']['id_auteur']
 	) {
 		include_spip('inc/securiser_action');
 		$token = _action_auteur('previsualiser', $aut, null, 'alea_ephemere');
@@ -74,7 +74,7 @@ function action_redirect_dist() {
 	}
 
 	$status = '302';
-	if (_request('status') AND _request('status') == '301') {
+	if (_request('status') and _request('status') == '301') {
 		$status = '301';
 	}
 

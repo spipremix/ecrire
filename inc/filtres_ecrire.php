@@ -49,7 +49,7 @@ function parametres_css_prive() {
 	$args['md5b'] = (function_exists('md5_boutons_plugins') ? md5_boutons_plugins() : '');
 
 	$c = (is_array($GLOBALS['visiteur_session'])
-		AND is_array($GLOBALS['visiteur_session']['prefs']))
+		and is_array($GLOBALS['visiteur_session']['prefs']))
 		? $GLOBALS['visiteur_session']['prefs']['couleur']
 		: 9;
 
@@ -57,7 +57,7 @@ function parametres_css_prive() {
 	parse_str($couleurs($c), $c);
 	$args = array_merge($args, $c);
 
-	if (_request('var_mode') == 'recalcul' OR (defined('_VAR_MODE') AND _VAR_MODE == 'recalcul')) {
+	if (_request('var_mode') == 'recalcul' or (defined('_VAR_MODE') and _VAR_MODE == 'recalcul')) {
 		$args['var_mode'] = 'recalcul';
 	}
 
@@ -174,7 +174,7 @@ function avoir_visiteurs($past = false, $accepter = true) {
 	if ($GLOBALS['meta']["forums_publics"] == 'abo') {
 		return true;
 	}
-	if ($accepter AND $GLOBALS['meta']["accepter_visiteurs"] <> 'non') {
+	if ($accepter and $GLOBALS['meta']["accepter_visiteurs"] <> 'non') {
 		return true;
 	}
 	if (sql_countsel('spip_articles', "accepter_forum='abo'")) {
@@ -370,7 +370,7 @@ function auteurs_lister_statuts($quoi = 'tous', $en_base = true) {
  */
 function trouver_rubrique_creer_objet($id_rubrique, $objet) {
 
-	if (!$id_rubrique AND defined('_CHOIX_RUBRIQUE_PAR_DEFAUT') AND _CHOIX_RUBRIQUE_PAR_DEFAUT) {
+	if (!$id_rubrique and defined('_CHOIX_RUBRIQUE_PAR_DEFAUT') and _CHOIX_RUBRIQUE_PAR_DEFAUT) {
 		$in = !count($GLOBALS['connect_id_rubrique'])
 			? ''
 			: (" AND " . sql_in('id_rubrique', $GLOBALS['connect_id_rubrique']));
@@ -457,7 +457,7 @@ function alertes_auteur($id_auteur) {
 	}
 
 	if (isset($GLOBALS['meta']['message_crash_tables'])
-		AND autoriser('detruire', null, null, $id_auteur)
+		and autoriser('detruire', null, null, $id_auteur)
 	) {
 		include_spip('genie/maintenance');
 		if ($msg = message_crash_tables()) {
@@ -466,9 +466,9 @@ function alertes_auteur($id_auteur) {
 	}
 
 	if (isset($GLOBALS['meta']['message_crash_plugins'])
-		AND $GLOBALS['meta']['message_crash_plugins']
-		AND autoriser('configurer', '_plugins', null, $id_auteur)
-		AND is_array($msg = unserialize($GLOBALS['meta']['message_crash_plugins']))
+		and $GLOBALS['meta']['message_crash_plugins']
+		and autoriser('configurer', '_plugins', null, $id_auteur)
+		and is_array($msg = unserialize($GLOBALS['meta']['message_crash_plugins']))
 	) {
 		$msg = implode(', ', array_map('joli_repertoire', array_keys($msg)));
 		$alertes[] = _T('plugins_erreur', array('plugins' => $msg));
@@ -476,8 +476,8 @@ function alertes_auteur($id_auteur) {
 
 	$a = isset($GLOBALS['meta']['message_alertes_auteurs']) ? $GLOBALS['meta']['message_alertes_auteurs'] : '';
 	if ($a
-		AND is_array($a = unserialize($a))
-		AND count($a)
+		and is_array($a = unserialize($a))
+		and count($a)
 	) {
 		$update = false;
 		if (isset($a[$GLOBALS['visiteur_session']['statut']])) {
@@ -496,7 +496,7 @@ function alertes_auteur($id_auteur) {
 	}
 
 	if (isset($GLOBALS['meta']['plugin_erreur_activation'])
-		AND autoriser('configurer', '_plugins', null, $id_auteur)
+		and autoriser('configurer', '_plugins', null, $id_auteur)
 	) {
 		include_spip('inc/plugin');
 		$alertes[] = plugin_donne_erreurs();
@@ -574,7 +574,7 @@ function lister_objets_lies($objet_source, $objet, $id_objet, $objet_lien) {
 	include_spip('action/editer_liens');
 	$l = array();
 	// quand $objet == $objet_lien == $objet_source on reste sur le cas par defaut de $objet_lien == $objet_source
-	if ($objet_lien == $objet AND $objet_lien !== $objet_source) {
+	if ($objet_lien == $objet and $objet_lien !== $objet_source) {
 		$res = objet_trouver_liens(array($objet => $id_objet), array($objet_source => '*'));
 	} else {
 		$res = objet_trouver_liens(array($objet_source => '*'), array($objet => $id_objet));

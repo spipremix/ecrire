@@ -79,14 +79,14 @@ function get_spip_doc($fichier) {
 function creer_repertoire_documents($ext) {
 	$rep = sous_repertoire(_DIR_IMG, $ext);
 
-	if (!$ext OR !$rep) {
+	if (!$ext or !$rep) {
 		spip_log("creer_repertoire_documents '$rep' interdit");
 		exit;
 	}
 
 	// Cette variable de configuration peut etre posee par un plugin
 	// par exemple acces_restreint
-	if (isset($GLOBALS['meta']["creer_htaccess"]) AND $GLOBALS['meta']["creer_htaccess"] == 'oui') {
+	if (isset($GLOBALS['meta']["creer_htaccess"]) and $GLOBALS['meta']["creer_htaccess"] == 'oui') {
 		include_spip('inc/acces');
 		verifier_htaccess($rep);
 	}
@@ -105,8 +105,8 @@ function effacer_repertoire_temporaire($nom) {
 		if (is_file("$nom/$f")) {
 			spip_unlink("$nom/$f");
 		} else {
-			if ($f <> '.' AND $f <> '..'
-				AND is_dir("$nom/$f")
+			if ($f <> '.' and $f <> '..'
+				and is_dir("$nom/$f")
 			) {
 				effacer_repertoire_temporaire("$nom/$f");
 			}
@@ -169,7 +169,7 @@ function determine_upload($type = '') {
 	}
 
 	if (!autoriser('chargerftp')
-		OR $type == 'logos'
+		or $type == 'logos'
 	) # on ne le permet pas pour les logos
 	{
 		return false;

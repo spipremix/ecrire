@@ -76,14 +76,14 @@ function expression_recherche($recherche, $options) {
 	}
 
 	$u = $GLOBALS['meta']['pcre_u'];
-	if ($u AND strpos($options['preg_flags'], $u) === false) {
+	if ($u and strpos($options['preg_flags'], $u) === false) {
 		$options['preg_flags'] .= $u;
 	}
 	include_spip('inc/charsets');
 	$recherche = trim($recherche);
 
 	$is_preg = false;
-	if (substr($recherche, 0, 1) == '/' AND substr($recherche, -1, 1) == '/') {
+	if (substr($recherche, 0, 1) == '/' and substr($recherche, -1, 1) == '/') {
 		// c'est une preg
 		$recherche_trans = translitteration($recherche);
 		$preg = $recherche_trans . $options['preg_flags'];
@@ -132,7 +132,7 @@ function expression_recherche($recherche, $options) {
 	// Si la chaine est inactive, on va utiliser LIKE pour aller plus vite
 	// ou si l'expression reguliere est invalide
 	if (!$is_preg
-		OR (@preg_match($preg, '') === false)
+		or (@preg_match($preg, '') === false)
 	) {
 		$methode = 'LIKE';
 		$u = $GLOBALS['meta']['pcre_u'];
@@ -182,8 +182,8 @@ function expression_recherche($recherche, $options) {
 	for ($i = 0; $i < spip_strlen($q); $i++) {
 		$char = spip_substr($q, $i, 1);
 		if (!is_ascii($char)
-			AND $char_t = translitteration($char)
-			AND $char_t !== $char
+			and $char_t = translitteration($char)
+			and $char_t !== $char
 		) {
 			$q_t = str_replace($char, $is_preg ? "." : "_", $q_t);
 		}
@@ -195,7 +195,7 @@ function expression_recherche($recherche, $options) {
 	// les plus frequents qui peuvent etre accentues
 	// (oui c'est tres dicustable...)
 	if (isset($GLOBALS['connexions'][$options['serveur'] ? $options['serveur'] : 0]['type'])
-		AND strncmp($GLOBALS['connexions'][$options['serveur'] ? $options['serveur'] : 0]['type'], 'sqlite', 6) == 0
+		and strncmp($GLOBALS['connexions'][$options['serveur'] ? $options['serveur'] : 0]['type'], 'sqlite', 6) == 0
 	) {
 		$q_t = strtr($q, "aeuioc", $is_preg ? "......" : "______");
 		// si il reste au moins un char significatif...
@@ -223,7 +223,7 @@ function recherche_en_base($recherche = '', $tables = null, $options = array(), 
 		$liste = liste_des_champs();
 
 		if (is_string($tables)
-			AND $tables != ''
+			and $tables != ''
 		) {
 			$toutes = array();
 			foreach (explode(',', $tables) as $t) {
@@ -238,7 +238,7 @@ function recherche_en_base($recherche = '', $tables = null, $options = array(), 
 		}
 	}
 
-	if (!strlen($recherche) OR !count($tables)) {
+	if (!strlen($recherche) or !count($tables)) {
 		return array();
 	}
 
@@ -322,7 +322,7 @@ function remplace_en_base($recherche = '', $remplace = null, $tables = null, $op
 		$_id_table = id_table_objet($table);
 		foreach ($r as $id => $x) {
 			if ($options['toutmodifier']
-				OR autoriser('modifier', $table, $id)
+				or autoriser('modifier', $table, $id)
 			) {
 				$modifs = array();
 				foreach ($x['champs'] as $key => $val) {

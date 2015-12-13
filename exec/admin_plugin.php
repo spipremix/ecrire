@@ -46,7 +46,7 @@ function exec_admin_plugin_dist($retour = '') {
 		// si jamais la liste des plugins actifs change, il faut faire un refresh du hit
 		// pour etre sur que les bons fichiers seront charges lors de l'install
 		$new = actualise_plugins_actifs();
-		if ($new AND _request('actualise') < 2) {
+		if ($new and _request('actualise') < 2) {
 			include_spip('inc/headers');
 			redirige_par_entete(parametre_url(self(), 'actualise', _request('actualise')+1, '&'));
 		} else {
@@ -159,7 +159,7 @@ function admin_plug_args($quoi, $erreur, $format) {
 		}
 	}
 
-	if ($quoi == 'actifs' OR $lpf) {
+	if ($quoi == 'actifs' or $lpf) {
 		$nb = count($lcpa);
 		if (defined('_DIR_PLUGINS_SUPPL')) {
 			$nb += count($lcpas);
@@ -297,11 +297,11 @@ function liste_librairies() {
 	$libs = array();
 	foreach (array_reverse(creer_chemin()) as $d) {
 		if (is_dir($dir = $d . 'lib/')
-			AND $t = @opendir($dir)
+			and $t = @opendir($dir)
 		) {
 			while (($f = readdir($t)) !== false) {
 				if ($f[0] != '.'
-					AND is_dir("$dir/$f")
+					and is_dir("$dir/$f")
 				) {
 					$libs[$f] = $dir;
 				}

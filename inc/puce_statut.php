@@ -67,7 +67,7 @@ function inc_puce_statut_dist(
 	static $f_puce_statut = array();
 	$type = objet_type($type);
 	// cas prioritaire : fonction perso, qui permet aussi de gerer les cas historiques
-	if (!isset($f_puce_statut[$type]) OR is_null($f_puce_statut[$type])) {
+	if (!isset($f_puce_statut[$type]) or is_null($f_puce_statut[$type])) {
 		$f_puce_statut[$type] = charger_fonction($type, 'puce_statut', true);
 	}
 	if ($f_puce_statut[$type]) {
@@ -336,8 +336,8 @@ function puce_statut_changement_rapide(
 	}
 
 	if (!$id
-		OR !_SPIP_AJAX
-		OR !$menu_rapide
+		or !_SPIP_AJAX
+		or !$menu_rapide
 	) {
 		$ajax_node = '';
 	} else {

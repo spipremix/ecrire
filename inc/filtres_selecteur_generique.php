@@ -114,9 +114,9 @@ function picker_selected($selected, $type = '') {
 				$id_objet = intval($captures[2]);
 
 				// Si on cherche un type et que c'est le bon, on renvoit un tableau que d'identifiants
-				if (is_string($type) AND $type == $objet AND ($id_objet OR in_array($objet, array('racine', 'rubrique')))) {
+				if (is_string($type) and $type == $objet and ($id_objet or in_array($objet, array('racine', 'rubrique')))) {
 					$select[] = $id_objet;
-				} elseif (!$type AND ($id_objet OR in_array($objet, array('racine', 'rubrique')))) {
+				} elseif (!$type and ($id_objet or in_array($objet, array('racine', 'rubrique')))) {
 					$select[] = array('objet' => $objet, 'id_objet' => $id_objet);
 				}
 			}
@@ -213,7 +213,7 @@ function test_enfants_rubrique($id_rubrique, $types = array()) {
 		$has = array_map('reset', $has);
 		$fratrie = array_diff($fratrie, $has);
 
-		while (count($fratrie) AND is_array($types) AND count($types)) {
+		while (count($fratrie) and is_array($types) and count($types)) {
 			$type = array_shift($types);
 			$h = sql_allfetsel("DISTINCT id_rubrique", table_objet_sql($type), sql_in('id_rubrique', $fratrie));
 			$h = array_map('reset', $h);

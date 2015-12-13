@@ -20,13 +20,13 @@ include_spip('base/objets');
 function inc_icone_renommer_dist($fond, $fonction) {
 	$size = 24;
 	if (preg_match("/(?:-([0-9]{1,3}))?([.](gif|png))?$/i", $fond, $match)
-		AND ((isset($match[0]) AND $match[0]) OR (isset($match[1]) AND $match[1]))
+		and ((isset($match[0]) and $match[0]) or (isset($match[1]) and $match[1]))
 	) {
-		if (isset($match[1]) AND $match[1]) {
+		if (isset($match[1]) and $match[1]) {
 			$size = $match[1];
 		}
 		$type = substr($fond, 0, -strlen($match[0]));
-		if (!isset($match[2]) OR !$match[2]) {
+		if (!isset($match[2]) or !$match[2]) {
 			$fond .= ".png";
 		}
 	} else {
@@ -51,8 +51,8 @@ function inc_icone_renommer_dist($fond, $fonction) {
 		$fond = $icone;
 
 		if ($rtl
-			AND $fr = "$type-rtl-$size.png"
-			AND file_exists($dir . '/' . $fr)
+			and $fr = "$type-rtl-$size.png"
+			and file_exists($dir . '/' . $fr)
 		) {
 			$type = "$type-rtl";
 		}
@@ -70,7 +70,7 @@ function inc_icone_renommer_dist($fond, $fonction) {
 		}
 		if ($action) {
 			if ($fa = "$type-$action-$size.png"
-				AND file_exists($dir . '/' . $fa)
+				and file_exists($dir . '/' . $fa)
 			) {
 				$fond = $dir . '/' . $fa;
 				$fonction = "";

@@ -71,7 +71,7 @@ function importer_csv_nettoie_key($key) {
 function inc_importer_csv_dist($file, $head = false, $delim = ", ", $enclos = '"', $len = 10000) {
 	$return = false;
 	if (@file_exists($file)
-		AND $handle = fopen($file, "r")
+		and $handle = fopen($file, "r")
 	) {
 		if ($head) {
 			$header = fgetcsv($handle, $len, $delim, $enclos);
@@ -90,14 +90,14 @@ function inc_importer_csv_dist($file, $head = false, $delim = ", ", $enclos = '"
 		}
 		while (($data = fgetcsv($handle, $len, $delim, $enclos)) !== false) {
 			$data = array_map('importer_csv_importcharset', $data);
-			if ($head AND isset($header)) {
+			if ($head and isset($header)) {
 				$row = array();
 				foreach ($header as $key => $heading) {
 					if ($header_type[$heading] == "array") {
 						if (!isset($row[$heading])) {
 							$row[$heading] = array();
 						}
-						if (isset($data[$key]) AND strlen($data[$key])) {
+						if (isset($data[$key]) and strlen($data[$key])) {
 							$row[$heading][] = $data[$key];
 						}
 					} else {

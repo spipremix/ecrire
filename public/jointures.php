@@ -33,7 +33,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  *     Chaine sinon : le nom du champ (non décomposable donc)
  */
 function decompose_champ_id_objet($champ) {
-	if (($champ !== 'id_objet') AND preg_match(',^id_([a-z_]+)$,', $champ, $regs)) {
+	if (($champ !== 'id_objet') and preg_match(',^id_([a-z_]+)$,', $champ, $regs)) {
 		return array('id_objet', 'objet', objet_type($regs[1]));
 	}
 
@@ -56,7 +56,7 @@ function decompose_champ_id_objet($champ) {
  */
 function trouver_champs_decomposes($champ, $desc) {
 	if (!is_array($desc) // on ne se risque pas en conjectures si on ne connait pas la table
-		OR array_key_exists($champ, $desc['field'])
+		or array_key_exists($champ, $desc['field'])
 	) {
 		return array($champ);
 	}
@@ -101,7 +101,7 @@ function calculer_jointure(&$boucle, $depart, $arrivee, $col = '', $cond = false
 	$max = 1;
 	$res = false;
 	$milieu_exclus = ($col ? $col : array());
-	while ($max <= $max_liens AND !$res) {
+	while ($max <= $max_liens and !$res) {
 		$res = calculer_chaine_jointures($boucle, $depart, $arrivee, array(), $milieu_exclus, $max);
 		$max++;
 	}
@@ -193,9 +193,9 @@ function fabrique_jointures(&$boucle, $res, $cond = false, $desc = array(), $nom
 	// si une seule jointure
 	// et si l'index de jointure est une primary key a l'arrivee !
 	if (!$pk
-		AND (count($boucle->from) == 2)
-		AND isset($a[1]['key']['PRIMARY KEY'])
-		AND ($j == $a[1]['key']['PRIMARY KEY'])
+		and (count($boucle->from) == 2)
+		and isset($a[1]['key']['PRIMARY KEY'])
+		and ($j == $a[1]['key']['PRIMARY KEY'])
 	) {
 		$pk = true;
 	}
@@ -236,7 +236,7 @@ function nogroupby_if($depart, $arrivee, $col) {
 	if (is_array($col)) {
 		$col = implode(', *', $col);
 	} // cas id_objet, objet
-	return (preg_match("/^$id_primary, *$col$/", $pk) OR
+	return (preg_match("/^$id_primary, *$col$/", $pk) or
 		preg_match("/^$col, *$id_primary$/", $pk));
 }
 
@@ -351,7 +351,7 @@ function calculer_chaine_jointures(
 	}
 	// quand on a exclus id_objet comme cle de jointure, il faut aussi exclure objet
 	// faire une jointure sur objet tout seul n'a pas de sens
-	if (in_array('id_objet', $milieu_exclus) AND !in_array('objet', $milieu_exclus)) {
+	if (in_array('id_objet', $milieu_exclus) and !in_array('objet', $milieu_exclus)) {
 		$milieu_exclus[] = 'objet';
 	}
 
@@ -419,9 +419,9 @@ function calculer_chaine_jointures(
 	$new = $vu;
 	foreach ($boucle->jointures as $v) {
 		if ($v
-			AND !in_array($v, $vu)
-			AND $def = $trouver_table($v, $boucle->sql_serveur)
-			AND !in_array($def['table_sql'], $vu)
+			and !in_array($v, $vu)
+			and $def = $trouver_table($v, $boucle->sql_serveur)
+			and !in_array($def['table_sql'], $vu)
 		) {
 			// ne pas tester les cles qui sont exclues a l'appel
 			// ie la cle de la jointure precedente
@@ -430,7 +430,7 @@ function calculer_chaine_jointures(
 			$max_iter = 50; // securite
 			while (count($jointure_directe_possible = calculer_chaine_jointures($boucle, $depart, array($v, $def), $vu,
 					$test_cles, 1))
-				AND $max_iter--) {
+				and $max_iter--) {
 				$jointure_directe_possible = reset($jointure_directe_possible);
 				$milieu = end($jointure_directe_possible);
 				$exclure_fin = $milieu_exclus;
@@ -515,9 +515,9 @@ function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false)
 		if ($join && $table = $trouver_table($join, $boucle->sql_serveur)) {
 			if (isset($table['field'])
 				// verifier que toutes les cles cherchees sont la
-				AND (count(array_intersect($cle, array_keys($table['field']))) == count($cle))
+				and (count(array_intersect($cle, array_keys($table['field']))) == count($cle))
 				// si on sait ou on veut arriver, il faut que ca colle
-				AND ($checkarrivee == false || $checkarrivee == $table['table'])
+				and ($checkarrivee == false || $checkarrivee == $table['table'])
 			) {
 				return array($table['table'], $table, $cle);
 			}
@@ -526,8 +526,8 @@ function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false)
 
 	// au premier coup, on essaye de decomposer, si possible
 	if (count($cle) == 1
-		AND $c = reset($cle)
-		AND is_array($decompose = decompose_champ_id_objet($c))
+		and $c = reset($cle)
+		and is_array($decompose = decompose_champ_id_objet($c))
 	) {
 
 		$desc = $boucle->show;

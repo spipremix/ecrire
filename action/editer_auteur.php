@@ -189,10 +189,10 @@ function auteur_modifier($id_auteur, $set = null, $force_update = false) {
 			// donnees eventuellement fournies
 			$set
 		);
-		if (isset($c['new_login']) AND !isset($c['login'])) {
+		if (isset($c['new_login']) and !isset($c['login'])) {
 			$c['login'] = $c['new_login'];
 		}
-		if (isset($c['new_pass']) AND !isset($c['pass'])) {
+		if (isset($c['new_pass']) and !isset($c['pass'])) {
 			$c['pass'] = $c['new_pass'];
 		}
 		$err = auteur_instituer($id_auteur, $c);
@@ -314,17 +314,17 @@ function auteur_instituer($id_auteur, $c, $force_webmestre = false) {
 	$champs = array();
 
 	// les memoriser pour les faire passer dans le pipeline pre_edition
-	if (isset($c['login']) AND strlen($c['login'])) {
+	if (isset($c['login']) and strlen($c['login'])) {
 		$champs['login'] = $c['login'];
 	}
-	if (isset($c['pass']) AND strlen($c['pass'])) {
+	if (isset($c['pass']) and strlen($c['pass'])) {
 		$champs['pass'] = $c['pass'];
 	}
 
 	$statut = $statut_ancien = sql_getfetsel('statut', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
 
 	if (isset($c['statut'])
-		AND (autoriser('modifier', 'auteur', $id_auteur, null, array('statut' => $c['statut'])))
+		and (autoriser('modifier', 'auteur', $id_auteur, null, array('statut' => $c['statut'])))
 	) {
 		$statut = $champs['statut'] = $c['statut'];
 	}
@@ -340,13 +340,13 @@ function auteur_instituer($id_auteur, $c, $force_webmestre = false) {
 	}
 
 	if (isset($c['webmestre'])
-		AND ($force_webmestre OR autoriser('modifier', 'auteur', $id_auteur, null, array('webmestre' => '?')))
+		and ($force_webmestre or autoriser('modifier', 'auteur', $id_auteur, null, array('webmestre' => '?')))
 	) {
 		$champs['webmestre'] = $c['webmestre'] == 'oui' ? 'oui' : 'non';
 	}
 
 	// si statut change et n'est pas 0minirezo, on force webmestre a non
-	if (isset($c['statut']) AND $c['statut'] !== '0minirezo') {
+	if (isset($c['statut']) and $c['statut'] !== '0minirezo') {
 		$champs['webmestre'] = $c['webmestre'] = 'non';
 	}
 
@@ -364,7 +364,7 @@ function auteur_instituer($id_auteur, $c, $force_webmestre = false) {
 	);
 
 	if (isset($c['restreintes']) and is_array($c['restreintes'])
-		AND autoriser('modifier', 'auteur', $id_auteur, null, array('restreint' => $c['restreintes']))
+		and autoriser('modifier', 'auteur', $id_auteur, null, array('restreint' => $c['restreintes']))
 	) {
 		$rubriques = array_map('intval', $c['restreintes']);
 		$rubriques = array_unique($rubriques);
@@ -376,15 +376,15 @@ function auteur_instituer($id_auteur, $c, $force_webmestre = false) {
 	$flag_ecrire_acces = false;
 	// commencer par traiter les cas particuliers des logins et pass
 	// avant les autres ecritures en base
-	if (isset($champs['login']) OR isset($champs['pass'])) {
+	if (isset($champs['login']) or isset($champs['pass'])) {
 		$auth_methode = sql_getfetsel('source', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
 		include_spip('inc/auth');
-		if (isset($champs['login']) AND strlen($champs['login'])) {
+		if (isset($champs['login']) and strlen($champs['login'])) {
 			if (!auth_modifier_login($auth_methode, $champs['login'], $id_auteur)) {
 				$erreurs[] = 'ecrire:impossible_modifier_login_auteur';
 			}
 		}
-		if (isset($champs['pass']) AND strlen($champs['pass'])) {
+		if (isset($champs['pass']) and strlen($champs['pass'])) {
 			$champs['login'] = sql_getfetsel('login', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
 			if (!auth_modifier_pass($auth_methode, $champs['login'], $champs['pass'], $id_auteur)) {
 				$erreurs[] = 'ecrire:impossible_modifier_pass_auteur';
@@ -402,7 +402,7 @@ function auteur_instituer($id_auteur, $c, $force_webmestre = false) {
 
 	// .. mettre a jour les fichiers .htpasswd et .htpasswd-admin
 	if ($flag_ecrire_acces
-		OR isset($champs['statut'])
+		or isset($champs['statut'])
 	) {
 		include_spip('inc/acces');
 		ecrire_acces();

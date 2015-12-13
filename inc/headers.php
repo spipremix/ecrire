@@ -53,7 +53,7 @@ function redirige_par_entete($url, $equiv = '', $status = 302) {
 		$url = parametre_url($url, 'transformer_xml', $x, '&');
 	}
 
-	if (defined('_AJAX') AND _AJAX) {
+	if (defined('_AJAX') and _AJAX) {
 		$url = parametre_url($url, 'var_ajax_redir', 1, '&');
 	}
 
@@ -61,16 +61,16 @@ function redirige_par_entete($url, $equiv = '', $status = 302) {
 	$url = str_replace(array('<', '"'), array('&lt;', '&quot;'), $url);
 	// interdire les url inline avec des pseudo-protocoles :
 	if (
-		(preg_match(",data:,i", $url) AND preg_match("/base64\s*,/i", $url))
-		OR preg_match(",(javascript|mailto):,i", $url)
+		(preg_match(",data:,i", $url) and preg_match("/base64\s*,/i", $url))
+		or preg_match(",(javascript|mailto):,i", $url)
 	) {
 		$url = "./";
 	}
 
 	// Il n'y a que sous Apache que setcookie puis redirection fonctionne
 	include_spip('inc/cookie');
-	if ((!$equiv AND !spip_cookie_envoye()) OR ((strncmp("Apache", $_SERVER['SERVER_SOFTWARE'],
-					6) == 0) OR defined('_SERVER_APACHE'))
+	if ((!$equiv and !spip_cookie_envoye()) or ((strncmp("Apache", $_SERVER['SERVER_SOFTWARE'],
+					6) == 0) or defined('_SERVER_APACHE'))
 	) {
 		@header("Location: " . $url);
 		$equiv = "";
@@ -108,12 +108,12 @@ function redirige_par_entete($url, $equiv = '', $status = 302) {
 // http://code.spip.net/@redirige_formulaire
 function redirige_formulaire($url, $equiv = '', $format = 'message') {
 	if (!_AJAX
-		AND !headers_sent()
-		AND !_request('var_ajax')
+		and !headers_sent()
+		and !_request('var_ajax')
 	) {
 		redirige_par_entete(str_replace('&amp;', '&', $url), $equiv);
 	} // si c'est une ancre, fixer simplement le window.location.hash
-	elseif ($format == 'ajaxform' AND preg_match(',^#[0-9a-z\-_]+$,i', $url)) {
+	elseif ($format == 'ajaxform' and preg_match(',^#[0-9a-z\-_]+$,i', $url)) {
 		return array(
 			// on renvoie un lien masque qui sera traite par ajaxCallback.js
 			"<a href='$url' name='ajax_ancre' style='display:none;'>anchor</a>",
@@ -201,7 +201,7 @@ function http_status($status) {
 		return;
 	}
 
-	$php_cgi = ($GLOBALS['flag_sapi_name'] AND preg_match(",cgi,i", @php_sapi_name()));
+	$php_cgi = ($GLOBALS['flag_sapi_name'] and preg_match(",cgi,i", @php_sapi_name()));
 	if ($php_cgi) {
 		header("Status: " . $status_string[$status]);
 	} else {

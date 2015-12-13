@@ -76,7 +76,7 @@ function balise_LOGIN_PUBLIC_stat($args, $context_compil) {
 function balise_LOGIN_PUBLIC_dyn($url, $login) {
 	include_spip('balise/formulaire_');
 	if (!$url    # pas d'url passee en filtre ou dans le contexte
-		AND !$url = _request('url') # ni d'url passee par l'utilisateur
+		and !$url = _request('url') # ni d'url passee par l'utilisateur
 	) {
 		$url = parametre_url(self(), '', '', '&');
 	}

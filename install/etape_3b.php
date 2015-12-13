@@ -42,7 +42,7 @@ function install_etape_3b_dist() {
 					_T('info_login_trop_court')
 					: ''));
 		include_spip('inc/filtres');
-		if (!$echec AND $email AND !email_valide($email)) {
+		if (!$echec and $email and !email_valide($email)) {
 			$echec = _T('form_email_non_valide');
 		}
 		if ($echec) {
@@ -131,7 +131,7 @@ function install_etape_3b_dist() {
 		// mais sans cookie d'admin ni connexion longue
 		include_spip('inc/auth');
 		if (!$auteur = auth_identifier_login($login, $pass)
-			OR !auth_loger($auteur, true)
+			or !auth_loger($auteur, true)
 		) {
 			spip_log("login automatique impossible $auth_spip $session" . count($row));
 		}

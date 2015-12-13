@@ -57,8 +57,8 @@ function inc_chercher_rubrique_dist($id_rubrique, $type, $restreint, $idem = 0, 
 	// - soit parce que le cookie ajax n'est pas la
 	// - soit parce qu'il y a peu de rubriques
 	if (_SPIP_AJAX < 1
-		OR $type == 'breve'
-		OR sql_countsel('spip_rubriques') < _SPIP_SELECT_RUBRIQUES
+		or $type == 'breve'
+		or sql_countsel('spip_rubriques') < _SPIP_SELECT_RUBRIQUES
 	) {
 		return selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem);
 	} else {
@@ -124,7 +124,7 @@ function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $excl
 
 	// Si on a demande l'exclusion ne pas descendre dans la rubrique courante
 	if ($exclus > 0
-		AND $root == $exclus
+		and $root == $exclus
 	) {
 		return '';
 	}
@@ -160,7 +160,7 @@ function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $excl
 	}
 
 	// si l'objet a deplacer est publie, verifier qu'on a acces aux rubriques
-	if ($restreint AND $root != $id_rubrique AND !autoriser('publierdans', 'rubrique', $root)) {
+	if ($restreint and $root != $id_rubrique and !autoriser('publierdans', 'rubrique', $root)) {
 		return $sous;
 	}
 
@@ -187,13 +187,13 @@ function sous_menu_rubriques($id_rubrique, $root, $niv, &$data, &$enfants, $excl
  **/
 function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem = 0) {
 	$data = array();
-	if ($type == 'rubrique' AND autoriser('publierdans', 'rubrique', 0)) {
+	if ($type == 'rubrique' and autoriser('publierdans', 'rubrique', 0)) {
 		$data[0] = _T('info_racine_site');
 	}
 	# premier choix = neant
 	# si auteur (rubriques restreintes)
 	# ou si creation avec id_rubrique=0
-	elseif ($type == 'auteur' OR !$id_rubrique) {
+	elseif ($type == 'auteur' or !$id_rubrique) {
 		$data[0] = '&nbsp;';
 	}
 
@@ -209,7 +209,7 @@ function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem = 0) {
 			// titre largeur maxi a 50
 			$titre = couper(supprimer_tags(typo($r['titre'])) . " ", 50);
 			if ($GLOBALS['meta']['multi_rubriques'] == 'oui'
-				AND ($r['langue_choisie'] == "oui" OR $r['id_parent'] == 0)
+				and ($r['langue_choisie'] == "oui" or $r['id_parent'] == 0)
 			) {
 				$titre .= ' [' . traduire_nom_langue($r['lang']) . ']';
 			}
@@ -225,9 +225,9 @@ function selecteur_rubrique_html($id_rubrique, $type, $restreint, $idem = 0) {
 	// inutile de mettre le selecteur sur un choix vide par defaut
 	// sauf si le selecteur s'adresse a une rubrique puisque on peut la mettre a la racine dans ce cas
 	if (count($data) == 2
-		AND isset($data[0])
-		AND !in_array($type, array('auteur', 'rubrique'))
-		AND !$id_rubrique
+		and isset($data[0])
+		and !in_array($type, array('auteur', 'rubrique'))
+		and !$id_rubrique
 	) {
 		unset($data[0]);
 	}

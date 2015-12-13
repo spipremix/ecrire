@@ -69,7 +69,7 @@ function balise_URL_LOGOUT_stat($args, $context_compil) {
  **/
 function balise_URL_LOGOUT_dyn($cible) {
 
-	if (!$GLOBALS['visiteur_session']['login'] AND !$GLOBALS['visiteur_session']['statut']) {
+	if (!$GLOBALS['visiteur_session']['login'] and !$GLOBALS['visiteur_session']['statut']) {
 		return '';
 	}
 

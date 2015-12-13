@@ -36,7 +36,7 @@ function decompiler_boucle($struct, $fmt = '', $prof = 0) {
 	// Revoir le cas de la boucle recursive
 
 	$crit = $struct->param;
-	if ($crit AND !is_array($crit[0])) {
+	if ($crit and !is_array($crit[0])) {
 		$type = strtolower($type) . array_shift($crit);
 	}
 	$crit = decompiler_criteres($struct, $fmt, $prof);
@@ -117,16 +117,16 @@ function decompiler_liste($sources, $fmt = '', $prof = 0) {
 		foreach ($arg as $v) {
 			// cas des arguments entoures de ' ou "
 			if ((count($v) == 1)
-				AND $v[0]->type == 'texte'
-				AND (strlen($v[0]->apres) == 1)
-				AND $v[0]->apres == $v[0]->avant
+				and $v[0]->type == 'texte'
+				and (strlen($v[0]->apres) == 1)
+				and $v[0]->apres == $v[0]->avant
 			) {
 				$args[] = $v[0]->avant . $v[0]->texte . $v[0]->apres;
 			} else {
 				$args[] = decompiler_($v, $fmt, 0-$prof);
 			}
 		}
-		if (($r !== '') OR $args) {
+		if (($r !== '') or $args) {
 			$res .= $f($r, $args, $prof);
 		}
 	}
@@ -153,15 +153,15 @@ function decompiler_criteres($boucle, $fmt = '', $prof = 0) {
 		$args = array();
 		foreach ($crit as $i => $v) {
 			if ((count($v) == 1)
-				AND $v[0]->type == 'texte'
-				AND $v[0]->apres
+				and $v[0]->type == 'texte'
+				and $v[0]->apres
 			) {
 				$args[] = array(array('texte', ($v[0]->apres . $v[0]->texte . $v[0]->apres)));
 			} else {
 				$res2 = array();
 				foreach ($v as $k => $p) {
 					if (isset($p->type)
-						AND function_exists($d = 'decompiler_' . $p->type)
+						and function_exists($d = 'decompiler_' . $p->type)
 					) {
 						$r = $d($p, $fmt, (0-$prof), @$v[$k+1]);
 						$res2[] = array($p->type, $r);
@@ -196,11 +196,11 @@ function decompiler_($liste, $fmt = '', $prof = 0) {
 		// le champ simple les eliminant est un bug helas perenne.
 
 		if ($next
-			AND ($next->type == 'texte')
-			AND $p->type == 'champ'
-			AND !$p->apres
-			AND !$p->avant
-			AND $p->fonctions
+			and ($next->type == 'texte')
+			and $p->type == 'champ'
+			and !$p->apres
+			and !$p->avant
+			and $p->fonctions
 		) {
 			$n = strlen($next->texte)-strlen(ltrim($next->texte));
 			if ($n) {

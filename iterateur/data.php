@@ -213,7 +213,7 @@ class IterateurDATA implements Iterator {
 
 		// {source format, [URL], [arg2]...}
 		if (isset($this->command['source'])
-			AND isset($this->command['sourcemode'])
+			and isset($this->command['sourcemode'])
 		) {
 			$this->select_source();
 		}
@@ -235,8 +235,8 @@ class IterateurDATA implements Iterator {
 		// {datapath query.results}
 		// extraire le chemin "query.results" du tableau de donnees
 		if (!$this->err
-			AND isset($this->command['datapath'])
-			AND is_array($this->command['datapath'])
+			and isset($this->command['datapath'])
+			and is_array($this->command['datapath'])
 		) {
 			$this->select_datapath();
 		}
@@ -267,7 +267,7 @@ class IterateurDATA implements Iterator {
 		# l'objet en cache ; cf plugins/icalendar
 		# perf : pas de fonction table_to_array ! (table est deja un array)
 		if (isset($this->command['sourcemode'])
-			AND !in_array($this->command['sourcemode'], array('table', 'array', 'tableau'))
+			and !in_array($this->command['sourcemode'], array('table', 'array', 'tableau'))
 		) {
 			charger_fonction($this->command['sourcemode'] . '_to_array', 'inc', true);
 		}
@@ -286,11 +286,11 @@ class IterateurDATA implements Iterator {
 			$ttl = intval($this->command['datacache']);
 		}
 		if ($cache
-			AND ($cache['time']+(isset($ttl) ? $ttl : $cache['ttl'])
+			and ($cache['time']+(isset($ttl) ? $ttl : $cache['ttl'])
 				> time())
-			AND !(_request('var_mode') === 'recalcul'
-				AND include_spip('inc/autoriser')
-				AND autoriser('recalcul')
+			and !(_request('var_mode') === 'recalcul'
+				and include_spip('inc/autoriser')
+				and autoriser('recalcul')
 			)
 		) {
 			$this->tableau = $cache['data'];
@@ -304,13 +304,13 @@ class IterateurDATA implements Iterator {
 				}
 
 				if (isset($this->command['sourcemode'])
-					AND in_array($this->command['sourcemode'],
+					and in_array($this->command['sourcemode'],
 						array('table', 'array', 'tableau'))
 				) {
 					if (is_array($a = $src)
-						OR (is_string($a)
-							AND $a = str_replace('&quot;', '"', $a) # fragile!
-							AND is_array($a = @unserialize($a)))
+						or (is_string($a)
+							and $a = str_replace('&quot;', '"', $a) # fragile!
+							and is_array($a = @unserialize($a)))
 					) {
 						$this->tableau = $a;
 					}
@@ -345,7 +345,7 @@ class IterateurDATA implements Iterator {
 						}
 					}
 					if (!$this->err
-						AND $g = charger_fonction($this->command['sourcemode'] . '_to_array', 'inc', true)
+						and $g = charger_fonction($this->command['sourcemode'] . '_to_array', 'inc', true)
 					) {
 						$args = $this->command['source'];
 						$args[0] = $u;
@@ -359,7 +359,7 @@ class IterateurDATA implements Iterator {
 					$this->err = true;
 				}
 
-				if (!$this->err AND isset($ttl) and $ttl > 0) {
+				if (!$this->err and isset($ttl) and $ttl > 0) {
 					$this->cache_set($cle, $ttl);
 				}
 
@@ -375,7 +375,7 @@ class IterateurDATA implements Iterator {
 
 		# en cas d'erreur, utiliser le cache si encore dispo
 		if ($this->err
-			AND $cache
+			and $cache
 		) {
 			$this->tableau = $cache['data'];
 			$this->err = false;
@@ -639,7 +639,7 @@ function inc_yql_to_array_dist($u) {
 	define('_YQL_ENDPOINT', 'http://query.yahooapis.com/v1/public/yql?&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q=');
 	$v = recuperer_url($url = _YQL_ENDPOINT . urlencode($u) . '&format=json');
 	if (!$v['page']
-		OR !$w = json_decode($v['page'], true)
+		or !$w = json_decode($v['page'], true)
 	) {
 		throw new Exception('YQL: r&#233;ponse vide ou mal form&#233;e');
 	}
@@ -681,7 +681,7 @@ function inc_sql_to_array_dist($u) {
  */
 function inc_json_to_array_dist($u) {
 	if (is_array($json = json_decode($u))
-		OR is_object($json)
+		or is_object($json)
 	) {
 		return (array)$json;
 	}

@@ -271,7 +271,7 @@ function maj_v014_dist($version_installee, $version_cible) {
 	}
 
 	// l'upgrade < 1.462 ci-dessus etait fausse, d'ou correctif
-	if (upgrade_vers(1.464, $version_installee, $version_cible) AND ($version_installee >= 1.462)) {
+	if (upgrade_vers(1.464, $version_installee, $version_cible) and ($version_installee >= 1.462)) {
 		$res = spip_query("SELECT id_type, extension FROM spip_types_documents WHERE id_type NOT IN (1,2,3)");
 		while ($row = sql_fetch($res)) {
 			$extension = $row['extension'];

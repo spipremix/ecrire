@@ -230,7 +230,7 @@ function article_inserer($id_rubrique, $set = null) {
 
 	// controler si le serveur n'a pas renvoye une erreur
 	if ($id_article > 0) {
-		$id_auteur = ((is_null(_request('id_auteur')) AND isset($GLOBALS['visiteur_session']['id_auteur'])) ?
+		$id_auteur = ((is_null(_request('id_auteur')) and isset($GLOBALS['visiteur_session']['id_auteur'])) ?
 			$GLOBALS['visiteur_session']['id_auteur']
 			: _request('id_auteur'));
 		if ($id_auteur) {
@@ -291,11 +291,11 @@ function article_instituer($id_article, $c, $calcul_rub = true) {
 	$s = isset($c['statut']) ? $c['statut'] : $statut;
 
 	// cf autorisations dans inc/instituer_article
-	if ($s != $statut OR ($d AND $d != $date)) {
+	if ($s != $statut or ($d and $d != $date)) {
 		if (autoriser('publierdans', 'rubrique', $id_rubrique)) {
 			$statut = $champs['statut'] = $s;
 		} else {
-			if (autoriser('modifier', 'article', $id_article) AND $s != 'publie') {
+			if (autoriser('modifier', 'article', $id_article) and $s != 'publie') {
 				$statut = $champs['statut'] = $s;
 			} else {
 				spip_log("editer_article $id_article refus " . join(' ', $c));
@@ -307,9 +307,9 @@ function article_instituer($id_article, $c, $calcul_rub = true) {
 		// ou si l'article est deja date dans le futur
 		// En cas de proposition d'un article (mais pas depublication), idem
 		if ($champs['statut'] == 'publie'
-			OR ($champs['statut'] == 'prop' AND ($d OR !in_array($statut_ancien, array('publie', 'prop'))))
+			or ($champs['statut'] == 'prop' and ($d or !in_array($statut_ancien, array('publie', 'prop'))))
 		) {
-			if ($d OR strtotime($d = $date) > time()) {
+			if ($d or strtotime($d = $date) > time()) {
 				$champs['date'] = $date = $d;
 			} else {
 				$champs['date'] = $date = date('Y-m-d H:i:s');
@@ -320,9 +320,9 @@ function article_instituer($id_article, $c, $calcul_rub = true) {
 	// Verifier que la rubrique demandee existe et est differente
 	// de la rubrique actuelle
 	if (isset($c['id_parent'])
-		AND $id_parent = $c['id_parent']
-		AND $id_parent != $id_rubrique
-		AND (sql_fetsel('1', "spip_rubriques", "id_rubrique=" . intval($id_parent)))
+		and $id_parent = $c['id_parent']
+		and $id_parent != $id_rubrique
+		and (sql_fetsel('1', "spip_rubriques", "id_rubrique=" . intval($id_parent)))
 	) {
 		$champs['id_rubrique'] = $id_parent;
 
@@ -330,7 +330,7 @@ function article_instituer($id_article, $c, $calcul_rub = true) {
 		// et que le demandeur n'est pas admin de la rubrique de destination
 		// repasser l'article en statut 'propose'.
 		if ($statut == 'publie'
-			AND !autoriser('publierdans', 'rubrique', $id_parent)
+			and !autoriser('publierdans', 'rubrique', $id_parent)
 		) {
 			$champs['statut'] = 'prop';
 		}
@@ -364,7 +364,7 @@ function article_instituer($id_article, $c, $calcul_rub = true) {
 	if ($date) {
 		$t = strtotime($date);
 		$p = @$GLOBALS['meta']['date_prochain_postdate'];
-		if ($t > time() AND (!$p OR ($t < $p))) {
+		if ($t > time() and (!$p or ($t < $p))) {
 			ecrire_meta('date_prochain_postdate', $t);
 		}
 	}
@@ -439,7 +439,7 @@ function editer_article_heritage($id_article, $id_rubrique, $statut, $champs, $c
 
 	if ($cond) {
 		include_spip('inc/rubriques');
-		$postdate = ($GLOBALS['meta']["post_dates"] == "non" AND isset($champs['date']) AND (strtotime($champs['date']) < time())) ? $champs['date'] : false;
+		$postdate = ($GLOBALS['meta']["post_dates"] == "non" and isset($champs['date']) and (strtotime($champs['date']) < time())) ? $champs['date'] : false;
 		calculer_rubriques_if($id_rubrique, $champs, $statut, $postdate);
 	}
 }

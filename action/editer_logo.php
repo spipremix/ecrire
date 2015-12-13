@@ -98,7 +98,7 @@ function logo_modifier($objet, $id_objet, $etat, $source) {
 	if ($erreur) {
 		return $erreur;
 	}
-	if (!$ok OR !file_exists($file_tmp)) {
+	if (!$ok or !file_exists($file_tmp)) {
 		spip_log($erreur = "probleme de copie pour $file_tmp ");
 
 		return $erreur;
@@ -111,30 +111,30 @@ function logo_modifier($objet, $id_objet, $etat, $source) {
 		$file_tmp = $file_tmp . ".$type";
 		$poids = filesize($file_tmp);
 
-		if (defined('_LOGO_MAX_WIDTH') OR defined('_LOGO_MAX_HEIGHT')) {
+		if (defined('_LOGO_MAX_WIDTH') or defined('_LOGO_MAX_HEIGHT')) {
 
-			if ((defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH AND $size[0] > _LOGO_MAX_WIDTH)
-				OR (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT AND $size[1] > _LOGO_MAX_HEIGHT)
+			if ((defined('_LOGO_MAX_WIDTH') and _LOGO_MAX_WIDTH and $size[0] > _LOGO_MAX_WIDTH)
+				or (defined('_LOGO_MAX_HEIGHT') and _LOGO_MAX_HEIGHT and $size[1] > _LOGO_MAX_HEIGHT)
 			) {
-				$max_width = (defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH) ? _LOGO_MAX_WIDTH : '*';
-				$max_height = (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT) ? _LOGO_MAX_HEIGHT : '*';
+				$max_width = (defined('_LOGO_MAX_WIDTH') and _LOGO_MAX_WIDTH) ? _LOGO_MAX_WIDTH : '*';
+				$max_height = (defined('_LOGO_MAX_HEIGHT') and _LOGO_MAX_HEIGHT) ? _LOGO_MAX_HEIGHT : '*';
 
 				// pas la peine d'embeter le redacteur avec ca si on a active le calcul des miniatures
 				// on met directement a la taille maxi a la volee
-				if (isset($GLOBALS['meta']['creer_preview']) AND $GLOBALS['meta']['creer_preview'] == 'oui') {
+				if (isset($GLOBALS['meta']['creer_preview']) and $GLOBALS['meta']['creer_preview'] == 'oui') {
 					include_spip('inc/filtres');
 					$img = filtrer('image_reduire', $file_tmp, $max_width, $max_height);
 					$img = extraire_attribut($img, 'src');
 					$img = supprimer_timestamp($img);
-					if (@file_exists($img) AND $img !== $file_tmp) {
+					if (@file_exists($img) and $img !== $file_tmp) {
 						spip_unlink($file_tmp);
 						@rename($img, $file_tmp);
 						$size = @getimagesize($file_tmp);
 					}
 				}
 				// verifier au cas ou image_reduire a echoue
-				if ((defined('_LOGO_MAX_WIDTH') AND _LOGO_MAX_WIDTH AND $size[0] > _LOGO_MAX_WIDTH)
-					OR (defined('_LOGO_MAX_HEIGHT') AND _LOGO_MAX_HEIGHT AND $size[1] > _LOGO_MAX_HEIGHT)
+				if ((defined('_LOGO_MAX_WIDTH') and _LOGO_MAX_WIDTH and $size[0] > _LOGO_MAX_WIDTH)
+					or (defined('_LOGO_MAX_HEIGHT') and _LOGO_MAX_HEIGHT and $size[1] > _LOGO_MAX_HEIGHT)
 				) {
 					spip_unlink($file_tmp);
 					$erreur = _T('info_logo_max_poids',
@@ -156,7 +156,7 @@ function logo_modifier($objet, $id_objet, $etat, $source) {
 			}
 		}
 
-		if (!$erreur AND defined('_LOGO_MAX_SIZE') AND _LOGO_MAX_SIZE AND $poids > _LOGO_MAX_SIZE*1024) {
+		if (!$erreur and defined('_LOGO_MAX_SIZE') and _LOGO_MAX_SIZE and $poids > _LOGO_MAX_SIZE*1024) {
 			spip_unlink($file_tmp);
 			$erreur = _T('info_logo_max_poids',
 				array(

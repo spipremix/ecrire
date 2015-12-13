@@ -43,7 +43,7 @@ function action_instituer_objet_dist($arg = null) {
 	} // impossible mais sait-on jamais
 
 	if ($id_objet = intval($id_objet)
-		AND autoriser('instituer', $objet, $id_objet, '', array('statut' => $statut))
+		and autoriser('instituer', $objet, $id_objet, '', array('statut' => $statut))
 	) {
 
 		include_spip('action/editer_objet');

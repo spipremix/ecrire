@@ -46,7 +46,7 @@ function genie_mail_dist($t) {
 	if (strlen(trim($page['texte']))) {
 		// recuperer les entetes envoyes par #HTTP_HEADER
 		$headers = "";
-		if (isset($page['entetes']) AND count($page['entetes'])) {
+		if (isset($page['entetes']) and count($page['entetes'])) {
 			foreach ($page['entetes'] as $k => $v) {
 				$headers .= (strlen($v) ? "$k: $v" : $k) . "\n";
 			}

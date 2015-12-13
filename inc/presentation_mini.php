@@ -36,8 +36,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  **/
 function echo_log($f, $ret) {
 	spip_log("Page " . self() . " function $f: echo " . substr($ret, 0, 50) . "...", 'echo');
-	echo(_SIGNALER_ECHOS ? "#Echo par $f#" : "")
-		. $ret;
+	echo(_SIGNALER_ECHOS ? "#Echo par $f#" : "") . $ret;
 }
 
 /**
@@ -83,7 +82,7 @@ function fin_gauche() { return "</div></div><br class = 'nettoyeur' />"; }
  */
 function creer_colonne_droite() {
 	static $deja_colonne_droite;
-	if ($GLOBALS['spip_ecran'] != 'large' OR $deja_colonne_droite) {
+	if ($GLOBALS['spip_ecran'] != 'large' or $deja_colonne_droite) {
 		return '';
 	}
 	$deja_colonne_droite = true;
@@ -129,10 +128,10 @@ function liste_objets_bloques($exec, $contexte = array(), $auteur = null) {
 			$auteur = $GLOBALS['visiteur_session'];
 		}
 		if ($en_cours = trouver_objet_exec($exec)
-			AND $en_cours['edition']
-			AND $type = $en_cours['type']
-			AND ((isset($contexte[$en_cours['id_table_objet']]) and $id = $contexte[$en_cours['id_table_objet']])
-				OR $id = _request($en_cours['id_table_objet']))
+			and $en_cours['edition']
+			and $type = $en_cours['type']
+			and ((isset($contexte[$en_cours['id_table_objet']]) and $id = $contexte[$en_cours['id_table_objet']])
+				or $id = _request($en_cours['id_table_objet']))
 		) {
 			// marquer le fait que l'objet est ouvert en edition par toto
 			// a telle date ; une alerte sera donnee aux autres redacteurs
@@ -162,9 +161,9 @@ function fin_page() {
 	include_spip('inc/pipelines');
 	// avec &var_profile=1 on a le tableau de mesures SQL
 	$debug = ((_request('exec') !== 'valider_xml')
-		AND ((_request('var_mode') == 'debug')
-			OR (isset($GLOBALS['tableau_des_temps']) AND $GLOBALS['tableau_des_temps'])
-			AND isset($_COOKIE['spip_admin'])));
+		and ((_request('var_mode') == 'debug')
+			or (isset($GLOBALS['tableau_des_temps']) and $GLOBALS['tableau_des_temps'])
+			and isset($_COOKIE['spip_admin'])));
 	$t = '</div><div id="pied"><div class="largeur">'
 		. recuperer_fond('prive/squelettes/inclure/pied')
 		. "</div>"
@@ -187,7 +186,7 @@ function fin_page() {
  * @return string Code HTML
  **/
 function html_tests_js() {
-	if (_SPIP_AJAX AND !defined('_TESTER_NOSCRIPT')) {
+	if (_SPIP_AJAX and !defined('_TESTER_NOSCRIPT')) {
 		// pour le pied de page (deja defini si on est validation XML)
 		define('_TESTER_NOSCRIPT',
 			"<noscript>\n<div style='display:none;'><img src='"

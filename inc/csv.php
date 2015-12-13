@@ -83,7 +83,7 @@ function analyse_csv($t) {
 
 	// retrait des lignes vides finales
 	while (count($lignes) > 0
-		AND preg_match("/^$sep*$/", $lignes[count($lignes)-1])) {
+		and preg_match("/^$sep*$/", $lignes[count($lignes)-1])) {
 		unset($lignes[count($lignes)-1]);
 	}
 	//  calcul du  nombre de colonne a chaque ligne

@@ -51,7 +51,7 @@ function install_etape_4_dist() {
 	// au premier passage dans l'espace prive on aura une demande d'upgrade qui se poursuit sur la page plugin
 	// et procede alors a l'installation
 	if (!isset($GLOBALS['meta']['version_installee'])
-		OR ($GLOBALS['spip_version_base'] == (str_replace(',', '.', $GLOBALS['meta']['version_installee'])))
+		or ($GLOBALS['spip_version_base'] == (str_replace(',', '.', $GLOBALS['meta']['version_installee'])))
 	) {
 		plugin_installes_meta();
 	}

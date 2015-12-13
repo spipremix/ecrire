@@ -31,7 +31,7 @@ function inc_informer_dist($id, $col, $exclus, $rac, $type, $do = 'aff') {
 	}
 
 	$res = '';
-	if ($type == "rubrique" AND $GLOBALS['spip_display'] != 1 AND isset($GLOBALS['meta']['image_process'])) {
+	if ($type == "rubrique" and $GLOBALS['spip_display'] != 1 and isset($GLOBALS['meta']['image_process'])) {
 		if ($GLOBALS['meta']['image_process'] != "non") {
 			$chercher_logo = charger_fonction('chercher_logo', 'inc');
 			if ($res = $chercher_logo($id, 'id_rubrique', 'on')) {

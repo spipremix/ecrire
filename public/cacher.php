@@ -59,10 +59,10 @@ function lire_cache($nom_cache) {
 	$d = substr($nom_cache, 0, 2);
 	$u = substr($nom_cache, 2, 2);
 	if (file_exists($f = _DIR_CACHE . "$d/$u.cache")
-		AND lire_fichier($f, $tmp)
-		AND $tmp = unserialize($tmp)
-		AND $tmp['nom_cache'] == $nom_cache
-		AND isset($tmp['valeur'])
+		and lire_fichier($f, $tmp)
+		and $tmp = unserialize($tmp)
+		and $tmp['nom_cache'] == $nom_cache
+		and isset($tmp['valeur'])
 	) {
 		return $tmp['valeur'];
 	}
@@ -94,7 +94,7 @@ function cache_signature(&$page) {
  * @return array
  */
 function gzip_page($page) {
-	if (function_exists('gzcompress') AND strlen($page['texte']) > 16*1024) {
+	if (function_exists('gzcompress') and strlen($page['texte']) > 16*1024) {
 		$page['gz'] = true;
 		$page['texte'] = gzcompress($page['texte']);
 	} else {
@@ -139,27 +139,27 @@ function cache_valide(&$page, $date) {
 
 	// Apparition d'un nouvel article post-date ?
 	if (isset($GLOBALS['meta']['post_dates'])
-		AND $GLOBALS['meta']['post_dates'] == 'non'
-		AND isset($GLOBALS['meta']['date_prochain_postdate'])
-		AND $now > $GLOBALS['meta']['date_prochain_postdate']
+		and $GLOBALS['meta']['post_dates'] == 'non'
+		and isset($GLOBALS['meta']['date_prochain_postdate'])
+		and $now > $GLOBALS['meta']['date_prochain_postdate']
 	) {
 		spip_log('Un article post-date invalide le cache');
 		include_spip('inc/rubriques');
 		calculer_prochain_postdate(true);
 	}
 
-	if (defined('_VAR_NOCACHE') AND _VAR_NOCACHE) {
+	if (defined('_VAR_NOCACHE') and _VAR_NOCACHE) {
 		return -1;
 	}
-	if (isset($GLOBALS['meta']['cache_inhib']) AND $_SERVER['REQUEST_TIME'] < $GLOBALS['meta']['cache_inhib']) {
+	if (isset($GLOBALS['meta']['cache_inhib']) and $_SERVER['REQUEST_TIME'] < $GLOBALS['meta']['cache_inhib']) {
 		return -1;
 	}
 	if (defined('_NO_CACHE')) {
-		return (_NO_CACHE == 0 AND !isset($page['texte'])) ? 1 : _NO_CACHE;
+		return (_NO_CACHE == 0 and !isset($page['texte'])) ? 1 : _NO_CACHE;
 	}
 
 	// pas de cache ? on le met a jour, sauf pour les bots (on leur calcule la page sans mise en cache)
-	if (!$page OR !isset($page['texte']) OR !isset($page['entetes']['X-Spip-Cache'])) {
+	if (!$page or !isset($page['texte']) or !isset($page['entetes']['X-Spip-Cache'])) {
 		return _IS_BOT ? -1 : 1;
 	}
 
@@ -170,14 +170,14 @@ function cache_valide(&$page, $date) {
 
 	// #CACHE{n,statique} => on n'invalide pas avec derniere_modif
 	// cf. ecrire/public/balises.php, balise_CACHE_dist()
-	if (!isset($page['entetes']['X-Spip-Statique']) OR $page['entetes']['X-Spip-Statique'] !== 'oui') {
+	if (!isset($page['entetes']['X-Spip-Statique']) or $page['entetes']['X-Spip-Statique'] !== 'oui') {
 
 		// Cache invalide par la meta 'derniere_modif'
 		// sauf pour les bots, qui utilisent toujours le cache
 		if (!_IS_BOT
-			AND $GLOBALS['derniere_modif_invalide']
-			AND isset($GLOBALS['meta']['derniere_modif'])
-			AND $date < $GLOBALS['meta']['derniere_modif']
+			and $GLOBALS['derniere_modif_invalide']
+			and isset($GLOBALS['meta']['derniere_modif'])
+			and $date < $GLOBALS['meta']['derniere_modif']
 		) {
 			return 1;
 		}
@@ -192,9 +192,9 @@ function cache_valide(&$page, $date) {
 		return -1;
 	} // sauf pour les bots, qui utilisent toujours le cache
 	else {
-		if ((!_IS_BOT AND $date+$duree < $now)
+		if ((!_IS_BOT and $date+$duree < $now)
 			# le cache est anterieur a la derniere purge : l'ignorer, meme pour les bots
-			OR $date < $cache_mark
+			or $date < $cache_mark
 		) {
 			return _IS_BOT ? -1 : 1;
 		} else {
@@ -219,8 +219,8 @@ function creer_cache(&$page, &$chemin_cache) {
 	// grave s'est presentee (compilation du squelette, MySQL, etc)
 	// le cas var_nocache ne devrait jamais arriver ici (securite)
 	// le cas spip_interdire_cache correspond a une ereur SQL grave non anticipable
-	if ((defined('_VAR_NOCACHE') AND _VAR_NOCACHE)
-		OR defined('spip_interdire_cache')
+	if ((defined('_VAR_NOCACHE') and _VAR_NOCACHE)
+		or defined('spip_interdire_cache')
 	) {
 		return;
 	}
@@ -228,7 +228,7 @@ function creer_cache(&$page, &$chemin_cache) {
 	// Si la page c1234 a un invalideur de session 'zz', sauver dans
 	// 'tmp/cache/MD5(chemin_cache)_zz'
 	if (isset($page['invalideurs'])
-		AND isset($page['invalideurs']['session'])
+		and isset($page['invalideurs']['session'])
 	) {
 		// on verifie que le contenu du chemin cache indique seulement
 		// "cache sessionne" ; sa date indique la date de validite
@@ -327,7 +327,7 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 
 	// Cas ignorant le cache car completement dynamique
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'
-		OR _request('connect')
+		or _request('connect')
 	) {
 		$use_cache = -1;
 		$lastmodified = 0;
@@ -348,12 +348,12 @@ function public_cacher_dist($contexte, &$use_cache, &$chemin_cache, &$page, &$la
 
 	// s'il est sessionne, charger celui correspondant a notre session
 	if (isset($page['invalideurs'])
-		AND isset($page['invalideurs']['session'])
+		and isset($page['invalideurs']['session'])
 	) {
 		$chemin_cache_session = generer_nom_fichier_cache(array("chemin_cache" => $chemin_cache),
 			array("session" => spip_session()));
 		if ($page_session = lire_cache($chemin_cache_session)
-			AND $page_session['lastmodified'] >= $page['lastmodified']
+			and $page_session['lastmodified'] >= $page['lastmodified']
 		) {
 			$page = $page_session;
 		} else {

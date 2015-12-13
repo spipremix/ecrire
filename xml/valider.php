@@ -79,7 +79,7 @@ class ValidateurXML {
 		}
 		if (isset($this->dtc->attributs[$name])) {
 			foreach ($this->dtc->attributs[$name] as $n => $v) {
-				if (($v[1] == '#REQUIRED') AND (!isset($attrs[$n]))) {
+				if (($v[1] == '#REQUIRED') and (!isset($attrs[$n]))) {
 					coordonnees_erreur($this, " <b>$n</b>"
 						. '&nbsp;:&nbsp;'
 						. _T('zxml_obligatoire_attribut')
@@ -230,7 +230,7 @@ class ValidateurXML {
 				coordonnees_erreur($this, " <p><b>$name</b> " . _T('zxml_nonvide_balise'));
 			}
 			// pour les regles PCDATA ou iteration de disjonction, tout est fait
-		} elseif ($regle AND ($regle != '*')) {
+		} elseif ($regle and ($regle != '*')) {
 			if ($regle == '+') {
 				// iteration de disjonction non vide: 1 balise au -
 				if ($n == $k) {
@@ -288,7 +288,7 @@ class ValidateurXML {
 	// http://code.spip.net/@defautElement
 	function defaultElement($phraseur, $data) {
 		if (!preg_match('/^<!--/', $data)
-			AND (preg_match_all('/&([^;]*)?/', $data, $r, PREG_SET_ORDER))
+			and (preg_match_all('/&([^;]*)?/', $data, $r, PREG_SET_ORDER))
 		) {
 			foreach ($r as $m) {
 				list($t, $e) = $m;
@@ -300,7 +300,7 @@ class ValidateurXML {
 				}
 			}
 		}
-		if (isset($this->process['default']) AND ($f = $this->process['default'])) {
+		if (isset($this->process['default']) and ($f = $this->process['default'])) {
 			$f($this, $data);
 		}
 	}
@@ -309,7 +309,7 @@ class ValidateurXML {
 	function phraserTout($phraseur, $data) {
 		xml_parsestring($this, $data);
 
-		if (!$this->dtc OR preg_match(',^' . _MESSAGE_DOCTYPE . ',', $data)) {
+		if (!$this->dtc or preg_match(',^' . _MESSAGE_DOCTYPE . ',', $data)) {
 			$this->err[] = array('DOCTYPE ?', 0, 0);
 		} else {
 			$this->valider_passe2($this);

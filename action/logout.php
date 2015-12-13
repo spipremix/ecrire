@@ -37,20 +37,20 @@ function action_logout_dist() {
 	$logout = _request('logout');
 	$url = securiser_redirect_action(_request('url'));
 	// cas particulier, logout dans l'espace public
-	if ($logout == 'public' AND !$url) {
+	if ($logout == 'public' and !$url) {
 		$url = url_de_base();
 	}
 
 	// seul le loge peut se deloger (mais id_auteur peut valoir 0 apres une restauration avortee)
 	if (isset($GLOBALS['visiteur_session']['id_auteur'])
-		AND is_numeric($GLOBALS['visiteur_session']['id_auteur'])
+		and is_numeric($GLOBALS['visiteur_session']['id_auteur'])
 		// des sessions anonymes avec id_auteur=0 existent, mais elle n'ont pas de statut : double check
-		AND isset($GLOBALS['visiteur_session']['statut'])
+		and isset($GLOBALS['visiteur_session']['statut'])
 	) {
 
 		// il faut un jeton pour fermer la session (eviter les CSRF)
 		if (!$jeton = _request('jeton')
-			OR !verifier_jeton_logout($jeton, $GLOBALS['visiteur_session'])
+			or !verifier_jeton_logout($jeton, $GLOBALS['visiteur_session'])
 		) {
 			$jeton = generer_jeton_logout($GLOBALS['visiteur_session']);
 			$action = generer_url_action("logout", "jeton=$jeton");
@@ -78,8 +78,8 @@ function action_logout_dist() {
 		// si authentification http, et que la personne est loge,
 		// pour se deconnecter, il faut proposer un nouveau formulaire de connexion http
 		if (isset($_SERVER['PHP_AUTH_USER'])
-			AND !$GLOBALS['ignore_auth_http']
-			AND $GLOBALS['auth_can_disconnect']
+			and !$GLOBALS['ignore_auth_http']
+			and $GLOBALS['auth_can_disconnect']
 		) {
 			ask_php_auth(_T('login_deconnexion_ok'),
 				_T('login_verifiez_navigateur'),

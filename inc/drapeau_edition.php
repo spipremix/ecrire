@@ -130,7 +130,7 @@ function signale_edition($id, $auteur, $type = 'article') {
 		$nom = $id_a = $GLOBALS['ip'];
 	}
 
-	if (!isset($edition[$type][$id]) OR !is_array($edition[$type][$id])) {
+	if (!isset($edition[$type][$id]) or !is_array($edition[$type][$id])) {
 		$edition[$type][$id] = array();
 	}
 	$edition[$type][$id][$id_a][$nom] = time();
@@ -202,8 +202,8 @@ function liste_drapeau_edition($id_auteur) {
 	foreach ($edition as $objet => $data) {
 		foreach ($data as $id => $auteurs) {
 			if (isset($auteurs[$id_auteur])
-				AND is_array($auteurs[$id_auteur]) // precaution
-				AND (array_pop($auteurs[$id_auteur]) > time()-3600)
+				and is_array($auteurs[$id_auteur]) // precaution
+				and (array_pop($auteurs[$id_auteur]) > time()-3600)
 			) {
 				$objets_ouverts[] = array(
 					'objet' => $objet,
@@ -258,7 +258,7 @@ function debloquer_edition($id_auteur, $id_objet, $type = 'article') {
 		if ($objet == $type) {
 			foreach ($data as $id => $auteurs) {
 				if ($id == $id_objet
-					AND isset($auteurs[$id_auteur])
+					and isset($auteurs[$id_auteur])
 				) {
 					unset($edition[$objet][$id][$id_auteur]);
 					ecrire_tableau_edition($edition);

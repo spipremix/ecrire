@@ -21,7 +21,7 @@ function trace_query_start() {
 		include_spip('inc/autoriser');
 		// gare au bouclage sur calcul de droits au premier appel
 		// A fortiori quand on demande une trace
-		$trace = isset($_GET['var_profile']) AND (autoriser('debug'));
+		$trace = isset($_GET['var_profile']) and (autoriser('debug'));
 	}
 
 	return $trace ? microtime() : 0;
@@ -33,7 +33,7 @@ function trace_query_end($query, $start, $result, $erreur, $serveur = '') {
 		trace_query_chrono($start, microtime(), $query, $result, $serveur);
 	}
 	// tracer les erreurs, sauf pour select, c'est fait dans abstract_sql
-	if ($erreur AND !preg_match('/^select\b/i', $query)) {
+	if ($erreur and !preg_match('/^select\b/i', $query)) {
 		erreur_squelette(array(sql_errno($serveur), $erreur, $query));
 	}
 
@@ -48,7 +48,7 @@ function trace_query_chrono($m1, $m2, $query, $result, $serveur = '') {
 	$x = _request('var_mode_objet');
 	if (isset($GLOBALS['debug']['aucasou'])) {
 		list(, $boucle, $serveur, $contexte) = $GLOBALS['debug']['aucasou'];
-		if ($x AND !preg_match("/$boucle\$/", $x)) {
+		if ($x and !preg_match("/$boucle\$/", $x)) {
 			return;
 		}
 		if ($serveur) {

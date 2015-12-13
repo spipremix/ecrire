@@ -105,7 +105,7 @@ function definir_barre_onglets($script) {
 				$infos['titre'],  // titre
 				(isset($infos['action']) and $infos['action'])
 					? generer_url_ecrire($infos['action'],
-					(isset($infos['parametres']) AND $infos['parametres']) ? $infos['parametres'] : '')
+					(isset($infos['parametres']) and $infos['parametres']) ? $infos['parametres'] : '')
 					: null
 			);
 		}

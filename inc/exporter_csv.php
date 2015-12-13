@@ -104,7 +104,7 @@ function inc_exporter_csv_dist($titre, $resource, $delim = ', ', $entetes = null
 	}
 	$filename = "$filename.$extension";
 
-	if ($entetes AND is_array($entetes) AND count($entetes)) {
+	if ($entetes and is_array($entetes) and count($entetes)) {
 		$output = exporter_csv_ligne($entetes, $delim, $importer_charset);
 	}
 

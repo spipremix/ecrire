@@ -48,7 +48,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function inc_admin_dist($script, $titre, $comment = '', $anonymous = false) {
 	$reprise = true;
 	if (!isset($GLOBALS['meta'][$script])
-		OR !isset($GLOBALS['meta']['admin'])
+		or !isset($GLOBALS['meta']['admin'])
 	) {
 		$reprise = false;
 		$res = debut_admin($script, $titre, $comment);
@@ -107,9 +107,9 @@ function admin_verifie_session($script, $anonymous = false) {
 	if ($valeur === null) {
 		ecrire_meta('admin', $signal, 'non');
 	} else {
-		if (!$anonymous AND ($valeur != $signal)) {
+		if (!$anonymous and ($valeur != $signal)) {
 			if (!preg_match('/^(.*)_(\d+)_/', $GLOBALS['meta']["admin"], $l)
-				OR intval($l[2]) != $GLOBALS['visiteur_session']['id_auteur']
+				or intval($l[2]) != $GLOBALS['visiteur_session']['id_auteur']
 			) {
 				include_spip('inc/minipres');
 				spip_log("refus de lancer $script, priorite a $valeur");
@@ -191,7 +191,7 @@ function fichier_admin($action, $pref = 'admin_') {
  **/
 function debut_admin($script, $action = '', $corps = '') {
 
-	if ((!$action) || !(autoriser('webmestre') OR autoriser('chargerftp'))) {
+	if ((!$action) || !(autoriser('webmestre') or autoriser('chargerftp'))) {
 		include_spip('inc/minipres');
 
 		return minipres();
@@ -207,8 +207,8 @@ function debut_admin($script, $action = '', $corps = '') {
 
 		// Si on est un super-admin, un bouton de validation suffit
 		// sauf dans les cas destroy
-		if ((autoriser('webmestre') OR $script === 'repair')
-			AND $script != 'delete_all'
+		if ((autoriser('webmestre') or $script === 'repair')
+			and $script != 'delete_all'
 		) {
 			if (_request('validation_admin') == $signal) {
 				spip_log("Action super-admin: $action");
@@ -294,7 +294,7 @@ function fin_admin($action) {
 function copy_request($script, $suite, $submit = '') {
 	include_spip('inc/filtres');
 	foreach (array_merge($_POST, $_GET) as $n => $c) {
-		if (!in_array($n, array('fichier', 'exec', 'validation_admin')) AND !is_array($c)) {
+		if (!in_array($n, array('fichier', 'exec', 'validation_admin')) and !is_array($c)) {
 			$suite .= "\n<input type='hidden' name='" . spip_htmlspecialchars($n) . "' value='" .
 				entites_html($c) .
 				"'  />";

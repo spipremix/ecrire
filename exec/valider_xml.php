@@ -80,7 +80,7 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
 			$dir = (substr($url, -1, 1) === '/') ? $url : "$url/";
 			$ext = !preg_match('/^[.*\w]+$/', $req_ext) ? 'php' : $req_ext;
 			$files = preg_files($dir, "$ext$", $limit, $rec);
-			if (!$files AND $ext !== 'html') {
+			if (!$files and $ext !== 'html') {
 				$files = preg_files($dir, 'html$', $limit, $rec);
 				if ($files) {
 					$ext = 'html';
@@ -98,9 +98,9 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
 		} else {
 			if (preg_match('@^((?:[.]/)?[^?]*)[?]([0-9a-z_]+)=([^&]*)(.*)$@', $url, $r)) {
 				list(, $server, $dir, $script, $args) = $r;
-				if (((!$server) OR ($server == './')
-						OR strpos($server, url_de_base()) === 0)
-					AND is_dir($dir)
+				if (((!$server) or ($server == './')
+						or strpos($server, url_de_base()) === 0)
+					and is_dir($dir)
 				) {
 					$url = $script;
 					// Pour quand le validateur saura simuler
@@ -229,7 +229,7 @@ function valider_script($transformer_xml, $script, $dir, $ext) {
 	$f = charger_fonction($script, $dir, true);
 
 	// ne pas se controler soi-meme ni l'index du repertoire ni un fichier annexe
-	if ($script == _request('exec') OR $script == 'index' OR !$f) {
+	if ($script == _request('exec') or $script == 'index' or !$f) {
 		return array('/', 0, '', $script, '');
 	}
 
@@ -297,7 +297,7 @@ function valider_skel($transformer_xml, $file, $dir, $ext) {
 	}
 	if (!strpos($text, 'DOCTYPE')) {
 		preg_match(",Content[-]Type: *\w+/(\S)+,", $text, $r);
-		if ($r[1] === 'css' OR $r[1] === 'plain') {
+		if ($r[1] === 'css' or $r[1] === 'plain') {
 			return array('/', 'DOCTYPE?', $file, '');
 		}
 	}
@@ -352,10 +352,10 @@ function valider_contexte($code, $file) {
 	foreach ($r as $v) {
 		list(, $f, $nom, $suite) = $v;
 		if (!in_array($nom, $exceptions)
-			AND (!isset($args[$nom]) OR !$args[$nom])
+			and (!isset($args[$nom]) or !$args[$nom])
 		) {
 			$args[$nom] = ((strpos($f, 'sql_quote') !== false)
-				AND strpos($suite, "'int'") !== false);
+				and strpos($suite, "'int'") !== false);
 		}
 	}
 	$contexte = array(); // etudier l'ajout de:

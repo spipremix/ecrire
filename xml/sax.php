@@ -24,8 +24,8 @@ include_spip('xml/interfaces');
  * @return string
  */
 function xml_entites_html($texte) {
-	if (!is_string($texte) OR !$texte
-		OR strpbrk($texte, "&\"'<>") == false
+	if (!is_string($texte) or !$texte
+		or strpbrk($texte, "&\"'<>") == false
 	) {
 		return $texte;
 	}
@@ -87,7 +87,7 @@ function xml_finElement($phraseur, $name, $fusion_bal = false) {
 	// en presence d'attributs ne le faire que si la DTD est dispo et d'accord
 	// (param fusion_bal)
 
-	if ($t || (($ouv != $name) AND !$fusion_bal)) {
+	if ($t || (($ouv != $name) and !$fusion_bal)) {
 		$phraseur->res .= ($ouv ? ('<' . $ouv . '>') : '') . $t . "</" . $name . ">";
 	} else {
 		$phraseur->res .= ($ouv ? ('<' . $ouv . ' />') : ("</" . $name . ">"));

@@ -88,9 +88,9 @@ function f_surligne($texte) {
 	}
 	$rech = _request('var_recherche');
 	if (!$rech
-		AND (!defined('_SURLIGNE_RECHERCHE_REFERERS')
-			OR !_SURLIGNE_RECHERCHE_REFERERS
-			OR !isset($_SERVER['HTTP_REFERER']))
+		and (!defined('_SURLIGNE_RECHERCHE_REFERERS')
+			or !_SURLIGNE_RECHERCHE_REFERERS
+			or !isset($_SERVER['HTTP_REFERER']))
 	) {
 		return $texte;
 	}
@@ -121,9 +121,9 @@ function f_tidy($texte) {
 	 */
 
 	if ($GLOBALS['xhtml'] # tidy demande
-		AND $GLOBALS['html'] # verifie que la page avait l'entete text/html
-		AND strlen($texte)
-		AND !headers_sent()
+		and $GLOBALS['html'] # verifie que la page avait l'entete text/html
+		and strlen($texte)
+		and !headers_sent()
 	) {
 		# Compatibilite ascendante
 		if (!is_string($GLOBALS['xhtml'])) {
@@ -187,7 +187,7 @@ function f_insert_head($texte) {
  * @return string         Contenu de la page envoyée au navigateur
  **/
 function f_admin($texte) {
-	if (defined('_VAR_PREVIEW') AND _VAR_PREVIEW AND $GLOBALS['html']) {
+	if (defined('_VAR_PREVIEW') and _VAR_PREVIEW and $GLOBALS['html']) {
 		include_spip('inc/filtres'); // pour http_img_pack
 		$x = "<div class='spip-previsu' "
 			. http_style_background('preview-32.png')
@@ -200,7 +200,7 @@ function f_admin($texte) {
 		$texte = substr_replace($texte, $x, $pos, 0);
 	}
 
-	if (isset($GLOBALS['affiche_boutons_admin']) AND $GLOBALS['affiche_boutons_admin']) {
+	if (isset($GLOBALS['affiche_boutons_admin']) and $GLOBALS['affiche_boutons_admin']) {
 		include_spip('public/admin');
 		$texte = affiche_boutons_admin($texte);
 	}
@@ -247,8 +247,8 @@ function f_queue(&$texte) {
 
 	// eviter une inclusion si rien a faire
 	if (_request('action') == 'cron'
-		OR queue_sleep_time_to_next_job() > 0
-		OR defined('_DEBUG_BLOCK_QUEUE')
+		or queue_sleep_time_to_next_job() > 0
+		or defined('_DEBUG_BLOCK_QUEUE')
 	) {
 		return $texte;
 	}
@@ -258,7 +258,7 @@ function f_queue(&$texte) {
 
 	// si rien a afficher
 	// ou si on est pas dans une page html, on ne sait rien faire de mieux
-	if (!$code OR !isset($GLOBALS['html']) OR !$GLOBALS['html']) {
+	if (!$code or !isset($GLOBALS['html']) or !$GLOBALS['html']) {
 		return $texte;
 	}
 

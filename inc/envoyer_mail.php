@@ -119,7 +119,7 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
 		if (is_array($headers)) {
 			$headers = implode("\n", $headers);
 		}
-		if ($corps['pieces_jointes'] AND function_exists('mail_embarquer_pieces_jointes')) {
+		if ($corps['pieces_jointes'] and function_exists('mail_embarquer_pieces_jointes')) {
 			$parts = mail_embarquer_pieces_jointes($corps['pieces_jointes']);
 		}
 	} else {

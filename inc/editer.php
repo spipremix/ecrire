@@ -80,7 +80,7 @@ function formulaires_editer_objet_traiter(
 	}
 	$id_table_objet = id_table_objet($type);
 	$res[$id_table_objet] = $id;
-	if ($err OR !$id) {
+	if ($err or !$id) {
 		$res['message_erreur'] = ($err ? $err : _T('erreur'));
 	} else {
 		// Un lien de trad a prendre en compte
@@ -132,7 +132,7 @@ function formulaires_editer_objet_verifier($type, $id = 'new', $oblis = array())
 	$erreurs = array();
 	if (intval($id)) {
 		$conflits = controler_contenu($type, $id);
-		if ($conflits AND count($conflits)) {
+		if ($conflits and count($conflits)) {
 			foreach ($conflits as $champ => $conflit) {
 				if (!isset($erreurs[$champ])) {
 					$erreurs[$champ] = '';
@@ -143,7 +143,7 @@ function formulaires_editer_objet_verifier($type, $id = 'new', $oblis = array())
 	}
 	foreach ($oblis as $obli) {
 		$value = _request($obli);
-		if (is_null($value) OR !(is_array($value) ? count($value) : strlen($value))) {
+		if (is_null($value) or !(is_array($value) ? count($value) : strlen($value))) {
 			if (!isset($erreurs[$obli])) {
 				$erreurs[$obli] = '';
 			}
@@ -210,7 +210,7 @@ function formulaires_editer_objet_charger(
 	$new = !is_numeric($id);
 	// Appel direct dans un squelette
 	if (!$row) {
-		if (!$new OR $lier_trad) {
+		if (!$new or $lier_trad) {
 			if ($select = charger_fonction("precharger_" . $type, 'inc', true)) {
 				$row = $select($id, $id_parent, $lier_trad);
 			} else {
@@ -232,13 +232,13 @@ function formulaires_editer_objet_charger(
 
 	// Gaffe: sans ceci, on ecrase systematiquement l'article d'origine
 	// (et donc: pas de lien de traduction)
-	$id = ($new OR $lier_trad)
+	$id = ($new or $lier_trad)
 		? 'oui'
 		: $row[$id_table_objet];
 	$row[$id_table_objet] = $id;
 
 	$contexte = $row;
-	if (strlen($id_parent) && is_numeric($id_parent) && (!isset($contexte['id_parent']) OR $new)) {
+	if (strlen($id_parent) && is_numeric($id_parent) && (!isset($contexte['id_parent']) or $new)) {
 		if (!isset($contexte['id_parent'])) {
 			unset($contexte['id_rubrique']);
 		}
@@ -252,7 +252,7 @@ function formulaires_editer_objet_charger(
 			$contexte['id_parent'] = '';
 		}
 		if (!$contexte['id_parent']
-			AND $preselectionner_parent_nouvel_objet = charger_fonction("preselectionner_parent_nouvel_objet", "inc", true)
+			and $preselectionner_parent_nouvel_objet = charger_fonction("preselectionner_parent_nouvel_objet", "inc", true)
 		) {
 			$contexte['id_parent'] = $preselectionner_parent_nouvel_objet($type, $row);
 		}
@@ -344,7 +344,7 @@ function coupe_trop_long($texte) {
  */
 function editer_texte_recolle($texte, $att_text) {
 	if ((strlen($texte) < 29*1024)
-		OR (include_spip('inc/layer') AND ($GLOBALS['browser_name'] != "MSIE"))
+		or (include_spip('inc/layer') and ($GLOBALS['browser_name'] != "MSIE"))
 	) {
 		return array($texte, "");
 	}
@@ -527,7 +527,7 @@ function controler_contenu($type, $id, $options = array(), $c = false, $serveur 
 	unset($c['id_secteur']);
 
 	// Gerer les champs non vides
-	if (isset($options['nonvide']) AND is_array($options['nonvide'])) {
+	if (isset($options['nonvide']) and is_array($options['nonvide'])) {
 		foreach ($options['nonvide'] as $champ => $sinon) {
 			if ($c[$champ] === '') {
 				$c[$champ] = $sinon;
@@ -610,7 +610,7 @@ function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
 	// On elimine les donnees non modifiees par le formulaire (mais
 	// potentiellement modifiees entre temps par un autre utilisateur)
 	foreach ($champs as $key => $val) {
-		if (isset($ctr[$prefix . $key]) AND $m = $ctr[$prefix . $key]) {
+		if (isset($ctr[$prefix . $key]) and $m = $ctr[$prefix . $key]) {
 			if (is_scalar($val) and $m == md5($val)) {
 				unset($champs[$key]);
 			}
@@ -639,7 +639,7 @@ function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
 	// de conflit.
 	$ctrh = $ctrq = $conflits = array();
 	foreach (array_keys($champs) as $key) {
-		if (isset($ctr[$prefix . $key]) AND $m = $ctr[$prefix . $key]) {
+		if (isset($ctr[$prefix . $key]) and $m = $ctr[$prefix . $key]) {
 			$ctrh[$key] = $m;
 			$ctrq[] = $key;
 		}
@@ -648,7 +648,7 @@ function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
 		$ctrq = sql_fetsel($ctrq, $spip_table_objet, "$id_table_objet=$id", $serveur);
 		foreach ($ctrh as $key => $m) {
 			if ($m != md5($ctrq[$key])
-				AND $champs[$key] !== $ctrq[$key]
+				and $champs[$key] !== $ctrq[$key]
 			) {
 				$conflits[$key] = array(
 					'base' => $ctrq[$key],
@@ -671,7 +671,7 @@ function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
  * @return string
  */
 function display_conflit_champ($x) {
-	if (strstr($x, "\n") OR strlen($x) > 80) {
+	if (strstr($x, "\n") or strlen($x) > 80) {
 		return "<textarea style='width:99%; height:10em;'>" . entites_html($x) . "</textarea>\n";
 	} else {
 		return "<input type='text' size='40' style='width:99%' value=\"" . entites_html($x) . "\" />\n";

@@ -166,7 +166,7 @@ function install_etape_2_form($hidden, $checked, $res, $etape) {
 		)
 
 		. ((defined('_INSTALL_TABLE_PREFIX')
-			OR $GLOBALS['table_prefix'] != 'spip')
+			or $GLOBALS['table_prefix'] != 'spip')
 			? '<h3>' . _T('install_table_prefix_hebergeur') . '  <tt>' . $GLOBALS['table_prefix'] . '</tt>' . '</h3>'
 			: "<fieldset><legend>" . _T('texte_choix_table_prefix') . "</legend>\n"
 			. "<p><label for='table_prefix'>" . _T('info_table_prefix') . "</label></p><p>"

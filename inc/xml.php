@@ -128,14 +128,14 @@ function spip_xml_parse(&$texte, $strict = true, $clean = true, $profondeur = -1
 			// tag fermant
 			$ncclos = strlen("</$closing_tag>");
 			$p = strpos($txt, "</$closing_tag>");
-			if ($p !== false AND (strpos($txt, "<") < $p)) {
+			if ($p !== false and (strpos($txt, "<") < $p)) {
 				$nclose = 0;
 				$nopen = 0;
 				$d = 0;
 				while (
 					$p !== false
-					AND ($morceau = substr($txt, $d, $p-$d))
-					AND (($nopen += preg_match_all("{<" . preg_quote($closing_tag) . "(\s*>|\s[^>]*[^/>]>)}is", $morceau,
+					and ($morceau = substr($txt, $d, $p-$d))
+					and (($nopen += preg_match_all("{<" . preg_quote($closing_tag) . "(\s*>|\s[^>]*[^/>]>)}is", $morceau,
 							$matches, PREG_SET_ORDER)) > $nclose)
 				) {
 					$nclose++;
@@ -154,7 +154,7 @@ function spip_xml_parse(&$texte, $strict = true, $clean = true, $profondeur = -1
 			}
 			$content = substr($txt, 0, $p);
 			$txt = substr($txt, $p+$ncclos);
-			if ($profondeur == 0 OR strpos($content, "<") === false) // eviter une recursion si pas utile
+			if ($profondeur == 0 or strpos($content, "<") === false) // eviter une recursion si pas utile
 			{
 				$out[$tag][] = importer_charset($content, $charset);
 			}//$content;

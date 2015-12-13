@@ -43,7 +43,7 @@ function public_styliser_dist($fond, $contexte, $lang = '', $connect = '') {
 
 	// s'assurer que le fond est licite
 	// car il peut etre construit a partir d'une variable d'environnement
-	if (strpos($fond, "../") !== false OR strncmp($fond, '/', 1) == 0) {
+	if (strpos($fond, "../") !== false or strncmp($fond, '/', 1) == 0) {
 		$fond = "404";
 	}
 
@@ -73,7 +73,7 @@ function public_styliser_dist($fond, $contexte, $lang = '', $connect = '') {
 		'data' => $squelette['fond'],
 	);
 
-	if (test_espace_prive() OR defined('_ZPIP')) {
+	if (test_espace_prive() or defined('_ZPIP')) {
 		if (!$styliser_par_z) {
 			$styliser_par_z = charger_fonction('styliser_par_z', 'public');
 		}
@@ -105,9 +105,9 @@ function public_styliser_dist($fond, $contexte, $lang = '', $connect = '') {
  **/
 function styliser_par_objets($flux) {
 	if (test_espace_prive()
-		AND !$squelette = $flux['data']
-		AND strncmp($flux['args']['fond'], 'prive/objets/', 13) == 0
-		AND $echafauder = charger_fonction('echafauder', 'prive', true)
+		and !$squelette = $flux['data']
+		and strncmp($flux['args']['fond'], 'prive/objets/', 13) == 0
+		and $echafauder = charger_fonction('echafauder', 'prive', true)
 	) {
 		if (strncmp($flux['args']['fond'], 'prive/objets/liste/', 19) == 0) {
 			$table = table_objet(substr($flux['args']['fond'], 19));
@@ -172,17 +172,17 @@ function quete_rubrique_fond($contexte) {
 		return $quete[$s];
 	}
 
-	if (isset($c['id_rubrique']) AND $r = $c['id_rubrique']) {
+	if (isset($c['id_rubrique']) and $r = $c['id_rubrique']) {
 		unset($c['id_rubrique']);
 		$c = array('id_rubrique' => $r)+$c;
 	}
 
 	foreach ($c as $_id => $id) {
 		if ($id
-			AND $row = quete_parent_lang(table_objet_sql($liste_objets[$_id]), $id)
+			and $row = quete_parent_lang(table_objet_sql($liste_objets[$_id]), $id)
 		) {
 			$lang = isset($row['lang']) ? $row['lang'] : '';
-			if ($_id == 'id_rubrique' OR (isset($row['id_rubrique']) AND $id = $row['id_rubrique'])) {
+			if ($_id == 'id_rubrique' or (isset($row['id_rubrique']) and $id = $row['id_rubrique'])) {
 				return $quete[$s] = array($id, $lang);
 			}
 		}

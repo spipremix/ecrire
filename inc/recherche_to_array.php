@@ -97,11 +97,11 @@ function inc_recherche_to_array_dist($recherche, $options = array()) {
 	);
 
 	while ($t = sql_fetch($s, $serveur)
-		AND (!isset($t['score']) OR $t['score'] > 0)) {
+		and (!isset($t['score']) or $t['score'] > 0)) {
 		$id = intval($t[$_id_table]);
 
 		if ($options['toutvoir']
-			OR autoriser('voir', $table, $id)
+			or autoriser('voir', $table, $id)
 		) {
 			// indiquer les champs concernes
 			$champs_vus = array();
@@ -132,8 +132,8 @@ function inc_recherche_to_array_dist($recherche, $options = array()) {
 					}
 
 					if (!$options['champs']
-						AND !$options['score']
-						AND !$options['matches']
+						and !$options['score']
+						and !$options['matches']
 					) {
 						break;
 					}
@@ -163,7 +163,7 @@ function inc_recherche_to_array_dist($recherche, $options = array()) {
 	// ici on est un peu naze : pas capables de reconstruire une jointure complexe
 	// on ne sait passer que par table de laison en 1 coup
 	if (isset($jointures[$table])
-		AND $joints = recherche_en_base(
+		and $joints = recherche_en_base(
 			$recherche,
 			$jointures[$table],
 			array_merge($options, array('jointures' => false))
@@ -209,7 +209,7 @@ function inc_recherche_to_array_dist($recherche, $options = array()) {
 						array("objet='$table_liee'", sql_in('id_objet', array_keys($ids_trouves))), '', '', '', '', $serveur);
 				} // cas table de liaison generique spip_xxx_yyy
 				elseif ($t = $trouver_table($table_arrivee . "_" . $table_depart, $serveur)
-					OR $t = $trouver_table($table_depart . "_" . $table_arrivee, $serveur)
+					or $t = $trouver_table($table_depart . "_" . $table_arrivee, $serveur)
 				) {
 					$s = sql_select("$cle_depart,$cle_arrivee", $t["table_sql"], sql_in($cle_arrivee, array_keys($ids_trouves)),
 						'', '', '', '', $serveur);

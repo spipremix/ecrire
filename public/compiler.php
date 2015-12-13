@@ -83,7 +83,7 @@ function argumenter_inclure(
 		foreach ($couple as $n => $val) {
 			$var = $val[0];
 			if ($var->type != 'texte') {
-				if ($n OR $k OR $fond1) {
+				if ($n or $k or $fond1) {
 					$erreur_p_i_i = array(
 						'zbug_parametres_inclus_incorrects',
 						array('param' => $var->nom_champ)
@@ -105,7 +105,7 @@ function argumenter_inclure(
 					}
 					$val[0] = new Texte;
 					$val[0]->texte = $v;
-				} elseif ($k OR $n OR $fond1) {
+				} elseif ($k or $n or $fond1) {
 					$auto = true;
 				} else {
 					$var = 1;
@@ -175,13 +175,13 @@ function calculer_inclure($p, &$boucles, $id_boucle) {
 
 	} else {
 		$code = calculer_liste($p->texte, $p->descr, $boucles, $id_boucle);
-		if ($code AND preg_match("/^'([^']*)'/s", $code, $r)) {
+		if ($code and preg_match("/^'([^']*)'/s", $code, $r)) {
 			$fichier = $r[1];
 		} else {
 			$fichier = '';
 		}
 	}
-	if (!$code OR $code === '""') {
+	if (!$code or $code === '""') {
 		$erreur_p_i_i = array(
 			'zbug_parametres_inclus_incorrects',
 			array('param' => $code)
@@ -276,13 +276,13 @@ function instituer_boucle(&$boucle, $echapper = true, $ignore_previsu = false) {
 */
 	$id_table = $boucle->id_table;
 	$show = $boucle->show;
-	if (isset($show['statut']) AND $show['statut']) {
+	if (isset($show['statut']) and $show['statut']) {
 		foreach ($show['statut'] as $k => $s) {
 			// Restreindre aux elements publies si pas de {statut} ou autre dans les criteres
 			$filtrer = true;
 			if (isset($s['exception'])) {
 				foreach (is_array($s['exception']) ? $s['exception'] : array($s['exception']) as $m) {
-					if (isset($boucle->modificateur[$m]) OR isset($boucle->modificateur['criteres'][$m])) {
+					if (isset($boucle->modificateur[$m]) or isset($boucle->modificateur['criteres'][$m])) {
 						$filtrer = false;
 						break;
 					}
@@ -316,8 +316,8 @@ function instituer_boucle(&$boucle, $echapper = true, $ignore_previsu = false) {
 
 				$arg_ignore_previsu = ($ignore_previsu ? ",true" : '');
 				include_spip('public/quete');
-				if (isset($s['post_date']) AND $s['post_date']
-					AND $GLOBALS['meta']["post_dates"] == 'non'
+				if (isset($s['post_date']) and $s['post_date']
+					and $GLOBALS['meta']["post_dates"] == 'non'
 				) {
 					$date = $id . '.' . preg_replace(',\W,', '', $s['post_date']); // securite
 					array_unshift($boucle->where,
@@ -510,7 +510,7 @@ function calculer_boucle_nonrec($id_boucle, &$boucles, $trace) {
 		$fin_lang_select_public = '';
 		// sortir les appels au traducteur (invariants de boucle)
 		if (strpos($return, '?php') === false
-			AND preg_match_all("/\W(_T[(]'[^']*'[)])/", $return, $r)
+			and preg_match_all("/\W(_T[(]'[^']*'[)])/", $return, $r)
 		) {
 			$i = 1;
 			foreach ($r[1] as $t) {
@@ -540,7 +540,7 @@ function calculer_boucle_nonrec($id_boucle, &$boucles, $trace) {
 
 	// Calculer les invalideurs si c'est une boucle non constante et si on
 	// souhaite invalider ces elements
-	if (!$constant AND $primary) {
+	if (!$constant and $primary) {
 		include_spip('inc/invalideur');
 		if (function_exists($i = 'calcul_invalideurs')) {
 			$corps = $i($corps, $primary, $boucles, $id_boucle);
@@ -550,7 +550,7 @@ function calculer_boucle_nonrec($id_boucle, &$boucles, $trace) {
 	// gerer le compteur de boucle 
 	// avec ou sans son utilisation par les criteres {1/3} {1,4} {n-2,1}...
 
-	if ($boucle->partie OR $boucle->cptrows) {
+	if ($boucle->partie or $boucle->cptrows) {
 		$corps = "\n\t\t\$Numrows['$id_boucle']['compteur_boucle']++;"
 			. $boucle->partie
 			. $corps;
@@ -562,7 +562,7 @@ function calculer_boucle_nonrec($id_boucle, &$boucles, $trace) {
 	// si le corps est une constante, ne pas appeler le serveur N fois!
 
 	if (preg_match(CODE_MONOTONE, str_replace("\\'", '', $corps), $r)) {
-		if (!isset($r[2]) OR (!$r[2])) {
+		if (!isset($r[2]) or (!$r[2])) {
 			if (!$boucle->numrows) {
 				return "\n\t\$t0 = '';";
 			} else {
@@ -578,7 +578,7 @@ function calculer_boucle_nonrec($id_boucle, &$boucles, $trace) {
 
 	$count = '';
 	if (!$boucle->select) {
-		if (!$boucle->numrows OR $boucle->limit OR $boucle->mode_partie OR $boucle->group) {
+		if (!$boucle->numrows or $boucle->limit or $boucle->mode_partie or $boucle->group) {
 			$count = '1';
 		} else {
 			$count = 'count(*)';
@@ -593,7 +593,7 @@ function calculer_boucle_nonrec($id_boucle, &$boucles, $trace) {
 		$nums = '';
 	}
 
-	if ($boucle->numrows OR $boucle->mode_partie) {
+	if ($boucle->numrows or $boucle->mode_partie) {
 		$nums .= "\$Numrows['$id_boucle']['total'] = @intval(\$iter->count());"
 			. $boucle->mode_partie
 			. "\n\t";
@@ -795,7 +795,7 @@ function calculer_dump_array($a) {
 		return $a;
 	}
 	$res = "";
-	if ($a AND $a[0] == "'?'") {
+	if ($a and $a[0] == "'?'") {
 		return ("(" . calculer_dump_array($a[1]) .
 			" ? " . calculer_dump_array($a[2]) .
 			" : " . calculer_dump_array($a[3]) .
@@ -857,7 +857,7 @@ function calculer_from_type(&$boucle) {
 // http://code.spip.net/@calculer_order
 function calculer_order(&$boucle) {
 	if (!$order = $boucle->order
-		AND !$order = $boucle->default_order
+		and !$order = $boucle->default_order
 	) {
 		$order = array();
 	}
@@ -901,7 +901,7 @@ function calculer_liste($tableau, $descr, &$boucles, $id_boucle = '') {
 			$res = '';
 			foreach ($codes as $code) {
 				if (!preg_match("/^'[^']*'$/", $code)
-					OR substr($res, -1, 1) !== "'"
+					or substr($res, -1, 1) !== "'"
 				) {
 					$res .= " .\n$tab$code";
 				} else {
@@ -995,7 +995,7 @@ function compile_cas($tableau, $descr, &$boucles, $id_boucle) {
 				$newdescr['niv']--;
 				$altern = calculer_liste($p->altern,
 					$newdescr, $boucles, $id_boucle);
-				if (($avant === false) OR ($apres === false) OR ($altern === false)) {
+				if (($avant === false) or ($apres === false) or ($altern === false)) {
 					$err_e_c = true;
 					$code = "''";
 				} else {
@@ -1004,12 +1004,12 @@ function compile_cas($tableau, $descr, &$boucles, $id_boucle) {
 						'($Cache, $Pile, $doublons, $Numrows, $SP)';
 					$commentaire = "?$nom";
 					if (!$boucles[$nom]->milieu
-						AND $boucles[$nom]->type_requete <> TYPE_RECURSIF
+						and $boucles[$nom]->type_requete <> TYPE_RECURSIF
 					) {
 						if ($altern != "''") {
 							$code .= "\n. $altern";
 						}
-						if ($avant <> "''" OR $apres <> "''") {
+						if ($avant <> "''" or $apres <> "''") {
 							spip_log("boucle $nom toujours vide, code superflu dans $descr[sourcefile]");
 						}
 						$avant = $apres = $altern = "''";
@@ -1076,12 +1076,12 @@ function compile_cas($tableau, $descr, &$boucles, $id_boucle) {
 				// Si la valeur est destinee a une comparaison a ''
 				// forcer la conversion en une chaine par strval
 				// si ca peut etre autre chose qu'une chaine
-				if (($avant != "''" OR $apres != "''")
-					AND $code[0] != "'"
+				if (($avant != "''" or $apres != "''")
+					and $code[0] != "'"
 #			AND (strpos($code,'interdire_scripts') !== 0)
-					AND !preg_match(_REGEXP_COND_VIDE_NONVIDE, $code)
-					AND !preg_match(_REGEXP_COND_NONVIDE_VIDE, $code)
-					AND !preg_match(_REGEXP_CONCAT_NON_VIDE, $code)
+					and !preg_match(_REGEXP_COND_VIDE_NONVIDE, $code)
+					and !preg_match(_REGEXP_COND_NONVIDE_VIDE, $code)
+					and !preg_match(_REGEXP_CONCAT_NON_VIDE, $code)
 				) {
 					$code = "strval($code)";
 				}
@@ -1120,7 +1120,7 @@ function compile_retour($code, $avant, $apres, $altern, $tab, $n) {
 	if ($apres == "''") {
 		$apres = '';
 	}
-	if (!$avant AND !$apres AND ($altern === "''")) {
+	if (!$avant and !$apres and ($altern === "''")) {
 		return $code;
 	}
 
@@ -1154,7 +1154,7 @@ function compile_retour($code, $avant, $apres, $altern, $tab, $n) {
 
 function compile_inclure_doublons($lexemes) {
 	foreach ($lexemes as $v) {
-		if ($v->type === 'include' AND $v->param) {
+		if ($v->type === 'include' and $v->param) {
 			foreach ($v->param as $r) {
 				if (trim($r[0]) === 'doublons') {
 					return true;
@@ -1223,7 +1223,7 @@ function public_compiler_dist($squelette, $nom, $gram, $sourcefile, $connect = '
 		}
 	}
 
-	$debug = ($boucles AND defined('_VAR_MODE') AND _VAR_MODE == 'debug');
+	$debug = ($boucles and defined('_VAR_MODE') and _VAR_MODE == 'debug');
 	if ($debug) {
 		include_spip('public/decompiler');
 		foreach ($boucles as $id => $boucle) {
@@ -1253,7 +1253,7 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 	static $trouver_table;
 	spip_timer('calcul_skel');
 
-	if (defined('_VAR_MODE') AND _VAR_MODE == 'debug') {
+	if (defined('_VAR_MODE') and _VAR_MODE == 'debug') {
 		$GLOBALS['debug_objets']['squelette'][$nom] = $descr['squelette'];
 		$GLOBALS['debug_objets']['sourcefile'][$nom] = $sourcefile;
 
@@ -1278,17 +1278,17 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 		if (!($type = $boucle->type_requete)) {
 			continue;
 		}
-		if (!$descr['documents'] AND (
-				(($type == 'documents') AND $boucle->doublons) OR
-				compile_inclure_doublons($boucle->avant) OR
-				compile_inclure_doublons($boucle->apres) OR
-				compile_inclure_doublons($boucle->milieu) OR
+		if (!$descr['documents'] and (
+				(($type == 'documents') and $boucle->doublons) or
+				compile_inclure_doublons($boucle->avant) or
+				compile_inclure_doublons($boucle->apres) or
+				compile_inclure_doublons($boucle->milieu) or
 				compile_inclure_doublons($boucle->altern))
 		) {
 			$descr['documents'] = true;
 		}
 		if ($type != TYPE_RECURSIF) {
-			if (!$boucles[$id]->sql_serveur AND $connect) {
+			if (!$boucles[$id]->sql_serveur and $connect) {
 				$boucles[$id]->sql_serveur = $connect;
 			}
 
@@ -1302,7 +1302,7 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 				// utiliser les informations donnees par le requeteur
 				// cas "php:xx" et "data:xx".
 			} else {
-				if ($boucle->sql_serveur AND $requeteur = charger_fonction($boucle->sql_serveur, 'requeteur', true)) {
+				if ($boucle->sql_serveur and $requeteur = charger_fonction($boucle->sql_serveur, 'requeteur', true)) {
 					$requeteur($boucles, $boucle, $id);
 
 					// utiliser la description des champs transmis
@@ -1312,7 +1312,7 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 					// c'est peut etre une table qui necessite son connecteur dedie fourni
 					// permet une ecriture allegee (GEO) -> (geo:GEO)
 					if (!$show
-						AND $show = $trouver_table($type, strtolower($type))
+						and $show = $trouver_table($type, strtolower($type))
 					) {
 						$boucles[$id]->sql_serveur = strtolower($type);
 					}
@@ -1326,8 +1326,8 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 
 						$boucles[$id]->descr = &$descr;
 						if ((!$boucles[$id]->jointures)
-							AND is_array($show['tables_jointures'])
-							AND count($x = $show['tables_jointures'])
+							and is_array($show['tables_jointures'])
+							and count($x = $show['tables_jointures'])
 						) {
 							$boucles[$id]->jointures = $x;
 						}
@@ -1362,7 +1362,7 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 	// Commencer par reperer les boucles appelees explicitement 
 	// car elles indexent les arguments de maniere derogatoire
 	foreach ($boucles as $id => $boucle) {
-		if ($boucle->type_requete == TYPE_RECURSIF AND $boucle->param) {
+		if ($boucle->type_requete == TYPE_RECURSIF and $boucle->param) {
 			$boucles[$id]->descr = &$descr;
 			$rec = &$boucles[$boucle->param[0]];
 			if (!$rec) {
@@ -1386,7 +1386,7 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 	foreach ($boucles as $id => $boucle) {
 		$id = strval($id); // attention au type dans index_pile
 		$type = $boucle->type_requete;
-		if ($type AND $type != TYPE_RECURSIF) {
+		if ($type and $type != TYPE_RECURSIF) {
 			$res = '';
 			if ($boucle->param) {
 				// retourne un tableau en cas d'erreur
@@ -1430,14 +1430,14 @@ function compiler_squelette($squelette, $boucles, $nom, $descr, $sourcefile, $co
 			$serveur = strtolower($boucle->sql_serveur);
 			if (
 				// fonction de boucle avec serveur & table
-				(!$serveur OR
+				(!$serveur or
 					((!function_exists($f = "boucle_" . $serveur . "_" . $table))
-						AND (!function_exists($f = $f . "_dist"))
+						and (!function_exists($f = $f . "_dist"))
 					)
 				)
 				// fonction de boucle avec table
-				AND (!function_exists($f = "boucle_" . $table))
-				AND (!function_exists($f = $f . "_dist"))
+				and (!function_exists($f = "boucle_" . $table))
+				and (!function_exists($f = $f . "_dist"))
 			) {
 				// fonction de boucle standard 
 				if (!function_exists($f = 'boucle_DEFAUT')) {

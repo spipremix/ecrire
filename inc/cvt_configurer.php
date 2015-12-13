@@ -46,7 +46,7 @@ function cvtconf_formulaire_charger($flux) {
 		if (!charger_fonction("charger", "formulaires/$form/", true)) {
 			$flux['data'] = cvtconf_formulaires_configurer_recense($form);
 			$flux['data']['editable'] = true;
-			if (_request('var_mode') == 'configurer' AND autoriser('webmestre')) {
+			if (_request('var_mode') == 'configurer' and autoriser('webmestre')) {
 				if (!_AJAX) {
 					var_dump($flux['data']);
 				}
@@ -67,8 +67,8 @@ function cvtconf_formulaire_charger($flux) {
  */
 function cvtconf_formulaire_traiter($flux) {
 	if ($form = $flux['args']['form']
-		AND strncmp($form, 'configurer_', 11) == 0 // un #FORMULAIRE_CONFIGURER_XXX
-		AND !charger_fonction("traiter", "formulaires/$form/", true) // sans fonction traiter()
+		and strncmp($form, 'configurer_', 11) == 0 // un #FORMULAIRE_CONFIGURER_XXX
+		and !charger_fonction("traiter", "formulaires/$form/", true) // sans fonction traiter()
 	) {
 		$trace = cvtconf_formulaires_configurer_enregistre($form, $flux['args']['args']);
 		$flux['data'] = array('message_ok' => _T('config_info_enregistree') . $trace, 'editable' => true);
@@ -170,7 +170,7 @@ function cvtconf_formulaires_configurer_recense($form) {
 
 	// sinon cas analyse du squelette
 	if ($f = find_in_path($form . '.' . _EXTENSION_SQUELETTES, 'formulaires/')
-		AND lire_fichier($f, $contenu)
+		and lire_fichier($f, $contenu)
 	) {
 
 		for ($i = 0; $i < 2; $i++) {
@@ -186,9 +186,9 @@ function cvtconf_formulaires_configurer_recense($form) {
 
 			foreach ($balises as $b) {
 				if ($n = extraire_attribut($b, 'name')
-					AND preg_match(",^([\w\-]+)(\[\w*\])?$,", $n, $r)
-					AND !in_array($n, array('formulaire_action', 'formulaire_action_args'))
-					AND extraire_attribut($b, 'type') !== 'submit'
+					and preg_match(",^([\w\-]+)(\[\w*\])?$,", $n, $r)
+					and !in_array($n, array('formulaire_action', 'formulaire_action_args'))
+					and extraire_attribut($b, 'type') !== 'submit'
 				) {
 					$valeurs[$r[1]] = '';
 					// recuperer les valeurs _meta_xx qui peuvent etre fournies
@@ -230,7 +230,7 @@ function cvtconf_configurer_stocker($form, $valeurs, $store) {
 
 	foreach ($store as $k => $v) {
 		ecrire_config("$stockage$table$prefixe$casier$k", $v);
-		if (_request('var_mode') == 'configurer' AND autoriser('webmestre')) {
+		if (_request('var_mode') == 'configurer' and autoriser('webmestre')) {
 			$trace .= "<br />table $table : " . $prefixe . $k . " = $v;";
 		}
 	}

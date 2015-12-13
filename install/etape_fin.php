@@ -64,7 +64,7 @@ function install_etape_fin_dist() {
 
 function install_verifier_htaccess() {
 	if (verifier_htaccess(_DIR_TMP, true)
-		AND verifier_htaccess(_DIR_CONNECT, true)
+		and verifier_htaccess(_DIR_CONNECT, true)
 	) {
 		return '';
 	}

@@ -120,7 +120,7 @@ function index_pile(
 		// $c = le nom du champ demandé
 		list($t, $c) = index_tables_en_pile($idb, $nom_champ, $boucles, $joker);
 		if ($t) {
-			if ($select AND !in_array($t, $boucles[$idb]->select)) {
+			if ($select and !in_array($t, $boucles[$idb]->select)) {
 				$boucles[$idb]->select[] = $t;
 			}
 			$champ = '$Pile[$SP' . ($i ? "-$i" : "") . '][\'' . $c . '\']';
@@ -431,17 +431,17 @@ function calculer_balise($nom, $p) {
 	if ($f = charger_fonction($nom, 'balise', true)) {
 		$p->balise_calculee = true;
 		$res = $f($p);
-		if ($res !== null AND is_object($res)) {
+		if ($res !== null and is_object($res)) {
 			return $res;
 		}
 	}
 
 	// Certaines des balises comportant un _ sont generiques
 	if ($f = strpos($nom, '_')
-		AND $f = charger_fonction(substr($nom, 0, $f+1), 'balise', true)
+		and $f = charger_fonction(substr($nom, 0, $f+1), 'balise', true)
 	) {
 		$res = $f($p);
-		if ($res !== null AND is_object($res)) {
+		if ($res !== null and is_object($res)) {
 			return $res;
 		}
 	}
@@ -481,7 +481,7 @@ function calculer_balise_DEFAUT_dist($nom, $p) {
 
 	// compatibilite: depuis qu'on accepte #BALISE{ses_args} sans [(...)] autour
 	// il faut recracher {...} quand ce n'est finalement pas des args
-	if ($p->fonctions AND (!$p->fonctions[0][0]) AND $p->fonctions[0][1]) {
+	if ($p->fonctions and (!$p->fonctions[0][0]) and $p->fonctions[0][1]) {
 		$code = addslashes($p->fonctions[0][1]);
 		$p->code .= " . '$code'";
 	}
@@ -498,8 +498,8 @@ function calculer_balise_DEFAUT_dist($nom, $p) {
 	// ALORS retourner la couleur.
 	// Ca permet si l'on veut vraiment de recuperer [(#ACCEDE*)]
 	if (preg_match("/^[A-F]{1,6}$/i", $nom)
-		AND !$p->etoile
-		AND !$p->fonctions
+		and !$p->etoile
+		and !$p->fonctions
 	) {
 		$p->code = "'#$nom'";
 		$p->interdire_scripts = false;
@@ -555,11 +555,11 @@ function calculer_balise_dynamique($p, $nom, $l, $supp = array()) {
 	}
 	// compatibilite: depuis qu'on accepte #BALISE{ses_args} sans [(...)] autour
 	// il faut recracher {...} quand ce n'est finalement pas des args
-	if ($p->fonctions AND (!$p->fonctions[0][0]) AND $p->fonctions[0][1]) {
+	if ($p->fonctions and (!$p->fonctions[0][0]) and $p->fonctions[0][1]) {
 		$p->fonctions = null;
 	}
 
-	if ($p->param AND ($c = $p->param[0])) {
+	if ($p->param and ($c = $p->param[0])) {
 		// liste d'arguments commence toujours par la chaine vide
 		array_shift($c);
 		// construire la liste d'arguments comme pour un filtre
@@ -630,12 +630,12 @@ function collecter_balise_dynamique($l, &$p, $nom) {
 function trouver_nom_serveur_distant($p) {
 	$nom = $p->id_boucle;
 	if ($nom
-		AND isset($p->boucles[$nom])
+		and isset($p->boucles[$nom])
 	) {
 		$s = $p->boucles[$nom]->sql_serveur;
 		if (strlen($s)
-			AND strlen($serveur = strtolower($s))
-			AND !in_array($serveur, $GLOBALS['exception_des_connect'])
+			and strlen($serveur = strtolower($s))
+			and !in_array($serveur, $GLOBALS['exception_des_connect'])
 		) {
 			return $serveur;
 		}
@@ -667,7 +667,7 @@ function trouver_nom_serveur_distant($p) {
 function balise_distante_interdite($p) {
 	$nom = $p->id_boucle;
 
-	if ($nom AND trouver_nom_serveur_distant($p)) {
+	if ($nom and trouver_nom_serveur_distant($p)) {
 		spip_log($nom . ':' . $p->nom_champ . ' ' . _T('zbug_distant_interdit'));
 
 		return false;
@@ -705,10 +705,10 @@ function champs_traitements($p) {
 		$table_sql = isset($p->boucles[$idb]->show['table_sql']) ? $p->boucles[$idb]->show['table_sql'] : false;
 
 		// le traitement peut n'etre defini que pour une table en particulier "spip_articles"
-		if ($table_sql AND isset($ps[$table_sql])) {
+		if ($table_sql and isset($ps[$table_sql])) {
 			$ps = $ps[$table_sql];
 		} // ou pour une boucle en particulier "DATA","articles"
-		elseif ($type_requete AND isset($ps[$type_requete])) {
+		elseif ($type_requete and isset($ps[$type_requete])) {
 			$ps = $ps[$type_requete];
 		} // ou pour indiferrement quelle que soit la boucle
 		elseif (isset($ps[0])) {
@@ -729,11 +729,11 @@ function champs_traitements($p) {
 	// (qui traitent les raccourcis <docXX> referencant les docs)
 
 	if (isset($p->descr['documents'])
-		AND
+		and
 		$p->descr['documents']
-		AND (
+		and (
 			(strpos($ps, 'propre') !== false)
-			OR
+			or
 			(strpos($ps, 'typo') !== false)
 		)
 	) {
@@ -790,8 +790,8 @@ function compose_filtres(&$p, $code) {
 		if (!$fonc) {
 			continue;
 		} // normalement qu'au premier tour.
-		$is_filtre_image = ((substr($fonc, 0, 6) == 'image_') AND $fonc != 'image_graver');
-		if ($image_miette AND !$is_filtre_image) {
+		$is_filtre_image = ((substr($fonc, 0, 6) == 'image_') and $fonc != 'image_graver');
+		if ($image_miette and !$is_filtre_image) {
 			// il faut graver maintenant car apres le filtre en cours
 			// on est pas sur d'avoir encore le nom du fichier dans le pipe
 			$code = "filtrer('image_graver', $code)";
@@ -834,17 +834,17 @@ function filtre_logique($fonc, $code, $arg) {
 	switch (true) {
 		case in_array($fonc, $GLOBALS['table_criteres_infixes']):
 			return "($code $fonc $arg)";
-		case ($fonc == 'and') OR ($fonc == 'et'):
+		case ($fonc == 'and') or ($fonc == 'et'):
 			return "((($code) AND ($arg)) ?' ' :'')";
-		case ($fonc == 'or') OR ($fonc == 'ou'):
+		case ($fonc == 'or') or ($fonc == 'ou'):
 			return "((($code) OR ($arg)) ?' ' :'')";
-		case ($fonc == 'xor') OR ($fonc == 'xou'):
+		case ($fonc == 'xor') or ($fonc == 'xou'):
 			return "((($code) XOR ($arg)) ?' ' :'')";
 		case ($fonc == 'sinon'):
 			return "(((\$a = $code) OR (is_string(\$a) AND strlen(\$a))) ? \$a : $arg)";
-		case ($fonc == 'not') OR ($fonc == 'non'):
+		case ($fonc == 'not') or ($fonc == 'non'):
 			return "(($code) ?'' :' ')";
-		case ($fonc == 'yes') OR ($fonc == 'oui'):
+		case ($fonc == 'yes') or ($fonc == 'oui'):
 			return "(($code) ?' ' :'')";
 	}
 

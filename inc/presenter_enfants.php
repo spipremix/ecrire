@@ -31,7 +31,7 @@ include_spip('inc/presentation');
  *  Un tableau des sous rubriques
  */
 function enfant_rub($collection, $debut = 0, $limite = 500) {
-	$voir_logo = (isset($GLOBALS['meta']['image_process']) AND $GLOBALS['meta']['image_process'] != "non");
+	$voir_logo = (isset($GLOBALS['meta']['image_process']) and $GLOBALS['meta']['image_process'] != "non");
 	$logo = "";
 
 	if ($voir_logo) {

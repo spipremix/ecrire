@@ -52,9 +52,9 @@ function objet_associable($objet) {
 
 	$l = "";
 	if ($primary = id_table_objet($objet)
-		AND $trouver_table($l = $table_sql . "_liens")
-		AND !preg_match(',[^\w],', $primary)
-		AND !preg_match(',[^\w],', $l)
+		and $trouver_table($l = $table_sql . "_liens")
+		and !preg_match(',[^\w],', $primary)
+		and !preg_match(',[^\w],', $l)
 	) {
 		return array($primary, $l);
 	}
@@ -236,8 +236,8 @@ function objet_dupliquer_liens($objet, $id_source, $id_cible, $types = null, $ex
 	$n = 0;
 	foreach ($tables as $table_sql => $infos) {
 		if (
-			(is_null($types) OR in_array($infos['type'], $types))
-			AND (is_null($exclure_types) OR !in_array($infos['type'], $exclure_types))
+			(is_null($types) or in_array($infos['type'], $types))
+			and (is_null($exclure_types) or !in_array($infos['type'], $exclure_types))
 		) {
 			if (objet_associable($infos['type'])) {
 				$liens = (($infos['type'] == $objet) ?
@@ -410,7 +410,7 @@ function lien_insert($objet_source, $primary, $table_lien, $id, $objets, $qualif
 			$where = lien_where($primary, $id, $objet, $id_objet, $cond);
 
 			if ($id_objet = intval($insertions['id_objet'])
-				AND !sql_getfetsel($primary, $table_lien, $where)
+				and !sql_getfetsel($primary, $table_lien, $where)
 			) {
 
 				$e = sql_insertq($table_lien, $insertions);
@@ -447,15 +447,15 @@ function lien_insert($objet_source, $primary, $table_lien, $id, $objets, $qualif
  * @return array                        Liste des conditions
  */
 function lien_where($primary, $id_source, $objet, $id_objet, $cond = array()) {
-	if ((!is_array($id_source) AND !strlen($id_source))
-		OR !strlen($objet)
-		OR (!is_array($id_objet) AND !strlen($id_objet))
+	if ((!is_array($id_source) and !strlen($id_source))
+		or !strlen($objet)
+		or (!is_array($id_objet) and !strlen($id_objet))
 	) {
 		return array("0=1");
 	} // securite
 
 	$not = "";
-	if (is_array($id_source) AND reset($id_source) == "NOT") {
+	if (is_array($id_source) and reset($id_source) == "NOT") {
 		$not = array_shift($id_source);
 		$id_source = reset($id_source);
 	}
@@ -470,7 +470,7 @@ function lien_where($primary, $id_source, $objet, $id_objet, $cond = array()) {
 	} // idiot mais quand meme
 
 	$not = "";
-	if (is_array($id_objet) AND reset($id_objet) == "NOT") {
+	if (is_array($id_objet) and reset($id_objet) == "NOT") {
 		$not = array_shift($id_objet);
 		$id_objet = reset($id_objet);
 	}
@@ -525,7 +525,7 @@ function lien_delete($objet_source, $primary, $table_lien, $id, $objets, $cond =
 
 	foreach ($objets as $objet => $id_objets) {
 		$objet = ($objet == '*') ? $objet : objet_type($objet); # securite
-		if (!is_array($id_objets) OR reset($id_objets) == "NOT") {
+		if (!is_array($id_objets) or reset($id_objets) == "NOT") {
 			$id_objets = array($id_objets);
 		}
 		foreach ($id_objets as $id_objet) {
@@ -622,7 +622,7 @@ function lien_optimise($objet_source, $primary, $table_lien, $id, $objets) {
 	$dels = 0;
 	foreach ($objets as $objet => $id_objets) {
 		$objet = ($objet == '*') ? $objet : objet_type($objet); # securite
-		if (!is_array($id_objets) OR reset($id_objets) == "NOT") {
+		if (!is_array($id_objets) or reset($id_objets) == "NOT") {
 			$id_objets = array($id_objets);
 		}
 		foreach ($id_objets as $id_objet) {
@@ -718,7 +718,7 @@ function lien_set($objet_source, $primary, $table_lien, $id, $objets, $qualif) {
 			roles_trouver_dans_qualif($objet_source, $objet, $qualif);
 
 		$objet = ($objet == '*') ? $objet : objet_type($objet); # securite
-		if (!is_array($id_objets) OR reset($id_objets) == "NOT") {
+		if (!is_array($id_objets) or reset($id_objets) == "NOT") {
 			$id_objets = array($id_objets);
 		}
 		foreach ($id_objets as $id_objet) {
@@ -831,7 +831,7 @@ function lien_propage_date_modif($objet, $ids) {
 
 	$table = table_objet_sql($objet);
 	if ($desc = $trouver_table($table)
-		AND isset($desc['field']['date_modif'])
+		and isset($desc['field']['date_modif'])
 	) {
 		$primary = id_table_objet($objet);
 		$where = (is_array($ids) ? sql_in($primary, array_map('intval', $ids)) : "$primary=" . intval($ids));

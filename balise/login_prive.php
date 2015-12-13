@@ -74,7 +74,7 @@ function balise_LOGIN_PRIVE_stat($args, $context_compil) {
 function balise_LOGIN_PRIVE_dyn($url, $login) {
 	include_spip('balise/formulaire_');
 	if (!$url    # pas d'url passee en filtre ou dans le contexte
-		AND !$url = _request('url') # ni d'url passee par l'utilisateur
+		and !$url = _request('url') # ni d'url passee par l'utilisateur
 	) {
 		$url = generer_url_ecrire('accueil', '', true);
 	}

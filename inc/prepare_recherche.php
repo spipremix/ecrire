@@ -62,12 +62,12 @@ function inc_prepare_recherche_dist(
 
 	// si recherche n'est pas dans le contexte, on va prendre en globals
 	// ca permet de faire des inclure simple.
-	if (!isset($recherche) AND isset($GLOBALS['recherche'])) {
+	if (!isset($recherche) and isset($GLOBALS['recherche'])) {
 		$recherche = $GLOBALS['recherche'];
 	}
 
 	// traiter le cas {recherche?}
-	if ($cond AND !strlen($recherche)) {
+	if ($cond and !strlen($recherche)) {
 		return array(
 			"0 as points" /* as points */, /* where */
 			''
@@ -84,8 +84,8 @@ function inc_prepare_recherche_dist(
 		$row = sql_fetsel('UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(resultats.maj) AS fraicheur', 'spip_resultats AS resultats',
 			$where, '', 'fraicheur DESC', '0,1');
 		if (!$row
-			OR ($row['fraicheur'] > $delai_fraicheur)
-			OR (defined('_VAR_MODE') AND _VAR_MODE == 'recalcul')
+			or ($row['fraicheur'] > $delai_fraicheur)
+			or (defined('_VAR_MODE') and _VAR_MODE == 'recalcul')
 		) {
 			$rechercher = true;
 		}

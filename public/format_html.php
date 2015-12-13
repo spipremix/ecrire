@@ -66,8 +66,8 @@ function format_champ_html($nom, $boucle, $etoile, $avant, $apres, $args, $filtr
 
 	// Determiner si c'est un champ etendu, 
 
-	$s = ($avant OR $apres OR $filtres
-		OR (strpos($args, '(#') !== false));
+	$s = ($avant or $apres or $filtres
+		or (strpos($args, '(#') !== false));
 
 	return ($s ? "[$avant($nom)$apres]" : $nom);
 }
@@ -77,7 +77,7 @@ function format_critere_html($critere) {
 		$crit_s = '';
 		foreach ($crit as $operande) {
 			list($type, $valeur) = $operande;
-			if ($type == 'champ' AND $valeur[0] == '[') {
+			if ($type == 'champ' and $valeur[0] == '[') {
 				$valeur = substr($valeur, 1, -1);
 				if (preg_match(',^[(](#[^|]*)[)]$,sS', $valeur)) {
 					$valeur = substr($valeur, 1, -1);
@@ -101,14 +101,14 @@ function format_suite_html($args) {
 	for ($i = 0; $i < count($args)-1; $i++) {
 		list($texte, $type) = $args[$i];
 		list($texte2, $type2) = $args[$i+1];
-		if (!$texte OR !$texte2) {
+		if (!$texte or !$texte2) {
 			continue;
 		}
 		$c1 = substr($texte, -1);
 		if ($type2 !== 'texte') {
 			// si un texte se termine par ( et est suivi d'un champ
 			// ou assimiles, forcer la notation pleine
-			if ($c1 == '(' AND substr($texte2, 0, 1) == '#') {
+			if ($c1 == '(' and substr($texte2, 0, 1) == '#') {
 				$args[$i+1][0] = '[(' . $texte2 . ')]';
 			}
 		} else {
@@ -118,8 +118,8 @@ function format_suite_html($args) {
 			// si un champ ou assimiles est suivi d'un texte
 			// et si celui-ci commence par un caractere de champ
 			// forcer la notation pleine
-			if (($c1 == '}' AND substr(ltrim($texte2), 0, 1) == '|')
-				OR (preg_match('/[\w\d_*]/', $c1) AND preg_match('/^[\w\d_*{|]/', $texte2))
+			if (($c1 == '}' and substr(ltrim($texte2), 0, 1) == '|')
+				or (preg_match('/[\w\d_*]/', $c1) and preg_match('/^[\w\d_*{|]/', $texte2))
 			) {
 				$args[$i][0] = '[(' . $texte . ')]';
 			}

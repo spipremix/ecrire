@@ -123,20 +123,20 @@ function redirige_action_post($action, $arg, $ret, $gra, $corps, $att = '') {
  */
 function ajax_retour($corps, $content_type = null) {
 	$xml = false;
-	if (is_null($content_type) OR $content_type === true) {
+	if (is_null($content_type) or $content_type === true) {
 		$xml = true;
 		$content_type = 'text/html';
-	} elseif (!$content_type OR !is_string($content_type) OR strpos($content_type, '/') === false) {
+	} elseif (!$content_type or !is_string($content_type) or strpos($content_type, '/') === false) {
 		$content_type = 'text/html';
 	}
 
 	$e = "";
 	if (isset($_COOKIE['spip_admin'])
-		AND ((_request('var_mode') == 'debug') OR !empty($GLOBALS['tableau_des_temps']))
+		and ((_request('var_mode') == 'debug') or !empty($GLOBALS['tableau_des_temps']))
 	) {
 		$e = erreur_squelette();
 	}
-	if (isset($GLOBALS['transformer_xml']) OR (isset($GLOBALS['exec']) AND $GLOBALS['exec'] == 'valider_xml')) {
+	if (isset($GLOBALS['transformer_xml']) or (isset($GLOBALS['exec']) and $GLOBALS['exec'] == 'valider_xml')) {
 		$debut = _DOCTYPE_ECRIRE
 			. "<html><head><title>Debug Spip Ajax</title></head>"
 			. "<body><div>\n\n"
@@ -147,7 +147,7 @@ function ajax_retour($corps, $content_type = null) {
 	} else {
 		$c = $GLOBALS['meta']["charset"];
 		header('Content-Type: ' . $content_type . '; charset=' . $c);
-		$debut = (($xml AND strlen(trim($corps))) ? '<' . "?xml version='1.0' encoding='" . $c . "'?" . ">\n" : '');
+		$debut = (($xml and strlen(trim($corps))) ? '<' . "?xml version='1.0' encoding='" . $c . "'?" . ">\n" : '');
 		$fin = "";
 	}
 	echo $debut, $corps, $fin, $e;

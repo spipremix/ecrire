@@ -31,14 +31,14 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 $res = true;
 
 // Cas d'une page contenant du PHP :
-if (empty($page['process_ins']) OR $page['process_ins'] != 'html') {
+if (empty($page['process_ins']) or $page['process_ins'] != 'html') {
 
 	include_spip('inc/lang');
 
 	// restaurer l'etat des notes avant calcul
 	if (isset($page['notes'])
-		AND $page['notes']
-		AND $notes = charger_fonction("notes", "inc", true)
+		and $page['notes']
+		and $notes = charger_fonction("notes", "inc", true)
 	) {
 		$notes($page['notes'], 'restaurer_etat');
 	}
