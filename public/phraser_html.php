@@ -59,7 +59,7 @@ define('SQL_ARGS', '(\([^)]*\))');
 define('CHAMP_SQL_PLUS_FONC', '`?([A-Z_\/][A-Z_\/0-9.]*)' . SQL_ARGS . '?`?');
 
 // http://code.spip.net/@phraser_inclure
-function phraser_inclure($texte, $ligne, $result){
+function phraser_inclure($texte, $ligne, $result) {
 
 	while (preg_match(BALISE_INCLURE, $texte, $match)) {
 		$match = array_pad($match, 3, null);
@@ -98,7 +98,7 @@ function phraser_inclure($texte, $ligne, $result){
 }
 
 // http://code.spip.net/@phraser_polyglotte
-function phraser_polyglotte($texte, $ligne, $result){
+function phraser_polyglotte($texte, $ligne, $result) {
 
 	if (preg_match_all(BALISE_POLYGLOTTE, $texte, $m, PREG_SET_ORDER)) {
 		foreach ($m as $match) {
@@ -158,7 +158,7 @@ function phraser_polyglotte($texte, $ligne, $result){
  * @param array $result
  * @return array
  **/
-function phraser_idiomes($texte, $ligne, $result){
+function phraser_idiomes($texte, $ligne, $result) {
 	while (preg_match(BALISE_IDIOMES, $texte, $match)) {
 		$match = array_pad($match, 8, null);
 		$p = strpos($texte, $match[0]);
@@ -210,7 +210,7 @@ function phraser_idiomes($texte, $ligne, $result){
  * @param array $result
  * @return array
  **/
-function phraser_champs($texte, $ligne, $result){
+function phraser_champs($texte, $ligne, $result) {
 	while (preg_match("/" . NOM_DE_CHAMP . "/S", $texte, $match)) {
 		$p = strpos($texte, $match[0]);
 		// texte après la balise
@@ -260,7 +260,7 @@ function phraser_champs($texte, $ligne, $result){
 // on recommence tant qu'il y a des [...] en substituant a l'appel suivant
 
 // http://code.spip.net/@phraser_champs_etendus
-function phraser_champs_etendus($texte, $ligne, $result){
+function phraser_champs_etendus($texte, $ligne, $result) {
 	if ($texte === "") {
 		return $result;
 	}
@@ -279,7 +279,7 @@ function phraser_champs_etendus($texte, $ligne, $result){
 // Tres chevelu
 
 // http://code.spip.net/@phraser_args
-function phraser_args($texte, $fin, $sep, $result, &$pointeur_champ){
+function phraser_args($texte, $fin, $sep, $result, &$pointeur_champ) {
 	$texte = ltrim($texte);
 	while (($texte !== "") && strpos($fin, $texte[0]) === false) {
 		$result = phraser_arg($texte, $sep, $result, $pointeur_champ);
@@ -293,7 +293,7 @@ function phraser_args($texte, $fin, $sep, $result, &$pointeur_champ){
 }
 
 // http://code.spip.net/@phraser_arg
-function phraser_arg(&$texte, $sep, $result, &$pointeur_champ){
+function phraser_arg(&$texte, $sep, $result, &$pointeur_champ) {
 	preg_match(",^(\|?[^}{)|]*)(.*)$,ms", $texte, $match);
 	$suite = ltrim($match[2]);
 	$fonc = trim($match[1]);
@@ -430,7 +430,7 @@ function phraser_arg(&$texte, $sep, $result, &$pointeur_champ){
 
 
 // http://code.spip.net/@phraser_champs_exterieurs
-function phraser_champs_exterieurs($texte, $ligne, $sep, $nested){
+function phraser_champs_exterieurs($texte, $ligne, $sep, $nested) {
 	$res = array();
 	while (($p = strpos($texte, "%$sep")) !== false) {
 		if (!preg_match(',^%' . preg_quote($sep) . '([0-9]+)@,', substr($texte, $p), $m)) {
@@ -449,7 +449,7 @@ function phraser_champs_exterieurs($texte, $ligne, $sep, $nested){
 }
 
 // http://code.spip.net/@phraser_champs_interieurs
-function phraser_champs_interieurs($texte, $ligne, $sep, $result){
+function phraser_champs_interieurs($texte, $ligne, $sep, $result) {
 	$i = 0; // en fait count($result)
 	$x = "";
 
@@ -509,7 +509,7 @@ function phraser_champs_interieurs($texte, $ligne, $sep, $result){
 	}
 }
 
-function phraser_vieux(&$champ){
+function phraser_vieux(&$champ) {
 	$nom = $champ->nom_champ;
 	if ($nom == 'EMBED_DOCUMENT') {
 		if (!function_exists('phraser_vieux_emb')) {
@@ -569,7 +569,7 @@ function phraser_vieux(&$champ){
  *     Elle sera complété de la liste de ses critères
  * @return void
  **/
-function phraser_criteres($params, &$result){
+function phraser_criteres($params, &$result) {
 
 	$err_ci = ''; // indiquera s'il y a eu une erreur
 	$args = array();
@@ -742,7 +742,7 @@ function phraser_criteres($params, &$result){
 }
 
 // http://code.spip.net/@phraser_critere_infixe
-function phraser_critere_infixe($arg1, $arg2, $args, $op, $not, $cond){
+function phraser_critere_infixe($arg1, $arg2, $args, $op, $not, $cond) {
 	$args[0] = new Texte;
 	$args[0]->texte = $arg1;
 	$args[0] = array($args[0]);
@@ -757,7 +757,7 @@ function phraser_critere_infixe($arg1, $arg2, $args, $op, $not, $cond){
 	return $crit;
 }
 
-function public_phraser_html_dist($texte, $id_parent, &$boucles, $descr, $ligne = 1){
+function public_phraser_html_dist($texte, $id_parent, &$boucles, $descr, $ligne = 1) {
 
 	$all_res = array();
 
