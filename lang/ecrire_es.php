@@ -233,6 +233,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_message' => 'Ningún mensaje',
 	'info_aucun_rubrique' => 'Ninguna sección',
 	'info_aujourdhui' => 'hoy:',
+	'info_auteur_gere_rubriques' => 'Este autor gestiona las secciones siguientes :',
 	'info_auteur_gere_toutes_rubriques' => 'este autor gestiona <b>todas las secciones</b>',
 	'info_auteur_gere_toutes_rubriques_2' => 'yo gestiono <b>todas las secciones</b>',
 	'info_auteurs' => 'Autores',
@@ -599,7 +600,8 @@ Las traducciones están asociadas al original, en un color que indica su estado:
 	'mois_non_connu' => 'desconocido',
 
 	// N
-	'nouvelle_version_spip' => 'La versión @version@ de SPIP está disponible', # MODIF
+	'nouvelle_version_spip' => 'La versión @version@ de SPIP está disponible',
+	'nouvelle_version_spip_majeure' => 'Una nueva  versión SPIP @version@ está disponible',
 
 	// O
 	'onglet_contenu' => 'Contenido',

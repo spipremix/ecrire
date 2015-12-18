@@ -77,7 +77,7 @@
 		<traducteur nom="frederik" lien="http://trad.spip.net/auteur/frederik" />
 		<traducteur nom="Matthieu Marcillaud" lien="http://trad.spip.net/auteur/matthieu-marcillaud" />
 	</langue>
-	<langue code="es" url="http://trad.spip.net/tradlang_module/ecrire_?lang_cible=es" total="794" traduits="791" relire="0" modifs="1" nouveaux="2" pourcent="99.62">
+	<langue code="es" url="http://trad.spip.net/tradlang_module/ecrire_?lang_cible=es" total="794" traduits="794" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="alf" lien="http://trad.spip.net/auteur/alf" />
 		<traducteur nom="b_b" lien="http://trad.spip.net/auteur/b_b" />
 		<traducteur nom="dani" lien="http://trad.spip.net/auteur/dani" />
