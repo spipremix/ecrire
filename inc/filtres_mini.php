@@ -160,6 +160,9 @@ function protocole_implicite($url_absolue) {
 function liens_absolus($texte, $base = '') {
 	if (preg_match_all(',(<(a|link|image|img|script)\s[^<>]*(href|src)=[^<>]*>),imsS',
 		$texte, $liens, PREG_SET_ORDER)) {
+		if (!function_exists('extraire_attribut')) {
+			include_spip('inc/filtres');
+		}
 		foreach ($liens as $lien) {
 			foreach (array('href', 'src') as $attr) {
 				$href = extraire_attribut($lien[0], $attr);
