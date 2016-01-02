@@ -62,7 +62,7 @@
 	<langue code="eo" url="http://trad.spip.net/tradlang_module/spip?lang_cible=eo" total="636" traduits="625" relire="0" modifs="3" nouveaux="8" pourcent="98.27">
 		<traducteur nom="Matthieu Marcillaud" lien="http://trad.spip.net/auteur/matthieu-marcillaud" />
 	</langue>
-	<langue code="es" url="http://trad.spip.net/tradlang_module/spip?lang_cible=es" total="636" traduits="631" relire="0" modifs="1" nouveaux="4" pourcent="99.21">
+	<langue code="es" url="http://trad.spip.net/tradlang_module/spip?lang_cible=es" total="636" traduits="636" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="b_b" lien="http://trad.spip.net/auteur/b_b" />
 		<traducteur nom="dani" lien="http://trad.spip.net/auteur/dani" />
 		<traducteur nom="jotacese" lien="http://trad.spip.net/auteur/jotacese" />
