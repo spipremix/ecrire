@@ -600,7 +600,7 @@ e vi recounetà au sit.
 	'pass_nouveau_pass' => 'Mot de passa nouvèu',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Denembrança dóu mot de passa',
-	'pass_procedure_changer' => 'Per changà lou vouòstre mot de passa, deven en premié verificà la vouòstra identità. Per acò, endicàs l’adressa e-mail assouciada au vouòstre conte.', # MODIF
+	'pass_procedure_changer' => 'Per changà lou vouòstre mot de passa, endicàs l’adressa email assouciada au vouòstre conte.',
 	'pass_quitter_fenetre' => 'Quità aquesta fenèstra ',
 	'pass_rappel_login' => 'Renembrança: lo voastre identificant (login) es « @login@ ».',
 	'pass_recevoir_mail' => 'Receverès un e-mail que v’espliquerà couma retroubà lou vouòstre achès au sit.',
