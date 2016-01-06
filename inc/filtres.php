@@ -195,7 +195,16 @@ function version_svn_courante($dir) {
 	}
 
 	// version installee par SVN
-	if (lire_fichier($dir . '/.svn/entries', $c)
+	if (file_exists($dir . '/.svn/wc.db')) {
+		$db = new SQLite3($dir . '/.svn/wc.db');
+		$result = $db->query('SELECT changed_revision FROM nodes WHERE local_relpath = "" LIMIT 1');
+		if ($result) {
+			$row = $result->fetchArray();
+			if ($row['changed_revision'] != "") {
+				return -$row['changed_revision'];
+			}
+		}
+	} else if (lire_fichier($dir . '/.svn/entries', $c)
 		and (
 			(preg_match_all(
 					',committed-rev="([0-9]+)",', $c, $r1, PREG_PATTERN_ORDER)
@@ -301,6 +310,10 @@ function filtrer($filtre) {
 function filtre_set(&$Pile, $val, $key, $continue = null) {
 	$Pile['vars'][$key] = $val;
 
+	return $continue ? $val : '';
+}
+function filtre_setenv(&$Pile, $val, $key, $continue = null) {
+	$Pile[0][$key] = $val;
 	return $continue ? $val : '';
 }
 
