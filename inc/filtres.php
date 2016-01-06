@@ -195,7 +195,7 @@ function version_svn_courante($dir) {
 	}
 
 	// version installee par SVN
-	if (file_exists($dir . '/.svn/wc.db')) {
+	if (file_exists($dir . '/.svn/wc.db') && class_exists('SQLite3')) {
 		$db = new SQLite3($dir . '/.svn/wc.db');
 		$result = $db->query('SELECT changed_revision FROM nodes WHERE local_relpath = "" LIMIT 1');
 		if ($result) {
