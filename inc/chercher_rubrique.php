@@ -81,6 +81,9 @@ $GLOBALS['selecteur_rubrique'] = 'inc_chercher_rubrique_dist';
  **/
 function style_menu_rubriques($i) {
 
+	include_spip('inc/layer');
+	verif_butineur();
+
 	$espace = '';
 	if (preg_match(",mozilla,i", $GLOBALS['browser_name'])) {
 		$style = "padding-" . $GLOBALS['spip_lang_left'] . ": 16px; "
