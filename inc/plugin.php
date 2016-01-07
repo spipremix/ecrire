@@ -126,7 +126,7 @@ define('_EXTRAIRE_INTERVALLE', ',^[\[\(\]]([0-9.a-zRC\s\-]*)[;]([0-9.a-zRC\s\-\*
  * Teste si le numéro de version d'un plugin est dans un intervalle donné.
  *
  * Cette fonction peut être volontairement trompée (phase de développement) :
- * voir commentaire infra sur l'utilisation de la constante _DEV_PLUGINS
+ * voir commentaire infra sur l'utilisation de la constante _DEV_VERSION_SPIP_COMPAT
  *
  * @param string $intervalle
  *    Un intervalle entre 2 versions. ex: [2.0.0-dev;2.1.*]
@@ -152,13 +152,17 @@ function plugin_version_compatible($intervalle, $version, $avec_quoi = '') {
 	$minimum = $regs[1];
 	$maximum = $regs[2];
 
-	//  si une borne de compatibilité supérieure a été définie (dans
-	//  mes_options.php, sous la forme : define('_DEV_PLUGINS', '3.1.99');
+	//  si une version SPIP de compatibilité a été définie (dans
+	//  mes_options.php, sous la forme : define('_DEV_VERSION_SPIP_COMPAT', '3.1.0');
 	//  on l'utilise (phase de dev, de test...) mais *que* en cas de comparaison
 	//  avec la version de SPIP (ne nuit donc pas aux tests de necessite
 	//  entre plugins)
-	if (defined('_DEV_PLUGINS') && $avec_quoi == 'spip') {
-		$maximum = _DEV_PLUGINS . ']';
+	if (defined('_DEV_VERSION_SPIP_COMPAT') and $avec_quoi == 'spip' and $version !== _DEV_VERSION_SPIP_COMPAT) {
+		if (plugin_version_compatible($intervalle, _DEV_VERSION_SPIP_COMPAT, $avec_quoi)) {
+			return true;
+		}
+		// si pas de compatibilite avec _DEV_VERSION_SPIP_COMPAT, on essaye quand meme avec la vrai version
+		// cas du plugin qui n'est compatible qu'avec cette nouvelle version
 	}
 
 	$minimum_inc = $intervalle{0} == "[";
