@@ -41,7 +41,7 @@ function affiche_boutons_admin($contenu) {
 		. "' type='text/css' />\n";
 	if ($f = find_in_path('spip_admin_perso.css')) {
 		$css .= "<link rel='stylesheet' href='"
-			. url_absolue(direction_css($f)) . "' type='text/css' />\n";
+			. protocole_implicite(url_absolue(direction_css($f))) . "' type='text/css' />\n";
 	}
 
 	($pos = stripos($contenu, '</head>'))
