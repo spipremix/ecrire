@@ -219,6 +219,9 @@ function spip_htmlspecialchars($string, $flags = null, $encoding = 'ISO-8859-1',
 		}
 	}
 
+	if (PHP_VERSION_ID<50203) {
+		return htmlspecialchars($string, $flags, $encoding);
+	}
 	return htmlspecialchars($string, $flags, $encoding, $double_encode);
 }
 
@@ -239,5 +242,8 @@ function spip_htmlentities($string, $flags = null, $encoding = 'ISO-8859-1', $do
 		}
 	}
 
+	if (PHP_VERSION_ID<50203) {
+		return htmlentities($string, $flags, $encoding);
+	}
 	return htmlentities($string, $flags, $encoding, $double_encode);
 }
