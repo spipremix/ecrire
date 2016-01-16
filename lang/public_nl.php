@@ -12,10 +12,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// A
 	'accueil_site' => 'Homepagina',
 	'article' => 'Artikel',
-	'articles' => 'Artikels',
-	'articles_auteur' => 'Artikels van deze auteur',
-	'articles_populaires' => 'Meest bekeken artikels',
-	'articles_rubrique' => 'Artikels van deze rubriek',
+	'articles' => 'Artikelen',
+	'articles_auteur' => 'Artikelen van deze auteur',
+	'articles_populaires' => 'Meest bekeken artikelen',
+	'articles_rubrique' => 'Artikelen in deze rubriek',
 	'aucun_article' => 'Op dit adres is geen artikel te vinden',
 	'aucun_auteur' => 'Op dit adres is geen auteur te vinden',
 	'aucun_site' => 'Op dit adres is geen site te vinden',
@@ -33,25 +33,25 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// C
 	'commenter_site' => 'Commentaar geven op de site',
 	'contact' => 'Contact',
-	'copie_document_impossible' => 'Onmogelijk om het document te kopiëren',
+	'copie_document_impossible' => 'Het is niet mogelijk het document te kopiëren',
 
 	// D
 	'date' => 'Datum',
 	'dernier_ajout' => 'Laatste toevoeging',
 	'dernieres_breves' => 'Laatste nieuwsberichten',
-	'derniers_articles' => 'Laatste artikels',
+	'derniers_articles' => 'Laatste artikelen',
 	'derniers_commentaires' => 'Laatste commentaren',
 	'derniers_messages_forum' => 'Laatst gepubliceerde berichten in het forum',
 
 	// E
 	'edition_mode_texte' => 'Uitgave in tekstmodus van',
-	'en_reponse' => 'Als antwoord op :',
+	'en_reponse' => 'Als antwoord op:',
 	'en_resume' => 'Samengevat',
 	'envoyer_message' => 'Een bericht sturen',
 	'espace_prive' => 'Privé-site',
 
 	// F
-	'formats_acceptes' => 'Aanvaarde formaten : @formats@.',
+	'formats_acceptes' => 'Toegelaten formaten: @formats@.',
 
 	// H
 	'hierarchie_site' => 'Structuur van de site',
@@ -60,7 +60,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'jours' => 'dagen',
 
 	// L
-	'lien_connecter' => 'Zich aansluiten',
+	'lien_connecter' => 'Zich aanmelden',
 
 	// M
 	'meme_auteur' => 'Van dezelfde auteur',
@@ -68,7 +68,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'memes_auteurs' => 'Van dezelfde auteurs',
 	'message' => 'Bericht',
 	'messages_forum' => 'Berichten',
-	'messages_recents' => 'Meest recente berichten van de forums',
+	'messages_recents' => 'Meest recente forumberichten',
 	'mots_clef' => 'Trefwoord',
 	'mots_clefs' => 'Trefwoorden',
 	'mots_clefs_meme_groupe' => 'Trefwoorden van dezelfde groep',
@@ -78,7 +78,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'nom' => 'Naam',
 	'nouveautes' => 'Nieuwigheden',
 	'nouveautes_web' => 'Nieuwigheden op het Web',
-	'nouveaux_articles' => 'Nieuwe artikels',
+	'nouveaux_articles' => 'Nieuwe artikelen',
 	'nouvelles_breves' => 'Nieuwe nieuwsberichten',
 
 	// P
@@ -89,7 +89,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'plan_site' => 'Overzicht van de site',
 	'popularite' => 'Populariteit',
 	'poster_message' => 'Een bericht plaatsen',
-	'proposer_site' => 'Je kan voorstellen een site in deze rubriek op te nemen :',
+	'proposer_site' => 'Je kan voorstellen een site in deze rubriek op te nemen:',
 
 	// R
 	'repondre_article' => 'Dit artikel beantwoorden',
@@ -111,13 +111,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'syndiquer_site' => 'Nieuws overnemen van de hele site',
 
 	// T
-	'texte_lettre_information' => 'Ziehier de nieuwsbrief van de site',
-	'texte_lettre_information_2' => 'Deze brief geeft de laatste gepubliceerde sinds',
+	'texte_lettre_information' => 'Dit is de nieuwsbrief van de site',
+	'texte_lettre_information_2' => 'Deze nieuwsbrief toont de publicaties vanaf',
 
 	// V
 	'ver_imprimer' => 'Afdrukversie',
 	'voir_en_ligne' => 'Online bekijken',
-	'voir_squelette' => 'het skelet van deze bladzijde zien'
+	'voir_squelette' => 'het skelet van deze bladzijde bekijken'
 );
 
 ?>
