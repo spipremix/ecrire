@@ -30,7 +30,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Alternativamente, não utilize o suporte LDAP para importar utilizadores.',
 	'avis_deplacement_rubrique' => 'Atenção ! Esta rubrica contém @contient_breves@ informação@scb@ : se a deslocar, por favor confirme-o nesta caixa.',
 	'avis_erreur_connexion_mysql' => 'Erro de ligação SQL',
-	'avis_espace_interdit' => '<b>Espaço interdito</b><p>SPIP já está instalado.',
+	'avis_espace_interdit' => '<b>Espaço interdito</b><p>SPIP já está instalado.', # MODIF
 	'avis_lecture_noms_bases_1' => 'O programa de instalação não conseguiu ler os nomes das bases de dados instaladas. ',
 	'avis_lecture_noms_bases_2' => 'Ou nenhuma base de dados está disponível, ou a função que permite listá-las foi desactivada
 por razões de segurança (o que é o caso em muitos serviços de hospedagem).  ',

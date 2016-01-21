@@ -27,7 +27,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Alternativt kan du välja att inte använda LDAP stöd för att importera användare.',
 	'avis_deplacement_rubrique' => 'Varning! Den här avdelningen innehåller @contient_breves@ notiser@scb@: om du flyttar den, markera i kryssrutan för att bekräfta.',
 	'avis_erreur_connexion_mysql' => 'Fel på SQL-förbindelsen',
-	'avis_espace_interdit' => '<b>Förbjudet område</b><p>SPIP är redan installerat.',
+	'avis_espace_interdit' => '<b>Förbjudet område</b><p>SPIP är redan installerat.', # MODIF
 	'avis_lecture_noms_bases_1' => 'Installerings-scriptet kunde inte läsa namnen på de installerade databaserna.',
 	'avis_lecture_noms_bases_2' => 'Antingen finns det ingen tillgänglig databas eller så är funktionen som listar
  databaser inaktiverad av säkerhetsskäl (det är fallet hos många webbvärdar).',

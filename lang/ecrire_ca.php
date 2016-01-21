@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Alternativament, no utilitzeu el support LDAP per a importar els usuaris.',
 	'avis_deplacement_rubrique' => 'Atenció ! Aquesta secció conté @contient_breves@ breu@scb@ : si la moveu, assenyaleu-ho en aquesta casella de confirmació.',
 	'avis_erreur_connexion_mysql' => 'Error de connexió SQL',
-	'avis_espace_interdit' => '<b>Zona prohibida</b><div>SPIP ja està instal·lat.</div>',
+	'avis_espace_interdit' => '<b>Zona prohibida</b><div>SPIP ja està instal·lat.</div>', # MODIF
 	'avis_lecture_noms_bases_1' => 'El programa d’instal·lació no ha pogut llegir els noms de les bases de dades instal·lades.',
 	'avis_lecture_noms_bases_2' => 'O bé cap base de dades no està disponible, o bé la funció que permet de llistar les bases ha estat
 desactivada per raons de seguretat (cosa normal en molts proveïdors d’hostatge).',

@@ -30,7 +30,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Nie używaj wsparcia LDAP do importu użytkowników.',
 	'avis_deplacement_rubrique' => 'Uwaga! Ten dział zawiera @contient_breves@ news@scb@: jeśli chcesz go przenieść, proszę zaznacz to okienko.',
 	'avis_erreur_connexion_mysql' => 'Błąd połączenia z SQL', # MODIF
-	'avis_espace_interdit' => '<b>Dostęp zabroniony</b><div>SPIP jest już zainstalowany.</div>',
+	'avis_espace_interdit' => '<b>Dostęp zabroniony</b><div>SPIP jest już zainstalowany.</div>', # MODIF
 	'avis_lecture_noms_bases_1' => 'Program instalacyjny nie może odczytać nazw instalowanych baz danych.',
 	'avis_lecture_noms_bases_2' => 'Żadna baza danych nie jest dostępna, lub funkcja listingu baz danych nie działa
    ze względów bezpieczeństwa(co jest częstym przypadkiem wielu hostów).',

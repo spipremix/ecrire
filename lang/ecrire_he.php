@@ -28,7 +28,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'לחלופין, אל תשתמש בתמיכת אל.די.איי.פי  לייבא משתמשים ',
 	'avis_deplacement_rubrique' => ' אזהרה ! המדור הזה כולל @contient_breves@ brève@scb@ : אם הנך מזיז אותו, וודא שהנך מסמן את התיבה הזאת לאישור.',
 	'avis_erreur_connexion_mysql' => 'שגיאת התחברות לאס.קיו.אל',
-	'avis_espace_interdit' => '<b>Forbidden area</b><p>אס.פי.אי.פי כבר מותקן',
+	'avis_espace_interdit' => '<b>Forbidden area</b><p>אס.פי.אי.פי כבר מותקן', # MODIF
 	'avis_lecture_noms_bases_1' => 'תוכנת ההתקנה לא יכולה לקרוא את שמות בסיסי הנתונים המותקנים ',
 	'avis_lecture_noms_bases_2' => 'או שאף בסיס אינו נגיש , או שהפונקציה המאפשרת לערוך רשימה של הבסיסים אינה פעילה יותר
  מסיבות בטיחות (מקרה הקורה אצל הרבה שרתי אכסון).',

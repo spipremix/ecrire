@@ -26,7 +26,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Ann itilize pa sipò LDAP pou gen enpòt itilizatè yo.',
 	'avis_deplacement_rubrique' => 'Atansyon ! Ribwik la @contient_breves@ brève@scb@ : si w déplas ali, mési ekri yon krwa po konfirmasyon.',
 	'avis_erreur_connexion_mysql' => 'Erè ak koneksyon SQL', # MODIF
-	'avis_espace_interdit' => '<b>Espas entèdi</b><div>SPIP se déja instalé.</div>',
+	'avis_espace_interdit' => '<b>Espas entèdi</b><div>SPIP se déja instalé.</div>', # MODIF
 	'avis_lecture_noms_bases_1' => 'Pwogwam pou enstalasyon, li te pa kap fè lekti kouman ki rele bazdone yo, yo ki deja enstale.',
 	'avis_lecture_noms_bases_2' => 'Ouswa okenn bazdone se disponib, oswa fonksyon-nan ki pèmè fé lan lis tout bazdone te kraze akòz sekirite
   (genyen anpil lebergè te chwazi ki se ka-a).',

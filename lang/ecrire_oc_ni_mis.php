@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'D’un biais alternatiéu, noun utilisàs lou supouart LDAP per impourtà d’utilisaire.',
 	'avis_deplacement_rubrique' => 'Mèfi ! Aquela rùbrica counten @contient_breves@ brèva @scb@ : se la desplaçàs, vourguès ben entacà aquela casa de counfirmacioun.',
 	'avis_erreur_connexion_mysql' => 'Errour de counessioun SQL',
-	'avis_espace_interdit' => '<b>Espaci prouhibit</b><div>SPIP es ja instalat.</div>',
+	'avis_espace_interdit' => '<b>Espaci prouhibit</b><div>SPIP es ja instalat.</div>', # MODIF
 	'avis_lecture_noms_bases_1' => 'Lou prougrama d’instalacioun a pas pouscut legì lu noum dei basa de dounada instaladi.',
 	'avis_lecture_noms_bases_2' => 'Sìa minga de basa es dispounibla, sìa la founcioun que permete de listà li basa es estada desativada
 		per de rasoun de segurtà (cen qu’es lou cas de plusiur aubergadour).',

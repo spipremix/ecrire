@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'وإلا، لا تستخدم دعم LDAP لجلب المستخدمين.',
 	'avis_deplacement_rubrique' => 'تحذير! يحتوي هذا القسم على @contient_breves@ خبر@scb@: إذا قمت بنقله، الرجاء تأشير هذا الخيار لتأكيد طلبك.',
 	'avis_erreur_connexion_mysql' => 'خطأ اتصالي SQL',
-	'avis_espace_interdit' => '<b>مجال ممنوع</b><div>SPIP مثبت مسبقاً.</div>',
+	'avis_espace_interdit' => '<b>مجال ممنوع</b><div>SPIP مثبت مسبقاً.</div>', # MODIF
 	'avis_lecture_noms_bases_1' => 'لم يتمكن المثبت من قراءة أسماء قواعد البيانات المثبتة.',
 	'avis_lecture_noms_bases_2' => 'إما لا توجد قاعدة بيانات متوافرة أو تم ايقاف وظيفة عرض قواعد البيانات
 لأسباب أمنية (هكذا الحال لدى العديد من المضيفين).',

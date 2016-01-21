@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Sie können Benutzer auch ohne LDAP-Support importieren.',
 	'avis_deplacement_rubrique' => 'Achtung! diese Rubrik enthält @contient_breves@ Meldungen@scb@: wenn Sie Rubrik verschieben wollen, markieren Sie bitte zur Bestätigung dieses Kästchen.',
 	'avis_erreur_connexion_mysql' => 'Verbindungsfehler (SQL)',
-	'avis_espace_interdit' => '<b>Gesperrter Bereich</b><div>SPIP ist bereits installiert.</div>',
+	'avis_espace_interdit' => '<b>Gesperrter Bereich</b><div>SPIP ist bereits installiert.</div>', # MODIF
 	'avis_lecture_noms_bases_1' => 'Das Installationsprogramm konnte die Namen der vorhandenen Datenbanken nicht lesen.',
 	'avis_lecture_noms_bases_2' => 'Entweder ist keine Datenbank vorhanden oder die Funktion zum Auflisten der Datenbanken ist aus Sciherheitsgründen abgeschaltet
 (Das ist bei vielen Webhostern der Fall).',
