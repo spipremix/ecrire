@@ -1095,7 +1095,7 @@ function need_proxy($host, $http_proxy = null, $http_noproxy = null) {
 		$http_proxy = isset($GLOBALS['meta']["http_proxy"]) ? $GLOBALS['meta']["http_proxy"] : null;
 	}
 	if (is_null($http_noproxy)) {
-		$http_noproxy = isset($GLOBALS['meta']["http_noproxy"]) ? $GLOBALS['meta']["http_proxy"] : null;
+		$http_noproxy = isset($GLOBALS['meta']["http_noproxy"]) ? $GLOBALS['meta']["http_noproxy"] : null;
 	}
 
 	$domain = substr($host, strpos($host, '.'));
