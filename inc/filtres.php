@@ -5755,7 +5755,7 @@ function produire_fond_statique($fond, $contexte = array(), $options = array(), 
 			or md5_file($filename) !== md5_file($filename . ".last")
 		) {
 			@copy($filename . ".last", $filename);
-			spip_clearstatcache(true, $filename); // eviter que PHP ne reserve le vieux timestamp
+			clearstatcache(true, $filename); // eviter que PHP ne reserve le vieux timestamp
 		}
 	}
 

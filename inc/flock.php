@@ -451,22 +451,6 @@ function spip_unlink($f) {
 }
 
 /**
- * clearstatcache adapte a la version PHP
- *
- * @param bool $clear_realpath_cache
- * @param null $filename
- */
-function spip_clearstatcache($clear_realpath_cache = false, $filename = null) {
-	if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
-		// Below PHP 5.3, clearstatcache does not accept any function parameters.
-		return clearstatcache();
-	} else {
-		return clearstatcache($clear_realpath_cache, $filename);
-	}
-
-}
-
-/**
  * Invalidates a PHP file from any active opcode caches.
  *
  * If the opcode cache does not support the invalidation of individual files,
@@ -477,7 +461,7 @@ function spip_clearstatcache($clear_realpath_cache = false, $filename = null) {
  *   The absolute path of the PHP file to invalidate.
  */
 function spip_clear_opcode_cache($filepath) {
-	spip_clearstatcache(true, $filepath);
+	clearstatcache(true, $filepath);
 
 	// Zend OPcache
 	if (function_exists('opcache_invalidate')) {

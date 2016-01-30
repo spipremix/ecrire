@@ -57,7 +57,7 @@ function spip_setcookie($name = '', $value = '', $expire = 0, $path = 'AUTO', $d
 	#spip_log("cookie('$name', '$value', '$expire', '$path', '$domain', '$secure', '$httponly'");
 
 	$a =
-		($httponly and strnatcmp(phpversion(), '5.2.0') >= 0) ?
+		$httponly ?
 			@setcookie($name, $value, $expire, $path, $domain, $secure, $httponly)
 			: ($secure ?
 			@setcookie($name, $value, $expire, $path, $domain, $secure)

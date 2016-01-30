@@ -449,13 +449,6 @@ function alertes_auteur($id_auteur) {
 
 	$alertes = array();
 
-	// si on n'est plus compatible avec php4 : le dire a tous ceux qui passent
-	// dans l'espace prive
-	if (version_compare(phpversion(), _PHP_MIN) == -1) {
-		$alertes[] = _L('SPIP n&#233;cessite PHP&nbsp;@min@, votre version est @version@.',
-			array('min' => _PHP_MIN, 'version' => phpversion()));
-	}
-
 	if (isset($GLOBALS['meta']['message_crash_tables'])
 		and autoriser('detruire', null, null, $id_auteur)
 	) {

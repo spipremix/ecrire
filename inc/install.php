@@ -167,16 +167,8 @@ function tester_compatibilite_hebergement() {
 	$err = array();
 
 	$p = phpversion();
-	if (preg_match(',^([0-9]+)\.([0-9]+)\.([0-9]+),', $p, $regs)) {
-		$php = array($regs[1], $regs[2], $regs[3]);
-		$m = '5.1.0';
-		$min = explode('.', $m);
-		if ($php[0] < $min[0]
-			or ($php[0] == $min[0] and $php[1] < $min[1])
-			or ($php[0] == $min[0] and $php[1] == $min[1] and $php[2] < $min[2])
-		) {
-			$err[] = _T('install_php_version', array('version' => $p, 'minimum' => $m));
-		}
+	if (version_compare($p, _PHP_MIN, '<'))) {
+		$err[] = _T('install_php_version', array('version' => $p, 'minimum' => _PHP_MIN));
 	}
 
 	// Si on n'a pas la bonne version de PHP, c'est la fin

@@ -2295,12 +2295,6 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 		define('_LANGUE_PAR_DEFAUT', 'fr');
 	}
 
-	// PHP_VERSION_ID dispo depuis PHP 5.2.7
-	if (!defined('PHP_VERSION_ID')) {
-	   $version = explode('.',PHP_VERSION);
-	   define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
-	}
-
 	//
 	// Module de lecture/ecriture/suppression de fichiers utilisant flock()
 	// (non surchargeable en l'etat ; attention si on utilise include_spip()
@@ -2326,11 +2320,6 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 	spip_desinfecte($_POST);
 	spip_desinfecte($_COOKIE);
 	spip_desinfecte($_REQUEST);
-
-	// Par ailleurs on ne veut pas de magic_quotes au cours de l'execution
-	if (PHP_VERSION_ID<50300) {
-		set_magic_quotes_runtime(0);
-	}
 
 	// Si les variables sont passees en global par le serveur,
 	// il faut faire quelques verifications de base
