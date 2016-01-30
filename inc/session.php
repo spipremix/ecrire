@@ -628,7 +628,7 @@ function spip_php_session_start() {
  **/
 function is_php_session_started() {
 	if (php_sapi_name() !== 'cli') {
-		if (version_compare(phpversion(), '5.4.0', '>=')) {
+		if (PHP_VERSION_ID >= 50400) {
 			return session_status() === PHP_SESSION_ACTIVE ? true : false;
 		} else {
 			return session_id() === '' ? false : true;
