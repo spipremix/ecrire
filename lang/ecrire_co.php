@@ -29,7 +29,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'O sinnò, ùn aduprate micca u supportu LDAP per impurtà utilizatori.',
 	'avis_deplacement_rubrique' => 'Attenti ! Sta rùbbrica cuntene @contient_breves@ dispacciu/i : Sè vo a spiazzate, spuntate puru sta casella da cunfirmà.',
 	'avis_erreur_connexion_mysql' => 'Errore di cunnessione SQL',
-	'avis_espace_interdit' => '<b>Spaziu interdettu</b><div>Hè digià stallatu SPIP.</div>', # MODIF
+	'avis_espace_interdit' => '<b>Spaziu interdettu</b> <div>Hè digià stallatu SPIP.</div>',
 	'avis_lecture_noms_bases_1' => 'U prugrammu di stallazione ùn hà pussutu leghje i nomi di e base stallate nant’à u servore.',
 	'avis_lecture_noms_bases_2' => 'Sia ùn hè dispunìbule nisuna basa di dati, sia a funzione chì permette d’accede à e base hè
 	stata disattivata per ragioni di sicurezza (stu casu hè abbastanza spartu).',
