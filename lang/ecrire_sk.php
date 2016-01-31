@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Prípadne nevyužívajte podporu LDAP na import používateľov.',
 	'avis_deplacement_rubrique' => 'Pozor! V tejto rubrike je @contient_breves@ novinka @scb@: ak ju presuniete, potvrďte to, prosím,  označením tohto políčka.',
 	'avis_erreur_connexion_mysql' => 'Chyba pripojenia k SQL',
-	'avis_espace_interdit' => '<b>Zakázaná zóna</b><div>SPIP je už nainštalovaný.</div>', # MODIF
+	'avis_espace_interdit' => '<b>Zakázaná zóna</b> <div>SPIP je už nainštalovaný.</div>',
 	'avis_lecture_noms_bases_1' => 'Inštalátor nevedel prečítať názov žiadnej z nainštalovaných databáz.',
 	'avis_lecture_noms_bases_2' => 'Buď nie je dostupná žiadna databáza, alebo bola funkcia, ktorá umožňuje vymenovanie databáz, deaktivovaná
   z bezpečnostných dôvodov (čo je prípad mnohých hostingov).',
