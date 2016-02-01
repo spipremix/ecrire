@@ -15,7 +15,8 @@
 		<traducteur nom="fa_b" lien="http://trad.spip.net/auteur/fa_b" />
 		<traducteur nom="kerivo" lien="http://trad.spip.net/auteur/kerivo" />
 	</langue>
-	<langue code="bs" url="http://trad.spip.net/tradlang_module/spip?lang_cible=bs" total="636" traduits="465" relire="0" modifs="42" nouveaux="129" pourcent="73.11">
+	<langue code="bs" url="http://trad.spip.net/tradlang_module/spip?lang_cible=bs" total="636" traduits="466" relire="0" modifs="42" nouveaux="128" pourcent="73.27">
+		<traducteur nom="kent1" lien="http://trad.spip.net/auteur/kent1" />
 	</langue>
 	<langue code="ca" url="http://trad.spip.net/tradlang_module/spip?lang_cible=ca" total="636" traduits="629" relire="1" modifs="2" nouveaux="4" pourcent="98.90">
 		<traducteur nom="laura" lien="http://trad.spip.net/auteur/laura" />
