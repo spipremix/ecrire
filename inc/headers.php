@@ -197,7 +197,7 @@ function http_status($status) {
 		503 => '503 Service Unavailable'
 	);
 
-	if ($GLOBALS['REDIRECT_STATUS'] && $GLOBALS['REDIRECT_STATUS'] == $status) {
+	if (!empty($GLOBALS['REDIRECT_STATUS']) && $GLOBALS['REDIRECT_STATUS'] == $status) {
 		return;
 	}
 
