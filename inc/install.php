@@ -221,30 +221,20 @@ function tester_compatibilite_hebergement() {
 }
 
 
-// Une fonction pour faciliter la recherche du login (superflu ?)
-// http://code.spip.net/@login_hebergeur
+/** 
+ * Faciliter la recherche du login d'installation en fonction de certains hébergeurs connus
+ * 
+ * @note superflu ??
+ */
 function login_hebergeur() {
-
 	$base_hebergeur = 'localhost'; # par defaut
 
-	// Lycos (ex-Multimachin)
-	if ($GLOBALS['HTTP_X_HOST'] == 'membres.lycos.fr') {
-		preg_match(',^/([^/]*),', $GLOBALS['REQUEST_URI'], $regs);
+	// Free
+	if (preg_match(',(.*)\.free\.fr$,', $_SERVER['SERVER_NAME'], $regs)) {
+		$base_hebergeur = 'sql.free.fr';
 		$login_hebergeur = $regs[1];
-	} // Altern
-	else {
-		if (preg_match(',altern\.com$,', $GLOBALS['SERVER_NAME'])) {
-			preg_match(',([^.]*\.[^.]*)$,', $GLOBALS['HTTP_HOST'], $regs);
-			$login_hebergeur = preg_replace('[^\w\d]', '_', $regs[1]);
-		} // Free
-		else {
-			if (preg_match(',(.*)\.free\.fr$,', $GLOBALS['SERVER_NAME'], $regs)) {
-				$base_hebergeur = 'sql.free.fr';
-				$login_hebergeur = $regs[1];
-			} else {
-				$login_hebergeur = '';
-			}
-		}
+	} else {
+		$login_hebergeur = '';
 	}
 
 	return array($base_hebergeur, $login_hebergeur);
