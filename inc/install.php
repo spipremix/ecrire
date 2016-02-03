@@ -167,7 +167,7 @@ function tester_compatibilite_hebergement() {
 	$err = array();
 
 	$p = phpversion();
-	if (version_compare($p, _PHP_MIN, '<'))) {
+	if (version_compare($p, _PHP_MIN, '<')) {
 		$err[] = _T('install_php_version', array('version' => $p, 'minimum' => _PHP_MIN));
 	}
 
