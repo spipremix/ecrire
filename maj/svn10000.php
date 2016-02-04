@@ -654,11 +654,12 @@ $GLOBALS['maj'][19268] = array(
  **/
 function supprimer_toutes_sessions() {
 	spip_log("supprimer sessions auteur");
-	$dir = opendir(_DIR_SESSIONS);
-	while (($f = readdir($dir)) !== false) {
-		spip_unlink(_DIR_SESSIONS . $f);
-		if (time() >= _TIME_OUT) {
-			return;
+	if ($dir = opendir(_DIR_SESSIONS)) {
+		while (($f = readdir($dir)) !== false) {
+			spip_unlink(_DIR_SESSIONS . $f);
+			if (time() >= _TIME_OUT) {
+				return;
+			}
 		}
 	}
 }
@@ -674,18 +675,19 @@ $GLOBALS['maj'][21676] = array(
 function ranger_cache_gd2() {
 	spip_log("ranger_cache_gd2");
 	$base = _DIR_VAR . "cache-gd2/";
-	$dir = opendir($base);
-	while (($f = readdir($dir)) !== false) {
-		if (!is_dir($base . $f) and strncmp($f, ".", 1) !== 0
-			and preg_match(",[0-9a-f]{32}\.\w+,", $f)
-		) {
-			$sub = substr($f, 0, 2);
-			$sub = sous_repertoire($base, $sub);
-			@rename($base . $f, $sub . substr($f, 2));
-			@unlink($base . $f); // au cas ou le rename a foire (collision)
-		}
-		if (time() >= _TIME_OUT) {
-			return;
+	if ($dir = opendir($base)) {
+		while (($f = readdir($dir)) !== false) {
+			if (!is_dir($base . $f) and strncmp($f, ".", 1) !== 0
+				and preg_match(",[0-9a-f]{32}\.\w+,", $f)
+			) {
+				$sub = substr($f, 0, 2);
+				$sub = sous_repertoire($base, $sub);
+				@rename($base . $f, $sub . substr($f, 2));
+				@unlink($base . $f); // au cas ou le rename a foire (collision)
+			}
+			if (time() >= _TIME_OUT) {
+				return;
+			}
 		}
 	}
 }
