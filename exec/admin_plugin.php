@@ -297,7 +297,7 @@ function liste_librairies() {
 	$libs = array();
 	foreach (array_reverse(creer_chemin()) as $d) {
 		if (is_dir($dir = $d . 'lib/')
-			and $t = @opendir($dir)
+			and $t = opendir($dir)
 		) {
 			while (($f = readdir($t)) !== false) {
 				if ($f[0] != '.'

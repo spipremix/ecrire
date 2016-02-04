@@ -76,7 +76,7 @@ function fast_find_plugin_dirs($dir, $max_prof = 100) {
 	}
 
 	$subdirs = array();
-	if (@is_dir($dir) and is_readable($dir) and $d = @opendir($dir)) {
+	if (@is_dir($dir) and is_readable($dir) and $d = opendir($dir)) {
 		while (($f = readdir($d)) !== false) {
 			if ($f[0] != '.' # ignorer . .. .svn etc
 				and $f != 'CVS'

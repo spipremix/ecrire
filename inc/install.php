@@ -354,7 +354,7 @@ function fieldset_champs($champs = array()) {
 function install_select_serveur() {
 	$options = array();
 	$dir = _DIR_RESTREINT . 'req/';
-	$d = @opendir($dir);
+	$d = opendir($dir);
 	if (!$d) {
 		return array();
 	}

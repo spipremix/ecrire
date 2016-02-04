@@ -75,7 +75,7 @@ function action_calculer_taille_cache_dist($arg = null) {
  * @return int Taille en octets
  */
 function calculer_taille_dossier($dir) {
-	$handle = @opendir($dir);
+	$handle = opendir($dir);
 	if (!$handle) {
 		return 0;
 	}

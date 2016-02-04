@@ -100,15 +100,16 @@ function creer_repertoire_documents($ext) {
  * @param string $nom
  */
 function effacer_repertoire_temporaire($nom) {
-	$d = opendir($nom);
-	while (($f = readdir($d)) !== false) {
-		if (is_file("$nom/$f")) {
-			spip_unlink("$nom/$f");
-		} else {
-			if ($f <> '.' and $f <> '..'
-				and is_dir("$nom/$f")
-			) {
-				effacer_repertoire_temporaire("$nom/$f");
+	if ($d = opendir($nom)) {
+		while (($f = readdir($d)) !== false) {
+			if (is_file("$nom/$f")) {
+				spip_unlink("$nom/$f");
+			} else {
+				if ($f <> '.' and $f <> '..'
+					and is_dir("$nom/$f")
+				) {
+					effacer_repertoire_temporaire("$nom/$f");
+				}
 			}
 		}
 	}

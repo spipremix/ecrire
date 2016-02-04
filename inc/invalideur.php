@@ -50,7 +50,7 @@ if (!defined('_AGE_CACHE_ATIME')) {
 function nombre_de_fichiers_repertoire($dir, $nb_estim_taille = 20) {
 	$taille = 0; // mesurer la taille de N fichiers au hasard dans le repertoire
 	$nb = $nb_estim_taille;
-	if (!$h = @opendir($dir)) {
+	if (!$h = opendir($dir)) {
 		return false;
 	}
 	$total = 0;
@@ -84,7 +84,7 @@ function taille_du_cache() {
 	$time = $GLOBALS['meta']['cache_mark'];
 	for ($i=0; $i < 256; $i++) {
 		$dir = _DIR_CACHE.sprintf('%02s', dechex($i));
-		if (@is_dir($dir) AND is_readable($dir) AND $d = @opendir($dir)) {
+		if (@is_dir($dir) AND is_readable($dir) AND $d = opendir($dir)) {
 			while (($f = readdir($d)) !== false) {
 				if (preg_match(',^[[0-9a-f]+\.cache$,S', $f) AND $a = stat("$dir/$f")) {
 					$n++;
@@ -178,7 +178,7 @@ function suivre_invalideur($cond, $modif = true) {
  *     Nombre de fichiers supprimés
  **/
 function purger_repertoire($dir, $options = array()) {
-	$handle = @opendir($dir);
+	$handle = opendir($dir);
 	if (!$handle) {
 		return;
 	}

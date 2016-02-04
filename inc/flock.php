@@ -673,7 +673,7 @@ function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs =
 		$dir = '.';
 	}
 
-	if (@is_dir($dir) and is_readable($dir) and $d = @opendir($dir)) {
+	if (@is_dir($dir) and is_readable($dir) and $d = opendir($dir)) {
 		while (($f = readdir($d)) !== false && ($nbfiles < $maxfiles)) {
 			if ($f[0] != '.' # ignorer . .. .svn etc
 				and $f != 'CVS'
