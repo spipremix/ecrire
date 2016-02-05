@@ -78,17 +78,31 @@ function nombre_de_fichiers_repertoire($dir, $nb_estim_taille = 20) {
  * @return int Taille approximative en octets
  **/
 function taille_du_cache() {
-	$total = 0;
-	$taille = 0;
-	for ($i = 0; $i < 16; $i++) {
-		$l = dechex($i);
-		$dir = sous_repertoire(_DIR_CACHE, $l);
-		list($n, $s) = nombre_de_fichiers_repertoire($dir);
-		$total += $n;
-		$taille += $s;
+	# check dirs until we reach > 500 files
+	$t = 0;
+	$n = 0;
+	$time = $GLOBALS['meta']['cache_mark'];
+	for ($i=0; $i < 256; $i++) {
+		$dir = _DIR_CACHE.sprintf('%02s', dechex($i));
+		if (@is_dir($dir) AND is_readable($dir) AND $d = @opendir($dir)) {
+			while (($f = readdir($d)) !== false) {
+				if (preg_match(',^[[0-9a-f]+\.cache$,S', $f) AND $a = stat("$dir/$f")) {
+					$n++;
+					if ($a['mtime'] >= $time) {
+						if ($a['blocks'] > 0) {
+							$t += 512*$a['blocks'];
+						} else {
+							$t += $a['size'];
+						}
+					}
+				}
+			}
+		}
+		if ($n > 500) {
+			return intval(256*$t/(1+$i));
+		}
 	}
-
-	return $total * $taille / 16;
+	return $t;
 }
 
 
