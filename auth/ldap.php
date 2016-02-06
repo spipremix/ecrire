@@ -166,9 +166,9 @@ function auth_ldap_search($login, $pass, $checkpass = true, $serveur = '') {
 		return '';
 	}
 
-	$ldap_link = $ldap['link'];
-	$ldap_base = $ldap['base'];
-	$desc = $ldap['attributes'] ? $ldap['attributes'] : $GLOBALS['ldap_attributes'];
+	$ldap_link = isset($ldap['link']) ? $ldap['link'] : null;
+	$ldap_base = isset($ldap['base']) ? $ldap['base'] : null;
+	$desc = isset($ldap['attributes']) && $ldap['attributes'] ? $ldap['attributes'] : $GLOBALS['ldap_attributes'] ;
 
 	$logins = is_array($desc['login']) ? $desc['login'] : array($desc['login']);
 
