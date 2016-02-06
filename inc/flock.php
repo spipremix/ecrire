@@ -594,14 +594,7 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
 	@mkdir($path, _SPIP_CHMOD);
 	@chmod($path, _SPIP_CHMOD);
 
-	$ok = false;
-	if ($test = @fopen("$path/dir_test.php", "w")) {
-		@fputs($test, '<' . '?php $ok = true; ?' . '>');
-		@fclose($test);
-		@include("$path/dir_test.php");
-		spip_unlink("$path/dir_test.php");
-	}
-	if ($ok) {
+	if (is_dir($path) && is_writable($path)) {
 		@touch("$path/.ok");
 		spip_log("creation $base$subdir/");
 
