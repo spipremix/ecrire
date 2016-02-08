@@ -81,7 +81,7 @@ function taille_du_cache() {
 	# check dirs until we reach > 500 files
 	$t = 0;
 	$n = 0;
-	$time = $GLOBALS['meta']['cache_mark'];
+	$time = isset($GLOBALS['meta']['cache_mark']) ? $GLOBALS['meta']['cache_mark'] : 0;
 	for ($i=0; $i < 256; $i++) {
 		$dir = _DIR_CACHE.sprintf('%02s', dechex($i));
 		if (@is_dir($dir) AND is_readable($dir) AND $d = opendir($dir)) {
@@ -178,6 +178,9 @@ function suivre_invalideur($cond, $modif = true) {
  *     Nombre de fichiers supprimés
  **/
 function purger_repertoire($dir, $options = array()) {
+	if (!is_dir($dir) or !is_readable($dir)) {
+		return;
+	}
 	$handle = opendir($dir);
 	if (!$handle) {
 		return;
