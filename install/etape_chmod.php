@@ -60,15 +60,7 @@ function test_ecrire($my_dir) {
 		}
 		spip_unlink('test');
 	}
-	// Verifier que les valeurs sont correctes
-	$f = @fopen($my_dir . 'test.php', 'w');
-	if ($f) {
-		@fputs($f, '<' . '?php $ok = true; ?' . '>');
-		@fclose($f);
-		@chmod($my_dir . 'test.php', $chmod);
-		include($my_dir . 'test.php');
-	}
-	spip_unlink($my_dir . 'test.php');
+	$ok = is_dir($my_dir) && is_writable($my_dir);
 
 	return $ok ? $chmod : false;
 }
