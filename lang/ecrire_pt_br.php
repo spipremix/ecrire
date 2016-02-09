@@ -236,8 +236,9 @@ Estas informações deverão ser fornecidas pelo administrador do sistema ou da 
 	'info_aucun_message' => 'Nenhuma mensagem',
 	'info_aucun_rubrique' => 'Nenhuma seção',
 	'info_aujourdhui' => 'Hoje:',
+	'info_auteur_gere_rubriques' => 'Este autor gerencia as seções a seguir:',
 	'info_auteur_gere_toutes_rubriques' => 'Este autor gerencia <b>todas as seções</b>',
-	'info_auteur_gere_toutes_rubriques_2' => 'Eu gerencio <b>todas as seções</b>', # MODIF
+	'info_auteur_gere_toutes_rubriques_2' => 'Eu gerencio <b>todas as seções</b>',
 	'info_auteurs' => 'Os autores',
 	'info_auteurs_par_tri' => 'Autores@partri@',
 	'info_auteurs_trouves' => 'Autores encontrados',
@@ -389,7 +390,7 @@ Os idiomas já utilizados no site (no topo da lista) não podem ser desativados.
 	'info_post_scriptum' => 'Rodapé',
 	'info_post_scriptum_2' => 'Rodapé:',
 	'info_pour' => 'para',
-	'info_preview_texte' => 'É possível visualizar o site como se todas as matérias e notas (tendo pelo menos o status de «proposta») estivessem publicadas. Esta possibilidade deve estar disponível apenas para os administradores, para todos os redatores, ou para ninguém?', # MODIF
+	'info_preview_texte' => 'É possível visualizar os diferentes elementos editoriais do site que tenham  pelo menos o status de «proposto», bem como os elementos em fase de redação de que se é autor. Esta funcionalidade deve estar disponível para os administradores, para os redatores, ou para ninguém?',
 	'info_procedez_par_etape' => 'proceder passo-a-passo',
 	'info_procedure_maj_version' => 'o procedimento de atualização deve ser rodado para adaptar a base de dados à nova versão do SPIP.',
 	'info_proxy_ok' => 'Proxy testado com sucesso',
@@ -553,7 +554,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'label_choix_langue' => 'Escolha o seu idioma',
 	'label_nom_fichier_connect' => 'Informe o nome usado por este servidor',
 	'label_slogan_site' => 'Slogan do site',
-	'label_taille_ecran' => 'Largura da tela', # MODIF
+	'label_taille_ecran' => 'Largura da tela',
 	'label_texte_et_icones_navigation' => 'Menu de navegação',
 	'label_texte_et_icones_page' => 'Exibição na página',
 	'ldap_correspondance' => 'herança do campo @champ@',
@@ -593,7 +594,8 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'mois_non_connu' => 'desconhecido',
 
 	// N
-	'nouvelle_version_spip' => 'A versão @version@ do SPIP está disponível.', # MODIF
+	'nouvelle_version_spip' => 'A versão @version@ do SPIP está disponível',
+	'nouvelle_version_spip_majeure' => 'Uma nova versão SPIP @version@ está disponível',
 
 	// O
 	'onglet_contenu' => 'Conteúdo',
@@ -642,7 +644,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'plugin_info_upgrade_ok' => 'Atualização bem sucedida',
 	'plugin_librairies_installees' => 'Bibliotecas instaladas',
 	'plugin_necessite_lib' => 'Este plugin precisa da biblioteca @lib@',
-	'plugin_necessite_plugin' => 'É necessário o plugin @plugin@, pelo menos na versão @version@.', # MODIF
+	'plugin_necessite_plugin' => 'Precisa do plugin @plugin@, na versão @version@.',
 	'plugin_necessite_plugin_sans_version' => 'Precisa do plugin @plugin@',
 	'plugin_necessite_spip' => 'É necessário o SPIP na versão @version@, pelo menos.',
 	'plugin_source' => 'fonte: ',
@@ -650,6 +652,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'plugin_titre_automatique_ajouter' => 'Incluir plugins',
 	'plugin_titre_installation' => 'Instalação do plugin @plugin@',
 	'plugin_titre_modifier' => 'Meus plugins',
+	'plugin_utilise_plugin' => 'Utiliza o plugin @plugin@ na versão @version@.',
 	'plugin_zip_active' => 'Continue para o ativar',
 	'plugin_zip_adresse' => 'Indique abaixo o endereço de um arquivo zip de plugin a ser transferido, ou ainda o endereço de uma lista de plugins.',
 	'plugin_zip_adresse_champ' => 'Endereço do plugin ou da lista',
@@ -676,7 +679,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 
 	// Q
 	'queue_executer_maintenant' => 'Executar agora',
-	'queue_info_purger' => 'Você pode excluir todas as tarefas em espera e reinicializar a lista com as tarefas periódicas', # MODIF
+	'queue_info_purger' => 'Você pode excluir todas as tarefas em espera e reinicializar a lista com as tarefas periódicas',
 	'queue_nb_jobs_in_queue' => '@nb@ trabalhos em espera',
 	'queue_next_job_in_nb_sec' => 'Próximo trabalho em @nb@ s',
 	'queue_no_job_in_queue' => 'Nenhum tarefa em espera',
@@ -735,6 +738,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'texte_date_publication_anterieure_nonaffichee' => 'Não exibir a data de redação anterior.',
 	'texte_date_publication_article' => 'DATA DE PUBLICAÇÃO ONLINE:',
 	'texte_date_publication_objet' => 'Data de publicação online:',
+	'texte_definir_comme_traduction_rubrique' => 'Esta seção é uma tradução da seção número:',
 	'texte_descriptif_rapide' => 'Descrição rápida',
 	'texte_effacer_base' => 'Apagar a base de dados do SPIP',
 	'texte_effacer_statistiques' => 'Apagar as estatísticas',
