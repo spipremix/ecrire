@@ -33,7 +33,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'annuler' => 'Cancelar',
 	'antispam_champ_vide' => 'Por favor, deixe este campo vazio:',
 	'articles_recents' => 'Matérias mais recentes',
-	'avis_1_erreur_saisie' => 'Há um erro nos dados informados. Por favor, verifique.', # MODIF
+	'avis_1_erreur_saisie' => 'Há um erro nos dados informados. Por favor, verifique.',
 	'avis_archive_incorrect' => 'a cópia de segurança não é um arquivo do SPIP',
 	'avis_archive_invalide' => 'a cópia de segurança não é válida',
 	'avis_attention' => 'ATENÇÃO!',
@@ -529,6 +529,7 @@ Se você não quiser que a sua senha possa ser interceptada na rede, por favor a
 	'login_retour_public' => 'Voltar ao site público',
 	'login_retour_site' => 'Voltar ao site público',
 	'login_retoursitepublic' => 'voltar ao site público',
+	'login_sans_cookie' => 'Identificação sem cookie',
 	'login_securise' => 'Login seguro',
 	'login_sinscrire' => 'cadastrar-se',
 	'login_test_navigateur' => 'testar navegador/reconexão',
@@ -585,7 +586,7 @@ e reconectar-se com o site.
 	'pass_nouveau_pass' => 'Nova senha',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Esquecimento de senha',
-	'pass_procedure_changer' => 'Para alterar a sua senha, é necessário verificar a sua identidade. Para isso, informe o endereço de e-mail associado a esta sua conta.', # MODIF
+	'pass_procedure_changer' => 'Para alterar a sua senha, por favor informe o endereço de e-mail associado à sua conta.',
 	'pass_quitter_fenetre' => 'Fechar esta janela',
 	'pass_rappel_login' => 'Lembrete: seu login é «@login@».',
 	'pass_recevoir_mail' => 'Você receberá um e-mail explicando como você pode recuperar o acesso ao site.',
