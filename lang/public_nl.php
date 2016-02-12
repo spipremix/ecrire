@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bonjour' => 'Hallo',
 
 	// C
-	'commenter_site' => 'Commentaar geven op de site',
+	'commenter_site' => 'Reageren op de site',
 	'contact' => 'Contact',
 	'copie_document_impossible' => 'Het is niet mogelijk het document te kopiëren',
 
@@ -48,7 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'en_reponse' => 'Als antwoord op:',
 	'en_resume' => 'Samengevat',
 	'envoyer_message' => 'Een bericht sturen',
-	'espace_prive' => 'Privé-site',
+	'espace_prive' => 'Privé-gedeelte',
 
 	// F
 	'formats_acceptes' => 'Toegelaten formaten: @formats@.',
@@ -60,7 +60,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'jours' => 'dagen',
 
 	// L
-	'lien_connecter' => 'Zich aanmelden',
+	'lien_connecter' => 'Aanmelden',
 
 	// M
 	'meme_auteur' => 'Van dezelfde auteur',
@@ -85,7 +85,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'page_precedente' => 'vorige pagina',
 	'page_suivante' => 'volgende pagina',
 	'par_auteur' => 'door ',
-	'participer_site' => 'Je kan bijdragen tot deze site door je eigen artikels voor te stellen als je je hieronder inschrijft. Je krijgt meteen een e-mail met daarin de toegangscode voor het privé-deel van de site.',
+	'participer_site' => 'Wanneer je je hieronder inschrijft, kun je zelf een bijdrage leveren aan deze site door je eigen artikelen voor te stellen. Je ontvangt meteen een e-mail met daarin de toegangscode voor het privé-gedeelte van de site.',
 	'plan_site' => 'Overzicht van de site',
 	'popularite' => 'Populariteit',
 	'poster_message' => 'Een bericht plaatsen',
@@ -100,7 +100,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'rubriques' => 'Rubrieken',
 
 	// S
-	'signatures_petition' => 'Handtekeningen',
+	'signatures_petition' => 'Ondertekeningen',
 	'site_realise_avec_spip' => 'Site gebouwd met SPIP',
 	'sites_web' => 'Websites',
 	'sous_rubriques' => 'Subrubrieken',
