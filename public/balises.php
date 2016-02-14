@@ -1628,7 +1628,7 @@ function balise_CHAMP_SQL_dist($p) {
 	) {
 		$p->code = champ_sql($champ, $p);
 	} else {
-		$err_b_s_a = array('zbug_balise_sans_argument', array('balise' => ' URL_'));
+		$err_b_s_a = array('zbug_balise_sans_argument', array('balise' => ' CHAMP_SQL'));
 		erreur_squelette($err_b_s_a, $p);
 	}
 
