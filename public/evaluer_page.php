@@ -49,20 +49,39 @@ if (empty($page['process_ins']) or $page['process_ins'] != 'html') {
 
 	try {
 		$res = eval('?' . '>' . $page['texte']);
-		// error catching PHP<7
+		// error catching 5.2<=PHP<7
 		if ($res === false
 		  and function_exists('error_get_last')
 		  and ($erreur = error_get_last()) ) {
-			erreur_squelette($erreur['message'],array($page['source'],'',$erreur['file'],$erreur['line'],$GLOBALS['spip_lang']));
+			$code = $page['texte'];
+			$GLOBALS['numero_ligne_php'] = 1;
+			if (!function_exists('numerote_ligne_php')){
+				function numerote_ligne_php($match){
+					$GLOBALS['numero_ligne_php']++;
+					return "\n/*".str_pad($GLOBALS['numero_ligne_php'],3,"0",STR_PAD_LEFT)."*/";
+				}
+			}
+			$code = "/*001*/".preg_replace_callback(",\n,","numerote_ligne_php",$code);
+			$code = trim(highlight_string($code,true));
+			erreur_squelette("L".$erreur['line'].": ".$erreur['message']."<br />".$code,array($page['source'],'',$erreur['file'],'',$GLOBALS['spip_lang']));
 			$page['texte'] = "<!-- Erreur -->";
 		}
 		else {
 			$page['texte'] = ob_get_contents();
 		}
 	}
-	// error catching PHP>=7
 	catch (Exception $e){
-		erreur_squelette($e->getMessage(),array($page['source'],'',$e->getFile(),$e->getLine(),$GLOBALS['spip_lang']));
+		$code = $page['texte'];
+		$GLOBALS['numero_ligne_php'] = 1;
+		if (!function_exists('numerote_ligne_php')){
+			function numerote_ligne_php($match){
+				$GLOBALS['numero_ligne_php']++;
+				return "\n/*".str_pad($GLOBALS['numero_ligne_php'],3,"0",STR_PAD_LEFT)."*/";
+			}
+		}
+		$code = "/*001*/".preg_replace_callback(",\n,","numerote_ligne_php",$code);
+		$code = trim(highlight_string($code,true));
+		erreur_squelette("L".$e->getLine().": ".$e->getMessage()."<br />".$code,array($page['source'],'',$e->getFile(),'',$GLOBALS['spip_lang']));
 		$page['texte'] = "<!-- Erreur -->";
 	}
 	ob_end_clean();
