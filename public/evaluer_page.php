@@ -47,18 +47,25 @@ if (empty($page['process_ins']) or $page['process_ins'] != 'html') {
 		$page['texte'] = str_replace('<' . '?xml', "<\1?xml", $page['texte']);
 	}
 
-	$res = eval('?' . '>' . $page['texte']);
-	$eval = ob_get_contents();
-	ob_end_clean();
-
-	// erreur d'exécution ?
-	// enregistrer le code pour afficher zbug_erreur_execution_page
-	if (false === $res) {
-		$page['codephp'] = $page['texte'];
-		$page['texte'] = '<!-- erreur -->';
-	} else {
-		$page['texte'] = $eval;
+	try {
+		$res = eval('?' . '>' . $page['texte']);
+		// error catching PHP<7
+		if ($res === false
+		  and function_exists('error_get_last')
+		  and ($erreur = error_get_last()) ) {
+			erreur_squelette($erreur['message'],array($page['source'],'',$erreur['file'],$erreur['line'],$GLOBALS['spip_lang']));
+			$page['texte'] = "<!-- Erreur -->";
+		}
+		else {
+			$page['texte'] = ob_get_contents();
+		}
 	}
+	// error catching PHP>=7
+	catch (Exception $e){
+		erreur_squelette($e->getMessage(),array($page['source'],'',$e->getFile(),$e->getLine(),$GLOBALS['spip_lang']));
+		$page['texte'] = "<!-- Erreur -->";
+	}
+	ob_end_clean();
 
 	$page['process_ins'] = 'html';
 
