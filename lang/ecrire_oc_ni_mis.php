@@ -807,9 +807,9 @@ recarculà soulamen una pàgina, passas pulèu per l’espaci public et utilisas
   qu’acò vengue de la basa de dounada.</b><p>
   Lou vouòstre servidou SQL a la facultà de reparà li sieu
   taula quoura li soun estadi degalhadi per achident. Aquì poudès prouvà aquela reparacioun ; se 
-  noun marcha, counservàs una còpia de l’afichage, que counten bessai
+  noun marche, counservas una còpia de l’afichage, que counten bessai
  d’indìci de cen que noun marcha...</p><p>
-  Se lou proublema persiste, countactàs lou vouòstre
+  Se lou proublema persiste, countactas lou vouòstre
   aubergadour.</p>',
 	'texte_selection_langue_principale' => 'Poudès seleciounà aquì souta la « lenga principala » dóu sit. Aquela chausida noun v’oubligia - gauch proun que noun - da escriéure lu vouòstre article en la lenga seleciounada, ma permete de determinà :
  <ul><li> lou fourmat predefinit dei data soubre lou sit pùblicou ;</li>
@@ -821,14 +821,14 @@ recarculà soulamen una pàgina, passas pulèu per l’espaci public et utilisas
 	'texte_statut_attente_validation' => 'en aspèra de validacioun',
 	'texte_statut_publies' => 'publicat en ligna',
 	'texte_statut_refuses' => 'refudat',
-	'texte_suppression_fichiers' => 'Utilisàs aquela coumanda per fin de suprimà toui lu fichié que si trouvon
+	'texte_suppression_fichiers' => 'Utilisas aquela coumanda per fin de suprimà toui lu fichié que si trouvon
 en l’amagadou SPIP. Acò permete per isemple de fourçà un nouvèu carcul de touti li pàgina
 s’avès fach dei moudificacioun empourtanti de grafisme o d’estrutura dóu sit.',
 	'texte_sur_titre' => 'Soubre-titre',
 	'texte_table_ok' => ': aquela taula va ben.',
 	'texte_tentative_recuperation' => 'Tentativa de reparacioun',
 	'texte_tenter_reparation' => 'Prouvà de reparà la basa de dounada',
-	'texte_test_proxy' => 'Per prouvà aqueu proxy, endicàs aquì l’adressa d’un sit web
+	'texte_test_proxy' => 'Per prouvà aqueu proxy, endicas aquì l’adressa d’un sit web
     que lou vourias prouvà.',
 	'texte_titre_02' => 'Titre :',
 	'texte_titre_obligatoire' => '<b>Titre</b> [Oubligatori]',
