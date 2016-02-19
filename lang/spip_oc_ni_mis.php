@@ -90,7 +90,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'choix_couleur_interface' => 'coulou ',
 	'choix_interface' => 'chausida de l’interfaça',
 	'colonne' => 'Coulòna',
-	'confirm_changer_statut' => 'Mèfi, avès demandat de cambià l’estatut d’aquel elemen. Desiràs countinuà ?',
+	'confirm_changer_statut' => 'Mèfi, avès demandat de cambià l’estatut d’aquel elemen. Desiras countinuà ?',
 	'correcte' => 'courret', # chaine utilisée dans le debugueur : "validation .. impossible" ou "validation .. correcte"
 
 	// D
@@ -224,11 +224,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'dirs_probleme_droits' => 'Proublèma de drech d’achès',
 	'dirs_repertoires_absents' => '<p><b>Lu repertori seguent noun soun estat trouvat :</b></p><ul>@bad_dirs@.</ul>
   <p>Si pòu que vengue d’un proublema de maiùscoula o minùscula mau messa.
-  Verificàs que li minùscula e maiùscoula d’aquelu repertori courrespouòndon ben embé cen qu’es afichat
-  aquì soubre ; s’es pas lou cas, renoumàs lu repertori emb’au vouòstre lougiciau FTP per courregì l’errour.</p>
+  Verificas que li minùscula e maiùscoula d’aquelu repertori courrespouòndon ben embé cen qu’es afichat
+  aquì soubre ; noun sigue lou cas, renoumas lu repertori emb’au vouòstre lougiciau FTP per courregì l’errour.</p>
   <p>Un còu qu’aurès fach acò, pourès ',
 	'dirs_repertoires_suivants' => '<p><b>Lu repertori seguent noun soun achessible en escritura :</b></p><ul>@bad_dirs@.</ul>
-  <p>Per lì remedià, utilisàs lou vouòstre client FTP per fin de reglà lu drech d’achès de cadun
+  <p>Per lì remedià, utilisas lou vouòstre client FTP per fin de reglà lu drech d’achès de cadun
   d’aquelu repertori. La guida d’instalacioun espliga en detalh couma prouchedre.</p>
   <p>Un còu aquesta manipulacioun facha, pourès ',
 	'double_occurrence' => 'Doubla ocurença de @balise@',
@@ -246,7 +246,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// F
 	'fichier_introuvable' => 'Fichié @fichier@ introuvable',
-	'form_auteur_confirmation' => 'Counfirmàs la vouòstra adressa email',
+	'form_auteur_confirmation' => 'Counfirmas la vouòstra adressa email',
 	'form_auteur_email_modifie' => 'La vouòstra adressa email a estada moudificada.',
 	'form_auteur_envoi_mail_confirmation' => 'Un courrié electrònicou de counfirmacioun es estat mandat a @email@. Deurès visità l’adressa Web menciounada en aqueu courrié per validà la vouòstra adressa mail.',
 	'form_auteur_mail_confirmation' => 'Bouònjou,
@@ -262,11 +262,11 @@ sera ignourada) :
 	'form_email_non_valide' => 'La vouòstra adressa e-mail noun es valida.',
 	'form_forum_access_refuse' => 'Poudès pu achèdre en estou sit.',
 	'form_forum_bonjour' => 'Bouònjou @nom@,',
-	'form_forum_confirmer_email' => 'Pèr counfirmà la vouòstra adressa e-mail, anàs en aquela adressa : @url_confirm@',
+	'form_forum_confirmer_email' => 'Pèr counfirmà la vouòstra adressa e-mail, anas en aquela adressa : @url_confirm@',
 	'form_forum_email_deja_enregistre' => 'Aquela adressa e-mail es ja registrada, poudès dounca utilisà lou vouòstre mot de passa abitual.',
 	'form_forum_identifiant_mail' => 'Lou vouòstre nouvèl identificant ven de v’èstre mandat per e-mail.',
 	'form_forum_identifiants' => 'Identificant persounal',
-	'form_forum_indiquer_nom_email' => 'Endicàs aquí lou vouòstre noum e la vouòstra adressa e-mail. Lou vouòstre identificant persounal arriberà rapidamen, per courrié electrònicou.',
+	'form_forum_indiquer_nom_email' => 'Endicas aquí lou vouòstre noum e la vouòstra adressa e-mail. Lou vouòstre identificant persounal arriberà rapidamen, per courrié electrònicou.',
 	'form_forum_login' => 'login :',
 	'form_forum_message_auto' => '(acò es un message automàticou)',
 	'form_forum_pass' => 'mot de passa :',
@@ -393,7 +393,7 @@ sera ignourada) :
 	'info_erreur_squelette2' => 'Minga d’esquèletrou <b>@fichier@</b> es dispounibla...',
 	'info_erreur_systeme' => 'Errour sistèma (errno @errsys@)',
 	'info_erreur_systeme2' => 'Bessai que lou disc dur es plen, o la basa de dounada es degalhada.<br />
-<span style="color:red;">Prouvàs de <a href=\'@script@\'>reparà la basa</a>, o countatàs lou vouòstre aubergadour.</span>',
+<span style="color:red;">Prouvas de <a href=\'@script@\'>reparà la basa</a>, o countatas lou vouòstre aubergadour.</span>',
 	'info_fini' => 'Es acabat !',
 	'info_format_image' => 'Fourmat d’image que pouòdon èstre utilisat per creà de vigneta : @gd_formats@.',
 	'info_format_non_defini' => 'fourmat noun definit',
@@ -429,13 +429,13 @@ sera ignourada) :
 	'info_mois_courant' => 'En cours de mes:',
 	'info_mot_cle_ajoute' => 'Lou mot clau seguent es estat ajustat a ',
 	'info_multi_herit' => 'Lenga predefinida',
-	'info_multi_langues_soulignees' => 'Li <u>lenga soulignadi</u> beneficioun d’una traducioun toutala o parciala dei test de l’interfaça. Se seleciounàs aqueli lenga, touplen d’elemen dóu sit public (data, fourmulari) seràn traduch automaticamen. Per li lenga noun soulignadi, aquelu elemen apareisseràn en la lenga principala dóu sit.',
+	'info_multi_langues_soulignees' => 'Li <u>lenga soulignadi</u> beneficioun d’una traducioun toutala o parciala dei test de l’interfaça. Se seleciounès aqueli lenga, touplen d’elemen dóu sit public (data, fourmulari) seran traduch automaticamen. Per li lenga noun soulignadi, aquelu elemen apareisseran en la lenga principala dóu sit.',
 	'info_multilinguisme' => 'Multilenguisme',
 	'info_nom_non_utilisateurs_connectes' => 'Lou vouòstre noum noun aparèisse en la lista dei utilisaire counetat.',
 	'info_nom_utilisateurs_connectes' => 'Lou vouòstre noum aparèisse en la lista dei utilisaire counetat.',
 	'info_nombre_en_ligne' => 'Ahura en ligna :',
 	'info_non_resultat' => 'Minga de resultat per "@cherche_mot@"',
-	'info_non_utilisation_messagerie' => 'Noun utilisàs la messagerìa interna d’estou sit.',
+	'info_non_utilisation_messagerie' => 'Noun utilisas la messagerìa interna d’estou sit.',
 	'info_nouveau_message' => 'AVÈS UN NOUVÈU MESSAGE',
 	'info_nouveaux_messages' => 'AVÈS @total_messages@ NOUVÈU MESSAGE',
 	'info_numero_abbreviation' => 'N° ',
@@ -479,7 +479,7 @@ sera ignourada) :
 	'info_travaux_texte' => 'Estou sit es pas encara counfigurat. Tournès pu tardi...',
 	'info_travaux_titre' => 'Sit en obra',
 	'info_trop_resultat' => 'Tròu de resultat per "@cherche_mot@" ; vourguès afinà la recercà.',
-	'info_utilisation_messagerie_interne' => 'Utilisàs la messagerìa interna d’estou sit.',
+	'info_utilisation_messagerie_interne' => 'Utilisas la messagerìa interna d’estou sit.',
 	'info_valider_lien' => 'validà aquel estac',
 	'info_verifier_image' => ', vourguès verificà que li vouòstri image soun estadi trasferidi courretamen.',
 	'info_vignette_defaut' => 'Vigneta predefinida',
@@ -548,7 +548,7 @@ sera ignourada) :
 	'module_fichiers_langues' => 'Fichié de lenga',
 
 	// N
-	'navigateur_pas_redirige' => 'Se lou vouòstre navigatour noun es redirigiat, clicàs aquí per continuà.',
+	'navigateur_pas_redirige' => 'Se lou vouòstre navigatour noun es redirigiat, clicas aquí per continuà.',
 	'numero' => 'Nùmero',
 
 	// O
@@ -630,20 +630,20 @@ e vi recounetà au sit.
 	'texte_actualite_site_1' => 'Coura serès familharisat embé l’interfaça, pourès clicà sus « ',
 	'texte_actualite_site_2' => 'interfaça coumpleta',
 	'texte_actualite_site_3' => '» per avé mai de poussibilità.',
-	'texte_creation_automatique_vignette' => 'La creacioun autoumatica de vigneta de previsualisacioun es ativada soubre estou sit. S’instalàs d’image ai fourmat @gd_formats@ a partì d’estou fourmulari, seràn acoumpagnadi d’una vinheta d’una talha massimala de @taille_preview@ pixel.',
+	'texte_creation_automatique_vignette' => 'La creacioun autoumatica de vigneta de previsualisacioun es ativada soubre estou sit. S’instalas d’image ai fourmat @gd_formats@ a partì d’estou fourmulari, seràn acoumpagnadi d’una vinheta d’una talha massimala de @taille_preview@ pixel.',
 	'texte_documents_associes' => 'Lu doucumen seguent soun assouciat dau article,
 				mà soun pas estat diretamen
 				inserat. Segoun la coumpaginacioun dóu sit public,
 				pouran aparèisse souta fourma de doucumen jounch.',
 	'texte_erreur_mise_niveau_base' => 'Errour de basa de dounada dóu tems de la messa a nivèu.
 		L’image <b>@fichier@</b> es pas passada (article @id_article@).
-		Noutàs ben aquela referença, reprouvàs la messa a
-		nivèu, e verificàs pi que lu image aparèisson
+		Noutas ben aquela referença, reprouvas la messa a
+		nivèu, e verificas pi que lu image aparèisson
 		encara en lu article.',
-	'texte_erreur_visiteur' => 'Avès prouvat d’achèdre a l’espaci privat emb’un identificant que noun lou permete.',
+	'texte_erreur_visiteur' => 'Avès prouvat d’achèdre à l’espaci privat emb’un identificant que noun lou permete.',
 	'texte_inc_auth_1' => 'Sias identificat couma
 		<b>@auth_login@</b>, ma aquèu login noun esista o esista plus en la basa.
-		Prouvàs de vi',
+		Prouvas de vi',
 	'texte_inc_auth_2' => 'recounetà',
 	'texte_inc_auth_3' => ', après avé eventualamen quitat pi
 		relançat lou vouòstre navigatour.',
