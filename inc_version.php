@@ -279,7 +279,7 @@ $controler_dates_rss = true;
 # ils seront compiles par la suite
 # note: un pipeline non reference se compile aussi, mais uniquement
 # lorsqu'il est rencontre
-// http://code.spip.net/@Tuto-Se-servir-des-points-d-entree
+// http://programmer.spip.net/-Les-pipelines-
 $spip_pipeline = array();
 
 # la matrice standard (fichiers definissant les fonctions a inclure)
