@@ -374,13 +374,12 @@ function critere_recherche_dist($idb, &$boucles, $crit) {
 }
 
 /**
- * Compile le critère {traduction}
+ * Compile le critère `traduction`
  *
  * Sélectionne toutes les traductions de l'élément courant (la boucle englobante)
  * en différentes langues (y compris l'élément englobant)
  *
- * Équivalent à
- * (id_trad>0 AND id_trad=id_trad(precedent)) OR id_xx=id_xx(precedent)
+ * Équivalent à `(id_trad>0 AND id_trad=id_trad(precedent)) OR id_xx=id_xx(precedent)`
  *
  * @param string $idb Identifiant de la boucle
  * @param array $boucles AST du squelette
