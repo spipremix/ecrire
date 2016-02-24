@@ -309,9 +309,31 @@ function filtrer($filtre) {
  */
 function filtre_set(&$Pile, $val, $key, $continue = null) {
 	$Pile['vars'][$key] = $val;
-
 	return $continue ? $val : '';
 }
+
+/**
+ * Filtre `setenv` qui enregistre une valeur dans l'environnement du squelette
+ *
+ * La valeur pourra être retrouvée avec `#ENV{variable}`.
+ * 
+ * @example
+ *     `[(#CALCUL|setenv{toto})]` enregistre le résultat de `#CALCUL`
+ *      dans l'environnement toto et renvoie vide.
+ *      `#ENV{toto}` retourne la valeur.
+ *
+ *      `[(#CALCUL|setenv{toto,1})]` enregistre le résultat de `#CALCUL`
+ *      dans l'environnement toto et renvoie la valeur.
+ *      `#ENV{toto}` retourne la valeur.
+ *
+ * @filtre
+ *
+ * @param array $Pile
+ * @param mixed $val Valeur à enregistrer
+ * @param mixed $key Nom de la variable
+ * @param null|mixed $continue Si présent, retourne la valeur en sortie
+ * @return string|mixed Retourne `$val` si `$continue` présent, sinon ''.
+ */
 function filtre_setenv(&$Pile, $val, $key, $continue = null) {
 	$Pile[0][$key] = $val;
 	return $continue ? $val : '';
