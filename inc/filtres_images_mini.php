@@ -225,7 +225,7 @@ function image_passe_partout(
 	list($destWidth, $destHeight, $ratio) = ratio_passe_partout($largeur, $hauteur, $taille_x, $taille_y);
 	$fonction = array('image_passe_partout', func_get_args());
 
-	return process_image_reduire($fonction, $img, $destWidth, $destHeight, $force, $cherche_image, $process);
+	return process_image_reduire($fonction, $img, $destWidth, $destHeight, $force, $process);
 }
 
 /**
@@ -289,7 +289,7 @@ function image_reduire($img, $taille = -1, $taille_y = -1, $force = false, $cher
 
 	$fonction = array('image_reduire', func_get_args());
 
-	return process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process);
+	return process_image_reduire($fonction, $img, $taille, $taille_y, $force, $process);
 }
 
 

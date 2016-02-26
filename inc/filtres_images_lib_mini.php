@@ -1243,15 +1243,13 @@ function ratio_passe_partout($srcWidth, $srcHeight, $maxWidth, $maxHeight) {
  * @param int $taille_y
  *     Hauteur désirée
  * @param bool $force
- * @param bool $cherche_image
- *     Inutilisé
  * @param string $process
  *     Librairie graphique à utiliser (gd1, gd2, netpbm, convert, imagick).
  *     AUTO utilise la librairie sélectionnée dans la configuration.
  * @return string
  *     Code HTML de la balise img produite
  **/
-function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $cherche_image, $process = 'AUTO') {
+function process_image_reduire($fonction, $img, $taille, $taille_y, $force, $process = 'AUTO') {
 	$image = false;
 	if (($process == 'AUTO') and isset($GLOBALS['meta']['image_process'])) {
 		$process = $GLOBALS['meta']['image_process'];
