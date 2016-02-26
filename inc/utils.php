@@ -2570,7 +2570,7 @@ function spip_initialisation_suite() {
 	// on verifie que la memoire est suffisante pour le compactage css+js pour eviter la page blanche
 	// il y aura d'autres problemes et l'utilisateur n'ira pas tres loin, mais ce sera plus comprehensible qu'une page blanche
 	if (test_espace_prive() and _MEMORY_LIMIT_MIN > 8) {
-		if ($memory = trim(ini_get('memory_limit'))) {
+		if ($memory = trim(ini_get('memory_limit')) and $memory != -1) {
 			$unit = strtolower(substr($memory, strlen($memory / 1), 1));
 			switch ($unit) {
 				// Le modifieur 'G' est disponible depuis PHP 5.1.0
