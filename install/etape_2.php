@@ -71,7 +71,7 @@ function install_etape_2_dist() {
 		echo "<div class='success'><b>" . _T('info_connexion_ok') . "</b></div>";
 		echo info_progression_etape(2, 'etape_', 'install/');
 
-		echo info_etape(_T('menu_aide_installation_choix_base') . aide("install2", true));
+		echo info_etape(_T('menu_aide_installation_choix_base') . aider("install2", true));
 
 		echo "\n", '<!-- ', sql_version($server_db), ' -->';
 		list($checked, $res) = install_etape_2_bases($login_db, $server_db);

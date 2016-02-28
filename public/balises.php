@@ -2495,7 +2495,7 @@ function balise_PLUGIN_dist($p) {
 function balise_AIDER_dist($p) {
 	$_motif = interprete_argument_balise(1, $p);
 	$s = "'" . addslashes($p->descr['sourcefile']) . "'";
-	$p->code = "((\$aider=charger_fonction('aider','inc',true))?\$aider($_motif,$s, \$Pile[0]):'')";
+	$p->code = "((\$aider=charger_fonction('aide','inc',true))?\$aider($_motif,$s, \$Pile[0]):'')";
 
 	return $p;
 }

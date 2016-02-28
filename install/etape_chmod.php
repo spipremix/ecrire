@@ -132,7 +132,7 @@ function install_etape_chmod_dist() {
 					array('bad_dirs' => join("\n", array_keys($absent_dirs)))) .
 				"<b>" . _T('login_recharger') . "</b>.";
 		}
-		$res = "<p>" . $continuer . $res . aide("install0", true) . "</p>";
+		$res = "<p>" . $continuer . $res . aider("install0", true) . "</p>";
 
 		$t = _T('login_recharger');
 		$t = (!$test_dir ? "" :

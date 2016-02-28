@@ -2900,10 +2900,11 @@ function spip_session($force = false) {
  * @param bool $distante
  *    Generer une url locale (par defaut)
  *    ou une url distante [directement sur spip.net]
- * @return Lien sur une icone d'aide
+ * @return
+ *    Lien sur une icone d'aide
  **/
-function aide($aide = '', $distante = false) {
-	$aider = charger_fonction('aider', 'inc', true);
+function aider($aide = '', $distante = false) {
+	$aider = charger_fonction('aide', 'inc', true);
 
 	return $aider ? $aider($aide, '', array(), $distante) : '';
 }

@@ -227,7 +227,7 @@ function install_premier_auteur($email, $login, $nom, $pass, $hidden, $auteur_ob
 	info_etape(_T('info_informations_personnelles'),
 
 		"<b>" . _T('texte_informations_personnelles_1') . "</b>" .
-		aide("install5", true) .
+		aider("install5", true) .
 		"<p>" .
 		($auteur_obligatoire ?
 			''

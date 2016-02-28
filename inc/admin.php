@@ -225,7 +225,7 @@ function debut_admin($script, $action = '', $corps = '') {
 
 			$corps .= "<fieldset><legend>"
 				. _T('info_authentification_ftp')
-				. aide("ftp_auth")
+				. aider("ftp_auth")
 				. "</legend>\n<label for='fichier'>"
 				. _T('info_creer_repertoire')
 				. "</label>\n"

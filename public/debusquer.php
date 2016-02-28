@@ -278,7 +278,7 @@ function debusquer_navigation($tableau, $caption = array(), $id = 'debug-nav') {
 	. "<caption onclick=\"x = document.getElementById('$id'); (x.style.display == '' ? x.style.display = 'none' : x.style.display = '');\">"
 	. $caption[0]
 ## aide locale courte a ecrire, avec lien vers une grosse page de documentation
-#		aide('erreur_compilation'),
+#		aider('erreur_compilation'),
 	. "</caption>"
 	//  fausse caption du chrono (mais vraie nav)
 	. (!empty($caption[1]) ? $caption[1] : '')
@@ -346,7 +346,7 @@ function debusquer_requete($message) {
 		. spip_htmlspecialchars($query)
 		. "</b></span></tt><br />";
 
-	//. aide('erreur_mysql');
+	//. aider('erreur_mysql');
 
 	return $err;
 }
