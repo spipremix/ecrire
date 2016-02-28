@@ -248,9 +248,8 @@ $quota_cache = 10;
 //
 // Serveurs externes
 //
-# aide en ligne
+# Serveur de documentation officielle
 $home_server = 'http://www.spip.net';
-$help_server = array($home_server . '/aide');
 # glossaire pour raccourci [?X]. Aussi: [?X#G] et definir glossaire_G
 $url_glossaire_externe = "http://@lang@.wikipedia.org/wiki/%s";
 
