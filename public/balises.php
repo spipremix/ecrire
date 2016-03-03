@@ -1015,15 +1015,22 @@ function balise_RANG_dist($p) {
 			$trouver_table = charger_fonction('trouver_table', 'base');
 			$desc = $trouver_table($boucle->id_table);
 			$_titre = ''; # où extraire le numero ?
+			
 			if (isset($desc['titre'])) {
 				$t = $desc['titre'];
-				if (preg_match(';(^|,)([^,]*titre)(,|$);', $t, $m)) {
-					$m = preg_replace(",as\s+titre$,i", "", $m[2]);
+				if (
+					// Soit on trouve avec la déclaration de la lang AVANT
+					preg_match(';(?:lang\s*,)\s*(.*?titre)\s*(,|$);', $t, $m)
+					// Soit on prend depuis le début
+					or preg_match(';^(.*?titre)\s*(,|$);', $t, $m)
+				) {
+					$m = preg_replace(',as\s+titre$,i', '', $m[1]);
 					$m = trim($m);
 					if ($m != "''") {
 						if (!preg_match(",\W,", $m)) {
 							$m = $boucle->id_table . ".$m";
 						}
+						
 						$m .= " AS titre_rang";
 
 						$boucle->select[] = $m;
@@ -1031,15 +1038,19 @@ function balise_RANG_dist($p) {
 					}
 				}
 			}
+			
+			// si on n'a rien trouvé, on utilise le champ titre classique
 			if (!$_titre) {
 				$_titre = champ_sql('titre', $p);
 			}
+			
 			$_rang = "recuperer_numero($_titre)";
 		}
+		
 		$p->code = $_rang;
 		$p->interdire_scripts = false;
 	}
-
+	
 	return $p;
 }
 
