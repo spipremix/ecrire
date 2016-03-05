@@ -2916,10 +2916,12 @@ function aider($aide = '', $distante = false) {
  */
 function exec_info_dist() {
 
-	if ($GLOBALS['connect_statut'] == '0minirezo') {
+	include_spip('inc/autoriser');
+	if (autoriser('defaut')) {
 		phpinfo();
 	} else {
-		echo "pas admin";
+		include_spip('inc/filtres');
+		sinon_interdire_acces();
 	}
 }
 
