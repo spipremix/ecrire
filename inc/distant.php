@@ -248,7 +248,7 @@ function prepare_donnees_post($donnees, $boundary = '') {
  *   bool transcoder : true si on veut transcoder la page dans le charset du site
  *   string methode : Type de requête HTTP à faire (HEAD, GET ou POST)
  *   int taille_max : Arrêter le contenu au-delà (0 = seulement les entetes ==> requête HEAD). Par defaut taille_max = 1Mo ou 16Mo si copie dans un fichier
- *   string|array datas : Pour faire un POST de données (force la methode POST si non vide)
+ *   string|array datas : Pour envoyer des donnees (array) et/ou entetes (string) (force la methode POST si donnees non vide)
  *   string boundary : boundary pour formater les datas au format array
  *   bool refuser_gz : Pour forcer le refus de la compression (cas des serveurs orthographiques)
  *   int if_modified_since : Un timestamp unix pour arrêter la récuperation si la page distante n'a pas été modifiée depuis une date donnée
@@ -295,12 +295,14 @@ function recuperer_url($url, $options = array()) {
 	}
 
 	if (!empty($options['datas'])) {
-		$options['methode'] = 'POST';
 		list($head, $postdata) = prepare_donnees_post($options['datas'], $options['boundary']);
 		if (stripos($head, "Content-Length:") === false) {
 			$head .= 'Content-Length: ' . strlen($postdata);
 		}
 		$options['datas'] = $head . "\r\n\r\n" . $postdata;
+		if (strlen($postdata)) {
+			$options['methode'] = 'POST';
+		}
 	}
 
 	// Accepter les URLs au format feed:// ou qui ont oublie le http:// ou les urls relatives au protocole
@@ -658,14 +660,14 @@ function recuperer_lapage(
 	// dix tentatives maximum en cas d'entetes 301...
 	$res = recuperer_url($url, $options);
 
-	if ($res) {
+	if (!$res) {
 		return false;
 	}
 	if ($res['status'] !== 200) {
 		return false;
 	}
 
-	return array($res['headers'], $res['result']);
+	return array($res['headers'], $res['page']);
 }
 
 /**
