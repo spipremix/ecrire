@@ -595,6 +595,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'lien_ajouter_une_rubrique' => 'إضافة هذا القسم',
 	'lien_email' => 'البريد الالكتروني',
 	'lien_nom_site' => 'إسم الموقع:',
+	'lien_rapide_contenu' => 'الذهاب الى المحتوى',
+	'lien_rapide_navigation' => 'الذهاب اى التصفح',
+	'lien_rapide_recherche' => 'الذهاب الى البحث',
 	'lien_retirer_auteur' => 'حذف المؤلف',
 	'lien_retirer_rubrique' => 'سحب القسم',
 	'lien_retirer_tous_auteurs' => 'إزالة جميع المؤلفين',
@@ -640,6 +643,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// P
 	'page_pas_proxy' => 'لا يجب ان تمر هذه الصفحة عبر جهاز بروكسي',
 	'pas_de_proxy_pour' => 'لدى الضرورة، حدد الاجهزة او النطاقات التي لا يجب ان ينطبق عليها الوكيل (مثلاً: @exemple@) ',
+	'phpinfo' => 'إعدادات PHP',
 	'plugin_charge_paquet' => 'تحميل رزمة @name@',
 	'plugin_charger' => 'تحميل',
 	'plugin_erreur_charger' => 'خطأ: لا يمكن تحميل @zip@',
