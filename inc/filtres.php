@@ -714,6 +714,19 @@ function filtrer_entites($texte) {
 }
 
 /**
+ * Version securisee de filtrer_entites
+ * @param string $t
+ * @return string
+ */
+if (!function_exists('filtre_filtrer_entites_dist')) {
+	function filtre_filtrer_entites_dist($t) {
+		include_spip('inc/texte');
+		return interdire_scripts(filtrer_entites($t));
+	}
+}
+
+
+/**
  * Supprime des caractères illégaux
  *
  * Remplace les caractères de controle par le caractère `-`
