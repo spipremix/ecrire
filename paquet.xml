@@ -1,14 +1,14 @@
 <paquet
 	prefix="spip"
 	categorie="outil"
-	version="3.1.0"
+	version="3.1.1"
 	etat="stable"
 	compatibilite="];["
 	schema="21742"
 	documentation="http://www.spip.net"
 	demonstration="http://demo.spip.net"
 	developpement="http://core.spip.net/projects/spip/"
->	
+>
 
 	<nom>SPIP</nom>
 	<!-- Système de publication pour l'Internet -->
