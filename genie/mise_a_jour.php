@@ -181,7 +181,7 @@ function info_maj_cache($nom, $dir, $page = '') {
 	$url = _VERSIONS_SERVEUR . $dir . '/' . _VERSIONS_LISTE;
 	$a = file_exists($nom) ? filemtime($nom) : '';
 	include_spip('inc/distant');
-	$res = recuperer_lapage($url, false, 'GET', _COPIE_LOCALE_MAX_SIZE, '', false, $a);
+	$res = recuperer_url_cache($url, array('if_modified_since'=>$a));
 	// Si rien de neuf (ou inaccessible), garder l'ancienne
 	if ($res) {
 		list(, $page) = $res;
