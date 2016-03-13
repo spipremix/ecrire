@@ -33,7 +33,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'annuler' => 'Zrušiť',
 	'antispam_champ_vide' => 'Toto pole, prosím, nevypĺňajte:',
 	'articles_recents' => 'Najnovšie články',
-	'avis_1_erreur_saisie' => 'Vo vašom zadaní je 1 chyba, skontrolujte si údaje.', # MODIF
+	'avis_1_erreur_saisie' => 'Vo vašich údajoch je 1 chyba, prosím, skontrolujte ich.',
 	'avis_archive_incorrect' => 'archívny súbor nie je platný súbor SPIPu',
 	'avis_archive_invalide' => 'archívny súbor nie je platný',
 	'avis_attention' => 'POZOR!',
@@ -599,7 +599,7 @@ a znova sa prihlásiť na stránku.
 	'pass_nouveau_pass' => 'Nové heslo',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Zabudnuté heslo',
-	'pass_procedure_changer' => 'Ak si chcete zmeniť heslo, musíme overiť vašu identitu. Použijeme na to e-mailovú adresu priradenú k vášmu účtu.', # MODIF
+	'pass_procedure_changer' => 'Ďakujeme, že pri zmene hesla zadáte e-mailovú adresu priradenú k svojmu účtu.',
 	'pass_quitter_fenetre' => 'Zatvoriť toto okno',
 	'pass_rappel_login' => 'Na pripomenutie: váš identifikátor (prihlasovacie meno) je "@login@".',
 	'pass_recevoir_mail' => 'Dostanete e-mail, ktorý vám vysvetlí, ako znova získať prístup na stránku.',
