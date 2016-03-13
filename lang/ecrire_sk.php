@@ -240,6 +240,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_message' => 'Žiadne správy',
 	'info_aucun_rubrique' => 'Žiadne rubriky',
 	'info_aujourdhui' => 'dnes:',
+	'info_auteur_gere_rubriques' => 'Autor riadi tieto rubriky:',
 	'info_auteur_gere_toutes_rubriques' => 'Tento autor riadi <b>všetky rubriky</b>',
 	'info_auteur_gere_toutes_rubriques_2' => 'Radim <b>všetky rubriky</b>',
 	'info_auteurs' => 'Autori',
@@ -584,6 +585,9 @@ a stav ich spracovania je označený farbou:',
 	'lien_ajouter_une_rubrique' => 'Pridať túto rubriku',
 	'lien_email' => 'e-mail',
 	'lien_nom_site' => 'NÁZOV STRÁNKY:',
+	'lien_rapide_contenu' => 'Prejsť na obsah',
+	'lien_rapide_navigation' => 'Prejsť na navigáciu',
+	'lien_rapide_recherche' => 'Prejsť na vyhľadávanie',
 	'lien_retirer_auteur' => 'Odstrániť autora',
 	'lien_retirer_rubrique' => 'Odstrániť rubriku',
 	'lien_retirer_tous_auteurs' => 'Odstrániť všetkých autorov',
@@ -614,7 +618,8 @@ a stav ich spracovania je označený farbou:',
 	'mois_non_connu' => 'neznámy',
 
 	// N
-	'nouvelle_version_spip' => 'K dispozícii je SPIP verzia @version@', # MODIF
+	'nouvelle_version_spip' => 'K dispozícii je verzia SPIPu @version@',
+	'nouvelle_version_spip_majeure' => 'K dispozícii je nová verzia SPIPu @version@',
 
 	// O
 	'onglet_contenu' => 'Obsah',
@@ -628,6 +633,7 @@ a stav ich spracovania je označený farbou:',
 	// P
 	'page_pas_proxy' => 'Táto stránka sa nesmie spúšťať cez proxy',
 	'pas_de_proxy_pour' => 'Ak treba, určte, na ktoré počítače alebo domény sa tento proxy nemá použiť (napríklad @exemple@)',
+	'phpinfo' => 'Nastavenie PHP',
 	'plugin_charge_paquet' => 'Spúšťa sa archívny súbor @name@',
 	'plugin_charger' => 'Stiahnuť',
 	'plugin_erreur_charger' => 'chyba: nedá sa spustiť @zip@',
@@ -698,7 +704,7 @@ a stav ich spracovania je označený farbou:',
 
 	// Q
 	'queue_executer_maintenant' => 'Spustiť teraz',
-	'queue_info_purger' => 'Môžete vymazať všetky čakajúce úlohy a zaplniť zoznam pravidelnými úlohami', # MODIF
+	'queue_info_purger' => 'Môžete vymazať všetky čakajúce úlohy a zobraziť zoznam pravidelných úloh',
 	'queue_nb_jobs_in_queue' => '@nb@ úloh v rade',
 	'queue_next_job_in_nb_sec' => 'Ďalšia úloha o @nb@ s.',
 	'queue_no_job_in_queue' => 'Žiadne nevykonané úlohy',
