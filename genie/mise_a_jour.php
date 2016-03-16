@@ -181,10 +181,10 @@ function info_maj_cache($nom, $dir, $page = '') {
 	$url = _VERSIONS_SERVEUR . $dir . '/' . _VERSIONS_LISTE;
 	$a = file_exists($nom) ? filemtime($nom) : '';
 	include_spip('inc/distant');
-	$res = recuperer_url_cache($url, array('if_modified_since'=>$a));
+	$res = recuperer_url_cache($url, array('if_modified_since' => $a));
 	// Si rien de neuf (ou inaccessible), garder l'ancienne
 	if ($res) {
-		list(, $page) = $res;
+		$page = $res['page'] ? $res['page'] : $page;
 	}
 	// Placer l'indicateur de fraicheur
 	$page = preg_replace('/^<archives.*?>/', $re, $page);
