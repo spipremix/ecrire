@@ -49,6 +49,7 @@
 	<pipeline nom="affiche_formulaire_login" action="auth_formulaire_login" inclure="inc/pipelines.php" />
 	<pipeline nom="alertes_auteur" action="" />
 	<pipeline nom="arbo_creer_chaine_url" action="" />
+	<pipeline nom="auth_administrer" action="" />
 	<pipeline nom="autoriser" action="" />
 	<pipeline nom="base_admin_repair" action="" />
 	<pipeline nom="boite_infos" action="f_boite_infos" inclure="inc/pipelines_ecrire.php" />

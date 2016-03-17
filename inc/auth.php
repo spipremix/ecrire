@@ -358,10 +358,19 @@ function auth_administrer($fonction, $args, $defaut = false) {
 	if ($auth = charger_fonction($auth_methode, 'auth', true)
 		and function_exists($f = "auth_{$auth_methode}_$fonction")
 	) {
-		return call_user_func_array($f, $args);
+		$res = call_user_func_array($f, $args);
 	} else {
-		return $defaut;
+		$res = $defaut;
 	}
+	$res = pipeline('auth_administrer',array(
+		'args' => array(
+			'fonction' => $fonction,
+			'methode' => $auth_methode,
+			'args' => $args
+		),
+		'data' => $res
+	));
+	return $res;
 }
 
 /**
