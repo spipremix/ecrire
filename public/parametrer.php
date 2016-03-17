@@ -164,6 +164,12 @@ function public_parametrer_dist($fond, $contexte = '', $cache = '', $connect = '
 			. join(', ', $infos)
 			. ' (' . strlen($page['texte']) . ' octets)');
 
+		if (defined('_CALCUL_PROFILER') AND intval($profile)>_CALCUL_PROFILER){
+			spip_log("calcul ($profile) [$skel] "
+				. join(', ', $infos)
+				.' ('.strlen($page['texte']).' octets) | '.$_SERVER['REQUEST_URI'],"profiler"._LOG_AVERTISSEMENT);
+		}
+
 		if ($debug) {
 			// si c'est ce que demande le debusqueur, lui passer la main
 			$t = strlen($page['texte']) ? $page['texte'] : " ";
