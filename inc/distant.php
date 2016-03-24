@@ -475,9 +475,10 @@ function recuperer_url_cache($url, $options = array()) {
 	$sig = $options;
 	unset($sig['if_modified_since']);
 	unset($sig['delai_cache']);
+	$sig['url'] = $url;
 
 	$dir = sous_repertoire(_DIR_CACHE, 'curl');
-	$cache = md5(serialize($sig)) . "-" . substr(preg_replace(",\W+,", "_", $url), 80);
+	$cache = md5(serialize($sig)) . "-" . substr(preg_replace(",\W+,", "_", $url), 0, 80);
 	$sub = sous_repertoire($dir, substr($cache, 0, 2));
 	$cache = "$sub$cache";
 
