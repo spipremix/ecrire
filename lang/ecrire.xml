@@ -248,6 +248,7 @@
 		<traducteur nom="kent1" lien="http://trad.spip.net/auteur/kent1" />
 	</langue>
 	<langue code="tr" url="http://trad.spip.net/tradlang_module/ecrire_?lang_cible=tr" total="798" traduits="601" relire="0" modifs="36" nouveaux="161" pourcent="75.31">
+		<traducteur nom="alexis" lien="http://trad.spip.net/auteur/alexis" />
 		<traducteur nom="b_b" lien="http://trad.spip.net/auteur/b_b" />
 		<traducteur nom="kent1" lien="http://trad.spip.net/auteur/kent1" />
 	</langue>
