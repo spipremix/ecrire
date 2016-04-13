@@ -199,13 +199,6 @@ function test_login($nom, $mail) {
 		$login_base = 'user';
 	}
 
-	// eviter aussi qu'il soit trop long (essayer d'attraper le prenom)
-	if (strlen($login_base) > 10) {
-		$login_base = preg_replace("/^(.{4,}(_.{1,7})?)_.*/",
-			'\1', $login_base);
-		$login_base = substr($login_base, 0, 13);
-	}
-
 	$login = $login_base;
 
 	for ($i = 1; ; $i++) {
