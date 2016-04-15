@@ -564,6 +564,9 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'lien_ajouter_une_rubrique' => 'Incluir esta seção',
 	'lien_email' => 'e-mail',
 	'lien_nom_site' => 'NOME DO SITE:',
+	'lien_rapide_contenu' => 'Ir para o conteúdo',
+	'lien_rapide_navigation' => 'Ir para a navegação',
+	'lien_rapide_recherche' => 'Ir para a busca',
 	'lien_retirer_auteur' => 'Retirar o autor',
 	'lien_retirer_rubrique' => 'Excluir a seção',
 	'lien_retirer_tous_auteurs' => 'Retirar todos os autores',
@@ -609,6 +612,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	// P
 	'page_pas_proxy' => 'Esta página não deve passar pelo proxy',
 	'pas_de_proxy_pour' => 'Se necessário, indique as máquinas ou domínios para os quais este proxy não se aplica (por exemplo: @exemple@)',
+	'phpinfo' => 'Configuração PHP',
 	'plugin_charge_paquet' => 'Carregamento do pacote @name@',
 	'plugin_charger' => 'Transferir',
 	'plugin_erreur_charger' => 'erro: não foi possível carregar @zip@',
