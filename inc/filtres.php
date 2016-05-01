@@ -4598,7 +4598,7 @@ function filtre_foreach_dist($tableau, $modele = 'foreach') {
  *     true (à éviter) pour forcer le recalcul du cache des informations des plugins.
  * @return array|string|bool
  *
- *     - Liste sérialisée des préfixe de plugins actifs (si $plugin = '')
+ *     - Liste sérialisée des préfixes de plugins actifs (si $plugin = '')
  *     - Suivant $type_info, avec $plugin un préfixe
  *         - est_actif : renvoie true s'il est actif, false sinon
  *         - x : retourne l'information x du plugin si présente (et plugin actif)
@@ -4611,12 +4611,14 @@ function filtre_info_plugin_dist($plugin, $type_info, $reload = false) {
 
 	if (!$plugin) {
 		return serialize(array_keys($plugins_actifs));
-	} elseif (empty($plugins_actifs[$plugin])) {
-		return '';
-	} elseif ($type_info == 'est_actif') {
-		return $plugins_actifs[$plugin] ? 1 : 0;
-	} elseif (isset($plugins_actifs[$plugin][$type_info])) {
-		return $plugins_actifs[$plugin][$type_info];
+	} elseif (!$reload) {
+		if (empty($plugins_actifs[$plugin])) {
+			return '';
+		} elseif ($type_info == 'est_actif') {
+			return $plugins_actifs[$plugin] ? 1 : 0;
+		} elseif (isset($plugins_actifs[$plugin][$type_info])) {
+			return $plugins_actifs[$plugin][$type_info];
+		}
 	} else {
 		$get_infos = charger_fonction('get_infos', 'plugins');
 		// On prend en compte les extensions
