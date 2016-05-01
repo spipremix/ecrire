@@ -4632,6 +4632,8 @@ function filtre_info_plugin_dist($plugin, $type_info, $reload = false) {
 		}
 		if ($type_info == 'tout') {
 			return $infos;
+		} elseif ($type_info == 'est_actif') {
+			return $infos ? 1 : 0;
 		} else {
 			return strval($infos[$type_info]);
 		}
