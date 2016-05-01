@@ -4611,14 +4611,12 @@ function filtre_info_plugin_dist($plugin, $type_info, $reload = false) {
 
 	if (!$plugin) {
 		return serialize(array_keys($plugins_actifs));
-	} elseif (!$reload) {
-		if (empty($plugins_actifs[$plugin])) {
-			return '';
-		} elseif ($type_info == 'est_actif') {
-			return $plugins_actifs[$plugin] ? 1 : 0;
-		} elseif (isset($plugins_actifs[$plugin][$type_info])) {
-			return $plugins_actifs[$plugin][$type_info];
-		}
+	} elseif (empty($plugins_actifs[$plugin]) and !$reload) {
+		return '';
+	} elseif (($type_info == 'est_actif') and !$reload) {
+		return $plugins_actifs[$plugin] ? 1 : 0;
+	} elseif (isset($plugins_actifs[$plugin][$type_info]) and !$reload) {
+		return $plugins_actifs[$plugin][$type_info];
 	} else {
 		$get_infos = charger_fonction('get_infos', 'plugins');
 		// On prend en compte les extensions
