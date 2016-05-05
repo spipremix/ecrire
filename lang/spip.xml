@@ -76,6 +76,7 @@
 		<traducteur nom="kent1" lien="http://trad.spip.net/auteur/kent1" />
 	</langue>
 	<langue code="eu" url="http://trad.spip.net/tradlang_module/spip?lang_cible=eu" total="636" traduits="624" relire="0" modifs="4" nouveaux="8" pourcent="98.11">
+		<traducteur nom="Ixab" lien="http://trad.spip.net/auteur/ixab" />
 		<traducteur nom="otalazt" lien="http://trad.spip.net/auteur/otalazt" />
 	</langue>
 	<langue code="fa" url="http://trad.spip.net/tradlang_module/spip?lang_cible=fa" total="636" traduits="629" relire="0" modifs="3" nouveaux="4" pourcent="98.90">
