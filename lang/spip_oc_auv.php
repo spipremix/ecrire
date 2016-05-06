@@ -586,4 +586,3 @@ e vos tornar connectar au sit.
 	'zbug_serveur_indefini' => 'servidor SQL indefinit', # MODIF
 	'zbug_table_inconnue' => 'Taula SQL «@table@» desconeguda'
 );
-

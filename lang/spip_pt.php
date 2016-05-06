@@ -718,4 +718,3 @@ Poderá então introduzir uma nova palavra-passe e reconectar-se ao sítio.
 	'zxml_vide_balise' => 'tag vazia',
 	'zxml_vu' => 'visualizado antes'
 );
-

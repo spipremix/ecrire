@@ -703,4 +703,3 @@ Veţi putea după aceea alege o nouă parolă şi veţi putea să vă reconecta�
 	'zxml_vide_balise' => 'baliză (tag) vidă',
 	'zxml_vu' => 'văzut înainte'
 );
-

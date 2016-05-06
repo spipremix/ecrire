@@ -626,4 +626,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zbug_serveur_indefini' => '未定義のSQL server', # MODIF
 	'zbug_table_inconnue' => 'SQLテーブル "@table@" は見つからない'
 );
-

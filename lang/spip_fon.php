@@ -550,4 +550,3 @@ Nú mi ná ɖó mɔ nɔtɛn gblogblojí  é lɔ tɔn  mi yì
 	'zbug_serveur_indefini' => 'Mɔxwìtíxwìtítàtɔ SQL tɔn ê mà tɛɖɛ é jì a ', # MODIF
 	'zbug_table_inconnue' => 'Tìtòmɛ  SQL « @table@ »yè mà tùn'
 );
-

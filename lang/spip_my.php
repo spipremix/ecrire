@@ -591,4 +591,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vide_balise' => 'တေးမှတ်ချက် မရှိပါ',
 	'zxml_vu' => 'တွေ့ရှိပြီးပြီ'
 );
-

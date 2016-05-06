@@ -673,4 +673,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vide_balise' => 'סימן עריכה ריק',
 	'zxml_vu' => 'נראה קודם'
 );
-

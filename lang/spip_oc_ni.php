@@ -652,4 +652,3 @@ e vos tornar connectar au sit.
 	'zxml_vide_balise' => 'balise vuèia',
 	'zxml_vu' => 'vist adés'
 );
-

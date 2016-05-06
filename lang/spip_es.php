@@ -714,4 +714,3 @@ Intenta',
 	'zxml_vide_balise' => 'baliza vacía',
 	'zxml_vu' => 'visto antes'
 );
-

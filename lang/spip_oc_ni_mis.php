@@ -733,4 +733,3 @@ e vi recounetà au sit.
 	'zxml_vide_balise' => 'balisa vuèia',
 	'zxml_vu' => 'vist adé'
 );
-

@@ -610,4 +610,3 @@ Nếu bạn đem vào những hình ảnh trong dạng  @gd_formats@, chúng s�
 	'zxml_survoler' => 'để xem chi tiết đúng, di chuyển con chuột lên trên',
 	'zxml_vu' => 'đã thấy trước đây'
 );
-

@@ -689,4 +689,3 @@ Aliet oc’h da chom hep kemmañ tra ebet e-keit ha n’oc’h ket boas ouzh SPI
 	'zxml_vide_balise' => 'balizenn c’houllo',
 	'zxml_vu' => 'bet gwelet a-raok'
 );
-

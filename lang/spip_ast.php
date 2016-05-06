@@ -695,4 +695,3 @@ Intenta',
 	'zxml_vide_balise' => 'etiqueta vacía',
 	'zxml_vu' => 'visto enantes'
 );
-

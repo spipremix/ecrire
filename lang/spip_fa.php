@@ -690,4 +690,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vide_balise' => 'TAG خالی',
 	'zxml_vu' => 'قبلأ دیده شده'
 );
-

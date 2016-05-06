@@ -706,4 +706,3 @@ Probéiert ',
 	'zxml_vide_balise' => 'Eidelen Tag',
 	'zxml_vu' => 'virdru gesinn'
 );
-

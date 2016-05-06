@@ -645,4 +645,3 @@ e vos tornar connectar al sit.
 	'zxml_vide_balise' => 'balise voida',
 	'zxml_vu' => 'vist aperavant'
 );
-

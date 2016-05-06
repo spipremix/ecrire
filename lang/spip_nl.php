@@ -726,4 +726,3 @@ opnieuw verbinding maken met de site
 	'zxml_vide_balise' => 'leeg baken',
 	'zxml_vu' => 'eerder gezien'
 );
-

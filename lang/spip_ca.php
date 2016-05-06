@@ -708,4 +708,3 @@ i tornar-vos a connectar al lloc.
 	'zxml_vide_balise' => 'etiqueta buida',
 	'zxml_vu' => 'vist abans'
 );
-

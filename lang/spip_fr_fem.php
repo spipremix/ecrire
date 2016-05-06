@@ -733,4 +733,3 @@ et vous reconnecter au site.
 	'zxml_vide_balise' => 'balise vide',
 	'zxml_vu' => 'vu auparavant'
 );
-

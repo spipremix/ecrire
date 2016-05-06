@@ -684,4 +684,3 @@ och koppla upp dig mot sajten igen.
 	'zxml_vide_balise' => 'tom tagg',
 	'zxml_vu' => 'tidigare sedd'
 );
-

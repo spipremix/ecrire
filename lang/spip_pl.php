@@ -686,4 +686,3 @@ a następnie sprawdź czy obrazki pojawiają się zawsze w artykułach.',
 	'zxml_vide_balise' => 'pusty znacznik',
 	'zxml_vu' => 'widziany wcześniej'
 );
-

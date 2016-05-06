@@ -621,4 +621,3 @@ a znovu se ke stránkám připojíte.
 	'zbug_serveur_indefini' => 'Nedefinovaný server SQL', # MODIF
 	'zbug_table_inconnue' => 'Neznámá tabulka SQL "@table@"'
 );
-

@@ -635,4 +635,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vide_balise' => 'ប្លាក​ទទេ',
 	'zxml_vu' => 'បានឃើញ ​ពី​មុន'
 );
-

@@ -703,4 +703,3 @@ Modu orokorrean, orrialde hauetako kudeaketa zure guneko web arduradun nagusiari
 	'zxml_vide_balise' => 'etiketa hutsa',
 	'zxml_vu' => 'jadanik ikusia'
 );
-

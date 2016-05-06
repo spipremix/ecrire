@@ -708,4 +708,3 @@ Sie können auf dieser Seite ein neues Passwort eingeben und sich wieder bei der
 	'zxml_vide_balise' => 'leerer Tag',
 	'zxml_vu' => 'bereits gesehen'
 );
-

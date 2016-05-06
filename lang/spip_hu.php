@@ -650,4 +650,3 @@ Próbáljon', # MODIF
 	'zxml_vide_balise' => 'üres tag',
 	'zxml_vu' => 'látva ezelőtt:'
 );
-

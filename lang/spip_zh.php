@@ -609,4 +609,3 @@ Zhen QIN (zhen_q@21cn.com)',
 	'zbug_info_erreur_squelette' => '站点错误',
 	'zbug_table_inconnue' => 'SQL表格 « @table@ » 未知'
 );
-

@@ -732,4 +732,3 @@ and log in to the site.
 	'zxml_vide_balise' => 'empty tag',
 	'zxml_vu' => 'seen before'
 );
-

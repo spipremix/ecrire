@@ -705,4 +705,3 @@ e reconectar co web.
 	'zxml_vide_balise' => 'baliza baleira',
 	'zxml_vu' => 'vista previa'
 );
-

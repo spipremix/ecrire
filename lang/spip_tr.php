@@ -644,4 +644,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vide_balise' => 'boş etiket',
 	'zxml_vu' => 'önceden görülen'
 );
-

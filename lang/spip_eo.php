@@ -724,4 +724,3 @@ sub la respondeco de la ĉefa retejestro .</b>',
 	'zxml_vide_balise' => 'malplena marko',
 	'zxml_vu' => 'antaŭe vidita'
 );
-

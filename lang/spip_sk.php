@@ -732,4 +732,3 @@ a znova sa prihlásiť na stránku.
 	'zxml_vide_balise' => 'prázdny tag',
 	'zxml_vu' => 'zobrazené predtým'
 );
-

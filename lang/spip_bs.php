@@ -570,4 +570,3 @@ Obratite paznu na ovu referencu, ponovo pokusajte nadogradnju i na kraju provjer
 	'zbug_serveur_indefini' => 'nedefinisan SQL server', # MODIF
 	'zbug_table_inconnue' => 'Nedefinisana SQL  tabela « @table@ »'
 );
-

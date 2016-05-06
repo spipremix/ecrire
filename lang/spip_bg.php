@@ -594,4 +594,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zbug_serveur_indefini' => 'неопределен сървър SQL', # MODIF
 	'zbug_table_inconnue' => 'Непозната таблица от типа SQL: "@table@"'
 );
-

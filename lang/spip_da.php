@@ -577,4 +577,3 @@ og igen få adgang til webstedet.', # MODIF
 	'zbug_parametres_inclus_incorrects' => 'Paramètres d’inclusion incorrects', # MODIF
 	'zbug_serveur_indefini' => 'serveur SQL indéfini' # MODIF
 );
-

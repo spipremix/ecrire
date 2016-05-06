@@ -732,4 +732,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vide_balise' => 'علامة فارغة',
 	'zxml_vu' => 'ظهر مسبقاً'
 );
-

@@ -620,4 +620,3 @@ lès plitò jestyon paj sa-yo pou wèbmèt prensipal sou sit-la.</b>', # MODIF
 	'zbug_serveur_indefini' => 'sèvè SQL ki pa defini', # MODIF
 	'zbug_table_inconnue' => 'Tab SQL « @table@ » se pa koni'
 );
-
