@@ -734,4 +734,3 @@ et vous reconnecter au site.
 	'zxml_vu' => 'vu auparavant'
 );
 
-?>

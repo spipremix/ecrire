@@ -587,4 +587,3 @@ e vos tornar connectar au sit.
 	'zbug_table_inconnue' => 'Taula SQL «@table@» desconeguda'
 );
 
-?>

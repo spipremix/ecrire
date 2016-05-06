@@ -622,4 +622,3 @@ a znovu se ke stránkám připojíte.
 	'zbug_table_inconnue' => 'Neznámá tabulka SQL "@table@"'
 );
 
-?>

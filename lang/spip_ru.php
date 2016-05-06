@@ -733,4 +733,3 @@ and connect again to the site.
 	'zxml_vu' => 'уже просматривалось'
 );
 
-?>

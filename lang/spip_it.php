@@ -728,4 +728,3 @@ funzionamento del sito. Non intervenire finché non conosci bene i meccanismi de
 	'zxml_vu' => 'visto in precedenza'
 );
 
-?>

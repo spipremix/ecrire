@@ -627,4 +627,3 @@ aou lès lazéstyon do bann paz-la pou lo wèbmèt prinsipal.</b>', # MODIF
 	'zbug_table_inconnue' => 'Lo tab SQL « @table@ »  la , li lé pa konu'
 );
 
-?>

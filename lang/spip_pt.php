@@ -719,4 +719,3 @@ Poderá então introduzir uma nova palavra-passe e reconectar-se ao sítio.
 	'zxml_vu' => 'visualizado antes'
 );
 
-?>

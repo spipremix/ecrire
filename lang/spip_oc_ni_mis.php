@@ -734,4 +734,3 @@ e vi recounetà au sit.
 	'zxml_vu' => 'vist adé'
 );
 
-?>

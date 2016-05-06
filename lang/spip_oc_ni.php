@@ -653,4 +653,3 @@ e vos tornar connectar au sit.
 	'zxml_vu' => 'vist adés'
 );
 
-?>

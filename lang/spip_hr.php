@@ -717,4 +717,3 @@ SPIP. <br /><br /><b>Uopćeno rečeno, izričito vam savjetujemo da izmjene prep
 	'zxml_vu' => 'već viđeno'
 );
 
-?>

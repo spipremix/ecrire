@@ -648,4 +648,3 @@ dan mengakses situs kembali.
 	'zxml_vu' => 'dilihat sebelumnya'
 );
 
-?>

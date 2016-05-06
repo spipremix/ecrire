@@ -709,4 +709,3 @@ i tornar-vos a connectar al lloc.
 	'zxml_vu' => 'vist abans'
 );
 
-?>

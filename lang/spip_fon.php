@@ -551,4 +551,3 @@ Nú mi ná ɖó mɔ nɔtɛn gblogblojí  é lɔ tɔn  mi yì
 	'zbug_table_inconnue' => 'Tìtòmɛ  SQL « @table@ »yè mà tùn'
 );
 
-?>

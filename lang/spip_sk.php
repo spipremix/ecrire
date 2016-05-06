@@ -733,4 +733,3 @@ a znova sa prihlásiť na stránku.
 	'zxml_vu' => 'zobrazené predtým'
 );
 
-?>

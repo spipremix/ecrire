@@ -707,4 +707,3 @@ Probéiert ',
 	'zxml_vu' => 'virdru gesinn'
 );
 
-?>

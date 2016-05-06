@@ -727,4 +727,3 @@ opnieuw verbinding maken met de site
 	'zxml_vu' => 'eerder gezien'
 );
 
-?>

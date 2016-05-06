@@ -645,4 +645,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vu' => 'önceden görülen'
 );
 
-?>

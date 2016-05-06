@@ -589,4 +589,3 @@ e tornar connectà’vs au sit.
 	'zbug_table_inconnue' => 'Taula SQL «@table@» inconeguda'
 );
 
-?>

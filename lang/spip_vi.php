@@ -611,4 +611,3 @@ Nếu bạn đem vào những hình ảnh trong dạng  @gd_formats@, chúng s�
 	'zxml_vu' => 'đã thấy trước đây'
 );
 
-?>

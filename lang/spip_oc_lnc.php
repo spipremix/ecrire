@@ -646,4 +646,3 @@ e vos tornar connectar al sit.
 	'zxml_vu' => 'vist aperavant'
 );
 
-?>

@@ -701,4 +701,3 @@ Puderete tandu inserisce un nuvellu password
 	'zxml_vu' => 'vistu prima'
 );
 
-?>

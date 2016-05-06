@@ -619,4 +619,3 @@ Sitix uka arunak ajlltax.Walja sapa mayanaka jach’a qamawita (urunaka, phuqañ
 	'zxml_vu' => 'nayra uñjata '
 );
 
-?>

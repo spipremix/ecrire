@@ -715,4 +715,3 @@ Intenta',
 	'zxml_vu' => 'visto antes'
 );
 
-?>

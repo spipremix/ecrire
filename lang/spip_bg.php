@@ -595,4 +595,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zbug_table_inconnue' => 'Непозната таблица от типа SQL: "@table@"'
 );
 
-?>

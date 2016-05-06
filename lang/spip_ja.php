@@ -627,4 +627,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zbug_table_inconnue' => 'SQLテーブル "@table@" は見つからない'
 );
 
-?>

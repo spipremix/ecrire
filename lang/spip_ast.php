@@ -696,4 +696,3 @@ Intenta',
 	'zxml_vu' => 'visto enantes'
 );
 
-?>

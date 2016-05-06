@@ -691,4 +691,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vu' => 'قبلأ دیده شده'
 );
 
-?>

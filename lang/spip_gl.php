@@ -706,4 +706,3 @@ e reconectar co web.
 	'zxml_vu' => 'vista previa'
 );
 
-?>

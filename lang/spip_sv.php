@@ -685,4 +685,3 @@ och koppla upp dig mot sajten igen.
 	'zxml_vu' => 'tidigare sedd'
 );
 
-?>

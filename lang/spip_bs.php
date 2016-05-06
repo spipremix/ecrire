@@ -571,4 +571,3 @@ Obratite paznu na ovu referencu, ponovo pokusajte nadogradnju i na kraju provjer
 	'zbug_table_inconnue' => 'Nedefinisana SQL  tabela « @table@ »'
 );
 
-?>

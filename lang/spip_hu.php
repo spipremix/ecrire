@@ -651,4 +651,3 @@ Próbáljon', # MODIF
 	'zxml_vu' => 'látva ezelőtt:'
 );
 
-?>

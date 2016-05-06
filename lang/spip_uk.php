@@ -716,4 +716,3 @@ and connect again to the site.
 	'zxml_vu' => 'вже проглядалося'
 );
 
-?>

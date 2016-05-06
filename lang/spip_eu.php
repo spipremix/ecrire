@@ -704,4 +704,3 @@ Modu orokorrean, orrialde hauetako kudeaketa zure guneko web arduradun nagusiari
 	'zxml_vu' => 'jadanik ikusia'
 );
 
-?>

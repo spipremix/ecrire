@@ -578,4 +578,3 @@ og igen få adgang til webstedet.', # MODIF
 	'zbug_serveur_indefini' => 'serveur SQL indéfini' # MODIF
 );
 
-?>
