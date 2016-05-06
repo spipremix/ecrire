@@ -118,4 +118,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_squelette' => 'voir le squelette de cette page'
 );
 
-?>

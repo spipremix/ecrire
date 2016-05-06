@@ -120,4 +120,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_squelette' => 'vidi la skeleton de tiu paĝo'
 );
 
-?>

@@ -107,4 +107,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_squelette' => 'kou je sou léskelèt paj-la'
 );
 
-?>

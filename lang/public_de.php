@@ -120,4 +120,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_squelette' => 'Layoutvorlage dieser Seite ansehen'
 );
 
-?>

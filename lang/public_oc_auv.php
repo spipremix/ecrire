@@ -107,4 +107,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_squelette' => 'telecharjar l’esqueleta d’aquela pagina'
 );
 
-?>

@@ -119,4 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_squelette' => 'ver la cadarma d’esta páxina'
 );
 
-?>

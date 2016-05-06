@@ -106,4 +106,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_squelette' => 'Hent skabelonen til denne side'
 );
 
-?>
