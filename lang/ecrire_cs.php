@@ -639,4 +639,3 @@ změny grafického uspořádání nebo struktury vašeho webu.',
 	'version' => 'Verze:'
 );
 
-?>

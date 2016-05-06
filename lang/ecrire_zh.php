@@ -610,4 +610,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'trad_new' => '为该篇文章写一篇新译文' # MODIF
 );
 
-?>

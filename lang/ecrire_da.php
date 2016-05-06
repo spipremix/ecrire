@@ -560,4 +560,3 @@ i en farve, der angiver deres status:',
 	'trad_new' => 'Lav en ny oversættelse af denne artikel' # MODIF
 );
 
-?>

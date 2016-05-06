@@ -617,4 +617,3 @@ s’avètz bravament modificat lo grafisme o l’estructura dau sit.',
 	'version' => 'Version :'
 );
 
-?>

@@ -618,4 +618,3 @@ Bagay-la pémè, pa egsanp, fòse rekalkil tout paj sa-yo, apré plizyè gro cha
 	'trad_new' => 'Ekri tradiksyon ankò pou atik la' # MODIF
 );
 
-?>

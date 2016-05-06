@@ -599,4 +599,3 @@ s’avetz modificat de bèth pro lo grafisme o l’estructura deu sit.',
 	'trad_new' => 'Escríver ua arrevirada navèra d’aqueste article' # MODIF
 );
 
-?>

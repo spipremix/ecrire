@@ -890,4 +890,3 @@ a fim de evitar as modificações simultâneas.
 	'version' => 'Versão:'
 );
 
-?>

@@ -648,4 +648,3 @@ anda memasukkan modifikasi yang penting di grafik atau struktur situs.',
 	'version' => 'Versi:'
 );
 
-?>

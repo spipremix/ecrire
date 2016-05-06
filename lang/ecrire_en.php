@@ -910,4 +910,3 @@ significant modifications to the site’s graphics or structure.',
 	'version' => 'Version:'
 );
 
-?>

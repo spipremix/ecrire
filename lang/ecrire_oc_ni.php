@@ -769,4 +769,3 @@ s’avètz bravament modificat lo grafisme ò l’estructura dau sit.',
 	'version' => 'Version:'
 );
 
-?>

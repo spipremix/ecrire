@@ -918,4 +918,3 @@ avez fait des modifications importantes de graphisme ou de structure du site.',
 	'version' => 'Version :'
 );
 
-?>

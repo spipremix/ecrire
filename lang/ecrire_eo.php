@@ -885,4 +885,3 @@ faris gravajn ŝanĝojn en la grafiko aŭ strukturo de la retejo.',
 	'version' => 'Versio :'
 );
 
-?>

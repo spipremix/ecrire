@@ -897,4 +897,3 @@ s’avès fach dei moudificacioun empourtanti de grafisme o d’estrutura dóu s
 	'version' => 'Versioun:'
 );
 
-?>

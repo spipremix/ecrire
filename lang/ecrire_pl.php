@@ -836,4 +836,3 @@ odświeżyć tylko jedną stronę, zrób to z obszaru publicznego, używając pr
 	'version' => 'Wersja :'
 );
 
-?>

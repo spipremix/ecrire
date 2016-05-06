@@ -839,4 +839,3 @@ U so statutu hè signalatu da u culore di l’icona (scrittore = giallu; amminis
 	'version' => 'Versione :'
 );
 
-?>

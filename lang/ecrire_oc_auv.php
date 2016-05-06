@@ -600,4 +600,3 @@ s’avètz bravament modificat lo grafisme o l’estructura dau sit.',
 	'trad_new' => 'Escriure una revirada novèla d’aqueste article' # MODIF
 );
 
-?>

@@ -599,4 +599,3 @@ s’avetz bravament modificat lo grafisme o l’estructura dau sit.',
 	'trad_new' => 'Escriure una revirada novela de queste article' # MODIF
 );
 
-?>

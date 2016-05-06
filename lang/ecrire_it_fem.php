@@ -766,4 +766,3 @@ per evitare di generare messaggi d’avvertimento intempestivi.',
 	'version' => 'Versione:'
 );
 
-?>

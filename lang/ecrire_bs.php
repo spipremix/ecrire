@@ -543,4 +543,3 @@ Prevodi su (sa bojom koja ukazuje na njihovo stanje) povezani sa originalnim cla
 	'trad_new' => 'Napisati novi prevod ovog clanka' # MODIF
 );
 
-?>

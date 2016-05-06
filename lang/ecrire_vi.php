@@ -550,4 +550,3 @@ Bạn có thể cho phép cảnh báo hay không:',
 	'trad_new' => 'Dịch bài này' # MODIF
 );
 
-?>

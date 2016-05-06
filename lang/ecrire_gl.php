@@ -846,4 +846,3 @@ estes ficheiros).</p>', # MODIF
 	'version' => 'Versión :'
 );
 
-?>

@@ -660,4 +660,3 @@ s’avètz bravament modificat lo grafisme o l’estructura del sit.',
 	'version' => 'Version :'
 );
 
-?>

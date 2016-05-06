@@ -867,4 +867,3 @@ Si el problema persiste, contacte a su hospedaje.</p>',
 	'version' => 'Versión:'
 );
 
-?>

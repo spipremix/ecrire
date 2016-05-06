@@ -212,4 +212,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_identification_publique' => 'Uñacht’ayawima...'
 );
 
-?>

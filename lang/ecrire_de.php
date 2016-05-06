@@ -863,4 +863,3 @@ Wenn das Problem weiter besteht, nehmen Sie bitte Kontakt mit Ihrem Provider auf
 	'version' => 'Version:'
 );
 
-?>

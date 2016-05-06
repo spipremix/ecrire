@@ -613,4 +613,3 @@ dans le cache SPIP. Ez például eröltethet az összes oldal frissítését, ha
 	'version' => 'Verzió :'
 );
 
-?>
