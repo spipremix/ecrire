@@ -549,4 +549,3 @@ Bạn có thể cho phép cảnh báo hay không:',
 	'trad_lier' => 'Bài này là bản dịch của bài số',
 	'trad_new' => 'Dịch bài này' # MODIF
 );
-

@@ -838,4 +838,3 @@ U so statutu hè signalatu da u culore di l’icona (scrittore = giallu; amminis
 	// V
 	'version' => 'Versione :'
 );
-

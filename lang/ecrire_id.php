@@ -647,4 +647,3 @@ anda memasukkan modifikasi yang penting di grafik atau struktur situs.',
 	// V
 	'version' => 'Versi:'
 );
-

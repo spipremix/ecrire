@@ -616,4 +616,3 @@ Mé vèy byin, lopsyon-la, li lé pa aktivé otomatikman pou anpès lafisaz inn 
 	// V
 	'version' => 'Vesyon :'
 );
-

@@ -909,4 +909,3 @@ significant modifications to the site’s graphics or structure.',
 	// V
 	'version' => 'Version:'
 );
-

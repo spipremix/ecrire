@@ -832,4 +832,3 @@ Arazoa berriro gertatzen baldin bada, zure aterbetzailearekin harremanetan jar z
 	// V
 	'version' => 'Bertsioa :'
 );
-

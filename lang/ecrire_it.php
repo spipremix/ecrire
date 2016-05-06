@@ -890,4 +890,3 @@ per evitare di generare messaggi d’avvertimento intempestivi.',
 	// V
 	'version' => 'Versione:'
 );
-

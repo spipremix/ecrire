@@ -617,4 +617,3 @@ Bagay-la pémè, pa egsanp, fòse rekalkil tout paj sa-yo, apré plizyè gro cha
 	'trad_lier' => 'Atik la se tradiksyon atik nimewo :',
 	'trad_new' => 'Ekri tradiksyon ankò pou atik la' # MODIF
 );
-

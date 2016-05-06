@@ -211,4 +211,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_gauche_visiteurs_enregistres' => 'Akanxa jach’a qamaw utan qillqatanakakiw jikxatasi (aruskipañawinak qillqayasiyampi)',
 	'info_identification_publique' => 'Uñacht’ayawima...'
 );
-

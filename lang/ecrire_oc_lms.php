@@ -598,4 +598,3 @@ s’avetz bravament modificat lo grafisme o l’estructura dau sit.',
 	'trad_lier' => 'Queste article es una revirada de l’article numero:',
 	'trad_new' => 'Escriure una revirada novela de queste article' # MODIF
 );
-

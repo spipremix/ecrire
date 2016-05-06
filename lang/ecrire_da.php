@@ -559,4 +559,3 @@ i en farve, der angiver deres status:',
 	'trad_lier' => 'Denne artikel er en oversættelse af artikel nummer :',
 	'trad_new' => 'Lav en ny oversættelse af denne artikel' # MODIF
 );
-

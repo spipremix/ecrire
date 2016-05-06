@@ -908,4 +908,3 @@ v cache SPIPu. To si vynúti obnovenie každej stránky vášho webu, čo je u�
 	// V
 	'version' => 'Verzia:'
 );
-

@@ -889,4 +889,3 @@ a fim de evitar as modificações simultâneas.
 	// V
 	'version' => 'Versão:'
 );
-

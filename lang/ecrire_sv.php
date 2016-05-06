@@ -585,4 +585,3 @@ gjort viktiga förändringar i sajtens utseende eller struktur.',
 	// V
 	'version' => 'Version:'
 );
-

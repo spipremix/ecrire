@@ -523,4 +523,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'trad_lier' => 'kò nyí tìnmɛ wékpá ɖévó tɔn :',
 	'trad_new' => 'Lɛ wlán tìnmɛ wékpá ɖévó tɔn' # MODIF
 );
-

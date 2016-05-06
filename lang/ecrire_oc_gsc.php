@@ -598,4 +598,3 @@ s’avetz modificat de bèth pro lo grafisme o l’estructura deu sit.',
 	'trad_lier' => 'Aqueste article qu’ei ua arrevirada de l’article numèro:',
 	'trad_new' => 'Escríver ua arrevirada navèra d’aqueste article' # MODIF
 );
-

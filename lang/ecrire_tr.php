@@ -812,4 +812,3 @@ SQL’in, kazayla zarar gören tablolarını onarma yeteneği vardır. Burada bu
 	// V
 	'version' => 'Sürüm :'
 );
-

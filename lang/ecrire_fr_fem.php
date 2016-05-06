@@ -914,4 +914,3 @@ avez fait des modifications importantes de graphisme ou de structure du site.',
 	// V
 	'version' => 'Version :'
 );
-

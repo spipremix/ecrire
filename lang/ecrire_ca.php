@@ -869,4 +869,3 @@ Aquesta opció està desactivada per defecte amb la finalitat d’evitar mostrar
 	// V
 	'version' => 'Versió:'
 );
-

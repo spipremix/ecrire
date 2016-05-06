@@ -638,4 +638,3 @@ změny grafického uspořádání nebo struktury vašeho webu.',
 	// V
 	'version' => 'Verze:'
 );
-

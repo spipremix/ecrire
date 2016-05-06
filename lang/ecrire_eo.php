@@ -884,4 +884,3 @@ faris gravajn ŝanĝojn en la grafiko aŭ strukturo de la retejo.',
 	// V
 	'version' => 'Versio :'
 );
-

@@ -843,4 +843,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'version' => 'نسخه:'
 );
-

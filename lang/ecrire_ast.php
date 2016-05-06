@@ -837,4 +837,3 @@ vienes de facer cambéos importantes nel grafismu o na estructura del sitiu.',
 	// V
 	'version' => 'Versión:'
 );
-

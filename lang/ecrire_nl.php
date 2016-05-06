@@ -893,4 +893,3 @@ Dit kan handig zijn als je veel pagina’s hebt gewijzigd, de layout of de struc
 	// V
 	'version' => 'Versie:'
 );
-

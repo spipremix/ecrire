@@ -859,4 +859,3 @@ Se o problema persistir, contate o seu serviço de hospedagem.</p>',
 	// V
 	'version' => 'Versão:'
 );
-

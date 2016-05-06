@@ -879,4 +879,3 @@ adstaliañ SPIP hag adkrouiñ un diaz titouroù nevez hag ur moned merour kenta�
 	// V
 	'version' => 'Stumm :'
 );
-
