@@ -115,4 +115,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Çevrimiçi görüntüle',
 	'voir_squelette' => 'bu sayfanın iskeletini göster'
 );
-

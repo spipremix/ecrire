@@ -115,4 +115,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'לתוכן מקוון',
 	'voir_squelette' => 'לראות את השלד של דף זה'
 );
-

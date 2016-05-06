@@ -105,4 +105,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ver_imprimer' => 'Nyomtatható változat',
 	'voir_en_ligne' => 'Látni élőben'
 );
-

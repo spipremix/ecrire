@@ -119,4 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Vidjeti on-line',
 	'voir_squelette' => 'Pogledati kostur ovih stranica'
 );
-

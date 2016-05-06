@@ -115,4 +115,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Vedi on line',
 	'voir_squelette' => 'download del modello di questa pagina'
 );
-

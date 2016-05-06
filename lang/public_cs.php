@@ -115,4 +115,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Podívejte se online',
 	'voir_squelette' => 'Zobrazit šablonu této stránky'
 );
-

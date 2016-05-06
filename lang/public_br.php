@@ -119,4 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Gwelet enlinenn',
 	'voir_squelette' => 'Gwelet framm ar bajenn-mañ'
 );
-

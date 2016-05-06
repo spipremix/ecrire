@@ -119,4 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'عرض مباشر',
 	'voir_squelette' => 'عرض الصفحة النموذجية لهذه الصفحة'
 );
-

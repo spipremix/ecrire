@@ -118,4 +118,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Velo en llínia',
 	'voir_squelette' => 'ver la cadarma d’esta páxina'
 );
-

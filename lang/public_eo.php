@@ -119,4 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Vidi konektite',
 	'voir_squelette' => 'vidi la skeleton de tiu paĝo'
 );
-

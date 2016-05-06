@@ -118,4 +118,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Vedeţi în direct',
 	'voir_squelette' => 'vedeţi scheletul acestei pagini'
 );
-

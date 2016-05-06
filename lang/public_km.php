@@ -115,4 +115,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => '​អាន លើអិនរើណែត',
 	'voir_squelette' => 'មើលគ្រោងឆ្អឹង នៃទំព័រនេះ'
 );
-

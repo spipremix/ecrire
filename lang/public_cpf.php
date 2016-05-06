@@ -106,4 +106,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Anon vwar an liyn',
 	'voir_squelette' => 'Apiy po télésarz léskélet lapaz-la'
 );
-

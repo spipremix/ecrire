@@ -119,4 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'View online',
 	'voir_squelette' => 'show the template of this page'
 );
-

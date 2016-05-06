@@ -105,4 +105,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ver_imprimer' => 'Kiểu dể in',
 	'voir_en_ligne' => 'Xem online'
 );
-

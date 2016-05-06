@@ -106,4 +106,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'အွန်လိုင်းတွင် ကြည့်ပါ',
 	'voir_squelette' => 'ٍဤစာမျက်နှာ ပုံစံခွက်ကိုပြပါ'
 );
-

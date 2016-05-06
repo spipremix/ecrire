@@ -105,4 +105,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ver_imprimer' => 'Version d’estampar',
 	'voir_en_ligne' => 'Vesetz en linha'
 );
-

@@ -106,4 +106,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Виж как ще изглежда',
 	'voir_squelette' => 'Изтеглете шаблона на тази страница'
 );
-

@@ -105,4 +105,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ver_imprimer' => 'Verzija za printanje',
 	'voir_en_ligne' => 'Pogledati online'
 );
-

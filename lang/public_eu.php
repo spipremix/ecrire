@@ -119,4 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Linean ikusi',
 	'voir_squelette' => 'Orri hunen eskeletoa ikusi'
 );
-

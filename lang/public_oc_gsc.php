@@ -106,4 +106,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Vedetz en linha',
 	'voir_squelette' => 'telecargar l’esqueleta d’aquera pagina'
 );
-

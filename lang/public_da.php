@@ -105,4 +105,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Se online',
 	'voir_squelette' => 'Hent skabelonen til denne side'
 );
-

@@ -106,4 +106,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Naktata uñjaña',
 	'voir_squelette' => 'Aka laphi uñnaqan ch’aka ch’aka uñjaña'
 );
-

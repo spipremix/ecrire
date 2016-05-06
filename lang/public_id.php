@@ -106,4 +106,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Lihat secara online',
 	'voir_squelette' => 'ٍTampilkan templat halaman ini'
 );
-

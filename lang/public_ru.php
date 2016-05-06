@@ -119,4 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'См. онлайн',
 	'voir_squelette' => 'показать шаблон этой страницы'
 );
-

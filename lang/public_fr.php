@@ -117,4 +117,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Voir en ligne',
 	'voir_squelette' => 'voir le squelette de cette page'
 );
-
