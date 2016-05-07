@@ -323,3 +323,11 @@ function image_reduire_par($img, $val = 1, $force = false) {
 
 	return $img;
 }
+
+function filtre_couleur_saturation_dist($couleur, $val) {
+	return $couleur;
+}
+
+function filtre_couleur_luminance_dist($couleur, $val) {
+	return $couleur;
+}
