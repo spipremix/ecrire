@@ -325,9 +325,15 @@ function image_reduire_par($img, $val = 1, $force = false) {
 }
 
 function filtre_couleur_saturation_dist($couleur, $val) {
+	if (function_exists('couleur_saturation')) {
+		return couleur_saturation($couleur, $val);
+	}
 	return $couleur;
 }
 
 function filtre_couleur_luminance_dist($couleur, $val) {
+	if (function_exists('couleur_luminance')) {
+		return couleur_luminance($couleur, $val);
+	}
 	return $couleur;
 }
