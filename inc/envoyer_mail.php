@@ -52,15 +52,17 @@ function nettoyer_caracteres_mail($t) {
 
 	if ($GLOBALS['meta']['charset'] <> 'utf-8') {
 		$t = str_replace(
-			array("&#8217;", "&#8220;", "&#8221;"),
+			array('&#8217;', '&#8220;', '&#8221;'),
 			array("'", '"', '"'),
-			$t);
+			$t
+		);
 	}
 
 	$t = str_replace(
-		array("&mdash;", "&endash;"),
-		array("--", "-"),
-		$t);
+		array('&mdash;', '&endash;'),
+		array('--', '-'),
+		$t
+	);
 
 	return $t;
 }
@@ -93,7 +95,7 @@ function nettoyer_caracteres_mail($t) {
  * @param string $headers (deprecie, utiliser l'entree headers de $corps)
  * @return bool
  */
-function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $headers = "") {
+function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = '', $headers = '') {
 
 	if (!email_valide($destinataire)) {
 		return false;
@@ -105,13 +107,13 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
 	// Fournir si possible un Message-Id: conforme au RFC1036,
 	// sinon SpamAssassin denoncera un MSGID_FROM_MTA_HEADER
 
-	$email_envoi = $GLOBALS['meta']["email_envoi"];
+	$email_envoi = $GLOBALS['meta']['email_envoi'];
 	if (!email_valide($email_envoi)) {
-		spip_log("Meta email_envoi invalide. Le mail sera probablement vu comme spam.");
+		spip_log('Meta email_envoi invalide. Le mail sera probablement vu comme spam.');
 		$email_envoi = $destinataire;
 	}
 
-	$parts = "";
+	$parts = '';
 	if (is_array($corps)) {
 		$texte = $corps['texte'];
 		$from = (isset($corps['from']) ? $corps['from'] : $from);
@@ -187,11 +189,11 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
  * @param string $parts
  * @return array
  */
-function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "") {
+function mail_normaliser_headers($headers, $from, $to, $texte, $parts = '') {
 	$charset = $GLOBALS['meta']['charset'];
 
 	// Ajouter le Content-Type et consort s'il n'y est pas deja
-	if (strpos($headers, "Content-Type: ") === false) {
+	if (strpos($headers, 'Content-Type: ') === false) {
 		$type =
 			"Content-Type: text/plain;charset=\"$charset\";\n" .
 			"Content-Transfer-Encoding: 8bit\n";
@@ -219,11 +221,11 @@ function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "") {
 
 	// .. et s'en servir pour plaire a SpamAssassin
 
-	$mid = 'Message-Id: <' . $uniq . ">";
+	$mid = 'Message-Id: <' . $uniq . '>';
 
 	// indispensable pour les sites qui collent d'office From: serveur-http
 	// sauf si deja mis par l'envoyeur
-	$rep = (strpos($headers, "Reply-To:") !== false) ? '' : "Reply-To: $from\n";
+	$rep = (strpos($headers, 'Reply-To:') !== false) ? '' : "Reply-To: $from\n";
 
 	// Nettoyer les en-tetes envoyees
 	// Ajouter le \n final
@@ -231,7 +233,7 @@ function mail_normaliser_headers($headers, $from, $to, $texte, $parts = "") {
 		$headers .= "\n";
 	}
 
-	// Et mentionner l'indeboulonable nomenclature ratee 
+	// Et mentionner l'indeboulonable nomenclature ratee
 
 	$headers .= "From: $from\n$type$rep$mid\nMIME-Version: 1.0\n";
 
