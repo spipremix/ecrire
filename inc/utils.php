@@ -1238,7 +1238,7 @@ function lister_themes_prives() {
 		$themes = array(_SPIP_THEME_PRIVE);
 		// lors d'une installation neuve, prefs n'est pas definie.
 		if (isset($GLOBALS['visiteur_session']['prefs'])) {
-			$prefs = isset($GLOBALS['visiteur_session']['prefs']);
+			$prefs = $GLOBALS['visiteur_session']['prefs'];
 		} else {
 			$prefs = array();
 		}
