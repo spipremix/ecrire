@@ -256,7 +256,7 @@ function creer_cache(&$page, &$chemin_cache) {
 	$pagez['sig'] = cache_signature($pagez);
 
 	// l'enregistrer, compresse ou non...
-	$ok = ecrire_cache($chemin_cache, gzip_page($pagez));
+	$ok = ecrire_cache($chemin_cache, $pagez);
 
 	spip_log((_IS_BOT ? "Bot:" : "") . "Creation du cache $chemin_cache pour "
 		. $page['entetes']['X-Spip-Cache'] . " secondes" . ($ok ? '' : ' (erreur!)'), _LOG_INFO_IMPORTANTE);
