@@ -202,7 +202,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 					$id_rubrique = sql_getfetsel($parent, $spip_table_objet, "$id_table_objet=" . intval($id_objet));
 				}
 				$instituer_langue_objet = charger_fonction('instituer_langue_objet', 'action');
-				$champs['lang'] = $instituer_langue_objet($objet, $id_objet, $id_rubrique, $changer_lang);
+				$champs['lang'] = $instituer_langue_objet($objet, $id_objet, $id_rubrique, $changer_lang, $serveur);
 			}
 			// on laisse 'lang' dans $champs,
 			// ca permet de passer dans le pipeline post_edition et de journaliser
