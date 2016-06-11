@@ -27,37 +27,41 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  * @param int $id
  * @param int $id_rubrique
  * @param string $changer_lang
- * @param bool $langue_choisie : la table à modifier dispose-t-elle d'un champ 'langue_choisie'
+ * @param string $serveur
  * @return string
  */
-function action_instituer_langue_objet_dist($objet, $id, $id_rubrique, $changer_lang, $langue_choisie = true) {
+function action_instituer_langue_objet_dist($objet, $id, $id_rubrique, $changer_lang, $serveur='') {
 	if ($changer_lang) {
 		$table_objet_sql = table_objet_sql($objet);
 		$id_table_objet = id_table_objet($objet);
+		$trouver_table = charger_fonction('trouver_table', 'base');
+		$desc = $trouver_table($table_objet_sql, $serveur);
+		
+		$set = array();
+		if (isset($desc['field']['langue_choisie'])){
+			$set['langue_choisie'] = 'oui';
+		}
 		
 		if ($changer_lang != "herit") {
-			$champs = array('lang' => $changer_lang);
-			if ($langue_choisie) {
-				$champs['langue_choisie'] = 'oui';
-			}
-			sql_updateq($table_objet_sql, $champs, "$id_table_objet=" . intval($id));
-			include_spip('inc/rubriques');
+			$set['lang'] = $changer_lang;
+			sql_updateq($table_objet_sql, $set, "$id_table_objet=" . intval($id),'',$serveur);
 			if ($table_objet_sql == 'spip_rubriques') {
+				include_spip('inc/rubriques');
 				calculer_langues_rubriques();
 			}
-			$langues = calculer_langues_utilisees();
+			$langues = calculer_langues_utilisees($serveur);
 			ecrire_meta('langues_utilisees', $langues);
 		} else {
 			$langue_parent = sql_getfetsel("lang", "spip_rubriques", "id_rubrique=" . intval($id_rubrique));
 			if (!$langue_parent) {
 				$langue_parent = $GLOBALS['meta']['langue_site'];
 			}
-			$champs = array('lang' => $langue_parent);
-			if ($langue_choisie) {
-				$champs['langue_choisie'] = 'non';
-			}
-			sql_updateq($table_objet_sql, $champs, "$id_table_objet=" . intval($id));
 			$changer_lang = $langue_parent;
+			$set['lang'] = $changer_lang;
+			if (isset($set['langue_choisie'])){
+				$set['langue_choisie'] = 'non';
+			}
+			sql_updateq($table_objet_sql, $set, "$id_table_objet=" . intval($id),'',$serveur);
 			if ($table_objet_sql == 'spip_rubriques') {
 				include_spip('inc/rubriques');
 				calculer_langues_rubriques();
