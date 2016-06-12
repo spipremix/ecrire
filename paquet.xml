@@ -57,6 +57,7 @@
 	<pipeline nom="ajouter_onglets" action="" />
 	<pipeline nom="body_prive" action="" />
 	<pipeline nom="calculer_rubriques" action="" />
+	<pipeline nom="chercher_logo" action="" />
 	<pipeline nom="configurer_liste_metas" action="" />
 	<pipeline nom="compter_contributions_auteur" action="" />
 	<pipeline nom="declarer_filtres_squelettes" action="" />

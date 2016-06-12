@@ -37,18 +37,35 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  **/
 function inc_chercher_logo_dist($id, $_id_objet, $mode = 'on') {
 	# attention au cas $id = '0' pour LOGO_SITE_SPIP : utiliser intval()
-
+	
+	$infos_logo = array();
 	$type = type_du_logo($_id_objet);
 	$nom = $type . $mode . intval($id);
-
+	
 	foreach ($GLOBALS['formats_logos'] as $format) {
 		if (@file_exists($d = (_DIR_LOGOS . $nom . '.' . $format))) {
-			return array($d, _DIR_LOGOS, $nom, $format, @filemtime($d));
+			$infos_logo = array($d, _DIR_LOGOS, $nom, $format, @filemtime($d));
+			break; // On sort au premier logo trouvé
 		}
 	}
-
+	
+	// On passe dans un pipeline
+	$infos_logo = pipeline(
+		'chercher_logo',
+		array(
+			'args' => array(
+				'id_objet' => $id,
+				'objet' => objet_type($_id_objet),
+				'cle_objet' => $_id_objet,
+				'type' => $type,
+				'mode' => $mode,
+			),
+			'data' => $infos_logo,
+		)
+	);
+	
 	# coherence de type pour servir comme filtre (formulaire_login)
-	return array();
+	return $infos_logo;
 }
 
 /**
