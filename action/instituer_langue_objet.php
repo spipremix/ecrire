@@ -45,8 +45,8 @@ function action_instituer_langue_objet_dist($objet, $id, $id_rubrique, $changer_
 		if ($changer_lang != "herit") {
 			$set['lang'] = $changer_lang;
 			sql_updateq($table_objet_sql, $set, "$id_table_objet=" . intval($id),'',$serveur);
+			include_spip('inc/rubriques'); // pour calculer_langues_rubriques et calculer_langues_utilisees
 			if ($table_objet_sql == 'spip_rubriques') {
-				include_spip('inc/rubriques');
 				calculer_langues_rubriques();
 			}
 			$langues = calculer_langues_utilisees($serveur);
