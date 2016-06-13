@@ -293,8 +293,8 @@ function quete_meta($nom, $serveur) {
  * de 3 elements :
  * le chemin du fichier, celui du logo de survol, l'attribut style=w/h.
  *
- * @param string $type
- *     Type de l'objet dont on veut chercher le logo.
+ * @param string $cle_objet
+ *     Nom de la clé de l'objet dont on veut chercher le logo.
  * @param string $onoff
  *     Sélectionne quel(s) logo(s) : "on" pour le logo normal, "off" pour le logo de survol, ou "ON" pour l'ensemble.
  * @param int $id
@@ -308,29 +308,38 @@ function quete_meta($nom, $serveur) {
  * @return array|string
  *     Retourne soit un tableau, soit le chemin du fichier.
  */
-function quete_logo($type, $onoff, $id, $id_rubrique, $flag) {
-	static $chercher_logo;
-	if (is_null($chercher_logo)) {
-		$chercher_logo = charger_fonction('chercher_logo', 'inc');
-	}
+function quete_logo($cle_objet, $onoff, $id, $id_rubrique, $flag) {
+	include_spip('base/objets');
 	$nom = strtolower($onoff);
 
 	while (1) {
-		$on = $chercher_logo($id, $type, $nom);
+		$objet = objet_type($cle_objet);
+		
+		$on = quete_logo_objet($id, $objet, $nom);
+		
 		if ($on) {
 			if ($flag) {
-				return "$on[2].$on[3]";
+				return basename($on['chemin']);
 			} else {
-				$taille = @getimagesize($on[0]);
-				$off = ($onoff != 'ON') ? '' :
-					$chercher_logo($id, $type, 'off');
+				$taille = @getimagesize($on['chemin']);
+				
+				// Si on a déjà demandé un survol directement ($onoff = off) ou qu'on a demandé uniquement le normal ($onoff = on)
+				// alors on ne cherche pas du tout le survol ici
+				if ($onoff != 'ON') {
+					$off = '';
+				}
+				// Sinon, c'est qu'on demande normal ET survol à la fois, donc on cherche maintenant le survol
+				else {
+					$off = quete_logo_objet($id, $objet, 'off');
+				}
+				
 				// on retourne une url du type IMG/artonXX?timestamp
 				// qui permet de distinguer le changement de logo
 				// et placer un expire sur le dossier IMG/
 				$res = array(
-					$on[0] . ($on[4] ? "?$on[4]" : ""),
-					($off ? $off[0] . ($off[4] ? "?$off[4]" : "") : ''),
-					(!$taille ? '' : (" " . $taille[3]))
+					$on['chemin'] . ($on['timestamp'] ? "?{$on['timestamp']}" : ''),
+					($off ? $off['chemin'] . ($off['timestamp'] ? "?{$off['timestamp']}" : '') : ''),
+					(!$taille ? '' : (' ' . $taille[3]))
 				);
 				$res['src'] = $res[0];
 				$res['logo_on'] = $res[0];
@@ -345,11 +354,11 @@ function quete_logo($type, $onoff, $id, $id_rubrique, $flag) {
 				return '';
 			} else {
 				if ($id_rubrique) {
-					$type = 'id_rubrique';
+					$cle_objet = 'id_rubrique';
 					$id = $id_rubrique;
 					$id_rubrique = 0;
 				} else {
-					if ($id and $type == 'id_rubrique') {
+					if ($id and $cle_objet == 'id_rubrique') {
 						$id = quete_parent($id);
 					} else {
 						return '';
@@ -358,6 +367,43 @@ function quete_logo($type, $onoff, $id, $id_rubrique, $flag) {
 			}
 		}
 	}
+}
+
+/**
+ * Chercher le logo d'un contenu précis
+ * 
+ * @param int $id_objet
+ * 		Idenfiant de l'objet dont on cherche le logo
+ * @param string $objet
+ * 		Type de l'objet dont on cherche le logo
+ * @param string $mode
+ * 		"on" ou "off" suivant le logo normal ou survol
+ **/
+function quete_logo_objet($id_objet, $objet, $mode) {
+	static $chercher_logo;
+	if (is_null($chercher_logo)) {
+		$chercher_logo = charger_fonction('chercher_logo', 'inc');
+	}
+	$cle_objet = id_table_objet($objet);
+	
+	// On cherche pas la méthode classique
+	$infos_logo = $chercher_logo($id_objet, $cle_objet, $mode);
+	
+	// On passe cette recherche de logo dans un pipeline
+	$infos_logo = pipeline(
+		'quete_logo_objet',
+		array(
+			'args' => array(
+				'id_objet' => $id_objet,
+				'objet' => $objet,
+				'cle_objet' => $cle_objet,
+				'mode' => $mode,
+			),
+			'data' => $infos_logo,
+		)
+	);
+	
+	return $infos_logo;
 }
 
 /**

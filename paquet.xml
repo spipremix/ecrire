@@ -57,7 +57,6 @@
 	<pipeline nom="ajouter_onglets" action="" />
 	<pipeline nom="body_prive" action="" />
 	<pipeline nom="calculer_rubriques" action="" />
-	<pipeline nom="chercher_logo" action="" />
 	<pipeline nom="configurer_liste_metas" action="" />
 	<pipeline nom="compter_contributions_auteur" action="" />
 	<pipeline nom="declarer_filtres_squelettes" action="" />
@@ -120,6 +119,7 @@
 	<pipeline nom="post_insertion" action="" />
 	<pipeline nom="pre_indexation" action="" />
 	<pipeline nom="propres_creer_chaine_url" action="" />
+	<pipeline nom="quete_logo_objet" action="" />
 	<pipeline nom="requete_dico" action="" />
 	<pipeline nom="rubrique_encours" action="" />
 	<pipeline nom="taches_generales_cron" action="" />
