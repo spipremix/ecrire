@@ -737,7 +737,7 @@ function critere_parinverse($idb, &$boucles, $crit, $sens = '') {
 							} else {
 								if ($par == 'date'
 									and $desc = $boucle->show
-									and $desc['date']
+									and !empty($desc['date'])
 								) {
 									$m = $desc['date'];
 									$order = "'" . $boucle->id_table . "." . $m . "'";
