@@ -388,6 +388,13 @@ function quete_logo_objet($id_objet, $objet, $mode) {
 	
 	// On cherche pas la méthode classique
 	$infos_logo = $chercher_logo($id_objet, $cle_objet, $mode);
+	// Si la méthode classique a trouvé quelque chose, on utilise le nouveau format
+	if (!empty($infos_logo)) {
+		$infos_logo = array(
+			'chemin' => $infos_logo[0],
+			'timestamp' => $infos_logo[4],
+		);
+	}
 	
 	// On passe cette recherche de logo dans un pipeline
 	$infos_logo = pipeline(
