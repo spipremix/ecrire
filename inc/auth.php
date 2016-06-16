@@ -708,7 +708,13 @@ function auth_synchroniser_distant(
  * @return array|bool
  */
 function lire_php_auth($login, $pw, $serveur = '') {
-
+	if (
+		!$login
+		or !$login = auth_retrouver_login($login, $serveur)
+	) {
+		return false;
+	}
+	
 	$row = sql_fetsel('*', 'spip_auteurs', 'login=' . sql_quote($login, $serveur, 'text'), '', '', '', '', $serveur);
 
 	if (!$row) {
