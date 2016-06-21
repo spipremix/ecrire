@@ -54,7 +54,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  */
 function balise_LOGO__dist($p) {
 
-	preg_match(",^LOGO_([A-Z_]+?)(|_NORMAL|_SURVOL|_RUBRIQUE)$,i", $p->nom_champ, $regs);
+	preg_match(',^LOGO_([A-Z_]+?)(|_NORMAL|_SURVOL|_RUBRIQUE)$,i', $p->nom_champ, $regs);
 	$type = strtolower($regs[1]);
 	$suite_logo = $regs[2];
 
@@ -90,7 +90,6 @@ function balise_LOGO__dist($p) {
 			} else {
 				$lien = calculer_liste($a, $p->descr, $p->boucles, $p->id_boucle);
 			}
-
 		}
 	}
 
@@ -119,7 +118,7 @@ function balise_LOGO__dist($p) {
 		}
 	} elseif ($connect) {
 		$code = "''";
-		spip_log("Les logos distants ne sont pas prevus");
+		spip_log('Les logos distants ne sont pas prevus');
 	} else {
 		$code = logo_survol($id_objet, $_id_objet, $type, $align, $fichier, $lien, $p, $suite_logo);
 	}
@@ -164,9 +163,9 @@ function logo_survol($id_objet, $_id_objet, $type, $align, $fichier, $lien, $p, 
 			(($suite == '_NORMAL') ? 'on' : 'ON')) .
 		"', $_id_objet," .
 		(($suite == '_RUBRIQUE') ?
-			champ_sql("id_rubrique", $p) :
+			champ_sql('id_rubrique', $p) :
 			(($type == 'rubrique') ? "quete_parent($_id_objet)" : "''")) .
-		", " . intval($fichier) . ")";
+		', ' . intval($fichier) . ')';
 
 	if ($fichier) {
 		return $code;
@@ -174,15 +173,15 @@ function logo_survol($id_objet, $_id_objet, $type, $align, $fichier, $lien, $p, 
 
 	// class spip_logos a supprimer ulterieurement (transition douce vers spip_logo)
 	// cf http://core.spip.net/issues/2483
-	$class = "spip_logo ";
+	$class = 'spip_logo ';
 	if ($align) {
 		$class .= "spip_logo_$align ";
 	}
-	$class .= "spip_logos";
+	$class .= 'spip_logos';
 	$style = '';
 	if (in_array($align, array('left', 'right'))) {
 		$style = "float:$align";
-		$align = "";
+		$align = '';
 	}
 	$code = "\n((!is_array(\$l = $code)) ? '':\n (" .
 		'"<img class=\"' . $class . '\" alt=\"\"' .
