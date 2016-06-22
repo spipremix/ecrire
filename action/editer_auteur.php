@@ -11,7 +11,7 @@
 \***************************************************************************/
 
 /**
- * Gestion de l'action editer_article et de l'API d'édition d'un article
+ * Gestion de l'action editer_auteur et de l'API d'édition d'un auteur
  *
  * @package SPIP\Core\Auteurs\Edition
  */
