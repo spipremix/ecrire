@@ -951,6 +951,11 @@ function fichier_copie_locale($source) {
  **/
 function recuperer_infos_distantes($source, $max = 0, $charger_si_petite_image = true) {
 
+	// pas la peine de perdre son temps
+	if (!tester_url_absolue($source)) {
+		return false;
+	}
+	
 	# charger les alias des types mime
 	include_spip('base/typedoc');
 
@@ -1033,6 +1038,11 @@ function recuperer_infos_distantes($source, $max = 0, $charger_si_petite_image =
 	if (!$a and !$max) {
 		spip_log("tenter GET $source");
 		$a = recuperer_infos_distantes($source, _INC_DISTANT_MAX_SIZE);
+	}
+
+	// si on a rien trouve pas la peine d'insister
+	if (!$a) {
+		return false;
 	}
 
 	// S'il s'agit d'une image pas trop grosse ou d'un fichier html, on va aller
