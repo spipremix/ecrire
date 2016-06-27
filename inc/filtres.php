@@ -4803,7 +4803,9 @@ function encoder_contexte_ajax($c, $form = '', $emboite = null, $ajaxid = '') {
 	$r = ' data-origin="' . $r . '"';
 	$class = 'ajaxbloc';
 	if ($ajaxid and is_string($ajaxid)) {
-		$class .= ' ajax-id-' . $ajaxid;
+		// ajaxid est normalement conforme a un nom de classe css
+		// on ne verifie pas la conformite, mais on passe entites_html par dessus par precaution
+		$class .= ' ajax-id-' . entites_html($ajaxid);
 	}
 
 	return "<div class='$class' " . "data-ajax-env='$env'$r>\n$emboite</div><!--ajaxbloc-->\n";
