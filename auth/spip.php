@@ -144,8 +144,8 @@ function auth_spip_formulaire_login($flux) {
 		. "jQuery(function(){
 	jQuery('#password').after(\"<em id='pass_securise'><img src='" . chemin_image('cadenas-16.png') . "' width='16' height='16' alt='" . attribut_html(_T('login_securise')) . "' title='" . attribut_html(_T('login_securise')) . "' \/><\/em>\");
 	if (login_info.alea_actuel) jQuery('#pass_securise').show(); else jQuery('#pass_securise').hide();
-	jQuery('#var_login').change(actualise_auteur);
-	jQuery('form#formulaire_login').submit(login_submit);
+	jQuery('#var_login').change(function(){actualise_auteur();});
+	jQuery('form#formulaire_login').submit(function(){login_submit();});
 });"
 		. "/*]]>*/</script>";
 
