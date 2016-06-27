@@ -83,7 +83,7 @@ function expression_recherche($recherche, $options) {
 	$recherche = trim($recherche);
 
 	$is_preg = false;
-	if (substr($recherche, 0, 1) == '/' and substr($recherche, -1, 1) == '/') {
+	if (substr($recherche, 0, 1) == '/' and substr($recherche, -1, 1) == '/' and strlen($recherche) > 2) {
 		// c'est une preg
 		$recherche_trans = translitteration($recherche);
 		$preg = $recherche_trans . $options['preg_flags'];
