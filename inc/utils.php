@@ -1805,6 +1805,16 @@ function url_de_($http, $host, $request, $prof = 0) {
 	$prof = max($prof, 0);
 
 	$myself = ltrim($request, '/');
+	// vieux mode HTTP qui envoie après le nom de la methode l'URL compléte
+	// protocole, "://", nom du serveur avant le path dans _SERVER["REQUEST_URI"]
+	if (strpos($myself,'://') !== false) {
+		$myself = explode('://',$myself);
+		array_shift($myself);
+		$myself = implode('://',$myself);
+		$myself = explode('/',$myself);
+		array_shift($myself);
+		$myself = implode('/',$myself);
+	}
 	# supprimer la chaine de GET
 	list($myself) = explode('?', $myself);
 	$url = join('/', array_slice(explode('/', $myself), 0, -1 - $prof)) . '/';
