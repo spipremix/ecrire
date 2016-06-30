@@ -69,7 +69,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// C
 	'cache_modifiable_webmestre' => 'Этот параметр может быть изменен только вебмастером.',
-	'calendrier_synchro' => 'Если вы используете календарь, совместимый с <b>iCal</b>, вы можете согласовать его с данными сайта.',
+	'calendrier_synchro' => 'Если вы используете календарь, совместимый с <b>iCal</b>, вы можете синхронизировать его с сайтом.',
 	'config_activer_champs' => 'Включить следующие поля',
 	'config_choix_base_sup' => 'Выберите базу на этом сервере',
 	'config_erreur_base_sup' => 'SPIP не может отобразить список доступных баз данных',
@@ -573,6 +573,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'lien_ajouter_une_rubrique' => 'Добавить раздел',
 	'lien_email' => 'Электронная почта',
 	'lien_nom_site' => 'НАЗВАНИЕ САЙТА:',
+	'lien_rapide_contenu' => 'Перейти к информации',
+	'lien_rapide_navigation' => 'Перейти к навигации',
+	'lien_rapide_recherche' => 'Перейти к поиску',
 	'lien_retirer_auteur' => 'Убрать автора',
 	'lien_retirer_rubrique' => 'Убрать раздел',
 	'lien_retirer_tous_auteurs' => 'Убрать всех авторов',
@@ -618,6 +621,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// P
 	'page_pas_proxy' => 'Эта страница не должна проходить через прокси',
 	'pas_de_proxy_pour' => 'Если необходимо, укажите для каких компьютеров или доменов не следует применять прокси (например: @exemple@) ',
+	'phpinfo' => 'Настройки PHP',
 	'plugin_charge_paquet' => 'Загрузка архива файла @имя@',
 	'plugin_charger' => 'Скачать',
 	'plugin_erreur_charger' => 'ошибка: невозможно загрузить @zip@',
