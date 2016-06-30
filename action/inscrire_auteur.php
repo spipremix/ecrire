@@ -166,6 +166,8 @@ function inscription_nouveau($desc) {
 		return _T('titre_probleme_technique');
 	}
 
+	$desc['lang'] = $GLOBALS['spip_lang'];
+
 	include_spip('inc/autoriser');
 	// lever l'autorisation pour pouvoir modifier le statut
 	autoriser_exception('modifier', 'auteur', $id_auteur);
