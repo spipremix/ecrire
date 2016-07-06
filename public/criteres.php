@@ -1112,7 +1112,7 @@ function calculer_critere_parties_aux($idb, &$boucles, $param) {
 		} elseif (!empty($m[4])) {
 			return array($a1, $m[4]);
 		} else {
-			return array($a1, calculer_liste(array($param[1]), array(), $boucles[$idb]->id_parent, $boucles));
+			return array($a1, calculer_liste(array($param[1]), array(), $boucles, $boucles[$idb]->id_parent));
 		}
 	}
 }
