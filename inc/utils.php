@@ -421,16 +421,20 @@ function set_request($var, $val = null, $c = false) {
 
 /**
  * Tester si une URL est absolue
- * on accepte tous les protocoles sauf file:// (on est sur le web quand meme)
+ * 
+ * On est sur le web, on exclut certains protocoles, 
+ * notamment 'file://', 'php://' et d'autres…
+
  * @param string $url
  * @return bool
  */
 function tester_url_absolue($url) {
 	$url = trim($url);
 	if (preg_match(";^([a-z]{3,7}:)?//;Uims", $url, $m)) {
-		if (isset($m[1])
+		if (
+			isset($m[1])
 			and $p = strtolower(rtrim($m[1], ':'))
-			and in_array($p, array('file', 'php', 'zlib', 'glob', 'phar', 'ssh2', 'rar', 'ogg', 'expect'))
+			and in_array($p, array('file', 'php', 'zlib', 'glob', 'phar', 'ssh2', 'rar', 'ogg', 'expect', 'zip'))
 		  ) {
 			return false;
 		}
