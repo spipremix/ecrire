@@ -429,7 +429,8 @@ function tester_url_absolue($url) {
 	$url = trim($url);
 	if (preg_match(";^([a-z]{3,7}:)?//;Uims", $url, $m)) {
 		if (isset($m[1])
-			and in_array(rtrim($m[1], ':'), array('file', 'php', 'zlib', 'glob', 'phar', 'ssh2', 'rar', 'ogg', 'expect'))
+			and $p = strtolower(rtrim($m[1], ':'))
+			and in_array($p, array('file', 'php', 'zlib', 'glob', 'phar', 'ssh2', 'rar', 'ogg', 'expect'))
 		  ) {
 			return false;
 		}
