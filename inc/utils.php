@@ -427,8 +427,12 @@ function set_request($var, $val = null, $c = false) {
  */
 function tester_url_absolue($url) {
 	$url = trim($url);
-	if (preg_match(";^([a-z]{3,7}:)?//;Uims", $url)
-	  and strncasecmp($url, 'file://', 7)!==0){
+	if (preg_match(";^([a-z]{3,7}:)?//;Uims", $url, $m)) {
+		if (isset($m[1])
+			and in_array(rtrim($m[1], ':'), array('file', 'php', 'zlib', 'glob', 'phar', 'ssh2', 'rar', 'ogg', 'expect'))
+		  ) {
+			return false;
+		}
 		return true;
 	}
 	return false;
