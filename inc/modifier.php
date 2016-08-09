@@ -197,7 +197,7 @@ function objet_modifier_champs($objet, $id_objet, $options, $c = null, $serveur 
 		if (isset($champs['lang'])) {
 			if ($changer_lang = $champs['lang']) {
 				$id_rubrique = 0;
-				if ($desc['field']['id_rubrique']) {
+				if (isset($desc['field']['id_rubrique'])) {
 					$parent = ($objet == 'rubrique') ? 'id_parent' : 'id_rubrique';
 					$id_rubrique = sql_getfetsel($parent, $spip_table_objet, "$id_table_objet=" . intval($id_objet));
 				}
