@@ -471,14 +471,19 @@ function critere_meme_parent_dist($idb, &$boucles, $crit) {
  * Compile le critère `branche` qui sélectionne dans une boucle les
  * éléments appartenant à une branche d'une rubrique.
  *
- * Cherche l'identifiant de la rubrique en premier paramètre du critère {branche XX}
- * s'il est renseigné, sinon, sans paramètre ({branche} tout court) dans les
+ * Cherche l'identifiant de la rubrique en premier paramètre du critère `{branche XX}`
+ * s'il est renseigné, sinon, sans paramètre (`{branche}` tout court) dans les
  * boucles parentes. On calcule avec lui la liste des identifiants
  * de rubrique de toute la branche.
  *
  * La boucle qui possède ce critère cherche une liaison possible avec
- * la colonne id_rubrique, et tentera de trouver une jointure avec une autre
+ * la colonne `id_rubrique`, et tentera de trouver une jointure avec une autre
  * table si c'est nécessaire pour l'obtenir.
+ * 
+ * Ce critère peut être rendu optionnel avec `{branche ?}` en remarquant 
+ * cependant que le test s'effectue sur la présence d'un champ 'id_rubrique'
+ * sinon d'une valeur 'id_rubrique' dans l'environnement (et non 'branche'
+ * donc).
  *
  * @link http://www.spip.net/@branche
  *
@@ -496,7 +501,7 @@ function critere_branche_dist($idb, &$boucles, $crit) {
 		$arg = calculer_liste($crit->param[0], array(), $boucles, $boucles[$idb]->id_parent);
 		// sinon on le prend chez une boucle parente
 	} else {
-		$arg = kwote(calculer_argument_precedent($idb, 'id_rubrique', $boucles));
+		$arg = kwote(calculer_argument_precedent($idb, 'id_rubrique', $boucles), $boucle->sql_serveur, 'int NOT NULL');
 	}
 
 	//Trouver une jointure
@@ -1200,7 +1205,7 @@ function kwote($lisp, $serveur = '', $type = '') {
 	if (preg_match(_CODE_QUOTE, $lisp, $r)) {
 		return $r[1] . "\"" . sql_quote(str_replace(array("\\'", "\\\\"), array("'", "\\"), $r[2]), $serveur, $type) . "\"";
 	} else {
-		return "sql_quote($lisp)";
+		return "sql_quote($lisp, '$serveur', '" . str_replace("'", "\\'", $type) . "')";
 	}
 }
 
