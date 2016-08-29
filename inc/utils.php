@@ -71,7 +71,9 @@ function charger_fonction($nom, $dossier = 'exec', $continue = false) {
 		if ($continue) {
 			return false;
 		} //appel interne, on passe
-		die(spip_htmlspecialchars($nom) . " pas autorise");
+		include_spip('inc/minipres');
+		echo minipres();
+		exit;
 	}
 
 	// passer en minuscules (cf les balises de formulaires)
