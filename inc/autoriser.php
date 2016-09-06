@@ -1016,7 +1016,7 @@ function autoriser_associerauteurs_dist($faire, $type, $id, $qui, $opt) {
  * @param  array $qui Description de l'auteur demandant l'autorisation
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-ÿ */
+ **/
 function autoriser_chargerftp_dist($faire, $type, $id, $qui, $opt) {
 	return $qui['statut'] == '0minirezo';
 }
