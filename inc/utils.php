@@ -2938,12 +2938,12 @@ function aider($aide = '', $distante = false) {
 /**
  * Page `exec=info` : retourne le contenu de la fonction php `phpinfo()`
  *
- * Si l’utiliseur est un administrateur.
+ * Si l’utiliseur est un webmestre.
  */
 function exec_info_dist() {
 
 	include_spip('inc/autoriser');
-	if (autoriser('defaut')) {
+	if (autoriser('webmestre')) {
 		phpinfo();
 	} else {
 		include_spip('inc/filtres');
