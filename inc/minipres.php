@@ -186,7 +186,7 @@ function minipres($titre = '', $corps = "", $options = array()) {
 		$statut = isset($GLOBALS['visiteur_session']['statut']) ? $GLOBALS['visiteur_session']['statut'] : '';
 		$nom = isset($GLOBALS['visiteur_session']['nom']) ? $GLOBALS['visiteur_session']['nom'] : '';
 
-		if ($statut < '0minirezo') {
+		if ($statut != '0minirezo') {
 			$titre = _T('info_acces_interdit');
 		}
 
