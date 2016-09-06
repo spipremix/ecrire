@@ -2950,14 +2950,14 @@ function aide($aide = '', $distante = false) {
 /**
  * Page `exec=info` : retourne le contenu de la fonction php `phpinfo()`
  *
- * Si l’utiliseur est un administrateur.
+ * Si l’utiliseur est un webmestre.
  */
 function exec_info_dist() {
 
-	if ($GLOBALS['connect_statut'] == '0minirezo') {
+	if ($GLOBALS['connect_statut'] == '0minirezo' and $GLOBALS['visiteur_session']['webmestre'] == 'oui') {
 		phpinfo();
 	} else {
-		echo "pas admin";
+		echo "pas webmestre";
 	}
 }
 

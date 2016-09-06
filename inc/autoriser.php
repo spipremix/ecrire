@@ -1016,7 +1016,7 @@ function autoriser_associerauteurs_dist($faire, $type, $id, $qui, $opt) {
  * @param  array $qui Description de l'auteur demandant l'autorisation
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
- **/
+ÿ */
 function autoriser_chargerftp_dist($faire, $type, $id, $qui, $opt) {
 	return $qui['statut'] == '0minirezo';
 }
@@ -1573,4 +1573,21 @@ function autoriser_inscrireauteur_dist($faire, $quoi, $id, $qui, $opt) {
 	}
 
 	return false;
+}
+
+
+/**
+ * Autorisation à voir le phpinfo
+ *
+ * Il faut être webmestre
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_phpinfos($faire, $type, $id, $qui, $opt) {
+	return autoriser('webmestre');
 }
