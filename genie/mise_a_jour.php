@@ -121,6 +121,7 @@ function info_maj($dir, $file, $version) {
 	$p = substr("0123456789", intval($maj));
 	$p = ',/' . $file . '\D+([' . $p . ']+)\D+(\d+)(\D+(\d+))?.*?[.]zip",i';
 	preg_match_all($p, $page, $m, PREG_SET_ORDER);
+	$m = array_pad($m, 5, 0);
 	$page = $page_majeure = '';
 
 	// branche en cours d'utilisation
