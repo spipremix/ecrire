@@ -80,6 +80,14 @@ if (_request('action') or _request('var_ajax') or _request('formulaire_action'))
 		exit;
 	} // le hit est fini !
 }
+// securiser les redirect du back-office
+if (_request('redirect')) {
+	if (!function_exists('securiser_redirect_action')){
+		include_spip('public/aiguiller');
+	}
+	set_request('redirect',securiser_redirect_action(_request('redirect')));
+}
+
 
 //
 // Gestion d'une page normale de l'espace prive
