@@ -4473,9 +4473,9 @@ function charge_scripts($files, $script = true) {
 		}
 		if ($file) {
 			$path = find_in_path($file);
-		}
-		if ($path) {
-			$flux .= spip_file_get_contents($path);
+			if ($path) {
+				$flux .= spip_file_get_contents($path);
+			}
 		}
 	}
 
