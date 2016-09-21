@@ -507,6 +507,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_une_rubrique_02' => 'قسم واحد',
 	'info_url' => 'عنوان URL:',
 	'info_url_proxy' => 'عنوان URL للجهاز الوكيل',
+	'info_url_proxy_pas_conforme' => 'عنوان الجهاز الوكيل غير صالح.',
 	'info_url_site_pas_conforme' => 'عنوان URL غير صالح.',
 	'info_url_test_proxy' => 'عنوان URL للاختبار',
 	'info_urlref' => 'وصلة هايبرتكست:',
