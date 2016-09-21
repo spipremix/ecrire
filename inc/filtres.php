@@ -991,8 +991,17 @@ function textebrut($texte) {
  *     Texte avec liens ouvrants
  **/
 function liens_ouvrants($texte) {
-	return preg_replace(",<a\s+([^>]*https?://[^>]*class=[\"']spip_(out|url)\b[^>]+)>,",
-		"<a \\1 target=\"_blank\">", $texte);
+	if (preg_match_all(",(<a\s+[^>]*https?://[^>]*class=[\"']spip_(out|url)\b[^>]+>),imsS",
+		$texte, $liens, PREG_SET_ORDER)) {
+		foreach ($liens[0] as $a) {
+			$rel = 'noopener noreferrer ' . extraire_attribut($a, 'rel');
+			$ablank = inserer_attribut($a, 'rel', $rel);
+			$ablank = inserer_attribut($ablank, 'target', '_blank');
+			$texte = str_replace($a, $ablank, $texte);
+		}
+	}
+
+	return $texte;
 }
 
 /**
