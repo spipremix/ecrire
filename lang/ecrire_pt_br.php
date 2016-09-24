@@ -476,6 +476,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'info_une_rubrique_02' => '1 seção',
 	'info_url' => 'URL:',
 	'info_url_proxy' => 'URL do proxy',
+	'info_url_proxy_pas_conforme' => 'O URL do proxy não é válido.',
 	'info_url_site_pas_conforme' => 'O URL do site não é válido.',
 	'info_url_test_proxy' => 'URL de teste',
 	'info_urlref' => 'Link hipertexto:',
