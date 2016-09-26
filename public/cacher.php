@@ -249,11 +249,14 @@ function creer_cache(&$page, &$chemin_cache) {
 	// (qui contient deja sa duree de validite)
 	$page['lastmodified'] = $_SERVER['REQUEST_TIME'];
 
+	// compresser le contenu si besoin
+	$pagez = gzip_page($page);
+	
 	// signer le contenu
-	$page['sig'] = cache_signature($page);
+	$pagez['sig'] = cache_signature($pagez);
 
 	// l'enregistrer, compresse ou non...
-	$ok = ecrire_cache($chemin_cache, gzip_page($page));
+	$ok = ecrire_cache($chemin_cache, $pagez);
 
 	spip_log((_IS_BOT ? "Bot:" : "") . "Creation du cache $chemin_cache pour "
 		. $page['entetes']['X-Spip-Cache'] . " secondes" . ($ok ? '' : ' (erreur!)'), _LOG_INFO_IMPORTANTE);
