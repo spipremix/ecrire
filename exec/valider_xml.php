@@ -148,7 +148,7 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
 			$res =
 				"<div style='text-align: center'>" . $err . "</div>" .
 				"<div style='margin: 10px; text-align: left'>" . $texte . '</div>';
-			$bandeau = "<a href='$url_aff'>$url</a>";
+			$bandeau = "<a href='$url_aff'>".$url_aff."</a>";
 		}
 	}
 
