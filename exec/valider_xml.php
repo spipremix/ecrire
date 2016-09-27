@@ -51,7 +51,7 @@ function exec_valider_xml_dist() {
 		if (strncmp($url,'/',1)==0) $erreur = 'Chemin absolu interdit pour var_url';
 		// on a pas le droit de remonter plus de 1 fois dans le path (pas 2 occurences de ../)
 		if (($p=strpos($url,'../'))!==false AND strpos($url,'../',$p+3)!==false) $erreur = 'Interdit de remonter en dehors de la racine';
-		if (strpos($url,'://')!==false) $erreur = 'URL absolue interdite pour var_url';
+		if (strpos($url,'://')!==false or strpos($url,':\\')!==false) $erreur = 'URL absolue interdite pour var_url';
 
 		$ext = trim(_request('ext'));
 		$ext = ltrim($ext,'.'); // precaution
@@ -88,9 +88,8 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
 	}
 	$titre = _T('analyse_xml');
 	if (!$url) {
-		$url_aff = 'http://';
-		$onfocus = "this.value='';";
-		$texte = $bandeau = $err = '';
+		$url_aff = '';
+		$bandeau = $err = '';
 	} else {
 		include_spip('inc/distant');
 
@@ -133,7 +132,6 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
 			}
 
 			$transformer_xml = charger_fonction('valider', 'xml');
-			$onfocus = "this.value='" . addslashes($url) . "';";
 			if (preg_match(',^[a-z][0-9a-z_]*$,i', $url)) {
 				$res = $transformer_xml(charger_fonction($url, $dir), $args);
 				$url_aff = valider_pseudo_url($dir, $script);
@@ -158,11 +156,11 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
 	$jq = http_script("", 'jquery.js');
 
 	echo str_replace('<head>', "<head>$jq", $debut);
-	$onfocus = '<input type="text" size="70" value="' . $url_aff . '" name="var_url" id="var_url" onfocus="' . $onfocus . '" />';
-	$onfocus = generer_form_ecrire('valider_xml', $onfocus, " method='get'");
+	$texte = '<input type="text" size="70" value="' . $url_aff . '" name="var_url" id="var_url" placeholder="http://" />';
+	$texte = generer_form_ecrire('valider_xml', $texte, " method='get'");
 
-	echo "<h1>", $titre, '<br>', $bandeau, '</h1>',
-	"<div style='text-align: center'>", $onfocus, "</div>",
+	echo "<h1 class='grostitre'>", $titre, $bandeau, '</h1>',
+	"<div style='text-align: center'>", $texte, "</div>",
 	$res,
 	fin_page();
 }
