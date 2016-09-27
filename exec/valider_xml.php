@@ -51,6 +51,7 @@ function exec_valider_xml_dist() {
 		if (strncmp($url,'/',1)==0) $erreur = 'Chemin absolu interdit pour var_url';
 		// on a pas le droit de remonter plus de 1 fois dans le path (pas 2 occurences de ../)
 		if (($p=strpos($url,'../'))!==false AND strpos($url,'../',$p+3)!==false) $erreur = 'Interdit de remonter en dehors de la racine';
+		if (strpos($url,'://')!==false) $erreur = 'URL absolue interdite pour var_url';
 
 		$ext = trim(_request('ext'));
 		$ext = ltrim($ext,'.'); // precaution
