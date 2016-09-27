@@ -171,7 +171,7 @@ function calculer_inclure($p, &$boucles, $id_boucle) {
 	$_contexte = argumenter_inclure($p->param, false, $p, $boucles, $id_boucle, true, '', true);
 	if (is_string($p->texte)) {
 		$fichier = $p->texte;
-		$code = "\"$fichier\"";
+		$code = "\"".str_replace('"','\"',$fichier)."\"";
 
 	} else {
 		$code = calculer_liste($p->texte, $p->descr, $boucles, $id_boucle);
@@ -220,7 +220,7 @@ function calculer_inclure($p, &$boucles, $id_boucle) {
 	}
 
 	// s'il y a une extension .php, ce n'est pas un squelette
-	if (preg_match('/^.+[.]php$/s', $fichier)) {
+	if ($fichier and preg_match('/^.+[.]php$/s', $fichier)) {
 		$code = sandbox_composer_inclure_php($fichier, $p, $contexte);
 	} else {
 		$_options[] = "\"compil\"=>array($compil)";
