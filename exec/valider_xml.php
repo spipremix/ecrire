@@ -41,7 +41,7 @@ include_spip('public/debusquer');
  * @uses valider_xml_ok()
  **/
 function exec_valider_xml_dist() {
-	if (!autoriser('sauvegarder')) {
+	if (!autoriser('webmestre')) {
 		include_spip('inc/minipres');
 		echo minipres();
 	} else {
@@ -49,20 +49,39 @@ function exec_valider_xml_dist() {
 		// verifier que les var de l'URL sont conformes avant d'appeler la fonction
 		$url = trim(_request('var_url'));
 		if (strncmp($url,'/',1)==0) $erreur = 'Chemin absolu interdit pour var_url';
-		// on a pas le droit de remonter plus de 1 fois dans le path (pas 2 occurences de ../)
-		if (($p=strpos($url,'../'))!==false AND strpos($url,'../',$p+3)!==false) $erreur = 'Interdit de remonter en dehors de la racine';
+		// on a pas le droit de remonter plus de 1 fois dans le path (pas 2 occurences de ../ ou ..\ (win))
+		if (($p=strpos($url,'..'))!==false AND strpos($url,'..',$p+3)!==false) $erreur = 'Interdit de remonter en dehors de la racine';
 		if (strpos($url,'://')!==false or strpos($url,':\\')!==false) $erreur = 'URL absolue interdite pour var_url';
 
 		$ext = trim(_request('ext'));
 		$ext = ltrim($ext,'.'); // precaution
 		if (preg_match('/\W/',$ext)) $erreur = 'Extension invalide';
 
+		// en GET var_url doit etre signee, en POST seule l'action est signee
+		// CSRF safe
+		$process = true;
+		if ($url){
+			include_spip('inc/securiser_action');
+			if ($_SERVER["REQUEST_METHOD"]=='POST'){
+				if (!$token = _request('var_token')
+				  or !verifier_cle_action("valider_xml",$token)){
+					$process = false;
+				}
+			}
+			if ($_SERVER["REQUEST_METHOD"]!='POST'){
+				if (!$token = _request('var_token')
+				  or !verifier_cle_action("valider_xml&var_url=$url",$token)){
+					$process = false;
+				}
+			}
+		}
+
 		if ($erreur){
 			include_spip('inc/minipres');
 			echo minipres($erreur);
 		}
 		else {
-			valider_xml_ok($url, $ext, intval(_request('limit')), _request('recur'));
+			valider_xml_ok($url, $ext, intval(_request('limit')), _request('recur'), $process);
 		}
 	}
 }
@@ -80,7 +99,7 @@ function exec_valider_xml_dist() {
  * @param array|bool $rec
  *
  **/
-function valider_xml_ok($url, $req_ext, $limit, $rec) {
+function valider_xml_ok($url, $req_ext, $limit, $rec, $process = true) {
 	$url = urldecode($url);
 	$rec = !$rec ? false : array();
 	if (!$limit) {
@@ -131,23 +150,28 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
 				$args = true;
 			}
 
-			$transformer_xml = charger_fonction('valider', 'xml');
-			if (preg_match(',^[a-z][0-9a-z_]*$,i', $url)) {
-				$res = $transformer_xml(charger_fonction($url, $dir), $args);
-				$url_aff = valider_pseudo_url($dir, $script);
-			} else {
-				$res = $transformer_xml(recuperer_page($url));
-				$url_aff = entites_html($url);
-			}
-			list($texte, $err) = emboite_texte($res);
-			if (!$err) {
-				$err = '<h3>' . _T('spip_conforme_dtd') . '</h3>';
+			$url_aff = entites_html($url);
+			$bandeau = "";
+			$res = "";
+			if ($process) {
+				$transformer_xml = charger_fonction('valider', 'xml');
+				if (preg_match(',^[a-z][0-9a-z_]*$,i', $url)) {
+					$res = $transformer_xml(charger_fonction($url, $dir), $args);
+					$url_aff = valider_pseudo_url($dir, $script);
+				} else {
+					$res = $transformer_xml(recuperer_page($url));
+					$url_aff = entites_html($url);
+				}
+				list($texte, $err) = emboite_texte($res);
+				if (!$err) {
+					$err = '<h3>' . _T('spip_conforme_dtd') . '</h3>';
+				}
+				$res =
+					"<div style='text-align: center'>" . $err . "</div>" .
+					"<div style='margin: 10px; text-align: left'>" . $texte . '</div>';
+				$bandeau = "<a href='$url_aff'>".$url_aff."</a>";
 			}
 
-			$res =
-				"<div style='text-align: center'>" . $err . "</div>" .
-				"<div style='margin: 10px; text-align: left'>" . $texte . '</div>';
-			$bandeau = "<a href='$url_aff'>".$url_aff."</a>";
 		}
 	}
 
@@ -155,13 +179,27 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
 	$debut = $commencer_page($titre);
 	$jq = http_script("", 'jquery.js');
 
-	echo str_replace('<head>', "<head>$jq", $debut);
-	$texte = '<input type="text" size="70" value="' . $url_aff . '" name="var_url" id="var_url" placeholder="http://" />';
-	$texte = generer_form_ecrire('valider_xml', $texte, " method='get'");
 
-	echo "<h1 class='grostitre'>", $titre, $bandeau, '</h1>',
+	echo str_replace('<head>', "<head>$jq", $debut);
+	include_spip('inc/securiser_action');
+	$token = calculer_cle_action("valider_xml");
+	$texte = '<input type="text" size="70" value="' . $url_aff . '" name="var_url" id="var_url" placeholder="http://" />';
+	$texte .= '<input type="hidden" value="' . $token . '" name="var_token" />';
+	$texte .= '<input type="hidden" value="' . $req_ext . '" name="ext" />';
+	$texte .= '<input type="submit" value="Go" />';
+	$texte = generer_form_ecrire('valider_xml', $texte, " method='post'");
+
+	$self = generer_url_ecrire('valider_xml');
+	$self = parametre_url($self, 'var_url', $url);
+	$self = parametre_url($self, 'ext', $req_ext);
+	$self = parametre_url($self, 'limit', $limit);
+	$self = parametre_url($self, 'rec', $rec);
+	$self = "<a href='$self'>$self</a>";
+
+	echo "<h1 class='grostitre'>", $titre, " <small>$bandeau</small>", '</h1>',
 	"<div style='text-align: center'>", $texte, "</div>",
 	$res,
+	"<br /><br /><p><small>$self</small></p>",
 	fin_page();
 }
 
@@ -174,6 +212,7 @@ function valider_xml_ok($url, $req_ext, $limit, $rec) {
  * @return array
  **/
 function valider_resultats($res, $mode) {
+	include_spip('inc/securiser_action');
 	$i = $j = 0;
 	$table = '';
 	rsort($res);
@@ -194,9 +233,13 @@ function valider_resultats($res, $mode) {
 		if ($err) {
 			$j++;
 		}
-		$h = $mode
-			? ($appel . '&var_mode=debug&var_mode_affiche=validation')
-			: generer_url_ecrire('valider_xml', "var_url=" . urlencode($appel));
+		if ($mode) {
+			$h = $appel . '&var_mode=debug&var_mode_affiche=validation';
+		}
+		else {
+			$h = generer_url_ecrire('valider_xml', "var_url=" . urlencode($appel));
+			$h = parametre_url($h,'var_token', calculer_cle_action("valider_xml&var_url=$appel"));
+		}
 
 		$table .= "<tr class='$class'>"
 			. "<td style='text-align: right'>$nb</td>"
