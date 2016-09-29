@@ -1760,37 +1760,35 @@ function url_de_base($profondeur = null) {
 		or (isset($_SERVER['HTTPS']) and
 			test_valeur_serveur($_SERVER['HTTPS']))
 	) ? 'https' : 'http';
-	if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
-		$host = strtr($_SERVER['HTTP_X_FORWARDED_HOST'], "<>?\"' \r\n", '________');
-	} else {
-		// note : HTTP_HOST contient le :port si necessaire
-		$host = $_SERVER['HTTP_HOST'];
-		// si on n'a pas trouvé d'hôte du tout, en dernier recours on utilise adresse_site comme fallback
-		if (is_null($host) and isset($GLOBALS['meta']['adresse_site'])) {
-			$host = $GLOBALS['meta']['adresse_site'];
-			if ($scheme = parse_url($host, PHP_URL_SCHEME)) {
-				$http = $scheme;
-				$host = str_replace("{$scheme}://", '', $host);
-			}
-		}
-		if (isset($_SERVER['SERVER_PORT'])
-			and $port = $_SERVER['SERVER_PORT']
-			and strpos($host, ":") == false
-		) {
-			if (!defined('_PORT_HTTP_STANDARD')) {
-				define('_PORT_HTTP_STANDARD', '80');
-			}
-			if (!defined('_PORT_HTTPS_STANDARD')) {
-				define('_PORT_HTTPS_STANDARD', '443');
-			}
-			if ($http == "http" and !in_array($port, explode(',', _PORT_HTTP_STANDARD))) {
-				$host .= ":$port";
-			}
-			if ($http == "https" and !in_array($port, explode(',', _PORT_HTTPS_STANDARD))) {
-				$host .= ":$port";
-			}
+
+	// note : HTTP_HOST contient le :port si necessaire
+	$host = $_SERVER['HTTP_HOST'];
+	// si on n'a pas trouvé d'hôte du tout, en dernier recours on utilise adresse_site comme fallback
+	if (is_null($host) and isset($GLOBALS['meta']['adresse_site'])) {
+		$host = $GLOBALS['meta']['adresse_site'];
+		if ($scheme = parse_url($host, PHP_URL_SCHEME)) {
+			$http = $scheme;
+			$host = str_replace("{$scheme}://", '', $host);
 		}
 	}
+	if (isset($_SERVER['SERVER_PORT'])
+		and $port = $_SERVER['SERVER_PORT']
+		and strpos($host, ":") == false
+	) {
+		if (!defined('_PORT_HTTP_STANDARD')) {
+			define('_PORT_HTTP_STANDARD', '80');
+		}
+		if (!defined('_PORT_HTTPS_STANDARD')) {
+			define('_PORT_HTTPS_STANDARD', '443');
+		}
+		if ($http == "http" and !in_array($port, explode(',', _PORT_HTTP_STANDARD))) {
+			$host .= ":$port";
+		}
+		if ($http == "https" and !in_array($port, explode(',', _PORT_HTTPS_STANDARD))) {
+			$host .= ":$port";
+		}
+	}
+
 	if (!$GLOBALS['REQUEST_URI']) {
 		if (isset($_SERVER['REQUEST_URI'])) {
 			$GLOBALS['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
