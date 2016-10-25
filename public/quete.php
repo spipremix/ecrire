@@ -33,8 +33,16 @@ include_spip('base/abstract_sql');
  * @return array|bool|null
  */
 function quete_virtuel($id_article, $connect) {
-	return sql_getfetsel('virtuel', 'spip_articles', array("id_article=" . intval($id_article), "statut='publie'"), '',
-		'', '', '', $connect);
+	return sql_getfetsel(
+		'virtuel',
+		'spip_articles',
+		array('id_article=' . intval($id_article), "statut='publie'"),
+		'',
+		'',
+		'',
+		'',
+		$connect
+	);
 }
 
 /**
@@ -56,19 +64,27 @@ function quete_parent_lang($table, $id, $connect = '') {
 			$trouver_table = charger_fonction('trouver_table', 'base');
 			if (!$desc = $trouver_table($table,
 					$connect) or !isset($desc['field']['id_rubrique'])
-			) // pas de parent rubrique, on passe
-			{
+			) {
+				// pas de parent rubrique, on passe
 				$cache_quete[$connect][$table]['_select'] = false;
 			} else {
 				$select = ($table == 'spip_rubriques' ? 'id_parent' : 'id_rubrique');
-				$select .= isset($desc['field']['lang']) ? ", lang" : "";
+				$select .= isset($desc['field']['lang']) ? ', lang' : '';
 				$cache_quete[$connect][$table]['_select'] = $select;
 				$cache_quete[$connect][$table]['_id'] = id_table_objet(objet_type($table));
 			}
 		}
 		if ($cache_quete[$connect][$table]['_select']) {
-			$cache_quete[$connect][$table][$id] = sql_fetsel($cache_quete[$connect][$table]['_select'], $table,
-				$cache_quete[$connect][$table]['_id'] . "=" . intval($id), '', '', '', '', $connect);
+			$cache_quete[$connect][$table][$id] = sql_fetsel(
+				$cache_quete[$connect][$table]['_select'],
+				$table,
+				$cache_quete[$connect][$table]['_id'] . '=' . intval($id),
+				'',
+				'',
+				'',
+				'',
+				$connect
+			);
 		}
 	}
 
@@ -149,14 +165,14 @@ function quete_profondeur($id, $connect = '') {
  */
 function quete_condition_postdates($champ_date, $serveur = '', $ignore_previsu = false) {
 	if (defined('_VAR_PREVIEW') and _VAR_PREVIEW and !$ignore_previsu) {
-		return "1=1";
+		return '1=1';
 	}
 
 	return
 		(isset($GLOBALS['meta']['date_prochain_postdate'])
 			and $GLOBALS['meta']['date_prochain_postdate'] > time())
 			? "$champ_date<" . sql_quote(date('Y-m-d H:i:s', $GLOBALS['meta']['date_prochain_postdate']), $serveur)
-			: "1=1";
+			: '1=1';
 }
 
 
@@ -178,7 +194,7 @@ function quete_condition_postdates($champ_date, $serveur = '', $ignore_previsu =
 function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ignore_previsu = false) {
 	static $cond = array();
 	$key = func_get_args();
-	$key = implode("-", $key);
+	$key = implode('-', $key);
 	if (isset($cond[$key])) {
 		return $cond[$key];
 	}
@@ -194,7 +210,7 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 	}
 	// '' => ne rien afficher, '!'=> ne rien filtrer
 	if (!strlen($liste)) {
-		return $cond[$key] = ($not ? "1=1" : "'0=1'");
+		return $cond[$key] = ($not ? '1=1' : "'0=1'");
 	}
 
 	$liste = explode(',', $liste);
@@ -202,31 +218,37 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 	foreach ($liste as $k => $v) {
 		// filtrage /auteur pour limiter les objets d'un statut (prepa en general)
 		// a ceux de l'auteur identifie
-		if (strpos($v, "/") !== false) {
-			$v = explode("/", $v);
+		if (strpos($v, '/') !== false) {
+			$v = explode('/', $v);
 			$filtre = end($v);
 			$v = reset($v);
-			$v = preg_replace(",\W,", "", $v);
-			if ($filtre == "auteur"
+			$v = preg_replace(',\W,', '', $v);
+			if ($filtre == 'auteur'
 				and isset($GLOBALS['visiteur_session']['id_auteur'])
 				and intval($GLOBALS['visiteur_session']['id_auteur'])
-				and (strpos($mstatut, ".") !== false)
-				and $objet = explode(".", $mstatut)
+				and (strpos($mstatut, '.') !== false)
+				and $objet = explode('.', $mstatut)
 				and $id_table = reset($objet)
 				and $objet = objet_type($id_table)
 			) {
 				$primary = id_table_objet($objet);
-				$where[] = "($mstatut<>" . sql_quote($v) . " OR $id_table.$primary IN (" . sql_get_select("ssss.id_objet",
-						"spip_auteurs_liens AS ssss",
-						"ssss.objet=" . sql_quote($objet) . " AND ssss.id_auteur=" . intval($GLOBALS['visiteur_session']['id_auteur']),
-						'', '', '', '', $serveur) . "))";
+				$where[] = "($mstatut<>" . sql_quote($v) . " OR $id_table.$primary IN (" . sql_get_select(
+					'ssss.id_objet',
+					'spip_auteurs_liens AS ssss',
+					'ssss.objet=' . sql_quote($objet) . ' AND ssss.id_auteur=' . intval($GLOBALS['visiteur_session']['id_auteur']),
+					'',
+					'',
+					'',
+					'',
+					$serveur
+				) . '))';
 			} // ignorer ce statut si on ne sait pas comment le filtrer
 			else {
-				$v = "";
+				$v = '';
 			}
 		}
 		// securite
-		$liste[$k] = preg_replace(",\W,", "", $v);
+		$liste[$k] = preg_replace(',\W,', '', $v);
 	}
 	$liste = array_filter($liste);
 	if (count($liste) == 1) {
@@ -257,8 +279,7 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
  * @return array|bool|null
  */
 function quete_fichier($id_document, $serveur = '') {
-	return sql_getfetsel('fichier', 'spip_documents', ("id_document=" . intval($id_document)), '', array(), '', '',
-		$serveur);
+	return sql_getfetsel('fichier', 'spip_documents', ('id_document=' . intval($id_document)), '', array(), '', '', $serveur);
 }
 
 /**
@@ -269,7 +290,7 @@ function quete_fichier($id_document, $serveur = '') {
  * @return array|bool
  */
 function quete_document($id_document, $serveur = '') {
-	return sql_fetsel('*', 'spip_documents', ("id_document=" . intval($id_document)), '', array(), '', '', $serveur);
+	return sql_fetsel('*', 'spip_documents', ('id_document=' . intval($id_document)), '', array(), '', '', $serveur);
 }
 
 /**
@@ -282,8 +303,7 @@ function quete_document($id_document, $serveur = '') {
  * @return array|bool|null
  */
 function quete_meta($nom, $serveur) {
-	return sql_getfetsel("valeur", "spip_meta", "nom=" . sql_quote($nom),
-		'', '', '', '', $serveur);
+	return sql_getfetsel('valeur', 'spip_meta', 'nom=' . sql_quote($nom), '', '', '', '', $serveur);
 }
 
 /**
@@ -314,25 +334,25 @@ function quete_logo($cle_objet, $onoff, $id, $id_rubrique, $flag) {
 
 	while (1) {
 		$objet = objet_type($cle_objet);
-		
+
 		$on = quete_logo_objet($id, $objet, $nom);
-		
+
 		if ($on) {
 			if ($flag) {
 				return basename($on['chemin']);
 			} else {
 				$taille = @getimagesize($on['chemin']);
-				
-				// Si on a déjà demandé un survol directement ($onoff = off) ou qu'on a demandé uniquement le normal ($onoff = on)
+
+				// Si on a déjà demandé un survol directement ($onoff = off)
+				// ou qu'on a demandé uniquement le normal ($onoff = on)
 				// alors on ne cherche pas du tout le survol ici
 				if ($onoff != 'ON') {
 					$off = '';
-				}
-				// Sinon, c'est qu'on demande normal ET survol à la fois, donc on cherche maintenant le survol
-				else {
+				} else {
+					// Sinon, c'est qu'on demande normal ET survol à la fois, donc on cherche maintenant le survol
 					$off = quete_logo_objet($id, $objet, 'off');
 				}
-				
+
 				// on retourne une url du type IMG/artonXX?timestamp
 				// qui permet de distinguer le changement de logo
 				// et placer un expire sur le dossier IMG/
@@ -371,7 +391,7 @@ function quete_logo($cle_objet, $onoff, $id, $id_rubrique, $flag) {
 
 /**
  * Chercher le logo d'un contenu précis
- * 
+ *
  * @param int $id_objet
  * 		Idenfiant de l'objet dont on cherche le logo
  * @param string $objet
@@ -385,7 +405,7 @@ function quete_logo_objet($id_objet, $objet, $mode) {
 		$chercher_logo = charger_fonction('chercher_logo', 'inc');
 	}
 	$cle_objet = id_table_objet($objet);
-	
+
 	// On cherche pas la méthode classique
 	$infos_logo = $chercher_logo($id_objet, $cle_objet, $mode);
 	// Si la méthode classique a trouvé quelque chose, on utilise le nouveau format
@@ -395,7 +415,7 @@ function quete_logo_objet($id_objet, $objet, $mode) {
 			'timestamp' => $infos_logo[4],
 		);
 	}
-	
+
 	// On passe cette recherche de logo dans un pipeline
 	$infos_logo = pipeline(
 		'quete_logo_objet',
@@ -409,7 +429,7 @@ function quete_logo_objet($id_objet, $objet, $mode) {
 			'data' => $infos_logo,
 		)
 	);
-	
+
 	return $infos_logo;
 }
 
@@ -565,7 +585,7 @@ function calcul_exposer($id, $prim, $reference, $parent, $type, $connect = '') {
 				$exposer[$m][$type][$principal] = true;
 				if ($type == 'id_mot') {
 					if (!$parent) {
-						$parent = sql_getfetsel('id_groupe', 'spip_mots', "id_mot=" . intval($principal), '', '', '', '', $connect);
+						$parent = sql_getfetsel('id_groupe', 'spip_mots', 'id_mot=' . intval($principal), '', '', '', '', $connect);
 					}
 					if ($parent) {
 						$exposer[$m]['id_groupe'][$parent] = true;
