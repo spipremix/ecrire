@@ -50,7 +50,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function roles_presents($objet, $objet_destination = '') {
 	$desc = lister_tables_objets_sql(table_objet_sql($objet));
 
-	// pas de liste de roles, on sort 
+	// pas de liste de roles, on sort
 	if (!isset($desc['roles_titres']) or !($titres = $desc['roles_titres'])) {
 		return false;
 	}
@@ -204,7 +204,8 @@ function roles_creer_condition_role($objet_source, $objet, $cond, $tous_si_absen
  * @param string $objet_source Objet dont on veut récupérer la liste des identifiants
  * @param string $objet Objet sur lequel est liée la source
  * @param int $id_objet Identifiant d'objet sur lequel est liée la source
- * @param string $objet_lien Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
+ * @param string $objet_lien Objet dont on utilise la table de liaison
+ * 		(c'est forcément soit $objet_source, soit $objet)
  * @return array               Liste des identifiants
  */
 function roles_complets($objet_source, $objet, $id_objet, $objet_lien) {
@@ -241,7 +242,8 @@ function roles_complets($objet_source, $objet, $id_objet, $objet_lien) {
  * @param string $objet_source Objet qu'on lie
  * @param string $objet Objet sur lequel est liée la source
  * @param int $id_objet Identifiant d'objet sur lequel est liée la source
- * @param string $objet_lien Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
+ * @param string $objet_lien Objet dont on utilise la table de liaison
+ * 		(c'est forcément soit $objet_source, soit $objet)
  * @return array                  Liste des roles
  */
 function roles_presents_sur_id($id_objet_source, $objet_source, $objet, $id_objet, $objet_lien) {
@@ -275,7 +277,8 @@ function roles_presents_sur_id($id_objet_source, $objet_source, $objet, $id_obje
  * @param string $objet_source Objet dont on veut récupérer la liste des identifiants
  * @param string $objet Objet sur lequel est liée la source
  * @param int $id_objet Identifiant d'objet sur lequel est liée la source
- * @param string $objet_lien Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
+ * @param string $objet_lien Objet dont on utilise la table de liaison
+ * 		(c'est forcément soit $objet_source, soit $objet)
  * @return array|bool
  *     - Tableau d'index
  *       - roles : tableau de description des roles,
@@ -334,7 +337,8 @@ function roles_presents_liaisons($objet_source, $objet, $id_objet, $objet_lien) 
  *
  * @param string $objet_source Objet dont on veut récupérer la liste des identifiants
  * @param string $objet Objet sur lequel est liée la source
- * @param string $objet_lien Objet dont on utilise la table de liaison (c'est forcément soit $objet_source, soit $objet)
+ * @param string $objet_lien Objet dont on utilise la table de liaison
+ * 		(c'est forcément soit $objet_source, soit $objet)
  * @return array|bool
  *     - Tableau de roles : tableau de description des roles,
  *     - false si pas de role déclarés
@@ -361,9 +365,12 @@ function roles_connus_en_base($objet_source, $objet, $objet_lien) {
 	list($primary, $l) = $lien;
 	$colone_role = $roles['colonne'];
 
-	$all = sql_allfetsel("DISTINCT $colone_role", $l,
-		"objet=" . sql_quote(($objet_source == $objet_lien) ? $objet : $objet_source));
-	$done[$hash] = array_map("reset", $all);
+	$all = sql_allfetsel(
+		"DISTINCT $colone_role",
+		$l,
+		'objet=' . sql_quote(($objet_source == $objet_lien) ? $objet : $objet_source)
+	);
+	$done[$hash] = array_map('reset', $all);
 
 	return $done[$hash];
 }
