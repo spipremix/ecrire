@@ -428,10 +428,12 @@ function plugin_trier($infos, $liste_non_classee) {
 
 function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 	static $erreurs = array();
+
 	foreach ($liste_non_classee as $p => $resume) {
 		$dir_type = $resume['dir_type'];
 		$plug = $resume['dir'];
 		$k = $infos[$dir_type][$plug];
+
 		$plug = constant($dir_type) . $plug;
 		if (!isset($msg[$p])) {
 			if (!$msg[$p] = plugin_necessite($k['necessite'], $liste, 'necessite')) {
@@ -444,6 +446,7 @@ function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 		}
 		$erreurs[$plug] = $msg[$p];
 	}
+
 	ecrire_meta('plugin_erreur_activation', serialize($erreurs));
 }
 
@@ -486,9 +489,13 @@ function plugin_necessite($n, $liste, $balise = 'necessite') {
 	$msg = array();
 	foreach ($n as $need) {
 		$id = strtoupper($need['nom']);
-		if ($r = plugin_controler_necessite($liste, $id, isset($need['compatibilite']) ? $need['compatibilite'] : '',
-			$balise)
-		) {
+		$r = plugin_controler_necessite(
+			$liste, 
+			$id, 
+			isset($need['compatibilite']) ? $need['compatibilite'] : '', 
+			$balise
+		);
+		if ($r) {
 			$msg[] = $r;
 		}
 	}
@@ -516,8 +523,12 @@ function plugin_controler_necessite($liste, $nom, $intervalle, $balise) {
 		return '';
 	}
 
-	return
-		plugin_message_incompatibilite($intervalle, (isset($liste[$nom]) ? $liste[$nom]['version'] : ""), $nom, $balise);
+	return plugin_message_incompatibilite(
+		$intervalle, 
+		(isset($liste[$nom]) ? $liste[$nom]['version'] : ""), 
+		$nom, 
+		$balise
+	);
 }
 
 
