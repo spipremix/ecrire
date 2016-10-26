@@ -429,6 +429,13 @@ function plugin_trier($infos, $liste_non_classee) {
 function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 	static $erreurs = array();
 
+	if (!is_array($liste)) {
+		$liste = array();
+	}
+
+	// les plugins en erreur ne sont pas actifs ; ils ne doivent pas être dans la liste
+	$liste = array_diff_key($liste, $liste_non_classee);
+
 	foreach ($liste_non_classee as $p => $resume) {
 		$dir_type = $resume['dir_type'];
 		$plug = $resume['dir'];
