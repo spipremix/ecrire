@@ -28,7 +28,7 @@ function inc_journal_dist($phrase, $opt = array()) {
 		return;
 	}
 	if ($opt) {
-		$phrase .= " :: " . str_replace("\n", ' ', join(', ', $opt));
+		$phrase .= ' :: ' . str_replace("\n", ' ', join(', ', $opt));
 	}
 	spip_log($phrase, 'journal');
 }
