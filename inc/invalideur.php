@@ -203,8 +203,8 @@ function purger_repertoire($dir, $options = array()) {
 		} else {
 			if (is_dir($chemin)) {
 				$opts = $options;
-				if (isset($otpions['limit'])) {
-					$otps['limit'] = $otpions['limit'] - $total;
+				if (isset($options['limit'])) {
+					$opts['limit'] = $options['limit'] - $total;
 				}
 				$total += purger_repertoire($chemin, $opts);
 				if (isset($options['subdir']) && $options['subdir']) {
