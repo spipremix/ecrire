@@ -17,7 +17,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function inc_log_dist($message, $logname = null, $logdir = null, $logsuf = null) {
 	static $test_repertoire = array();
 	static $compteur = array();
-	static $debugverb = ""; // pour ne pas le recalculer au reappel
+	static $debugverb = ''; // pour ne pas le recalculer au reappel
 
 	if (is_null($logname) or !is_string($logname)) {
 		$logname = defined('_FILE_LOG') ? _FILE_LOG : 'spip';
@@ -42,8 +42,12 @@ function inc_log_dist($message, $logname = null, $logdir = null, $logsuf = null)
 
 	if (!isset($test_repertoire[$d = dirname($logfile)])) {
 		$test_repertoire[$d] = false; // eviter une recursivite en cas d'erreur de sous_repertoire
-		$test_repertoire[$d] = (@is_dir($d) ? true : (function_exists('sous_repertoire') ? sous_repertoire($d, '', false,
-			true) : false));
+		$test_repertoire[$d] = (@is_dir($d) ? true : (function_exists('sous_repertoire') ? sous_repertoire(
+			$d,
+			'',
+			false,
+			true
+		) : false));
 	}
 
 	// si spip_log() dans mes_options, ou repertoire log/ non present, poser dans tmp/
@@ -67,10 +71,10 @@ function inc_log_dist($message, $logname = null, $logdir = null, $logsuf = null)
 			$fi = substr($fi, strlen(_ROOT_RACINE));
 		}
 		$fu = isset($debug[2]['function']) ? $debug[2]['function'] : '';
-		$debugverb = "$fi:L$l:$fu" . "():";
+		$debugverb = "$fi:L$l:$fu" . '():';
 	}
 
-	$m = date("Y-m-d H:i:s") . ' ' . (isset($GLOBALS['ip']) ? $GLOBALS['ip'] : '') . ' ' . $pid . ' '
+	$m = date('Y-m-d H:i:s') . ' ' . (isset($GLOBALS['ip']) ? $GLOBALS['ip'] : '') . ' ' . $pid . ' '
 		//distinguer les logs prives et publics dans les grep
 		. $debugverb
 		. (test_espace_prive() ? ':Pri:' : ':Pub:')
@@ -84,7 +88,7 @@ function inc_log_dist($message, $logname = null, $logdir = null, $logsuf = null)
 		$m .= "[-- rotate --]\n";
 	}
 
-	$f = @fopen($logfile, "ab");
+	$f = @fopen($logfile, 'ab');
 	if ($f) {
 		fputs($f, (defined('_LOG_BRUT') and _LOG_BRUT) ? $m : str_replace('<', '&lt;', $m));
 		fclose($f);
@@ -105,5 +109,5 @@ function inc_log_dist($message, $logname = null, $logdir = null, $logsuf = null)
 	) {
 		inc_log_dist($logname == 'maj' ? 'cf maj.log' : $message);
 	}
-	$debugverb = "";
+	$debugverb = '';
 }
