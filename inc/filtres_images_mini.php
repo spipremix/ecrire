@@ -71,9 +71,9 @@ function couleur_html_to_hex($couleur) {
 function couleur_foncer($couleur, $coeff = 0.5) {
 	$couleurs = _couleur_hex_to_dec($couleur);
 
-	$red = $couleurs["red"] - round(($couleurs["red"]) * $coeff);
-	$green = $couleurs["green"] - round(($couleurs["green"]) * $coeff);
-	$blue = $couleurs["blue"] - round(($couleurs["blue"]) * $coeff);
+	$red = $couleurs['red'] - round(($couleurs['red']) * $coeff);
+	$green = $couleurs['green'] - round(($couleurs['green']) * $coeff);
+	$blue = $couleurs['blue'] - round(($couleurs['blue']) * $coeff);
 
 	$couleur = _couleur_dec_to_hex($red, $green, $blue);
 
@@ -95,14 +95,13 @@ function couleur_foncer($couleur, $coeff = 0.5) {
 function couleur_eclaircir($couleur, $coeff = 0.5) {
 	$couleurs = _couleur_hex_to_dec($couleur);
 
-	$red = $couleurs["red"] + round((255 - $couleurs["red"]) * $coeff);
-	$green = $couleurs["green"] + round((255 - $couleurs["green"]) * $coeff);
-	$blue = $couleurs["blue"] + round((255 - $couleurs["blue"]) * $coeff);
+	$red = $couleurs['red'] + round((255 - $couleurs['red']) * $coeff);
+	$green = $couleurs['green'] + round((255 - $couleurs['green']) * $coeff);
+	$blue = $couleurs['blue'] + round((255 - $couleurs['blue']) * $coeff);
 
 	$couleur = _couleur_dec_to_hex($red, $green, $blue);
 
 	return $couleur;
-
 }
 
 /**
@@ -137,12 +136,12 @@ function image_select($img, $width_min = 0, $height_min = 0, $width_max = 10000,
 	$class = extraire_attribut($img, 'class');
 	$p = strpos($class, 'filtre_inactif');
 	if (($select == false) and ($p === false)) {
-		$class .= " filtre_inactif";
+		$class .= ' filtre_inactif';
 		$img = inserer_attribut($img, 'class', $class);
 	}
 	if (($select == true) and ($p !== false)) {
 		// no_image_filtrer : historique, a virer
-		$class = preg_replace(",\s*(filtre_inactif|no_image_filtrer),", "", $class);
+		$class = preg_replace(',\s*(filtre_inactif|no_image_filtrer),', '', $class);
 		$img = inserer_attribut($img, 'class', $class);
 	}
 
