@@ -72,13 +72,11 @@ function traiter_raccourci_lien_atts($texte) {
 
 define('_RACCOURCI_CHAPO', '/^(\W*)(\W*)(\w*\d+([?#].*)?)$/');
 /**
- * Fonction pour les champs virtuels de redirection qui peut etre:
- * 3. une URL std
- *
- * renvoie l'url reelle de redirection si le $url=true,
- * l'url brute contenue dans le chapo sinon
- *
- * http://code.spip.net/@chapo_redirige
+ * Retourne la valeur d'un champ de redirection (articles virtuels)
+ * 
+ * @note
+ *     Pas d'action dans le noyau SPIP directement. 
+ *     Se réferer inc/lien du plugin Textwheel.
  *
  * @param string $virtuel
  * @param bool $url
