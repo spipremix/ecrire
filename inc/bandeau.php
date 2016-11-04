@@ -60,7 +60,6 @@ function definir_barre_contexte($contexte = null) {
 			}
 		}
 	}
-
 	return $contexte;
 }
 
@@ -91,10 +90,12 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 	}
 
 	foreach ($liste_boutons as $id => $infos) {
-		$parent = "";
+		$parent = '';
 		// les boutons principaux ne sont pas soumis a autorisation
-		if (!isset($infos['parent']) or !($parent = $infos['parent']) or !$autorise or autoriser('menu', "_$id", 0, null,
-				array('contexte' => $contexte))
+		if (!isset($infos['parent'])
+			or !($parent = $infos['parent'])
+			or !$autorise
+			or autoriser('menu', "_$id", 0, null, array('contexte' => $contexte))
 		) {
 			if ($parent
 				and $parent = preg_replace(',^bando_,', 'menu_', $parent)
@@ -137,7 +138,6 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 			}
 		}
 	}
-
 	return pipeline('ajouter_menus', $boutons_admin);
 }
 
@@ -149,17 +149,16 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
  * @param array|null $contexte
  * @return string
  */
-function bandeau_creer_url($url, $args = "", $contexte = null) {
+function bandeau_creer_url($url, $args = '', $contexte = null) {
 	if (!preg_match(',[\/\?],', $url)) {
 		$url = generer_url_ecrire($url, $args, true);
 		// recuperer les parametres du contexte demande par l'url sous la forme
 		// &truc=@machin@
 		// @machin@ etant remplace par _request('machin')
 		$url = str_replace('&amp;', '&', $url);
-		while (preg_match(",[&?]([a-z_]+)=@([a-z_]+)@,i", $url, $matches)) {
+		while (preg_match(',[&?]([a-z_]+)=@([a-z_]+)@,i', $url, $matches)) {
 			if ($matches[2] == 'id_secteur' and !isset($contexte['id_secteur']) and isset($contexte['id_rubrique'])) {
-				$contexte['id_secteur'] = sql_getfetsel('id_secteur', 'spip_rubriques',
-					'id_rubrique=' . intval($contexte['id_rubrique']));
+				$contexte['id_secteur'] = sql_getfetsel('id_secteur', 'spip_rubriques', 'id_rubrique=' . intval($contexte['id_rubrique']));
 			}
 			$val = _request($matches[2], $contexte);
 			$url = parametre_url($url, $matches[1], $val ? $val : '', '&');
@@ -169,7 +168,6 @@ function bandeau_creer_url($url, $args = "", $contexte = null) {
 
 	return $url;
 }
-
 
 /**
  * Construire tout le bandeau supérieur de l'espace privé

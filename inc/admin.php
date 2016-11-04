@@ -20,7 +20,6 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
-
 /**
  * Teste qu'un utilisateur a des droits sur les fichiers du site et
  * exécute l'action (en base) demandée si c'est le cas.
@@ -70,7 +69,6 @@ function inc_admin_dist($script, $titre, $comment = '', $anonymous = false) {
 	return '';
 }
 
-
 /**
  * Gestion dans la meta "admin" du script d'administation demandé,
  * pour éviter des exécutions en parallèle, notamment après Time-Out.
@@ -99,16 +97,15 @@ function inc_admin_dist($script, $titre, $comment = '', $anonymous = false) {
  *     Code HTML si message d'erreur, '' sinon;
  */
 function admin_verifie_session($script, $anonymous = false) {
-
 	include_spip('base/abstract_sql');
-	$pref = sprintf("_%d_", $GLOBALS['visiteur_session']['id_auteur']);
+	$pref = sprintf('_%d_', $GLOBALS['visiteur_session']['id_auteur']);
 	$signal = fichier_admin($script, "$script$pref");
 	$valeur = sql_getfetsel('valeur', 'spip_meta', "nom='admin'");
 	if ($valeur === null) {
 		ecrire_meta('admin', $signal, 'non');
 	} else {
 		if (!$anonymous and ($valeur != $signal)) {
-			if (!preg_match('/^(.*)_(\d+)_/', $GLOBALS['meta']["admin"], $l)
+			if (!preg_match('/^(.*)_(\d+)_/', $GLOBALS['meta']['admin'], $l)
 				or intval($l[2]) != $GLOBALS['visiteur_session']['id_auteur']
 			) {
 				include_spip('inc/minipres');
@@ -118,14 +115,14 @@ function admin_verifie_session($script, $anonymous = false) {
 			}
 		}
 	}
-	$journal = "spip";
-	if (autoriser('configurer')) // c'est une action webmestre, soit par ftp soit par statut webmestre
-	{
+	$journal = 'spip';
+	if (autoriser('configurer')) {
+		// c'est une action webmestre, soit par ftp soit par statut webmestre
 		$journal = 'webmestre';
 	}
 	// on pourrait statuer automatiquement les webmestres a l'init d'une action auth par ftp ... ?
 
-	spip_log("admin $pref" . ($valeur ? " (reprise)" : ' (init)'), $journal);
+	spip_log("admin $pref" . ($valeur ? ' (reprise)' : ' (init)'), $journal);
 
 	return '';
 }
@@ -147,7 +144,6 @@ function dir_admin() {
 	}
 }
 
-
 /**
  * Retourne le nom d'un fichier de teste d'authentification par accès
  * aux fichiers
@@ -162,7 +158,6 @@ function dir_admin() {
  *     Nom du fichier
  **/
 function fichier_admin($action, $pref = 'admin_') {
-
 	return $pref .
 	substr(md5($action . (time() & ~2047) . $GLOBALS['visiteur_session']['login']), 0, 10);
 }
@@ -190,7 +185,6 @@ function fichier_admin($action, $pref = 'admin_') {
  *     sinon chaîne vide si déjà fait.
  **/
 function debut_admin($script, $action = '', $corps = '') {
-
 	if ((!$action) || !(autoriser('webmestre') or autoriser('chargerftp'))) {
 		include_spip('inc/minipres');
 
@@ -220,21 +214,22 @@ function debut_admin($script, $action = '', $corps = '') {
 			$js = '';
 		} else {
 			// cet appel permet d'assurer un copier-coller du nom du repertoire a creer dans tmp (esj)
-			// l'insertion du script a cet endroit n'est pas xhtml licite mais evite de l'embarquer dans toutes les pages minipres
-			$corps .= http_script('', "spip_barre.js");
+			// l'insertion du script a cet endroit n'est pas xhtml licite
+			// mais evite de l'embarquer dans toutes les pages minipres
+			$corps .= http_script('', 'spip_barre.js');
 
-			$corps .= "<fieldset><legend>"
+			$corps .= '<fieldset><legend>'
 				. _T('info_authentification_ftp')
-				. aider("ftp_auth")
+				. aider('ftp_auth')
 				. "</legend>\n<label for='fichier'>"
 				. _T('info_creer_repertoire')
 				. "</label>\n"
-				. "<span id='signal' class='formo'>" . $signal . "</span>"
+				. "<span id='signal' class='formo'>" . $signal . '</span>'
 				. "<input type='hidden' id='fichier' name='fichier' value='"
 				. $signal
 				. "' />"
 				. _T('info_creer_repertoire_2', array('repertoire' => joli_repertoire($dir)))
-				. "</fieldset>";
+				. '</fieldset>';
 
 			$suivant = _T('bouton_recharger_page');
 
@@ -243,7 +238,6 @@ function debut_admin($script, $action = '', $corps = '') {
 			// en remettant a vide le champ pour que ca marche aussi en cas
 			// de JavaScript inactif.
 			$js = " onload='var range=document.createRange(); var signal = document.getElementById(\"signal\"); var userSelection = window.getSelection(); range.setStart(signal,0); range.setEnd(signal,1); userSelection.addRange(range);'";
-
 		}
 
 		// admin/xxx correspond
