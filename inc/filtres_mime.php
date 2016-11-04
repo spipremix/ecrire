@@ -38,7 +38,9 @@ include_spip('inc/filtres');
  * @param string $t Contenu
  * @return string Rien.
  **/
-function filtre_image_dist($t) { return ''; }
+function filtre_image_dist($t) {
+	return '';
+}
 
 /**
  * Filtre d'incrustation d'un document audio
@@ -49,7 +51,9 @@ function filtre_image_dist($t) { return ''; }
  * @param string $t Contenu
  * @return string Rien.
  **/
-function filtre_audio_dist($t) { return ''; }
+function filtre_audio_dist($t) {
+	return '';
+}
 
 /**
  * Filtre d'incrustation d'un document video
@@ -60,7 +64,9 @@ function filtre_audio_dist($t) { return ''; }
  * @param string $t Contenu
  * @return string Rien.
  **/
-function filtre_video_dist($t) { return ''; }
+function filtre_video_dist($t) {
+	return '';
+}
 
 /**
  * Filtre d'incrustation d'un document application
@@ -71,7 +77,9 @@ function filtre_video_dist($t) { return ''; }
  * @param string $t Contenu
  * @return string Rien.
  **/
-function filtre_application_dist($t) { return ''; }
+function filtre_application_dist($t) {
+	return '';
+}
 
 /**
  * Filtre d'incrustation d'un document message
@@ -82,7 +90,9 @@ function filtre_application_dist($t) { return ''; }
  * @param string $t Contenu
  * @return string Rien.
  **/
-function filtre_message_dist($t) { return ''; }
+function filtre_message_dist($t) {
+	return '';
+}
 
 /**
  * Filtre d'incrustation d'un document multipart
@@ -93,7 +103,9 @@ function filtre_message_dist($t) { return ''; }
  * @param string $t Contenu
  * @return string Rien.
  **/
-function filtre_multipart_dist($t) { return ''; }
+function filtre_multipart_dist($t) {
+	return '';
+}
 
 /**
  * Filtre d'incrustation d'un document test
@@ -132,7 +144,7 @@ function filtre_text_csv_dist($t) {
 	$corps = $caption .
 		"\n|{{" .
 		join('}}|{{', $entete) .
-		"}}|" .
+		'}}|' .
 		"\n|" .
 		str_replace("\n", "|\n|", $corps);
 	$corps = str_replace('&#34#', '&#34;', $corps);
@@ -176,7 +188,7 @@ function filtre_text_html_dist($t) {
 	// Pourquoi SafeHtml transforme-t-il en texte les scripts dans Body ?
 	$t = safehtml(preg_replace(',<script' . '.*?</script>,is', '', $t));
 
-	return (!$style ? '' : "\n<style>" . $style . "</style>") . $t;
+	return (!$style ? '' : "\n<style>" . $style . '</style>') . $t;
 }
 
 /**

@@ -106,7 +106,7 @@ function spip_nfslock($fichier, $max_age = 0) {
 	if (!$max_age) {
 		$max_age = _DEFAULT_LOCKTIME;
 	}
-	$lock_file = _DIR_TMP . _NAME_LOCK . "-" . substr(md5($fichier), 0, 8);
+	$lock_file = _DIR_TMP . _NAME_LOCK . '-' . substr(md5($fichier), 0, 8);
 
 
 	/*
@@ -155,7 +155,7 @@ function spip_nfslock($fichier, $max_age = 0) {
 		 */
 
 		$old_stat = lstat($lock_file);
-		if (@fputs($tmpfd, "zz", 2) != 2 || !$our_tmp = fstat($tmpfd)) {
+		if (@fputs($tmpfd, 'zz', 2) != 2 || !$our_tmp = fstat($tmpfd)) {
 			break;
 		} /* something bogus is going on */
 
@@ -244,7 +244,7 @@ function spip_nfsunlock($fichier, $birth, $max_age = 0, $test = false) {
 	$tpath = _DIR_TMP . "stime.$id";
 	$tmpfd = @fopen($tpath, 'w');
 	if ((!$tmpfd)
-		or (@fputs($tmpfd, "zz", 2) != 2)
+		or (@fputs($tmpfd, 'zz', 2) != 2)
 		or !($our_tmp = fstat($tmpfd))
 	) {
 		/* The open failed, or we can't write the file, or we can't stat it */
@@ -261,7 +261,7 @@ function spip_nfsunlock($fichier, $birth, $max_age = 0, $test = false) {
 	 * 2. make fullpath, a buffer for the full pathname of the lock file
 	 */
 
-	$lock_file = _DIR_TMP . _NAME_LOCK . "-" . substr(md5($fichier), 0, 8);
+	$lock_file = _DIR_TMP . _NAME_LOCK . '-' . substr(md5($fichier), 0, 8);
 
 	/*
 	 * 3. If the ctime hasn't been modified, unlink the file and return. If the
@@ -293,7 +293,7 @@ function spip_nfsunlock($fichier, $birth, $max_age = 0, $test = false) {
 	 *    someone else has grabbed the file, so return NFSL_LOST.
 	 */
 
-	if ($our_tmp['ctime'] < $birth + $max_age)  /* lock was stolen */ {
+	if ($our_tmp['ctime'] < $birth + $max_age) { /* lock was stolen */
 		return false;
 	} //(NFSL_STOLEN);
 

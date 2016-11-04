@@ -209,13 +209,13 @@ function test_enfants_rubrique($id_rubrique, $types = array()) {
 		$id_parent = sql_getfetsel('id_parent', 'spip_rubriques', 'id_rubrique=' . intval($id_rubrique));
 		$fratrie = sql_allfetsel('id_rubrique', 'spip_rubriques', 'id_parent=' . intval($id_parent));
 		$fratrie = array_map('reset', $fratrie);
-		$has = sql_allfetsel("DISTINCT id_parent", "spip_rubriques", sql_in('id_parent', $fratrie));
+		$has = sql_allfetsel('DISTINCT id_parent', 'spip_rubriques', sql_in('id_parent', $fratrie));
 		$has = array_map('reset', $has);
 		$fratrie = array_diff($fratrie, $has);
 
 		while (count($fratrie) and is_array($types) and count($types)) {
 			$type = array_shift($types);
-			$h = sql_allfetsel("DISTINCT id_rubrique", table_objet_sql($type), sql_in('id_rubrique', $fratrie));
+			$h = sql_allfetsel('DISTINCT id_rubrique', table_objet_sql($type), sql_in('id_rubrique', $fratrie));
 			$h = array_map('reset', $h);
 			$has = array_merge($has, $h);
 			$fratrie = array_diff($fratrie, $h);
