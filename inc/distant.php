@@ -235,6 +235,31 @@ function prepare_donnees_post($donnees, $boundary = '') {
 }
 
 /**
+ * Convertir une URL dont le host est en utf8 en ascii
+ * Utilise la librairie https://github.com/phlylabs/idna-convert/tree/v0.9.1
+ * dans sa derniere version compatible toutes version PHP 5
+ * La fonction PHP idn_to_ascii depend d'un package php5-intl et est rarement disponible
+ *
+ * @param string $url_idn
+ * @return array|string
+ */
+function url_to_ascii($url_idn) {
+
+	if ($parts = parse_url($url_idn)) {
+		$host = $parts['host'];
+		if (!preg_match(',^[a-z0-9_\.\-]+$,i', $host)) {
+			include_spip('inc/idna_convert.class');
+			$IDN = new idna_convert();
+			$host_ascii = $IDN->encode($host);
+			$url_idn = explode($host, $url_idn, 2);
+			$url_idn = implode($host_ascii, $url_idn);
+		}
+	}
+
+	return $url_idn;
+}
+
+/**
  * Récupère le contenu d'une URL
  * au besoin encode son contenu dans le charset local
  *
@@ -312,6 +337,8 @@ function recuperer_url($url, $options = array()) {
 	} elseif (strncmp($url, "//", 2) == 0) {
 		$url = 'http:' . $url;
 	}
+
+	$url = url_to_ascii($url);
 
 	$result = array(
 		'status' => 0,
