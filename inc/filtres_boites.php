@@ -49,7 +49,7 @@ function balise_BOITE_OUVRIR_dist($p) {
 	$_head_class = interprete_argument_balise(3, $p);
 	$_titre = ($_titre ? $_titre : "''");
 	$_class = ($_class ? ", $_class" : ", 'simple'");
-	$_head_class = ($_head_class ? ", $_head_class" : "");
+	$_head_class = ($_head_class ? ", $_head_class" : '');
 
 	$f = chercher_filtre('boite_ouvrir');
 	$p->code = "$f($_titre$_class$_head_class)";
@@ -76,7 +76,7 @@ function balise_BOITE_OUVRIR_dist($p) {
  */
 function balise_BOITE_PIED_dist($p) {
 	$_class = interprete_argument_balise(1, $p);
-	$_class = ($_class ? "$_class" : "");
+	$_class = ($_class ? "$_class" : '');
 
 	$f = chercher_filtre('boite_pied');
 	$p->code = "$f($_class)";
@@ -127,7 +127,7 @@ function balise_BOITE_FERMER_dist($p) {
  * @return string
  *     HTML du début de la boîte
  */
-function boite_ouvrir($titre, $class = '', $head_class = '', $id = "") {
+function boite_ouvrir($titre, $class = '', $head_class = '', $id = '') {
 	$class = "box $class";
 	$head_class = "clearfix hd $head_class";
 	// dans l'espace prive, titrer en h3 si pas de balise <hn>
@@ -135,7 +135,7 @@ function boite_ouvrir($titre, $class = '', $head_class = '', $id = "") {
 		$titre = "<h3>$titre</h3>";
 	}
 
-	return '<div class="' . $class . ($id ? "\" id=\"$id" : "") . '">'
+	return '<div class="' . $class . ($id ? "\" id=\"$id" : '') . '">'
 	. '<b class="top"><b class="tl"></b><b class="tr"></b></b>'
 	. '<div class="inner">'
 	. ($titre ? '<div class="clearfix ' . $head_class . '">' . $titre . '<!--/hd--></div>' : '')

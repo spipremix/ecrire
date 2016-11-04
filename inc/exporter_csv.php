@@ -90,7 +90,7 @@ function inc_exporter_csv_dist($titre, $resource, $delim = ', ', $entetes = null
 		$delim = "\t";
 	}
 	if (!in_array($delim, array(',', ';', "\t"))) {
-		$delim = ",";
+		$delim = ',';
 	}
 
 	$charset = $GLOBALS['meta']['charset'];
@@ -110,7 +110,7 @@ function inc_exporter_csv_dist($titre, $resource, $delim = ', ', $entetes = null
 
 	// on passe par un fichier temporaire qui permet de ne pas saturer la memoire
 	// avec les gros exports
-	$fichier = sous_repertoire(_DIR_CACHE, "export") . $filename;
+	$fichier = sous_repertoire(_DIR_CACHE, 'export') . $filename;
 	$fp = fopen($fichier, 'w');
 	$length = fwrite($fp, $output);
 

@@ -75,7 +75,7 @@ function formulaires_editer_objet_traiter(
 	if ($action_editer = charger_fonction("editer_$type", 'action', true)) {
 		list($id, $err) = $action_editer($id);
 	} else {
-		$action_editer = charger_fonction("editer_objet", 'action');
+		$action_editer = charger_fonction('editer_objet', 'action');
 		list($id, $err) = $action_editer($id, $type);
 	}
 	$id_table_objet = id_table_objet($type);
@@ -137,7 +137,7 @@ function formulaires_editer_objet_verifier($type, $id = 'new', $oblis = array())
 				if (!isset($erreurs[$champ])) {
 					$erreurs[$champ] = '';
 				}
-				$erreurs[$champ] .= _T("alerte_modif_info_concourante") . "<br /><textarea readonly='readonly' class='forml'>" . $conflit['base'] . "</textarea>";
+				$erreurs[$champ] .= _T('alerte_modif_info_concourante') . "<br /><textarea readonly='readonly' class='forml'>" . $conflit['base'] . '</textarea>';
 			}
 		}
 	}
@@ -147,7 +147,7 @@ function formulaires_editer_objet_verifier($type, $id = 'new', $oblis = array())
 			if (!isset($erreurs[$obli])) {
 				$erreurs[$obli] = '';
 			}
-			$erreurs[$obli] .= _T("info_obligatoire");
+			$erreurs[$obli] .= _T('info_obligatoire');
 		}
 	}
 
@@ -211,10 +211,10 @@ function formulaires_editer_objet_charger(
 	// Appel direct dans un squelette
 	if (!$row) {
 		if (!$new or $lier_trad) {
-			if ($select = charger_fonction("precharger_" . $type, 'inc', true)) {
+			if ($select = charger_fonction('precharger_' . $type, 'inc', true)) {
 				$row = $select($id, $id_parent, $lier_trad);
 			} else {
-				$row = sql_fetsel('*', $table_objet_sql, $id_table_objet . "=" . intval($id));
+				$row = sql_fetsel('*', $table_objet_sql, $id_table_objet . '=' . intval($id));
 			}
 			if (!$new) {
 				$md5 = controles_md5($row);
@@ -252,7 +252,7 @@ function formulaires_editer_objet_charger(
 			$contexte['id_parent'] = '';
 		}
 		if (!$contexte['id_parent']
-			and $preselectionner_parent_nouvel_objet = charger_fonction("preselectionner_parent_nouvel_objet", "inc", true)
+			and $preselectionner_parent_nouvel_objet = charger_fonction('preselectionner_parent_nouvel_objet', 'inc', true)
 		) {
 			$contexte['id_parent'] = $preselectionner_parent_nouvel_objet($type, $row);
 		}
@@ -296,7 +296,7 @@ function formulaires_editer_objet_charger(
 
 	// preciser que le formulaire doit etre securise auteur/action
 	// n'est plus utile lorsque l'action accepte l'id en argument direct
-	// on le garde pour compat 
+	// on le garde pour compat
 	$contexte['_action'] = array("editer_$type", $id);
 
 	return $contexte;
@@ -318,7 +318,7 @@ function coupe_trop_long($texte) {
 			$debut = substr($texte, 0, $pos) . "\n\n<!--SPIP-->\n";
 			$suite = substr($texte, $pos + 2);
 		} else {
-			$pos = strpos($texte, " ", 28 * 1024);  // sinon coupe espace
+			$pos = strpos($texte, ' ', 28 * 1024);  // sinon coupe espace
 			if (!($pos > 0 and $pos < 32 * 1024)) {
 				$pos = 28 * 1024;  // au pire (pas d'espace trouv'e)
 				$decalage = 0; // si y'a pas d'espace, il ne faut pas perdre le caract`ere
@@ -344,9 +344,9 @@ function coupe_trop_long($texte) {
  */
 function editer_texte_recolle($texte, $att_text) {
 	if ((strlen($texte) < 29 * 1024)
-		or (include_spip('inc/layer') and ($GLOBALS['browser_name'] != "MSIE"))
+		or (include_spip('inc/layer') and ($GLOBALS['browser_name'] != 'MSIE'))
 	) {
-		return array($texte, "");
+		return array($texte, '');
 	}
 
 	include_spip('inc/barre');
@@ -356,7 +356,7 @@ function editer_texte_recolle($texte, $att_text) {
 	while (strlen($texte) > 29 * 1024) {
 		$nombre++;
 		list($texte1, $texte) = coupe_trop_long($texte);
-		$textes_supplement .= "<br />" .
+		$textes_supplement .= '<br />' .
 			"<textarea id='texte$nombre' name='texte_plus[$nombre]'$att_text>$texte1</textarea>\n";
 	}
 
@@ -402,7 +402,7 @@ function titre_automatique($champ_titre, $champs_contenu, $longueur = null) {
  */
 function inc_titrer_contenu_dist($champs_contenu, $c = null, $longueur = 50) {
 	// trouver un champ texte non vide
-	$t = "";
+	$t = '';
 	foreach ($champs_contenu as $champ) {
 		if ($t = _request($champ, $c)) {
 			break;
@@ -411,7 +411,7 @@ function inc_titrer_contenu_dist($champs_contenu, $c = null, $longueur = 50) {
 
 	if ($t) {
 		include_spip('inc/texte_mini');
-		$t = couper($t, $longueur, "...");
+		$t = couper($t, $longueur, '...');
 	}
 
 	return $t;
@@ -503,7 +503,6 @@ function controler_contenu($type, $id, $options = array(), $c = false, $serveur 
 
 	$table_objet = table_objet($type);
 	$spip_table_objet = table_objet_sql($type);
-	$id_table_objet = id_table_objet($type);
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table($table_objet, $serveur);
 
@@ -548,7 +547,8 @@ function controler_contenu($type, $id, $options = array(), $c = false, $serveur 
 	$champs = array_map('corriger_caracteres', $champs);
 
 	// Envoyer aux plugins
-	$champs = pipeline('pre_edition',
+	$champs = pipeline(
+		'pre_edition',
 		array(
 			'args' => array(
 				'table' => $spip_table_objet, // compatibilite
@@ -569,8 +569,7 @@ function controler_contenu($type, $id, $options = array(), $c = false, $serveur 
 	}
 
 	// Verifier si les mises a jour sont pertinentes, datees, en conflit etc
-	$conflits = controler_md5($champs, $_POST, $type, $id, $serveur,
-		isset($options['prefix']) ? $options['prefix'] : 'ctr_');
+	$conflits = controler_md5($champs, $_POST, $type, $id, $serveur, isset($options['prefix']) ? $options['prefix'] : 'ctr_');
 
 	return $conflits;
 }
@@ -602,7 +601,6 @@ function controler_contenu($type, $id, $options = array(), $c = false, $serveur 
  *     - post : le contenu posté
  **/
 function controler_md5(&$champs, $ctr, $type, $id, $serveur, $prefix = 'ctr_') {
-	$table_objet = table_objet($type);
 	$spip_table_objet = table_objet_sql($type);
 	$id_table_objet = id_table_objet($type);
 
@@ -698,6 +696,7 @@ function signaler_conflits_edition($conflits, $redirect = '') {
 	include_spip('afficher_diff/champ');
 	include_spip('inc/suivi_versions');
 	include_spip('inc/diff');
+	$diffs = array();
 	foreach ($conflits as $champ => $a) {
 		// probleme de stockage ou conflit d'edition ?
 		$base = isset($a['save']) ? $a['save'] : $a['base'];
@@ -705,18 +704,19 @@ function signaler_conflits_edition($conflits, $redirect = '') {
 		$diff = new Diff(new DiffTexte);
 		$n = preparer_diff($a['post']);
 		$o = preparer_diff($base);
-		$d = propre_diff(
-			afficher_para_modifies(afficher_diff($diff->comparer($n, $o))));
+		$d = propre_diff(afficher_para_modifies(afficher_diff($diff->comparer($n, $o))));
 
-		$titre = isset($a['save']) ? _L('Echec lors de l\'enregistrement du champ @champ@',
-			array('champ' => $champ)) : $champ;
+		$titre = isset($a['save']) ? _L(
+			'Echec lors de l\'enregistrement du champ @champ@',
+			array('champ' => $champ)
+		) : $champ;
 
 		$diffs[] = "<h2>$titre</h2>\n"
-			. "<h3>" . _T('info_conflit_edition_differences') . "</h3>\n"
+			. '<h3>' . _T('info_conflit_edition_differences') . "</h3>\n"
 			. "<div style='max-height:8em; overflow: auto; width:99%;'>" . $d . "</div>\n"
-			. "<h4>" . _T('info_conflit_edition_votre_version') . "</h4>"
+			. '<h4>' . _T('info_conflit_edition_votre_version') . '</h4>'
 			. display_conflit_champ($a['post'])
-			. "<h4>" . _T('info_conflit_edition_version_enregistree') . "</h4>"
+			. '<h4>' . _T('info_conflit_edition_version_enregistree') . '</h4>'
 			. display_conflit_champ($base);
 	}
 
@@ -737,12 +737,10 @@ function signaler_conflits_edition($conflits, $redirect = '') {
 			}, 200);'
 				. "</script>\n";
 		}
-
 	}
 
 	echo minipres(
 		_T('titre_conflit_edition'),
-
 		'<style>
 .diff-para-deplace { background: #e8e8ff; }
 .diff-para-ajoute { background: #d0ffc0; color: #000; }
