@@ -846,6 +846,21 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	return ($GLOBALS['meta']['plugin'] != $actifs_avant);
 }
 
+/**
+ * Écrit le fichier de déclaration des chemins (path) des plugins actifs
+ * 
+ * Le fichier créé, une fois exécuté permet à SPIP de rechercher
+ * des fichiers dans les répertoires des plugins concernés.
+ * 
+ * @see _chemin() Utilisé pour déclarer les chemins.
+ * @uses plugin_version_compatible()
+ * @uses ecrire_fichier_php()
+ * 
+ * @param array $plugins_valides
+ *     Couples (prefixe => description) des plugins qui seront actifs
+ * @param array $ordre
+ *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances
+**/
 function plugins_precompile_chemin($plugin_valides, $ordre) {
 	$chemins = array();
 	$contenu = "";
@@ -896,6 +911,20 @@ function plugins_precompile_chemin($plugin_valides, $ordre) {
 	ecrire_fichier_php(_CACHE_PLUGINS_PATH, $contenu);
 }
 
+/**
+ * Écrit les fichiers de chargement des fichiers d'options et de fonctions des plugins
+ * 
+ * Les onglets et menus déclarés dans le fichier paquet.xml des plugins sont également 
+ * ajoutés au fichier de fonctions créé.
+ * 
+ * @uses plugin_ongletbouton()
+ * @uses ecrire_fichier_php()
+ * 
+ * @param array $plugins_valides
+ *     Couples (prefixe => description) des plugins qui seront actifs
+ * @param array $ordre
+ *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances
+**/
 function plugins_precompile_xxxtions($plugin_valides, $ordre) {
 	$contenu = array('options' => '', 'fonctions' => '');
 	$boutons = array();
@@ -1006,7 +1035,9 @@ function plugin_ongletbouton($nom, $val) {
  * raccourcies pour des usages fréquents de ces pipelines.
  * 
  * @param array $plugins_valides
+ *     Couples (prefixe => description) des plugins qui seront actifs
  * @param array $ordre
+ *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances
  * @param string $pipe_recherche
  * @return array
  *     Couples (nom du pipeline => Code PHP à insérer au début du pipeline)
