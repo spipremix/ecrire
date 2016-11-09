@@ -200,11 +200,7 @@ function ajouter_session($auteur) {
 
 	// poser le cookie de session SPIP
 	include_spip('inc/cookie');
-	$duree = _RENOUVELLE_ALEA *
-		(!isset($auteur['cookie'])
-			? 2 : (is_numeric($auteur['cookie'])
-				? $auteur['cookie'] : 20));
-
+	$duree = definir_duree_cookie_session($auteur);
 	spip_setcookie(
 		'spip_session',
 		$_COOKIE['spip_session'],
@@ -218,6 +214,33 @@ function ajouter_session($auteur) {
 	return $_COOKIE['spip_session'];
 }
 
+/**
+ * Calcule le temps de validité en seconde du cookie de session
+ *
+ * Applique un coefficient multiplicateur à la durée de renouvellement de l'alea 
+ * (noté ensuite `dR`, valant 12h par défaut) pour déterminer la durée du cookie.
+ * 
+ * - `2 * dR`. 
+ * - `20 * dR` si le visiteur a indiqué vouloir rester connecté quelques jours 
+ *    sur le formulaire de login (la clé `cookie` vaut alors `oui`) 
+ * - `c * dR`, un coeficient défini manuellement si la clé `cookie` est numérique
+ * 
+ * @param array $auteur
+ *     Description de l'auteur
+ * @return int
+ *     Durée en secondes
+**/
+function definir_duree_cookie_session($auteur) {
+	$coef = 2;
+	if (isset($auteur['cookie'])) {
+		if (is_numeric($auteur['cookie'])) {
+			$coef = $auteur['cookie'];
+		} else {
+			$coef = 20;
+		}
+	}
+	return (int)(_RENOUVELLE_ALEA * $coef);
+}
 
 /**
  * Vérifie si le cookie spip_session indique une session valide
