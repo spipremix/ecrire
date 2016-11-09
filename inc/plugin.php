@@ -994,10 +994,23 @@ function plugin_ongletbouton($nom, $val) {
 		. "}\n";
 }
 
-// creer le fichier CACHE_PLUGIN_VERIF a partir de
-// $GLOBALS['spip_pipeline']
-// $GLOBALS['spip_matrice']
-
+/**
+ * Crée la liste des filtres à traverser pour chaque pipeline
+ *
+ * Complète la globale `spip_pipeline` des fonctions que doit traverser un pipeline,
+ * et la globale `spip_matrice` des fichiers à charger qui contiennent ces fonctions.
+ * 
+ * Retourne aussi pour certaines balises présentes dans les paquet.xml (script, style, genie),
+ * un code PHP à insérer au début de la chaîne du ou des pipelines associés à cette balise
+ * (insert_head, insert_head_css, taches_generales_cron, ...). Ce sont des écritures 
+ * raccourcies pour des usages fréquents de ces pipelines.
+ * 
+ * @param array $plugins_valides
+ * @param array $ordre
+ * @param string $pipe_recherche
+ * @return array
+ *     Couples (nom du pipeline => Code PHP à insérer au début du pipeline)
+**/
 function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche) {
 	static $liste_pipe_manquants = array();
 	if (($pipe_recherche) && (!in_array($pipe_recherche, $liste_pipe_manquants))) {
@@ -1143,8 +1156,28 @@ function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche) {
 	return $prepend_code;
 }
 
-// precompilation des pipelines
-// http://code.spip.net/@pipeline_precompile
+/**
+ * Précompilation des pipelines
+ *
+ * Crée le fichier d'exécution des pipelines 
+ * dont le chemin est défini par `_CACHE_PIPELINES`
+ * 
+ * La liste des pipelines est définie par la globale `spip_pipeline`
+ * qui a été remplie soit avec les fichiers d'options, soit avec 
+ * des descriptions de plugins (plugin.xml ou paquet.xml) dont celui de SPIP lui-même.
+ * 
+ * Les fichiers à charger pour accéder aux fonctions qui doivent traverser
+ * un pipeline se trouve dans la globale `spip_matrice`.
+ * 
+ * @see pipeline_matrice_precompile()
+ * 
+ * @uses ecrire_fichier_php()
+ * @uses clear_path_cache()
+ * 
+ * @param array $prepend_code
+ *     Code PHP à insérer avant le passage dans la chaîne des fonctions d'un pipeline
+ *     Couples 'Nom du pipeline' => Code PHP à insérer
+**/
 function pipeline_precompile($prepend_code = array()) {
 
 	$content = "";
@@ -1188,7 +1221,14 @@ function pipeline_precompile($prepend_code = array()) {
 }
 
 
-// http://code.spip.net/@plugin_est_installe
+/**
+ * Indique si un chemin de plugin fait parti des plugins activés sur le site
+ *
+ * @param string $plug_path
+ *     Chemin du plugin
+ * @return bool
+ *     true si le plugin est actif, false sinon
+**/
 function plugin_est_installe($plug_path) {
 	$plugin_installes = isset($GLOBALS['meta']['plugin_installes']) ? unserialize($GLOBALS['meta']['plugin_installes']) : array();
 	if (!$plugin_installes) {
@@ -1236,6 +1276,16 @@ function plugin_installes_meta() {
 	ecrire_meta('plugin_installes', serialize($meta_plug_installes), 'non');
 }
 
+/**
+ * Écrit un fichier PHP
+ *
+ * @param string $nom
+ *     Chemin du fichier
+ * @param string $contenu
+ *     Contenu du fichier (sans les balises ouvrantes et fermantes de PHP)
+ * @param string $comment
+ *     Commentaire : code écrit en tout début de fichier, après la balise PHP ouvrante
+**/
 function ecrire_fichier_php($nom, $contenu, $comment = '') {
 	ecrire_fichier($nom,
 		'<' . '?php' . "\n" . $comment . "\nif (defined('_ECRIRE_INC_VERSION')) {\n" . $contenu . "}\n?" . '>');
