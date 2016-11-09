@@ -412,18 +412,38 @@ function liste_chemin_plugin_actifs($dir_plugins = _DIR_PLUGINS) {
 	return liste_chemin_plugin(liste_plugin_actifs(), $dir_plugins);
 }
 
-// Pour tester utilise, il faut connaitre tous les plugins
-// qui seront forcement pas la a la fin,
-// car absent de la liste des plugins actifs.
-// Il faut donc construire une liste ordonnee
-// Cette fonction detecte des dependances circulaires,
-// avec un doute sur un "utilise" qu'on peut ignorer.
-// Mais ne pas inserer silencieusement et risquer un bug sournois latent
-
+/**
+ * Trier les plugins en vériant leur dépendances (qui doivent être présentes)
+ *
+ * Pour tester "utilise", il faut connaître tous les plugins
+ * qui seront forcément absents à la fin,
+ * car absent de la liste des plugins actifs.
+ * 
+ * Il faut donc construire une liste ordonnée.
+ * 
+ * Cette fonction détecte des dépendances circulaires,
+ * avec un doute sur un "utilise" qu'on peut ignorer.
+ * Mais ne pas insérer silencieusement et risquer un bug sournois latent
+ * 
+ * @uses plugin_version_compatible()
+ * 
+ * @param array $infos 
+ *     Répertoire (plugins, plugins-dist, ...) => Couples (prefixes => infos completes) des plugins qu'ils contiennent
+ * @param array $liste_non_classee
+ *     Couples (prefixe => description) des plugins qu'on souhaite utiliser
+ * @return array
+ *     Tableau de 3 éléments :
+ *     - $liste : couples (prefixes => description) des plugins valides
+ *     - $ordre : couples (prefixes => infos completes) des plugins triés
+ *                (les plugins nécessités avant les plugins qui les utilisent)
+ *     - $liste_non_classee : couples (prefixes => description) des plugins 
+ *                qui n'ont pas satisfait leurs dépendances
+**/
 function plugin_trier($infos, $liste_non_classee) {
 	$toute_la_liste = $liste_non_classee;
 	$liste = $ordre = array();
 	$count = 0;
+
 	while ($c = count($liste_non_classee) and $c != $count) { // tant qu'il reste des plugins a classer, et qu'on ne stagne pas
 		#echo "tour::";var_dump($liste_non_classee);
 		$count = $c;
@@ -469,8 +489,19 @@ function plugin_trier($infos, $liste_non_classee) {
 	return array($liste, $ordre, $liste_non_classee);
 }
 
-// Collecte les erreurs dans la meta
-
+/**
+ * Collecte les erreurs de dépendances des plugins dans la meta `plugin_erreur_activation`
+ *
+ * @uses plugin_necessite()
+ * @uses plugin_controler_lib()
+ * 
+ * @param array $liste_non_classee
+ *     Couples (prefixe => description) des plugins en erreur
+ * @param array $liste
+ *     Couples (prefixe => description) des plugins qu'on souhaite utiliser
+ * @param array $infos 
+ *     Répertoire (plugins, plugins-dist, ...) => Couples (prefixes => infos completes) des plugins qu'ils contiennent
+**/
 function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 	static $erreurs = array();
 
@@ -502,6 +533,17 @@ function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 	ecrire_meta('plugin_erreur_activation', serialize($erreurs));
 }
 
+/**
+ * Retourne les erreurs d'activation des plugins, au format html ou brut
+ *
+ * @param bool $raw
+ *     - true : pour obtenir le tableau brut des erreurs
+ *     - false : Code HTML
+ * @param bool $raz
+ *     - true pour effacer la meta qui stocke les erreurs.
+ * @return string|array
+ *     - Liste des erreurs ou code HTML des erreurs
+**/
 function plugin_donne_erreurs($raw = false, $raz = true) {
 	if (!isset($GLOBALS['meta']['plugin_erreur_activation'])) {
 		return $raw ? array() : '';
@@ -525,17 +567,17 @@ function plugin_donne_erreurs($raw = false, $raz = true) {
 }
 
 /**
- * Teste des dependances
+ * Teste des dépendances
  * 
- * Et verifie que chaque dependance est presente
- * dans la liste de plugins donnee
+ * Et vérifie que chaque dépendance est présente
+ * dans la liste de plugins donnée
  *
  * @param array $n
- *    Tableau de dependances dont on souhaite verifier leur presence
+ *    Tableau de dépendances dont on souhaite vérifier leur présence
  * @param array $liste
- *    Tableau des plugins presents
+ *    Tableau des plugins présents
  * @return array
- *    Tableau des messages d'erreurs recus. Il sera vide si tout va bien.
+ *    Tableau des messages d'erreurs reçus. Il sera vide si tout va bien.
  *
  **/
 function plugin_necessite($n, $liste, $balise = 'necessite') {
