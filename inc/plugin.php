@@ -26,11 +26,24 @@ define('_DIR_PLUGINS_AUTO', _DIR_PLUGINS . 'auto/');
 #include_spip('inc/texte'); // ????? Appelle public/parametrer trop tot avant la reconstruction du chemin des plugins.
 include_spip('plugins/installer');
 
-// lecture des sous repertoire plugin existants
-// $dir_plugins pour forcer un repertoire (ex: _DIR_PLUGINS_DIST)
-// _DIR_PLUGINS_SUPPL pour aller en chercher ailleurs
-// (chemin relatif a la racine du site)
-// http://code.spip.net/@liste_plugin_files
+/**
+ * Retourne la description de chaque plugin présent dans un répertoire 
+ *
+ * Lecture des sous repertoire plugin existants
+ * 
+ * @example
+ *     - `liste_plugin_files()`
+ *     - `liste_plugin_files(_DIR_PLUGINS_DIST)`
+ *     - `liste_plugin_files(_DIR_PLUGINS_SUPPL)`
+ * 
+ * @uses fast_find_plugin_dirs()
+ * @uses plugins_get_infos_dist()
+ * 
+ * @param string|null $dir_plugins
+ *     - string : Chemin (relatif à la racine du site) du répertoire à analyser. 
+ *     - null : utilise le chemin `_DIR_PLUGINS`.
+ * @return array
+**/
 function liste_plugin_files($dir_plugins = null) {
 	static $plugin_files = array();
 	if (is_null($dir_plugins)) {
@@ -43,6 +56,7 @@ function liste_plugin_files($dir_plugins = null) {
 		foreach (fast_find_plugin_dirs($dir_plugins) as $plugin) {
 			$plugin_files[$dir_plugins][] = substr($plugin, strlen($dir_plugins));
 		}
+		var_dump($plugin_files);
 
 		sort($plugin_files[$dir_plugins]);
 		// et on lit le XML de tous les plugins pour le mettre en cache
@@ -54,6 +68,18 @@ function liste_plugin_files($dir_plugins = null) {
 	return $plugin_files[$dir_plugins];
 }
 
+/**
+ * Recherche rapide des répertoires de plugins contenus dans un répertoire
+ *
+ * @uses is_plugin_dir()
+ * 
+ * @param string $dir
+ *     Chemin du répertoire dont on souhaite retourner les sous répertoires
+ * @param int $max_prof
+ *     Profondeur maximale des sous répertoires
+ * @return array
+ *     Liste complète des répeertoires
+**/
 function fast_find_plugin_dirs($dir, $max_prof = 100) {
 	$fichiers = array();
 	// revenir au repertoire racine si on a recu dossier/truc
@@ -95,7 +121,24 @@ function fast_find_plugin_dirs($dir, $max_prof = 100) {
 	return $fichiers;
 }
 
+/**
+ * Indique si un répertoire (ou plusieurs) est la racine d'un plugin SPIP
+ *
+ * Vérifie le ou les chemins relatifs transmis pour vérifier qu'ils contiennent
+ * un `plugin.xml` ou un `paquet.xml`. Les chemins valides sont retournés.
+ * 
+ * @param string|string[] $dir
+ *     Chemin (relatif à `$dir_plugins`), ou liste de chemins à tester
+ * @param string|null $dir_plugins
+ *     - string : Chemin de répertoire (relatif à la `_DIR_RACINE`), départ des chemin(s) à tester
+ *     - null (par défaut) : utilise le chemin `_DIR_PLUGINS`
+ * @return string|string[]
+ *     - string : Le chemin accepté (c'était un plugin)
+ *     - '' : ce n'était pas un chemin valide
+ *     - array : Ensemble des chemins acceptés (si `$dir` était array)
+**/
 function is_plugin_dir($dir, $dir_plugins = null) {
+
 	if (is_array($dir)) {
 		foreach ($dir as $k => $d) {
 			if (!is_plugin_dir($d, $dir_plugins)) {
@@ -188,11 +231,9 @@ function plugin_version_compatible($intervalle, $version, $avec_quoi = '') {
 	return true;
 }
 
-
 /**
- * Construire la liste des infos strictement necessaires aux plugins a activer
- * afin de les memoriser dans une meta pas trop grosse
- * http://code.spip.net/@liste_plugin_valides
+ * Construire la liste des infos strictement necessaires aux plugins à activer
+ * afin de les mémoriser dans une meta pas trop grosse
  *
  * @param array $liste_plug
  * @param bool $force
@@ -280,11 +321,11 @@ function plugin_valide_resume(&$liste, $plug, $infos, $dir_type) {
 }
 
 /**
- * Completer la liste des plugins avec les eventuels procure
+ * Compléter la liste des plugins avec les éventuels procure
  *
- * les <procure> sont consideres comme des plugins proposes,
- * mais surchargeables (on peut activer un plugin qui procure ca pour l'ameliorer,
- * donc avec le meme prefixe, qui sera pris en compte si il a une version plus grande)
+ * les balises `<procure>` sont considerées comme des plugins proposés,
+ * mais surchargeables (on peut activer un plugin qui procure ça pour l'améliorer,
+ * donc avec le même prefixe, qui sera pris en compte si il a une version plus grande)
  *
  * @param array $liste
  * @param array $infos
@@ -333,8 +374,9 @@ function plugin_fixer_procure(&$liste, &$infos) {
 }
 
 /**
- * extrait les chemins d'une liste de plugin
- * selectionne au passage ceux qui sont dans $dir_plugins uniquement
+ * Extrait les chemins d'une liste de plugin
+ * 
+ * Sélectionne au passage ceux qui sont dans `$dir_plugins` uniquement
  * si valeur non vide
  *
  * @param array $liste
@@ -485,6 +527,7 @@ function plugin_donne_erreurs($raw = false, $raz = true) {
 
 /**
  * Teste des dependances
+ * 
  * Et verifie que chaque dependance est presente
  * dans la liste de plugins donnee
  *
