@@ -170,6 +170,8 @@ define('_EXTRAIRE_INTERVALLE', ',^[\[\(\]]([0-9.a-zRC\s\-]*)[;]([0-9.a-zRC\s\-\*
  * Cette fonction peut être volontairement trompée (phase de développement) :
  * voir commentaire infra sur l'utilisation de la constante _DEV_VERSION_SPIP_COMPAT
  *
+ * @uses spip_version_compare()
+ * 
  * @param string $intervalle
  *    Un intervalle entre 2 versions. ex: [2.0.0-dev;2.1.*]
  * @param string $version
@@ -234,6 +236,11 @@ function plugin_version_compatible($intervalle, $version, $avec_quoi = '') {
  * Construire la liste des infos strictement necessaires aux plugins à activer
  * afin de les mémoriser dans une meta pas trop grosse
  *
+ * @uses liste_plugin_files()
+ * @uses plugins_get_infos_dist()
+ * @uses plugin_valide_resume()
+ * @uses plugin_fixer_procure()
+ * 
  * @param array $liste_plug
  * @param bool $force
  * @return array
@@ -292,6 +299,9 @@ function liste_plugin_valides($liste_plug, $force = false) {
  * et dans leur plus recente version compatible
  * avec la version presente de SPIP
  *
+ * @uses plugin_version_compatible()
+ * @uses spip_version_compare()
+ * 
  * @param array $liste
  * @param string $plug
  * @param array $infos
@@ -326,6 +336,8 @@ function plugin_valide_resume(&$liste, $plug, $infos, $dir_type) {
  * mais surchargeables (on peut activer un plugin qui procure ça pour l'améliorer,
  * donc avec le même prefixe, qui sera pris en compte si il a une version plus grande)
  *
+ * @uses spip_version_compare()
+ * 
  * @param array $liste
  * @param array $infos
  */
@@ -402,6 +414,9 @@ function liste_chemin_plugin($liste, $dir_plugins = _DIR_PLUGINS) {
  * Liste les chemins vers les plugins actifs du dossier fourni en argument
  * a partir d'une liste d'elelements construits par plugin_valide_resume
  *
+ * @uses liste_plugin_actifs()
+ * @uses liste_chemin_plugin()
+ * 
  * @param string $dir_plugins
  *     Chemin du répertoire de plugins
  * @return array
@@ -572,6 +587,8 @@ function plugin_donne_erreurs($raw = false, $raz = true) {
  * Et vérifie que chaque dépendance est présente
  * dans la liste de plugins donnée
  *
+ * @uses plugin_controler_necessite()
+ * 
  * @param array $n
  *    Tableau de dépendances dont on souhaite vérifier leur présence
  * @param array $liste
@@ -599,19 +616,22 @@ function plugin_necessite($n, $liste, $balise = 'necessite') {
 }
 
 /**
- * Verifie qu'une dependance (plugin) est bien presente.
+ * Vérifie qu'une dépendance (plugin) est bien présente.
  *
+ * @uses plugin_version_compatible()
+ * @uses plugin_message_incompatibilite()
+ * 
  * @param $liste
  *    Liste de description des plugins
  * @param $nom
  *    Le plugin donc on cherche la presence
  * @param $intervalle
- *    L'éventuelle intervalle de compatibilité de la dependance. ex: [1.1.0;]
+ *    L'éventuelle intervalle de compatibilité de la dépendance. ex: [1.1.0;]
  * @param $balise
- *    Permet de définir si on teste un utilise ou un necessite
+ *    Permet de définir si on teste un utilise ou un nécessite
  * @return string.
  *    Vide si ok,
- *    Message d'erreur lorsque la dependance est absente.
+ *    Message d'erreur lorsque la dépendance est absente.
  **/
 function plugin_controler_necessite($liste, $nom, $intervalle, $balise) {
 	if (isset($liste[$nom]) and plugin_version_compatible($intervalle, $liste[$nom]['version'])) {
