@@ -938,66 +938,66 @@ function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche) {
 						}
 					}
 				}
-				if (isset($info['genie']) and count($info['genie'])) {
-					if (!isset($prepend_code['taches_generales_cron'])) {
-						$prepend_code['taches_generales_cron'] = "";
-					}
-					foreach ($info['genie'] as $genie) {
-						$nom = $prefix . $genie['nom'];
-						$periode = max(60, intval($genie['periode']));
-						if (charger_fonction($nom, "genie", true)) {
-							$prepend_code['taches_generales_cron'] .= "\$val['$nom'] = $periode;\n";
-						} else {
-							spip_log("Fonction genie_$nom introuvable", _LOG_ERREUR);
-						}
+			}
+			if (isset($info['genie']) and count($info['genie'])) {
+				if (!isset($prepend_code['taches_generales_cron'])) {
+					$prepend_code['taches_generales_cron'] = "";
+				}
+				foreach ($info['genie'] as $genie) {
+					$nom = $prefix . $genie['nom'];
+					$periode = max(60, intval($genie['periode']));
+					if (charger_fonction($nom, "genie", true)) {
+						$prepend_code['taches_generales_cron'] .= "\$val['$nom'] = $periode;\n";
+					} else {
+						spip_log("Fonction genie_$nom introuvable", _LOG_ERREUR);
 					}
 				}
-				if (isset($info['style']) and count($info['style'])) {
-					if (!isset($prepend_code['insert_head_css'])) {
-						$prepend_code['insert_head_css'] = "";
+			}
+			if (isset($info['style']) and count($info['style'])) {
+				if (!isset($prepend_code['insert_head_css'])) {
+					$prepend_code['insert_head_css'] = "";
+				}
+				if (!isset($prepend_code['header_prive_css'])) {
+					$prepend_code['header_prive_css'] = "";
+				}
+				foreach ($info['style'] as $style) {
+					if (isset($style['path']) and $style['path']) {
+						$code = "if (\$f=timestamp(direction_css(find_in_path('" . addslashes($style['path']) . "')))) ";
+					} else {
+						$code = "if (\$f='" . addslashes($style['url']) . "') ";
 					}
-					if (!isset($prepend_code['header_prive_css'])) {
-						$prepend_code['header_prive_css'] = "";
+					$code .= "\$val .= '<link rel=\"stylesheet\" href=\"'.\$f.'\" type=\"text/css\"";
+					if (isset($style['media']) and strlen($style['media'])) {
+						$code .= " media=\"" . addslashes($style['media']) . "\"";
 					}
-					foreach ($info['style'] as $style) {
-						if (isset($style['path']) and $style['path']) {
-							$code = "if (\$f=timestamp(direction_css(find_in_path('" . addslashes($style['path']) . "')))) ";
-						} else {
-							$code = "if (\$f='" . addslashes($style['url']) . "') ";
-						}
-						$code .= "\$val .= '<link rel=\"stylesheet\" href=\"'.\$f.'\" type=\"text/css\"";
-						if (isset($style['media']) and strlen($style['media'])) {
-							$code .= " media=\"" . addslashes($style['media']) . "\"";
-						}
-						$code .= "/>';\n";
-						if ($style['type'] != 'prive') {
-							$prepend_code['insert_head_css'] .= $code;
-						}
-						if ($style['type'] != 'public') {
-							$prepend_code['header_prive_css'] .= $code;
-						}
+					$code .= "/>';\n";
+					if ($style['type'] != 'prive') {
+						$prepend_code['insert_head_css'] .= $code;
+					}
+					if ($style['type'] != 'public') {
+						$prepend_code['header_prive_css'] .= $code;
 					}
 				}
-				if (!isset($prepend_code['insert_head'])) {
-					$prepend_code['insert_head'] = "";
-				}
-				if (!isset($prepend_code['header_prive'])) {
-					$prepend_code['header_prive'] = "";
-				}
-				if (isset($info['script']) and count($info['script'])) {
-					foreach ($info['script'] as $script) {
-						if (isset($script['path']) and $script['path']) {
-							$code = "if (\$f=timestamp(find_in_path('" . addslashes($script['path']) . "'))) ";
-						} else {
-							$code = "if (\$f='" . addslashes($script['url']) . "') ";
-						}
-						$code .= "\$val .= '<script src=\"'.\$f.'\" type=\"text/javascript\"></script>';\n";
-						if ($script['type'] != 'prive') {
-							$prepend_code['insert_head'] .= $code;
-						}
-						if ($script['type'] != 'public') {
-							$prepend_code['header_prive'] .= $code;
-						}
+			}
+			if (!isset($prepend_code['insert_head'])) {
+				$prepend_code['insert_head'] = "";
+			}
+			if (!isset($prepend_code['header_prive'])) {
+				$prepend_code['header_prive'] = "";
+			}
+			if (isset($info['script']) and count($info['script'])) {
+				foreach ($info['script'] as $script) {
+					if (isset($script['path']) and $script['path']) {
+						$code = "if (\$f=timestamp(find_in_path('" . addslashes($script['path']) . "'))) ";
+					} else {
+						$code = "if (\$f='" . addslashes($script['url']) . "') ";
+					}
+					$code .= "\$val .= '<script src=\"'.\$f.'\" type=\"text/javascript\"></script>';\n";
+					if ($script['type'] != 'prive') {
+						$prepend_code['insert_head'] .= $code;
+					}
+					if ($script['type'] != 'public') {
+						$prepend_code['header_prive'] .= $code;
 					}
 				}
 			}
