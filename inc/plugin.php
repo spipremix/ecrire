@@ -56,7 +56,6 @@ function liste_plugin_files($dir_plugins = null) {
 		foreach (fast_find_plugin_dirs($dir_plugins) as $plugin) {
 			$plugin_files[$dir_plugins][] = substr($plugin, strlen($dir_plugins));
 		}
-		var_dump($plugin_files);
 
 		sort($plugin_files[$dir_plugins]);
 		// et on lit le XML de tous les plugins pour le mettre en cache
