@@ -858,7 +858,7 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
  * @uses plugin_version_compatible()
  * @uses ecrire_fichier_php()
  * 
- * @param array $plugins_valides
+ * @param array $plugin_valides
  *     Couples (prefixe => description) des plugins qui seront actifs
  * @param array $ordre
  *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances
@@ -922,7 +922,7 @@ function plugins_precompile_chemin($plugin_valides, $ordre) {
  * @uses plugin_ongletbouton()
  * @uses ecrire_fichier_php()
  * 
- * @param array $plugins_valides
+ * @param array $plugin_valides
  *     Couples (prefixe => description) des plugins qui seront actifs
  * @param array $ordre
  *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances
@@ -1059,7 +1059,7 @@ function plugins_amorcer_plugins_actifs() {
  * (insert_head, insert_head_css, taches_generales_cron, ...). Ce sont des écritures 
  * raccourcies pour des usages fréquents de ces pipelines.
  * 
- * @param array $plugins_valides
+ * @param array $plugin_valides
  *     Couples (prefixe => description) des plugins qui seront actifs
  * @param array $ordre
  *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances

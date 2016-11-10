@@ -2491,7 +2491,7 @@ function balise_PLUGIN_dist($p) {
  * au sein des squelettes.
  *
  * @balise
- * @see inc_aider_dist()
+ * @see inc_aide_dist()
  * @link http://www.spip.net/4733
  * @example
  *     ```
