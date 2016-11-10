@@ -16,7 +16,6 @@
  * Utilisé uniquement par ecrire/oo/index.php
  * Pour le reste, cela se passe par formulaires/configurer_preferences.
  *
- * @see ecrire/oo/index.php
  * @see prive/formulaires/configurer_preferences.php
  *
  * @package SPIP\Core\Auteurs\Preferences

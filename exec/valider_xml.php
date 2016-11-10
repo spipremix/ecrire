@@ -97,6 +97,7 @@ function exec_valider_xml_dist() {
  * @param string $req_ext
  * @param int $limit
  * @param array|bool $rec
+ * @param bool $process
  *
  **/
 function valider_xml_ok($url, $req_ext, $limit, $rec, $process = true) {

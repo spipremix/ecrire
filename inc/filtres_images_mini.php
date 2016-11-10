@@ -323,6 +323,23 @@ function image_reduire_par($img, $val = 1, $force = false) {
 	return $img;
 }
 
+/**
+ * Modifie la saturation de la couleur transmise
+ *
+ * @note
+ *     Nécessite le plugin `filtres_images` pour fonctionner.
+ *     La couleur d’entrée est retournée tel quelle en cas d'absence.
+ * 
+ * @see couleur_saturation() du plugin `filtres_images`
+ * @uses couleur_saturation()
+ * 
+ * @param string $couleur
+ *      Couleur en écriture hexadécimale, tel que `ff3300`
+ * @param float $val
+ *      Pourcentage désiré (entre 0 et 1)
+ * @return string
+ *      Couleur en écriture hexadécimale.
+**/
 function filtre_couleur_saturation_dist($couleur, $val) {
 	if (function_exists('couleur_saturation')) {
 		return couleur_saturation($couleur, $val);
@@ -330,6 +347,23 @@ function filtre_couleur_saturation_dist($couleur, $val) {
 	return $couleur;
 }
 
+/**
+ * Modifie la luminance de la couleur transmise
+ *
+ * @note
+ *     Nécessite le plugin `filtres_images` pour fonctionner.
+ *     La couleur d’entrée est retournée tel quelle en cas d'absence.
+ * 
+ * @see couleur_luminance() du plugin `filtres_images`
+ * @uses couleur_luminance()
+ * 
+ * @param string $couleur
+ *      Couleur en écriture hexadécimale, tel que `ff3300`
+ * @param float $val
+ *      Pourcentage désiré (entre 0 et 1)
+ * @return string
+ *      Couleur en écriture hexadécimale.
+**/
 function filtre_couleur_luminance_dist($couleur, $val) {
 	if (function_exists('couleur_luminance')) {
 		return couleur_luminance($couleur, $val);

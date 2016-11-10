@@ -713,12 +713,17 @@ function filtrer_entites($texte) {
 	return $texte;
 }
 
-/**
- * Version securisee de filtrer_entites
- * @param string $t
- * @return string
- */
+
 if (!function_exists('filtre_filtrer_entites_dist')) {
+	/**
+	 * Version sécurisée de filtrer_entites
+	 * 
+	 * @uses interdire_scripts()
+	 * @uses filtrer_entites()
+	 * 
+	 * @param string $t
+	 * @return string
+	 */
 	function filtre_filtrer_entites_dist($t) {
 		include_spip('inc/texte');
 		return interdire_scripts(filtrer_entites($t));
