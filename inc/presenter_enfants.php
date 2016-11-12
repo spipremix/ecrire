@@ -31,8 +31,8 @@ include_spip('inc/presentation');
  *  Un tableau des sous rubriques
  */
 function enfant_rub($collection, $debut = 0, $limite = 500) {
-	$voir_logo = (isset($GLOBALS['meta']['image_process']) and $GLOBALS['meta']['image_process'] != "non");
-	$logo = "";
+	$voir_logo = (isset($GLOBALS['meta']['image_process']) and $GLOBALS['meta']['image_process'] != 'non');
+	$logo = '';
 
 	if ($voir_logo) {
 		$chercher_logo = charger_fonction('chercher_logo', 'inc');
@@ -41,18 +41,24 @@ function enfant_rub($collection, $debut = 0, $limite = 500) {
 
 	$res = array();
 
-	$result = sql_select("id_rubrique, id_parent, titre, descriptif, lang ", "spip_rubriques", "id_parent=$collection",
-		'', '0+titre,titre', "$debut,$limite");
+	$result = sql_select(
+		'id_rubrique, id_parent, titre, descriptif, lang',
+		'spip_rubriques',
+		'id_parent='.intval($collection),
+		'',
+		'0+titre,titre',
+		"$debut,$limite"
+	);
 	while ($row = sql_fetch($result)) {
 		$id_rubrique = $row['id_rubrique'];
 		$id_parent = $row['id_parent'];
-		$titre = generer_info_entite($id_rubrique, 'rubrique', 'titre'); // pour etre sur de passer par tous les traitements
+		// pour etre sur de passer par tous les traitements
+		$titre = generer_info_entite($id_rubrique, 'rubrique', 'titre');
 		if ('' !== ($rang = recuperer_numero($row['titre']))) {
 			$rang = "$rang. ";
 		}
 
 		if (autoriser('voir', 'rubrique', $id_rubrique)) {
-
 			$les_sous_enfants = sous_enfant_rub($id_rubrique);
 
 			changer_typo($row['lang']);
@@ -69,21 +75,26 @@ function enfant_rub($collection, $debut = 0, $limite = 500) {
 				}
 			}
 
-			$lib_bouton = (!acces_restreint_rubrique($id_rubrique) ? "" :
-					http_img_pack('auteur-0minirezo-16.png', '', " width='16' height='16'", _T('image_administrer_rubrique'))) .
+			$lib_bouton = (!acces_restreint_rubrique($id_rubrique) ? '' :
+					http_img_pack(
+						'auteur-0minirezo-16.png',
+						'',
+						" width='16' height='16'",
+						_T('image_administrer_rubrique')
+					)) .
 				" <a dir='$lang_dir'" .
 				($row['lang'] !== $GLOBALS['spip_lang'] ? " hreflang='" . $row['lang'] . "'" : '') .
 				" href='" .
 				generer_url_entite($id_rubrique, 'rubrique') .
 				"'>" .
 				$rang . $titre .
-				"</a>";
+				'</a>';
 
 			$titre = (is_string($logo) ? $logo : '') .
 				bouton_block_depliable($lib_bouton, $les_sous_enfants ? false : -1, "enfants$id_rubrique");
 
 			$res[] =
-				debut_cadre_sous_rub(($id_parent ? "rubrique-24.png" : "secteur-24.png"), true, "", $titre) .
+				debut_cadre_sous_rub(($id_parent ? 'rubrique-24.png' : 'secteur-24.png'), true, '', $titre) .
 				(!$descriptif ? '' : "\n<div class='descriptif'>$descriptif</div>") .
 				$les_sous_enfants .
 				fin_cadre_sous_rub(true);
@@ -104,7 +115,7 @@ function enfant_rub($collection, $debut = 0, $limite = 500) {
  *  Le contenu du bloc dépliable
  */
 function sous_enfant_rub($collection2) {
-	$nb = sql_countsel('spip_rubriques', "id_parent=$collection2");
+	$nb = sql_countsel('spip_rubriques', 'id_parent='.intval($collection2));
 
 	$retour = '';
 	$pagination = '';
@@ -123,14 +134,22 @@ function sous_enfant_rub($collection2) {
 		$limite = $debut + $limite;
 	}
 
-	$result = sql_select("id_rubrique, id_parent, titre, lang", "spip_rubriques", "id_parent=$collection2", '',
-		'0+titre,titre', "$debut,$limite");
+	$result = sql_select(
+		'id_rubrique, id_parent, titre, lang',
+		'spip_rubriques',
+		'id_parent='.intval($collection2),
+		'',
+		'0+titre,titre',
+		"$debut,$limite"
+	);
 
 	while ($row = sql_fetch($result)) {
 		$id_rubrique2 = $row['id_rubrique'];
-		$id_parent2 = $row['id_parent'];
-		$titre2 = generer_info_entite($id_rubrique2, 'rubrique',
-			'titre'); // pour etre sur de passer par tous les traitements
+		$titre2 = generer_info_entite(
+			$id_rubrique2,
+			'rubrique',
+			'titre'
+		); // pour etre sur de passer par tous les traitements
 		if ('' !== ($rang2 = recuperer_numero($row['titre']))) {
 			$rang2 = "$rang2. ";
 		}
@@ -138,8 +157,10 @@ function sous_enfant_rub($collection2) {
 		changer_typo($row['lang']);
 		$lang_dir = lang_dir($row['lang']);
 		if (autoriser('voir', 'rubrique', $id_rubrique2)) {
-			$retour .= "\n<li class='item' dir='$lang_dir'><a href='" . generer_url_entite($id_rubrique2,
-					'rubrique') . "'>" . $rang2 . $titre2 . "</a></li>\n";
+			$retour .= "\n<li class='item' dir='$lang_dir'><a href='" . generer_url_entite(
+				$id_rubrique2,
+				'rubrique'
+			) . "'>" . $rang2 . $titre2 . "</a></li>\n";
 		}
 	}
 
@@ -171,24 +192,25 @@ function afficher_enfant_rub($id_rubrique = 0) {
 	$debut = 0;
 	$limite = 500;
 
-	$nb = sql_countsel('spip_rubriques', "id_parent=$id_rubrique");
+	$nb = sql_countsel('spip_rubriques', 'id_parent='.intval($id_rubrique));
 
 	if ($nb > $limite) {
-		$debut = _request('debut_rubrique' . $collection2) ? _request('debut_rubrique' . $collection2) : $debut;
+		$debut = _request('debut_rubrique' . $id_rubrique) ? _request('debut_rubrique' . $id_rubrique) : $debut;
 		$pagination = chercher_filtre('pagination');
-		$pagination = '<br class="nettoyeur"><p class="pagination">' . $pagination($nb, '_rubrique' . $collection2, $debut,
-				$limite, true, 'prive') . '</p>';
+		$pagination = '<br class="nettoyeur"><p class="pagination">' .
+			$pagination($nb, '_rubrique' . $id_rubrique, $debut, $limite, true, 'prive') .
+		'</p>';
 	}
 
 	$les_enfants = enfant_rub($id_rubrique, $debut, $limite);
 
 	if (!$n = count($les_enfants)) {
-		return "";
+		return '';
 	}
 
 	if ($n == 1) {
 		$les_enfants = reset($les_enfants);
-		$les_enfants2 = "";
+		$les_enfants2 = '';
 	} else {
 		$n = ceil($n / 2);
 		$les_enfants2 = implode('', array_slice($les_enfants, $n));
@@ -199,10 +221,10 @@ function afficher_enfant_rub($id_rubrique = 0) {
 		$pagination
 		. "<div class='gauche'>"
 		. $les_enfants
-		. "</div>"
+		. '</div>'
 		. "<div class='droite'>"
 		. $les_enfants2
-		. "</div>"
+		. '</div>'
 		. $pagination;
 
 	return $res;
