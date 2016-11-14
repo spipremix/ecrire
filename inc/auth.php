@@ -202,9 +202,15 @@ function auth_mode() {
  * si la globale est vide ce n'est pas un tableau, on la force pour empêcher un warning.
  *
  * @param array $row
- * @return array|string
+ * @return array|string|bool
  */
 function auth_init_droits($row) {
+
+	include_spip('inc/autoriser');
+	if (!autoriser('loger', '', 0, $row)) {
+		return false;
+	}
+
 
 	if ($row['statut'] == 'nouveau') {
 		include_spip('action/inscrire_auteur');
@@ -254,7 +260,6 @@ function auth_init_droits($row) {
 	// A noter : le premier appel a autoriser() a le bon gout
 	// d'initialiser $GLOBALS['visiteur_session']['restreint'],
 	// qui ne figure pas dans le fichier de session
-	include_spip('inc/autoriser');
 
 	if (!autoriser('ecrire')) {
 		return $row;
@@ -525,7 +530,9 @@ function auth_loger($auteur) {
 
 	// initialiser et poser le cookie de session
 	unset($_COOKIE['spip_session']);
-	auth_init_droits($auteur);
+	if (auth_init_droits($auteur) === false) {
+		return false;
+	}
 
 	// initialiser les prefs
 	$p = $GLOBALS['visiteur_session']['prefs'];

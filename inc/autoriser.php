@@ -257,6 +257,24 @@ function autoriser_defaut_dist($faire, $type, $id, $qui, $opt) {
 		and !$qui['restreint'];
 }
 
+/**
+ * Autorisation a se loger ? Retourne true pour tous les statuts sauf 5poubelle
+ * Peut etre surchargee pour interdire statut=nouveau a se connecter
+ * et forcer l'utilisation du lien de confirmation email pour valider le compte
+ *
+ * @param $faire
+ * @param $type
+ * @param $id
+ * @param $qui
+ * @param $opt
+ * @return bool
+ */
+function autoriser_loger_dist($faire, $type, $id, $qui, $opt) {
+	if ($qui['statut'] == '5poubelle') {
+		return false;
+	}
+	return true;
+}
 
 /**
  * Autorisation d'accès à l'espace privé ?

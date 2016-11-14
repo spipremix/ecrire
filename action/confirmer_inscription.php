@@ -36,6 +36,9 @@ function action_confirmer_inscription_dist() {
 		and $auteur['email'] == $email
 		and $auteur['statut'] == 'nouveau'
 	) {
+		
+		// d'abord on confirme son statut
+		$auteur = confirmer_statut_inscription($auteur);
 
 		// OK c'est un nouvel inscrit qui confirme :
 		// on le loge => ca va confirmer son statut et c'est plus sympa
