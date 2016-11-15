@@ -477,14 +477,22 @@ function spip_clear_opcode_cache($filepath) {
 }
 
 /**
- * si opcache est actif et en mode validate_timestamps
- * le timestamp ne sera checke qu'apres revalidate_freq s
- * il faut donc attendre ce temps la pour etre sur qu'on va bien beneficier de la recompilation
- * NB c'est une config foireuse deconseillee de opcode cache mais malheureusement utilisee par Octave
- * cf http://stackoverflow.com/questions/25649416/when-exactly-does-php-5-5-opcache-check-file-timestamp-based-on-revalidate-freq
- * et http://wiki.mikejung.biz/PHP_OPcache
- *
+ * Attendre l'invalidation de l'opcache
+ * 
+ * Si opcache est actif et en mode `validate_timestamps`,
+ * le timestamp du fichier ne sera vérifié qu'après une durée 
+ * en secondes fixée par `revalidate_freq`.
+ * 
+ * Il faut donc attendre ce temps là pour être sûr qu'on va bien 
+ * bénéficier de la recompilation du fichier par l'opcache.
+ * 
  * Ne fait rien en dehors de ce cas
+ * 
+ * @note
+ *     C'est une config foireuse déconseillée de opcode cache mais 
+ *     malheureusement utilisée par Octave.
+ * @link http://stackoverflow.com/questions/25649416/when-exactly-does-php-5-5-opcache-check-file-timestamp-based-on-revalidate-freq
+ * @link http://wiki.mikejung.biz/PHP_OPcache
  *
  */
 function spip_attend_invalidation_opcode_cache() {
