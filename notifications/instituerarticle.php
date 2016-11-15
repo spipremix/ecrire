@@ -17,36 +17,37 @@ function notifications_instituerarticle_dist($quoi, $id_article, $options) {
 
 	// ne devrait jamais se produire
 	if ($options['statut'] == $options['statut_ancien']) {
-		spip_log("statut inchange", 'notifications');
+		spip_log('statut inchange', 'notifications');
 
 		return;
 	}
 
 	include_spip('inc/texte');
 
-	$modele = "";
+	$modele = '';
 	if ($options['statut'] == 'publie') {
-		if ($GLOBALS['meta']["post_dates"] == 'non'
+		if ($GLOBALS['meta']['post_dates'] == 'non'
 			and strtotime($options['date']) > time()
 		) {
-			$modele = "notifications/article_valide";
+			$modele = 'notifications/article_valide';
 		} else {
-			$modele = "notifications/article_publie";
+			$modele = 'notifications/article_publie';
 		}
 	}
 
 	if ($options['statut'] == 'prop' and $options['statut_ancien'] != 'publie') {
-		$modele = "notifications/article_propose";
+		$modele = 'notifications/article_propose';
 	}
 
 	if ($modele) {
 		$destinataires = array();
-		if ($GLOBALS['meta']["suivi_edito"] == "oui") {
-			$destinataires = explode(',', $GLOBALS['meta']["adresse_suivi"]);
+		if ($GLOBALS['meta']['suivi_edito'] == 'oui') {
+			$destinataires = explode(',', $GLOBALS['meta']['adresse_suivi']);
 		}
 
 
-		$destinataires = pipeline('notifications_destinataires',
+		$destinataires = pipeline(
+			'notifications_destinataires',
 			array(
 				'args' => array('quoi' => $quoi, 'id' => $id_article, 'options' => $options),
 				'data' => $destinataires
