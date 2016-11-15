@@ -24,20 +24,20 @@ function typographie_fr_dist($letexte) {
 	// 147 = ldquo; 148 = rdquo; ' = zouli apostrophe
 	if (!$trans) {
 		$trans = array(
-			"'" => "&#8217;",
-			"&nbsp;" => "~",
-			"&raquo;" => "&#187;",
-			"&laquo;" => "&#171;",
-			"&rdquo;" => "&#8221;",
-			"&ldquo;" => "&#8220;",
-			"&deg;" => "&#176;"
+			"'" => '&#8217;',
+			'&nbsp;' => '~',
+			'&raquo;' => '&#187;',
+			'&laquo;' => '&#171;',
+			'&rdquo;' => '&#8221;',
+			'&ldquo;' => '&#8220;',
+			'&deg;' => '&#176;'
 		);
 		$chars = array(160 => '~', 187 => '&#187;', 171 => '&#171;', 148 => '&#8221;', 147 => '&#8220;', 176 => '&#176;');
 		$chars_trans = array_keys($chars);
 		$chars = array_values($chars);
 		$chars_trans = implode(' ', array_map('chr', $chars_trans));
 		$chars_trans = unicode2charset(charset2unicode($chars_trans, 'iso-8859-1', 'forcer'));
-		$chars_trans = explode(" ", $chars_trans);
+		$chars_trans = explode(' ', $chars_trans);
 		foreach ($chars as $k => $r) {
 			$trans[$chars_trans[$k]] = $r;
 		}
@@ -66,7 +66,7 @@ function typographie_fr_dist($letexte) {
 		'\0~'
 	);
 	$letexte = preg_replace($cherche1, $remplace1, $letexte);
-	$letexte = preg_replace("/ *~+ */S", "~", $letexte);
+	$letexte = preg_replace('/ *~+ */S', '~', $letexte);
 
 	$cherche2 = array(
 		'/([^-\n]|^)--([^-]|$)/S',

@@ -19,7 +19,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function typographie_en_dist($letexte) {
 
 	// zouli apostrophe
-	$letexte = str_replace("'", "&#8217;", $letexte);
+	$letexte = str_replace("'", '&#8217;', $letexte);
 
 	$cherche1 = array(
 		'/ --?,/S'
@@ -29,8 +29,8 @@ function typographie_en_dist($letexte) {
 	);
 	$letexte = preg_replace($cherche1, $remplace1, $letexte);
 
-	$letexte = str_replace("&nbsp;", "~", $letexte);
-	$letexte = preg_replace("/ *~+ */", "~", $letexte);
+	$letexte = str_replace('&nbsp;', '~', $letexte);
+	$letexte = preg_replace('/ *~+ */', '~', $letexte);
 
 	$cherche2 = array(
 		'/([^-\n]|^)--([^-]|$)/',
