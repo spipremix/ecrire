@@ -28,8 +28,8 @@ function exec_404_dist() {
 	$exec = _request('exec');
 
 	$titre = "exec_$exec";
-	$navigation = "";
-	$extra = "";
+	$navigation = '';
+	$extra = '';
 
 	include_spip('inc/presentation'); // alleger les inclusions avec un inc/presentation_mini
 	$commencer_page = charger_fonction('commencer_page', 'inc');
@@ -38,11 +38,11 @@ function exec_404_dist() {
 	echo debut_gauche("404_$exec", true);
 	echo pipeline('affiche_gauche', array('args' => array('exec' => '404', 'exec_erreur' => $exec), 'data' => ''));
 
-	echo creer_colonne_droite("404", true);
+	echo creer_colonne_droite('404', true);
 	echo pipeline('affiche_droite', array('args' => array('exec' => '404', 'exec_erreur' => $exec), 'data' => ''));
 
-	echo debut_droite("404", true);
-	echo "<h1 class='grostitre'>" . _T('fichier_introuvable', array('fichier' => $exec)) . "</h1>";
+	echo debut_droite('404', true);
+	echo "<h1 class='grostitre'>" . _T('fichier_introuvable', array('fichier' => $exec)) . '</h1>';
 	echo pipeline('affiche_milieu', array('args' => array('exec' => '404', 'exec_erreur' => $exec), 'data' => ''));
 
 	echo fin_gauche(), fin_page();
