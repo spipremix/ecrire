@@ -42,13 +42,16 @@ function install_etape_ldap1_dist() {
 
 	echo install_debut_html('AUTO', ' onload="document.getElementById(\'suivant\').focus();return false;"');
 
-	echo info_etape(_T('titre_connexion_ldap'), info_progression_etape(1, 'etape_ldap', 'install/'),
-		_T('entree_informations_connexion_ldap'));
+	echo info_etape(
+		_T('titre_connexion_ldap'),
+		info_progression_etape(1, 'etape_ldap', 'install/'),
+		_T('entree_informations_connexion_ldap')
+	);
 
 	echo generer_form_ecrire('install', (
 		"\n<input type='hidden' name='etape' value='ldap2' />"
-
-		. fieldset(_T('entree_adresse_annuaire'),
+		. fieldset(
+			_T('entree_adresse_annuaire'),
 			array(
 				'adresse_ldap' => array(
 					'label' => _T('texte_adresse_annuaire_1'),
@@ -78,7 +81,8 @@ function install_etape_ldap1_dist() {
 		)
 
 		. "\n<p>" . _T('texte_acces_ldap_anonyme_1') . '</p>'
-		. fieldset(_T('connexion_ldap'),
+		. fieldset(
+			_T('connexion_ldap'),
 			array(
 				'login_ldap' => array(
 					'label' => _T('texte_login_ldap_1'),
@@ -90,7 +94,6 @@ function install_etape_ldap1_dist() {
 				)
 			)
 		)
-
 		. bouton_suivant()));
 
 	echo install_fin_html();

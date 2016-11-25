@@ -67,11 +67,11 @@ function install_etape_2_dist() {
 	//echo join(', ', $GLOBALS['connexions'][$server_db]);
 	//echo "\n-->\n";
 
-	if (($db_connect == "0") && $link) {
-		echo "<div class='success'><b>" . _T('info_connexion_ok') . "</b></div>";
+	if (($db_connect == '0') && $link) {
+		echo "<div class='success'><b>" . _T('info_connexion_ok') . '</b></div>';
 		echo info_progression_etape(2, 'etape_', 'install/');
 
-		echo info_etape(_T('menu_aide_installation_choix_base') . aider("install2", true));
+		echo info_etape(_T('menu_aide_installation_choix_base') . aider('install2', true));
 
 		echo "\n", '<!-- ', sql_version($server_db), ' -->';
 		list($checked, $res) = install_etape_2_bases($login_db, $server_db);
@@ -87,18 +87,18 @@ function install_etape_2_dist() {
 
 		echo "<div class='error'>";
 		echo info_etape(_T('info_connexion_base'));
-		echo "<h3>" . _T('avis_connexion_echec_1') . "</h3>";
-		echo "<p>" . _T('avis_connexion_echec_2') . "</p>";
+		echo '<h3>' . _T('avis_connexion_echec_1') . '</h3>';
+		echo '<p>' . _T('avis_connexion_echec_2') . '</p>';
 
 		echo "<p style='font-size: small;'>",
 		_T('avis_connexion_echec_3'),
-		"</p></div>";
+		'</p></div>';
 	}
 
 	echo install_fin_html();
 }
 
-// Liste les bases accessibles, 
+// Liste les bases accessibles,
 // avec une heuristique pour preselectionner la plus probable
 
 // http://code.spip.net/@install_etape_2_bases
@@ -111,18 +111,18 @@ function install_etape_2_bases($login_db, $server_db) {
 			$checked,
 			"<label for='choix_db'><b>"
 			. _T('texte_choix_base_2')
-			. "</b><br />"
+			. '</b><br />'
 			. _T('texte_choix_base_3')
-			. "</label>"
+			. '</label>'
 			. "<ul>\n<li>"
 			. join("</li>\n<li>", $bases)
 			. "</li>\n</ul><p>"
 			. _T('info_ou')
-			. " "
+			. ' '
 		);
 	}
-	$res = "<b>" . _T('avis_lecture_noms_bases_1') . "</b>
-		" . _T('avis_lecture_noms_bases_2') . "<p>";
+	$res = '<b>' . _T('avis_lecture_noms_bases_1') . '</b>
+		' . _T('avis_lecture_noms_bases_2') . '<p>';
 
 	$checked = false;
 	if ($login_db) {
@@ -138,11 +138,11 @@ function install_etape_2_bases($login_db, $server_db) {
 
 		if ($ok) {
 			$res .= _T('avis_lecture_noms_bases_3')
-				. "<ul>"
-				. "<li><input name=\"choix_db\" value=\"" . $test_base . "\" type='radio' id='stand' checked='checked' />"
+				. '<ul>'
+				. '<li><input name="choix_db" value="' . $test_base . "\" type='radio' id='stand' checked='checked' />"
 				. "<label for='stand'>" . $test_base . "</label></li>\n"
-				. "</ul>"
-				. "<p>" . _T('info_ou') . " ";
+				. '</ul>'
+				. '<p>' . _T('info_ou') . ' ';
 			$checked = true;
 		}
 	}
@@ -168,8 +168,8 @@ function install_etape_2_form($hidden, $checked, $res, $etape) {
 		. ((defined('_INSTALL_TABLE_PREFIX')
 			or $GLOBALS['table_prefix'] != 'spip')
 			? '<h3>' . _T('install_table_prefix_hebergeur') . '  <tt>' . $GLOBALS['table_prefix'] . '</tt>' . '</h3>'
-			: "<fieldset><legend>" . _T('texte_choix_table_prefix') . "</legend>\n"
-			. "<p><label for='table_prefix'>" . _T('info_table_prefix') . "</label></p><p>"
+			: '<fieldset><legend>' . _T('texte_choix_table_prefix') . "</legend>\n"
+			. "<p><label for='table_prefix'>" . _T('info_table_prefix') . '</label></p><p>'
 			. "\n<input type='text' id='tprefix' name='tprefix' class='text' value='"
 			. 'spip' # valeur par defaut
 			. "' size='20' /></p></fieldset>"

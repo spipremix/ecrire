@@ -32,10 +32,12 @@ function etape_ldap5_save() {
 	lire_fichier(_FILE_CONNECT_TMP, $conn);
 
 	if ($p = strpos($conn, "'');")) {
-		ecrire_fichier(_FILE_CONNECT_TMP,
+		ecrire_fichier(
+			_FILE_CONNECT_TMP,
 			substr($conn, 0, $p + 1)
 			. _FILE_LDAP
-			. substr($conn, $p + 1));
+			. substr($conn, $p + 1)
+		);
 	}
 
 	$adresse_ldap = addcslashes(_request('adresse_ldap'), "'\\");
@@ -64,10 +66,10 @@ function etape_ldap5_save() {
 				$val = _q($val);
 			}
 		} else {
-			$val = "array(" . _q(preg_split('/\W+/', $val)) . ')';
+			$val = 'array(' . _q(preg_split('/\W+/', $val)) . ')';
 		};
 		if ($val) {
-			$res .= "'$champ' => " . $val . ",";
+			$res .= "'$champ' => " . $val . ',';
 		}
 	}
 	$conn .= "\$GLOBALS['ldap_champs'] = array($res);\n";
@@ -78,8 +80,11 @@ function etape_ldap5_save() {
 function etape_ldap5_suite() {
 	echo install_debut_html('AUTO', ' onload="document.getElementById(\'suivant\').focus();return false;"');
 
-	echo info_etape(_T('info_ldap_ok'), info_progression_etape(5, 'etape_ldap', 'install/'),
-		_T('info_terminer_installation'));
+	echo info_etape(
+		_T('info_ldap_ok'),
+		info_progression_etape(5, 'etape_ldap', 'install/'),
+		_T('info_terminer_installation')
+	);
 
 	echo generer_form_ecrire('install', (
 		"<input type='hidden' name='etape' value='3' />" .

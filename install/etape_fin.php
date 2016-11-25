@@ -71,12 +71,14 @@ function install_verifier_htaccess() {
 
 	$titre = _T('htaccess_inoperant');
 
-	$averti = _T('htaccess_a_simuler',
+	$averti = _T(
+		'htaccess_a_simuler',
 		array(
 			'htaccess' => '<tt>' . _ACCESS_FILE_NAME . '</tt>',
 			'constantes' => '<tt>_DIR_TMP &amp; _DIR_CONNECT</tt>',
 			'document_root' => '<tt>' . $_SERVER['DOCUMENT_ROOT'] . '</tt>'
-		));
+		)
+	);
 
 	return "<div class='error'><h3>$titre</h3><p>$averti</p></div>";
 }

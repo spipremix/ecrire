@@ -34,14 +34,14 @@ function install_etape_ldap4_dist() {
 	@ldap_bind($ldap_link, $login_ldap, $pass_ldap);
 
 	// Essayer de verifier le chemin fourni
-	$r = @ldap_compare($ldap_link, $base_ldap, "objectClass", "");
+	$r = @ldap_compare($ldap_link, $base_ldap, 'objectClass', '');
 	$fail = (ldap_errno($ldap_link) == 32);
 
 	if ($fail) {
 		echo info_etape(_T('info_chemin_acces_annuaire')),
 		info_progression_etape(3, 'etape_ldap', 'install/', true),
-			"<div class='error'><p><b>" . _T('avis_operation_echec') . "</b></p><p>" . _T('avis_chemin_invalide_1'),
-			" (<tt>" . spip_htmlspecialchars($base_ldap) . "</tt>) " . _T('avis_chemin_invalide_2') . "</p></div>";
+			"<div class='error'><p><b>" . _T('avis_operation_echec') . '</b></p><p>' . _T('avis_chemin_invalide_1'),
+			' (<tt>' . spip_htmlspecialchars($base_ldap) . '</tt>) ' . _T('avis_chemin_invalide_2') . '</p></div>';
 	} else {
 		info_etape(_T('info_reglage_ldap'));
 		echo info_progression_etape(4, 'etape_ldap', 'install/');
@@ -55,7 +55,8 @@ function install_etape_ldap4_dist() {
 		$res = install_propager(array('adresse_ldap', 'port_ldap', 'login_ldap', 'pass_ldap', 'protocole_ldap', 'tls_ldap'))
 			. "<input type='hidden' name='etape' value='ldap5' />"
 			. "<input type='hidden' name='base_ldap' value='" . spip_htmlentities($base_ldap) . "' />"
-			. fieldset(_T('info_statut_utilisateurs_1'),
+			. fieldset(
+				_T('info_statut_utilisateurs_1'),
 				array(
 					'statut_ldap' => array(
 						'label' => _T('info_statut_utilisateurs_2') . '<br />',
@@ -76,9 +77,9 @@ function install_etape_ldap4_dist() {
 // http://code.spip.net/@liste_statuts_ldap
 function liste_statuts_ldap() {
 	$recom = array(
-		"info_administrateurs" => ("<b>" . _T('info_administrateur_1') . "</b> " . _T('info_administrateur_2') . "<br />"),
-		"info_redacteurs" => ("<b>" . _T('info_redacteur_1') . "</b> " . _T('info_redacteur_2') . "<br />"),
-		"info_visiteurs" => ("<b>" . _T('info_visiteur_1') . "</b> " . _T('info_visiteur_2') . "<br />")
+		'info_administrateurs' => ('<b>' . _T('info_administrateur_1') . '</b> ' . _T('info_administrateur_2') . '<br />'),
+		'info_redacteurs' => ('<b>' . _T('info_redacteur_1') . '</b> ' . _T('info_redacteur_2') . '<br />'),
+		'info_visiteurs' => ('<b>' . _T('info_visiteur_1') . '</b> ' . _T('info_visiteur_2') . '<br />')
 	);
 
 	$res = array();
@@ -102,6 +103,6 @@ function install_ldap_correspondances() {
 		);
 	}
 
-	return !$champs ? '' : fieldset(_T('ldap_correspondance_1'), $champs, '',
-		_T('ldap_correspondance_2') . '<br /><br />');
+	return !$champs ?
+		'' : fieldset(_T('ldap_correspondance_1'), $champs, '', _T('ldap_correspondance_2') . '<br /><br />');
 }

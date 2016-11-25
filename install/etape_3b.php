@@ -50,8 +50,8 @@ function install_etape_3b_dist() {
 				'AUTO',
 				info_progression_etape(3, 'etape_', 'install/', true) .
 				"<div class='error'><h3>$echec</h3>\n" .
-				"<p>" . _T('avis_connexion_echec_2') . "</p>" .
-				"</div>"
+				'<p>' . _T('avis_connexion_echec_2') . '</p>' .
+				'</div>'
 			);
 			exit;
 		}
@@ -89,15 +89,15 @@ function install_etape_3b_dist() {
 		$shapass = _nano_sha256($alea_actuel . $pass);
 		// prelablement, creer le champ webmestre si il n'existe pas (install neuve
 		// sur une vieille base
-		$t = sql_showtable("spip_auteurs", true);
+		$t = sql_showtable('spip_auteurs', true);
 		if (!isset($t['field']['webmestre'])) {
 			@sql_alter("TABLE spip_auteurs ADD webmestre varchar(3)  DEFAULT 'non' NOT NULL");
 		}
 
-		$id_auteur = sql_getfetsel("id_auteur", "spip_auteurs", "login=" . sql_quote($login));
+		$id_auteur = sql_getfetsel('id_auteur', 'spip_auteurs', 'login=' . sql_quote($login));
 		if ($id_auteur !== null) {
 			sql_updateq('spip_auteurs', array(
-				"nom" => $nom,
+				'nom' => $nom,
 				'email' => $email,
 				'login' => $login,
 				'pass' => $shapass,
@@ -150,5 +150,4 @@ function install_etape_3b_dist() {
 
 	include_spip('inc/distant');
 	redirige_par_entete(parametre_url(self(), 'etape', '4', '&'));
-
 }
