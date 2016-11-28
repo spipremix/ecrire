@@ -414,9 +414,9 @@ function init_langues() {
 	$tout = array();
 	if (!$all_langs) {
 		// trouver tous les modules lang/spip_xx.php
-		$modules = find_all_in_path("lang/", "/spip_([a-z_]+)\.php[3]?$");
+		$modules = find_all_in_path("lang/", "/spip_([a-z_]+)\.php$");
 		foreach ($modules as $name => $path) {
-			if (preg_match(',^spip_([a-z_]+)\.php[3]?$,', $name, $regs)) {
+			if (preg_match(',^spip_([a-z_]+)\.php$,', $name, $regs)) {
 				$tout[] = $regs[1];
 			}
 		}
