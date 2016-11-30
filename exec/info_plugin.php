@@ -25,7 +25,7 @@ function exec_info_plugin_dist() {
 		include_spip('inc/minipres');
 		echo minipres();
 	} else {
-		$plug = _DIR_RACINE . _request('plugin');
+		$plug = _DIR_RACINE . htmlspecialchars(_request('plugin'));
 		$get_infos = charger_fonction('get_infos', 'plugins');
 		$dir = "";
 		if (strncmp($plug, _DIR_PLUGINS, strlen(_DIR_PLUGINS)) == 0) {
