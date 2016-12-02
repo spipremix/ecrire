@@ -29,7 +29,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function exec_plonger_dist() {
 	include_spip('inc/actions');
 
-	$rac = _request('rac');
+	$rac = preg_replace(',[^\w\,/#&;-]+,', ' ', _request('rac'));
 	$id = intval(_request('id'));
 	$exclus = intval(_request('exclus'));
 	$col = intval(_request('col'));
