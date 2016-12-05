@@ -5732,6 +5732,31 @@ function objet_icone($objet, $taille = 24) {
 	return $icone ? $balise_img($icone, _T(objet_info($objet, 'texte_objet'))) : '';
 }
 
+/**
+ * Renvoyer une traduction d'une chaine de langue contextuelle à un objet si elle existe,
+ * la traduction de la chaine generique
+ *
+ * Ex : [(#ENV{objet}|objet_label{trad_reference})]
+ * va chercher si une chaine objet:trad_reference existe et renvoyer sa trad le cas echeant
+ * sinon renvoie la trad de la chaine trad_reference
+ * Si la chaine fournie contient un prefixe il est remplacé par celui de l'objet pour chercher la chaine contextuelle
+ *
+ * Les arguments $args et $options sont ceux de la fonction _T
+ *
+ * @param string $objet
+ * @param string $chaine
+ * @param array $args
+ * @param array $options
+ * @return string
+ */
+function objet_T($objet, $chaine, $args = array(), $options = array()){
+	$chaine = explode(':',$chaine);
+	if ($t = _T($objet . ':' . end($chaine), $args, array_merge($options, array('force'=>false)))) {
+		return $t;
+	}
+	$chaine = implode(':',$chaine);
+	return _T($chaine, $args, $options);
+}
 
 /**
  * Fonction de secours pour inserer le head_css de facon conditionnelle
