@@ -135,7 +135,8 @@ function precharger_traduction_objet($type, $id_objet, $id_rubrique = 0, $lier_t
 	// Recuperer les donnees de l'objet original
 	$row = sql_fetsel("*", $table, "$_id_objet=$lier_trad");
 	if ($row) {
-		$row[$champ_titre] = filtrer_entites(_T('info_nouvelle_traduction')) . ' ' . $row[$champ_titre];
+		include_spip('inc/filtres');
+		$row[$champ_titre] = filtrer_entites(objet_T($type, 'info_nouvelle_traduction')) . ' ' . $row[$champ_titre];
 	} else {
 		$row = array();
 	}
