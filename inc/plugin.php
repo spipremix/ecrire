@@ -671,7 +671,7 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	}
 
 	// recharger le xml des plugins a activer
-	// on forcer le reload ici, meme si le fichier xml n'a pas change
+	// on force le reload ici, meme si le fichier xml n'a pas change
 	// pour ne pas rater l'ajout ou la suppression d'un fichier fonctions/options/administrations
 	// pourra etre evite quand on ne supportera plus les plugin.xml
 	// en deplacant la detection de ces fichiers dans la compilation ci dessous
@@ -717,10 +717,12 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	// generer charger_plugins_chemin.php
 	plugins_precompile_chemin($plugin_valides, $ordre);
 	// generer les fichiers
-	// 	charger_plugins_options.php
-	// 	charger_plugins_fonctions.php
-	// et retourner les fichiers a verifier
+	// - charger_plugins_options.php
+	// - charger_plugins_fonctions.php
 	plugins_precompile_xxxtions($plugin_valides, $ordre);
+	// charger les chemins des plugins et les fichiers d'options
+	// (qui peuvent déclarer / utiliser des pipelines, ajouter d'autres chemins)
+	plugins_amorcer_plugins_actifs();
 	// mise a jour de la matrice des pipelines
 	$prepend_code = pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche);
 	// generer le fichier _CACHE_PIPELINE
@@ -886,6 +888,29 @@ function plugin_ongletbouton($nom, $val) {
 		. "}\n";
 }
 
+/**
+ * Chargement des plugins actifs dans le path de SPIP
+ * et exécution de fichiers d'options des plugins
+ *
+ * Les fichiers d'options peuvent déclarer des pipelines ou de
+ * nouveaux chemins.
+ *
+ * La connaissance chemins peut être nécessaire pour la construction
+ * du fichier d'exécution des pipelines.
+ **/
+function plugins_amorcer_plugins_actifs() {
+
+	if (@is_readable(_CACHE_PLUGINS_PATH)) {
+		include_once(_CACHE_PLUGINS_PATH);
+	}
+
+	if (@is_readable(_CACHE_PLUGINS_OPT)) {
+		include_once(_CACHE_PLUGINS_OPT);
+	} else {
+		spip_log("pipelines desactives: impossible de produire " . _CACHE_PLUGINS_OPT);
+	}
+}
+
 // creer le fichier CACHE_PLUGIN_VERIF a partir de
 // $GLOBALS['spip_pipeline']
 // $GLOBALS['spip_matrice']
@@ -1012,18 +1037,6 @@ function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche) {
 		"include_once_check(_DIR_RESTREINT . 'inc/pipelines_ecrire.php');\n"
 		. "\$val = minipipe('f_jQuery_prive', \$val);\n"
 		. $prepend_code['header_prive'];
-
-
-	// on charge les fichiers d'options qui peuvent completer
-	// la globale spip_pipeline egalement
-	if (@is_readable(_CACHE_PLUGINS_PATH)) {
-		include_once(_CACHE_PLUGINS_PATH);
-	} // securite : a priori n'a pu etre fait plus tot
-	if (@is_readable(_CACHE_PLUGINS_OPT)) {
-		include_once(_CACHE_PLUGINS_OPT);
-	} else {
-		spip_log("pipelines desactives: impossible de produire " . _CACHE_PLUGINS_OPT);
-	}
 
 	// on ajoute les pipe qui ont ete recenses manquants
 	foreach ($liste_pipe_manquants as $add_pipe) {
