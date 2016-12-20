@@ -367,7 +367,7 @@ $liste_des_authentifications = array(
 $spip_version_branche = "3.2.0-dev";
 // cette version dev accepte tous les plugins compatible avec la version ci-dessous
 // a supprimer en phase beta/rc/release
-define('_DEV_VERSION_SPIP_COMPAT',"3.1.0");
+define('_DEV_VERSION_SPIP_COMPAT',"3.1.3");
 // version des signatures de fonctions PHP
 // (= numero SVN de leur derniere modif cassant la compatibilite et/ou necessitant un recalcul des squelettes)
 $spip_version_code = 22653;
