@@ -2555,7 +2555,7 @@ function filtrer_ical($texte) {
 /**
  * Adapte une date pour être insérée dans une valeur de date d'un export ICAL
  *
- * Retourne une date au format `Ymd\THis`, tel que '20150428T163254'
+ * Retourne une date au format `Ymd\THis\Z`, tel que '20150428T163254Z'
  *
  * @example `DTSTAMP:[(#DATE|date_ical)]`
  * @filtre
@@ -2573,7 +2573,7 @@ function date_ical($date, $addminutes = 0) {
 	list($heures, $minutes, $secondes) = recup_heure($date);
 	list($annee, $mois, $jour) = recup_date($date);
 
-	return date("Ymd\THis", mktime($heures, $minutes + $addminutes, $secondes, $mois, $jour, $annee));
+	return gmdate("Ymd\THis\Z", mktime($heures, $minutes + $addminutes, $secondes, $mois, $jour, $annee));
 }
 
 
