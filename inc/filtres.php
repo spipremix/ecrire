@@ -2541,7 +2541,7 @@ function filtrer_ical($texte) {
 /**
  * Adapte une date pour être insérée dans une valeur de date d'un export ICAL
  *
- * Retourne une date au format `Ymd\THis`, tel que '20150428T163254'
+ * Retourne une date au format `Ymd\THis\Z`, tel que '20150428T163254Z'
  *
  * @example `DTSTAMP:[(#DATE|date_ical)]`
  * @filtre
