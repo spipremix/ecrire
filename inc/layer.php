@@ -92,7 +92,7 @@ function bouton_block_depliable($texte, $deplie, $ids = "") {
 	. "<a href='#' onclick=\"return jQuery(this).depliant_clicancre('$cible');\" class='titremancre'></a>"
 	. "$texte</$b>"
 	. http_script(($deplie === 'incertain')
-		? "jQuery(document).ready(function(){if (jQuery('$cible').is(':visible')) $('#$bouton_id').addClass('deplie').removeClass('replie');});"
+		? "jQuery(function($){if ($('$cible').is(':visible')) { $('#$bouton_id').addClass('deplie').removeClass('replie'); }});"
 		: '');
 }
 

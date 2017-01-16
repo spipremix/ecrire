@@ -395,7 +395,7 @@ function install_connexion_form($db, $login, $pass, $predef, $hidden, $etape, $j
 
 		. ($jquery ? http_script('', 'jquery.js') : '')
 		. http_script('
-		$(document).ready(function() {
+		jQuery(function($) {
 			$("input[type=hidden][name=server_db]").each(function(){
 				if ($(this).attr("value").match("sqlite*")){
 					$("#install_adresse_base_hebergeur,#install_login_base_hebergeur,#install_pass_base_hebergeur").hide();
@@ -406,7 +406,7 @@ function install_connexion_form($db, $login, $pass, $predef, $hidden, $etape, $j
 			else
 				$("#install_adresse_base_hebergeur,#install_login_base_hebergeur,#install_pass_base_hebergeur").show();
 			$("input[name=server_db]").each(function(){
-				$(this).bind("change",function(){
+				$(this).on("change",function(){
 					if ($(this).prop("checked") && $(this).attr("value").match("sqlite*")) {
 						$("#install_adresse_base_hebergeur,#install_login_base_hebergeur,#install_pass_base_hebergeur").hide();
 					}
