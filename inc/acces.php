@@ -31,7 +31,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  *     Mot de passe
  **/
 function creer_pass_aleatoire($longueur = 8, $sel = '') {
-	$seed = (int)round((microtime() + 1) * time());
+	$seed = (int)round(((float)microtime() + 1) * time());
 
 	mt_srand($seed);
 	srand($seed);
@@ -83,7 +83,7 @@ function creer_uniqid() {
 	static $seeded;
 
 	if (!$seeded) {
-		$seed = (int)round((microtime() + 1) * time());
+		$seed = (int)round(((float)microtime() + 1) * time());
 		mt_srand($seed);
 		srand($seed);
 		$seeded = true;
