@@ -252,8 +252,7 @@ function f_recuperer_fond($flux) {
  * @param string $texte Contenu de la page envoyée au navigateur
  * @return string         Contenu de la page envoyée au navigateur
  */
-function f_queue(&$texte) {
-
+function f_queue($texte) {
 	// eviter une inclusion si rien a faire
 	if (_request('action') == 'cron'
 		or queue_sleep_time_to_next_job() > 0
