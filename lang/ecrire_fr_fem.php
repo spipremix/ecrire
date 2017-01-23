@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=fr_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=fr_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -507,6 +507,7 @@ dans une couleur qui indique leur état :',
 	'info_une_rubrique_02' => '1 rubrique',
 	'info_url' => 'URL :',
 	'info_url_proxy' => 'URL du proxy',
+	'info_url_proxy_pas_conforme' => 'l’URL du proxy n’est pas valide.',
 	'info_url_site_pas_conforme' => 'l’URL du site n’est pas valide.',
 	'info_url_test_proxy' => 'URL de test',
 	'info_urlref' => 'Lien hypertexte :',
