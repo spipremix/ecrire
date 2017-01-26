@@ -221,6 +221,7 @@ function formulaires_editer_objet_charger(
 			}
 		}
 		if (!$row) {
+			$row = array();
 			$trouver_table = charger_fonction('trouver_table', 'base');
 			if ($desc = $trouver_table($table_objet)) {
 				foreach ($desc['field'] as $k => $v) {
