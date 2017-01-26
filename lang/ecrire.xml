@@ -236,7 +236,7 @@
 		<traducteur nom="telopa" lien="https://trad.spip.net/auteur/telopa" />
 		<traducteur nom="vmurariu" lien="https://trad.spip.net/auteur/vmurariu" />
 	</langue>
-	<langue code="ru" url="https://trad.spip.net/tradlang_module/ecrire_?lang_cible=ru" total="799" traduits="798" relire="0" modifs="0" nouveaux="1" pourcent="99.87">
+	<langue code="ru" url="https://trad.spip.net/tradlang_module/ecrire_?lang_cible=ru" total="799" traduits="799" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="b_b" lien="https://trad.spip.net/auteur/b_b" />
 		<traducteur nom="olly" lien="https://trad.spip.net/auteur/olly" />
 		<traducteur nom="Serge Markitanenko" lien="https://trad.spip.net/auteur/serge-markitanenko" />

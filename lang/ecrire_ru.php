@@ -485,6 +485,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_une_rubrique_02' => '1 раздел',
 	'info_url' => 'Адрес:',
 	'info_url_proxy' => 'URL прокси',
+	'info_url_proxy_pas_conforme' => 'URL прокси указан неверно.',
 	'info_url_site_pas_conforme' => 'неправильный URL сайта.',
 	'info_url_test_proxy' => 'URL для проверки',
 	'info_urlref' => 'Гиперссылка:',
