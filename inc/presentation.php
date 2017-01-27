@@ -127,19 +127,6 @@ function debut_cadre_couleur(
 
 function fin_cadre_couleur() { return fin_cadre('couleur'); }
 
-function debut_cadre_couleur_foncee(
-	$icone = '',
-	$dummy = '',
-	$fonction = '',
-	$titre = '',
-	$id = "",
-	$class = ""
-) {
-	return debut_cadre('couleur-foncee', $icone, $fonction, $titre, $id, $class);
-}
-
-function fin_cadre_couleur_foncee() { return fin_cadre('couleur-foncee'); }
-
 function debut_cadre_trait_couleur(
 	$icone = '',
 	$dummy = '',
