@@ -183,14 +183,6 @@ function bloc_des_raccourcis($bloc) {
 	. boite_ouvrir(_T('titre_cadre_raccourcis'), 'raccourcis') . $bloc . boite_fermer();
 }
 
-// Compatibilite
-// http://code.spip.net/@afficher_plus
-function afficher_plus($lien) {
-	include_spip('inc/filtres_ecrire');
-	afficher_plus_info($lien);
-}
-
-
 //
 // Fonctions d'affichage
 //
