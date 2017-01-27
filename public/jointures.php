@@ -47,6 +47,7 @@ function decompose_champ_id_objet($champ) {
  * regarde si le champ se décompose en objet/id_objet et si la table
  * possède ces champs, et dans ce cas, on les retourne.
  *
+ * @uses decompose_champ_id_objet()
  * @param string $champ Nom du champ à tester (ex. id_article)
  * @param array $desc Description de la table
  * @return array
@@ -78,6 +79,9 @@ function trouver_champs_decomposes($champ, $desc) {
  * L'objet boucle est modifié pour compléter la requête.
  * La fonction retourne l'alias d'arrivée une fois la jointure construire,
  * en general un "Lx"
+ *
+ * @uses calculer_chaine_jointures()
+ * @uses fabrique_jointures()
  *
  * @param Boucle $boucle
  *     Description de la boucle
@@ -121,6 +125,9 @@ function calculer_jointure(&$boucle, $depart, $arrivee, $col = '', $cond = false
  * - la jointure dans le tableau $boucle->join,
  * - la table de jointure dans le from
  * - un modificateur 'lien'
+ *
+ * @uses nogroupby_if()
+ * @uses liste_champs_jointures()
  *
  * @param Boucle $boucle
  *     Description de la boucle
@@ -247,8 +254,7 @@ function nogroupby_if($depart, $arrivee, $col) {
  *
  * sinon on construit une liste des champs a partir de la liste des cles de la table
  *
- * http://code.spip.net/@liste_champs_jointures
- *
+ * @uses split_key
  * @param string $nom
  * @param array $desc
  * @param bool $primary
@@ -301,8 +307,6 @@ function liste_champs_jointures($nom, $desc, $primary = false) {
 /**
  * Eclater une cle composee en plusieurs champs
  *
- * http://code.spip.net/@split_key
- *
  * @param string $v
  * @param array $join
  * @return array
@@ -318,7 +322,8 @@ function split_key($v, $join = array()) {
 /**
  * Constuire la chaine de jointures, de proche en proche
  *
- * http://code.spip.net/@calculer_chaine_jointures
+ * @uses liste_champs_jointures()
+ * @uses trouver_champs_decomposes()
  *
  * @param objetc $boucle
  * @param array $depart
@@ -460,8 +465,6 @@ function calculer_chaine_jointures(
  * applatit les cles multiples
  * redondance avec split_key() ? a mutualiser
  *
- * http://code.spip.net/@trouver_cles_table
- *
  * @param $keys
  * @return array
  */
@@ -483,6 +486,9 @@ function trouver_cles_table($keys) {
 /**
  * Cherche une colonne (ou plusieurs colonnes) dans les tables de jointures
  * possibles indiquées.
+ *
+ * @uses decompose_champ_id_objet()
+ * @uses liste_champs_jointures()
  *
  * @param string|array $cle
  *     Nom de la ou des colonnes à trouver dans les tables de jointures
@@ -561,12 +567,15 @@ function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false)
 }
 
 /**
- * Cherche a ajouter la possibilite d'interroger un champ sql
- * dans une boucle. Cela construira les jointures necessaires
+ * Cherche a ajouter la possibilite d'interroger un champ sql dans une boucle.
+ * 
+ * Cela construira les jointures necessaires
  * si une possibilite est trouve et retournera le nom de
  * l'alias de la table contenant ce champ
  * (L2 par exemple pour 'spip_mots AS L2' dans le FROM),
  *
+ * @uses trouver_champ_exterieur()
+ * @uses calculer_jointure()
  *
  * @param string $champ
  *    Nom du champ cherche (exemple id_article)
