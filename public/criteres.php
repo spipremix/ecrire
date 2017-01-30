@@ -606,12 +606,10 @@ function critere_fusion_dist($idb, &$boucles, $crit) {
 
 /**
  * Compile le critère `{collecte}` qui permet de spécifier l'interclassement
- * à utiliser pour la requête générée
+ * à utiliser pour les tris de la boucle.
  * 
- * Cela permet particulièrement avec le critère `{par}` de trier un texte
- * selon un interclassement spécifique. 
- * 
- * L'instruction s'appliquera sur tous les tris avec le critère `{par}`
+ * Cela permet avec le critère `{par}` de trier un texte selon 
+ * l'interclassement indiqué. L'instruction s'appliquera sur les critères `{par}`
  * qui succèdent ce critère, ainsi qu'au critère `{par}` précédent
  * si aucun interclassement ne lui est déjà appliqué.
  * 
