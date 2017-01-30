@@ -640,14 +640,50 @@ function calculer_critere_arg_dynamique($idb, &$boucles, $crit, $suffix = '') {
 	return "((\$x = preg_replace(\"/\\W/\",'', $arg)) ? $alt : '')";
 }
 
-// Tri : {par xxxx}
-// http://www.spip.net/@par
-// http://code.spip.net/@critere_par_dist
+/**
+ * Compile le critère `{par}` qui permet d'ordonner les résultats d'une boucle
+ *
+ * Demande à trier la boucle selon certains champs (en SQL, la commande `ORDER BY`).
+ * Si plusieurs tris sont demandés (plusieurs fois le critère `{par x}{par y}` dans une boucle ou plusieurs champs
+ * séparés par des virgules dans le critère `{par x, y, z}`), ils seront appliqués dans l'ordre.
+ *
+ * Quelques particularités :
+ * - `{par hasard}` : trie par hasard
+ * - `{par num titre}` : trie par numéro de titre
+ * - `{par multi titre}` : trie par la langue extraite d'une balise polyglotte `<multi>` sur le champ titre
+ * - `{!par date}` : trie par date inverse en utilisant le champ date principal déclaré pour la table (si c'est un objet éditorial).
+ * - `{!par points}` : trie par pertinence de résultat de recherche (avec le critère `{recherche}`)
+ * - `{par FUNCTION_SQL(n)}` : trie en utilisant une fonction SQL (peut dépendre du moteur SQL utilisé). Exemple : `{par SUBSTRING_INDEX(titre, ".", -1)}` (tri ~ alphabétique en ignorant les numéros de titres).
+ * - `{par table.champ}` : trie en effectuant une jointure sur la table indiquée.
+ * - `{par #BALISE}` : trie sur la valeur retournée par la balise (doit être un champ de la table, ou 'hasard').
+ *
+ * @example
+ *     - `{par titre}`
+ *     - `{!par date}`
+ *     - `{par num titre, multi titre, hasard}`
+ *
+ * @link http://www.spip.net/5531
+ * @see critere_tri_dist() Le critère `{tri ...}`
+ * @see critere_inverse_dist() Le critère `{inverse}`
+ *
+ * @uses critere_parinverse()
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ */
 function critere_par_dist($idb, &$boucles, $crit) {
 	return critere_parinverse($idb, $boucles, $crit);
 }
 
-// http://code.spip.net/@critere_parinverse
+/**
+ * Compile le critère `{par}` ou `{inverse}` pour ordonner les résultats d'une boucle
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ * @param string $sens Sens du tri
+ */
 function critere_parinverse($idb, &$boucles, $crit, $sens = '') {
 
 	$boucle = &$boucles[$idb];
@@ -805,10 +841,24 @@ function critere_par_joint($table, $champ, &$boucle, $idb) {
 	return !$t ? '' : ("'" . $t . '.' . $champ . "'");
 }
 
-// {inverse}
-// http://www.spip.net/@inverse
-
-// http://code.spip.net/@critere_inverse_dist
+/**
+ * Compile le critère `{inverse}` qui inverse l'ordre utilisé par le précédent critère `{par}`
+ *
+ * Accèpte un paramètre pour déterminer le sens : `{inverse #X}` utilisera un tri croissant (ASC) 
+ * si la valeur retournée par `#X` est considérée vrai (`true`),
+ * le sens contraire (DESC) sinon.
+ * 
+ * @example
+ *     - `{par date}{inverse}`, équivalent à `{!par date}`
+ *     - `{par date}{inverse #ENV{sens}}` utilise la valeur d'environnement sens pour déterminer le sens.
+ * @see critere_par_dist() Le critère `{par}`
+ * @link http://www.spip.net/5530
+ * @uses critere_parinverse()
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ */
 function critere_inverse_dist($idb, &$boucles, $crit) {
 
 	$boucle = &$boucles[$idb];
@@ -1380,6 +1430,7 @@ function critere_where_dist($idb, &$boucles, $crit) {
  *     `{tri num titre}{par titre}` permet de faire un tri sur le rang (modifiable dynamiquement)
  *     avec un second critère sur le titre en cas d'égalité des rangs
  *
+ * @link http://www.spip.net/5429
  * @see critere_par_dist() Le critère `{par ...}`
  * @see balise_TRI_dist() La balise `#TRI`
  *
