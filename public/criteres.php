@@ -682,15 +682,18 @@ function critere_par_dist($idb, &$boucles, $crit) {
  * @param string $idb Identifiant de la boucle
  * @param array $boucles AST du squelette
  * @param Critere $crit Paramètres du critère dans cette boucle
- * @param string $sens Sens du tri
  */
-function critere_parinverse($idb, &$boucles, $crit, $sens = '') {
+function critere_parinverse($idb, &$boucles, $crit) {
 
 	$boucle = &$boucles[$idb];
+
+	$sens = $collecte = '';
 	if ($crit->not) {
-		$sens = $sens ? "" : " . ' DESC'";
+		$sens = " . ' DESC'";
 	}
-	$collecte = (isset($boucle->modificateur['collecte'])) ? " . " . $boucle->modificateur['collecte'] : "";
+	if (isset($boucle->modificateur['collecte'])) {
+		$collecte = ' . ' . $boucle->modificateur['collecte'];
+	}
 
 	foreach ($crit->param as $tri) {
 
