@@ -604,9 +604,40 @@ function critere_fusion_dist($idb, &$boucles, $crit) {
 	}
 }
 
-// c'est la commande SQL "COLLATE"
-// qui peut etre appliquee sur les order by, group by, where like ...
-// http://code.spip.net/@critere_collecte_dist
+/**
+ * Compile le critère `{collecte}` qui permet de spécifier l'interclassement
+ * à utiliser pour la requête générée
+ * 
+ * Cela permet particulièrement avec le critère `{par}` de trier un texte
+ * selon un interclassement spécifique. 
+ * 
+ * L'instruction s'appliquera sur tous les tris avec le critère `{par}`
+ * qui succèdent ce critère, ainsi qu'au critère `{par}` précédent
+ * si aucun interclassement ne lui est déjà appliqué.
+ * 
+ * Techniquement, c'est la commande SQL "COLLATE" qui utilisée.
+ * (elle peut être appliquée sur les order by, group by, where, like ...)
+ * 
+ * @example  
+ *     - `{par titre}{collecte utf8_spanish_ci}` ou `{collecte utf8_spanish_ci}{par titre}`
+ *     - `{par titre}{par surtitre}{collecte utf8_spanish_ci}` : 
+ *        Seul 'surtitre' (`par` précédent) utilisera l'interclassement
+ *     - `{collecte utf8_spanish_ci}{par titre}{par surtitre}` : 
+ *        'titre' et 'surtitre' utiliseront l'interclassement (tous les `par` suivants)
+ * 
+ * @note 
+ *     Piège sur une éventuelle écriture peu probable :
+ *     `{par a}{collecte c1}{par b}{collecte c2}` : le tri `{par b}` 
+ *     utiliserait l'interclassement c1 (et non c2 qui ne s'applique pas
+ *     au `par` précédent s'il a déjà un interclassement demandé).
+ * 
+ * @link http://www.spip.net/4028
+ * @see critere_par_dist() Le critère `{par}`
+ * 
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ */
 function critere_collecte_dist($idb, &$boucles, $crit) {
 	if (isset($crit->param[0])) {
 		$_coll = calculer_liste($crit->param[0], array(), $boucles, $boucles[$idb]->id_parent);
@@ -614,7 +645,16 @@ function critere_collecte_dist($idb, &$boucles, $crit) {
 		$boucle->modificateur['collate'] = "($_coll ?' COLLATE '.$_coll:'')";
 		$n = count($boucle->order);
 		if ($n && (strpos($boucle->order[$n - 1], 'COLLATE') === false)) {
-			$boucle->order[$n - 1] .= " . " . $boucle->modificateur['collate'];
+			// l'instruction COLLATE doit être placée avant ASC ou DESC
+			// notamment lors de l'utilisation `{!par xxx}{collate yyy}`
+			if (
+				(false !== $i = strpos($boucle->order[$n - 1], 'ASC'))
+				OR (false !== $i = strpos($boucle->order[$n - 1], 'DESC'))
+			) {
+				$boucle->order[$n - 1] = substr_replace($boucle->order[$n - 1], "' . " . $boucle->modificateur['collate'] . " . ' ", $i, 0);
+			} else {
+				$boucle->order[$n - 1] .= " . " . $boucle->modificateur['collate'];
+			}
 		}
 	} else {
 		return (array('zbug_critere_inconnu', array('critere' => $crit->op . " " . count($boucles[$idb]->order))));
@@ -691,8 +731,8 @@ function critere_parinverse($idb, &$boucles, $crit) {
 	if ($crit->not) {
 		$sens = " . ' DESC'";
 	}
-	if (isset($boucle->modificateur['collecte'])) {
-		$collecte = ' . ' . $boucle->modificateur['collecte'];
+	if (isset($boucle->modificateur['collate'])) {
+		$collecte = ' . ' . $boucle->modificateur['collate'];
 	}
 
 	foreach ($crit->param as $tri) {
