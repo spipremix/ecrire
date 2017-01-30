@@ -1339,46 +1339,49 @@ function critere_where_dist($idb, &$boucles, $crit) {
 
 
 /**
- * Compile le critère {tri}
+ * Compile le critère `{tri}` permettant le tri dynamique d'un champ
  *
- * Gère un champ de tri qui peut etre modifie dynamiquement par la balise #TRI
+ * Le critère `{tri}` gère un champ de tri  qui peut être modifié dynamiquement par la balise `#TRI`.
+ * Il s'utilise donc conjointement avec la balise `#TRI` dans la même boucle
+ * pour génerér les liens qui permettent de changer le critère de tri et le sens du tri
  *
- * {tri [champ_par_defaut][,sens_par_defaut][,nom_variable]}
- * champ_par_defaut : un champ de la table sql
- * sens_par_defaut : -1 ou inverse pour decroissant, 1 ou direct pour croissant
- *   peut etre un tableau pour preciser des sens par defaut associes a chaque champ
- *   exemple : array('titre'=>1,'date'=>-1) pour trier par defaut
- *   les titre croissant et les dates decroissantes
- *   dans ce cas, quand un champ est utilise pour le tri et n'est pas present dans le tableau
- *   c'est la premiere valeur qui est utilisee
- * nom_variable : nom de la variable utilisee (par defaut tri_nomboucle)
+ * @syntaxe `{tri [champ_par_defaut][,sens_par_defaut][,nom_variable]}`
  *
- * {tri titre}
- * {tri titre,inverse}
- * {tri titre,-1}
- * {tri titre,-1,truc}
+ * - champ_par_defaut : un champ de la table sql
+ * - sens_par_defaut : -1 ou inverse pour décroissant, 1 ou direct pour croissant
+ *     peut être un tableau pour préciser des sens par défaut associés à chaque champ
+ *     exemple : `array('titre' => 1, 'date' => -1)` pour trier par défaut
+ *     les titre croissants et les dates décroissantes
+ *     dans ce cas, quand un champ est utilisé pour le tri et n'est pas présent dans le tableau
+ *     c'est la première valeur qui est utilisée
+ * - nom_variable : nom de la variable utilisée (par defaut `tri_{nomboucle}`)
  *
- * le critere {tri} s'utilise conjointement avec la balise #TRI dans la meme boucle
- * pour generer les liens qui permettent de changer le critere de tri et le sens du tri
+ *     {tri titre}
+ *     {tri titre,inverse}
+ *     {tri titre,-1}
+ *     {tri titre,-1,truc}
  *
- * Exemple d'utilisation
+ * Exemple d'utilisation :
  *
- * <B_articles>
- * <p>#TRI{titre,'Trier par titre'} | #TRI{date,'Trier par date'}</p>
- * <ul>
- * <BOUCLE_articles(ARTICLES){tri titre}>
- *  <li>#TITRE - [(#DATE|affdate_jourcourt)]</li>
- * </BOUCLE_articles>
- * </ul>
- * </B_articles>
+ *     <B_articles>
+ *     <p>#TRI{titre,'Trier par titre'} | #TRI{date,'Trier par date'}</p>
+ *     <ul>
+ *     <BOUCLE_articles(ARTICLES){tri titre}>
+ *      <li>#TITRE - [(#DATE|affdate_jourcourt)]</li>
+ *     </BOUCLE_articles>
+ *     </ul>
+ *     </B_articles>
  *
- * NB :
- * contraitement a {par ...} {tri} ne peut prendre qu'un seul champ,
- * mais il peut etre complete avec {par ...} pour indiquer des criteres secondaires
+ * @note
+ *     Contraitement à `{par ...}`, `{tri}` ne peut prendre qu'un seul champ,
+ *     mais il peut être complété avec `{par ...}` pour indiquer des criteres secondaires
  *
- * ex :
- * {tri num titre}{par titre} permet de faire un tri sur le rang (modifiable dynamiquement)
- * avec un second critere sur le titre en cas d'egalite des rang
+ *     Exemble :
+ *     `{tri num titre}{par titre}` permet de faire un tri sur le rang (modifiable dynamiquement)
+ *     avec un second critère sur le titre en cas d'égalité des rangs
+ *
+ * @see critere_par_dist() Le critère `{par ...}`
+ * @see balise_TRI_dist() La balise `#TRI`
  *
  * @param string $idb Identifiant de la boucle
  * @param array $boucles AST du squelette
