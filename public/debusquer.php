@@ -509,6 +509,7 @@ function ancre_texte($texte, $fautifs = array(), $nocpt = false) {
 // l'environnement graphique du debuggueur 
 
 function debusquer_squelette($fonc, $mode, $self) {
+	$texte = '';
 
 	if ($mode !== 'validation') {
 		if (isset($GLOBALS['debug_objets']['sourcefile']) and $GLOBALS['debug_objets']['sourcefile']) {
