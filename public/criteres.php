@@ -863,7 +863,7 @@ function calculer_critere_par_hasard($idb, &$boucles, $crit) {
 function calculer_critere_par_expression_num($idb, &$boucles, $crit, $tri, $champ) {
 	$champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
 	if (is_array($champ)) {
-		return array('zbug_critere_inconnu', array('critere' => $crit->op . "num $champ"));
+		return array('zbug_critere_inconnu', array('critere' => $crit->op . " num $champ"));
 	}
 	$boucle = &$boucles[$idb];
 	$texte = '0+' . $champ;
@@ -893,7 +893,7 @@ function calculer_critere_par_expression_num($idb, &$boucles, $crit, $tri, $cham
 function calculer_critere_par_expression_multi($idb, &$boucles, $crit, $tri, $champ) {
 	$champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
 	if (is_array($champ)) {
-		return array('zbug_critere_inconnu', array('critere' => $crit->op . "multi $champ"));
+		return array('zbug_critere_inconnu', array('critere' => $crit->op . " multi $champ"));
 	}
 	$boucle = &$boucles[$idb];
 	$boucle->select[] = "\".sql_multi('" . $champ . "', \$GLOBALS['spip_lang']).\"";
