@@ -858,15 +858,17 @@ function calculer_critere_par_hasard($idb, &$boucles, $crit) {
  * @param string $idb Identifiant de la boucle
  * @param array $boucles AST du squelette
  * @param Critere $crit Paramètres du critère dans cette boucle
+ * @param array $tri Paramètre en cours du critère
+ * @param string $champ Texte suivant l'expression ('titre' dans {par num titre})
  * @return string Clause pour le Order by
  */
 function calculer_critere_par_expression_num($idb, &$boucles, $crit, $tri, $champ) {
-	$champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
-	if (is_array($champ)) {
+	$_champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
+	if (is_array($_champ)) {
 		return array('zbug_critere_inconnu', array('critere' => $crit->op . " num $champ"));
 	}
 	$boucle = &$boucles[$idb];
-	$texte = '0+' . $champ;
+	$texte = '0+' . $_champ;
 	$suite = calculer_liste($tri, array(), $boucles, $boucle->id_parent);
 	if ($suite !== "''") {
 		$texte = "\" . ((\$x = $suite) ? ('$texte' . \$x) : '0')" . " . \"";
@@ -888,15 +890,17 @@ function calculer_critere_par_expression_num($idb, &$boucles, $crit, $tri, $cham
  * @param string $idb Identifiant de la boucle
  * @param array $boucles AST du squelette
  * @param Critere $crit Paramètres du critère dans cette boucle
+ * @param array $tri Paramètre en cours du critère
+ * @param string $champ Texte suivant l'expression ('titre' dans {par multi titre})
  * @return string Clause pour le Order by
  */
 function calculer_critere_par_expression_multi($idb, &$boucles, $crit, $tri, $champ) {
-	$champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
-	if (is_array($champ)) {
+	$_champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
+	if (is_array($_champ)) {
 		return array('zbug_critere_inconnu', array('critere' => $crit->op . " multi $champ"));
 	}
 	$boucle = &$boucles[$idb];
-	$boucle->select[] = "\".sql_multi('" . $champ . "', \$GLOBALS['spip_lang']).\"";
+	$boucle->select[] = "\".sql_multi('" . $_champ . "', \$GLOBALS['spip_lang']).\"";
 	$order = "'multi'";
 	return $order;
 }
