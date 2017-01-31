@@ -852,9 +852,13 @@ function calculer_critere_par_hasard($idb, &$boucles, $crit) {
  * Tri par numéro de texte (tel que "10. titre"). Le numéro calculé est ajouté au SELECT
  * de la boucle. L'écriture `{par num #ENV{tri}}` est aussi prise en compte.
  *
- * @note Les textes sans numéro valent 0 et sont donc placés avant les titres ayant des numéros.
+ * @note
+ *     Les textes sans numéro valent 0 et sont donc placés avant les titres ayant des numéros.
+ *     Utiliser `{par sinum champ, num champ}` pour avoir le comportement inverse.
  *
+ * @see calculer_critere_par_expression_sinum() pour le critère `{par sinum champ}`
  * @uses calculer_critere_par_champ()
+ *
  * @param string $idb Identifiant de la boucle
  * @param array $boucles AST du squelette
  * @param Critere $crit Paramètres du critère dans cette boucle
@@ -878,6 +882,41 @@ function calculer_critere_par_expression_num($idb, &$boucles, $crit, $tri, $cham
 	$order = "'$as'";
 	return $order;
 }
+
+/**
+ * Calculs pour le critère `{par sinum champ}` qui ordonne les champs avec numéros en premier
+ *
+ * Ajoute au SELECT la valeur 'sinum' qui vaut 0 si le champ a un numéro, 1 s'il n'en a pas.
+ * Ainsi `{par sinum titre, num titre, titre}` mettra les éléments sans numéro en fin de liste,
+ * contrairement à `{par num titre, titre}` seulement.
+ *
+ * @see calculer_critere_par_expression_num() pour le critère `{par num champ}`
+ * @uses calculer_critere_par_champ()
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ * @param array $tri Paramètre en cours du critère
+ * @param string $champ Texte suivant l'expression ('titre' dans {par sinum titre})
+ * @return string Clause pour le Order by
+ */
+function calculer_critere_par_expression_sinum($idb, &$boucles, $crit, $tri, $champ) {
+	$_champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
+	if (is_array($_champ)) {
+		return array('zbug_critere_inconnu', array('critere' => $crit->op . " sinum $champ"));
+	}
+	$boucle = &$boucles[$idb];
+	$texte = '0+' . $_champ;
+	$suite = calculer_liste($tri, array(), $boucles, $boucle->id_parent);
+	if ($suite !== "''") {
+		$texte = "\" . ((\$x = $suite) ? ('$texte' . \$x) : '0')" . " . \"";
+	}
+	$as = 'sinum' . ($boucle->order ? count($boucle->order) : "");
+	$boucle->select[] = 'CASE (' . $texte . ') WHEN 0 THEN 1 ELSE 0 END AS ' . $as;
+	$order = "'$as'";
+	return $order;
+}
+
 
 /**
  * Calculs pour le critère `{par multi champ}` qui extrait la langue en cours dans les textes
