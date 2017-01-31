@@ -483,10 +483,64 @@ function trouver_cles_table($keys) {
 	return array_keys($res);
 }
 
+
+/**
+ * Indique si une colonne (ou plusieurs colonnes) est présente dans l'une des tables indiquée.
+ *
+ * @param string|array $cle
+ *     Nom de la ou des colonnes à trouver dans les tables indiquées
+ * @param array $tables
+ *     Liste de noms de tables ou des couples (alias => nom de table).
+ *     - `$boucle->from` (alias => nom de table) : les tables déjà utilisées dans une boucle
+ *     - `$boucle->jointures` : les tables utilisables en tant que jointure
+ *     - `$boucle->jointures_explicites` les jointures explicitement indiquées à l'écriture de la boucle
+ * @param string $connect
+ *     Nom du connecteur SQL
+ * @param bool|string $checkarrivee
+ *     false : peu importe la table, si on trouve le/les champs, c'est bon.
+ *     string : nom de la table où on veut trouver le champ.
+ * @return array|false
+ *     false : on n'a pas trouvé
+ *     array : infos sur la table trouvée. Les clés suivantes sont retournés :
+ *     - 'desc' : tableau de description de la table,
+ *     - 'table' : nom de la table
+ *     - 'alias' : alias utilisé pour la table (si pertinent. ie: avec `$boucle->from` transmis par exemple)
+ */
+function chercher_champ_dans_tables($cle, $tables, $connect, $checkarrivee = false) {
+	static $trouver_table = '';
+	if (!$trouver_table) {
+		$trouver_table = charger_fonction('trouver_table', 'base');
+	}
+
+	if (!is_array($cle)) {
+		$cle = array($cle);
+	}
+
+	foreach ($tables as $k => $table) {
+		if ($table && $desc = $trouver_table($table, $connect)) {
+			if (isset($desc['field'])
+				// verifier que toutes les cles cherchees sont la
+				and (count(array_intersect($cle, array_keys($desc['field']))) == count($cle))
+				// si on sait ou on veut arriver, il faut que ca colle
+				and ($checkarrivee == false || $checkarrivee == $desc['table'])
+			) {
+				return array(
+					'desc' => $desc,
+					'table' => $desc['table'],
+					'alias' => $k,
+				);
+			}
+		}
+	}
+
+	return false;
+}
+
 /**
  * Cherche une colonne (ou plusieurs colonnes) dans les tables de jointures
  * possibles indiquées.
  *
+ * @uses chercher_champ_exterieur()
  * @uses decompose_champ_id_objet()
  * @uses liste_champs_jointures()
  *
@@ -501,13 +555,9 @@ function trouver_cles_table($keys) {
  *     string : nom de la table jointe où on veut trouver le champ.
  * @return array|string
  *     chaîne vide : on n'a pas trouvé
- *     liste si trouvé : nom de la table, description de la table
+ *     liste si trouvé : nom de la table, description de la table, clé(s) de la table
  */
 function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false) {
-	static $trouver_table = '';
-	if (!$trouver_table) {
-		$trouver_table = charger_fonction('trouver_table', 'base');
-	}
 
 	// support de la recherche multi champ :
 	// si en seconde etape on a decompose le champ id_xx en id_objet,objet
@@ -517,17 +567,8 @@ function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false)
 		$cle = array($cle);
 	}
 
-	foreach ($joints as $k => $join) {
-		if ($join && $table = $trouver_table($join, $boucle->sql_serveur)) {
-			if (isset($table['field'])
-				// verifier que toutes les cles cherchees sont la
-				and (count(array_intersect($cle, array_keys($table['field']))) == count($cle))
-				// si on sait ou on veut arriver, il faut que ca colle
-				and ($checkarrivee == false || $checkarrivee == $table['table'])
-			) {
-				return array($table['table'], $table, $cle);
-			}
-		}
+	if ($infos = chercher_champ_dans_tables($cle, $joints, $boucle->sql_serveur, $checkarrivee)) {
+		return array($infos['table'], $infos['desc'], $cle);
 	}
 
 	// au premier coup, on essaye de decomposer, si possible
@@ -588,16 +629,19 @@ function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false)
  *    par SPIP pour la table en question ($boucle->jointures)
  * @param bool $cond
  *     flag pour savoir si le critere est conditionnel ou non
+ * @param bool|string $checkarrivee
+ *     false : peu importe la table, si on trouve le/les champs, c'est bon.
+ *     string : nom de la table jointe où on veut trouver le champ.
  *
  * @return string
  */
-function trouver_jointure_champ($champ, &$boucle, $jointures = false, $cond = false) {
+function trouver_jointure_champ($champ, &$boucle, $jointures = false, $cond = false, $checkarrivee = false) {
 	if ($jointures === false) {
 		$jointures = $boucle->jointures;
 	}
 	// TODO : aberration, on utilise $jointures pour trouver le champ
 	// mais pas poour construire la jointure ensuite
-	$arrivee = trouver_champ_exterieur($champ, $jointures, $boucle);
+	$arrivee = trouver_champ_exterieur($champ, $jointures, $boucle, $checkarrivee);
 	if ($arrivee) {
 		$desc = $boucle->show;
 		array_pop($arrivee); // enlever la cle en 3eme argument
