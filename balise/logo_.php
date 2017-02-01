@@ -158,7 +158,11 @@ function balise_LOGO__dist($p) {
  *     Code compilé retournant le chemin du logo ou le code HTML du logo.
  **/
 function logo_survol($id_objet, $_id_objet, $type, $align, $fichier, $lien, $p, $suite) {
-	$code = "quete_logo('$id_objet', '" .
+	$quete_logo = "quete_logo";
+	if (function_exists($f = $quete_logo . "_" . $type) or function_exists($f . "_dist")) {
+		$quete_logo = $f;
+	}
+	$code = "$quete_logo('$id_objet', '" .
 		(($suite == '_SURVOL') ? 'off' :
 			(($suite == '_NORMAL') ? 'on' : 'ON')) .
 		"', $_id_objet," .
