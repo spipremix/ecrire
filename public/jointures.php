@@ -254,7 +254,7 @@ function nogroupby_if($depart, $arrivee, $col) {
  *
  * sinon on construit une liste des champs a partir de la liste des cles de la table
  *
- * @uses split_key
+ * @uses split_key()
  * @param string $nom
  * @param array $desc
  * @param bool $primary
@@ -540,7 +540,7 @@ function chercher_champ_dans_tables($cle, $tables, $connect, $checkarrivee = fal
  * Cherche une colonne (ou plusieurs colonnes) dans les tables de jointures
  * possibles indiquées.
  *
- * @uses chercher_champ_exterieur()
+ * @uses chercher_champ_dans_tables()
  * @uses decompose_champ_id_objet()
  * @uses liste_champs_jointures()
  *
