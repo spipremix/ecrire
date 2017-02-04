@@ -700,3 +700,7 @@ $GLOBALS['maj'][21742] = array(
 	array('sql_alter', "TABLE spip_articles CHANGE url_site url_site text DEFAULT '' NOT NULL"),
 	array('sql_alter', "TABLE spip_articles CHANGE virtuel virtuel text DEFAULT '' NOT NULL"),
 );
+
+$GLOBALS['maj'][23375] = array(
+	array('sql_alter', "TABLE spip_auteurs CHANGE prefs prefs text"),
+);

@@ -372,7 +372,7 @@ define('_DEV_VERSION_SPIP_COMPAT',"3.1.3");
 // (= numero SVN de leur derniere modif cassant la compatibilite et/ou necessitant un recalcul des squelettes)
 $spip_version_code = 22653;
 // version de la base SQL (= numero SVN de sa derniere modif)
-$spip_version_base = 21742;
+$spip_version_base = 23375;
 
 // version de l'interface a la base
 $spip_sql_version = 1;
