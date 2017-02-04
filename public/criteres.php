@@ -1001,7 +1001,7 @@ function calculer_critere_par_champ($idb, &$boucles, $crit,  $par, $raw = false)
 		) {
 			$par = $infos['alias'] . "." . $champ;
 		} elseif ($table) {
-			// On avait table + champ, mais on ne les as pas trouvé
+			// On avait table + champ, mais on ne les a pas trouvés
 			return array('zbug_critere_inconnu', array('critere' => $crit->op . " $par"));
 		} else {
 			// Sinon tant pis, ca doit etre un champ synthetise (cf points)
