@@ -178,3 +178,18 @@ function bandeau_creer_url($url, $args = '', $contexte = null) {
 function inc_bandeau_dist() {
 	return recuperer_fond('prive/squelettes/inclure/barre-nav', $_GET);
 }
+
+
+/**
+ * Retourne la liste des noms d'entrées de menus favoris de l'auteur connecté
+ * @return array
+ */
+function obtenir_menus_favoris() {
+	if (
+		isset($GLOBALS['visiteur_session']['prefs']['menus_favoris'])
+		and is_array($GLOBALS['visiteur_session']['prefs']['menus_favoris'])
+	) {
+		return $GLOBALS['visiteur_session']['prefs']['menus_favoris'];
+	}
+	return array();
+}
