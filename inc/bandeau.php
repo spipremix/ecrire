@@ -138,8 +138,60 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 			}
 		}
 	}
-	return pipeline('ajouter_menus', $boutons_admin);
+	$boutons_admin = pipeline('ajouter_menus', $boutons_admin);
+
+	// définir les favoris
+	if ($boutons_admin and $menus_favoris = obtenir_menus_favoris()) {
+		foreach ($boutons_admin as $key => $menu) {
+			$menu->favori = in_array($key, $menus_favoris);
+			if ($menu->sousmenu) {
+				foreach ($menu->sousmenu as $key => $bouton) {
+					$bouton->favori = in_array($key, $menus_favoris);
+				}
+			}
+		}
+	}
+
+	return $boutons_admin;
 }
+
+/**
+ * Trie les entrées des sous menus par ordre alhabétique
+ *
+ * @param Bouton[] $menus
+ * @param bool $avec_favoris
+ *     Si true, tri en premier les sous menus favoris, puis l'ordre alphabétique
+ * @return Bouton[]
+ */
+function trier_boutons_enfants_par_alpha($menus, $avec_favoris = false) {
+	foreach ($menus as $menu) {
+		if ($menu->sousmenu) {
+			$libelles = $favoris = array();
+			foreach ($menu->sousmenu as $key => $item) {
+				$libelles[$key] = strtolower(translitteration(_T($item->libelle)));
+				$favoris[$key] = $item->favori;
+			}
+			if ($avec_favoris) {
+				array_multisort($favoris, SORT_DESC, $libelles, SORT_ASC, $menu->sousmenu);
+			} else {
+				array_multisort($libelles, SORT_ASC, $menu->sousmenu);
+			}
+		}
+	}
+	return $menus;
+}
+
+/**
+ * Trie les entrées des sous menus par favoris puis ordre alhabétique
+ *
+ * @uses trier_boutons_enfants_par_alpha()
+ * @param Bouton[] $menus
+ * @return Bouton[]
+ */
+function trier_boutons_enfants_par_favoris_alpha($menus) {
+	return trier_boutons_enfants_par_alpha($menus, true);
+}
+
 
 /**
  * Créer l'URL à partir de exec et args, sauf si c'est déjà une url formatée
