@@ -103,6 +103,7 @@ function exec_valider_xml_dist() {
 function valider_xml_ok($url, $req_ext, $limit, $rec, $process = true) {
 	$url = urldecode($url);
 	$rec = !$rec ? false : array();
+	$res = '';
 	if (!$limit) {
 		$limit = 200;
 	}
@@ -153,7 +154,6 @@ function valider_xml_ok($url, $req_ext, $limit, $rec, $process = true) {
 
 			$url_aff = entites_html($url);
 			$bandeau = "";
-			$res = "";
 			if ($process) {
 				$transformer_xml = charger_fonction('valider', 'xml');
 				if (preg_match(',^[a-z][0-9a-z_]*$,i', $url)) {
