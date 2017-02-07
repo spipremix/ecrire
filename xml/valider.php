@@ -238,8 +238,8 @@ class ValidateurXML {
 						. _T('zxml_vide_balise'));
 				}
 			} else {
-				$f = $this->fratrie[substr($depth, 2)];
-				if (!preg_match($regle, $f)) {
+				$f = isset($this->fratrie[substr($depth, 2)]) ? $this->fratrie[substr($depth, 2)] : null;
+				if (is_null($f) or !preg_match($regle, $f)) {
 					coordonnees_erreur($this,
 						" <p>\n<b>$name</b> "
 						. _T('zxml_succession_fils_incorrecte')

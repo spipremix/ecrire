@@ -124,8 +124,12 @@ function plugins_get_infos_un($plug, $reload, $dir, &$cache) {
 	$ret['md5_file'] = $md5;
 	// Si on lit le paquet.xml de SPIP, on rajoute un procure php afin que les plugins puissent
 	// utiliser un necessite php. SPIP procure donc la version php courante du serveur.
+	// chaque librairie php est aussi procurée, par exemple 'php:curl'.
 	if (isset($ret['prefix']) and $ret['prefix'] == 'spip') {
 		$ret['procure']['php'] = array('nom' => 'php', 'version' => phpversion());
+		foreach (get_loaded_extensions() as $ext) {
+			$ret['procure']['php:' . $ext] = array('nom' => 'php:' . $ext, 'version' => phpversion($ext));
+		}
 	}
 	$diff = ($ret != $pcache);
 

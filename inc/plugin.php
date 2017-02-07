@@ -646,8 +646,29 @@ function plugin_controler_necessite($liste, $nom, $intervalle, $balise) {
 	);
 }
 
-
+/**
+ * @param string $intervalle
+ *     L'éventuelle intervalle de compatibilité de la dépendance. ex: [1.1.0;]
+ * @param string $version
+ *     La version en cours active pour le plugin demandé (ou php ou extension php demandée)
+ * @param string $nom
+ *     Le plugin (ou php ou extension php) qui est absent
+ * @param string $balise
+ *     Le type de balise utilisé (necessite ou utilise)
+ * @return string
+ *     Le message d'erreur.
+ */
 function plugin_message_incompatibilite($intervalle, $version, $nom, $balise) {
+
+	// prendre en compte les erreurs de dépendances à PHP
+	// ou à une extension PHP avec des messages d'erreurs dédiés.
+	$type = 'plugin';
+	if ($nom === 'PHP') {
+		$type = 'php';
+	} elseif (strncmp($nom, 'PHP:', 4) === 0) {
+		$type = 'extension_php';
+		list(,$nom) = explode(':', $nom, 2);
+	}
 
 	if (preg_match(_EXTRAIRE_INTERVALLE, $intervalle, $regs)) {
 		$minimum = $regs[1];
@@ -658,13 +679,13 @@ function plugin_message_incompatibilite($intervalle, $version, $nom, $balise) {
 
 		if (strlen($minimum)) {
 			if ($minimum_inclus and spip_version_compare($version, $minimum, '<')) {
-				return _T("plugin_${balise}_plugin", array(
+				return _T("plugin_${balise}_${type}", array(
 					'plugin' => $nom,
 					'version' => ' &ge; ' . $minimum
 				));
 			}
 			if (!$minimum_inclus and spip_version_compare($version, $minimum, '<=')) {
-				return _T("plugin_${balise}_plugin", array(
+				return _T("plugin_${balise}_${type}", array(
 					'plugin' => $nom,
 					'version' => ' &gt; ' . $minimum
 				));
@@ -673,7 +694,7 @@ function plugin_message_incompatibilite($intervalle, $version, $nom, $balise) {
 
 		if (strlen($maximum)) {
 			if ($maximum_inclus and spip_version_compare($version, $maximum, '>')) {
-				return _T("plugin_${balise}_plugin", array(
+				return _T("plugin_${balise}_${type}", array(
 					'plugin' => $nom,
 					'version' => ' &le; ' . $maximum
 				));
@@ -687,7 +708,10 @@ function plugin_message_incompatibilite($intervalle, $version, $nom, $balise) {
 		}
 	}
 
-	return _T("plugin_necessite_plugin_sans_version", array('plugin' => $nom));
+	// note : il ne peut pas y avoir d'erreur sur
+	// - un 'utilise' sans version.
+	// - un 'php' sans version.
+	return _T("plugin_necessite_${type}_sans_version", array('plugin' => $nom));
 }
 
 
