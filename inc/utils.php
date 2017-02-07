@@ -2649,9 +2649,36 @@ function spip_initialisation_suite() {
 	init_var_mode();
 }
 
-// Reperer les variables d'URL qui conditionnent la perennite du cache, des urls
-// ou d'autres petit caches (trouver_table, css et js compactes ...)
-// http://code.spip.net/@init_var_mode
+/**
+ * Repérer les variables d'URL spéciales `var_mode` qui conditionnent
+ * la validité du cache ou certains affichages spéciaux.
+ *
+ * Le paramètre d'URL `var_mode` permet de
+ * modifier la pérennité du cache, recalculer des urls
+ * ou d'autres petit caches (trouver_table, css et js compactes ...),
+ * d'afficher un écran de débug ou des traductions non réalisées.
+ *
+ * En fonction de ces paramètres dans l'URL appelante, on définit
+ * da constante `_VAR_MODE` qui servira ensuite à SPIP.
+ *
+ * Le paramètre `var_mode` accepte ces valeurs :
+ *
+ * - `calcul` : force un calcul du cache de la page (sans forcément recompiler les squelettes)
+ * - `recalcul` : force un calcul du cache de la page en recompilant au préabable les squelettes
+ * - `inclure` : modifie l'affichage en ajoutant visuellement le nom de toutes les inclusions qu'elle contient
+ * - `debug` :  modifie l'affichage activant le mode "debug"
+ * - `preview` : modifie l'affichage en ajoutant aux boucles les éléments prévisualisables
+ * - `traduction` : modifie l'affichage en affichant des informations sur les chaînes de langues utilisées
+ * - `urls` : permet de recalculer les URLs des objets appelés dans la page par les balises `#URL_xx`
+ * - `images` : permet de recalculer les filtres d'images utilisés dans la page
+ *
+ * En dehors des modes `calcul` et `recalcul`, une autorisation 'previsualiser' ou 'debug' est testée.
+ *
+ * @note
+ *     Il éxiste également le paramètre `var_profile` qui modifie l'affichage pour incruster
+ *     le nombre de requêtes SQL utilisées dans la page, qui peut se compléter avec le paramètre
+ * `   var_mode` (calcul ou recalcul).
+ */
 function init_var_mode() {
 	static $done = false;
 	if (!$done) {
@@ -2661,6 +2688,11 @@ function init_var_mode() {
 			// tout le monde peut calcul/recalcul
 			if (!defined('_VAR_MODE')) {
 				if (in_array('recalcul', $var_mode)) {
+					/**
+					 * Indique le mode de calcul ou d'affichage de la page.
+					 * Lire {@see init_var_mode()} pour les détails
+					 * @see init_var_mode()
+					 */
 					define('_VAR_MODE', 'recalcul');
 				} elseif (in_array('calcul', $var_mode)) {
 					define('_VAR_MODE', 'calcul');

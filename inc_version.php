@@ -56,8 +56,8 @@ define('_ROOT_CWD', getcwd() . '/');
 define('_ROOT_RESTREINT', _ROOT_CWD . _DIR_RESTREINT);
 
 // Icones
-/** Nom du dossier images */
 if (!defined('_NOM_IMG_PACK')) {
+	/** Nom du dossier images */
 	define('_NOM_IMG_PACK', 'images/');
 }
 /** le chemin http (relatif) vers les images standard */
@@ -66,8 +66,8 @@ define('_DIR_IMG_PACK', (_DIR_RACINE . 'prive/' . _NOM_IMG_PACK));
 /** le chemin php (absolu) vers les images standard (pour hebergement centralise) */
 define('_ROOT_IMG_PACK', dirname(dirname(__FILE__)) . '/prive/' . _NOM_IMG_PACK);
 
-/** Nom du repertoire des  bibliotheques JavaScript */
 if (!defined('_JAVASCRIPT')) {
+	/** Nom du repertoire des  bibliotheques JavaScript */
 	define('_JAVASCRIPT', 'javascript/');
 } // utilisable avec #CHEMIN et find_in_path
 /** le nom du repertoire des  bibliotheques JavaScript du prive */
@@ -77,20 +77,20 @@ define('_DIR_JAVASCRIPT', (_DIR_RACINE . 'prive/' . _JAVASCRIPT));
 # Par defaut ces 4 noms seront suffixes par _DIR_RACINE (cf plus bas)
 # mais on peut les mettre ailleurs et changer completement les noms
 
-/** le nom du repertoire des fichiers Temporaires Inaccessibles par http:// */
 if (!defined('_NOM_TEMPORAIRES_INACCESSIBLES')) {
+	/** Nom du repertoire des fichiers Temporaires Inaccessibles par http:// */
 	define('_NOM_TEMPORAIRES_INACCESSIBLES', "tmp/");
 }
-/** le nom du repertoire des fichiers Temporaires Accessibles par http:// */
 if (!defined('_NOM_TEMPORAIRES_ACCESSIBLES')) {
+	/** Nom du repertoire des fichiers Temporaires Accessibles par http:// */
 	define('_NOM_TEMPORAIRES_ACCESSIBLES', "local/");
 }
-/** le nom du repertoire des fichiers Permanents Inaccessibles par http:// */
 if (!defined('_NOM_PERMANENTS_INACCESSIBLES')) {
+	/** Nom du repertoire des fichiers Permanents Inaccessibles par http:// */
 	define('_NOM_PERMANENTS_INACCESSIBLES', "config/");
 }
-/** le nom du repertoire des fichiers Permanents Accessibles par http:// */
 if (!defined('_NOM_PERMANENTS_ACCESSIBLES')) {
+	/** Nom du repertoire des fichiers Permanents Accessibles par http:// */
 	define('_NOM_PERMANENTS_ACCESSIBLES', "IMG/");
 }
 
