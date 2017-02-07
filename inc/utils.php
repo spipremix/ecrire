@@ -1529,9 +1529,11 @@ function find_all_in_path($dir, $pattern, $recurs = false) {
 	return $liste_fichiers;
 }
 
-// predicat sur les scripts de ecrire qui n'authentifient pas par cookie
-
-// http://code.spip.net/@autoriser_sans_cookie
+/**
+ * Prédicat sur les scripts de ecrire qui n'authentifient pas par cookie
+ * @param string $nom
+ * @return bool
+ */
 function autoriser_sans_cookie($nom) {
 	static $autsanscookie = array('install', 'base_repair');
 	$nom = preg_replace('/.php[3]?$/', '', basename($nom));
@@ -1893,7 +1895,26 @@ function generer_url_ecrire($script = '', $args = "", $no_entities = false, $rel
 	return $rel . ($no_entities ? $args : str_replace('&', '&amp;', $args));
 }
 
-// http://code.spip.net/@generer_url_retour
+/**
+ * Permet d'ajouter lien vers une page privée à un paramètre d'url (déprécié)
+ *
+ *     ```
+ *     // deprecié
+ *     $h = generer_url_ecrire('article', "id_article=$id_article&redirect=" . generer_url_retour('articles'));
+ *     // utiliser
+ *     $h = generer_url_ecrire('article');
+ *     $h = parametre_url($h, 'id_article', $id_article);
+ *     $h = parametre_url($h, 'redirect', generer_url_ecrire('articles'));
+ *     ```
+ *
+ * @deprecated Utiliser parametre_url() et generer_url_ecrire()
+ * @see parametre_url()
+ * @see generer_url_ecrire()
+ *
+ * @param string $script
+ * @param string $args
+ * @return string
+ */
 function generer_url_retour($script, $args = "") {
 	return rawurlencode(generer_url_ecrire($script, $args, true, true));
 }
