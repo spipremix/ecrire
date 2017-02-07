@@ -2029,7 +2029,6 @@ function generer_form_ecrire($script, $corps, $atts = '', $submit = '') {
  * Attention, JS/Ajax n'aime pas le melange de param GET/POST
  * On n'applique pas la recommandation ci-dessus pour les scripts publics
  * qui ne sont pas destines a etre mis en signets
- * http://code.spip.net/@generer_form_action
  *
  * @param string $script
  * @param string $corps
@@ -2061,10 +2060,8 @@ function generer_form_action($script, $corps, $atts = '', $public = false) {
  *
  * @param  string $script
  *     Nom du script à exécuter
- * @param  string|array $args
- *     Arguments à transmettre a l'URL, soit sous la forme d'un string
- *     tel que `arg1=yy&arg2=zz` soit sous la forme d'un array tel que
- *    `array( arg1 => yy, arg2 => zz )`
+ * @param  string $args
+ *     Arguments à transmettre a l'URL sous la forme `arg1=yy&arg2=zz`
  * @param bool $no_entities
  *     Si false : transforme les & en &amp;
  * @param boolean $public
