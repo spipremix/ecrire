@@ -15,12 +15,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'articles' => 'Статті',
 	'articles_auteur' => 'Статті автора',
 	'articles_populaires' => 'Статті, що найчастіше читають',
-	'articles_rubrique' => 'Статті цієї рубрики',
-	'aucun_article' => 'Статей нема',
-	'aucun_auteur' => 'Авторів нема',
-	'aucun_site' => 'Сайтів нема',
-	'aucune_breve' => 'Новин нема',
-	'aucune_rubrique' => 'Рубрик нема',
+	'articles_rubrique' => 'Статті розділу',
+	'aucun_article' => 'Статей немає',
+	'aucun_auteur' => 'Авторів немає',
+	'aucun_site' => 'Сайтів немає',
+	'aucune_breve' => 'Новин немає',
+	'aucune_rubrique' => 'Розділів немає',
 	'auteur' => 'Автор',
 	'autres' => 'Інші',
 	'autres_breves' => 'Інші новини',
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bonjour' => 'Привіт',
 
 	// C
-	'commenter_site' => 'Коментарі до цього сайту',
+	'commenter_site' => 'Коментарі до сайту',
 	'contact' => 'Контакти',
 	'copie_document_impossible' => 'Неможливо скопіювати документ',
 
@@ -46,7 +46,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// E
 	'edition_mode_texte' => 'Текстовий режим',
 	'en_reponse' => 'Коментар до:',
-	'en_resume' => 'Резюме',
+	'en_resume' => 'Підсумки',
 	'envoyer_message' => 'Відправити повідомлення',
 	'espace_prive' => 'Адміністративна частина',
 
@@ -64,14 +64,14 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// M
 	'meme_auteur' => 'Цього автора',
-	'meme_rubrique' => 'Ще в рубриці',
+	'meme_rubrique' => 'Ще в розділі',
 	'memes_auteurs' => 'Тими самими авторами',
 	'message' => 'Повідомлення',
 	'messages_forum' => 'Повідомлення форуму',
 	'messages_recents' => 'Нові повідомлення форуму',
 	'mots_clef' => 'Ключове слово',
 	'mots_clefs' => 'Ключові слова',
-	'mots_clefs_meme_groupe' => 'Ключові слова з цієї групи',
+	'mots_clefs_meme_groupe' => 'Ключові слова з групи',
 
 	// N
 	'navigation' => 'Дивитись',
@@ -117,5 +117,5 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'ver_imprimer' => 'Версія для друку',
 	'voir_en_ligne' => 'Див. онлайн',
-	'voir_squelette' => 'Показати шаблон цієї сторінки'
+	'voir_squelette' => 'Показати шаблон сторінки'
 );
