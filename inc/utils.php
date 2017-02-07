@@ -2688,11 +2688,6 @@ function init_var_mode() {
 			// tout le monde peut calcul/recalcul
 			if (!defined('_VAR_MODE')) {
 				if (in_array('recalcul', $var_mode)) {
-					/**
-					 * Indique le mode de calcul ou d'affichage de la page.
-					 * Lire {@see init_var_mode()} pour les détails
-					 * @see init_var_mode()
-					 */
 					define('_VAR_MODE', 'recalcul');
 				} elseif (in_array('calcul', $var_mode)) {
 					define('_VAR_MODE', 'calcul');
@@ -2800,6 +2795,11 @@ function init_var_mode() {
 			}
 		}
 		if (!defined('_VAR_MODE')) {
+			/**
+			 * Indique le mode de calcul ou d'affichage de la page.
+			 * Lire {@see init_var_mode()} pour les détails
+			 * @see init_var_mode()
+			 */
 			define('_VAR_MODE', false);
 		}
 		$done = true;
