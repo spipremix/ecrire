@@ -736,30 +736,31 @@ function balise_EXPOSE_dist($p) {
  **/
 function calculer_balise_expose($p, $on, $off) {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->id_boucle;
-	$key = $p->boucles[$b]->primary;
-	$type = $p->boucles[$p->id_boucle]->primary;
-	$desc = $p->boucles[$b]->show;
-	$connect = sql_quote($p->boucles[$b]->sql_serveur);
-
-	if (!$key) {
+	if (empty($p->boucles[$b]->primary)) {
 		$msg = array('zbug_champ_hors_boucle', array('champ' => '#EXPOSER'));
 		erreur_squelette($msg, $p);
-	}
-
-	// Ne pas utiliser champ_sql, on jongle avec le nom boucle explicite
-	$c = index_pile($p->id_boucle, $type, $p->boucles);
-
-	if (isset($desc['field']['id_parent'])) {
-		$parent = 0; // pour if (!$parent) dans calculer_expose
-	} elseif (isset($desc['field']['id_rubrique'])) {
-		$parent = index_pile($p->id_boucle, 'id_rubrique', $p->boucles, $b);
-	} elseif (isset($desc['field']['id_groupe'])) {
-		$parent = index_pile($p->id_boucle, 'id_groupe', $p->boucles, $b);
 	} else {
-		$parent = "''";
-	}
 
-	$p->code = "(calcul_exposer($c, '$type', \$Pile[0], $parent, '$key', $connect) ? $on : $off)";
+		$key = $p->boucles[$b]->primary;
+		$type = $p->boucles[$p->id_boucle]->primary;
+		$desc = $p->boucles[$b]->show;
+		$connect = sql_quote($p->boucles[$b]->sql_serveur);
+
+		// Ne pas utiliser champ_sql, on jongle avec le nom boucle explicite
+		$c = index_pile($p->id_boucle, $type, $p->boucles);
+
+		if (isset($desc['field']['id_parent'])) {
+			$parent = 0; // pour if (!$parent) dans calculer_expose
+		} elseif (isset($desc['field']['id_rubrique'])) {
+			$parent = index_pile($p->id_boucle, 'id_rubrique', $p->boucles, $b);
+		} elseif (isset($desc['field']['id_groupe'])) {
+			$parent = index_pile($p->id_boucle, 'id_groupe', $p->boucles, $b);
+		} else {
+			$parent = "''";
+		}
+
+		$p->code = "(calcul_exposer($c, '$type', \$Pile[0], $parent, '$key', $connect) ? $on : $off)";
+	}
 
 	$p->interdire_scripts = false;
 

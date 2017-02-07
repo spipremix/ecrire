@@ -538,8 +538,6 @@ function vignette_logo_document($row, $connect = '') {
  * Calcul pour savoir si un objet est expose dans le contexte
  * fournit par $reference
  *
- * http://code.spip.net/@calcul_exposer
- *
  * @param int $id
  * @param string $prim
  * @param array $reference
