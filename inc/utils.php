@@ -2797,7 +2797,6 @@ function init_var_mode() {
 		if (!defined('_VAR_MODE')) {
 			/**
 			 * Indique le mode de calcul ou d'affichage de la page.
-			 * Lire {@see init_var_mode()} pour les détails
 			 * @see init_var_mode()
 			 */
 			define('_VAR_MODE', false);
