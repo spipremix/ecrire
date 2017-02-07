@@ -127,7 +127,7 @@ function optimiser_sansref($table, $id, $sel, $and = '') {
 
 	if ($in) {
 		sql_delete($table, sql_in($id, array_keys($in)) . ($and ? " AND $and" : ''));
-		spip_log("Numeros des entrees $id supprimees dans la table $table: $in");
+		spip_log("Numeros des entrees $id supprimees dans la table $table: " . implode(', ', array_keys($in)));
 	}
 
 	return count($in);
