@@ -1036,8 +1036,13 @@ function queue_sleep_time_to_next_job($force = null) {
 }
 
 
-// transformation XML des "&" en "&amp;"
-// http://code.spip.net/@quote_amp
+/**
+ * Transformation XML des `&` en `&amp;`
+ * 
+ * @pipeline post_typo
+ * @param string $u
+ * @return string
+ */
 function quote_amp($u) {
 	return preg_replace(
 		"/&(?![a-z]{0,4}\w{2,3};|#x?[0-9a-f]{2,6};)/i",

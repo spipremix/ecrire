@@ -1533,6 +1533,83 @@ function post_autobr($texte, $delim = "\n_ ") {
 
 
 /**
+ * Expression régulière pour obtenir le contenu des extraits idiomes `<:module:cle:>`
+ *
+ * @var string
+ */
+define('_EXTRAIRE_IDIOME', '@<:(?:([a-z0-9_]+):)?([a-z0-9_]+):>@isS');
+
+/**
+ * Extrait une langue des extraits idiomes (`<:module:cle_de_langue:>`)
+ *
+ * Retrouve les balises `<:cle_de_langue:>` d'un texte et remplace son contenu
+ * par l'extrait correspondant à la langue demandée (si possible), sinon dans la
+ * langue par défaut du site.
+ *
+ * Ne pas mettre de span@lang=fr si on est déjà en fr.
+ *
+ * @filtre
+ * @uses inc_traduire_dist()
+ * @uses code_echappement()
+ * @uses echappe_retour()
+ *
+ * @param string $letexte
+ * @param string $lang
+ *     Langue à retrouver (si vide, utilise la langue en cours).
+ * @param array $options Options {
+ * @type bool $echappe_span
+ *         True pour échapper les balises span (false par défaut)
+ * @type string $lang_defaut
+ *         Code de langue : permet de définir la langue utilisée par défaut,
+ *         en cas d'absence de traduction dans la langue demandée.
+ *         Par défaut la langue du site.
+ *         Indiquer 'aucune' pour ne pas retourner de texte si la langue
+ *         exacte n'a pas été trouvée.
+ * }
+ * @return string
+ **/
+function extraire_idiome($letexte, $lang = null, $options = array()) {
+	static $traduire = false;
+	if ($letexte
+		and preg_match_all(_EXTRAIRE_IDIOME, $letexte, $regs, PREG_SET_ORDER)
+	) {
+		if (!$traduire) {
+			$traduire = charger_fonction('traduire', 'inc');
+			include_spip('inc/lang');
+		}
+		if (!$lang) {
+			$lang = $GLOBALS['spip_lang'];
+		}
+		// Compatibilité avec le prototype de fonction précédente qui utilisait un boolean
+		if (is_bool($options)) {
+			$options = array('echappe_span' => $options);
+		}
+		if (!isset($options['echappe_span'])) {
+			$options = array_merge($options, array('echappe_span' => false));
+		}
+
+		foreach ($regs as $reg) {
+			$cle = ($reg[1] ? $reg[1] . ':' : '') . $reg[2];
+			$trad = $traduire($cle, $lang);
+			#$l = $lang; // TODO: aucun moyen de connaître la langue de retour de la traduction actuellement
+			// si pas de traduction, on laissera l'écriture de l'idiome entier dans le texte.
+			if (strlen($trad)) {
+				$trad = code_echappement($trad, 'idiome', false);
+				#$trad = str_replace("'", '"', inserer_attribut($trad, 'lang', $l));
+				#if (lang_dir($l) !== lang_dir($lang)) {
+				#	$trad = str_replace("'", '"', inserer_attribut($trad, 'dir', lang_dir($l)));
+				#}
+				if (!$options['echappe_span']) {
+					$trad = echappe_retour($trad, 'idiome');
+				}
+				$letexte = str_replace($reg[0], $trad, $letexte);
+			}
+		}
+	}
+	return $letexte;
+}
+
+/**
  * Expression régulière pour obtenir le contenu des extraits polyglottes `<multi>`
  *
  * @var string
