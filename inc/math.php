@@ -76,10 +76,36 @@ function produire_image_math($tex) {
 
 }
 
-
-// Fonction appelee par propre() s'il repere un mode <math>
-// http://code.spip.net/@traiter_math
-function traiter_math($letexte, $source = '') {
+/**
+ * Active la recherche et l'affichage d'expressions mathématiques dans le texte
+ * transmis, dans tous les textes à l'intérieur d'une balise `<math>`.
+ *
+ * Encadrer un texte de balises `<math> ... </math>` active la recherche
+ * d'expressions mathématiques écrites entre caractères `$` au sein de ce texte :
+ *
+ * - `$$expression$$` traitera l'expression comme un paragraphe centré (p)
+ * - `$expression$` traitera l'expression comme un texte en ligne (span)
+ *
+ * Un serveur distant calculera une image à partir de l'expression mathématique
+ * donnée. Cette image est mise en cache localement (local/cache-Tex)
+ *
+ * @note
+ *     Si cette fonction est appelée depuis `propre()` alors un échappement
+ *     des caractères `&` en `&amp;` a été réalisé, qu'il faut redéfaire
+ *     dans les expressions mathématiques trouvées (utiliser l'option
+ *     `$defaire_amp` à true pour cela).
+ *
+ * @link http://www.spip.net/3016
+ * @uses produire_image_math()
+ * @uses code_echappement()
+ *
+ * @param string $letexte
+ * @param string $source
+ * @param bool $defaire_amp
+ *     true pour passer les `&amp;` en `&` dans les expressions mathématiques.
+ * @return string
+ */
+function traiter_math($letexte, $source = '', $defaire_amp = false) {
 
 	$texte_a_voir = $letexte;
 	while (($debut = strpos($texte_a_voir, "<math>")) !== false) {
@@ -95,7 +121,11 @@ function traiter_math($letexte, $source = '') {
 
 		// Les doubles $$x^2$$ en mode 'div'
 		while ((preg_match(",[$][$]([^$]+)[$][$],", $texte_milieu, $regs))) {
-			$echap = "\n<p class=\"spip\" style=\"text-align: center;\">" . produire_image_math($regs[1]) . "</p>\n";
+			$expression = $regs[1];
+			if ($defaire_amp) {
+				$expression = str_replace('&amp;', '&', $expression);
+			}
+			$echap = "\n<p class=\"spip\" style=\"text-align: center;\">" . produire_image_math($expression) . "</p>\n";
 			$pos = strpos($texte_milieu, $regs[0]);
 			$texte_milieu = substr($texte_milieu, 0, $pos)
 				. code_echappement($echap, $source)
@@ -104,7 +134,11 @@ function traiter_math($letexte, $source = '') {
 
 		// Les simples $x^2$ en mode 'span'
 		while ((preg_match(",[$]([^$]+)[$],", $texte_milieu, $regs))) {
-			$echap = produire_image_math($regs[1]);
+			$expression = $regs[1];
+			if ($defaire_amp) {
+				$expression = str_replace('&amp;', '&', $expression);
+			}
+			$echap = produire_image_math($expression);
 			$pos = strpos($texte_milieu, $regs[0]);
 			$texte_milieu = substr($texte_milieu, 0, $pos)
 				. code_echappement($echap, $source)
