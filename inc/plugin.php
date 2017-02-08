@@ -161,7 +161,7 @@ function is_plugin_dir($dir, $dir_plugins = null) {
 	return '';
 }
 
-// Regexp d'extraction des informations d'un intervalle de compatibilité
+/** Regexp d'extraction des informations d'un intervalle de compatibilité */
 define('_EXTRAIRE_INTERVALLE', ',^[\[\(\]]([0-9.a-zRC\s\-]*)[;]([0-9.a-zRC\s\-\*]*)[\]\)\[]$,');
 
 /**
