@@ -1729,16 +1729,6 @@ function test_valeur_serveur($truc) {
  *     racine de SPIP : par exemple, sur ecrire/ elle vaut 1, sur sedna/ 1, et à
  *     la racine 0. Sur url/perso/ elle vaut 2
  *
- * @note
- *     Le test indiquant une connexion 'https' repose sur plusieurs éléments en fonction
- *     des serveurs / reverse proxy. Dans certains cas il faut compléter en indiquant à SPIP
- *     que le port 80 d'arrivée est aussi utilisé pour https, sinon il ajoutera :80 aux urls calculées.
- *
- *     ```
- *     // Nginx:443 => Apache:80 => SPIP…
- *     define('_PORT_HTTPS_STANDARD', '443,80');
- *     ```
- *
  * @param int|boo|array $profondeur
  *    - si non renseignée : retourne l'url pour la profondeur $GLOBALS['profondeur_url']
  *    - si int : indique que l'on veut l'url pour la profondeur indiquée
@@ -1765,7 +1755,6 @@ function url_de_base($profondeur = null) {
 	}
 
 	$http = 'http';
-	// plusieurs configurations serveurs peuvent indiquer une connexion https
 	if (
 		isset($_SERVER["SCRIPT_URI"])
 		and substr($_SERVER["SCRIPT_URI"], 0, 5) == 'https'
@@ -1776,13 +1765,7 @@ function url_de_base($profondeur = null) {
 		and test_valeur_serveur($_SERVER['HTTPS'])
 	) {
 		$http = 'https';
-	} elseif (
-		isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
-		AND $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
-		AND strncmp($GLOBALS['meta']['adresse_site'], 'https', 5) == 0)
-	{
-		$http = 'https';
-	}
+	} 
 
 	// note : HTTP_HOST contient le :port si necessaire
 	$host = $_SERVER['HTTP_HOST'];
