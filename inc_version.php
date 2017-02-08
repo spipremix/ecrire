@@ -209,6 +209,14 @@ $debut_date_publication = null;
 //
 // Prendre en compte les entetes HTTP_X_FORWARDED_XX
 //
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PROTO']==='https'){
+	if (empty($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+		$_SERVER['HTTP_X_FORWARDED_HOST'] = $_SERVER['HTTP_HOST'];
+	}
+	if (empty($_SERVER['HTTP_X_FORWARDED_PORT'])) {
+		$_SERVER['HTTP_X_FORWARDED_PORT'] = 443;
+	}
+}
 if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])){
 	if (isset($_SERVER['HTTP_X_FORWARDED_PORT']) and is_numeric($_SERVER['HTTP_X_FORWARDED_PORT'])){
 		$_SERVER['SERVER_PORT'] = $_SERVER['HTTP_X_FORWARDED_PORT'];
