@@ -79,7 +79,7 @@ function produire_image_math($tex) {
 
 // Fonction appelee par propre() s'il repere un mode <math>
 // http://code.spip.net/@traiter_math
-function traiter_math($letexte, $source = '') {
+function traiter_math($letexte, $source = '', $defaire_amp = false) {
 
 	$texte_a_voir = $letexte;
 	while (($debut = strpos($texte_a_voir, "<math>")) !== false) {
@@ -95,7 +95,11 @@ function traiter_math($letexte, $source = '') {
 
 		// Les doubles $$x^2$$ en mode 'div'
 		while ((preg_match(",[$][$]([^$]+)[$][$],", $texte_milieu, $regs))) {
-			$echap = "\n<p class=\"spip\" style=\"text-align: center;\">" . produire_image_math($regs[1]) . "</p>\n";
+			$expression = $regs[1];
+			if ($defaire_amp) {
+				$expression = str_replace('&amp;', '&', $expression);
+			}
+			$echap = "\n<p class=\"spip\" style=\"text-align: center;\">" . produire_image_math($expression) . "</p>\n";
 			$pos = strpos($texte_milieu, $regs[0]);
 			$texte_milieu = substr($texte_milieu, 0, $pos)
 				. code_echappement($echap, $source)
@@ -104,7 +108,11 @@ function traiter_math($letexte, $source = '') {
 
 		// Les simples $x^2$ en mode 'span'
 		while ((preg_match(",[$]([^$]+)[$],", $texte_milieu, $regs))) {
-			$echap = produire_image_math($regs[1]);
+			$expression = $regs[1];
+			if ($defaire_amp) {
+				$expression = str_replace('&amp;', '&', $expression);
+			}
+			$echap = produire_image_math($expression);
 			$pos = strpos($texte_milieu, $regs[0]);
 			$texte_milieu = substr($texte_milieu, 0, $pos)
 				. code_echappement($echap, $source)
