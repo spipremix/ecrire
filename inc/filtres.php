@@ -118,17 +118,16 @@ function chercher_filtre($fonc, $default = null) {
  *
  * @see filtrer() Assez proche
  *
- * @param string $arg
- *     Texte sur lequel appliquer le filtre
+ * @param mixed $arg
+ *     Texte (le plus souvent) sur lequel appliquer le filtre
  * @param string $filtre
- *     Nom du filtre a appliquer
- * @param string $force
- *     La fonction doit-elle retourner le texte ou rien ?
+ *     Nom du filtre à appliquer
+ * @param bool $force
+ *     La fonction doit-elle retourner le texte ou rien si le filtre est absent ?
  * @return string
- *     Texte avec le filtre appliqué s'il a été trouvé,
- *     Texte sans le filtre appliqué s'il n'a pas été trouvé et que $force n'a
- *       pas été fourni,
- *     Chaîne vide si le filtre n'a pas été trouvé et que $force a été fourni.
+ *     Texte traité par le filtre si le filtre existe,
+ *     Texte d'origine si le filtre est introuvable et si $force à `true`
+ *     Chaîne vide sinon (filtre introuvable).
  **/
 function appliquer_filtre($arg, $filtre, $force = null) {
 	$f = chercher_filtre($filtre);
