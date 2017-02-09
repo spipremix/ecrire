@@ -1970,7 +1970,11 @@ function affdate_base($numdate, $vue, $options = array()) {
 		// Cas d'une vue non definie : retomber sur le format
 		// de date propose par http://www.php.net/date
 		default:
-			return date($vue, strtotime($numdate));
+			list($annee, $mois, $jour, $heures, $minutes, $secondes) = $date_array;
+			if (!$time = mktime($heures, $minutes, $secondes, $mois, $jour, $annee)) {
+				$time = strtotime($numdate);
+			}
+			return date($vue, $time);
 	}
 }
 
