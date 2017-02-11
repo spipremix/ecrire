@@ -141,7 +141,7 @@ function expression_recherche($recherche, $options) {
 		$q = str_replace(array('%', '_'), array('\%', '\_'), trim($recherche));
 
 		// eviter les parentheses et autres caractères qui interferent avec pcre par la suite (dans le preg_match_all) s'il y a des reponses
-		$recherche = preg_quote($recherche);
+		$recherche = preg_quote($recherche, '/');
 		$recherche_trans = translitteration($recherche);
 		$recherche_mod = $recherche_trans;
 
