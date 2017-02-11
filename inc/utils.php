@@ -3087,7 +3087,7 @@ function recuperer_fond($fond, $contexte = array(), $options = array(), $connect
 	}
 
 	if (isset($contexte['connect'])) {
-		$connect = ($connect ? $connect : $contexte['connect']);
+		$connect = $contexte['connect'];
 		unset($contexte['connect']);
 	}
 
@@ -3131,8 +3131,16 @@ function recuperer_fond($fond, $contexte = array(), $options = array(), $connect
 			if (!function_exists('encoder_contexte_ajax')) {
 				include_spip('inc/filtres');
 			}
-			$page['texte'] = encoder_contexte_ajax(array_merge($contexte, array('fond' => $f)), '', $page['texte'],
-				$options['ajax']);
+			$page['texte'] = encoder_contexte_ajax(
+				array_merge(
+					$contexte,
+					array('fond' => $f),
+					($connect ? array('connect' => $connect) : array())
+				),
+				'',
+				$page['texte'],
+				$options['ajax']
+			);
 		}
 
 		if (isset($options['raw']) and $options['raw']) {
