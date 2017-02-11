@@ -27,8 +27,8 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  *
  * Utilise l'information `rechercher_champs` sur la déclaration
  * des objets éditoriaux.
- * 
- * @pipeline_appel rechercher_liste_des_champs()
+ *
+ * @pipeline_appel rechercher_liste_des_champs
  * @uses lister_tables_objets_sql()
  *
  * @return array Couples (type d'objet => Couples (champ => score))
