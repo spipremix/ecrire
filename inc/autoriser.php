@@ -684,10 +684,6 @@ function autoriser_rubrique_supprimer_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_article_modifier_dist($faire, $type, $id, $qui, $opt) {
 	$r = sql_fetsel('id_rubrique,statut', 'spip_articles', 'id_article=' . sql_quote($id));
 
-	if (!function_exists('auteurs_article')) {
-		include_spip('inc/auth');
-	} // pour auteurs_article si espace public
-
 	return
 		$r
 		and
@@ -697,7 +693,7 @@ function autoriser_article_modifier_dist($faire, $type, $id, $qui, $opt) {
 				(!isset($opt['statut']) or $opt['statut'] !== 'publie')
 				and in_array($qui['statut'], array('0minirezo', '1comite'))
 				and in_array($r['statut'], array('prop', 'prepa', 'poubelle'))
-				and auteurs_article($id, 'id_auteur=' . $qui['id_auteur'])
+				and auteurs_objet('article', $id, 'id_auteur=' . $qui['id_auteur'])
 			)
 		);
 }
@@ -754,9 +750,9 @@ function autoriser_article_voir_dist($faire, $type, $id, $qui, $opt) {
 		in_array($statut, array('prop', 'publie'))
 		// sinon si on est auteur, on a le droit de le voir, evidemment !
 		or
-		($id and $qui['id_auteur']
-			and (function_exists('auteurs_article') or include_spip('inc/auth'))
-			and auteurs_article($id, 'id_auteur=' . $qui['id_auteur']));
+		($id
+			and $qui['id_auteur']
+			and auteurs_objet('article', $id, 'id_auteur=' . $qui['id_auteur']));
 }
 
 
@@ -1535,10 +1531,43 @@ function autoriser_echafauder_dist($faire, $type, $id, $qui, $opt) {
 
 
 /**
+ * Retourne les identifiants d'auteurs liés à un objet
+ *
+ * @param string $objet
+ * @param int $id_objet
+ * @param string|array $cond
+ *     Condition(s) supplémentaire(s) pour le where de la requête
+ * @return int[]
+ *     Identifiants d'auteurs
+ */
+function auteurs_objet($objet, $id_objet, $cond = '') {
+	$objet = objet_type($objet);
+	$where = array(
+		'objet=' . sql_quote($objet),
+		'id_objet=' . intval($id_objet)
+	);
+	if (!empty($cond)) {
+		if (is_array($cond)) {
+			$where = array_merge($where, $cond);
+		} else {
+			$where[] = $cond;
+		}
+	}
+	$auteurs = sql_allfetsel(
+		'id_auteur',
+		'spip_auteurs_liens',
+		$where
+	);
+	if (is_array($auteurs)) {
+		return array_map('reset', $auteurs);
+	}
+	return array();
+}
+
+/**
  * Lister les auteurs d'un article
  *
- * Fonction générique utilisée par plusieurs autorisations
- *
+ * @deprecated utiliser auteurs_objets()
  * @param int $id_article Identifiant de l'article
  * @param string $cond Condition en plus dans le where de la requête
  * @return array|bool
