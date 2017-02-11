@@ -259,7 +259,7 @@ function cvtconf_configurer_lire_meta($form, &$valeurs) {
 
 	foreach ($valeurs as $k => $v) {
 		if (substr($k, 0, 1) !== '_') {
-			$valeurs[$k] = (isset($meta[$prefixe . $k]) ? $meta[$prefixe . $k] : '');
+			$valeurs[$k] = (isset($meta[$prefixe . $k]) ? $meta[$prefixe . $k] : null);
 		}
 	}
 }
