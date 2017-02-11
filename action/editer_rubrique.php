@@ -188,7 +188,7 @@ function editer_rubrique_breves($id_rubrique, $id_parent, $c = array()) {
 		return true;
 	}
 
-	if ($c['confirme_deplace'] != 'oui') {
+	if (empty($c['confirme_deplace']) or $c['confirme_deplace'] != 'oui') {
 		return false;
 	}
 
