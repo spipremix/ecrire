@@ -92,11 +92,8 @@ function chercher_filtre($fonc, $default = null) {
 
 		return $f;
 	}
-	foreach (
-		array('filtre_' . $fonc, 'filtre_' . $fonc . '_dist', $fonc) as $f) {
-		if (isset($GLOBALS['spip_matrice'][$f]) and is_string($g = $GLOBALS['spip_matrice'][$f])) {
-			find_in_path($g, '', true);
-		}
+	foreach (array('filtre_' . $fonc, 'filtre_' . $fonc . '_dist', $fonc) as $f) {
+		trouver_filtre_matrice($f); // charge des fichiers spécifiques éventuels
 		if (function_exists($f)
 			or (preg_match("/^(\w*)::(\w*)$/", $f, $regs)
 				and is_callable(array($regs[1], $regs[2]))
@@ -263,24 +260,39 @@ $GLOBALS['spip_matrice']['filtre_audio_x_pn_realaudio'] = 'inc/filtres_mime.php'
  *     Code HTML retourné par le filtre
  **/
 function filtrer($filtre) {
-	if (isset($GLOBALS['spip_matrice'][$filtre]) and is_string($f = $GLOBALS['spip_matrice'][$filtre])) {
-		find_in_path($f, '', true);
-		$GLOBALS['spip_matrice'][$filtre] = true;
-	}
 	$tous = func_get_args();
-	if (substr($filtre, 0, 6) == 'image_' && $GLOBALS['spip_matrice'][$filtre]) {
+	if (trouver_filtre_matrice($filtre) and substr($filtre, 0, 6) == 'image_') {
 		return image_filtrer($tous);
 	} elseif ($f = chercher_filtre($filtre)) {
 		array_shift($tous);
-
 		return call_user_func_array($f, $tous);
 	} else {
 		// le filtre n'existe pas, on provoque une erreur
 		$msg = array('zbug_erreur_filtre', array('filtre' => texte_script($filtre)));
 		erreur_squelette($msg);
-
 		return '';
 	}
+}
+
+/**
+ * Cherche un filtre spécial indiqué dans la globale `spip_matrice`
+ * et charge le fichier éventuellement associé contenant le filtre.
+ *
+ * Les filtres d'images par exemple sont déclarés de la sorte, tel que :
+ * ```
+ * $GLOBALS['spip_matrice']['image_reduire'] = true;
+ * $GLOBALS['spip_matrice']['image_monochrome'] = 'filtres/images_complements.php';
+ * ```
+ *
+ * @param string $filtre
+ * @return bool true si on trouve le filtre dans la matrice, false sinon.
+ */
+function trouver_filtre_matrice($filtre) {
+	if (isset($GLOBALS['spip_matrice'][$filtre]) and is_string($f = $GLOBALS['spip_matrice'][$filtre])) {
+		find_in_path($f, '', true);
+		$GLOBALS['spip_matrice'][$filtre] = true;
+	}
+	return !empty($GLOBALS['spip_matrice'][$filtre]);
 }
 
 
