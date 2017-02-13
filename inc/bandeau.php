@@ -141,7 +141,8 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 	$boutons_admin = pipeline('ajouter_menus', $boutons_admin);
 
 	// définir les favoris
-	if ($boutons_admin and $menus_favoris = obtenir_menus_favoris()) {
+	if ($boutons_admin) {
+		$menus_favoris = obtenir_menus_favoris();
 		foreach ($boutons_admin as $key => $menu) {
 			$menu->favori = in_array($key, $menus_favoris);
 			if ($menu->sousmenu) {
