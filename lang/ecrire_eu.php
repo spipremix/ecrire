@@ -30,7 +30,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Horren ordez, erabiltzaileak inportatzeko ez erabili LDAP euskarria.',
 	'avis_deplacement_rubrique' => 'ADI EGON!. Atal honek (@contient_breves@)breve@scb@. Mugitzen baduzu, eragin ezazu baieztapen-kutxatila hau.',
 	'avis_erreur_connexion_mysql' => 'SQL lokarri-errorea',
-	'avis_espace_interdit' => 'Gune helezina SPIP instalaturik dago jadanik.', # MODIF
+	'avis_espace_interdit' => '<b>Gune helezina</b> <div>SPIP instalaturik dago jadanik.</div>',
 	'avis_lecture_noms_bases_1' => 'Instalazio-programak ez du lortu instalaturik dauden datu-baseen izenak irakurtzea.',
 	'avis_lecture_noms_bases_2' => 'Bi aukera: Base erabilgarririk ez dago edo segurtasun arrazoiak direla medio baseen zerrenda-funtzioa desaktibatu egin da (zerbitzari ugaritan ohizkoa da). ',
 	'avis_lecture_noms_bases_3' => 'Bigarren kasuan, zure login izena duen base bat erabili ahal izatea litekeena da.',
@@ -153,7 +153,7 @@ Seguritate hobetzeko, konfigurazio hau aldatu behar zenuke, edo @constantes@ kon
 	'ical_info2' => 'Teknika guzti hauen buruzko informazio gehiago lortzeko, <a href="@spipnet@">SPIP dokumentazioa</a> kontsulta dezakezu.',
 	'ical_info_calendrier' => 'Bi egutegi dituzu eskura. Lehena gunearen planoa da, bertan argitaratutako artikulu guztiak adierazten direlarik. Bigarrenak iragarki editorialak eta zure azken mezu pribatuak ditu: zuk bakarrik ikus dezakezu gako pertsonal baten bidez, gakoa edozein unean alda dezakezularik zure pasahitza aldatuz.',
 	'ical_methode_http' => 'Deskargatu',
-	'ical_methode_webcal' => 'Sinkronizazioa (webcal://)', # MODIF
+	'ical_methode_webcal' => 'Sinkronizazioa (webcal://)',
 	'ical_texte_js' => 'Gune honetan berriki argitaratutako artikuluak, zure edo edozeinen gunean ikus ditzakezu, Javascript lerro baten bidez.',
 	'ical_texte_prive' => 'Egutegi hau erabat pertsonala da eta gune honen ekintza editorial pribatuen berri ematen du (eginkizunak, hitzordu pertsonalak, artikuluak eta proposatutako berri-laburrak,..)',
 	'ical_texte_public' => 'Egutegi honi eskerleku honetako ekintza publikoen jarraipena egin daiteke (artikuluak eta berri laburrak)',
@@ -231,7 +231,7 @@ Seguritate hobetzeko, konfigurazio hau aldatu behar zenuke, edo @constantes@ kon
 	'info_aucun_message' => 'Iruzkinik ez',
 	'info_aucun_rubrique' => 'Atalik ez',
 	'info_aujourdhui' => 'Gaur :',
-	'info_auteur_gere_toutes_rubriques_2' => '<b>Atal guztiak</b> kudeatzen ditut', # MODIF
+	'info_auteur_gere_toutes_rubriques_2' => '<b>Atal guztiak</b> kudeatzen ditut',
 	'info_auteurs' => 'Egileak',
 	'info_auteurs_par_tri' => '@partri@ egileak',
 	'info_auteurs_trouves' => 'Aurkitutako idazlariak',
@@ -382,7 +382,7 @@ Kasu honetan, SPIP-eko hurrengo funtzinalitateak ez dute funtzionatuko.',
 	'info_post_scriptum' => 'Post scriptum',
 	'info_post_scriptum_2' => 'Post scriptum:',
 	'info_pour' => '-rako',
-	'info_preview_texte' => 'Gunea artikulu eta berri labur guztiak (gutxienez« proposatua » statusa dutenak) argitaratuta egon balira bezala aurreikustea posible da. Posibilitate hau administratzaileentzat bakarrik, idazlari guztientzat, edo inorentzat egon behar da zabalik?', # MODIF
+	'info_preview_texte' => 'Gunea artikulu eta berri labur guztiak (gutxienez« proposatua » statusa dutenak) argitaratuta egon balira bezala aurreikustea posible da. Posibilitate hau administratzaileentzat bakarrik, idazlari guztientzat, edo inorentzat egon behar da zabalik?',
 	'info_procedez_par_etape' => 'etapaz etapa jokatu',
 	'info_procedure_maj_version' => 'Eguneratzeko prozedura bete egin behar da datu-basea SPIP-en bertsio berrira moldatzeko.',
 	'info_proxy_ok' => 'Proxy-aren proba lortua',
@@ -550,7 +550,7 @@ Itzulpenak originalari asoziatuta daude, bere egoera adierazten duten kolore bat
 	'label_choix_langue' => 'Hizkuntza aukera ezazu',
 	'label_nom_fichier_connect' => 'Zerbitzari honendako erabilitako izena ezar ezazu',
 	'label_slogan_site' => 'Gunearen lema',
-	'label_taille_ecran' => 'Panatila zabalera', # MODIF
+	'label_taille_ecran' => 'Pantailaren zabalera',
 	'label_texte_et_icones_navigation' => 'Nabigazio menua',
 	'label_texte_et_icones_page' => 'Orria erakutsi',
 	'ldap_correspondance' => '@champ@ eremuaren jaurantsia',
@@ -590,7 +590,7 @@ Hutsik utz ezazu ez betetzeko, espazio edo komak tarteka itzazu LDAP eremu bat b
 	'mois_non_connu' => 'ezezagun',
 
 	// N
-	'nouvelle_version_spip' => 'SPIPen @version@ bertsioa eskuragarri da.', # MODIF
+	'nouvelle_version_spip' => 'SPIPen @version@ bertsioa eskuragarri da.',
 
 	// O
 	'onglet_contenu' => 'Edukia',
