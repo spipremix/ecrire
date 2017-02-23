@@ -50,7 +50,7 @@ define('CHAMP_ETENDU', '/\[([^]\[]*)\(' . NOM_DE_CHAMP . '([^[)]*\)[^]\[]*)\]/S'
 
 define('BALISE_INCLURE', '/<INCLU[DR]E[[:space:]]*(\(([^)]*)\))?/S');
 define('BALISE_POLYGLOTTE', ',<multi>(.*)</multi>,Uims');
-define('BALISE_IDIOMES', ',<:(([a-z0-9_]+):)?([a-z0-9_]*)({([^\|=>]*=[^\|>]*)})?((\|[^>]*)?:>),iS');
+define('BALISE_IDIOMES', ',<:(([a-z0-9_]+):)?([a-z0-9_]*)({([^\|=>]*=[^\|>]*)})?((\|[^>]*)?:/?>),iS');
 define('BALISE_IDIOMES_ARGS', '@^\s*([^= ]*)\s*=\s*((' . NOM_DE_CHAMP . '[{][^}]*})?[^,]*)\s*,?\s*@s');
 
 /** Champ sql dans parenthèse ex: (id_article) */
