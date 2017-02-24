@@ -169,7 +169,7 @@
 		<traducteur nom="b_b" lien="https://trad.spip.net/auteur/b_b" />
 		<traducteur nom="kent1" lien="https://trad.spip.net/auteur/kent1" />
 	</langue>
-	<langue code="nl" url="https://trad.spip.net/tradlang_module/ecrire_?lang_cible=nl" total="806" traduits="799" relire="0" modifs="0" nouveaux="7" pourcent="99.13">
+	<langue code="nl" url="https://trad.spip.net/tradlang_module/ecrire_?lang_cible=nl" total="806" traduits="806" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="b_b" lien="https://trad.spip.net/auteur/b_b" />
 		<traducteur nom="ericdg10" lien="https://trad.spip.net/auteur/ericdg10" />
 		<traducteur nom="gerbrand" lien="https://trad.spip.net/auteur/gerbrand" />
