@@ -92,7 +92,7 @@
 		<traducteur nom="Raquel S. Bujaldón" lien="https://trad.spip.net/auteur/raquel-s-bujaldon" />
 		<traducteur nom="severo" lien="https://trad.spip.net/auteur/severo" />
 	</langue>
-	<langue code="eu" url="https://trad.spip.net/tradlang_module/ecrire_?lang_cible=eu" total="806" traduits="767" relire="0" modifs="2" nouveaux="37" pourcent="95.16">
+	<langue code="eu" url="https://trad.spip.net/tradlang_module/ecrire_?lang_cible=eu" total="806" traduits="771" relire="0" modifs="0" nouveaux="35" pourcent="95.66">
 		<traducteur nom="b_b" lien="https://trad.spip.net/auteur/b_b" />
 		<traducteur nom="otalazt" lien="https://trad.spip.net/auteur/otalazt-7232" />
 	</langue>
@@ -202,7 +202,7 @@
 		<traducteur nom="Bastian" lien="https://trad.spip.net/auteur/bastian" />
 		<traducteur nom="kent1" lien="https://trad.spip.net/auteur/kent1" />
 	</langue>
-	<langue code="oc_ni_mis" url="https://trad.spip.net/tradlang_module/ecrire_?lang_cible=oc_ni_mis" total="806" traduits="794" relire="0" modifs="0" nouveaux="12" pourcent="98.51">
+	<langue code="oc_ni_mis" url="https://trad.spip.net/tradlang_module/ecrire_?lang_cible=oc_ni_mis" total="806" traduits="806" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="b_b" lien="https://trad.spip.net/auteur/b_b" />
 		<traducteur nom="sylvain" lien="https://trad.spip.net/auteur/sylvain" />
 	</langue>
