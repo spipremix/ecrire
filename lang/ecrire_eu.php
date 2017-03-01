@@ -24,6 +24,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_echec_1' => 'SQL zerbitzariarekiko lokarriak huts egin du.',
 	'avis_connexion_echec_2' => 'Itzul zaitez aurreko orrialdera eta egiazta itzazu sartutako informazioak.',
 	'avis_connexion_echec_3' => 'KONTUZ: Zerbitzari askotan, erabili ahal izan aurretik SQL baserako sarreraren aktibatzea eskatu behar da. Ezin baduzu konektatu, egiaztaezazu tramite hori bete duzula.',
+	'avis_connexion_erreur_creer_base' => 'Datu basea ez sortu ahal izan.',
 	'avis_connexion_erreur_nom_base' => 'Basearen izenak hizkiak, zifrak eta marratxoak soilik eduki ditzazke',
 	'avis_connexion_ldap_echec_1' => 'LDAP zerbitzariarekiko lokarriak huts egin du',
 	'avis_connexion_ldap_echec_2' => 'Itzul zaitez aurreko orrialdera eta egiazta itzazu sartutako informazioak.',
@@ -132,6 +133,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'entree_url' => 'Zure lekuaren (URL) helbidea',
 	'entree_url_2' => 'Gunearen helbidea (URL)',
 	'erreur_connect_deja_existant' => 'Izen bereko zerbitzari bat badago jadanik',
+	'erreur_email_deja_existant' => 'Helbilde elektroniko hau jadanik erregistratua da.',
 	'erreur_nom_connect_incorrect' => 'Zerbitzari izen hori debekatua da',
 	'erreur_plugin_desinstalation_echouee' => 'Pluginaren desinstalazioak huts egin du. Halere, desaktibatzen ahal duzu.',
 	'erreur_plugin_fichier_absent' => 'Fitxategia ez dago',
@@ -167,7 +169,7 @@ Seguritate hobetzeko, konfigurazio hau aldatu behar zenuke, edo @constantes@ kon
 	'icone_admin_plugin' => 'Plugin-en kudeaketa',
 	'icone_administration' => 'Mantentzea',
 	'icone_afficher_auteurs' => 'Egileak erakutsi',
-	'icone_afficher_visiteurs' => 'Bisitariakerakutsi',
+	'icone_afficher_visiteurs' => 'Bisitariak erakutsi',
 	'icone_arret_discussion' => 'Elkarrizketa honetan ez berriro parte hartu ',
 	'icone_calendrier' => 'Egutegi',
 	'icone_configuration' => 'Konfigurazioa',
@@ -639,7 +641,7 @@ Hutsik utz ezazu ez betetzeko, espazio edo komak tarteka itzazu LDAP eremu bat b
 	'plugin_info_upgrade_ok' => 'Eguneratzea ongi bururatu da',
 	'plugin_librairies_installees' => 'Instalatutako liburutegiak',
 	'plugin_necessite_lib' => 'plugin hunek @lib@ liburutegia beharesten du.',
-	'plugin_necessite_plugin' => 'Beharretsia : @plugin@ plugina @version@ bertsio minimoarekin.', # MODIF
+	'plugin_necessite_plugin' => 'Beharretsia : @plugin@ plugina @version@ bertsio minimoarekin.',
 	'plugin_necessite_plugin_sans_version' => '@plugin@ plugina behar du.',
 	'plugin_necessite_spip' => 'SPIPen @version@ bertsio minimoa behar du.',
 	'plugin_source' => 'iturria: ',
@@ -673,7 +675,7 @@ Hutsik utz ezazu ez betetzeko, espazio edo komak tarteka itzazu LDAP eremu bat b
 
 	// Q
 	'queue_executer_maintenant' => 'Exekutatu orai',
-	'queue_info_purger' => 'Zain diren lan guziak ezeztatzen ahal dituzu, eta zerrenda berrabiarazi lan periodikoekin', # MODIF
+	'queue_info_purger' => 'Zain diren lan guziak ezeztatzen ahal dituzu, eta zerrenda berrabiarazi lan periodikoekin',
 	'queue_nb_jobs_in_queue' => '@nb@ lan zain daude',
 	'queue_next_job_in_nb_sec' => 'Ondoko lana @nb@ segundutan',
 	'queue_no_job_in_queue' => 'Zain dauden lanik ez da',
