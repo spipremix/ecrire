@@ -43,7 +43,7 @@ function definir_raccourcis_alineas() {
  *
  * Ne fait rien ici. Voir plugin Textwheel.
  *
- * @param sring $bloc
+ * @param string $bloc
  * @return string
  */
 function traiter_tableau($bloc) {
@@ -313,17 +313,24 @@ function corriger_typo($letexte, $lang = '') {
 		}
 	}
 
+	// trouver les blocs idiomes et les traiter à part
+	$letexte = extraire_idiome($ei = $letexte, $lang, true);
+	$ei = ($ei !== $letexte);
+
 	// trouver les blocs multi et les traiter a part
-	$letexte = extraire_multi($e = $letexte, $lang, true);
-	$e = ($e === $letexte);
+	$letexte = extraire_multi($em = $letexte, $lang, true);
+	$em = ($em !== $letexte);
 
 	// Charger & appliquer les fonctions de typographie
 	$typographie = charger_fonction(lang_typo($lang), 'typographie');
 	$letexte = $typographie($letexte);
 
 	// Les citations en une autre langue, s'il y a lieu
-	if (!$e) {
+	if ($em) {
 		$letexte = echappe_retour($letexte, 'multi');
+	}
+	if ($ei) {
+		$letexte = echappe_retour($letexte, 'idiome');
 	}
 
 	// Retablir les caracteres proteges
