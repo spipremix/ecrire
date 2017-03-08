@@ -100,12 +100,15 @@ function chercher_module_lang($module, $lang = '') {
  *
  * @param string $lang Code de langue
  * @param string $module Nom du module de langue
+ * @return string Langue du module chargé, sinon chaîne vide.
  **/
 function charger_langue($lang, $module = 'spip') {
+	$var = 'i18n_' . $module . '_' . $lang;
 	if ($lang and $fichiers_lang = chercher_module_lang($module, $lang)) {
-		$GLOBALS['idx_lang'] = 'i18n_' . $module . '_' . $lang;
+		$GLOBALS['idx_lang'] = $var;
 		include(array_shift($fichiers_lang));
 		surcharger_langue($fichiers_lang);
+		$GLOBALS['lang_' . $var] = $lang;
 	} else {
 		// si le fichier de langue du module n'existe pas, on se rabat sur
 		// la langue par defaut du site -- et au pire sur le francais, qui
@@ -113,15 +116,16 @@ function charger_langue($lang, $module = 'spip') {
 		// var liee a la langue
 		$l = $GLOBALS['meta']['langue_site'];
 		if (!$fichiers_lang = chercher_module_lang($module, $l)) {
-			$fichiers_lang = chercher_module_lang($module, _LANGUE_PAR_DEFAUT);
+			$l = _LANGUE_PAR_DEFAUT;
+			$fichiers_lang = chercher_module_lang($module, $l);
 		}
 
 		if ($fichiers_lang) {
 			$GLOBALS['idx_lang'] = 'i18n_' . $module . '_' . $l;
 			include(array_shift($fichiers_lang));
 			surcharger_langue($fichiers_lang);
-			$GLOBALS['i18n_' . $module . '_' . $lang]
-				= &$GLOBALS['i18n_' . $module . '_' . $l];
+			$GLOBALS[$var] = &$GLOBALS['i18n_' . $module . '_' . $l];
+			$GLOBALS['lang_' . $var] = $l;
 			#spip_log("module de langue : ${module}_$l.php");
 		}
 	}
@@ -174,6 +178,23 @@ function surcharger_langue($fichiers) {
 }
 
 
+
+class SPIP_Traductions_Description {
+	/** @var string code de langue (hors module) */
+	public $code;
+	/** @var string nom du module de langue */
+	public $module;
+	/** @var string langue de la traduction */
+	public $langue;
+	/** @var string traduction */
+	public $texte;
+	/** @var string var mode particulier appliqué ? */
+	public $mode;
+	/** @var bool Corrections des textes appliqué ? */
+	public $corrections = false;
+}
+
+
 /**
  * Traduire une chaine internationalisée
  *
@@ -204,15 +225,19 @@ function surcharger_langue($fichiers) {
  *     Clé de traduction, tel que `bouton_enregistrer` ou `mots:titre_mot`
  * @param string $lang
  *     Code de langue, la traduction doit se faire si possible dans cette langue
- * @return string
- *     Traduction demandée. Chaîne vide si aucune traduction trouvée.
+ * @param bool $raw
+ *     - false : retourne le texte (par défaut)
+ *     - true  : retourne une description de la chaine de langue (module, texte, langue)
+ * @return string|array
+ *     - string : Traduction demandée. Chaîne vide si aucune traduction trouvée.
+ *     - SPIP_Traductions_Description : traduction et description (texte, module, langue)
  **/
-function inc_traduire_dist($ori, $lang) {
+function inc_traduire_dist($ori, $lang, $raw = false) {
 	static $deja_vu = array();
 	static $local = array();
 
 	if (isset($deja_vu[$lang][$ori]) and (_request('var_mode') != 'traduction')) {
-		return $deja_vu[$lang][$ori];
+		return $raw ? $deja_vu[$lang][$ori] : $deja_vu[$lang][$ori]->texte;
 	}
 
 	// modules demandes explicitement <xxx|yyy|zzz:code> cf MODULES_IDIOMES
@@ -226,8 +251,8 @@ function inc_traduire_dist($ori, $lang) {
 		$ori_complet = implode('|', $modules) . ':' . $ori;
 	}
 
-	$text = '';
-	$module_retenu = '';
+	$desc = new SPIP_Traductions_Description();
+
 	// parcourir tous les modules jusqu'a ce qu'on trouve
 	foreach ($modules as $module) {
 		$var = "i18n_" . $module . "_" . $lang;
@@ -255,53 +280,74 @@ function inc_traduire_dist($ori, $lang) {
 		}
 
 		if (isset($GLOBALS[$var][$code])) {
-			$module_retenu = $module;
-			$text = $GLOBALS[$var][$code];
+			$desc->code = $code;
+			$desc->module = $module;
+			$desc->langue = $GLOBALS['lang_' . $var];
+			$desc->texte = $GLOBALS[$var][$code];
 			break;
 		}
 	}
 
-	// Retour aux sources si la chaine est absente dans la langue cible ;
-	// on essaie d'abord la langue du site, puis a defaut la langue fr
-	$langue_retenue = $lang;
-	if (!strlen($text)
-		and $lang !== _LANGUE_PAR_DEFAUT
-	) {
-		if ($lang !== $GLOBALS['meta']['langue_site']) {
-			$text = inc_traduire_dist($ori, $GLOBALS['meta']['langue_site']);
-			$langue_retenue = (!strlen($text) ? $GLOBALS['meta']['langue_site'] : '');
-		} else {
-			$text = inc_traduire_dist($ori, _LANGUE_PAR_DEFAUT);
-			$langue_retenue = (!strlen($text) ? _LANGUE_PAR_DEFAUT : '');
+	if (!$desc->corrections) {
+		$desc->corrections = true;
+		// Retour aux sources si la chaine est absente dans la langue cible ;
+		// on essaie d'abord la langue du site, puis a defaut la langue fr
+		if (!strlen($desc->texte) and $lang !== _LANGUE_PAR_DEFAUT) {
+			if ($lang !== $GLOBALS['meta']['langue_site']) {
+				$desc = inc_traduire_dist($ori, $GLOBALS['meta']['langue_site'], true);
+			} else {
+				$desc = inc_traduire_dist($ori, _LANGUE_PAR_DEFAUT, true);
+			}
 		}
-	}
 
-	// Supprimer la mention <NEW> ou <MODIF>
-	if (substr($text, 0, 1) === '<') {
-		$text = str_replace(array('<NEW>', '<MODIF>'), array(), $text);
-	}
+		// Supprimer la mention <NEW> ou <MODIF>
+		if (substr($desc->texte, 0, 1) === '<') {
+			$desc->texte = str_replace(array('<NEW>', '<MODIF>'), array(), $desc->texte);
+		}
 
-	// Si on n'est pas en utf-8, la chaine peut l'etre...
-	// le cas echeant on la convertit en entites html &#xxx;
-	if ((!isset($GLOBALS['meta']['charset']) or $GLOBALS['meta']['charset'] !== 'utf-8')
-		and preg_match(',[\x7f-\xff],S', $text)
-	) {
-		include_spip('inc/charsets');
-		$text = charset2unicode($text, 'utf-8');
+		// Si on n'est pas en utf-8, la chaine peut l'etre...
+		// le cas echeant on la convertit en entites html &#xxx;
+		if ((!isset($GLOBALS['meta']['charset']) or $GLOBALS['meta']['charset'] !== 'utf-8')
+			and preg_match(',[\x7f-\xff],S', $desc->texte)
+		) {
+			include_spip('inc/charsets');
+			$desc->texte = charset2unicode($desc->texte, 'utf-8');
+		}
 	}
 
 	if (_request('var_mode') == 'traduction') {
-		if ($text) {
-			$classe = 'debug-traduction' . ($module_retenu == 'ecrire' ? '-prive' : '');
-			$text = '<span lang=' . $langue_retenue . ' class=' . $classe . ' title=' . $ori_complet . '(' . $langue_retenue . ')>' . $text . '</span>';
-			$text = str_replace(
-				array("$module_retenu:", "$module_retenu|"),
-				array("*$module_retenu*:", "*$module_retenu*|"),
-				$text);
-		}
+		$desc = definir_details_traduction($desc, $ori_complet);
 	} else {
-		$deja_vu[$lang][$ori] = $text;
+		$deja_vu[$lang][$ori] = $desc;
 	}
 
-	return $text;
+	return $raw ? $desc : $desc->texte;
+}
+
+/**
+ * Modifie le texte de traduction pour indiquer des éléments
+ * servant au debug de celles-ci. (pour var_mode=traduction)
+ *
+ * @param SPIP_Traductions_Description $desc
+ * @param string $modules Les modules qui étaient demandés
+ * @return SPIP_Traductions_Description
+ */
+function definir_details_traduction($desc, $modules) {
+	if (!$desc->mode and $desc->texte) {
+		// ne pas modifier 2 fois l'affichage
+		$desc->mode = 'traduction';
+		$classe = 'debug-traduction' . ($desc->module == 'ecrire' ? '-prive' : '');
+		$desc->texte = '<span '
+			. 'lang=' . $desc->langue
+			. ' class=' . $classe
+			. ' title=' . $modules . '(' . $desc->langue . ')>'
+			. $desc->texte
+			. '</span>';
+		$desc->texte = str_replace(
+			array("$desc->module:", "$desc->module|"),
+			array("*$desc->module*:", "*$desc->module*|"),
+			$desc->texte
+		);
+	}
+	return $desc;
 }

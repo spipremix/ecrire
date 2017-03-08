@@ -1602,15 +1602,17 @@ function extraire_idiome($letexte, $lang = null, $options = array()) {
 
 		foreach ($regs as $reg) {
 			$cle = ($reg[1] ? $reg[1] . ':' : '') . $reg[2];
-			$trad = $traduire($cle, $lang);
-			#$l = $lang; // TODO: aucun moyen de connaître la langue de retour de la traduction actuellement
+			$desc = $traduire($cle, $lang, true);
+			$l = $desc->langue;
 			// si pas de traduction, on laissera l'écriture de l'idiome entier dans le texte.
-			if (strlen($trad)) {
-				$trad = code_echappement($trad, 'idiome', false);
-				#$trad = str_replace("'", '"', inserer_attribut($trad, 'lang', $l));
-				#if (lang_dir($l) !== lang_dir($lang)) {
-				#	$trad = str_replace("'", '"', inserer_attribut($trad, 'dir', lang_dir($l)));
-				#}
+			if (strlen($desc->texte)) {
+				$trad = code_echappement($desc->texte, 'idiome', false);
+				if ($l !== $lang) {
+					$trad = str_replace("'", '"', inserer_attribut($trad, 'lang', $l));
+				}
+				if (lang_dir($l) !== lang_dir($lang)) {
+					$trad = str_replace("'", '"', inserer_attribut($trad, 'dir', lang_dir($l)));
+				}
 				if (!$options['echappe_span']) {
 					$trad = echappe_retour($trad, 'idiome');
 				}
