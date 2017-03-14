@@ -37,6 +37,7 @@
 	<langue code="da" url="https://trad.spip.net/tradlang_module/spip?lang_cible=da" total="636" traduits="449" relire="0" modifs="54" nouveaux="133" pourcent="70.60">
 	</langue>
 	<langue code="de" url="https://trad.spip.net/tradlang_module/spip?lang_cible=de" total="636" traduits="636" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="Andras" lien="https://trad.spip.net/auteur/andras" />
 		<traducteur nom="Benjamin Tricault" lien="https://trad.spip.net/auteur/benjamin-tricault" />
 		<traducteur nom="kent1" lien="https://trad.spip.net/auteur/kent1" />
 		<traducteur nom="klaus++" lien="https://trad.spip.net/auteur/klaus" />
