@@ -317,6 +317,7 @@ function public_produire_page_dist(
 		and $use_cache > -1
 		and is_array($page)
 		and count($page)
+		and isset($page['entetes']['X-Spip-Cache'])
 		and $page['entetes']['X-Spip-Cache'] > 0
 	) {
 		if (is_null($cacher)) {
