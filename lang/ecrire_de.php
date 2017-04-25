@@ -653,10 +653,10 @@ in einer Farbe, die den Status anzeigt :',
 	'plugin_info_telecharger' => 'herunterladen von @url@ und in @rep@ installieren',
 	'plugin_info_upgrade_ok' => 'Upgrade erfolgreich',
 	'plugin_librairies_installees' => 'Installierte Bibliotheken',
-	'plugin_necessite_extension_php' => 'benötigt die PHP-Extension @plugin@ Version @version@.', # RELIRE
-	'plugin_necessite_extension_php_sans_version' => 'benötigt PHP-Extension @plugin@', # RELIRE
+	'plugin_necessite_extension_php' => 'benötigt die PHP-Erweiterung @plugin@ Version @version@.',
+	'plugin_necessite_extension_php_sans_version' => 'benötigt die PHP-Erweiterung @plugin@',
 	'plugin_necessite_lib' => 'Dieses Plugin benötigt die Bibliothek @lib@',
-	'plugin_necessite_php' => 'benötigt @plugin@ Version @version@.', # RELIRE
+	'plugin_necessite_php' => 'benötigt @plugin@ Version @version@.',
 	'plugin_necessite_plugin' => 'Benötigt Version @version@ des Plugin @plugin@.',
 	'plugin_necessite_plugin_sans_version' => 'Benötigt das Plugin @plugin@',
 	'plugin_necessite_spip' => 'Benötigt mindestens Version @version@ von SPIP.',
@@ -665,8 +665,8 @@ in einer Farbe, die den Status anzeigt :',
 	'plugin_titre_automatique_ajouter' => 'Plugins hinzufügen',
 	'plugin_titre_installation' => 'Installation des Plugins @plugin@',
 	'plugin_titre_modifier' => 'Meine Plugins',
-	'plugin_utilise_extension_php' => 'verwendet PHP-Extension @plugin@ Version @version@.', # RELIRE
-	'plugin_utilise_php' => 'verwendet @plugin@ Version @version@.', # RELIRE
+	'plugin_utilise_extension_php' => 'verwendet die PHP-Erweiterung @plugin@ Version @version@.',
+	'plugin_utilise_php' => 'verwendet @plugin@ Version @version@.',
 	'plugin_utilise_plugin' => 'Verwendet das Plugin @plugin@ in der Version @version@.',
 	'plugin_zip_active' => 'Weiter zum Aktivieren',
 	'plugin_zip_adresse' => 'Geben Sie hier die Adresse einer ZIP-Datei, die das Plugin enthält, oder die Adresse einer Plugin-Liste an.',
@@ -836,7 +836,7 @@ Wenn das Problem weiter besteht, nehmen Sie bitte Kontakt mit Ihrem Provider auf
 	'titre_config_langage' => 'Sprache einstellen',
 	'titre_configuration' => 'Website konfigurieren',
 	'titre_configurer_preferences' => 'Ihre Einstellungen',
-	'titre_configurer_preferences_menus' => 'Konfigurieren Sie Ihre Menüeinstellungen', # RELIRE
+	'titre_configurer_preferences_menus' => 'Konfigurieren Sie Ihre Menüeinstellungen',
 	'titre_conflit_edition' => 'Bearbeitungskonflikt',
 	'titre_connexion_ldap' => 'Optionen: <b>LDAP-Verbindung</b>',
 	'titre_groupe_mots' => 'KATEGORIE:',
@@ -858,7 +858,7 @@ Wenn das Problem weiter besteht, nehmen Sie bitte Kontakt mit Ihrem Provider auf
 	'titre_page_recherche' => 'Ergebnisse der Suche nach @recherche@',
 	'titre_page_statistiques_referers' => 'Statistik (Referer)',
 	'titre_page_upgrade' => 'Aktualisierung von SPIP',
-	'titre_preference_menus_favoris' => 'Lieblingsmenüs', # RELIRE
+	'titre_preference_menus_favoris' => 'Lieblingsmenüs',
 	'titre_publication_articles_post_dates' => 'Veröffentlichung von vordatierten Artikeln',
 	'titre_reparation' => 'Reparatur',
 	'titre_suivi_petition' => 'Petitionen verwalten',
