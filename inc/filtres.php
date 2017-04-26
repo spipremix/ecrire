@@ -4376,7 +4376,11 @@ function appliquer_traitement_champ($texte, $champ, $table_objet = '', $env = ar
 	if (!$champ) {
 		return $texte;
 	}
-
+	
+	// On charge toujours les filtres de texte car la majorité des traitements les utilisent
+	// et il ne faut pas partir du principe que c'est déjà chargé (form ajax, etc)
+	include_spip('inc/texte');
+	
 	$champ = strtoupper($champ);
 	$traitements = isset($GLOBALS['table_des_traitements'][$champ]) ? $GLOBALS['table_des_traitements'][$champ] : false;
 	if (!$traitements or !is_array($traitements)) {
