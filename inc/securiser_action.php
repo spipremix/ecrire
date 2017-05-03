@@ -185,9 +185,9 @@ function _action_auteur($action, $id_auteur, $pass, $alea) {
 	static $sha = array();
 	if (!isset($sha[$id_auteur . $pass . $alea])) {
 		if (!isset($GLOBALS['meta'][$alea]) and _request('exec') !== 'install') {
-			include_spip('base/abstract_sql');
-			$GLOBALS['meta'][$alea] = sql_getfetsel('valeur', 'spip_meta', "nom=" . sql_quote($alea));
-			if (!($GLOBALS['meta'][$alea])) {
+			include_spip('inc/acces');
+			charger_aleas();
+			if (empty($GLOBALS['meta'][$alea])) {
 				include_spip('inc/minipres');
 				echo minipres();
 				spip_log("$alea indisponible");

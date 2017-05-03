@@ -107,11 +107,8 @@ function action_logout_dist() {
  */
 function generer_jeton_logout($session, $alea = null) {
 	if (is_null($alea)) {
-		if (!isset($GLOBALS['meta']['alea_ephemere'])) {
-			include_spip('base/abstract_sql');
-			$GLOBALS['meta']['alea_ephemere'] = sql_getfetsel('valeur', 'spip_meta', "nom='alea_ephemere'");
-		}
-		$alea = $GLOBALS['meta']['alea_ephemere'];
+		include_spip('inc/acces');
+		$alea = charger_aleas();
 	}
 
 	$jeton = md5($session['date_session']
@@ -125,7 +122,8 @@ function generer_jeton_logout($session, $alea = null) {
 
 /**
  * Verifier que le jeton de logout est bon
- * il faut verifier avec alea_ephemere_ancien si pas bon avec alea_ephemere
+ *
+ * Il faut verifier avec alea_ephemere_ancien si pas bon avec alea_ephemere
  * pour gerer le cas de la rotation d'alea
  *
  * @param string $jeton
@@ -136,10 +134,7 @@ function verifier_jeton_logout($jeton, $session) {
 	if (generer_jeton_logout($session) === $jeton) {
 		return true;
 	}
-	if (!isset($GLOBALS['meta']['alea_ephemere_ancien'])) {
-		include_spip('base/abstract_sql');
-		$GLOBALS['meta']['alea_ephemere_ancien'] = sql_getfetsel('valeur', 'spip_meta', "nom='alea_ephemere_ancien'");
-	}
+
 	if (generer_jeton_logout($session, $GLOBALS['meta']['alea_ephemere_ancien']) === $jeton) {
 		return true;
 	}

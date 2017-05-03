@@ -573,13 +573,10 @@ function ecrire_fichier_session($fichier, $auteur) {
  */
 function fichier_session($alea, $tantpis = false) {
 
-	if (!isset($GLOBALS['meta'][$alea])) {
-		include_spip('base/abstract_sql');
-		$GLOBALS['meta'][$alea] = sql_getfetsel('valeur', 'spip_meta', "nom=" . sql_quote($alea), '', '', '', '', '',
-			'continue');
-	}
+	include_spip('inc/acces');
+	charger_aleas();
 
-	if (!$GLOBALS['meta'][$alea]) {
+	if (empty($GLOBALS['meta'][$alea])) {
 		if (!$tantpis) {
 			spip_log("fichier session ($tantpis): $alea indisponible", "session");
 			include_spip('inc/minipres');

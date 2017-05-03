@@ -121,13 +121,13 @@ function info_maj($dir, $file, $version) {
 	$p = substr("0123456789", intval($maj));
 	$p = ',/' . $file . '\D+([' . $p . ']+)\D+(\d+)(\D+(\d+))?.*?[.]zip",i';
 	preg_match_all($p, $page, $m, PREG_SET_ORDER);
-	$m = array_pad($m, 5, 0);
 	$page = $page_majeure = '';
 
 	// branche en cours d'utilisation
 	$branche = implode('.', array_slice(explode('.', $version, 3), 0, 2));
 
 	foreach ($m as $v) {
+		$v = array_pad($v, 5, 0);
 		list(, $maj2, $min2, , $rev2) = $v;
 		$branche_maj = $maj2 . '.' . $min2;
 		$version_maj = $maj2 . '.' . $min2 . '.' . $rev2;
@@ -174,7 +174,9 @@ function info_maj($dir, $file, $version) {
  *     Contenu du fichier de cache de l'info de maj de SPIP.
  */
 function info_maj_cache($nom, $dir, $page = '') {
-	$re = '<archives id="a' . $GLOBALS['meta']["alea_ephemere"] . '">';
+	include_spip('inc/acces');
+	$alea_ephemere = charger_aleas();
+	$re = '<archives id="a' . $alea_ephemere . '">';
 	if (preg_match("/$re/", $page)) {
 		return $page;
 	}

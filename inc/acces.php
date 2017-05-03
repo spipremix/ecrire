@@ -98,13 +98,43 @@ function creer_uniqid() {
 }
 
 /**
+ * Charge les aléas ehpémères s'il ne sont pas encore dans la globale
+ *
+ * Si les métas 'alea_ephemere' et 'alea_ephemere_ancien' se sont pas encore chargées
+ * en méta (car elles ne sont pas stockées, pour sécurité, dans le fichier cache des métas),
+ * alors on les récupère en base. Et on les ajoute à nos métas globales.
+ *
+ * @see touch_meta()
+ * @return string Retourne l'alea éphemère actuel au passage
+ */
+function charger_aleas() {
+	if (!isset($GLOBALS['meta']['alea_ephemere'])) {
+		include_spip('base/abstract_sql');
+		$aleas = sql_allfetsel(
+			array('nom', 'valeur'),
+			'spip_meta',
+			sql_in("nom", array('alea_ephemere', 'alea_ephemere_ancien')),
+			'', '', '', '', '',
+			'continue'
+		);
+		if ($aleas) {
+			foreach ($aleas as $a) {
+				$GLOBALS['meta'][$a['nom']] = $a['valeur'];
+			}
+			return $GLOBALS['meta']['alea_ephemere'];
+		} else {
+			spip_log("aleas indisponibles", "session");
+			return "";
+		}
+	}
+	return $GLOBALS['meta']['alea_ephemere'];
+}
+
+/**
  * Renouveller l'alea (utilisé pour sécuriser les scripts du répertoire `action/`)
  **/
 function renouvelle_alea() {
-	if (!isset($GLOBALS['meta']['alea_ephemere'])) {
-		include_spip('base/abstract_sql');
-		$GLOBALS['meta']['alea_ephemere'] = sql_getfetsel('valeur', 'spip_meta', "nom='alea_ephemere'");
-	}
+	charger_aleas();
 	ecrire_meta('alea_ephemere_ancien', @$GLOBALS['meta']['alea_ephemere'], 'non');
 	$GLOBALS['meta']['alea_ephemere'] = md5(creer_uniqid());
 	ecrire_meta('alea_ephemere', $GLOBALS['meta']['alea_ephemere'], 'non');
