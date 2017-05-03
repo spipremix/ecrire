@@ -21,6 +21,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 include_spip('base/abstract_sql');
+include_spip('inc/config');
 
 /**
  * Cron d'optimisation de la base de données
@@ -84,8 +85,8 @@ function optimiser_base_une_table() {
 	}
 
 	if ($tables) {
-		$table_op = intval($GLOBALS['meta']['optimiser_table'] + 1) % sizeof($tables);
-		ecrire_meta('optimiser_table', $table_op);
+		$table_op = intval(lire_config('optimiser_table', 0) + 1) % sizeof($tables);
+		ecrire_config('optimiser_table', $table_op);
 		$q = $tables[$table_op];
 		spip_log("debut d'optimisation de la table $q");
 		if (sql_optimize($q)) {
