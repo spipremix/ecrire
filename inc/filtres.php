@@ -4656,8 +4656,10 @@ function produire_fond_statique($fond, $contexte = array(), $options = array(), 
 	// calculer le nom de la css
 	$dir_var = sous_repertoire(_DIR_VAR, 'cache-' . $extension);
 	$nom_safe = preg_replace(",\W,", '_', str_replace('.', '_', $fond));
-	$filename = $dir_var . $extension . "dyn-$nom_safe-" . substr(md5($fond . serialize($contexte) . $connect), 0,
-			8) . ".$extension";
+	$contexte_implicite = calculer_contexte_implicite();
+	$filename = $dir_var . $extension . "dyn-$nom_safe-"
+		. substr(md5($fond . serialize($contexte_implicite) . serialize($contexte) . $connect), 0, 8)
+		. ".$extension";
 
 	// mettre a jour le fichier si il n'existe pas
 	// ou trop ancien
@@ -4675,6 +4677,7 @@ function produire_fond_statique($fond, $contexte = array(), $options = array(), 
 				test_espace_prive() ? generer_url_ecrire('accueil') : generer_url_public($fond));
 		}
 
+		$comment = '';
 		// ne pas insérer de commentaire si c'est du json
 		if ($extension != "json") {
 			$comment = "/* #PRODUIRE{fond=$fond";
@@ -4696,7 +4699,7 @@ function produire_fond_statique($fond, $contexte = array(), $options = array(), 
 		}
 	}
 
-	return $filename;
+	return timestamp($filename);
 }
 
 /**
