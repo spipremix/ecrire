@@ -1492,6 +1492,118 @@ function autoriser_synchro_menu_dist($faire, $type, $id, $qui, $opt) {
 }
 
 /**
+ * Autorisation de voir le menu configurer_interactions
+ *
+ * Il faut avoir accès à la page configurer_interactions
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configurerinteractions_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_interactions', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu configurer_langue
+ *
+ * Il faut avoir accès à la page configurer_langue
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configurerlangue_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_langue', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu configurer_multilinguisme
+ *
+ * Il faut avoir accès à la page configurer_multilinguisme
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configurermultilinguisme_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_multilinguisme', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu configurer_contenu
+ *
+ * Il faut avoir accès à la page configurer_contenu
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configurercontenu_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_contenu', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu configurer_avancees
+ *
+ * Il faut avoir accès à la page configurer_avancees
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configureravancees_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_avancees', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu admin_plugin
+ *
+ * Il faut avoir accès à la page admin_plugin
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_adminplugin_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_plugins', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu admin_tech
+ *
+ * Il faut avoir accès à la page admin_tech
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_admintech_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('detruire', $type, $id, $qui, $opt);
+}
+
+/**
  * Autorisation de purger la queue de travaux
  *
  * Il faut être webmestre.
