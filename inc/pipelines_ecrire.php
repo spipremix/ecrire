@@ -50,7 +50,7 @@ function f_jQuery_prive($texte) {
 			'prive/javascript/spip_barre.js',
 		));
 	foreach (array_unique($jquery_plugins) as $script) {
-		if ($script = find_in_path($script)) {
+		if ($script = find_in_path(supprimer_timestamp($script))) {
 			$script = timestamp($script);
 			$x .= "\n<script src=\"$script\" type=\"text/javascript\"></script>\n";
 		}
