@@ -88,10 +88,13 @@ function formulaires_editer_objet_traiter(
 			// referencer la traduction
 			$referencer_traduction = charger_fonction('referencer_traduction', 'action');
 			$referencer_traduction($type, $id, $lier_trad);
-			// dupliquer tous les liens sauf les auteurs : le nouvel auteur est celui qui traduit
-			// cf API editer_liens
-			include_spip('action/editer_liens');
-			objet_dupliquer_liens($type, $lier_trad, $id, null, array('auteur'));
+			// actions de recopie de champs / liens sur le nouvel objet créé
+			$completer_traduction = charger_fonction('completer_traduction', 'inc');
+			$err = $completer_traduction($type, $id, $lier_trad);
+			if ($err) {
+				$res['message_erreur'] = $err;
+				return $res;
+			}
 		}
 
 		$res['message_ok'] = _T('info_modification_enregistree');
