@@ -157,41 +157,66 @@ function cvtmulti_sauver_post($form, $je_suis_poste, &$valeurs) {
  * Reperer une demande de formulaire CVT multi page
  * et la reformater
  *
- * @param <type> $flux
- * @return <type>
+ * @deprecated : appel direct de cvtmulti_formulaire_charger_etapes par le core
+ * @param array $flux
+ * @return array
  */
 function cvtmulti_formulaire_charger($flux) {
-	#var_dump($flux['data']['_etapes']);
 	if (is_array($flux['data'])
 		and isset($flux['data']['_etapes'])
 	) {
-		$form = $flux['args']['form'];
-		$je_suis_poste = $flux['args']['je_suis_poste'];
-		$nb_etapes = $flux['data']['_etapes'];
-		$etape = _request('_etape');
-		$etape = min(max($etape, 1), $nb_etapes);
-		set_request('_etape', $etape);
-		$flux['data']['_etape'] = $etape;
-
-		// sauver les posts de cette etape pour les avoir a la prochaine etape
-		$flux['data'] = cvtmulti_sauver_post($form, $je_suis_poste, $flux['data']);
-		#var_dump($flux['data']);
+		$flux['data'] = cvtmulti_formulaire_charger_etapes($flux['args'], $flux['data']);
 	}
 
 	return $flux;
+}
+
+/**
+ * Charger une etape du cvt multi
+ * @param $args
+ * @param $valeurs
+ * @return array
+ */
+function cvtmulti_formulaire_charger_etapes($args, $valeurs) {
+	if (!isset($valeurs['_etape'])) {
+		$form = $args['form'];
+		$je_suis_poste = $args['je_suis_poste'];
+		$nb_etapes = $valeurs['_etapes'];
+		$etape = _request('_etape');
+		$etape = min(max($etape, 1), $nb_etapes);
+		set_request('_etape', $etape);
+		$valeurs['_etape'] = $etape;
+
+		// sauver les posts de cette etape pour les avoir a la prochaine etape
+		$valeurs = cvtmulti_sauver_post($form, $je_suis_poste, $valeurs);
+	}
+	return $valeurs;
 }
 
 
 /**
  * Verifier les etapes de saisie
  *
+ * @deprecated : appel direct de cvtmulti_formulaire_verifier_etapes par le core
  * @param array $flux
  * @return array
  */
 function cvtmulti_formulaire_verifier($flux) {
+	$flux['data'] = cvtmulti_formulaire_verifier_etapes($flux['args'], $flux['data']);
+	return $flux;
+}
+
+/**
+ * Verifier les etapes de saisie
+ * 
+ * @param array $args
+ * @param $erreurs
+ * @return array
+ */
+function cvtmulti_formulaire_verifier_etapes($args, $erreurs) {
 	#var_dump('Pipe verifier');
 
-	if ($form = $flux['args']['form']
+	if ($form = $args['form']
 		and ($e = cvtmulti_recuperer_post_precedents($form)) !== false
 	) {
 		// recuperer l'etape saisie et le nombre d'etapes total
@@ -199,20 +224,30 @@ function cvtmulti_formulaire_verifier($flux) {
 		$etape_demandee = _request('aller_a_etape'); // possibilite de poster en entier dans aller_a_etape
 
 		// lancer les verifs pour chaque etape deja saisie de 1 a $etape
-		$erreurs = array();
+		$erreurs_etapes = array();
 		$derniere_etape_ok = 0;
 		$e = 0;
 		while ($e < $etape and $e < $etapes) {
 			$e++;
-			$erreurs[$e] = array();
+			$erreurs_etapes[$e] = array();
 			if ($verifier = charger_fonction("verifier_$e", "formulaires/$form/", true)) {
-				$erreurs[$e] = call_user_func_array($verifier, $flux['args']['args']);
+				$erreurs_etapes[$e] = call_user_func_array($verifier, $args['args']);
 			} elseif ($verifier = charger_fonction("verifier_etape", "formulaires/$form/", true)) {
-				$args = $flux['args']['args'];
-				array_unshift($args, $e);
-				$erreurs[$e] = call_user_func_array($verifier, $args);
+				$a = $args['args'];
+				array_unshift($a, $e);
+				$erreurs_etapes[$e] = call_user_func_array($verifier, $a);
 			}
-			if ($derniere_etape_ok == $e - 1 and !count($erreurs[$e])) {
+			// et on appelle un pipeline dedie aux etapes, plus easy
+			$args['etape'] = $e;
+			$erreurs_etapes[$e] = pipeline(
+				'formulaire_verifier_etape',
+				array(
+					'args' => $args,
+					'data' => $erreurs_etapes[$e]
+				)
+			);
+
+			if ($derniere_etape_ok == $e - 1 and !count($erreurs_etapes[$e])) {
 				$derniere_etape_ok = $e;
 			}
 			// possibilite de poster dans _retour_etape_x
@@ -224,7 +259,7 @@ function cvtmulti_formulaire_verifier($flux) {
 		// si la derniere etape OK etait la derniere
 		// on renvoie le flux inchange et ca declenche traiter
 		if ($derniere_etape_ok == $etapes and !$etape_demandee) {
-			return $flux;
+			return $erreurs;
 		} else {
 			$etape = $derniere_etape_ok + 1;
 			if ($etape_demandee > 0 and $etape_demandee < $etape) {
@@ -233,20 +268,19 @@ function cvtmulti_formulaire_verifier($flux) {
 			$etape = min($etape, $etapes);
 			#var_dump("prochaine etape $etape");
 			// retourner les erreurs de l'etape ciblee
-			$flux['data'] = isset($erreurs[$etape]) ? $erreurs[$etape] : array();
+			$erreurs = isset($erreurs_etapes[$etape]) ? $erreurs_etapes[$etape] : array();
 			// Ne pas se tromper dans le texte du message d'erreur : la clé '_etapes' n'est pas une erreur !
-			if ($flux['data']) {
-				$flux['data']['message_erreur'] = singulier_ou_pluriel(count($flux['data']), 'avis_1_erreur_saisie',
-					'avis_nb_erreurs_saisie');
+			if ($erreurs) {
+				$erreurs['message_erreur'] = singulier_ou_pluriel(count($erreurs), 'avis_1_erreur_saisie', 'avis_nb_erreurs_saisie');
 			} else {
-				$flux['data']['message_erreur'] = "";
+				$erreurs['message_erreur'] = "";
 			}
-			$flux['data']['_etapes'] = "etape suivante $etape";
+			$erreurs['_etapes'] = "etape suivante $etape";
 			set_request('_etape', $etape);
 		}
 	}
 
-	return $flux;
+	return $erreurs;
 }
 
 /**

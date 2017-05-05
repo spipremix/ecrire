@@ -215,6 +215,15 @@ function traiter_formulaires_dynamiques($get = false) {
 				'data' => $verifier ? call_user_func_array($verifier, $args) : array()
 			)
 		);
+		// prise en charge CVT multi etape si besoin
+		if (_request('cvtm_prev_post')) {
+			include_spip('inc/cvt_multietapes');
+			$post["erreurs_$form"] = cvtmulti_formulaire_verifier_etapes(
+				array('form' => $form, 'args' => $args),
+				$post["erreurs_$form"]
+			);
+		}
+
 		// accessibilite : si des erreurs mais pas de message general l'ajouter
 		if (count($post["erreurs_$form"]) and !isset($post["erreurs_$form"]['message_erreur'])) {
 			$post["erreurs_$form"]['message_erreur'] = singulier_ou_pluriel(count($post["erreurs_$form"]),

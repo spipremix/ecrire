@@ -287,6 +287,15 @@ function formulaire__charger($form, $args, $poste) {
 		)
 	);
 
+	// prise en charge CVT multi etape
+	if (is_array($valeurs) and isset($valeurs['_etapes'])) {
+		include_spip('inc/cvt_multietapes');
+		$valeurs = cvtmulti_formulaire_charger_etapes(
+			array('form' => $form, 'args' => $args, 'je_suis_poste' => $poste), 
+			$valeurs
+		);
+	}
+
 	// si $valeurs et false ou une chaine, pas de formulaire, donc pas de pipeline !
 	if (is_array($valeurs)) {
 		if (!isset($valeurs['_pipelines'])) {
