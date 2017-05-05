@@ -199,23 +199,23 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 		return $cond[$key];
 	}
 
-	$liste = $publie;
+	$liste_statuts = $publie;
 	if (defined('_VAR_PREVIEW') and _VAR_PREVIEW and !$ignore_previsu) {
-		$liste = $previsu;
+		$liste_statuts = $previsu;
 	}
 	$not = false;
-	if (strncmp($liste, '!', 1) == 0) {
+	if (strncmp($liste_statuts, '!', 1) == 0) {
 		$not = true;
-		$liste = substr($liste, 1);
+		$liste_statuts = substr($liste_statuts, 1);
 	}
 	// '' => ne rien afficher, '!'=> ne rien filtrer
-	if (!strlen($liste)) {
+	if (!strlen($liste_statuts)) {
 		return $cond[$key] = ($not ? '1=1' : "'0=1'");
 	}
 
-	$liste = explode(',', $liste);
+	$liste_statuts = explode(',', $liste_statuts);
 	$where = array();
-	foreach ($liste as $k => $v) {
+	foreach ($liste_statuts as $k => $v) {
 		// filtrage /auteur pour limiter les objets d'un statut (prepa en general)
 		// a ceux de l'auteur identifie
 		if (strpos($v, '/') !== false) {
@@ -224,37 +224,46 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 			$v = reset($v);
 			$v = preg_replace(',\W,', '', $v);
 			if ($filtre == 'auteur'
-				and isset($GLOBALS['visiteur_session']['id_auteur'])
-				and intval($GLOBALS['visiteur_session']['id_auteur'])
 				and (strpos($mstatut, '.') !== false)
 				and $objet = explode('.', $mstatut)
 				and $id_table = reset($objet)
 				and $objet = objet_type($id_table)
 			) {
-				$primary = id_table_objet($objet);
-				$where[] = "($mstatut<>" . sql_quote($v) . " OR $id_table.$primary IN (" . sql_get_select(
-					'ssss.id_objet',
-					'spip_auteurs_liens AS ssss',
-					'ssss.objet=' . sql_quote($objet) . ' AND ssss.id_auteur=' . intval($GLOBALS['visiteur_session']['id_auteur']),
-					'',
-					'',
-					'',
-					'',
-					$serveur
-				) . '))';
+				$w = "$mstatut<>" . sql_quote($v);
+				// si pas d'auteur identifie pas de sous-requete car pas d'article qui matche
+				if (!isset($GLOBALS['visiteur_session']['id_auteur'])
+					or !intval($GLOBALS['visiteur_session']['id_auteur'])) {
+					$where[] = $w;
+				}
+				elseif(autoriser('previsualiser'.$v, $objet)) {
+					// dans ce cas (admin en general), pas de filtrage sur ce statut
+				}
+				else {
+					$primary = id_table_objet($objet);
+					$where[] = "($w OR $id_table.$primary IN (" . sql_get_select(
+						'ssss.id_objet',
+						'spip_auteurs_liens AS ssss',
+						'ssss.objet=' . sql_quote($objet) . ' AND ssss.id_auteur=' . intval($GLOBALS['visiteur_session']['id_auteur']),
+						'',
+						'',
+						'',
+						'',
+						$serveur
+					) . '))';
+				}
 			} // ignorer ce statut si on ne sait pas comment le filtrer
 			else {
 				$v = '';
 			}
 		}
 		// securite
-		$liste[$k] = preg_replace(',\W,', '', $v);
+		$liste_statuts[$k] = preg_replace(',\W,', '', $v);
 	}
-	$liste = array_filter($liste);
-	if (count($liste) == 1) {
-		$where[] = array('=', $mstatut, sql_quote(reset($liste), $serveur));
+	$liste_statuts = array_filter($liste_statuts);
+	if (count($liste_statuts) == 1) {
+		$where[] = array('=', $mstatut, sql_quote(reset($liste_statuts), $serveur));
 	} else {
-		$where[] = sql_in($mstatut, $liste, $not, $serveur);
+		$where[] = sql_in($mstatut, $liste_statuts, $not, $serveur);
 	}
 
 	while (count($where) > 1) {

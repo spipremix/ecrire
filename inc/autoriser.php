@@ -396,7 +396,14 @@ function test_previsualiser_objet_champ($type = null, $id = 0, $qui = array(), $
 				$previsu = explode(',', $c['previsu']);
 				// regarder si ce statut est autorise pour l'auteur
 				if (in_array($opt[$champ] . '/auteur', $previsu)) {
-					if (!sql_countsel(
+					if (!isset($GLOBALS['visiteur_session']['id_auteur'])
+						or !intval($GLOBALS['visiteur_session']['id_auteur'])) {
+						return false;
+					}
+					elseif(autoriser('previsualiser'.$opt[$champ], $type)) {
+						// dans ce cas (admin en general), pas de filtrage sur ce statut
+					}
+					elseif (!sql_countsel(
 						'spip_auteurs_liens',
 						'id_auteur=' . intval($qui['id_auteur']) . ' AND objet=' . sql_quote($type) . ' AND id_objet=' . intval($id)
 					)) {
