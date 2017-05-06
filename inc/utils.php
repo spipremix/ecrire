@@ -1509,6 +1509,12 @@ function find_all_in_path($dir, $pattern, $recurs = false) {
 	$liste_fichiers = array();
 	$maxfiles = 10000;
 
+	// cas borderline si dans mes_options on appelle redirige_par_entete qui utilise _T et charge un fichier de langue
+	// on a pas encore inclus flock.php
+	if (!function_exists('preg_files')) {
+		include_once _ROOT_RESTREINT . 'inc/flock.php';
+	}
+
 	// Parcourir le chemin
 	foreach (creer_chemin() as $d) {
 		$f = $d . $dir;
