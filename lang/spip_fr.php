@@ -545,6 +545,9 @@ le site "@nom_site_spip@" (@adresse_login@) :',
 	// M
 	'masquer_colonne' => 'Masquer cette colonne',
 	'masquer_trad' => 'masquer les traductions',
+	'message_nouveaux_identifiants_ok' => 'Les nouveaux identifiants de connexion ont été envoyés à @email@.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Les nouveaux identifiants de connexion n\'ont pas pu être envoyés.',
+	'message_nouveaux_identifiants_echec' => 'Impossible de générer de nouveaux identifiants.',
 	'module_fichiers_langues' => 'Fichiers de langue',
 
 	// N
