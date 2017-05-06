@@ -2041,6 +2041,8 @@ function tester_config($id, $mode = '') {
 //
 // Quelques fonctions de calcul arithmetique
 //
+function floatstr($a) { return str_replace(',','.',(string)floatval($a)); }
+function strize($f, $a, $b) { return floatstr($f(floatstr($a),floatstr($b))); }
 
 /**
  * Additionne 2 nombres
@@ -2060,7 +2062,7 @@ function tester_config($id, $mode = '') {
 function plus($a, $b) {
 	return $a + $b;
 }
-
+function strplus($a, $b) {return strize('plus', $a, $b);}
 /**
  * Soustrait 2 nombres
  *
@@ -2079,6 +2081,7 @@ function plus($a, $b) {
 function moins($a, $b) {
 	return $a - $b;
 }
+function strmoins($a, $b) {return strize('moins', $a, $b);}
 
 /**
  * Multiplie 2 nombres
@@ -2099,6 +2102,7 @@ function moins($a, $b) {
 function mult($a, $b) {
 	return $a * $b;
 }
+function strmult($a, $b) {return strize('mult', $a, $b);}
 
 /**
  * Divise 2 nombres
@@ -2119,6 +2123,7 @@ function mult($a, $b) {
 function div($a, $b) {
 	return $b ? $a / $b : 0;
 }
+function strdiv($a, $b) {return strize('div', $a, $b);}
 
 /**
  * Retourne le modulo 2 nombres
