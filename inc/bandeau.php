@@ -144,10 +144,10 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 	if ($boutons_admin) {
 		$menus_favoris = obtenir_menus_favoris();
 		foreach ($boutons_admin as $key => $menu) {
-			$menu->favori = in_array($key, $menus_favoris);
+			$menu->favori = table_valeur($menus_favoris, $key, false);
 			if ($menu->sousmenu) {
 				foreach ($menu->sousmenu as $key => $bouton) {
-					$bouton->favori = in_array($key, $menus_favoris);
+					$bouton->favori = table_valeur($menus_favoris, $key, false);
 				}
 			}
 		}
@@ -167,13 +167,14 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 function trier_boutons_enfants_par_alpha($menus, $avec_favoris = false) {
 	foreach ($menus as $menu) {
 		if ($menu->sousmenu) {
-			$libelles = $favoris = array();
+			$libelles = $isfavoris = $favoris = array();
 			foreach ($menu->sousmenu as $key => $item) {
 				$libelles[$key] = strtolower(translitteration(_T($item->libelle)));
+				$isfavoris[$key] = (bool)$item->favori;
 				$favoris[$key] = $item->favori;
 			}
 			if ($avec_favoris) {
-				array_multisort($favoris, SORT_DESC, $libelles, SORT_ASC, $menu->sousmenu);
+				array_multisort($isfavoris, SORT_DESC, $favoris, SORT_ASC, $libelles, SORT_ASC, $menu->sousmenu);
 			} else {
 				array_multisort($libelles, SORT_ASC, $menu->sousmenu);
 			}
@@ -183,7 +184,7 @@ function trier_boutons_enfants_par_alpha($menus, $avec_favoris = false) {
 }
 
 /**
- * Trie les entrées des sous menus par favoris puis ordre alhabétique
+ * Trie les entrées des sous menus par favoris (selon leur ordre) puis les autres par ordre alhabétique
  *
  * @uses trier_boutons_enfants_par_alpha()
  * @param Bouton[] $menus
@@ -241,8 +242,10 @@ function obtenir_menus_favoris() {
 	if (
 		isset($GLOBALS['visiteur_session']['prefs']['menus_favoris'])
 		and is_array($GLOBALS['visiteur_session']['prefs']['menus_favoris'])
+		and $GLOBALS['visiteur_session']['prefs']['menus_favoris']
 	) {
 		return $GLOBALS['visiteur_session']['prefs']['menus_favoris'];
 	}
-	return array();
+	$definir_menus_favoris = charger_fonction('definir_menus_favoris', 'inc');
+	return $definir_menus_favoris();
 }
