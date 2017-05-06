@@ -68,7 +68,7 @@ function resolve_path($url) {
  **/
 function suivre_lien($url, $lien) {
 
-	if (preg_match(',^(mailto|javascript|data):,iS', $lien)) {
+	if (preg_match(',^(mailto|javascript|data|tel|callto|file|ftp):,iS', $lien)) {
 		return $lien;
 	}
 	if (preg_match(';^((?:[a-z]{3,7}:)?//.*?)(/.*)?$;iS', $lien, $r)) {
