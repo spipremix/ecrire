@@ -196,6 +196,9 @@ function ajouter_session($auteur) {
 			echo minipres();
 			exit;
 		}
+		// verifier et limiter le nombre maxi de sessions
+		// https://core.spip.net/issues/3807
+		lister_sessions_auteur($id_auteur);
 	}
 
 	// poser le cookie de session SPIP
@@ -462,7 +465,7 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 	// .. mettre a jour les sessions de l'auteur cible
 	// attention au $ final pour ne pas risquer d'embarquer un .php.jeton temporaire
 	// cree par une ecriture concurente d'une session (fichier atomique temporaire)
-	$sessions = preg_files(_DIR_SESSIONS, '/' . $id_auteur . '_.*\.php$');
+	$sessions = lister_sessions_auteur($id_auteur);
 
 	// 1ere passe : lire et fusionner les sessions
 	foreach ($sessions as $session) {
@@ -506,6 +509,59 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 		$GLOBALS['visiteur_session'] = $sauve;
 	}
 
+}
+
+/**
+ * lister les sessions et en verifier le nombre maxi
+ * en supprimant les plus anciennes si besoin
+ * https://core.spip.net/issues/3807
+ *
+ * @param int $id_auteur
+ * @param int $nb_max
+ * @return array
+ */
+function lister_sessions_auteur($id_auteur, $nb_max = null) {
+
+	if (is_null($nb_max)) {
+		if (!defined('_SESSIONS_NB_MAX')) {
+			define('_NB_SESSIONS_MAX', 100);
+		}
+		$nb_max = _NB_SESSIONS_MAX;
+	}
+
+	// liste des sessions
+	$sessions = preg_files(_DIR_SESSIONS, '/' . $id_auteur . '_.*\.php$');
+
+	// si on en a plus que la limite, supprimer les plus vieilles
+	// si ce ne sont pas des sessions anonymes car elles sont alors chacune differentes
+	if ($id_auteur
+		and count($sessions) > $nb_max) {
+
+		// limiter le nombre de sessions ouvertes par un auteur
+		// filemtime sur les sessions
+		$sessions = array_flip($sessions);
+
+		// 1ere passe : lire les filemtime
+		foreach ($sessions as $session => $z) {
+			if ($d = @filemtime($session)
+			) {
+				$sessions[$session] = $d;
+			} else {
+				$sessions[$session] = 0;
+			}
+		}
+
+		// les plus anciennes en premier
+		asort($sessions);
+
+		$sessions = array_keys($sessions);
+		while (count($sessions) > $nb_max) {
+			$session = array_shift($sessions);
+			@unlink($session);
+		}
+	}
+
+	return $sessions;
 }
 
 
