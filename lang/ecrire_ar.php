@@ -63,6 +63,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_radio_non_envoi_annonces_editoriales' => 'عدم إرسال أي إعلان تحرير',
 	'bouton_redirection' => 'إعادة توجيه',
 	'bouton_relancer_installation' => 'إعادة إطلاق عملية التثبيت',
+	'bouton_reset_password' => 'إنشاء كلمة سر جديدة وإرسالها بالبريد الإلكتروني',
 	'bouton_suivant' => 'التالي',
 	'bouton_tenter_recuperation' => 'محاولة إصلاح',
 	'bouton_test_proxy' => 'اختبار الجهاز الوكيل',
