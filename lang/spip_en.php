@@ -290,6 +290,8 @@ the site "@nom_site_spip@" (@adresse_login@):',
 	'form_prop_non_enregistre' => 'Your suggestion has not been recorded.',
 	'form_prop_sujet' => 'Subject',
 	'form_prop_url_site' => 'Site URL',
+	'format_date_incorrecte' => 'The date or its format is incorrect.',
+	'format_heure_incorrecte' => 'The hour or its format is incorrect.',
 	'forum_non_inscrit' => 'Either you are not registered, or the address or password are wrong.',
 	'forum_par_auteur' => 'by @auteur@',
 	'forum_titre_erreur' => 'Error...',
@@ -545,6 +547,9 @@ the site "@nom_site_spip@" (@adresse_login@):',
 	// M
 	'masquer_colonne' => 'Hide this column',
 	'masquer_trad' => 'hide translations',
+	'message_nouveaux_identifiants_echec' => 'New identifiers could not be created.',
+	'message_nouveaux_identifiants_echec_envoi' => 'The new connection identifiers could not be sent.',
+	'message_nouveaux_identifiants_ok' => 'The new connection identifiers were sent to @email@.',
 	'module_fichiers_langues' => 'Language files',
 
 	// N
