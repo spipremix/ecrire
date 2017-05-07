@@ -62,6 +62,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_radio_non_envoi_annonces_editoriales' => 'Do not send any editorial announcements',
 	'bouton_redirection' => 'REDIRECT',
 	'bouton_relancer_installation' => 'Recommence installation',
+	'bouton_reset_password' => 'Create a new password and send by e-mail',
 	'bouton_suivant' => 'Next',
 	'bouton_tenter_recuperation' => 'Attempt to repair',
 	'bouton_test_proxy' => 'Test the proxy',
