@@ -289,6 +289,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'form_prop_non_enregistre' => 'لم يتم تسجيل اقتراحك.',
 	'form_prop_sujet' => 'الموضوع',
 	'form_prop_url_site' => 'عنوان الموقع',
+	'format_date_incorrecte' => 'التاريخ او تنسيقه غير صحيح',
+	'format_heure_incorrecte' => 'الساعة او تنسيقها غير صحيح',
 	'forum_non_inscrit' => 'إما انك غير مسجل أو هناك خطأ في العنوان أو كلمة السر.',
 	'forum_par_auteur' => 'من @auteur@',
 	'forum_titre_erreur' => 'خطأ...',
@@ -544,6 +546,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// M
 	'masquer_colonne' => 'حجب هذا العمود',
 	'masquer_trad' => 'حجب الترجمات',
+	'message_nouveaux_identifiants_echec' => 'لا يمكن إنشاء معرف وكلمة سر جديدين.',
+	'message_nouveaux_identifiants_echec_envoi' => 'مشكلة في إرسال المعرف وكلمة السر الجديدين.',
+	'message_nouveaux_identifiants_ok' => 'تم إرسال المعرف وكلمة السر الجديدين الى @email@.',
 	'module_fichiers_langues' => 'ملفات اللغة',
 
 	// N
