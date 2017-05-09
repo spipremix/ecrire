@@ -61,6 +61,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_radio_non_apparaitre_liste_redacteurs_connectes' => 'Do not appear in the list of editors online',
 	'bouton_radio_non_envoi_annonces_editoriales' => 'Do not send any editorial announcements',
 	'bouton_redirection' => 'REDIRECT',
+	'bouton_reinitialiser_aux_valeurs_par_defaut' => 'Reset to default values',
 	'bouton_relancer_installation' => 'Recommence installation',
 	'bouton_reset_password' => 'Create a new password and send by e-mail',
 	'bouton_suivant' => 'Next',
