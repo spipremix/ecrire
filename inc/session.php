@@ -523,7 +523,7 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 function lister_sessions_auteur($id_auteur, $nb_max = null) {
 
 	if (is_null($nb_max)) {
-		if (!defined('_SESSIONS_NB_MAX')) {
+		if (!defined('_NB_SESSIONS_MAX')) {
 			define('_NB_SESSIONS_MAX', 100);
 		}
 		$nb_max = _NB_SESSIONS_MAX;
