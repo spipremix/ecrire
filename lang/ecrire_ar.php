@@ -62,6 +62,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_radio_non_apparaitre_liste_redacteurs_connectes' => 'عدم الظهور في قائمة المحررين',
 	'bouton_radio_non_envoi_annonces_editoriales' => 'عدم إرسال أي إعلان تحرير',
 	'bouton_redirection' => 'إعادة توجيه',
+	'bouton_reinitialiser_aux_valeurs_par_defaut' => 'إعادة التأصيل الى القيم القياسية',
 	'bouton_relancer_installation' => 'إعادة إطلاق عملية التثبيت',
 	'bouton_reset_password' => 'إنشاء كلمة سر جديدة وإرسالها بالبريد الإلكتروني',
 	'bouton_suivant' => 'التالي',
