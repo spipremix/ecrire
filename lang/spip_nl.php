@@ -290,6 +290,8 @@ de website "@nom_site_spip@" (@adresse_login@):',
 	'form_prop_non_enregistre' => 'Je voorstel is niet geregistreerd',
 	'form_prop_sujet' => 'Onderwerp',
 	'form_prop_url_site' => 'URL van de site',
+	'format_date_incorrecte' => 'De datum of het formaat is incorrect',
+	'format_heure_incorrecte' => 'De tijd of het formaat is incorrect',
 	'forum_non_inscrit' => 'Je bent niet ingeschreven, ofwel is je adres of wachtwoord niet correct.',
 	'forum_par_auteur' => 'door @auteur@',
 	'forum_titre_erreur' => 'Fout ...',
@@ -547,6 +549,9 @@ de website "@nom_site_spip@" (@adresse_login@):',
 	// M
 	'masquer_colonne' => 'Deze kolom verbergen',
 	'masquer_trad' => 'vertalingen verbergen',
+	'message_nouveaux_identifiants_echec' => 'Er kunnen geen nieuwe identificaties worden aanmaken.',
+	'message_nouveaux_identifiants_echec_envoi' => 'De nieuwe identificaties konden niet worden verstuurd.',
+	'message_nouveaux_identifiants_ok' => 'De nieuwe identificaties werden verstuurd naar @email@.',
 	'module_fichiers_langues' => 'Taalbestanden',
 
 	// N
