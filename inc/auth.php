@@ -439,7 +439,7 @@ function auth_informer_login($login, $serveur = '') {
 	) {
 
 		// generer de fausses infos, mais credibles, pour eviter une attaque
-		// https://core.spip.org/issues/1758 + https://core.spip.net/issues/3691
+		// https://core.spip.net/issues/1758 + https://core.spip.net/issues/3691
 		include_spip('inc/securiser_action');
 		$fauxalea1 = md5('fauxalea' . secret_du_site() . $login . floor(date('U') / 86400));
 		$fauxalea2 = md5('fauxalea' . secret_du_site() . $login . ceil(date('U') / 86400));
