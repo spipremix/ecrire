@@ -1663,12 +1663,13 @@ function calculer_critere_infixe($idb, &$boucles, $crit) {
 		// sinon expliciter les
 		// sql_quote(truc) en sql_quote(truc,'',type)
 		// sql_quote(truc,serveur) en sql_quote(truc,serveur,type)
+		// sql_quote(truc,serveur,'') en sql_quote(truc,serveur,type)
 		// sans toucher aux
 		// sql_quote(truc,'','varchar(10) DEFAULT \'oui\' COLLATE NOCASE')
 		// sql_quote(truc,'','varchar')
 		elseif (preg_match('/\Asql_quote[(](.*?)(,[^)]*?)?(,[^)]*(?:\(\d+\)[^)]*)?)?[)]\s*\z/ms', $val[0], $r)
 			// si pas deja un type
-			and (!isset($r[3]) or !$r[3])
+			and (!isset($r[3]) or !$r[3] or !trim($r[3],", '"))
 		) {
 			$r = $r[1]
 				. ((isset($r[2]) and $r[2]) ? $r[2] : ",''")
