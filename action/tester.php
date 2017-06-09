@@ -32,7 +32,8 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function action_tester_dist() {
 	$arg = _request('arg');
 
-	$gd_formats = $gd_formats_read_gif = "";
+	$gd_formats = [];
+	$gd_formats_read_gif = "";
 	// verifier les formats acceptes par GD
 	if ($arg == "gd1") {
 		// Si GD est installe et php >= 4.0.2
@@ -57,12 +58,12 @@ function action_tester_dist() {
 			if (imagetypes() & IMG_PNG) {
 				$gd_formats[] = "png";
 			}
-		} else {  # ancienne methode de detection des formats, qui en plus
+		} else {
+			# ancienne methode de detection des formats, qui en plus
 			# est bugguee car elle teste les formats en lecture
 			# alors que la valeur deduite sert a identifier
 			# les formats disponibles en ecriture... (cf. inc_logos)
 
-			$gd_formats = array();
 			if (function_exists('ImageCreateFromJPEG')) {
 				$srcImage = @ImageCreateFromJPEG(_ROOT_IMG_PACK . "test.jpg");
 				if ($srcImage) {
