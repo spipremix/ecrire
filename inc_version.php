@@ -233,7 +233,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])){
 		$host = trim(reset($h));
 	}
 	// securite sur le contenu de l'entete
-	$host = strtr($host, "<>?\"' \r\n", '________');
+	$host = strtr($host, "<>?\"\{\}\$'` \r\n", '____________');
 	$_SERVER['HTTP_HOST'] = $host;
 }
 //
