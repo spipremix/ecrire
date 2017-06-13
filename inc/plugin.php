@@ -813,12 +813,13 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	if ($reste) {
 		plugins_erreurs($reste, $liste, $infos);
 	}
+
 	// Ignorer les plugins necessitant une lib absente
 	// et preparer la meta d'entete Http
 	$err = $msg = $header = array();
 	foreach ($plugin_valides as $p => $resume) {
-		// Les headers ne doivent pas indiquer les versions des extensions PHP
-		if (0 !== strpos($p, 'PHP:')) {
+		// Les headers ne doivent pas indiquer les versions des extensions PHP, ni la version PHP
+		if (0 !== strpos($p, 'PHP:') and $p !== 'PHP') {
 			$header[] = $p . ($resume['version'] ? "(" . $resume['version'] . ")" : "");
 		}
 		if ($resume['dir']) {
