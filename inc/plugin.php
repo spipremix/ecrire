@@ -685,7 +685,10 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	// et preparer la meta d'entete Http
 	$err = $msg = $header = array();
 	foreach ($plugin_valides as $p => $resume) {
-		$header[] = $p . ($resume['version'] ? "(" . $resume['version'] . ")" : "");
+		// Les headers ne doivent pas indiquer la version PHP
+		if ($p !== 'PHP') {
+			$header[] = $p . ($resume['version'] ? "(" . $resume['version'] . ")" : "");
+		}
 		if ($resume['dir']) {
 			foreach ($infos[$resume['dir_type']][$resume['dir']]['lib'] as $l) {
 				if (!find_in_path($l['nom'], 'lib/')) {
