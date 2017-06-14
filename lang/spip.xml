@@ -119,7 +119,8 @@
 	</langue>
 	<langue code="id" url="https://trad.spip.net/tradlang_module/spip?lang_cible=id" total="641" traduits="528" relire="0" modifs="28" nouveaux="85" pourcent="82.37">
 	</langue>
-	<langue code="it" url="https://trad.spip.net/tradlang_module/spip?lang_cible=it" total="641" traduits="633" relire="0" modifs="2" nouveaux="6" pourcent="98.75">
+	<langue code="it" url="https://trad.spip.net/tradlang_module/spip?lang_cible=it" total="641" traduits="641" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="Alberto" lien="https://trad.spip.net/auteur/alberto" />
 		<traducteur nom="Cap" lien="https://trad.spip.net/auteur/cap" />
 		<traducteur nom="Julia14" lien="https://trad.spip.net/auteur/julia14" />
 		<traducteur nom="phante" lien="https://trad.spip.net/auteur/phante" />
