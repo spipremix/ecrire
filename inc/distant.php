@@ -469,10 +469,10 @@ function recuperer_url($url, $options = array()) {
 }
 
 /**
- * Recuperer une URL si on l'a pas deja dans un cache fichier
- * le delai de cache est fourni par l'option delai_cache
- * les autres options et le format de retour sont identiques a recuperer_url_cache
+ * Récuperer une URL si on l'a pas déjà dans un cache fichier
  *
+ * Le délai de cache est fourni par l'option `delai_cache`
+ * Les autres options et le format de retour sont identiques à la fonction `recuperer_url`
  * @uses recuperer_url()
  *
  * @param string $url
