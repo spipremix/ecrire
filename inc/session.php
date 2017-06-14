@@ -352,8 +352,12 @@ function verifier_session($change = false) {
  * Lire une valeur dans la session SPIP
  *
  * @api
+ * @example `$login = session_get('login');`
+ *
  * @param string $nom
- * @return mixed
+ *    Clé dont on souhaite la valeur
+ * @return mixed|null
+ *     Valeur, si trouvée, `null` sinon.
  */
 function session_get($nom) {
 	return isset($GLOBALS['visiteur_session'][$nom]) ? $GLOBALS['visiteur_session'][$nom] : null;
