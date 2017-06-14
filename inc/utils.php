@@ -926,23 +926,29 @@ function cron($taches = array(), $taches_old = array()) {
  * Ajout d'une tache dans la file d'attente
  *
  * @param string $function
- *     The function name to call.
+ *     Le nom de la fonction PHP qui doit être appelée.
  * @param string $description
- *     A human-readable description of the queued job.
+ *     Une description humainement compréhensible de ce que fait la tâche
+ *     (essentiellement pour l’affichage dans la page de suivi de l’espace privé)
  * @param array $arguments
- *     Optional array of arguments to pass to the function.
+ *     Facultatif, vide par défaut : les arguments qui seront passés à la fonction, sous forme de tableau PHP
  * @param string $file
- *     Optional file path which needs to be included for $function.
- *     if ends with '/', will do charger_fonction($function,$file);
+ *     Facultatif, vide par défaut : nom du fichier à inclure, via `include_spip($file)`
+ *     exemple : `'inc/mail'` : il ne faut pas indiquer .php
+ *     Si le nom finit par un '/' alors on considère que c’est un répertoire et SPIP fera un `charger_fonction($function, $file)`
  * @param bool $no_duplicate
- *     If TRUE, do not add the job to the queue if one with the same function and
- *     arguments already exists.
+ *     Facultatif, `false` par défaut
+ *
+ *     - si `true` la tâche ne sera pas ajoutée si elle existe déjà en file d’attente avec la même fonction et les mêmes arguments.
+ *     - si `function_only` la tâche ne sera pas ajoutée si elle existe déjà en file d’attente avec la même fonction indépendamment de ses arguments
  * @param int $time
- *     time for starting the job. If 0, job will start as soon as possible
+ *     Facultatif, `0` par défaut : indique la date sous forme de timestamp à laquelle la tâche doit être programmée.
+ *     Si `0` ou une date passée, la tâche sera exécutée aussitôt que possible (en général en fin hit, en asynchrone).
  * @param int $priority
- *     -10 (low priority) to +10 (high priority), 0 is the default
+ *     Facultatif, `0` par défaut : indique un niveau de priorité entre -10 et +10.
+ *     Les tâches sont exécutées par ordre de priorité décroissante, une fois leur date d’exécution passée. La priorité est surtout utilisée quand une tâche cron indique qu’elle n’a pas fini et doit être relancée : dans ce cas SPIP réduit sa priorité pour être sûr que celle tâche ne monopolise pas la file d’attente.
  * @return int
- *     id of the job
+ *     Le numéro de travail ajouté ou `0` si aucun travail n’a été ajouté.
  */
 function job_queue_add(
 	$function,

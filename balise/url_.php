@@ -359,10 +359,8 @@ function balise_URL_ECRIRE_dist($p) {
  * @balise
  * @see generer_action_auteur()
  * @example
- *     ```
- *     #URL_ACTION_AUTEUR{converser,arg,redirect}
- *     -> ecrire/?action=converser&arg=arg&hash=xxx&redirect=redirect
- *     ```
+ *     `#URL_ACTION_AUTEUR{converser,arg,redirect}` pourra produire  
+ *     `ecrire/?action=converser&arg=arg&hash=xxx&redirect=redirect`
  *
  * @param Champ $p
  *     Pile au niveau de la balise
