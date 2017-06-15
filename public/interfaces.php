@@ -945,7 +945,7 @@ function declarer_interfaces() {
 
 	define('_TRAITEMENT_TYPO', 'typo(%s, "TYPO", $connect, $Pile[0])');
 	define('_TRAITEMENT_RACCOURCIS', 'propre(%s, $connect, $Pile[0])');
-	define('_TRAITEMENT_TYPO_SANS_NUMERO', 'typo(supprimer_numero(%s), "TYPO", $connect, $Pile[0])');
+	define('_TRAITEMENT_TYPO_SANS_NUMERO', 'supprimer_numero(typo(%s), "TYPO", $connect, $Pile[0])');
 
 	$GLOBALS['table_des_traitements']['BIO'][] = _TRAITEMENT_RACCOURCIS;
 	$GLOBALS['table_des_traitements']['CHAPO'][] = _TRAITEMENT_RACCOURCIS;
