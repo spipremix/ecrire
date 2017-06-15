@@ -1872,15 +1872,18 @@ function calculer_critere_infixe($idb, &$boucles, $crit) {
 					}
 					// si le champ n'est pas trouvé dans la table,
 					// on cherche si une jointure peut l'obtenir
-					elseif (@!array_key_exists($col, $desc['field'])
+					elseif (@!array_key_exists($col, $desc['field'])) {
 						// Champ joker * des iterateurs DATA qui accepte tout
-						and @!array_key_exists('*', $desc['field'])
-					) {
-						$r = calculer_critere_infixe_externe($boucle, $crit, $op, $desc, $col, $col_alias, $table);
-						if (!$r) {
-							return '';
+						if (@array_key_exists('*', $desc['field'])) {
+							$desc['field'][$col_vraie ? $col_vraie : $col] = ''; // on veut pas de cast INT par defaut car le type peut etre n'importe quoi dans les boucles DATA
 						}
-						list($col, $col_alias, $table, $where_complement, $desc) = $r;
+						else {
+							$r = calculer_critere_infixe_externe($boucle, $crit, $op, $desc, $col, $col_alias, $table);
+							if (!$r) {
+								return '';
+							}
+							list($col, $col_alias, $table, $where_complement, $desc) = $r;
+						}
 					}
 				}
 			}
