@@ -87,7 +87,7 @@ function action_tester_dist() {
 			}
 		}
 
-		if (! empty($$gd_formats)) {
+		if (! empty($gd_formats)) {
 			$gd_formats = join(",", $gd_formats);
 		}
 		ecrire_meta("gd_formats_read", $gd_formats . $gd_formats_read_gif);
