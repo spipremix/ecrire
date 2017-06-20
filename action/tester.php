@@ -32,7 +32,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function action_tester_dist() {
 	$arg = _request('arg');
 
-	$gd_formats = [];
+	$gd_formats = array();
 	$gd_formats_read_gif = "";
 	// verifier les formats acceptes par GD
 	if ($arg == "gd1") {
