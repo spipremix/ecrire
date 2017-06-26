@@ -201,7 +201,7 @@ function autoriser_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 	}
 
 	spip_log(
-		"$f($faire,$type,$id," . (isset($qui['nom']) ? $qui['nom'] : '') . '): ' . ($a ? 'OK' : 'niet'),
+		"$f($faire, $type, $id, " . (isset($qui['nom']) ? $qui['nom'] : '') . ') : ' . ($a ? 'OK' : 'niet'),
 		'autoriser' . _LOG_DEBUG
 	);
 
