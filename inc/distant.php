@@ -1298,7 +1298,15 @@ function lance_requete(
 	}
 
 	if ($connect) {
-		$streamContext = stream_context_create(array('ssl' => array('verify_peer' => false, 'allow_self_signed' => true)));
+		$streamContext = stream_context_create(array(
+			'ssl' => array(
+				'verify_peer' => false,
+				'allow_self_signed' => true,
+				'SNI_enabled' => true,
+				'SNI_server_name' => $host,
+				'peer_name' => $host,
+			)
+		));
 		$f = @stream_socket_client("tcp://$first_host:$port", $errno, $errstr, _INC_DISTANT_CONNECT_TIMEOUT,
 			STREAM_CLIENT_CONNECT, $streamContext);
 		spip_log("Recuperer $path sur $first_host:$port par $f (via CONNECT)", "connect");
