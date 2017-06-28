@@ -62,6 +62,8 @@ function exec_rechercher_args($id, $type, $exclus, $rac, $do) {
 		$do = 'aff';
 	}
 
+	$points = $rub = array();
+
 	$where = preg_split(",\s+,", $type);
 	if ($where) {
 		foreach ($where as $k => $v) {
@@ -70,51 +72,32 @@ function exec_rechercher_args($id, $type, $exclus, $rac, $do) {
 		$where_titre = ("(titre LIKE " . join(" AND titre LIKE ", $where) . ")");
 		$where_desc = ("(descriptif LIKE " . join(" AND descriptif LIKE ", $where) . ")");
 		$where_id = ("(id_rubrique = " . intval($type) . ")");
-	} else {
-		$where_titre = " 1=2";
-		$where_desc = " 1=2";
-		$where_id = " 1=2";
-	}
 
-	if ($exclus) {
-		include_spip('inc/rubriques');
-		$where_exclus = " AND " . sql_in('id_rubrique', calcul_branche_in($exclus), 'NOT');
-	} else {
-		$where_exclus = '';
-	}
-
-	$res = sql_select("id_rubrique, id_parent, titre", "spip_rubriques", "$where_id$where_exclus");
-
-	$points = $rub = array();
-
-	while ($row = sql_fetch($res)) {
-		$id_rubrique = $row["id_rubrique"];
-		$rub[$id_rubrique]["titre"] = typo($row["titre"]);
-		$rub[$id_rubrique]["id_parent"] = $row["id_parent"];
-		$points[$id_rubrique] = $points[$id_rubrique] + 3;
-	}
-	$res = sql_select("id_rubrique, id_parent, titre", "spip_rubriques", "$where_titre$where_exclus");
-
-	while ($row = sql_fetch($res)) {
-		$id_rubrique = $row["id_rubrique"];
-		$rub[$id_rubrique]["titre"] = typo($row["titre"]);
-		$rub[$id_rubrique]["id_parent"] = $row["id_parent"];
-		if (isset($points[$id_rubrique])) {
-			$points[$id_rubrique] += 2;
+		if ($exclus) {
+			include_spip('inc/rubriques');
+			$where_exclus = " AND " . sql_in('id_rubrique', calcul_branche_in($exclus), 'NOT');
 		} else {
-			$points[$id_rubrique] = 0;
+			$where_exclus = '';
 		}
-	}
-	$res = sql_select("id_rubrique, id_parent, titre", "spip_rubriques", "$where_desc$where_exclus");
 
-	while ($row = sql_fetch($res)) {
-		$id_rubrique = $row["id_rubrique"];
-		$rub[$id_rubrique]["titre"] = typo($row["titre"]);
-		$rub[$id_rubrique]["id_parent"] = $row["id_parent"];
-		if (isset($points[$id_rubrique])) {
-			$points[$id_rubrique] += 1;
-		} else {
-			$points[$id_rubrique] = 0;
+		foreach (array(
+			3 => $where_titre,
+			2 => $where_desc,
+			1 => $where_id,
+		) as $point => $recherche) {
+			$res = sql_select("id_rubrique, id_parent, titre", "spip_rubriques", "$recherche$where_exclus");
+			while ($row = sql_fetch($res)) {
+				$id_rubrique = $row["id_rubrique"];
+				if (!isset($rub[$id_rubrique])) {
+					$rub[$id_rubrique] = array();
+				}
+				$rub[$id_rubrique]["titre"] = typo($row["titre"]);
+				$rub[$id_rubrique]["id_parent"] = $row["id_parent"];
+				if (!isset($points[$id_rubrique])) {
+					$points[$id_rubrique] = 0;
+				}
+				$points[$id_rubrique] = $points[$id_rubrique] + $point;
+			}
 		}
 	}
 
