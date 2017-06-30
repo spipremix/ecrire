@@ -1568,7 +1568,6 @@ function balise_SESSION_SET_dist($p) {
  * @example
  *     ```
  *     #EVAL{6+9}
- *     #EVAL{_DIR_IMG_PACK}
  *     #EVAL{'date("Y-m-d")'}
  *     #EVAL{$_SERVER['REQUEST_URI']}
  *     #EVAL{'str_replace("r","z", "roger")'}  (attention les "'" sont interdits)
