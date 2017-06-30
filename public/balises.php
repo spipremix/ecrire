@@ -2871,10 +2871,11 @@ function balise_LARGEUR_ECRAN_dist($p) {
 
 
 /**
- * Compile la balise `#CONST` qui retourne la valeur de la constante passee en argument
- * #CONST{_DIR_IMG}
+ * Compile la balise `#CONST` qui retourne la valeur de la constante passée en argument
  *
  * @balise
+ * @example `#CONST{_DIR_IMG}`
+ *
  * @param Champ $p
  *     Pile au niveau de la balise
  * @return Champ
