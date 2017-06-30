@@ -2881,11 +2881,13 @@ function balise_LARGEUR_ECRAN_dist($p) {
  *     Pile complétée par le code à générer
  **/
 function balise_CONST_dist($p) {
-	$p->code = interprete_argument_balise(1, $p);
-	if (!strlen($p->code)) {
+	$_const = interprete_argument_balise(1, $p);
+	if (!strlen($_const)) {
 		$p->code = "''";
 	}
-	$p->code = 'constant('.$p->code.')';
+	else {
+		$p->code = "(defined($_const)?constant($_const):'')";
+	}
 	$p->interdire_scripts = false;
 
 	return $p;
