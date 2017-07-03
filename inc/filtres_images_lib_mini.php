@@ -230,6 +230,12 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 		return false;
 	}
 
+	// partager les images calculées pour des traitements identiques dans l’espace public ou privé
+	$identifiant = $fichier;
+	$f = realpath($fichier);
+	if (strpos(str_replace('\\', '/', $f), str_replace('\\', '/', _ROOT_RACINE)) === 0) {
+		$identifiant = substr($f, strlen(_ROOT_RACINE));
+	}
 
 	// cas general :
 	// on a un dossier cache commun et un nom de fichier qui varie avec l'effet
@@ -248,9 +254,9 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 			// on garde la terminaison initiale car image simplement copiee
 			// et on postfixe son nom avec un md5 du path
 			$terminaison_dest = $terminaison;
-			$fichier_dest .= '-' . substr(md5("$fichier"), 0, 5);
+			$fichier_dest .= '-' . substr(md5("$identifiant"), 0, 5);
 		} else {
-			$fichier_dest .= '-' . substr(md5("$fichier-$effet"), 0, 5);
+			$fichier_dest .= '-' . substr(md5("$identifiant-$effet"), 0, 5);
 		}
 		$cache = sous_repertoire(_DIR_VAR, $cache);
 		$cache = sous_repertoire($cache, $effet);
@@ -260,7 +266,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 				$terminaison_dest = $fmt;
 			}*/
 	} else {
-		$fichier_dest = md5("$fichier-$effet");
+		$fichier_dest = md5("$identifiant-$effet");
 		$cache = sous_repertoire(_DIR_VAR, $cache);
 		$cache = sous_repertoire($cache, substr($fichier_dest, 0, 2));
 		$fichier_dest = substr($fichier_dest, 2);
