@@ -232,7 +232,8 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 
 	// partager les images calculées pour des traitements identiques dans l’espace public ou privé
 	$identifiant = $fichier;
-	if (strpos($f = realpath($fichier), _ROOT_RACINE) === 0) {
+	$f = realpath($fichier);
+	if (strpos(str_replace('\\', '/', $f), str_replace('\\', '/', _ROOT_RACINE)) === 0) {
 		$identifiant = substr($f, strlen(_ROOT_RACINE));
 	}
 
