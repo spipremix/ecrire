@@ -312,7 +312,7 @@ function verifier_session($change = false) {
 	// sa victime, mais se ferait deconnecter par elle.
 	if (hash_env() != $GLOBALS['visiteur_session']['hash_env']) {
 		if (!$GLOBALS['visiteur_session']['ip_change']) {
-			define('_SESSION_REJOUER', rejouer_session());
+			define('_SESSION_REJOUER', true);
 			$GLOBALS['visiteur_session']['ip_change'] = true;
 			ajouter_session($GLOBALS['visiteur_session']);
 		} else {

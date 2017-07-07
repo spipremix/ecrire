@@ -194,9 +194,12 @@ function html_tests_js() {
 			. "' width='1' height='1' alt='' /></div></noscript>\n");
 	}
 
-	return
-		(defined('_SESSION_REJOUER') ? _SESSION_REJOUER : '')
-		. (defined('_TESTER_NOSCRIPT') ? _TESTER_NOSCRIPT : '');
+	$rejouer = '';
+	if (defined('_SESSION_REJOUER')) {
+		$rejouer = (_SESSION_REJOUER === true) ? rejouer_session() : _SESSION_REJOUER;
+	}
+
+	return $rejouer . (defined('_TESTER_NOSCRIPT') ? _TESTER_NOSCRIPT : '');
 }
 
 /**
