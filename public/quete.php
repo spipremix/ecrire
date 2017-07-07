@@ -230,26 +230,36 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 				and $objet = objet_type($id_table)
 			) {
 				$w = "$mstatut<>" . sql_quote($v);
-				// si pas d'auteur identifie pas de sous-requete car pas d'article qui matche
-				if (!isset($GLOBALS['visiteur_session']['id_auteur'])
-					or !intval($GLOBALS['visiteur_session']['id_auteur'])) {
-					$where[] = $w;
+
+				// retrouver l’id_auteur qui a filé un lien de prévisu éventuellement,
+				// sinon l’auteur en session
+				include_spip('inc/securiser_action');
+				if ($desc = decrire_token_previsu()) {
+					$id_auteur = $desc['id_auteur'];
+				} elseif (isset($GLOBALS['visiteur_session']['id_auteur'])) {
+					$id_auteur = intval($GLOBALS['visiteur_session']['id_auteur']);
+				} else {
+					$id_auteur = null;
 				}
-				elseif(autoriser('previsualiser'.$v, $objet)) {
-					// dans ce cas (admin en general), pas de filtrage sur ce statut
-				}
-				else {
-					$primary = id_table_objet($objet);
-					$where[] = "($w OR $id_table.$primary IN (" . sql_get_select(
-						'ssss.id_objet',
-						'spip_auteurs_liens AS ssss',
-						'ssss.objet=' . sql_quote($objet) . ' AND ssss.id_auteur=' . intval($GLOBALS['visiteur_session']['id_auteur']),
-						'',
-						'',
-						'',
-						'',
-						$serveur
-					) . '))';
+
+				// dans ce cas (admin en general), pas de filtrage sur ce statut
+				if (!autoriser('previsualiser' . $v, $objet, '', $id_auteur)) {
+					// si pas d'auteur identifie pas de sous-requete car pas d'article qui matche
+					if (!$id_auteur) {
+						$where[] = $w;
+					} else {
+						$primary = id_table_objet($objet);
+						$where[] = "($w OR $id_table.$primary IN (" . sql_get_select(
+								'ssss.id_objet',
+								'spip_auteurs_liens AS ssss',
+								'ssss.objet=' . sql_quote($objet) . ' AND ssss.id_auteur=' . intval($id_auteur),
+								'',
+								'',
+								'',
+								'',
+								$serveur
+							) . '))';
+					}
 				}
 			} // ignorer ce statut si on ne sait pas comment le filtrer
 			else {

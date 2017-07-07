@@ -312,6 +312,7 @@ function autoriser_creer_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de prévisualiser un contenu
  *
  * @uses test_previsualiser_objet_champ()
+ * @uses decrire_token_previsu()
  *
  * @param  string $faire Action demandée
  * @param  string $type Type d'objet sur lequel appliquer l'action
@@ -327,25 +328,9 @@ function autoriser_previsualiser_dist($faire, $type, $id, $qui, $opt) {
 		return test_previsualiser_objet_champ($type, $id, $qui, $opt);
 	}
 
-	// Sinon, on regarde s'il a un jeton (var_token) et on lui pose
-	// le cas echeant une session contenant l'autorisation
-	// de l'utilisateur ayant produit le jeton
-	if ($token = _request('var_previewtoken')) {
-		include_spip('inc/session');
-		session_set('previewtoken', $token);
-	}
-
-	// A-t-on un token valable ?
-	if (is_array($GLOBALS['visiteur_session'])
-		and $token = session_get('previewtoken')
-		and preg_match('/^(\d+)\*(.*)$/', $token, $r)
-		and $action = 'previsualiser'
-		and (include_spip('inc/securiser_action'))
-		and (
-			$r[2] == _action_auteur($action, $r[1], null, 'alea_ephemere')
-			or $r[2] == _action_auteur($action, $r[1], null, 'alea_ephemere_ancien')
-		)
-	) {
+	// A-t-on un token de prévisualisation valable ?
+	include_spip('inc/securiser_action');
+	if (decrire_token_previsu()) {
 		return true;
 	}
 
@@ -397,16 +382,25 @@ function test_previsualiser_objet_champ($type = null, $id = 0, $qui = array(), $
 				$previsu = explode(',', $c['previsu']);
 				// regarder si ce statut est autorise pour l'auteur
 				if (in_array($opt[$champ] . '/auteur', $previsu)) {
-					if (!isset($GLOBALS['visiteur_session']['id_auteur'])
-						or !intval($GLOBALS['visiteur_session']['id_auteur'])) {
+
+					// retrouver l’id_auteur qui a filé un lien de prévisu éventuellement,
+					// sinon l’auteur en session
+					include_spip('inc/securiser_action');
+					if ($desc = decrire_token_previsu()) {
+						$id_auteur = $desc['id_auteur'];
+					} elseif (isset($GLOBALS['visiteur_session']['id_auteur'])) {
+						$id_auteur = intval($GLOBALS['visiteur_session']['id_auteur']);
+					} else {
+						$id_auteur = null;
+					}
+
+					if (!$id_auteur) {
 						return false;
-					}
-					elseif(autoriser('previsualiser'.$opt[$champ], $type)) {
+					} elseif(autoriser('previsualiser' . $opt[$champ], $type, '', $id_auteur)) {
 						// dans ce cas (admin en general), pas de filtrage sur ce statut
-					}
-					elseif (!sql_countsel(
+					} elseif (!sql_countsel(
 						'spip_auteurs_liens',
-						'id_auteur=' . intval($qui['id_auteur']) . ' AND objet=' . sql_quote($type) . ' AND id_objet=' . intval($id)
+						'id_auteur=' . intval($id_auteur) . ' AND objet=' . sql_quote($type) . ' AND id_objet=' . intval($id)
 					)) {
 						return false;
 					} // pas auteur de cet objet => NIET

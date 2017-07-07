@@ -65,12 +65,13 @@ function action_redirect_dist() {
 	if ($m == 'preview'
 		and defined('_PREVIEW_TOKEN')
 		and _PREVIEW_TOKEN
+		and $type
+		and $id
 		and autoriser('previsualiser')
-		and $aut = $GLOBALS['visiteur_session']['id_auteur']
 	) {
 		include_spip('inc/securiser_action');
-		$token = _action_auteur('previsualiser', $aut, null, 'alea_ephemere');
-		$h = parametre_url($h, 'var_previewtoken', "$aut*$token");
+		$token = calculer_token_previsu($type, $id);
+		$h = parametre_url($h, 'var_previewtoken', $token);
 	}
 
 	$status = '302';
