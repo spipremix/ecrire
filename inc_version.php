@@ -289,9 +289,9 @@ $quota_cache = 10;
 // Serveurs externes
 //
 # Serveur de documentation officielle
-$home_server = 'http://www.spip.net';
+$home_server = 'https://www.spip.net';
 # glossaire pour raccourci [?X]. Aussi: [?X#G] et definir glossaire_G
-$url_glossaire_externe = "http://@lang@.wikipedia.org/wiki/%s";
+$url_glossaire_externe = "https://@lang@.wikipedia.org/wiki/%s";
 
 # TeX
 $tex_server = 'http://math.spip.org/tex.php';
