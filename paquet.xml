@@ -5,9 +5,9 @@
 	etat="dev"
 	compatibilite="];["
 	schema="23375"
-	documentation="http://www.spip.net"
-	demonstration="http://demo.spip.net"
-	developpement="http://core.spip.net/projects/spip/"
+	documentation="https://www.spip.net"
+	demonstration="https://demo.spip.net"
+	developpement="https://core.spip.net/projects/spip/"
 >
 
 	<nom>SPIP</nom>
