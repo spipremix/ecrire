@@ -153,7 +153,7 @@ function info_maj($dir, $file, $version) {
 	$message = $page ? _T('nouvelle_version_spip', array('version' => $page)) . ($page_majeure ? ' | ' : '') : '';
 	$message .= $page_majeure ? _T('nouvelle_version_spip_majeure', array('version' => $page_majeure)) : '';
 
-	return "<a class='info_maj_spip' href='http://www.spip.net/fr_update' title='$page'>" . $message . '</a>';
+	return "<a class='info_maj_spip' href='https://www.spip.net/fr_update' title='$page'>" . $message . '</a>';
 }
 
 /**
