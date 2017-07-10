@@ -204,12 +204,16 @@ function ajouter_session($auteur) {
 	// poser le cookie de session SPIP
 	include_spip('inc/cookie');
 	$duree = definir_duree_cookie_session($auteur);
-	spip_setcookie(
-		'spip_session',
-		$_COOKIE['spip_session'],
-		time() + $duree
-	);
+	spip_setcookie( 'spip_session', $_COOKIE['spip_session'], time() + $duree);
 	spip_log("ajoute session $fichier_session cookie $duree", "session");
+
+	// Si on est admin, poser le cookie de correspondance
+	if ($auteur['statut'] == '0minirezo') {
+		spip_setcookie('spip_admin', '@' . $auteur['login'], time() + max(_DUREE_COOKE_ADMIN, $duree));
+	} // sinon le supprimer ...
+	else {
+		spip_setcookie('spip_admin', '', 1);
+	}
 
 	# on en profite pour purger les vieilles sessions anonymes abandonnees
 	# supprimer_sessions(0, true, false);

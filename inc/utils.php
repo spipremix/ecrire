@@ -2440,6 +2440,9 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 	if (!defined('_RENOUVELLE_ALEA')) {
 		define('_RENOUVELLE_ALEA', 12 * 3600);
 	}
+	if (!defined('_DUREE_COOKE_ADMIN')) {
+		define('_DUREE_COOKE_ADMIN', 14 * 24 * 3600);
+	}
 
 	// charger les meta si possible et renouveller l'alea au besoin
 	// charge aussi effacer_meta et ecrire_meta

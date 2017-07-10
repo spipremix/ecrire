@@ -567,15 +567,6 @@ function auth_loger($auteur) {
 		'id_auteur=' . intval($auteur['id_auteur'])
 	);
 
-	// Si on est admin, poser le cookie de correspondance
-	include_spip('inc/cookie');
-	if ($auteur['statut'] == '0minirezo') {
-		spip_setcookie('spip_admin', '@' . $auteur['login'], time() + 7 * 24 * 3600);
-	} // sinon le supprimer ...
-	else {
-		spip_setcookie('spip_admin', '', 1);
-	}
-
 	//  bloquer ici le visiteur qui tente d'abuser de ses droits
 	verifier_visiteur();
 	return true;
