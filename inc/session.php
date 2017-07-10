@@ -208,7 +208,10 @@ function ajouter_session($auteur) {
 	spip_log("ajoute session $fichier_session cookie $duree", "session");
 
 	// Si on est admin, poser le cookie de correspondance
-	if ($auteur['statut'] == '0minirezo') {
+	if (!function_exists('autoriser')) {
+		include_spip('inc/autoriser');
+	}
+	if (autoriser('ecrire','','',$auteur) and _DUREE_COOKE_ADMIN) {
 		spip_setcookie('spip_admin', '@' . $auteur['login'], time() + max(_DUREE_COOKE_ADMIN, $duree));
 	} // sinon le supprimer ...
 	else {
