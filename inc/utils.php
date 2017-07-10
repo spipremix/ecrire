@@ -591,15 +591,22 @@ function nettoyer_uri($reset = null) {
 		return $propre;
 	}
 	$done = true;
+	return $propre = nettoyer_uri_var($GLOBALS['REQUEST_URI']);
+}
 
-	$uri1 = $GLOBALS['REQUEST_URI'];
+/**
+ * Nettoie une request_uri des paramètres var_xxx
+ * @param $request_uri
+ * @return string
+ */
+function nettoyer_uri_var($request_uri) {
+	$uri1 = $request_uri;
 	do {
 		$uri = $uri1;
 		$uri1 = preg_replace(',([?&])(PHPSESSID|(var_[^=&]*))=[^&]*(&|$),i',
 			'\1', $uri);
 	} while ($uri <> $uri1);
-
-	return $propre = (preg_replace(',[?&]$,', '', $uri1));
+	return preg_replace(',[?&]$,', '', $uri1);
 }
 
 

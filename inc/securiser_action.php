@@ -301,13 +301,12 @@ function verifier_cle_action($action, $cle) {
  * pour qu’une personne tierce le relise. Valable quelques temps.
  *
  * @see verifier_token_previsu()
- * @param string $type Type d’objet
- * @param int $id_objet Identifiant de l’objet
+ * @param string $url Url à autoriser en prévisu
  * @param int|null id_auteur qui génère le token de prévisu. Null utilisera auteur courant.
  * @param string $alea Nom de l’alea à utiliser
  * @return string Token, de la forme "{id}*{hash}"
  */
-function calculer_token_previsu($type, $id_objet, $id_auteur = null, $alea = 'alea_ephemere') {
+function calculer_token_previsu($url, $id_auteur = null, $alea = 'alea_ephemere') {
 	if (is_null($id_auteur)) {
 		if (!empty($GLOBALS['visiteur_session']['id_auteur'])) {
 			$id_auteur = $GLOBALS['visiteur_session']['id_auteur'];
@@ -316,7 +315,10 @@ function calculer_token_previsu($type, $id_objet, $id_auteur = null, $alea = 'al
 	if (!$id_auteur = intval($id_auteur)) {
 		return "";
 	}
-	$token = _action_auteur('previsualiser-' . $type . '-' . $id_objet, $id_auteur, null, $alea);
+	// On nettoie l’URL de tous les var_.
+	$url = nettoyer_uri_var($url);
+
+	$token = _action_auteur('previsualiser-' . $url, $id_auteur, null, $alea);
 	return "$id_auteur-$token";
 }
 
@@ -338,8 +340,7 @@ function verifier_token_previsu($token) {
 	// retrouver auteur / hash
 	$e = explode('-', $token, 2);
 	if (count($e) == 2 and is_numeric(reset($e))) {
-		list($id_auteur, $hash) = $e;
-		$id_auteur = intval($id_auteur);
+		$id_auteur = intval(reset($e));
 	} else {
 		return false;
 	}
@@ -347,22 +348,12 @@ function verifier_token_previsu($token) {
 	// calculer le type et id de l’url actuelle
 	include_spip('inc/urls');
 	include_spip('inc/filtres_mini');
-	$self = url_absolue(self());
-	$contexte = urls_decoder_url($self);
-	list($type, $contexte) = $contexte;
-	if (is_numeric($type)) {
-		return false;
-	}
-	$_id_table = id_table_objet($type);
-	if (empty($contexte[$_id_table])) {
-		return false;
-	}
-	$id = $contexte[$_id_table];
+	$url = url_absolue(self());
 
 	// verifier le token
-	$_token = calculer_token_previsu($type, $id, $id_auteur, 'alea_ephemere');
+	$_token = calculer_token_previsu($url, $id_auteur, 'alea_ephemere');
 	if (!$_token or $token !== $_token) {
-		$_token = calculer_token_previsu($type, $id, $id_auteur, 'alea_ephemere_ancien');
+		$_token = calculer_token_previsu($url, $id_auteur, 'alea_ephemere_ancien');
 		if (!$_token or $token !== $_token) {
 			return false;
 		}
@@ -370,8 +361,6 @@ function verifier_token_previsu($token) {
 
 	return array(
 		'id_auteur' => $id_auteur,
-		'type' => $type,
-		'id_objet' => $id
 	);
 }
 
