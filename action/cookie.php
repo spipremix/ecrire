@@ -103,8 +103,7 @@ function action_cookie_dist($set_cookie_admin = null, $change_session = null) {
 			} // Ajout de cookie d'admin
 			else {
 				if ($set_cookie_admin) {
-					spip_setcookie('spip_admin', $set_cookie_admin,
-						time() + 14 * 24 * 3600);
+					spip_setcookie('spip_admin', $set_cookie_admin, time() + max(_DUREE_COOKE_ADMIN, _RENOUVELLE_ALEA));
 				}
 			}
 		}
