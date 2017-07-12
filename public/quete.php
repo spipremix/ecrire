@@ -173,7 +173,7 @@ function quete_condition_postdates($champ_date, $serveur = '', $ignore_previsu =
  *   Serveur de BDD
  * @param bool $ignore_previsu
  *   true pour forcer le test même en prévisu
- * @return array
+ * @return array|string
  */
 function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ignore_previsu = false) {
 	static $cond = array();
@@ -194,7 +194,7 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 	}
 	// '' => ne rien afficher, '!'=> ne rien filtrer
 	if (!strlen($liste_statuts)) {
-		return $cond[$key] = ($not ? "1=1" : "'0=1'");
+		return $cond[$key] = ($not ? '1=1' : '0=1');
 	}
 
 	$liste_statuts = explode(',', $liste_statuts);
