@@ -555,10 +555,20 @@ function parametre_url($url, $c, $v = null, $sep = '&amp;') {
 	return $a . $ancre;
 }
 
-// Prend une URL et lui ajoute/retire une ancre apres l'avoir nettoyee
-// pour l'ancre on translitere, vire les non alphanum du debut,
-// et on remplace ceux a l'interieur ou au bout par -
-// http://code.spip.net/@ancre_url
+/**
+ * Ajoute (ou retire) une ancre sur une URL
+ *
+ * L’ancre est nettoyée : on translitère, vire les non alphanum du début,
+ * et on remplace ceux à l'interieur ou au bout par `-`
+ *
+ * @example
+ *     - `$url = ancre_url($url, 'navigation'); // => mettra l’ancre #navigation
+ *     - `$url = ancre_url($url, ''); // => enlèvera une éventuelle ancre
+ * @uses translitteration()
+ * @param string $url
+ * @param string $ancre
+ * @return string
+ */
 function ancre_url($url, $ancre) {
 	// lever l'#ancre
 	if (preg_match(',^([^#]*)(#.*)$,', $url, $r)) {
@@ -568,10 +578,12 @@ function ancre_url($url, $ancre) {
 		if (!function_exists('translitteration')) {
 			include_spip('inc/charsets');
 		}
-		$ancre = preg_replace(array('/^[^-_a-zA-Z0-9]+/', '/[^-_a-zA-Z0-9]/'), array('', '-'),
-			translitteration($ancre));
+		$ancre = preg_replace(
+			array('/^[^-_a-zA-Z0-9]+/', '/[^-_a-zA-Z0-9]/'),
+			array('', '-'),
+			translitteration($ancre)
+		);
 	}
-
 	return $url . (strlen($ancre) ? '#' . $ancre : '');
 }
 
