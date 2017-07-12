@@ -289,9 +289,7 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 }
 
 /**
- * retourne le fichier d'un document
- *
- * http://code.spip.net/@quete_fichier
+ * Retourne le fichier d'un document
  *
  * @param int $id_document
  * @param string $serveur
@@ -313,12 +311,10 @@ function quete_document($id_document, $serveur = '') {
 }
 
 /**
- * recuperer une meta sur un site distant (en local il y a plus simple)
+ * Récuperer une meta sur un site (spip) distant (en local il y a plus simple)
  *
- * http://code.spip.net/@quete_meta
- *
- * @param $nom
- * @param $serveur
+ * @param string $nom Nom de la méta
+ * @param string $serveur Connecteur
  * @return array|bool|null
  */
 function quete_meta($nom, $serveur) {
@@ -453,9 +449,9 @@ function quete_logo_objet($id_objet, $objet, $mode) {
 }
 
 /**
- * fonction appelee par la balise #LOGO_DOCUMENT
+ * Retourne le logo d’un fichier (document spip) sinon la vignette du type du fichier
  *
- * http://code.spip.net/@calcule_logo_document
+ * Fonction appeleé par la balise `#LOGO_DOCUMENT`
  *
  * @param array $row
  * @param string $connect
@@ -465,7 +461,7 @@ function quete_logo_file($row, $connect = null) {
 	include_spip('inc/documents');
 	$logo = vignette_logo_document($row, $connect);
 	if (!$logo) {
-		$logo = image_du_document($row);
+		$logo = image_du_document($row, $connect);
 	}
 	if (!$logo) {
 		$f = charger_fonction('vignette', 'inc');
@@ -506,6 +502,7 @@ function quete_logo_file($row, $connect = null) {
  * @return string
  */
 function quete_logo_document($row, $lien, $align, $mode_logo, $x, $y, $connect = null) {
+
 	include_spip('inc/documents');
 	$logo = '';
 	if (!in_array($mode_logo, array('icone', 'apercu'))) {
@@ -519,7 +516,28 @@ function quete_logo_document($row, $lien, $align, $mode_logo, $x, $y, $connect =
 		$row['fichier'] = '';
 	}
 
-	return vignette_automatique($logo, $row, $lien, $x, $y, $align);
+	return vignette_automatique($logo, $row, $lien, $x, $y, $align, null, $connect);
+}
+
+/**
+ * Retourne le chemin d’un document lorsque le connect est précisé
+ *
+ * Sur un connecteur distant, voir si on connait l’adresse du site (spip distant)
+ * et l’utiliser le cas échéant.
+ *
+ * @param string $fichier Chemin
+ * @param string $connect Nom du connecteur
+ * @return string|false
+ */
+function document_spip_externe($fichier, $connect) {
+	if ($connect) {
+		$site = quete_meta('adresse_site', $connect);
+		if ($site) {
+			$dir = quete_meta('dir_img', $connect);
+			return "$site/$dir$fichier";
+		}
+	}
+	return false;
 }
 
 /**
@@ -536,12 +554,10 @@ function vignette_logo_document($row, $connect = '') {
 		return '';
 	}
 	$fichier = quete_fichier($row['id_vignette'], $connect);
-	if ($connect) {
-		$site = quete_meta('adresse_site', $connect);
-		$dir = quete_meta('dir_img', $connect);
-
-		return "$site/$dir$fichier";
+	if ($url = document_spip_externe($fichier, $connect)) {
+		return $url;
 	}
+
 	$f = get_spip_doc($fichier);
 	if ($f and @file_exists($f)) {
 		return $f;
