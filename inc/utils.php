@@ -212,8 +212,33 @@ function minipipe($fonc, &$val) {
 	return $val;
 }
 
-// chargement du pipeline sous la forme d'un fichier php prepare
-// http://code.spip.net/@pipeline
+/**
+ * Appel d’un pipeline
+ *
+ * Exécute le pipeline souhaité, éventuellement avec des données initiales.
+ * Chaque plugin qui a demandé à voir ce pipeline vera sa fonction spécifique appelée.
+ * Les fonctions (des plugins) appelées peuvent modifier à leur guise le contenu.
+ *
+ * Deux types de retours. Si `$val` est un tableau de 2 éléments, avec une clé `data`
+ * on retourne uniquement ce contenu (`$val['data']`) sinon on retourne tout `$val`.
+ *
+ *
+ * @example
+ *     Appel du pipeline `pre_insertion`
+ *     ```
+ *     $champs = pipeline('pre_insertion', array(
+ *         'args' => array('table' => 'spip_articles'),
+ *         'data' => $champs
+ *     ));
+ *     ```
+ *
+ * @param string $action
+ *     Nom du pipeline
+ * @param null|string|array $val
+ *     Données à l’entrée du pipeline
+ * @return mixed|null
+ *     Résultat
+ */
 function pipeline($action, $val = null) {
 	static $charger;
 
