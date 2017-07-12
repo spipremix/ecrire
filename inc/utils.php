@@ -845,9 +845,16 @@ function _L($text, $args = array(), $class = null) {
 	}
 }
 
-// Afficher "ecrire/data/" au lieu de "data/" dans les messages
-// ou tmp/ au lieu de ../tmp/
-// http://code.spip.net/@joli_repertoire
+
+/**
+ * Retourne un joli chemin de répertoire
+ *
+ * Pour afficher `ecrire/action/` au lieu de `action/` dans les messages
+ * ou `tmp/` au lieu de `../tmp/`
+ *
+ * @param stirng $rep Chemin d’un répertoire
+ * @return string
+ */
 function joli_repertoire($rep) {
 	$a = substr($rep, 0, 1);
 	if ($a <> '.' and $a <> '/') {
@@ -859,10 +866,26 @@ function joli_repertoire($rep) {
 }
 
 
-//
-// spip_timer : on l'appelle deux fois et on a la difference, affichable
-//
-// http://code.spip.net/@spip_timer
+/**
+ * Débute ou arrête un chronomètre et retourne sa valeur
+ *
+ * On exécute 2 fois la fonction, la première fois pour démarrer le chrono,
+ * la seconde fois pour l’arrêter et récupérer la valeur
+ *
+ * @example
+ *     ```
+ *     spip_timer('papoter');
+ *     // actions
+ *     $duree = spip_timer('papoter');
+ *     ```
+ *
+ * @param string $t
+ *     Nom du chronomètre
+ * @param bool $raw
+ *     - false : retour en texte humainement lisible
+ *     - true : retour en millisecondes
+ * @return float|int|string|void
+ */
 function spip_timer($t = 'rien', $raw = false) {
 	static $time;
 	$a = time();
