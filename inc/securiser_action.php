@@ -366,7 +366,7 @@ function verifier_token_previsu($token) {
 
 /**
  * Décrire un token de prévisu en session
- * @uses verifier_token_previsu();
+ * @uses verifier_token_previsu()
  * @return bool|array
  */
 function decrire_token_previsu() {
