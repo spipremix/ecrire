@@ -60,12 +60,12 @@ function inc_couleurs_dist($choix = null, $ajouter = false) {
 			"couleur_lien" => "#D0000A",
 			"couleur_lien_off" => "#D96067"
 		),
-		// Violet clair
+		// Framboise
 		2 => array(
-			"couleur_foncee" => "#eb68b3",
-			"couleur_claire" => "#ffa9e6",
-			"couleur_lien" => "#8F004D",
-			"couleur_lien_off" => "#BE6B97"
+			"couleur_foncee" =>  "#D51B60",
+			"couleur_claire" => "#EF91B4",
+			"couleur_lien" => "#db1762",
+			"couleur_lien_off" => "#E29FB6"
 		),
 		// Vert de gris
 		7 => array(
