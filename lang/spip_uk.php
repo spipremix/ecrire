@@ -288,6 +288,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'form_prop_non_enregistre' => 'Вашу пропозицію не було записано.',
 	'form_prop_sujet' => 'Тема',
 	'form_prop_url_site' => 'URL сайту',
+	'format_date_incorrecte' => 'Дата або її формат некоректні',
+	'format_heure_incorrecte' => 'Час або його формат некоректні',
 	'forum_non_inscrit' => 'Або ви не зареєстровані, або адреса чи пароль неправильні.',
 	'forum_par_auteur' => ' @auteur@',
 	'forum_titre_erreur' => 'Помилка...',
@@ -539,6 +541,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// M
 	'masquer_colonne' => 'Сховати колонку',
 	'masquer_trad' => 'сховати переклад(и)',
+	'message_nouveaux_identifiants_echec' => 'Не вдалося створити нові ідентифікатори.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Нові ідентифікатори зв’язку не можуть бути відправлені.',
+	'message_nouveaux_identifiants_ok' => 'Нові ідентифікатори зв’язку були відправлені на @email@.',
 	'module_fichiers_langues' => 'Мовні файли',
 
 	// N

@@ -210,7 +210,7 @@
 	</langue>
 	<langue code="tr" url="https://trad.spip.net/tradlang_module/spip?lang_cible=tr" total="641" traduits="544" relire="0" modifs="29" nouveaux="68" pourcent="84.87">
 	</langue>
-	<langue code="uk" url="https://trad.spip.net/tradlang_module/spip?lang_cible=uk" total="641" traduits="636" relire="0" modifs="0" nouveaux="5" pourcent="99.22">
+	<langue code="uk" url="https://trad.spip.net/tradlang_module/spip?lang_cible=uk" total="641" traduits="641" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="olly" lien="https://trad.spip.net/auteur/olly" />
 		<traducteur nom="Retenodus" lien="https://trad.spip.net/auteur/retenodus" />
 		<traducteur nom="Serge Markitanenko" lien="https://trad.spip.net/auteur/serge-markitanenko" />
