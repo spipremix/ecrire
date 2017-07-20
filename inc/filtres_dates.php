@@ -263,7 +263,7 @@ function recup_date($numdate, $forcer_jour = true) {
 	if ($annee > 4000) {
 		$annee -= 9000;
 	}
-	if (substr($jour, 0, 1) == '0') {
+	if (strlen($jour) and substr($jour, 0, 1) == '0') {
 		$jour = substr($jour, 1);
 	}
 
