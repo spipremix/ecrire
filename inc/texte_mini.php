@@ -338,24 +338,17 @@ function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
 	}
 	$texte = substr($texte, 0, $offset); /* eviter de travailler sur 10ko pour extraire 150 caracteres */
 
-	// on utilise les \r pour passer entre les gouttes
-	$texte = str_replace("\r\n", "\n", $texte);
-	$texte = str_replace("\r", "\n", $texte);
-
-	// sauts de ligne et paragraphes
-	$texte = preg_replace("/\n\n+/", "\r", $texte);
-	$texte = preg_replace("/<(p|br)( [^>]*)?" . ">/", "\r", $texte);
-
-	// supprimer les traits, lignes etc
-	$texte = preg_replace("/(^|\r|\n)(-[-#\*]*|_ )/", "\r", $texte);
-
-	// travailler en accents charset
-	$texte = unicode2charset(html2unicode($texte, /* secure */
-		true));
 	if (!function_exists('nettoyer_raccourcis_typo')) {
 		include_spip('inc/lien');
 	}
 	$texte = nettoyer_raccourcis_typo($texte);
+
+	// on repasse les doubles \n en \r que le nettoyage a pu modifier
+	$texte = str_replace("\n\n", "\r", $texte);
+
+	// balises de sauts de ligne et paragraphe
+	$texte = preg_replace("/<p( [^>]*)?" . ">/", "\r", $texte);
+	$texte = preg_replace("/<br( [^>]*)?" . ">/", "\n", $texte);
 
 	// supprimer les tags
 	$texte = supprimer_tags($texte);
