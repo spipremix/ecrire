@@ -343,12 +343,12 @@ function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
 	}
 	$texte = nettoyer_raccourcis_typo($texte);
 
-	// on repasse les doubles \n en \r que le nettoyage a pu modifier
-	$texte = str_replace("\n\n", "\r", $texte);
-
 	// balises de sauts de ligne et paragraphe
 	$texte = preg_replace("/<p( [^>]*)?" . ">/", "\r", $texte);
 	$texte = preg_replace("/<br( [^>]*)?" . ">/", "\n", $texte);
+
+	// on repasse les doubles \n en \r que nettoyer_raccourcis_typo() a pu modifier
+	$texte = str_replace("\n\n", "\r", $texte);
 
 	// supprimer les tags
 	$texte = supprimer_tags($texte);
