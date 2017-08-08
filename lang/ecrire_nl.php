@@ -773,7 +773,7 @@ inbegrepen <i>alle</i> toegangsrechten voor redacteurs en beheerders. Nadat je d
 	'texte_descriptif_rapide' => 'Korte beschrijving.',
 	'texte_effacer_base' => 'Verwijder de SPIP database',
 	'texte_effacer_statistiques' => 'De statistieken wissen',
-	'texte_en_cours_validation' => 'De inhouden hieronder wachten op goedkeuring.',
+	'texte_en_cours_validation' => 'De onderstaande inhoud wacht op goedkeuring.',
 	'texte_enrichir_mise_a_jour' => 'De opmaak van een tekst kan gebeuren met behulp van zogeheten «typografische snelkoppelingen».',
 	'texte_fichier_authent' => 'SPIP moet er dan speciale bestanden <tt>.htpasswd</tt>
   en <tt>.htpasswd-admin</tt> in de directory @dossier@ ?</b><p>
