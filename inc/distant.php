@@ -1312,6 +1312,9 @@ function lance_requete(
 				'peer_name' => $host,
 			)
 		));
+		if (version_compare(phpversion(), '5.6', '<')) {
+			$streamContext['SNI_server_name'] = $host;
+		}
 		$f = @stream_socket_client(
 			"tcp://$first_host:$port",
 			$errno,
