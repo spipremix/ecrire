@@ -285,6 +285,8 @@ Para confirmar o seu novo endereço, basta acessar o endereço abaixo (cas contr
 	'form_prop_non_enregistre' => 'Sua proposta não foi cadastrada.',
 	'form_prop_sujet' => 'Assunto',
 	'form_prop_url_site' => 'Endereço URL do site',
+	'format_date_incorrecte' => 'A data e o seu formato está incorreta',
+	'format_heure_incorrecte' => 'A hora e o seu formato está incorreta',
 	'forum_non_inscrit' => 'Você não está inscrito, ou o endereço ou a senha estão errados.',
 	'forum_par_auteur' => 'por @auteur@',
 	'forum_titre_erreur' => 'Erro...',
@@ -538,6 +540,9 @@ Se você não quiser que a sua senha possa ser interceptada na rede, por favor a
 	// M
 	'masquer_colonne' => 'Ocultar esta coluna',
 	'masquer_trad' => 'esconder as traduções',
+	'message_nouveaux_identifiants_echec' => 'Impossível criar novos logins.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Os novos logins de conexão não puderam ser enviados.',
+	'message_nouveaux_identifiants_ok' => 'Os novos logins de conexão foram enviados para @email@.',
 	'module_fichiers_langues' => 'Arquivos de idioma',
 
 	// N

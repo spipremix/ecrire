@@ -184,7 +184,8 @@
 		<traducteur nom="Cláudia Anjos Lopes" lien="https://trad.spip.net/auteur/claudia_a_lopes" />
 		<traducteur nom="Fernando Ferreira" lien="https://trad.spip.net/auteur/fernando-ferreira" />
 	</langue>
-	<langue code="pt_br" url="https://trad.spip.net/tradlang_module/spip?lang_cible=pt_br" total="641" traduits="636" relire="0" modifs="0" nouveaux="5" pourcent="99.22">
+	<langue code="pt_br" url="https://trad.spip.net/tradlang_module/spip?lang_cible=pt_br" total="641" traduits="641" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="filipaun" lien="https://trad.spip.net/auteur/filipaun" />
 		<traducteur nom="joao1315" lien="https://trad.spip.net/auteur/joao1315" />
 		<traducteur nom="quijaua" lien="https://trad.spip.net/auteur/quijaua" />
 		<traducteur nom="Ricardo Porto" lien="https://trad.spip.net/auteur/ricardo-porto" />
