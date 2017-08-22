@@ -1308,7 +1308,6 @@ function lance_requete(
 				'verify_peer' => false,
 				'allow_self_signed' => true,
 				'SNI_enabled' => true,
-				'SNI_server_name' => $host,
 				'peer_name' => $host,
 			)
 		));
