@@ -1303,10 +1303,12 @@ function lance_requete(
 				'verify_peer' => false,
 				'allow_self_signed' => true,
 				'SNI_enabled' => true,
-				'SNI_server_name' => $host,
 				'peer_name' => $host,
 			)
 		));
+		if (version_compare(phpversion(), '5.6', '<')) {
+			$streamContext['SNI_server_name'] = $host;
+		}
 		$f = @stream_socket_client("tcp://$first_host:$port", $errno, $errstr, _INC_DISTANT_CONNECT_TIMEOUT,
 			STREAM_CLIENT_CONNECT, $streamContext);
 		spip_log("Recuperer $path sur $first_host:$port par $f (via CONNECT)", "connect");
