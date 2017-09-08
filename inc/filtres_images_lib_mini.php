@@ -211,7 +211,6 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 		// au lieu de faire un acces disque sur le fichier
 		list($ret["hauteur"], $ret["largeur"]) = taille_image($find_in_path ? $f : $img);
 		$date_src = @filemtime($f);
-		$fichier_realpath = realpath($fichier);
 	} elseif (@file_exists($f = "$fichier.src")
 		and lire_fichier($f, $valeurs)
 		and $valeurs = unserialize($valeurs)
@@ -221,7 +220,6 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 		$ret["hauteur"] = $valeurs["hauteur_dest"];
 		$ret["largeur"] = $valeurs["largeur_dest"];
 		$date_src = $valeurs["date"];
-		$fichier_realpath = substr(realpath("$fichier.src"),0,-4);
 	} // pas de fichier source par la
 	else {
 		return false;
@@ -232,12 +230,14 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 		return false;
 	}
 
-	// partager les images calculées pour des traitements identiques dans l’espace public ou privé
-	$identifiant = $fichier; // on garde $fichier et pas $fichier_realpath pour ne pas changer les hash des images temporaires existantes lors de l'upgrade
-	if (strpos(str_replace('\\', '/', $fichier_realpath), str_replace('\\', '/', _ROOT_RACINE)) === 0) {
-		// on retombe sur le chemin depuis la racine du site : en principe inchange si espace public
-		$identifiant = substr($fichier_realpath, strlen(_ROOT_RACINE));
-	}
+	// les images calculees dependent du chemin du fichier source
+	// pour une meme image source et un meme filtre on aboutira a 2 fichiers selon si l'appel est dans le public ou dans le prive
+	// ce n'est pas totalement optimal en terme de stockage, mais chaque image est associee a un fichier .src
+	// qui contient la methode de reconstrucion (le filtre + les arguments d'appel) et les arguments different entre prive et public
+	// la mise en commun du fichier image cree donc un bug et des problemes qui necessiteraient beaucoup de complexite de code
+	// alors que ca concerne peu de site au final
+	// la release de r23632+r23633+r23634 a provoque peu de remontee de bug attestant du peu de sites impactes
+	$identifiant = $fichier;
 
 	// cas general :
 	// on a un dossier cache commun et un nom de fichier qui varie avec l'effet
