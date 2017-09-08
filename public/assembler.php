@@ -673,6 +673,10 @@ function page_base_href(&$texte) {
 			$texte = $head . substr($texte, $poshead);
 			// gerer les ancres
 			$base = $_SERVER['REQUEST_URI'];
+			// pas de guillemets ni < dans l'URL qu'on insere dans le HTML
+			if (strpos($base,"'") or strpos($base,'"') or strpos($base,'<')) {
+				$base = str_replace(array("'",'"','<'),array("%27",'%22','%3C'), $base);
+			}
 			if (strpos($texte, "href='#") !== false) {
 				$texte = str_replace("href='#", "href='$base#", $texte);
 			}
