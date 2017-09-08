@@ -211,6 +211,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 		// au lieu de faire un acces disque sur le fichier
 		list($ret["hauteur"], $ret["largeur"]) = taille_image($find_in_path ? $f : $img);
 		$date_src = @filemtime($f);
+		$fichier_realpath = realpath($fichier);
 	} elseif (@file_exists($f = "$fichier.src")
 		and lire_fichier($f, $valeurs)
 		and $valeurs = unserialize($valeurs)
@@ -220,6 +221,7 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 		$ret["hauteur"] = $valeurs["hauteur_dest"];
 		$ret["largeur"] = $valeurs["largeur_dest"];
 		$date_src = $valeurs["date"];
+		$fichier_realpath = substr(realpath("$fichier.src"),0,-4);
 	} // pas de fichier source par la
 	else {
 		return false;
@@ -231,10 +233,10 @@ function _image_valeurs_trans($img, $effet, $forcer_format = false, $fonction_cr
 	}
 
 	// partager les images calculées pour des traitements identiques dans l’espace public ou privé
-	$identifiant = $fichier;
-	$f = realpath($fichier);
-	if (strpos(str_replace('\\', '/', $f), str_replace('\\', '/', _ROOT_RACINE)) === 0) {
-		$identifiant = substr($f, strlen(_ROOT_RACINE));
+	$identifiant = $fichier; // on garde $fichier et pas $fichier_realpath pour ne pas changer les hash des images temporaires existantes lors de l'upgrade
+	if (strpos(str_replace('\\', '/', $fichier_realpath), str_replace('\\', '/', _ROOT_RACINE)) === 0) {
+		// on retombe sur le chemin depuis la racine du site : en principe inchange si espace public
+		$identifiant = substr($fichier_realpath, strlen(_ROOT_RACINE));
 	}
 
 	// cas general :
