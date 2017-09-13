@@ -950,11 +950,12 @@ function autoriser_auteur_modifier_dist($faire, $type, $id, $qui, $opt) {
 	// Un redacteur peut modifier ses propres donnees mais ni son login/email
 	// ni son statut (qui sont le cas echeant passes comme option)
 	if ($qui['statut'] == '1comite') {
-		if (isset($opt['webmestre']) and $opt['webmestre']) {
+		if (!empty($opt['webmestre'])) {
 			return false;
-		} elseif ((isset($opt['statut']) and $opt['statut'])
-			or (isset($opt['restreintes']) and $opt['restreintes'])
-			or $opt['email']
+		} elseif (
+			!empty($opt['statut'])
+			or !empty($opt['restreintes'])
+			or !empty($opt['email'])
 		) {
 			return false;
 		} elseif ($id == $qui['id_auteur']) {
