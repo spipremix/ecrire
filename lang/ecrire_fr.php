@@ -136,6 +136,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'entree_url' => 'L’adresse (URL) de votre site',
 	'entree_url_2' => 'Adresse (URL) du site',
 	'erreur_connect_deja_existant' => 'Un serveur existe déjà avec ce nom',
+	'erreur_contenu_suspect' => 'Texte mal formé',
 	'erreur_email_deja_existant' => 'Cette adresse email est déjà enregistrée.',
 	'erreur_nom_connect_incorrect' => 'Ce nom de serveur n’est pas autorisé',
 	'erreur_plugin_attribut_balise_manquant' => 'Attribut @attribut@ manquant dans la balise @balise@.',
@@ -147,7 +148,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_plugin_prefix_manquant' => 'Espace de nommage du plugin non défini',
 	'erreur_plugin_tag_plugin_absent' => '&lt;plugin&gt; manquant dans le fichier de définition',
 	'erreur_plugin_version_manquant' => 'Version du plugin manquante',
-	'erreur_contenu_suspect' => 'Texte mal formé',
 
 	// H
 	'htaccess_a_simuler' => 'Avertissement : la configuration de votre serveur HTTP ne tient pas compte des fichiers @htaccess@. Pour pouvoir assurer une bonne sécurité, il faut que vous modifiiez cette configuration sur ce point, ou bien que les constantes @constantes@ (définissables dans le fichier mes_options.php) aient comme valeur des répertoires en dehors de @document_root@.',
