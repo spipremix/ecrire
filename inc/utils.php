@@ -821,7 +821,15 @@ function _T($texte, $args = array(), $options = array()) {
 function _L($text, $args = array(), $class = null) {
 	$f = $text;
 	if (is_array($args)) {
+		if (!function_exists('interdire_scripts')) {
+			include_spip('inc/texte');
+		}
+		if (!function_exists('echapper_html_suspect')) {
+			include_spip('inc/texte_mini');
+		}
 		foreach ($args as $name => $value) {
+			$value = echapper_html_suspect($value);
+			$value = interdire_scripts($value, -1);
 			if ($class) {
 				$value = "<span class='$class'>$value</span>";
 			}
