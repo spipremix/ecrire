@@ -687,7 +687,7 @@ function self($amp = '&amp;', $root = false) {
 	include_spip('inc/filtres_mini');
 	$url = spip_htmlspecialchars($url);
 	
-	$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
+	$url = str_replace(array("'", '"', '<', '[', ']'), array('%27', '%22', '%3C', '%5B', '%5D'), $url);
 
 	// &amp; ?
 	if ($amp != '&amp;') {
