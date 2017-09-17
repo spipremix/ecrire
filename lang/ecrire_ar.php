@@ -138,6 +138,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'entree_url' => 'عنوان موقعك',
 	'entree_url_2' => 'عنوان الموقع',
 	'erreur_connect_deja_existant' => 'يوجد حالياً جهاز خدمة بهذا الاسم',
+	'erreur_contenu_suspect' => 'تركيبة النص غير سليمة ',
 	'erreur_email_deja_existant' => 'هذا العنوان الالكتروني مسجل مسبقاً',
 	'erreur_nom_connect_incorrect' => 'هذا الاسم لجهاز الخدمة غير مسموح به',
 	'erreur_plugin_attribut_balise_manquant' => 'الخاصية @attribut@ غير موجودة في علامة @balise@.',
