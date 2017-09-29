@@ -700,12 +700,13 @@ function test_plugin_actif($plugin) {
  * @param array $options
  *     - string class : nom d'une classe a ajouter sur un span pour encapsuler la chaine
  *     - bool force : forcer un retour meme si la chaine n'a pas de traduction
+ *     - bool sanitize : nettoyer le html suspect dans les arguments
  * @return string
  *     Texte
  */
 function _T($texte, $args = array(), $options = array()) {
 	static $traduire = false;
-	$o = array('class' => '', 'force' => true);
+	$o = array('class' => '', 'force' => true, 'sanitize' => true);
 	if ($options) {
 		// support de l'ancien argument $class
 		if (is_string($options)) {
@@ -748,7 +749,7 @@ function _T($texte, $args = array(), $options = array()) {
 
 	}
 
-	return _L($text, $args, $o['class']);
+	return _L($text, $args, $o);
 
 }
 
@@ -769,13 +770,18 @@ function _T($texte, $args = array(), $options = array()) {
  *     Texte
  * @param array $args
  *     Couples (variable => valeur) à transformer dans le texte
- * @param string|null $class
- *     Encapsule les valeurs dans un span avec cette classe si transmis.
+ * @param array $options
+ *     - string class : nom d'une classe a ajouter sur un span pour encapsuler la chaine
+ *     - bool sanitize : nettoyer le html suspect dans les arguments
  * @return string
  *     Texte
  */
-function _L($text, $args = array(), $class = null) {
+function _L($text, $args = array(), $options = array()) {
 	$f = $text;
+	if ($options and is_string($options)) {
+		// support de l'ancien argument $class
+		$options = array('class' => $options);
+	}
 	if (is_array($args)) {
 		if (!function_exists('interdire_scripts')) {
 			include_spip('inc/texte');
@@ -784,10 +790,12 @@ function _L($text, $args = array(), $class = null) {
 			include_spip('inc/texte_mini');
 		}
 		foreach ($args as $name => $value) {
-			$value = echapper_html_suspect($value);
-			$value = interdire_scripts($value, -1);
-			if ($class) {
-				$value = "<span class='$class'>$value</span>";
+			if (!isset($options['sanitize']) or $options['sanitize']) {
+				$value = echapper_html_suspect($value);
+				$value = interdire_scripts($value, -1);
+			}
+			if (isset($options['class']) and $options['class']) {
+				$value = "<span class='".$options['class']."'>$value</span>";
 			}
 			$t = str_replace("@$name@", $value, $text);
 			if ($text !== $t) {
@@ -802,7 +810,7 @@ function _L($text, $args = array(), $class = null) {
 		}
 	}
 
-	if (($GLOBALS['test_i18n'] or (_request('var_mode') == 'traduction')) and $class === null) {
+	if (($GLOBALS['test_i18n'] or (_request('var_mode') == 'traduction')) and (!isset($options['class']) or !$options['class'])) {
 		return "<span class=debug-traduction-erreur>$text</span>";
 	} else {
 		return $text;
