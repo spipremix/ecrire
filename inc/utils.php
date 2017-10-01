@@ -829,7 +829,8 @@ function _L($text, $args = array(), $options = array()) {
 	// support de l'ancien argument $class
 	if ($options and is_string($options)) {
 		$options = array('class' => $options);
-	} elseif (is_array($options)) {
+	}
+	if (is_array($options)) {
 		$options += $defaut_options;
 	} else {
 		$options = $defaut_options;
