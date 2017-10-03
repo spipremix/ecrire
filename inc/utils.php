@@ -778,10 +778,20 @@ function _T($texte, $args = array(), $options = array()) {
  */
 function _L($text, $args = array(), $options = array()) {
 	$f = $text;
+	$defaut_options = array(
+		'class' => null,
+		'sanitize' => true,
+	);
+	// support de l'ancien argument $class
 	if ($options and is_string($options)) {
-		// support de l'ancien argument $class
 		$options = array('class' => $options);
 	}
+	if (is_array($options)) {
+		$options += $defaut_options;
+	} else {
+		$options = $defaut_options;
+	}
+
 	if (is_array($args)) {
 		if (!function_exists('interdire_scripts')) {
 			include_spip('inc/texte');
@@ -790,11 +800,11 @@ function _L($text, $args = array(), $options = array()) {
 			include_spip('inc/texte_mini');
 		}
 		foreach ($args as $name => $value) {
-			if (!isset($options['sanitize']) or $options['sanitize']) {
+			if ($options['sanitize']) {
 				$value = echapper_html_suspect($value);
 				$value = interdire_scripts($value, -1);
 			}
-			if (isset($options['class']) and $options['class']) {
+			if (!empty($options['class'])) {
 				$value = "<span class='".$options['class']."'>$value</span>";
 			}
 			$t = str_replace("@$name@", $value, $text);
@@ -810,7 +820,7 @@ function _L($text, $args = array(), $options = array()) {
 		}
 	}
 
-	if (($GLOBALS['test_i18n'] or (_request('var_mode') == 'traduction')) and (!isset($options['class']) or !$options['class'])) {
+	if (($GLOBALS['test_i18n'] or (_request('var_mode') == 'traduction')) and is_null($options['class'])) {
 		return "<span class=debug-traduction-erreur>$text</span>";
 	} else {
 		return $text;
