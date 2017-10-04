@@ -1800,7 +1800,7 @@ function url_de_base($profondeur = null) {
 	} 
 
 	// note : HTTP_HOST contient le :port si necessaire
-	$host = $_SERVER['HTTP_HOST'];
+	$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null;
 	// si on n'a pas trouvé d'hôte du tout, en dernier recours on utilise adresse_site comme fallback
 	if (is_null($host) and isset($GLOBALS['meta']['adresse_site'])) {
 		$host = $GLOBALS['meta']['adresse_site'];
@@ -1831,8 +1831,8 @@ function url_de_base($profondeur = null) {
 		if (isset($_SERVER['REQUEST_URI'])) {
 			$GLOBALS['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 		} else {
-			$GLOBALS['REQUEST_URI'] = $_SERVER['PHP_SELF'];
-			if ($_SERVER['QUERY_STRING']
+			$GLOBALS['REQUEST_URI'] = (php_sapi_name() !== 'cli') ? $_SERVER['PHP_SELF'] : '';
+			if (!empty($_SERVER['QUERY_STRING'])
 				and !strpos($_SERVER['REQUEST_URI'], '?')
 			) {
 				$GLOBALS['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
@@ -2435,7 +2435,7 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 	if (isset($_SERVER['REQUEST_URI'])) {
 		$GLOBALS['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 	} else {
-		$GLOBALS['REQUEST_URI'] = $_SERVER['PHP_SELF'];
+		$GLOBALS['REQUEST_URI'] = (php_sapi_name() !== 'cli') ? $_SERVER['PHP_SELF'] : '';
 		if (!empty($_SERVER['QUERY_STRING'])
 			and !strpos($_SERVER['REQUEST_URI'], '?')
 		) {
