@@ -145,6 +145,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_plugin_prefix_manquant' => 'Espace de nommage du plugin non défini',
 	'erreur_plugin_tag_plugin_absent' => '&lt;plugin&gt; manquant dans le fichier de définition',
 	'erreur_plugin_version_manquant' => 'Version du plugin manquante',
+	'erreur_contenu_suspect' => 'Texte mal formé',
 
 	// H
 	'htaccess_a_simuler' => 'Avertissement : la configuration de votre serveur HTTP ne tient pas compte des fichiers @htaccess@. Pour pouvoir assurer une bonne sécurité, il faut que vous modifiiez cette configuration sur ce point, ou bien que les constantes @constantes@ (définissables dans le fichier mes_options.php) aient comme valeur des répertoires en dehors de @document_root@.',
