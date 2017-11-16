@@ -1428,6 +1428,29 @@ function autoriser_auteurcreer_menu_dist($faire, $type, $id, $qui, $opt) {
 	return autoriser('creer', 'auteur', $id, $qui, $opt);
 }
 
+
+/**
+ * Autorisation de voir le menu "afficher les visiteurs"
+ *
+ * Il faut qu'il en existe
+ *
+ * @see autoriser_visiteurs_menu_dist()
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_visiteurs_menu_dist($faire, $type, $id, $qui, $opt) {
+	include_spip('base/abstract_sql');
+	return autoriser('webmestre')
+		and $GLOBALS['meta']["accepter_visiteurs"] <> 'non'
+		and sql_countsel('spip_auteurs', 'statut="6forum"') > 0;
+}
+
+
 /**
  * Autorisation de voir le menu suiviedito
  *
