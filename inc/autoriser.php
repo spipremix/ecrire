@@ -1428,13 +1428,10 @@ function autoriser_auteurcreer_menu_dist($faire, $type, $id, $qui, $opt) {
 	return autoriser('creer', 'auteur', $id, $qui, $opt);
 }
 
-
 /**
  * Autorisation de voir le menu "afficher les visiteurs"
  *
- * Il faut qu'il en existe
- *
- * @see autoriser_visiteurs_menu_dist()
+ * Être admin complet et il faut qu'il en existe ou que ce soit activé en config
  *
  * @param  string $faire Action demandée
  * @param  string $type Type d'objet sur lequel appliquer l'action
@@ -1445,11 +1442,13 @@ function autoriser_auteurcreer_menu_dist($faire, $type, $id, $qui, $opt) {
  **/
 function autoriser_visiteurs_menu_dist($faire, $type, $id, $qui, $opt) {
 	include_spip('base/abstract_sql');
-	return autoriser('webmestre')
-		and $GLOBALS['meta']["accepter_visiteurs"] <> 'non'
-		and sql_countsel('spip_auteurs', 'statut="6forum"') > 0;
+	return 
+		$qui['statut'] == '0minirezo' and !$qui['restreint']
+		and (
+			$GLOBALS['meta']["accepter_visiteurs"] != 'non'
+			or sql_countsel('spip_auteurs', 'statut="6forum"') > 0
+		);
 }
-
 
 /**
  * Autorisation de voir le menu suiviedito
