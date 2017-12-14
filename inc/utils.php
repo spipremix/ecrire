@@ -2812,8 +2812,8 @@ function init_var_mode() {
 				} elseif (in_array('calcul', $var_mode)) {
 					define('_VAR_MODE', 'calcul');
 				}
-				$var_mode = array_diff($var_mode, array('calcul', 'recalcul'));
 			}
+			$var_mode = array_diff($var_mode, array('calcul', 'recalcul'));
 			if ($var_mode) {
 				include_spip('inc/autoriser');
 				// autoriser preview si preview seulement, et sinon autoriser debug
