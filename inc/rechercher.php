@@ -20,6 +20,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
+defined('_RECHERCHE_LOCK_KEY') || define('_RECHERCHE_LOCK_KEY', 'fulltext');
 
 /**
  * Donne la liste des champs/tables où l'on sait chercher / remplacer
@@ -90,6 +91,10 @@ function expression_recherche($recherche, $options) {
 	}
 	include_spip('inc/charsets');
 	$recherche = trim($recherche);
+
+	// retirer les + de +truc et les * de truc*
+	$recherche = preg_replace(',(^|\s)\+(\w),Uims', '$1$2', $recherche);
+	$recherche = preg_replace(',(\w)\*($|\s),Uims', '$1$2', $recherche);
 
 	$is_preg = false;
 	if (substr($recherche, 0, 1) == '/' and substr($recherche, -1, 1) == '/' and strlen($recherche) > 2) {
@@ -179,6 +184,7 @@ function expression_recherche($recherche, $options) {
 		);
 
 		$preg = '/' . preg_replace(",\s+," . $u, ".+", trim($recherche_mod)) . '/' . $options['preg_flags'];
+
 	} else {
 		$methode = 'REGEXP';
 		$q = sql_quote(trim($recherche, '/'));
@@ -289,16 +295,17 @@ function recherche_en_base($recherche = '', $tables = null, $options = array(), 
 	//      id2 = { 'score' => x, attrs => { } },
 	// }
 
+	include_spip('inc/recherche_to_array');
+
 	foreach ($tables as $table => $champs) {
 		# lock via memoization, si dispo
 		if (function_exists('cache_lock')) {
-			cache_lock($lock = 'recherche ' . $table . ' ' . $recherche);
+			cache_lock($lock = _RECHERCHE_LOCK_KEY . ' ' . $table . ' ' . $recherche);
 		}
 
 		spip_timer('rech');
 
-		// TODO: ici plutot charger un iterateur via l'API iterateurs
-		include_spip('inc/recherche_to_array');
+		# TODO : ici plutot charger un iterateur via l'API iterateurs
 		$to_array = charger_fonction('recherche_to_array', 'inc');
 		$results[$table] = $to_array($recherche,
 			array_merge($options, array('table' => $table, 'champs' => $champs))
@@ -350,7 +357,7 @@ function remplace_en_base($recherche = '', $remplace = null, $tables = null, $op
 				$modifs = array();
 				foreach ($x['champs'] as $key => $val) {
 					if ($key == $_id_table) {
-						next;
+						continue;
 					}
 					$repl = preg_replace($preg, $remplace, $val);
 					if ($repl <> $val) {
