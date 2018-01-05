@@ -81,18 +81,10 @@ $GLOBALS['selecteur_rubrique'] = 'inc_chercher_rubrique_dist';
  **/
 function style_menu_rubriques($i) {
 
-	include_spip('inc/layer');
-	verif_butineur();
-
 	$espace = '';
-	if (preg_match(",mozilla,i", $GLOBALS['browser_name'])) {
-		$style = "padding-" . $GLOBALS['spip_lang_left'] . ": 16px; "
-			. "margin-" . $GLOBALS['spip_lang_left'] . ": " . (($i - 1) * 16) . "px;";
-	} else {
-		$style = '';
-		for ($count = 0; $count <= $i; $count++) {
-			$espace .= "&nbsp;&nbsp;&nbsp;&nbsp;";
-		}
+	$style = '';
+	for ($count = 1; $count <= $i; $count++) {
+		$espace .= "&nbsp;&nbsp;&nbsp;&nbsp;";
 	}
 	if ($i == 1) {
 		$espace = "";
