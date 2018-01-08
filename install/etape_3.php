@@ -21,14 +21,12 @@ include_spip('base/abstract_sql');
 function install_bases($adresse_db, $login_db, $pass_db, $server_db, $choix_db, $sel_db, $chmod_db) {
 
 	// Prefix des tables :
-	// contrairement a ce qui est dit dans le message (trop strict mais c'est
-	// pour notre bien), on va tolerer les chiffres en plus des minuscules
 	// S'il n'est pas defini par mes_options/inc/mutualiser, on va le creer
 	// a partir de ce qui est envoye a l'installation
 	if (!defined('_INSTALL_TABLE_PREFIX')) {
 		$table_prefix = ($GLOBALS['table_prefix'] != 'spip')
 			? $GLOBALS['table_prefix']
-			: trim(preg_replace(',[^a-z0-9],', '', strtolower(_request('tprefix'))));
+			: preparer_prefixe_tables(_request('tprefix'));
 		// S'il est vide on remet spip
 		if (!$table_prefix) {
 			$table_prefix = 'spip';
@@ -215,6 +213,21 @@ function install_bases($adresse_db, $login_db, $pass_db, $server_db, $choix_db, 
 	);
 
 	return '';
+}
+
+/**
+ * Préparer le préfixe des tables
+ *
+ * Contrairement a ce qui est dit dans le message (trop strict mais c'est
+ * pour notre bien), on tolère les chiffres en plus des minuscules.
+ * On corrige aussi le préfixe afin qu'il ne commence pas par un chiffre
+ * cf https://core.spip.net/issues/3626
+ *
+ * @param string $prefixe Le préfixe demandé
+ * @return string Le préfixe corrigé
+ */
+function preparer_prefixe_tables($prefixe) {
+	return trim(preg_replace(',^[0-9]+,', '', preg_replace(',[^a-z0-9],', '', strtolower($prefixe))));
 }
 
 // http://code.spip.net/@install_propose_ldap
