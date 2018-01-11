@@ -1446,7 +1446,7 @@ function autoriser_visiteurs_menu_dist($faire, $type, $id, $qui, $opt) {
 		$qui['statut'] == '0minirezo' and !$qui['restreint']
 		and (
 			$GLOBALS['meta']["accepter_visiteurs"] != 'non'
-			or sql_countsel('spip_auteurs', 'statut="6forum"') > 0
+			or sql_countsel('spip_auteurs', 'statut in ("6forum", "nouveau")') > 0
 		);
 }
 
