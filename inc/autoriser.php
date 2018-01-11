@@ -1444,6 +1444,24 @@ function autoriser_articlecreer_menu_dist($faire, $type, $id, $qui, $opt) {
 }
 
 /**
+ * Autorisation de voir le menu auteurcreer
+ *
+ * Il faut pouvoir créer un auteur !
+ *
+ * @see autoriser_auteur_creer_dist()
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_auteurcreer_menu_dist($faire, $type, $id, $qui, $opt) {
+	return autoriser('creer', 'auteur', $id, $qui, $opt);
+}
+
+/**
  * Autorisation de voir le menu "afficher les visiteurs"
  *
  * Être admin complet et il faut qu'il en existe ou que ce soit activé en config
@@ -1461,26 +1479,8 @@ function autoriser_visiteurs_menu_dist($faire, $type, $id, $qui, $opt) {
 		$qui['statut'] == '0minirezo' and !$qui['restreint']
 		and (
 			$GLOBALS['meta']["accepter_visiteurs"] != 'non'
-			or sql_countsel('spip_auteurs', 'statut="6forum"') > 0
+			or sql_countsel('spip_auteurs', 'statut in ("6forum", "nouveau")') > 0
 		);
-}
-
-/**
- * Autorisation de voir le menu auteurcreer
- *
- * Il faut pouvoir créer un auteur !
- *
- * @see autoriser_auteur_creer_dist()
- *
- * @param  string $faire Action demandée
- * @param  string $type Type d'objet sur lequel appliquer l'action
- * @param  int $id Identifiant de l'objet
- * @param  array $qui Description de l'auteur demandant l'autorisation
- * @param  array $opt Options de cette autorisation
- * @return bool          true s'il a le droit, false sinon
- **/
-function autoriser_auteurcreer_menu_dist($faire, $type, $id, $qui, $opt) {
-	return autoriser('creer', 'auteur', $id, $qui, $opt);
 }
 
 /**
