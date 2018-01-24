@@ -514,7 +514,7 @@ if (!defined('_HEADER_COMPOSED_BY')) {
 if (!headers_sent()) {
 	header("Vary: Cookie, Accept-Encoding");
 	if (!isset($GLOBALS['spip_header_silencieux']) or !$GLOBALS['spip_header_silencieux']) {
-		header(_HEADER_COMPOSED_BY . " $spip_version_affichee @ www.spip.net" . (isset($GLOBALS['meta']['plugin_header']) ? (" + " . $GLOBALS['meta']['plugin_header']) : ""));
+		header(_HEADER_COMPOSED_BY . " $spip_version_affichee @ www.spip.net + " . url_absolue(_DIR_VAR . "config.txt"));
 	} else // header minimal
 	{
 		header(_HEADER_COMPOSED_BY . " @ www.spip.net");

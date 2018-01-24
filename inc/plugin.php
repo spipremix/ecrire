@@ -843,7 +843,6 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	$liste = array_diff_key($liste, $plugin_valides);
 	ecrire_meta('plugin_attente', serialize($liste));
 	$header = strtolower(implode(",", $header));
-	ecrire_meta('plugin_header', substr($header, 0, 900));
 	if (!isset($GLOBALS['spip_header_silencieux']) or !$GLOBALS['spip_header_silencieux']) {
 		ecrire_fichier(_DIR_VAR . "config.txt",
 			(defined('_HEADER_COMPOSED_BY') ? _HEADER_COMPOSED_BY : "Composed-By: SPIP") . ' ' . $GLOBALS['spip_version_affichee'] . " @ www.spip.net + " . $header);
