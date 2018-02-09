@@ -742,12 +742,12 @@ function calculer_balise_expose($p, $on, $off) {
 	} else {
 
 		$key = $p->boucles[$b]->primary;
-		$type = $p->boucles[$b]->primary;
+		$type = $p->boucles[$p->id_boucle]->primary;
 		$desc = $p->boucles[$b]->show;
 		$connect = sql_quote($p->boucles[$b]->sql_serveur);
 
 		// Ne pas utiliser champ_sql, on jongle avec le nom boucle explicite
-		$c = index_pile($p->id_boucle, $type, $p->boucles, $b);
+		$c = index_pile($p->id_boucle, $type, $p->boucles);
 
 		if (isset($desc['field']['id_parent'])) {
 			$parent = 0; // pour if (!$parent) dans calculer_expose

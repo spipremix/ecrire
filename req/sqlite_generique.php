@@ -2938,8 +2938,6 @@ class sqlite_requeteur {
 			$GLOBALS['connexions'][$this->serveur ? $this->serveur : 0]['last'] = $query;
 			$GLOBALS['connexions'][$this->serveur ? $this->serveur : 0]['total_requetes']++;
 
-			if (defined('_TRACE_SQLITE_QUERIES')) spip_log($query,'sqlitequeries');
-
 			if ($this->sqlite_version == 3) {
 				$r = $this->link->query($query);
 				// sauvegarde de la requete (elle y est deja dans $r->queryString)
