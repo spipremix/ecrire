@@ -234,6 +234,7 @@ function objet_inserer($objet, $id_parent = null, $set = null) {
 		array(
 			'args' => array(
 				'table' => $table_sql,
+				'id_parent' => $id_parent,
 			),
 			'data' => $champs
 		)
@@ -262,6 +263,7 @@ function objet_inserer($objet, $id_parent = null, $set = null) {
 			array(
 				'args' => array(
 					'table' => $table_sql,
+					'id_parent' => $id_parent,
 					'id_objet' => $id,
 				),
 				'data' => $champs
