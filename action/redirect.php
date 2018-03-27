@@ -64,7 +64,7 @@ function action_redirect_dist() {
 	$status = '302';
 	if ($url) {
 		if ($var_mode) {
-			$url = parametre_url($url, 'var_mode', $var_mode);
+			$url = parametre_url($url, 'var_mode', $var_mode, '&');
 		}
 
 		if ($var_mode == 'preview'
