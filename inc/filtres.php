@@ -3405,7 +3405,7 @@ function afficher_enclosures($tags) {
  * @param string $rels Attribut `rel` à capturer (ou plusieurs séparés par des virgules)
  * @return string Liens trouvés
  **/
-function afficher_tags($tags, $rels = 'tag, directory') {
+function afficher_tags($tags, $rels = 'tag,directory') {
 	$s = array();
 	foreach (extraire_balises($tags, 'a') as $tag) {
 		$rel = extraire_attribut($tag, 'rel');
