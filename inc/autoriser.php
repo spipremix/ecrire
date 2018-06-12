@@ -1714,7 +1714,7 @@ function auteurs_article($id_article, $cond = '') {
 	return sql_allfetsel(
 		'id_auteur',
 		'spip_auteurs_liens',
-		"objet='article' AND id_objet=$id_article" . ($cond ? " AND $cond" : '')
+		"objet='article' AND id_objet=" . intval($id_article) . ($cond ? " AND $cond" : '')
 	);
 }
 
