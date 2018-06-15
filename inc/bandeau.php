@@ -56,6 +56,9 @@ function definir_barre_contexte($contexte = null) {
 					if (isset($row['id_secteur'])) {
 						$contexte['id_secteur'] = $row['id_secteur'];
 					}
+				} elseif (isset($row['id_groupe'])) {
+					// TODO supprimer ce bloc quand https://core.spip.net/issues/3844 sera réalisé
+					$contexte['id_groupe'] = $row['id_groupe'];
 				}
 			}
 		}
