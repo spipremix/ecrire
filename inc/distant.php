@@ -1175,8 +1175,8 @@ function init_http($method, $url, $refuse_gz = false, $referer = '', $datas = ""
 		$scheme = 'http';
 		$noproxy = '';
 	} elseif ($t['scheme'] == 'https') {
-		$scheme = 'tls';
-		$noproxy = 'tls://';
+		$scheme = 'ssl';
+		$noproxy = 'ssl://';
 		if (!isset($t['port']) || !($port = $t['port'])) {
 			$t['port'] = 443;
 		}
@@ -1275,13 +1275,13 @@ function lance_requete(
 
 	$connect = "";
 	if ($http_proxy) {
-		if (defined('_PROXY_HTTPS_VIA_CONNECT') and $scheme == "tls") {
+		if (defined('_PROXY_HTTPS_VIA_CONNECT') and in_array($scheme , array('tls','ssl'))) {
 			$path_host = (!$user ? '' : "$user@") . $host . (($port != 80) ? ":$port" : "");
 			$connect = "CONNECT " . $path_host . " $vers\r\n"
 				. "Host: $path_host\r\n"
 				. "Proxy-Connection: Keep-Alive\r\n";
 		} else {
-			$path = (($scheme == 'tls') ? 'https://' : "$scheme://")
+			$path = (in_array($scheme , array('tls','ssl')) ? 'https://' : "$scheme://")
 				. (!$user ? '' : "$user@")
 				. "$host" . (($port != 80) ? ":$port" : "") . $path;
 		}
