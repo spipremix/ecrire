@@ -697,10 +697,11 @@ function queue_affichage_cron() {
 		return $texte;
 	}
 
-	// en derniere solution, on insere une image background dans la page
-	$texte = '<!-- SPIP-CRON --><div style="background-image: url(\'' .
-		generer_url_action('cron') .
-		'\');"></div>';
+	// en derniere solution, on insere un appel xhr non bloquant ou une image background dans la page si pas de JS
+	$url_cron = generer_url_action('cron');
+	$texte = '<!-- SPIP-CRON -->'
+	  . "<script>setTimeout(function(){var xo = new XMLHttpRequest();xo.open('GET', '$url_cron', true);xo.send('');},100);</script>"
+	  . "<noscript><div style=\"background-image: url('$url_cron');\"></div></noscript>";
 
 	return $texte;
 }
