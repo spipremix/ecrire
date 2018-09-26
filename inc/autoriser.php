@@ -36,12 +36,6 @@ defined('_STATUT_AUTEUR_CREATION') || define('_STATUT_AUTEUR_CREATION', '1comite
 /** statuts associables a des rubriques (separes par des virgules) */
 defined('_STATUT_AUTEUR_RUBRIQUE') || define('_STATUT_AUTEUR_RUBRIQUE', _ADMINS_RESTREINTS ? '0minirezo' : '');
 
-// mes_fonctions peut aussi declarer des autorisations, donc il faut donc le charger
-if ($f = find_in_path('mes_fonctions.php')) {
-	global $dossier_squelettes;
-	include_once(_ROOT_CWD . $f);
-}
-
 
 if (!function_exists('autoriser')) {
 	/**
@@ -113,6 +107,14 @@ if (!function_exists('autoriser')) {
 
 		return call_user_func_array('autoriser_dist', $args);
 	}
+}
+
+
+// mes_fonctions peut aussi declarer des autorisations, donc il faut donc le charger
+// mais apres la fonction autoriser()
+if ($f = find_in_path('mes_fonctions.php')) {
+	global $dossier_squelettes;
+	include_once(_ROOT_CWD . $f);
 }
 
 
