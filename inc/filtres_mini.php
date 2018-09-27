@@ -152,7 +152,7 @@ function protocole_implicite($url_absolue) {
  */
 function protocole_verifier($url_absolue, $protocoles_autorises = array('http','https')) {
 
-	if (preg_match(';^([a-z]{3,7})://;i', '//', $url_absolue, $m)) {
+	if (preg_match(';^([a-z]{3,7})://;i', $url_absolue, $m)) {
 		$protocole = $m[1];
 		if (in_array($protocole, $protocoles_autorises)
 		  or in_array(strtolower($protocole), array_map('strtolower', $protocoles_autorises))) {
