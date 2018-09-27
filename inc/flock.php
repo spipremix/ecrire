@@ -465,7 +465,11 @@ function spip_clear_opcode_cache($filepath) {
 
 	// Zend OPcache
 	if (function_exists('opcache_invalidate')) {
-		opcache_invalidate($filepath, true);
+		$invalidate = @opcache_invalidate($filepath, true);
+		// si l'invalidation a echoue lever un flag
+		if (!$invalidate and !defined('_spip_attend_invalidation_opcode_cache')) {
+			define('_spip_attend_invalidation_opcode_cache',true);
+		}
 	}
 	// APC.
 	if (function_exists('apc_delete_file')) {
@@ -495,14 +499,24 @@ function spip_clear_opcode_cache($filepath) {
  * @link http://wiki.mikejung.biz/PHP_OPcache
  *
  */
-function spip_attend_invalidation_opcode_cache() {
+function spip_attend_invalidation_opcode_cache($timestamp = null) {
 	if (function_exists('opcache_get_configuration')
 		and @ini_get('opcache.enable')
 		and @ini_get('opcache.validate_timestamps')
 		and $duree = @ini_get('opcache.revalidate_freq')
+		and defined('_spip_attend_invalidation_opcode_cache') // des invalidations ont echouees
 	) {
-		spip_log('Probleme de configuration opcache.revalidate_freq '. $duree .'s', _LOG_INFO_IMPORTANTE);
-		sleep($duree + 1);
+		$wait = $duree + 1;
+		if ($timestamp) {
+			$wait -= (time() - $timestamp);
+			if ($wait<0) {
+				$wait = 0;
+			}
+		}
+		spip_log('Probleme de configuration opcache.revalidate_freq '. $duree .'s : on attend '.$wait.'s', _LOG_INFO_IMPORTANTE);
+		if ($wait) {
+			sleep($duree + 1);
+		}
 	}
 }
 

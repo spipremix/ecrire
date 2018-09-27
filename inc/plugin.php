@@ -863,9 +863,6 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	// generer le fichier _CACHE_PIPELINE
 	pipeline_precompile($prepend_code);
 
-	// attendre eventuellement l'invalidation du cache opcode
-	spip_attend_invalidation_opcode_cache();
-
 	if (spip_connect()) {
 		// lancer et initialiser les nouveaux crons !
 		include_spip('inc/genie');
@@ -1319,6 +1316,11 @@ function plugin_est_installe($plug_path) {
  * @uses plugins_installer_dist()
  **/
 function plugin_installes_meta() {
+	if (isset($GLOBALS['fichier_php_compile_recent'])) {
+		// attendre eventuellement l'invalidation du cache opcode
+		spip_attend_invalidation_opcode_cache($GLOBALS['fichier_php_compile_recent']);
+	}
+
 	$installer_plugins = charger_fonction('installer', 'plugins');
 	$meta_plug_installes = array();
 	foreach (unserialize($GLOBALS['meta']['plugin']) as $prefix => $resume) {
@@ -1358,6 +1360,9 @@ function plugin_installes_meta() {
  *     Commentaire : code écrit en tout début de fichier, après la balise PHP ouvrante
 **/
 function ecrire_fichier_php($nom, $contenu, $comment = '') {
+	if (!isset($GLOBALS['fichier_php_compile_recent'])) {
+		$GLOBALS['fichier_php_compile_recent'] = 0;
+	}
 
 	$contenu = '<' . '?php' . "\n" . $comment . "\nif (defined('_ECRIRE_INC_VERSION')) {\n" . $contenu . "}\n?" . '>';
 	// si un fichier existe deja on verifie que son contenu change avant de l'ecraser
@@ -1371,11 +1376,13 @@ function ecrire_fichier_php($nom, $contenu, $comment = '') {
 		}
 		file_put_contents($fichier_tmp, $contenu);
 		if(md5_file($nom) == md5_file($fichier_tmp)) {
+			$GLOBALS['fichier_php_compile_recent'] = max($GLOBALS['fichier_php_compile_recent'], filemtime($nom));
 			@unlink($fichier_tmp);
 			return;
 		}
 		@unlink($fichier_tmp);
 	}
 	ecrire_fichier($nom, $contenu);
+	$GLOBALS['fichier_php_compile_recent'] = max($GLOBALS['fichier_php_compile_recent'], filemtime($nom));
 	spip_clear_opcode_cache(realpath($nom));
 }
