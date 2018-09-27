@@ -1358,6 +1358,24 @@ function plugin_installes_meta() {
  *     Commentaire : code écrit en tout début de fichier, après la balise PHP ouvrante
 **/
 function ecrire_fichier_php($nom, $contenu, $comment = '') {
-	ecrire_fichier($nom,
-		'<' . '?php' . "\n" . $comment . "\nif (defined('_ECRIRE_INC_VERSION')) {\n" . $contenu . "}\n?" . '>');
+
+	$contenu = '<' . '?php' . "\n" . $comment . "\nif (defined('_ECRIRE_INC_VERSION')) {\n" . $contenu . "}\n?" . '>';
+	// si un fichier existe deja on verifie que son contenu change avant de l'ecraser
+	// si pas de modif on ne touche pas au fichier initial
+	if (file_exists($nom)) {
+		if (substr($nom, -4) == '.php') {
+			$fichier_tmp = substr($nom, 0, -4) . '.tmp.php';
+		}
+		else {
+			$fichier_tmp = $nom . '.tmp';
+		}
+		file_put_contents($fichier_tmp, $contenu);
+		if(md5_file($nom) == md5_file($fichier_tmp)) {
+			@unlink($fichier_tmp);
+			return;
+		}
+		@unlink($fichier_tmp);
+	}
+	ecrire_fichier($nom, $contenu);
+	spip_clear_opcode_cache(realpath($nom));
 }
