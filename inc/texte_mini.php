@@ -319,7 +319,7 @@ function echappe_retour_modeles($letexte, $interdire_scripts = false) {
  * @return string
  *     Texte coupé
  **/
-function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
+function couper($texte, $taille = 50, $suite = null) {
 	if (!($length = strlen($texte)) or $taille <= 0) {
 		return '';
 	}
@@ -369,6 +369,9 @@ function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
 	$long = spip_substr($texte, 0, max($taille - 4, 1));
 	$u = $GLOBALS['meta']['pcre_u'];
 	$court = preg_replace("/([^\s][\s]+)[^\s]*\n?$/" . $u, "\\1", $long);
+	if (is_null($suite)) {
+		$suite = (defined('_COUPER_SUITE') ? _COUPER_SUITE : '&nbsp;(...)');
+	}
 	$points = $suite;
 
 	// trop court ? ne pas faire de (...)

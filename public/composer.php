@@ -348,8 +348,8 @@ function filtre_introduction_dist($descriptif, $texte, $longueur, $connect, $sui
 		$notes('', 'depiler');
 	}
 
-	if (is_null($suite)) {
-		$suite = (defined('_INTRODUCTION_SUITE') ? _INTRODUCTION_SUITE : '&nbsp;(...)');
+	if (is_null($suite) and defined('_INTRODUCTION_SUITE')) {
+		$suite = _INTRODUCTION_SUITE;
 	}
 	$texte = couper($texte, $longueur, $suite);
 	// comme on a coupe il faut repasser la typo (on a perdu les insecables)
