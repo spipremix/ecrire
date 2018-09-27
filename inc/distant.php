@@ -137,6 +137,103 @@ function copie_locale($source, $mode = 'auto', $local = null, $taille_max = null
 }
 
 /**
+ * Valider qu'une URL d'un document distant est bien distante
+ * et pas une url localhost qui permet d'avoir des infos sur le serveur
+ * inspiree de https://core.trac.wordpress.org/browser/trunk/src/wp-includes/http.php?rev=36435#L500
+ * 
+ * @param string $url
+ * @param array $known_hosts
+ *   url/hosts externes connus et acceptes
+ * @return false|string 
+ *   url ou false en cas d'echec
+ */
+function valider_url_distante($url, $known_hosts = array()) {
+	if (!function_exists('protocole_verifier')){
+		include_spip('inc/filtres_mini');
+	}
+
+	if (!protocole_verifier($url, array('http', 'https'))) {
+		return false;
+	}
+	
+	$parsed_url = parse_url($url);
+	if (!$parsed_url or empty($parsed_url['host']) ) {
+		return false;
+	}
+
+	if (isset($parsed_url['user']) or isset($parsed_url['pass'])) {
+		return false;
+	}
+
+	if (false !== strpbrk($parsed_url['host'], ':#?[]')) {
+		return false;
+	}
+
+	if (!is_array($known_hosts)) {
+		$known_hosts = array($known_hosts);
+	}
+	$known_hosts[] = $GLOBALS['meta']['adresse_site'];
+	$known_hosts[] = self();
+	$known_hosts = pipeline('declarer_hosts_distants', $known_hosts);
+
+
+	$is_known_host = false;
+	foreach ($known_hosts as $known_host) {
+		$parse_known = $parsed_url($known_host);
+		if ($parse_known
+		  and strtolower($parse_known['host']) === strtolower($parsed_url['host'])) {
+			$is_known_host = true;
+			break;
+		}
+	}
+
+	if (!$is_known_host) {
+		$host = trim($parsed_url['host'], '.');
+		if (preg_match('#^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$#', $host)) {
+			$ip = $host;
+		} else {
+			$ip = gethostbyname($host);
+			if ($ip === $host) {
+				// Error condition for gethostbyname()
+				$ip = false;
+			}
+		}
+		if ($ip) {
+			$parts = array_map('intval', explode( '.', $ip ));
+			if (127 === $parts[0] or 10 === $parts[0] or 0 === $parts[0]
+			  or ( 172 === $parts[0] and 16 <= $parts[1] and 31 >= $parts[1] )
+			  or ( 192 === $parts[0] && 168 === $parts[1] )
+			) {
+				return false;
+			}
+		}
+	}
+
+	if (empty($parsed_url['port'])) {
+		return $url;
+	}
+
+	$port = $parsed_url['port'];
+	if ($port === 80  or $port === 443  or $port === 8080) {
+		return $url;
+	}
+
+	if ($is_known_host) {
+		foreach ($known_hosts as $known_host) {
+			$parse_known = $parsed_url($known_host);
+			if ($parse_known
+				and !empty($parse_known['port'])
+			  and strtolower($parse_known['host']) === strtolower($parsed_url['host'])
+			  and $parse_known['port'] == $port) {
+				return $url;
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
  * Preparer les donnes pour un POST
  * si $donnees est une chaine
  *  - charge a l'envoyeur de la boundariser, de gerer le Content-Type etc...

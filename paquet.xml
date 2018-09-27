@@ -59,6 +59,7 @@
 	<pipeline nom="calculer_rubriques" action="" />
 	<pipeline nom="configurer_liste_metas" action="" />
 	<pipeline nom="compter_contributions_auteur" action="" />
+	<pipeline nom="declarer_hosts_distants" action="" />
 	<pipeline nom="declarer_filtres_squelettes" action="" />
 	<pipeline nom="declarer_tables_interfaces" action="" />
 	<pipeline nom="declarer_tables_objets_sql" action="" />
