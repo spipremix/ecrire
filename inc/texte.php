@@ -270,7 +270,10 @@ function typo($letexte, $echapper = true, $connect = null, $env = array()) {
 
 	// Dans l'espace prive on se mefie de tout contenu dangereux
 	// https://core.spip.net/issues/3371
-	if (isset($env['espace_prive']) and $env['espace_prive']) {
+	// et aussi dans l'espace public si la globale filtrer_javascript = -1
+	// https://core.spip.net/issues/4166
+	if ($GLOBALS['filtrer_javascript'] == -1
+	  or (isset($env['espace_prive']) and $env['espace_prive'] and $GLOBALS['filtrer_javascript']<=0)) {
 		$letexte = echapper_html_suspect($letexte);
 	}
 
@@ -423,6 +426,17 @@ function propre($t, $connect = null, $env = array()) {
 		return strval($t);
 	}
 
+	// Dans l'espace prive on se mefie de tout contenu dangereux
+	// avant echappement des balises <html>
+	// https://core.spip.net/issues/3371
+	// et aussi dans l'espace public si la globale filtrer_javascript = -1
+	// https://core.spip.net/issues/4166
+	if ($interdire_script
+		or $GLOBALS['filtrer_javascript'] == -1
+		or (isset($env['espace_prive']) and $env['espace_prive'] and $GLOBALS['filtrer_javascript']<=0)
+		or (isset($env['wysiwyg']) and $env['wysiwyg'] and $GLOBALS['filtrer_javascript']<=0)) {
+		$t = echapper_html_suspect($t, false);
+	}
 	$t = echappe_html($t);
 	$t = expanser_liens($t, $connect, $env);
 	$t = traiter_raccourcis($t);

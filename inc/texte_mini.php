@@ -476,7 +476,7 @@ function echapper_html_suspect($texte, $strict=true) {
 		if (!function_exists('attribut_html')) {
 			include_spip('inc/filtres');
 		}
-		$texte = "<mark title='".attribut_html(_T('erreur_contenu_suspect'))."'>⚠️</mark> ".$texte;
+		$texte = "<mark class='danger-js' title='".attribut_html(_T('erreur_contenu_suspect'))."'>⚠️</mark> ".$texte;
 	}
 
 	return $texte;
