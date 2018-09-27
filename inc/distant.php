@@ -173,13 +173,12 @@ function valider_url_distante($url, $known_hosts = array()) {
 		$known_hosts = array($known_hosts);
 	}
 	$known_hosts[] = $GLOBALS['meta']['adresse_site'];
-	$known_hosts[] = self();
+	$known_hosts[] = url_de_base();
 	$known_hosts = pipeline('declarer_hosts_distants', $known_hosts);
-
 
 	$is_known_host = false;
 	foreach ($known_hosts as $known_host) {
-		$parse_known = $parsed_url($known_host);
+		$parse_known = parse_url($known_host);
 		if ($parse_known
 		  and strtolower($parse_known['host']) === strtolower($parsed_url['host'])) {
 			$is_known_host = true;
@@ -220,7 +219,7 @@ function valider_url_distante($url, $known_hosts = array()) {
 
 	if ($is_known_host) {
 		foreach ($known_hosts as $known_host) {
-			$parse_known = $parsed_url($known_host);
+			$parse_known = parse_url($known_host);
 			if ($parse_known
 				and !empty($parse_known['port'])
 			  and strtolower($parse_known['host']) === strtolower($parsed_url['host'])
