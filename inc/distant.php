@@ -1236,16 +1236,37 @@ function need_proxy($host, $http_proxy = null, $http_noproxy = null) {
 	if (is_null($http_proxy)) {
 		$http_proxy = isset($GLOBALS['meta']['http_proxy']) ? $GLOBALS['meta']['http_proxy'] : null;
 	}
+	// rien a faire si pas de proxy :)
+	if (is_null($http_proxy) or !$http_proxy = trim($http_proxy)) {
+		return '';
+	}
+
 	if (is_null($http_noproxy)) {
 		$http_noproxy = isset($GLOBALS['meta']['http_noproxy']) ? $GLOBALS['meta']['http_noproxy'] : null;
 	}
+	// si pas d'exception, on retourne le proxy
+	if (is_null($http_noproxy) or !$http_noproxy = trim($http_noproxy)) {
+		return $http_proxy;
+	}
 
-	$domain = substr($host, strpos($host, '.'));
+	// si le host ou l'un des domaines parents est dans $http_noproxy on fait exception
+	// $http_noproxy peut contenir plusieurs domaines separes par des espaces ou retour ligne
+	$http_noproxy = str_replace("\n", " ", $http_noproxy);
+	$http_noproxy = str_replace("\r", " ", $http_noproxy);
+	$http_noproxy = " $http_noproxy ";
+	$domain = $host;
+	do {
+		if (strpos($http_noproxy, " $domain ") !== false) {
+			return '';
+		}
 
-	return ($http_proxy
-		and (strpos(" $http_noproxy ", " $host ") === false
-			and (strpos(" $http_noproxy ", " $domain ") === false)))
-		? $http_proxy : '';
+		$domain = explode('.', $domain);
+		array_shift($domain);
+		$domain = implode('.', $domain);
+	} while (strpos($domain, '.') !== false);
+
+	// ok c'est pas une exception
+	return $http_proxy;
 }
 
 
