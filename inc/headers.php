@@ -69,8 +69,12 @@ function redirige_par_entete($url, $equiv = '', $status = 302) {
 
 	// Il n'y a que sous Apache que setcookie puis redirection fonctionne
 	include_spip('inc/cookie');
-	if ((!$equiv and !spip_cookie_envoye()) or ((strncmp("Apache", $_SERVER['SERVER_SOFTWARE'],
-					6) == 0) or defined('_SERVER_APACHE'))
+	if ((!$equiv and !spip_cookie_envoye()) or (
+			   (strncmp("Apache", $_SERVER['SERVER_SOFTWARE'], 6) == 0)
+			or (stripos($_SERVER['SERVER_SIGNATURE'], 'Apache') !== false)
+			or function_exists('apache_getenv')
+			or defined('_SERVER_APACHE')
+		)
 	) {
 		@header("Location: " . $url);
 		$equiv = "";
