@@ -178,8 +178,10 @@ function ajouter_session($auteur) {
 	if (!isset($auteur['date_session'])) {
 		$auteur['date_session'] = time();
 	}
-	if (isset($auteur['prefs']) and is_string($auteur['prefs'])) {
-		$auteur['prefs'] = unserialize($auteur['prefs']);
+	if (isset($auteur['prefs'])
+		and is_string($auteur['prefs'])
+	  and $prefs = @unserialize($auteur['prefs'])) {
+		$auteur['prefs'] = $prefs;
 	}
 
 	$fichier_session = "";
