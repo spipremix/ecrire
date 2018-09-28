@@ -1255,15 +1255,20 @@ function need_proxy($host, $http_proxy = null, $http_noproxy = null) {
 	$http_noproxy = str_replace("\r", " ", $http_noproxy);
 	$http_noproxy = " $http_noproxy ";
 	$domain = $host;
-	do {
-		if (strpos($http_noproxy, " $domain ") !== false) {
-			return '';
-		}
+	// si le domaine exact www.example.org est dans les exceptions
+	if (strpos($http_noproxy, " $domain ") !== false)
+		return '';
 
+	while (strpos($domain, '.') !== false) {
 		$domain = explode('.', $domain);
 		array_shift($domain);
 		$domain = implode('.', $domain);
-	} while (strpos($domain, '.') !== false);
+
+		// ou si un domaine parent commencant par un . est dans les exceptions (indiquant qu'il couvre tous les sous-domaines)
+		if (strpos($http_noproxy, " .$domain ") !== false) {
+			return '';
+		}
+	}
 
 	// ok c'est pas une exception
 	return $http_proxy;
