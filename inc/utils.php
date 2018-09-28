@@ -2567,7 +2567,7 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 
 			if (isset($GLOBALS['meta']['adresse_site'])) {
 				$uri_ref = parse_url($GLOBALS['meta']['adresse_site']);
-				$uri_ref = $uri_ref['path'] . '/';
+				$uri_ref = (isset($uri_ref['path']) ? $uri_ref['path'] : '') . '/';
 			} else {
 				$uri_ref = "";
 			}
