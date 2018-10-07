@@ -110,7 +110,7 @@ if (!function_exists('autoriser')) {
 }
 
 
-// mes_fonctions peut aussi declarer des autorisations, donc il faut donc le charger
+// mes_fonctions peut aussi declarer des autorisations, il faut donc le charger
 // mais apres la fonction autoriser()
 if ($f = find_in_path('mes_fonctions.php')) {
 	global $dossier_squelettes;
