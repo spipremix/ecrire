@@ -456,10 +456,24 @@ function echapper_faux_tags($letexte) {
  * @return string
  */
 function echapper_html_suspect($texte, $strict=true) {
-	if (!$texte
-		or strpos($texte, '<') === false or strpos($texte, '=') === false) {
+	static $echapper_html_suspect;
+	if (!$texte or !is_string($texte)) {
 		return $texte;
 	}
+
+	if (!isset($echapper_html_suspect)) {
+		$echapper_html_suspect = charger_fonction('echapper_html_suspect', 'inc', true);
+	}
+	// si fonction personalisee, on delegue
+	if ($echapper_html_suspect) {
+		return $echapper_html_suspect($texte, $strict);
+	}
+
+	if (strpos($texte, '<') === false
+	  or strpos($texte, '=') === false) {
+		return $texte;
+	}
+
 	// quand c'est du texte qui passe par propre on est plus coulant tant qu'il y a pas d'attribut du type onxxx=
 	// car sinon on declenche sur les modeles ou ressources
 	if (!$strict and
