@@ -24,7 +24,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 if (!defined('_CONTEXTE_IGNORE_VARIABLES')) {
-	define('_CONTEXTE_IGNORE_VARIABLES', "/(^var_|^PHPSESSID$)/");
+	define('_CONTEXTE_IGNORE_VARIABLES', "/(^var_|^PHPSESSID$|^fbclid$|^utm_)/");
 }
 
 // http://code.spip.net/@assembler
