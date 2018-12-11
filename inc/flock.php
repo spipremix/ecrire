@@ -578,7 +578,10 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
 	$base = str_replace("//", "/", $base);
 
 	# suppr le dernier caractere si c'est un / ou un _
-	$base = rtrim($base, '/_');
+	$base = rtrim($base, '/');
+	if (_CREER_DIR_PLAT) {
+		$base = rtrim($base, '_');
+	}
 
 	if (!strlen($subdir)) {
 		$n = strrpos($base, "/");
@@ -590,6 +593,9 @@ function sous_repertoire($base, $subdir = '', $nobase = false, $tantpis = false)
 	} else {
 		$base .= '/';
 		$subdir = str_replace("/", "", $subdir);
+		if (_CREER_DIR_PLAT) {
+			$subdir = rtrim($subdir, '_');
+		}
 	}
 
 	$baseaff = $nobase ? '' : $base;
