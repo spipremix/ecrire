@@ -532,6 +532,7 @@ function recuperer_url($url, $options = array()) {
 			$result['page'] = &$res;
 			$result['length'] = strlen($result['page']);
 		}
+		$result['status'] = 200; // on a reussi, donc !
 	}
 	if (!$result['page']) {
 		return $result;
