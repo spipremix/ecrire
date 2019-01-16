@@ -511,7 +511,7 @@ if (isset($_REQUEST['var_memotri'])
 if (!defined('_HEADER_COMPOSED_BY')) {
 	define('_HEADER_COMPOSED_BY', "Composed-By: SPIP");
 }
-if (!headers_sent()) {
+if (!headers_sent() and _HEADER_COMPOSED_BY) {
 	header("Vary: Cookie, Accept-Encoding");
 	if (!isset($GLOBALS['spip_header_silencieux']) or !$GLOBALS['spip_header_silencieux']) {
 		include_spip('inc/filtres_mini');
