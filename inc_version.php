@@ -509,7 +509,7 @@ if (isset($_REQUEST['var_memotri'])
 if (!defined('_HEADER_COMPOSED_BY')) {
 	define('_HEADER_COMPOSED_BY', "Composed-By: SPIP");
 }
-if (!headers_sent()) {
+if (!headers_sent() and _HEADER_COMPOSED_BY) {
 	header("Vary: Cookie, Accept-Encoding");
 	if (!isset($GLOBALS['spip_header_silencieux']) or !$GLOBALS['spip_header_silencieux']) {
 		header(_HEADER_COMPOSED_BY . " $spip_version_affichee @ www.spip.net" . (isset($GLOBALS['meta']['plugin_header']) ? (" + " . $GLOBALS['meta']['plugin_header']) : ""));
