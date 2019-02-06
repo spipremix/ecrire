@@ -15,5 +15,10 @@
         "name": "Emmanuel Saint-James",
         "email": "esj@rezo.net"
     }],
-    "require": {}
+    "require": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.3.x-dev"
+        }
+    }
 }
