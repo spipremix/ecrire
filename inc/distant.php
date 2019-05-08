@@ -1403,7 +1403,7 @@ function lance_requete(
 
 	$connect = '';
 	if ($http_proxy) {
-		if (defined('_PROXY_HTTPS_VIA_CONNECT') and in_array($scheme , array('tls','ssl'))) {
+		if (!defined('_PROXY_HTTPS_NOT_VIA_CONNECT') and in_array($scheme , array('tls','ssl'))) {
 			$path_host = (!$user ? '' : "$user@") . $host . (($port != 80) ? ":$port" : '');
 			$connect = 'CONNECT ' . $path_host . " $vers\r\n"
 				. "Host: $path_host\r\n"

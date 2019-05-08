@@ -241,7 +241,6 @@ class IterDecorator extends FilterIterator {
 		// {par #ENV{X}} avec X absent de l'URL
 		// IN sur collection vide (ce dernier devrait pouvoir etre fait a la compil)
 		if ($where = &$this->command['where']) {
-			$menage = false;
 			foreach ($where as $k => $v) {
 				if (is_array($v)) {
 					if ((count($v) >= 2) && ($v[0] == 'REGEXP') && ($v[2] == "'.*'")) {
@@ -256,7 +255,6 @@ class IterDecorator extends FilterIterator {
 				}
 				if ((!$op) or ($op == 1) or ($op == '0=0')) {
 					unset($where[$k]);
-					$menage = true;
 				}
 				// traiter {cle IN a,b} ou {valeur !IN a,b}
 				// prendre en compte le cas particulier de sous-requetes
@@ -271,7 +269,7 @@ class IterDecorator extends FilterIterator {
 				if (preg_match(',^\(\(([\w/]+)(\s+NOT)?\s+IN\s+(\(.*\))\)(?:\s+(AND|OR)\s+\(([\w/]+)(\s+NOT)?\s+IN\s+(\(.*\))\))*\)$,',
 					$op, $regs)) {
 					$this->ajouter_filtre($regs[1], 'IN', strlen($req) ? $req : $regs[3], $regs[2]);
-					unset($op);
+					unset($op, $where[$k]);
 				}
 			}
 			foreach ($where as $k => $v) {
@@ -302,7 +300,10 @@ class IterDecorator extends FilterIterator {
 
 		// Creer la fonction de filtrage sur $this
 		if ($this->filtre) {
-			$this->func_filtre = create_function('$me', $b = 'return (' . join(') AND (', $this->filtre) . ');');
+			$filtres = 'return (' . join(') AND (', $this->filtre) . ');';
+			$this->func_filtre = function () use ($filtres) {
+				return eval($filtres);
+			};
 		}
 	}
 
@@ -322,7 +323,7 @@ class IterDecorator extends FilterIterator {
 		# if (!in_array($cle, array('cle', 'valeur')))
 		#	return;
 
-		$a = '$me->get_select(\'' . $cle . '\')';
+		$a = '$this->get_select(\'' . $cle . '\')';
 
 		$filtre = '';
 
@@ -568,7 +569,7 @@ class IterDecorator extends FilterIterator {
 	 **/
 	public function accept() {
 		if ($f = $this->func_filtre) {
-			return $f($this);
+			return $f();
 		}
 
 		return true;

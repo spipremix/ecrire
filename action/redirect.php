@@ -96,6 +96,7 @@ function action_redirect_dist() {
  * @param string $type
  * @param int $id
  * @param string $var_mode
+ * @return string|null
  */
 function calculer_url_redirect_entite($type, $id, $var_mode) {
 	// invalider le cache à chaque modif en bdd

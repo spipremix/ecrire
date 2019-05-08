@@ -271,9 +271,11 @@ function cvtmulti_formulaire_verifier_etapes($args, $erreurs) {
 			$erreurs = isset($erreurs_etapes[$etape]) ? $erreurs_etapes[$etape] : array();
 			// Ne pas se tromper dans le texte du message d'erreur : la clé '_etapes' n'est pas une erreur !
 			if ($erreurs) {
-				$erreurs['message_erreur'] = singulier_ou_pluriel(count($erreurs), 'avis_1_erreur_saisie', 'avis_nb_erreurs_saisie');
+				if (empty($erreurs['message_erreur'])) {
+					$erreurs['message_erreur'] = singulier_ou_pluriel(count($erreurs), 'avis_1_erreur_saisie', 'avis_nb_erreurs_saisie');
+				}
 			} else {
-				$erreurs['message_erreur'] = "";
+				$erreurs['message_erreur'] = '';
 			}
 			$erreurs['_etapes'] = "etape suivante $etape";
 			set_request('_etape', $etape);

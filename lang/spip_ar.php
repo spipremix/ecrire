@@ -687,6 +687,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'trad_definir_reference' => 'اختيار "@titre@" كمرجع للترجمات',
 	'trad_reference' => '(مرجع الترجمات)',
 
+	// U
+	'upload_limit' => 'حجم هذا الملف أكبر مما يتحمل جهاز الخدمة: الحجم الأقصى المسموح به <b>للتنزيل</b> هو @max@.',
+
 	// Z
 	'zbug_balise_b_aval' => ': العلامة B متأخرة',
 	'zbug_balise_inexistante' => 'خطأ في الاعلان عن العلامة @balise@ لـ@from@',

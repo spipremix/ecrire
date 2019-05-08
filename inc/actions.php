@@ -136,17 +136,11 @@ function ajax_retour($corps, $content_type = null) {
 	) {
 		$e = erreur_squelette();
 	}
-	if (isset($GLOBALS['transformer_xml']) or (isset($GLOBALS['exec']) and $GLOBALS['exec'] == 'valider_xml')) {
-		$debut = _DOCTYPE_ECRIRE
-			. '<html><head><title>Debug Spip Ajax</title></head>'
-			. "<body><div>\n\n"
-			. "<!-- %%%%%%%%%%%%%%%%%%% Ajax %%%%%%%%%%%%%%%%%%% -->\n";
-		$fin = '</div></body></html>';
-	} else {
-		$c = $GLOBALS['meta']['charset'];
-		header('Content-Type: ' . $content_type . '; charset=' . $c);
-		$debut = (($xml and strlen(trim($corps))) ? '<' . "?xml version='1.0' encoding='" . $c . "'?" . ">\n" : '');
-		$fin = '';
-	}
+
+	$c = $GLOBALS['meta']['charset'];
+	header('Content-Type: ' . $content_type . '; charset=' . $c);
+	$debut = (($xml and strlen(trim($corps))) ? '<' . "?xml version='1.0' encoding='" . $c . "'?" . ">\n" : '');
+	$fin = '';
+
 	echo $debut, $corps, $fin, $e;
 }

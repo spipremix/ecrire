@@ -10,25 +10,30 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'accueil_site' => 'ホーム', # MODIF
+	'accueil_site' => 'ホーム',
+	'article' => '記事',
 	'articles' => '記事',
-	'articles_auteur' => 'この記事の著者',
-	'articles_populaires' => '最も読まれている記事',
-	'articles_rubrique' => 'このセクションの記事',
+	'articles_auteur' => 'この著者の記事',
+	'articles_populaires' => '人気のある記事',
+	'articles_rubrique' => 'このセクションにある記事',
 	'aucun_article' => 'このアドレスに記事はありません',
 	'aucun_auteur' => 'このアドレスに著者はいません',
 	'aucun_site' => 'このアドレスにサイトはありません',
 	'aucune_breve' => 'このアドレスにニュースはありません',
 	'aucune_rubrique' => 'このアドレスにセクションはありません',
+	'auteur' => '著者',
+	'autres' => 'その他',
 	'autres_breves' => '他のニュース',
 	'autres_groupes_mots_clefs' => 'キーワードの他のグループ',
 	'autres_sites' => '他のサイト',
 
 	// B
-	'bonjour' => 'おはようございます',
+	'bonjour' => 'こんにちは',
 
 	// C
 	'commenter_site' => 'このサイトについてコメントして下さい',
+	'contact' => '連絡先',
+	'copie_document_impossible' => 'ファイルのコーピは不可能です',
 
 	// D
 	'date' => '日付',
@@ -39,49 +44,56 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'derniers_messages_forum' => 'フォーラムで投稿された最新のメッセージ',
 
 	// E
-	'edition_mode_texte' => 'テキストモードonly',
-	'en_reponse' => 'Replying to:',
-	'en_resume' => 'まとめ',
+	'edition_mode_texte' => 'テキストモード編集',
+	'en_reponse' => '返事として：',
+	'en_resume' => 'まとめとして',
 	'envoyer_message' => 'メッセージを送る',
-	'espace_prive' => 'プライベートエリア',
+	'espace_prive' => '管理エリア',
+
+	// F
+	'formats_acceptes' => '受け入れるファイルのフォーマット: @formats@です。',
 
 	// H
 	'hierarchie_site' => 'サイトの階層',
 
 	// J
-	'jours' => '日付け',
+	'jours' => '日付',
+
+	// L
+	'lien_connecter' => 'ログイン',
 
 	// M
-	'meme_auteur' => '同じ著者によって',
+	'meme_auteur' => '同じ著者',
 	'meme_rubrique' => '同じセクションの中で',
-	'memes_auteurs' => '同じ著者によって',
-	'message' => 'メッセージ',
-	'messages_forum' => 'フォーラムメッセージ', # MODIF
-	'messages_recents' => '最も新しいフォーラムのメッセージ',
+	'memes_auteurs' => '同じ著者',
+	'message' => 'フォーラムのメッセージ',
+	'messages_forum' => 'フォーラムのメッセージ',
+	'messages_recents' => '最新のフォーラムのメッセージ',
+	'mots_clef' => 'キーワード',
 	'mots_clefs' => 'キーワード',
 	'mots_clefs_meme_groupe' => '同じグループのキーワード',
 
 	// N
 	'navigation' => 'ナビゲーション',
-	'nom' => '名前',
-	'nouveautes' => '新しいもの',
-	'nouveautes_web' => 'Webの中で新しいもの',
+	'nom' => 'お名前',
+	'nouveautes' => '最新刊',
+	'nouveautes_web' => 'ウェブに関する最新刊',
 	'nouveaux_articles' => '新しい記事',
 	'nouvelles_breves' => '新しいニュース',
 
 	// P
 	'page_precedente' => '前のページ',
 	'page_suivante' => '次のページ',
-	'par_auteur' => 'によって ',
-	'participer_site' => 'あなたはこのウェブサイトで活動することによって、登録後、あなたの記事を書くことが出来ます。それからあなたはすぐに、サイトのプライベートエリアへのアクセスコードを、emailによって得られるでしょう。',
+	'par_auteur' => '著者：',
+	'participer_site' => 'サインアップすると、サイトにご自分の記事を書くことが出来ます。申し込みしてから、管理エリアへのアクセスコードがメールで届きます。',
 	'plan_site' => 'サイトマップ',
-	'popularite' => 'ポピュラー',
-	'poster_message' => 'メッセージを投稿',
-	'proposer_site' => 'あなたはこのセクションに追加するサイトを提案することが出来ます:',
+	'popularite' => '人気',
+	'poster_message' => 'メッセージを投稿する',
+	'proposer_site' => '追加するサイトを提案できるセクション：',
 
 	// R
-	'repondre_article' => 'この記事に返信',
-	'repondre_breve' => 'このニュースに返信',
+	'repondre_article' => 'この記事に返信する',
+	'repondre_breve' => 'このニュースに返信する',
 	'resultats_recherche' => '検索結果',
 	'retour_debut_forums' => 'フォーラムの最初のページに戻る',
 	'rubrique' => 'セクション',
@@ -89,20 +101,21 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// S
 	'signatures_petition' => '署名',
-	'site_realise_avec_spip' => 'SPIPによってサイトは作られました',
+	'site_realise_avec_spip' => 'SPIPで創造されたサイトです',
 	'sites_web' => 'ウェブサイト',
 	'sous_rubriques' => 'サブセクション',
-	'suite' => '次の',
+	'spam' => '迷惑メール',
+	'suite' => '次へ',
 	'sur_web' => 'ウェブ上',
 	'syndiquer_rubrique' => 'このセクションを供給する',
-	'syndiquer_site' => 'サイト全体を供給する',
+	'syndiquer_site' => '全サイトを供給する',
 
 	// T
-	'texte_lettre_information' => 'サイトのニュースレターはここ',
-	'texte_lettre_information_2' => 'この手紙は、以来公表された記事とニュースをまとめてあります。', # MODIF
+	'texte_lettre_information' => 'サイトのニュースレター',
+	'texte_lettre_information_2' => '最新刊をまとめるニュースレター',
 
 	// V
-	'ver_imprimer' => 'バージョン表記',
-	'voir_en_ligne' => 'オンラインを見る',
-	'voir_squelette' => '???????????????' # MODIF
+	'ver_imprimer' => '印刷用のバージョン',
+	'voir_en_ligne' => 'オンラインで見る',
+	'voir_squelette' => 'ページのテンプレートを見る'
 );

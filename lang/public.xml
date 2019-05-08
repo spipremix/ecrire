@@ -66,6 +66,7 @@
 	</langue>
 	<langue code="fa" url="https://trad.spip.net/tradlang_module/public?lang_cible=fa" total="78" traduits="78" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="Davood Hossein" lien="https://trad.spip.net/auteur/davood-hossein" />
+		<traducteur nom="kamran" lien="https://trad.spip.net/auteur/kamran-7033" />
 	</langue>
 	<langue code="fi" url="https://trad.spip.net/tradlang_module/public?lang_cible=fi" total="78" traduits="64" relire="0" modifs="4" nouveaux="10" pourcent="82.05">
 	</langue>
@@ -85,7 +86,7 @@
 	<langue code="gl" url="https://trad.spip.net/tradlang_module/public?lang_cible=gl" total="78" traduits="74" relire="0" modifs="3" nouveaux="1" pourcent="94.87">
 	</langue>
 	<langue code="hac" url="https://trad.spip.net/tradlang_module/public?lang_cible=hac" total="78" traduits="78" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
-		<traducteur nom="akomarani" lien="https://trad.spip.net/auteur/akomarani" />
+		<traducteur nom="Aku Marani" lien="https://trad.spip.net/auteur/akomarani" />
 	</langue>
 	<langue code="he" url="https://trad.spip.net/tradlang_module/public?lang_cible=he" total="78" traduits="71" relire="0" modifs="3" nouveaux="4" pourcent="91.03">
 	</langue>
@@ -104,11 +105,13 @@
 	<langue code="iu" url="https://trad.spip.net/tradlang_module/public?lang_cible=iu" total="78" traduits="38" relire="23" modifs="3" nouveaux="14" pourcent="48.72">
 		<traducteur nom="kent1" lien="https://trad.spip.net/auteur/kent1" />
 	</langue>
-	<langue code="ja" url="https://trad.spip.net/tradlang_module/public?lang_cible=ja" total="78" traduits="65" relire="0" modifs="4" nouveaux="9" pourcent="83.33">
+	<langue code="ja" url="https://trad.spip.net/tradlang_module/public?lang_cible=ja" total="78" traduits="78" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="origenius" lien="https://trad.spip.net/auteur/origenius" />
 	</langue>
 	<langue code="km" url="https://trad.spip.net/tradlang_module/public?lang_cible=km" total="78" traduits="71" relire="0" modifs="3" nouveaux="4" pourcent="91.03">
 	</langue>
-	<langue code="la" url="https://trad.spip.net/tradlang_module/public?lang_cible=la" total="78" traduits="66" relire="0" modifs="3" nouveaux="9" pourcent="84.62">
+	<langue code="la" url="https://trad.spip.net/tradlang_module/public?lang_cible=la" total="78" traduits="78" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="Robert Sebille" lien="https://trad.spip.net/auteur/zenjo" />
 	</langue>
 	<langue code="lb" url="https://trad.spip.net/tradlang_module/public?lang_cible=lb" total="78" traduits="78" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="Jim Wanderscheid" lien="https://trad.spip.net/auteur/jwander" />

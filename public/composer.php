@@ -77,6 +77,7 @@ function public_composer_dist($squelette, $mime_type, $gram, $source, $connect =
 	}
 
 	// charger le source, si possible, et compiler 
+	$skel_code = '';
 	if (lire_fichier($source, $skel)) {
 		$compiler = charger_fonction('compiler', 'public');
 		$skel_code = $compiler($skel, $nom, $gram, $source, $connect);
@@ -954,7 +955,8 @@ function calculer_select(
 		// penser a regarder aussi la clause groubpy pour ne pas simplifier abusivement
 		// <BOUCLE10(EVENEMENTS){id_rubrique} />#TOTAL_BOUCLE<//B10>
 
-		list($t, $c) = each($from);
+		$t = key($from);
+		$c = current($from);
 		reset($from);
 		$e = '/\b(' . "$t\\." . join("|" . $t . '\.', $equiv) . ')\b/';
 		if (!(strpos($t, ' ') or // jointure des le depart cf boucle_doc
@@ -966,8 +968,8 @@ function calculer_select(
 				calculer_jointnul($t, $having, $e))
 			&& count($afrom[$t])
 		) {
-			reset($afrom[$t]);
-			list($nt, $nfrom) = each($afrom[$t]);
+			$nfrom = reset($afrom[$t]);
+			$nt = key($afrom[$t]);
 			unset($from[$t]);
 			$from[$nt] = $nfrom[1];
 			unset($afrom[$t][$nt]);

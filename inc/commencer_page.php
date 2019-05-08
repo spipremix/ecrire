@@ -176,7 +176,11 @@ function init_body_class() {
 		3 => 'icones_img'
 	);
 
-	return $GLOBALS['spip_ecran'] . " $spip_display_navigation $spip_display_outils " . $display_class[$GLOBALS['spip_display']];
+	$couleur = isset($GLOBALS['visiteur_session']['prefs']['couleur'])
+		? $GLOBALS['visiteur_session']['prefs']['couleur']
+		: 9;
+
+	return $GLOBALS['spip_ecran'] . " couleur_$couleur $spip_display_navigation $spip_display_outils " . $display_class[$GLOBALS['spip_display']];
 }
 
 

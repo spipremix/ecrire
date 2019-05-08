@@ -10,28 +10,28 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'activer_plugin' => 'Włącz rozszerzenie',
+	'activer_plugin' => 'Aktywuj wtyczkę',
 	'affichage' => 'Wyświetlanie',
 	'aide_non_disponible' => 'Ta część pomocy on-line nie jest jeszcze dostępna w tym języku.',
 	'annuler_recherche' => 'Anuluj wyszukiwanie',
-	'auteur' => 'Autor :',
+	'auteur' => 'Autor:',
 	'avis_acces_interdit' => 'Dostęp zabroniony.',
 	'avis_article_modifie' => 'Uwaga, @nom_auteur_modif@ pracował nad tym artykułem @date_diff@ minut temu.',
 	'avis_aucun_resultat' => 'Brak wyników szukania.',
-	'avis_base_inaccessible' => 'Połączenie z baza danych jest niemożliwe @base@.',
+	'avis_base_inaccessible' => 'Połączenie z bazą danych @base@ jest niemożliwe.',
 	'avis_chemin_invalide_1' => 'Ścieżka, którą wybrałeś',
 	'avis_chemin_invalide_2' => 'wydaje się nieprawidłowa. Proszę powrócić na poprzednią stronę w celu weryfikacji informacji.',
-	'avis_connexion_echec_1' => 'Połączenie z serwerem SQL nie powiodło się.', # MODIF
+	'avis_connexion_echec_1' => 'Połączenie z bazą danych nie powiodło się.',
 	'avis_connexion_echec_2' => 'Powróć do poprzedniej strony i zweryfikuj podane informacje.',
-	'avis_connexion_echec_3' => '<b>Uwaga</b> W przypadku wielu serwerów musisz <b>poprosić</b> o uaktywnienie dostępu do bazy danych, aby móc z niej korzystać. Jeśli nie możesz się połączyć, upewnij się, czy poprosiłeś o dostęp.', # MODIF
+	'avis_connexion_echec_3' => '<b>Uwaga</b> W przypadku wielu serwerów musisz <b>poprosić</b> o uaktywnienie dostępu do bazy danych, aby móc z niej korzystać. Jeśli nie możesz się połączyć, upewnij się, czy poprosiłeś o dostęp.',
 	'avis_connexion_erreur_nom_base' => 'Nazwa bazy danych powinno zawierać tylko litery, cyfry i łączniki.',
 	'avis_connexion_ldap_echec_1' => 'Połączenie z LDAP nie powiodło się.',
 	'avis_connexion_ldap_echec_2' => 'Powróć do poprzedniej strony i zweryfikuj podane informacje.',
 	'avis_connexion_ldap_echec_3' => 'Nie używaj wsparcia LDAP do importu użytkowników.',
 	'avis_deplacement_rubrique' => 'Uwaga! Ten dział zawiera @contient_breves@ news@scb@: jeśli chcesz go przenieść, proszę zaznacz to okienko.',
-	'avis_erreur_connexion_mysql' => 'Błąd połączenia z SQL', # MODIF
+	'avis_erreur_connexion_mysql' => 'Błąd połączenia z SQL',
 	'avis_espace_interdit' => '<b>Dostęp zabroniony</b> <div>SPIP jest już zainstalowany.</div>',
-	'avis_lecture_noms_bases_1' => 'Program instalacyjny nie może odczytać nazw instalowanych baz danych.',
+	'avis_lecture_noms_bases_1' => 'Program instalacyjny nie może odczytać nazw dotychczas zainstalowanych baz danych.',
 	'avis_lecture_noms_bases_2' => 'Żadna baza danych nie jest dostępna, lub funkcja listingu baz danych nie działa
    ze względów bezpieczeństwa(co jest częstym przypadkiem wielu hostów).',
 	'avis_lecture_noms_bases_3' => 'W drugim przypadku, do użytku może nadawać się baza danych nazwana Twoim loginem :',
@@ -44,6 +44,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_acces_ldap' => 'Dodaj dostęp do LDAP',
 	'bouton_ajouter' => 'Dodaj',
 	'bouton_annuler' => 'Anuluj',
+	'bouton_cache_activer' => 'Ponownie uaktywnić pamięć podręczną', # RELIRE
+	'bouton_cache_desactiver' => 'Tymczasowo wyłączyć pamięć podręczną', # RELIRE
 	'bouton_demande_publication' => 'Prośba o publikację artykułu',
 	'bouton_desactive_tout' => 'Wyłącz wszystko',
 	'bouton_desinstaller' => 'Odinstaluj',
@@ -59,7 +61,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_radio_non_apparaitre_liste_redacteurs_connectes' => 'Nie pokazuj w liście redaktorów',
 	'bouton_radio_non_envoi_annonces_editoriales' => 'Nie wysyłaj żadnych zawiadomień redakcyjnych',
 	'bouton_redirection' => 'PRZEKIERUJ',
+	'bouton_reinitialiser_aux_valeurs_par_defaut' => 'Zresetuj do wartości domyślnych.', # RELIRE
 	'bouton_relancer_installation' => 'Uruchom ponownie instalację',
+	'bouton_reset_password' => 'Wygeneruj nowe hasło i wyślij je e-mailem', # RELIRE
 	'bouton_suivant' => 'Następny',
 	'bouton_tenter_recuperation' => 'Próba naprawy',
 	'bouton_test_proxy' => 'Test proxy',
@@ -79,7 +83,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'config_info_logos_utiliser_non' => 'Nie używaj logo',
 	'config_info_logos_utiliser_survol' => 'Używaj logo roll-over',
 	'config_info_logos_utiliser_survol_non' => 'Nie używaj logo roll-over',
-	'config_info_redirection' => 'Włączając tą opcję, możesz tworzyć artykuły wirtualne, odnoszące się do artykułów opublikowanych na innych stronach niż Twoja.',
+	'config_info_redirection' => 'Włączając tę opcję, możesz tworzyć artykuły wirtualne, odnoszące się do artykułów opublikowanych na innych stronach (z lub bez SPIPa).',
 	'config_redirection' => 'Wirtualne artykuły',
 	'config_titre_base_sup' => 'Deklaracja dodatkowej bazy danych',
 	'config_titre_base_sup_choix' => 'Wybierz dodatkową bazę danych',
@@ -90,7 +94,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'date_mot_heures' => 'godz.',
 
 	// E
-	'ecran_securite' => '+ ekran bezpiczęstwa @version@',
+	'ecran_securite' => '+ ekran bezpieczeństwa @version@',
 	'email' => 'e-mail',
 	'email_2' => 'e-mail:',
 	'en_savoir_plus' => 'Aby dowiedzieć się więcej',
@@ -132,6 +136,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'entree_url_2' => 'Strona URL',
 	'erreur_connect_deja_existant' => 'Serwer o tej nazwie już istnieje.',
 	'erreur_nom_connect_incorrect' => 'Nazwa serwera nie jest dozwolona',
+	'erreur_plugin_attribut_balise_manquant' => 'Brakujący atrybut @attribut@ w tagu @balise@.', # RELIRE
 	'erreur_plugin_desinstalation_echouee' => 'Dezinstalacja wtyczki się nie powiodła . Jednakże, możesz ją wyłączyć.',
 	'erreur_plugin_fichier_absent' => 'Brak pliku',
 	'erreur_plugin_fichier_def_absent' => 'Brak pliku definicji',
@@ -142,20 +147,21 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_plugin_version_manquant' => 'Brakuje wersji rozszerzenia',
 
 	// H
-	'htaccess_inoperant' => 'htaccess nieczyny',
+	'htaccess_a_simuler' => 'Ostrzeżenie: Konfiguracja serwera HTTP nie obejmuje plików @ htaccess @. Aby zapewnić dobre bezpieczeństwo, musisz zmodyfikować tę konfigurację lub sprawdzić, czy @ constants @ (w pliku mes_options.php) mają wartość katalogu poza @ document_root @.', # RELIRE
+	'htaccess_inoperant' => 'htaccess nieczynny',
 
 	// I
 	'ical_info1' => 'Na tej stronie prezentujemy różne metody pozostanie w kontakcie z działalnością serwisu.',
-	'ical_info2' => 'Aby przeczytać więcej na ten temat, idź na stronę<a href="@spipnet@">la documentation de SPIP</a>.', # MODIF
+	'ical_info2' => 'Aby przeczytać więcej na ten temat, idź na stronę <a href="@spipnet@">dokumentacja SPIPa</a>.',
 	'ical_info_calendrier' => 'Do Twojej dyspozycji są dwa kalendarze. Jeden pokazuje mapę strony wraz ze wszystkimi opublikowanymi artykułami. Drugi zawiera ogłoszenia redakcyjne oraz Twoje ostatni wiadomości prywatne : tylko Ty masz do niego dostęp za hasłem.',
 	'ical_methode_http' => 'Ściągnij',
-	'ical_methode_webcal' => 'Synchronizacja (webcal://)', # MODIF
+	'ical_methode_webcal' => 'Synchronizacja (webcal://)',
 	'ical_texte_js' => 'Jedna linia javascript pozwala w bardzo prosty sposób, w każdym należącym do Ciebie serwisie pokazać ostatnio opublikowane w tym serwisie artykuły.',
 	'ical_texte_prive' => 'Ten kalendarz, wyłącznie do użytku osobistego, informuje Cię o działalności redakcyjnej w strefie prywatnej (zadania, spotkania, proponowane artykuły i newsy).',
 	'ical_texte_public' => 'Ten kalendarz pozawala śledzić aktywność redakcyjną serwisu (opublikowane artykuły i newsy).',
 	'ical_texte_rss' => 'Możesz syndykować nowości z tego serwisu w jakimkolwiek czytniku plików formatu XML/RSS (Rich Site Summary). Ten format pozwala SPIP odczytywać nowości opublikowane w innych serwisach (serwisach syndykowanych).',
 	'ical_titre_js' => 'Javascript',
-	'ical_titre_mailing' => 'Lista Mailowa',
+	'ical_titre_mailing' => 'Lista mailingowa',
 	'ical_titre_rss' => 'Pliki syndykacji',
 	'icone_accueil' => 'Strona główna',
 	'icone_activer_cookie' => 'Aktywuj cookies korespondencji',
@@ -170,33 +176,39 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'icone_creer_auteur' => 'Stwórz nowego autora i przypisz go do tego artykułu',
 	'icone_creer_mot_cle' => 'Stwórz nowe słowo kluczowe i skojarz je z tym artykułem',
 	'icone_creer_rubrique_2' => 'Utwórz nowy dział',
+	'icone_developpement' => 'Tworzenie', # RELIRE
 	'icone_edition' => 'Edytuj',
 	'icone_ma_langue' => 'Mój język',
 	'icone_mes_infos' => 'Moje dane',
 	'icone_mes_preferences' => 'Preferencje',
 	'icone_modifier_article' => 'Zmień ten artykuł',
 	'icone_modifier_rubrique' => 'Zmień ten dział',
-	'icone_publication' => 'Publikować',
+	'icone_publication' => 'Publikowanie',
 	'icone_relancer_signataire' => 'Skontaktuj się ponownie z sygnotariuszem',
 	'icone_retour' => 'Powrót',
 	'icone_retour_article' => 'Powrót do artykułu',
 	'icone_squelette' => 'Szablony',
 	'icone_suivi_publication' => 'śledzenie publikacji',
-	'icone_supprimer_cookie' => 'Usuń cookies korespondencji',
+	'icone_supprimer_cookie' => 'Usuń cookies sesji',
 	'icone_supprimer_rubrique' => 'Usuń ten dział',
 	'icone_supprimer_signature' => 'Usuń ten podpis',
 	'icone_valider_signature' => 'Zatwierdź ten podpis',
 	'image_administrer_rubrique' => 'Możesz zarządzać tym działem',
+	'impossible_modifier_login_auteur' => 'Login nie może zostać zmieniony.', # MODIF
+	'impossible_modifier_pass_auteur' => 'Hasło nie może zostać zmienione.', # MODIF
 	'info_1_article' => '1 artykuł',
-	'info_1_auteur' => '! autor',
+	'info_1_auteur' => '1 autor',
 	'info_1_message' => '1 wiadomość',
+	'info_1_mot_cle' => '1 słowo kluczowe',
 	'info_1_rubrique' => '1 sekcja',
 	'info_1_visiteur' => '1 gość',
 	'info_activer_cookie' => 'Możesz uaktywnić <b>cookies korespondecji</b>, co ci
  pozwoli przechodzić łatwo pomiędzy stroną publiczną a prywatną.',
+	'info_activer_menu_developpement' => 'Pokaż menu Rozwój', # RELIRE
 	'info_admin_etre_webmestre' => 'Daj mi prawa administratora sieci',
-	'info_admin_statuer_webmestre' => 'Daj webmasterowi prawo do tego administratora.',
-	'info_admin_webmestre' => 'Ten administrator jest <b>webmestre</b>',
+	'info_admin_je_suis_webmestre' => 'Jestem <b>webmasterem</b>',
+	'info_admin_statuer_webmestre' => 'Daj użytkownikowi prawa webmastera.',
+	'info_admin_webmestre' => 'Ten administrator jest <b>webmesterem</b>',
 	'info_administrateur' => 'Administrator',
 	'info_administrateur_1' => 'Administrator',
 	'info_administrateur_2' => 'strony (<i>korzystaj uważnie</i>)',
@@ -205,6 +217,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_administrateurs' => 'Administratorzy',
 	'info_administrer_rubrique' => 'Możesz zarządzać tym działem',
 	'info_adresse' => 'na adres:',
+	'info_adresse_desinscription' => 'Adres rezygnacji z subskrypcji :', # RELIRE
 	'info_adresse_url' => 'URL Twojej publicznej strony',
 	'info_afficher_par_nb' => 'pokaż',
 	'info_aide_en_ligne' => 'SPIP Pomoc Online',
@@ -216,7 +229,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_annonce_nouveautes' => 'Zapowiedzi najnowszych newsów',
 	'info_article' => 'artykuł',
 	'info_article_2' => 'artykuły',
-	'info_article_a_paraitre' => 'Artykuły przeterminowane do opublikowania',
+	'info_article_a_paraitre' => 'Artykuły ustawione do publikacji',
 	'info_articles_02' => 'artykuły',
 	'info_articles_2' => 'Artykuły',
 	'info_articles_auteur' => 'Artykuły tego autora',
@@ -229,6 +242,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_message' => 'Brak wiadomości',
 	'info_aucun_rubrique' => 'Brak działu',
 	'info_aujourdhui' => 'dziś:',
+	'info_auteur_gere_rubriques' => 'Ten autor zarządza następującymi sekcjami:',
+	'info_auteur_gere_toutes_rubriques_2' => 'Zarządzam <b>wszystkimi sekcjami</b>', # RELIRE
 	'info_auteurs' => 'Autorzy',
 	'info_auteurs_par_tri' => 'Autorzy@partri@',
 	'info_auteurs_trouves' => 'Autorzy znalezieni',
@@ -237,6 +252,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_barre_outils' => 'z jego paska narzędzi?',
 	'info_base_installee' => 'Struktura Twojej bazy danych została zainstalowana.',
 	'info_bio' => 'Biografia',
+	'info_cache_desactive' => 'Pamięć podręczna jest tymczasowo wyłączona.',
 	'info_chapeau' => 'Wstęp',
 	'info_chapeau_2' => 'Wstęp:',
 	'info_chemin_acces_1' => 'Opcje: <b>Ścieżka dostępu do katalogu</b>',
@@ -256,13 +272,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_conflit_edition_votre_version' => 'Twoja wersja:',
 	'info_connexion_base' => 'Próba połączenia z bazą danych',
 	'info_connexion_base_donnee' => 'Połączenie z bazą danych',
-	'info_connexion_ldap_ok' => '<b>Połączenie LDAP powiodło się.<b><p> Idź do następnego etapu.</p>', # MODIF
-	'info_connexion_mysql' => 'Połączenie z bazą SQL', # MODIF
+	'info_connexion_ldap_ok' => '<b>Połączenie LDAP powiodło się.<b><p> Idź do następnego etapu.</p>',
+	'info_connexion_mysql' => 'Połączenie z bazą SQL',
 	'info_connexion_ok' => 'Połączenie powiodło się.',
 	'info_contact' => 'Kontakt',
 	'info_contenu_articles' => 'Tematyka artykułów',
-	'info_contributions' => 'Składki',
-	'info_creation_paragraphe' => '(By utworzyć akapity, po prostu zostaw puste linijki.)', # MODIF
+	'info_contributions' => 'Wkład',
+	'info_creation_paragraphe' => 'By utworzyć akapity, po prostu zostaw puste linijki.',
 	'info_creation_rubrique' => 'Aby móc pisać artykuły,<br /> musisz utworzyć przynajmniej jeden dział.<br />',
 	'info_creation_tables' => 'Tworzenie tablic bazy danych',
 	'info_creer_base' => '<b>Utwórz</b> nową bazę danych :',
@@ -276,7 +292,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_ecrire_article' => 'Aby móc pisać artykuły, musisz utworzyć przynajmniej jeden dział.',
 	'info_email_envoi' => 'Adres e-mail nadawcy (nieobowiązkowo)',
 	'info_email_envoi_txt' => 'Wpisz adres e-maila, który będzie używany do wywyłania wiadomości (domyślnie adres odbiorcy będzie jednocześnie adresem wysyłkowym) :',
-	'info_email_webmestre' => 'Adres e-mail webmastera (nieobowiązkowo)', # MODIF
+	'info_email_webmestre' => 'Adres e-mail webmastera',
 	'info_envoi_email_automatique' => 'Automatyczna wysyłka maili',
 	'info_envoyer_maintenant' => 'Wyślij teraz',
 	'info_etape_suivante' => 'Przejdź do następnego kroku',
@@ -289,29 +305,31 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
    na listę mailingową redaktorów, informację-zapytanie
   o sprawdzenie i publikację artykułów.',
 	'info_fichiers_authent' => 'Plik uwierzytelniający « .htpasswd »',
-	'info_forums_abo_invites' => 'Twoja strona zawiera formu dostępne po zalogowaniu, zatem odwiedzający powinni się zarejestrować na stronie publicznej.',
-	'info_gauche_admin_tech' => '<b>Ta strona jest dostępna jedynie dla jej właścicieli.</b><p> Daje dostęp do fukcji typowo technicznych. Niektóre spośród nich wymagają specjalnego uwierzytelnienia
-, które można uzyskać jedynie poprzez FTP.', # MODIF
-	'info_gauche_admin_vider' => '<b>Ta strona jest dostępna jedynie dla głównych administratorów.</b><p> Daje dostęp do funkcji typowo technicznych. Niektóre spośród nich wymagają specjalnego uwierzytelnienia
-, które można uzyskać jedynie poprzez FTP.', # MODIF
+	'info_forums_abo_invites' => 'Twoja strona zawiera formularze dostępne po zalogowaniu, zatem odwiedzający powinni się zarejestrować na stronie publicznej.',
+	'info_gauche_admin_tech' => 'Ta strona jest dostępna tylko dla osób kierujących witryną.</b><p>
+Daje dostęp do różnych funkcje konserwacji technicznej. Niektóre spośród nich wymagają specjalnego uwierzytelnienia, które można uzyskać jedynie poprzez FTP.</p>',
+	'info_gauche_admin_vider' => '<b>Ta strona jest dostępna jedynie dla głównych administratorów.</b>
+<p> Daje dostęp do funkcji typowo technicznych. Niektóre spośród nich wymagają specjalnego uwierzytelnienia, które można uzyskać jedynie poprzez FTP.</p>',
 	'info_gauche_auteurs' => 'Znajdziesz tutaj informacje o wszystkich autorach serwisu.
  Ich kompetencje są zaznaczone kolorem ikony (redaktor = zielonym; administrator = żółtym).',
-	'info_gauche_auteurs_exterieurs' => 'Autorzy zewnętrzni, bez dostępu do strefy publicznej są zaznaczeni ikoną niebieską ;
-  autorzy skasowani.', # MODIF
+	'info_gauche_auteurs_exterieurs' => 'Autorzy zewnętrzni, bez dostępu do strefy publicznej, są zaznaczeni niebieską ikoną ;
+  autorzy skasowani szarą ikoną.',
 	'info_gauche_messagerie' => 'Poczta wewnętrzna pozwala Ci wymieniać wiadomości z innymi redaktorami, i zapisywać notki (prywatne) lub publikować ogłoszenia na stronie głównej strefy prywatnej (jeśli jesteś administratorem).',
 	'info_gauche_statistiques_referers' => 'Ta strona wyświetla listę <i>odnośników</i>, to znaczy stron które zawierają łącza prowadzące do Twojej strony, które ktoś użył wczoraj lub dzisiaj : lista jest zerowana co 24 godziny.',
 	'info_gauche_visiteurs_enregistres' => 'Znajdziesz tu gości zarejestrowanych
  w strefie publicznej strony (abonament forum).',
 	'info_generation_miniatures_images' => 'Generowanie miniaturek obrazków',
+	'info_gerer_trad_objets' => '@objets@ : zarządzać linkami do tłumaczenia', # RELIRE
 	'info_hebergeur_desactiver_envoi_email' => 'Niektóre serwisy hostingowe wyłączają możliwość automatycznego wywyłania
   emaili za pośrednictwem ich serwerów. W tym przypadku te funkcje
   SPIP nie będą działały.',
 	'info_hier' => 'wczoraj:',
 	'info_identification_publique' => 'Twoja nazwa publiczna',
 	'info_image_process' => 'Wybierz najlepsza metode przygotowania miniaturek kilkając na odpowiednim obrazku.',
-	'info_image_process2' => '<b>N.B.</b> <i>Jeśli nie wyświetlił się żaden obrazek, Twój serwer nie został skonfugurowany tak, aby skorzystać z tego narzędzia. Jeśli jednak chcesz skorzystać z tych funkcji, skontaktuj się z osobą odpowiedzialną za sprawy techniczne Twojego serwisu i poproś o włączenie rozszerzeń "GD" lub "Imagick".</i>', # MODIF
+	'info_image_process2' => 'Jeśli nie wyświetlił się żaden obrazek, to twój serwer nie został skonfugurowany tak, aby skorzystać z tego narzędzia. Jeśli jednak chcesz skorzystać z tych funkcji, skontaktuj się z osobą odpowiedzialną za sprawy techniczne twojego serwisu i poproś o włączenie rozszerzeń "GD" lub "Imagick".',
 	'info_images_auto' => 'Automatycznie obliczane rozmiary obrazka',
 	'info_informations_personnelles' => 'Informacje o użytkowniku',
+	'info_inscription' => 'Zarejestrowany dnia :', # RELIRE
 	'info_inscription_automatique' => 'Automatyczna rejestracja nowych redaktorów',
 	'info_jeu_caractere' => 'Kodowanie strony',
 	'info_jours' => 'dni',
@@ -330,7 +348,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_message_en_redaction' => 'Twoje wiadomości w trakcie tworzenia',
 	'info_message_technique' => 'Wiadomość techniczna:',
 	'info_messagerie_interne' => 'Poczta wewnętrzna',
-	'info_mise_a_niveau_base' => 'uaktualnianie bazy SQL', # MODIF
+	'info_mise_a_niveau_base' => 'uaktualnianie bazy SQL',
 	'info_mise_a_niveau_base_2' => '{{Uwaga !}} Zainstalowałeś taką wersję
   plików SPIP, które należą do wcześniejszej niż posiadana przez ciebie wersja:
   twoja baza danych może zostać zniszczona
@@ -345,15 +363,20 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_multi_cet_article' => 'Język tego artykułu:',
 	'info_multi_langues_choisies' => 'Wybierz języki do dyspozycji redaktorów twojej strony.
   Języki już używane na twojej stronie(wyświetlane na początku) nie mogą być wyłączone.',
+	'info_multi_objets' => '@objets@ : aktywować menu językowe', # RELIRE
 	'info_multi_secteurs' => ' ... tylko dla działów podstawowych ?',
 	'info_nb_articles' => '@nb@ artykuły',
 	'info_nb_auteurs' => '@nb@ autorzy',
+	'info_nb_messages' => '@nb@ wiadomości',
+	'info_nb_mots_cles' => '@nb@ słów kluczowych',
+	'info_nb_rubriques' => '@nb@ działow', # RELIRE
 	'info_nb_visiteurs' => '@nb@ goście',
 	'info_nom' => 'Nazwisko',
 	'info_nom_destinataire' => 'Nazwisko odbiorcy',
+	'info_nom_pas_conforme' => 'Tagi html nie są dozwolone',
 	'info_nom_site' => 'Nazwa Twojej strony',
 	'info_nombre_articles' => '@nb_articles@ artykułów,',
-	'info_nombre_rubriques' => '@nb_rubriques@ działu,',
+	'info_nombre_rubriques' => '@nb_rubriques@ dzialów,',
 	'info_nombre_sites' => '@nb_sites@ stron,',
 	'info_non_deplacer' => 'Nie zmieniać miejsca ...',
 	'info_non_envoi_annonce_dernieres_nouveautes' => 'SPIP może regularnie wysyłać ogłoszenia o najnowszych newsach.
@@ -363,9 +386,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_non_suppression_mot_cle' => 'Nie chcę usunąć tego słowa kluczowego.',
 	'info_notes' => 'Notatki',
 	'info_nouvel_article' => 'Nowy artykuł',
-	'info_nouvelle_traduction' => 'Nowy przekład :',
-	'info_numero_article' => 'ARTYKUŁ NUMER :',
-	'info_obligatoire_02' => '[Obowiązkowo]', # MODIF
+	'info_nouvelle_traduction' => 'Nowe tłumaczenie:',
+	'info_numero_article' => 'ARTYKUŁ NUMER:',
+	'info_obligatoire_02' => '(obowiązkowo)',
 	'info_option_accepter_visiteurs' => 'Zaakceptuj zapisy czytelników Twojej strony',
 	'info_option_ne_pas_accepter_visiteurs' => 'Wyłącz zapisy czytelników serwisu',
 	'info_options_avancees' => 'OPCJE ZAAWANSOWANE',
@@ -374,8 +397,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_par_nom' => 'wg nazw',
 	'info_par_nombre_article' => '(wg liczby artykułów)',
 	'info_par_statut' => 'wg statusu',
-	'info_par_tri' => '’(par @tri@)’',
+	'info_par_tri' => '’(według @tri@)’',
 	'info_passe_trop_court' => 'Za krótkie hasło.',
+	'info_passe_trop_court_car_pluriel' => 'Hasło musi zawierać co najmniej @nb@ znaków.', # RELIRE
 	'info_passes_identiques' => 'Hasła nie są identyczne.',
 	'info_plus_cinq_car' => 'więcej niż 5 znaków',
 	'info_plus_cinq_car_2' => '(Więcej niż 5 znaków)',
@@ -384,8 +408,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_post_scriptum' => 'Postscriptum',
 	'info_post_scriptum_2' => 'Postscriptum:',
 	'info_pour' => 'dla',
-	'info_preview_texte' => 'Istnieje możliwość włączania podglądu nieopublikowanych artykułów i newsów (muszą być "zaproponowane do oceny"). Czy chcesz, żeby ta funkcja była dostępna dla administratorów, redaktorów czy dla nikogo ? ', # MODIF
-	'info_procedez_par_etape' => 'etap za etapem',
+	'info_preview_texte' => 'Istnieje możliwość włączania podglądu nieopublikowanych artykułów i newsów (muszą być "zaproponowane do oceny"). Czy chcesz, żeby ta funkcja była dostępna dla administratorów, redaktorów czy dla nikogo? ',
+	'info_procedez_par_etape' => 'Postępuj krok po kroku',
 	'info_procedure_maj_version' => 'powinna zostać procedura uaktualniania w celu dostosowania
  bazy danych do nowej wersji SPIP.',
 	'info_proxy_ok' => 'Test proxy udany.',
@@ -393,16 +417,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_publier' => 'opublikuj',
 	'info_publies' => 'Twoje artykuły opublikowane online',
 	'info_question_accepter_visiteurs' => 'Jeśli szkielety Twojego serwisu przewidują dla odwiedzających zapisy bez dostępu do panelu administracyjnego, włącz poniższą opcję:',
-	'info_question_inscription_nouveaux_redacteurs' => 'Czy akceptujesz możliwość dodawania nowych redaktorów
-  za pośrednictwem stron publicznych ? Jeśli tak, odwiedzący będę mogli się zapisać
-  za pomocą zautomatyzowanego formularza i będą mieli dostęp do strefy prywatnej, gdzie
-  będą proponować własne artykuły. <blockquote><i>W trakcie procesu zapisywania,
-  użytkownik otrzyma automatycznie mailem
-  hasła dostępu do strefy prywatnej. Niektóre serwisy hostingowe
-  wyłączają możliwość wysyłania maili z ich
-  serwerów : w tym przypadku automatyczne zapisanie się jest
-  niemożliwe.', # MODIF
-	'info_racine_site' => 'Rdzeń strony',
+	'info_question_inscription_nouveaux_redacteurs' => 'Czy akceptujesz rejestracje nowych redaktorów za pośrednictwem strony publicznej? Jeśli tak, odwiedzający będą mogli się zapisać za pomocą zautomatyzowanego formularza i będą mieli dostęp do strefy prywatnej, gdzie będą proponować własne artykuły. <div class="notice">W trakcie procesu zapisywania,  użytkownik otrzyma automatycznie mailem  hasła dostępu do strefy prywatnej. Niektóre serwisy hostingowe wyłączają możliwość wysyłania maili z ich  serwerów : w tym przypadku automatyczne zapisanie się jest niemożliwe.</div>',
+	'info_qui_edite' => '@nom_auteur_modif@ pracował nad tą treścią @date_diff@ minut temu.',
+	'info_racine_site' => 'Katalog główny',
 	'info_recharger_page' => 'Proszę za chwilę ponownie załadować tę stronę.',
 	'info_recherche_auteur_zero' => '<b>Żadnych wyników dla " @cherche_auteur@ ".',
 	'info_recommencer' => 'Proszę spróbować ponownie.',
@@ -411,6 +428,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_redacteurs' => 'Redaktorzy',
 	'info_redaction_en_cours' => 'REDAKCJA W TOKU',
 	'info_redirection' => 'Przekierowanie',
+	'info_redirection_activee' => 'Przekierowanie jest aktywne.',
+	'info_redirection_boucle' => 'Próbujesz przekierować ten artykuł do samego siebie.',
+	'info_redirection_desactivee' => 'Przekierowanie zostało usunięte.',
 	'info_refuses' => 'Twoje odrzucone artykuły',
 	'info_reglage_ldap' => 'Opcje: <b>Regulacja importu LDAP</b>',
 	'info_renvoi_article' => '<b>Przekierowanie.</b> Ten artykuł odsyła do strony:',
@@ -427,14 +447,14 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_site_2' => 'strona:',
 	'info_site_min' => 'strona',
 	'info_site_reference_2' => 'Strona zlinkowana',
-	'info_site_web' => 'STRONA INTERNETOWA:', # MODIF
+	'info_site_web' => 'Strona internetowa:',
 	'info_sites' => 'strony',
 	'info_sites_lies_mot' => 'Zlinkowane strony związane z tymi słowami kluczowymi',
 	'info_sites_proxy' => 'Użyj proxy',
 	'info_sites_trouves' => 'Znalezione strony',
 	'info_sous_titre' => 'Podtytuł:',
 	'info_statut_administrateur' => 'Administrator',
-	'info_statut_auteur' => 'Status tego autora:', # MODIF
+	'info_statut_auteur' => 'Status tego autora:',
 	'info_statut_auteur_2' => 'Jestem',
 	'info_statut_auteur_a_confirmer' => 'Potwierdzenie subskrypcji',
 	'info_statut_auteur_autre' => 'Inny status :',
@@ -446,12 +466,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_syndication_integrale_1' => 'Twoja strona oferuje plik syndykacji « <a href="@url@">@titre@</a> »).',
 	'info_syndication_integrale_2' => 'Czy chcesz przesyłać całe artykuły czy wolisz dystrybuować podsumowanie ograniczone do kilkuset znaków ?',
 	'info_table_prefix' => 'Możesz użyć własnego prefixa nazw tablic w bazie danych (jest to niezbędne jeśli chcesz zainstalować więcej stron przy użyciu tej samej bazy danych). Prefix powinien być pisany bez akcentów, małymi literami i bez spacji.',
+	'info_taille_maximale_images' => 'SPIP przetestuje maksymalny rozmiar obrazów, które może przetwarzać (w milionach pikseli). <br /> Większe obrazy nie zostaną zmniejszone.', # RELIRE
 	'info_taille_maximale_vignette' => 'Maksymalny rozmiar minitaurek, generowanych przez system :',
 	'info_terminer_installation' => 'Możesz teraz zakończyć proces standardowej instalacji.',
 	'info_texte' => 'Tekst',
 	'info_texte_explicatif' => 'Tekst wyjaśniający',
 	'info_texte_long' => '(tekst jest za długi: pojawi się w kilku częściach, które zostaną złożone po zatwierdzeniu.)',
-	'info_texte_message' => 'Tekst Twojej wiadomości:', # MODIF
+	'info_texte_message' => 'Tekst Twojej wiadomości',
 	'info_texte_message_02' => 'Tekst wiadomości',
 	'info_titre' => 'Tytuł:',
 	'info_total' => 'ogółem:',
@@ -473,7 +494,10 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 	'info_une_rubrique' => 'dział,',
 	'info_une_rubrique_02' => '1 dział',
 	'info_url' => 'URL:',
-	'info_url_proxy' => 'Upoważnienie URL',
+	'info_url_proxy' => 'Adres URL serwera proxy',
+	'info_url_proxy_pas_conforme' => 'Adres URL serwera proxy jest nieprawidłowy.',
+	'info_url_site_pas_conforme' => 'Adres URL witryny jest nieprawidłowy.', # RELIRE
+	'info_url_test_proxy' => 'URL testowy', # RELIRE
 	'info_urlref' => 'Łącze hipertekstowe :',
 	'info_utilisation_spip' => 'SPIP jest już gotowy do użytku...',
 	'info_visites_par_mois' => 'Wizyt miesięcznie:',
@@ -481,27 +505,35 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 	'info_visiteur_2' => 'strony publicznej',
 	'info_visiteurs' => 'Odwiedzający',
 	'info_visiteurs_02' => 'Odwiedzający stronę publiczną',
+	'info_webmestre_forces' => 'Webmasterzy są obecnie zdefiniowani w <tt>@file_options@</tt>.', # RELIRE
 	'install_adresse_base_hebergeur' => 'Adres bazy danych przyznany przez usługodawcę hostingowego',
+	'install_connect_ok' => 'Nowa baza danych została zadeklarowana pod nazwą serwera @connect@.', # RELIRE
 	'install_echec_annonce' => 'Instalacja może się nie powieść lub może się zdażyć, że strona przestanie działać ...',
 	'install_extension_mbstring' => 'SPIP nie działa z:',
 	'install_extension_php_obligatoire' => 'SPIP wymaga rozszerzenia php:',
 	'install_login_base_hebergeur' => 'Login połączenia z bazą danych przyznany przez usługodawcę hostingowego',
 	'install_nom_base_hebergeur' => 'Nazwa bazy danych przyznana przez usługodawcę hostingowego:',
 	'install_pas_table' => 'Bazy danych nie ma tabel',
-	'install_pass_base_hebergeur' => 'Hasło do bazy danych przyznane przez uługodawcę hostingowego',
+	'install_pass_base_hebergeur' => 'Hasło do bazy danych przyznane przez usługodawcę hostingowego',
 	'install_php_version' => 'wersja PHP @version@ jest za niska (minimum = @minimum@)',
 	'install_select_langue' => 'Wybierz język i kliknij na przycisk "next" aby rozpocząć procedurę instalacji.',
 	'install_select_type_db' => 'Wskaż rodzaj bazy danych:',
+	'install_select_type_mysql' => 'MySQL',
+	'install_select_type_pg' => 'PostgreSQL',
+	'install_select_type_sqlite2' => 'SQLite 2',
+	'install_select_type_sqlite3' => 'SQLite 3',
 	'install_serveur_hebergeur' => 'Serwer bazy danych został przypisny przez dostawcę usług hostingowych.',
 	'install_table_prefix_hebergeur' => 'Prefix przyznany przez usługodawcę hostingowego',
 	'install_tables_base' => 'Tabele w bazie danych',
+	'install_types_db_connus' => 'SPIP może używać <b>MySQL</b> (najczęstszy) oraz <b>SQLite</b>.', # RELIRE
+	'install_types_db_connus_avertissement' => 'Wsparcie <b>PostgreSQL</b> jest również dostępne na zasadzie eksperymentu.', # RELIRE
 	'instituer_erreur_statut_a_change' => 'Status został już zmodyfikowany',
 	'instituer_erreur_statut_non_autorise' => 'Nie możesz wybrać tego statusu',
-	'intem_redacteur' => 'redaktor',
+	'intem_redacteur' => 'redaktorem',
 	'intitule_licence' => 'Licencja',
 	'item_accepter_inscriptions' => 'Zaakceptuj zapisy',
 	'item_activer_messages_avertissement' => 'Aktywuj komunikaty ostrzegawcze',
-	'item_administrateur_2' => 'administrator',
+	'item_administrateur_2' => 'administratorem',
 	'item_afficher_calendrier' => 'Wyświetl kalendarz',
 	'item_autoriser_syndication_integrale' => 'Wysyłanie pełnej treści artykułów w pliku syndykacji',
 	'item_choix_administrateurs' => 'administratorzy',
@@ -528,6 +560,8 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 	'item_oui' => 'Tak',
 	'item_publier_articles' => 'Publikuj artykuły bez względu na datę ich publikacji.',
 	'item_reponse_article' => 'Odpowiedz na artykuł',
+	'item_version_html_max_html4' => 'Na stronie publicznej używaj tylko HTML4',
+	'item_version_html_max_html5' => 'Zezwól na używanie HTML5',
 	'item_visiteur' => 'odwiedzający',
 
 	// J
@@ -540,18 +574,25 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 	'label_choix_langue' => 'Wybierz swój język',
 	'label_nom_fichier_connect' => 'Podaj nazwę dla tego serwera',
 	'label_slogan_site' => 'Slogan witryny internetowej',
-	'label_taille_ecran' => 'Szerokość ekranu', # MODIF
+	'label_taille_ecran' => 'Szerokość ekranu',
 	'label_texte_et_icones_navigation' => 'Menu nawigacyjne',
 	'label_texte_et_icones_page' => 'Wyświetlanie stron',
+	'ldap_correspondance' => 'dziedziczy z pola @champ@', # RELIRE
+	'ldap_correspondance_1' => 'dziedziczy z pól LDAP', # RELIRE
+	'ldap_correspondance_2' => 'Dla każdego z poniższych pól SPIP należy podać nazwę odpowiedniego pola LDAP. Pozostaw puste, aby je nie wypełnić, oddziel je spacjami lub przecinkami, aby wypróbować wiele pól LDAP.', # RELIRE
 	'lien_ajouter_auteur' => 'Dodaj autora',
 	'lien_ajouter_une_rubrique' => 'Dodaj tą sekcję',
 	'lien_email' => 'e-mail',
 	'lien_nom_site' => 'NAZWA STRONY:',
+	'lien_rapide_contenu' => 'Idź do treści',
+	'lien_rapide_navigation' => 'Idź do menu',
+	'lien_rapide_recherche' => 'Idź do wyszukiwania', # RELIRE
 	'lien_retirer_auteur' => 'Usuń autora',
 	'lien_retirer_rubrique' => 'Usuń sekcję',
 	'lien_retirer_tous_auteurs' => 'Usuń wszystkich autorów',
 	'lien_retirer_toutes_rubriques' => 'Usuń wszystkie sekcje',
 	'lien_site' => 'strona',
+	'lien_tout_decocher' => 'Odznacz wszystko',
 	'lien_tout_deplier' => 'Zwiń wszystko',
 	'lien_tout_replier' => 'Rozwiń wszystko',
 	'lien_tout_supprimer' => 'Usuń wszystko',
@@ -559,12 +600,12 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 	'lien_trier_nombre_articles' => 'Sortuj według liczby artykułów',
 	'lien_trier_statut' => 'Sortuj według status',
 	'lien_voir_en_ligne' => 'ZOBACZ ON-LINE :',
-	'logo_article' => 'LOGO ARTYKUŁU', # MODIF
-	'logo_auteur' => 'LOGO AUTORA', # MODIF
-	'logo_rubrique' => 'LOGO DZIAŁU', # MODIF
-	'logo_site' => 'LOGO STRONY', # MODIF
-	'logo_standard_rubrique' => 'STANDARDOWE LOGO DLA DZIAŁÓW', # MODIF
-	'logo_survol' => 'LOGO ROLL-OVER', # MODIF
+	'logo_article' => 'Logo artykułu',
+	'logo_auteur' => 'Logo autora',
+	'logo_rubrique' => 'Logo działu',
+	'logo_site' => 'Logo strony',
+	'logo_standard_rubrique' => 'Standardowe logo dla działow',
+	'logo_survol' => 'Logo po najechaniu kursorem',
 
 	// M
 	'menu_aide_installation_choix_base' => 'Wybieranie bazy danych',
@@ -574,6 +615,10 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 	'module_texte_explicatif' => 'Możesz umieścić następujące skróty w szkielecie Twojej strony publicznej. Zostaną automatycznie przetłumaczone na rózne języki, których pliki językowe istnieją.',
 	'module_texte_traduction' => 'Plik językowy « @module@ » jest dostępny w :',
 	'mois_non_connu' => 'nieznany',
+
+	// N
+	'nouvelle_version_spip' => 'Aktualizacja SPIP do wersji @version@ jest dostępna',
+	'nouvelle_version_spip_majeure' => 'Nowa wersja SPIP (@version@) jest dostępna',
 
 	// O
 	'onglet_contenu' => 'Treść',
@@ -587,21 +632,31 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 	// P
 	'page_pas_proxy' => 'Ta strona nie musi przejść przez pełnomocnika.',
 	'pas_de_proxy_pour' => 'Jeśli potrzeba podaj serwery lub domeny, do których to proxy ma nie być używane: @exemple@)',
+	'phpinfo' => 'Ustawienia PHP',
+	'plugin_charge_paquet' => 'Ładowanie archiwum @name@',
 	'plugin_charger' => 'pobierz pliki z serwera',
+	'plugin_erreur_charger' => 'błąd : nie można pobrać pliku @zip@',
+	'plugin_erreur_droit1' => 'Katalog <code>@dest@</code> nie jest zapisywalny.', # RELIRE
 	'plugin_erreur_droit2' => 'Proszę sprawdzić uprawnienia do zapisu w tym katalogu (i utworzenia katalogu, jeśli to konieczne). Ewentualnie proszę zainstalować pliki przez FTP.',
+	'plugin_erreur_zip' => 'Problem z pclzip : błąd @status@',
 	'plugin_etat_developpement' => 'wersja rozwojowa',
 	'plugin_etat_experimental' => 'wersja eksperymentalna',
 	'plugin_etat_stable' => 'wersja stabilna',
 	'plugin_etat_test' => 'wersja testowa',
 	'plugin_impossible_activer' => 'Nie można włączyć plugina @plugin@',
+	'plugin_info_automatique1' => 'Jeśli chcesz umożliwić automatyczną instalację wtyczek, prosimy:',
 	'plugin_info_automatique1_lib' => 'Jeśli chcesz, aby ta biblioteka została zainstalowana automatycznie, należy:',
 	'plugin_info_automatique2' => 'Utwórz katalog <code>@rep@</code> ;',
 	'plugin_info_automatique3' => 'Upewnij się że serwer ma odpowiednie uprawnienia do zapisu w tym katalogu.',
 	'plugin_info_automatique_creer' => 'Utworzyć w katalogu głównym witryny.',
 	'plugin_info_automatique_exemples' => 'przykłady:',
+	'plugin_info_automatique_ftp' => 'Możesz zainstalować wtyczki przez FTP, korzystając z folderu <tt>@rep@</tt>',
+	'plugin_info_automatique_lib' => 'Niektóre wtyczki wymagają możliwości wrzucania plików do folderu <code>lib/</code>. Folder ten powinien zostać utworzony w root.',
+	'plugin_info_automatique_liste' => 'Twoje listy wtyczek:',
 	'plugin_info_automatique_liste_officielle' => 'Oficjalne pluginy',
 	'plugin_info_automatique_liste_update' => 'Aktualizacja list',
 	'plugin_info_automatique_ou' => 'albo...',
+	'plugin_info_automatique_select' => 'Wybierz wtyczkę poniżej: SPIP pobierze ją i zainstaluje w katalogu <code>@rep@</code>; Jeśli ta wtyczka już istnieje, zostanie zaktualizowana.', # RELIRE
 	'plugin_info_credit' => 'Kredyty',
 	'plugin_info_erreur_xml' => 'Nieprawidłowe zgłoszenie wtyczek',
 	'plugin_info_install_ok' => 'Instalacja się udała',
@@ -609,25 +664,42 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 	'plugin_info_non_compatible_spip' => 'Ta wtyczka jest niezgodny z tą wersją systemu SPIP',
 	'plugin_info_plugins_dist_1' => 'Następujące wtyczki są załadowane i uruchomione w katalogu @plugins_dist@.',
 	'plugin_info_plugins_dist_2' => 'Nie mogą zostać wyłączone.',
+	'plugin_info_telecharger' => 'pobrać z @url@ i zainstalować w @rep@',
+	'plugin_info_upgrade_ok' => 'Aktualizacja udana', # RELIRE
 	'plugin_librairies_installees' => 'Biblioteka programistyczna została zainstalowana',
+	'plugin_necessite_extension_php' => 'Wymaga rozszerzenia PHP @plugin@ w wersji @version@.',
+	'plugin_necessite_extension_php_sans_version' => 'Wymaga rozszerzenia PHP @plugin@',
 	'plugin_necessite_lib' => 'Ta wtyczka wymaga biblioteki programistycznej @lib@',
-	'plugin_necessite_plugin' => 'Potrzeba pluginu @plugin@ co najmniej w wersji @version@.', # MODIF
+	'plugin_necessite_php' => 'Wymaga @plugin@ w wersji @version@.',
+	'plugin_necessite_plugin' => 'Potrzeba pluginu @plugin@ w wersji @version@.',
+	'plugin_necessite_plugin_sans_version' => 'Wymaga wtyczki @plugin@',
 	'plugin_necessite_spip' => 'Potrzeba co minimum wersji SPIP @version@ .',
 	'plugin_source' => 'źródło:',
 	'plugin_titre_automatique' => 'Instalacja automatyczna ',
 	'plugin_titre_automatique_ajouter' => 'Dodaj wtyczki',
 	'plugin_titre_installation' => 'Instalacja wtyczki @plugin@',
 	'plugin_titre_modifier' => 'Moje wtyczki',
+	'plugin_utilise_extension_php' => 'Używa rozszerzenia PHP @plugin@ w wersji @version@.',
+	'plugin_utilise_plugin' => 'Używa wtyczki @plugin@ w wersji @version@.', # RELIRE
 	'plugin_zip_active' => 'Kontynuuj w celu aktywacji',
 	'plugin_zip_adresse' => 'Aby załadować spakowany plik wtyczki lub listę wtyczek, wprowadź ścieżkę poniżej.',
 	'plugin_zip_adresse_champ' => 'Ścieżka wtyczki lub listy',
+	'plugin_zip_content' => 'Zawiera następujące pliki (@taille@), <br /> gotowe do zainstalowania w katalogu <code>@rep@</ code>', # RELIRE
 	'plugin_zip_installe_finie' => 'Plik @zip@ został rozpakowany i zainstalowany.',
 	'plugin_zip_installe_rep_finie' => 'Plik @zip@ został rozpakowany i zainstalowany w katalogu @rep@ ',
 	'plugin_zip_installer' => 'Teraz możesz to zainstalować.',
 	'plugin_zip_telecharge' => 'Plik @zip@ został załadowany',
-	'plugins_actifs_liste' => 'Plugins actifs', # MODIF
+	'plugins_actif_aucun' => 'Żadna wtyczka nie jest aktywna.',
+	'plugins_actif_un' => 'Jedna aktywna wtyczka.',
+	'plugins_actifs' => '@count@ aktywnych wtyczek.',
+	'plugins_actifs_liste' => 'Włączone',
+	'plugins_compte' => '@count@ wtyczek',
 	'plugins_disponible_un' => 'Jedna wtyczka dostępna',
+	'plugins_disponibles' => '@count@ dostępnych wtyczek.',
+	'plugins_erreur' => 'Błąd w wtyczkach : @plugins@',
 	'plugins_liste' => 'Lista rozszerzeń',
+	'plugins_liste_dist' => 'Zablokowane wtyczki', # RELIRE
+	'plugins_recents' => 'Ostatnie wtyczki.',
 	'plugins_tous_liste' => 'Wszystko',
 	'plugins_vue_hierarchie' => 'Hierarchia',
 	'plugins_vue_liste' => 'Lista',
@@ -635,7 +707,7 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 
 	// Q
 	'queue_executer_maintenant' => 'Uruchom teraz',
-	'queue_info_purger' => 'Możesz usunąć wszystkie zadania w toku i zresetować listę zadań okresowych', # MODIF
+	'queue_info_purger' => 'Możesz usunąć wszystkie zadania w toku i zresetować listę zadań okresowych',
 	'queue_nb_jobs_in_queue' => '@nb@ zadania w kolejce',
 	'queue_next_job_in_nb_sec' => 'Następne zadanie w @nb@ S',
 	'queue_no_job_in_queue' => 'Brak zadań w toku',
@@ -645,21 +717,24 @@ Przekłady są połączone z oryginałem, za pomocą koloru wskazującego na ich
 
 	// R
 	'repertoire_plugins' => 'Katalog :',
-	'required' => '[Obowiązkowo]', # MODIF
+	'required' => '(Obowiązkowo)',
 
 	// S
 	'sans_heure' => 'Czas nie określony',
-	'statut_admin_restreint' => '(admin z ograniczeniami)', # MODIF
+	'statut_admin_restreint' => 'admin z ograniczeniami',
+	'statut_webmestre' => 'webmaster',
 
 	// T
+	'tache_cron_asap' => 'Zadanie CRON @function@ (ASAP)',
+	'tache_cron_secondes' => 'Zadanie CRON @function@ (co @nb@ s)', # RELIRE
 	'taille_cache_image' => 'Obrazki mają automatycznie zmieniany rozmiar przez SPIP (miniaturki dokumentów, tytuły przedstawiane w postaci graficznej, funkcje matematyczne w formacie TeX...) zajmują w katalogu @dir@ obszar @taille@.',
 	'taille_cache_infinie' => 'Serwis nie ma włączonego ograniczenia dla wielkości katalogu cache.',
 	'taille_cache_maxi' => 'SPIP próbuje ograniczyć wielkość katalogu   <code>CACHE/</code> tej strony do około <b>@octets@</b> danych.',
 	'taille_cache_moins_de' => 'Rozmiar pamięci podręcznej jest mniejsze niż @octets@.',
-	'taille_cache_octets' => 'W tym momencie wielkość cache to: @octets@.', # MODIF
+	'taille_cache_octets' => 'Rozmiar pamięci podręcznej wynosi obecnie około @octets@.',
 	'taille_cache_vide' => 'Cache jest pusty.',
 	'taille_repertoire_cache' => 'Wielkość katalogu cache',
-	'text_article_propose_publication' => 'Artykuł zatwierdzony do publikacji. Nie wahaj się wyrazić swoją opinię przez forum dotyczące tego artykułu (na dole strony).', # MODIF
+	'text_article_propose_publication' => 'Artykuł zatwierdzony do publikacji. ',
 	'texte_acces_ldap_anonyme_1' => 'Niektóre serwery LDAP nie akceptują dostępu anonimowego. W tym przypadku należy podać indentyfikator dostępu, aby móc przeszukiwać katalog. Niemniej, w większości przypadków poniższe pola powinny pozostać puste.',
 	'texte_admin_effacer_01' => 'Ta komenda usuwa <i>całą</i> zawartość bazy danych,
 włącznie z <i>wszystkimi</i> parametrami dostępu dla redaktorów i administartorów. Po jej zastosowaniu powinieneś
@@ -674,13 +749,15 @@ zreinstalować SPIP w celu utworzenia nowej bazy danych i dostępu pierwszego ad
 	'texte_auteur_messagerie' => 'Na tej stronie może wyświetlać się bez przerwy lista zalogowanych redaktorów, co pozwoli Ci bezpośrednio wymieniać z nimi wiadomości. Możesz także zdecydować o nie pojawianiu się na tej liście (jesteś wówczas "niewidzialny" dla innych użytkowników)',
 	'texte_auteurs' => 'AUTORZY',
 	'texte_choix_base_1' => 'Wybierz bazę danych:',
-	'texte_choix_base_2' => 'Serwer SQL zawiera kilka baz danych.', # MODIF
+	'texte_choix_base_2' => 'Serwer SQL zawiera kilka baz danych.',
 	'texte_choix_base_3' => '<b>Wybierz</b>, jaka została Ci przyznana przez Twój serwis hostingowy:',
 	'texte_choix_table_prefix' => 'Prefix tablic:',
+	'texte_compatibilite_html' => 'Możesz zmusić SPIP do wytwarzania kodu kompatybilnego ze standardem <>HTML4</i>, albo umożliwić mu używanie bardziej nowoczesnego kodu kompatybilnego z <i>HTML5</i>.',
+	'texte_compatibilite_html_attention' => 'Nie ma żadnego zagrożenia związanego z aktywacją opcji <i>HTML5</i>, natomiast jeśli chcesz to zrobić, strony Twojej witryny muszą zaczynać się od następującego kodu, aby być odpowiednie: <code>&lt; !DOCTYPE html&gt;</code>.',
 	'texte_compte_element' => '@count@ element',
 	'texte_compte_elements' => '@count@ elementy',
 	'texte_conflit_edition_correction' => 'Proszę porównać różnice między obiema wersjami. Możesz również skopiować zmiany i zacząć od nowa.',
-	'texte_connexion_mysql' => 'Sprawdź informacje dostarczone przez Twój serwis hostingowy : znajdzies tam, jeśli serwer korzysta z SQL, kody służące do połączenia z serwerem SQL.', # MODIF
+	'texte_connexion_mysql' => 'Sprawdź informacje dostarczone przez hosta: powinieneś znaleźć oferowany serwer bazy danych i swoje osobiste poświadczenia, aby się z nim połączyć.',
 	'texte_contenu_article' => '(Treść artykułu w kilku słowach.)',
 	'texte_contenu_articles' => 'Zależnie od struktury jaką przyjąłeś dla swojego serwisu, możesz zdecydować,
  których elementów artykułów nie używać.Korzystając z poniższej listy, wybierz używane elementy.',
@@ -694,20 +771,18 @@ zreinstalować SPIP w celu utworzenia nowej bazy danych i dostępu pierwszego ad
 	'texte_date_publication_anterieure_nonaffichee' => 'Ukryj datę poprzedniej publikacji.',
 	'texte_date_publication_article' => 'DATA PUBLIKACJI ONLINE:',
 	'texte_date_publication_objet' => 'Opublikowane na:',
+	'texte_definir_comme_traduction_rubrique' => 'Ta sekcja jest tłumaczeniem sekcji numer:',
 	'texte_descriptif_rapide' => 'Krótki opis',
 	'texte_effacer_base' => 'Usuń bazę danych SPIP',
 	'texte_effacer_statistiques' => 'Usuń statystyki',
-	'texte_en_cours_validation' => 'Następujące artykuły i newsy zostały zatwierdzone do publikacji. Nie wahaj się wyrazić swoją opinię na dołączonych do nich forach.', # MODIF
+	'texte_en_cours_validation' => 'Poniższe treści oczekują na sprawdzenie.',
 	'texte_enrichir_mise_a_jour' => 'Możesz wzbogacić układ Twojego tekstu « skrótami typograficznymi ».',
-	'texte_fichier_authent' => '<b>Czy SPIP ma stworzyć specjalne pliki <tt>.htpasswd</tt>
-  i <tt>.htpasswd-admin</tt> w katalogu @dossier@ ?</b><p>
-  Te pliki mogą służyć jako ograniczenie dostępu dla autorów
-  i administratorów do innych części Twojego serwisu
-  (np. zewnętrznych statystyk).</p><p>
-  Jeśli nie chcesz z nich korzystać, możesz pozostawić tą opcję
-  w nienaruszonej postaci (te pliki nie zostaną stworzone).</p>', # MODIF
+	'texte_fichier_authent' => '<b>Czy SPIP ma stworzyć specjalne pliki <tt>.htpasswd</tt>  i <tt>.htpasswd-admin</tt> w katalogu @dossier@?</b>
+<p>Te pliki mogą służyć jako ograniczenie dostępu dla autorów  i administratorów do innych części twojego serwisu (np. zewnętrznych statystyk).</p>
+<p> Jeśli nie chcesz z nich korzystać, możesz pozostawić tą opcję
+  w nienaruszonej postaci (te pliki nie zostaną stworzone).</p>',
 	'texte_informations_personnelles_1' => 'System stworzy teraz spersonalizowany dostep do serwisu.',
-	'texte_informations_personnelles_2' => '(Informacja: jeśli jest to reinstalacja, a Twój dostęp wciąż działa, możesz', # MODIF
+	'texte_informations_personnelles_2' => '(Informacja: jeśli jest to reinstalacja, a Twój dostęp wciąż działa, możesz',
 	'texte_introductif_article' => '(Tekst wprowadzający do artykułu.)',
 	'texte_jeu_caractere' => 'Zaleca się używania uniwersalnego kodowania (<tt>utf-8</tt>), co pozwala na wyświetlanie tekstów we wszystkich językach i jest kompatybilne ze wszystkimi współczesnymi przeglądarkami.',
 	'texte_jeu_caractere_3' => 'Twoja strona pracuje obecnie w kodowaniu :',
@@ -720,11 +795,11 @@ zreinstalować SPIP w celu utworzenia nowej bazy danych i dostępu pierwszego ad
  Teraz należy uaktualnić bazę danych
  Twojego serwisu.',
 	'texte_modifier_article' => 'Edytuj artykuł',
-	'texte_multilinguisme' => 'Jeśli planujesz edytować artykuły w wielu językach, ze złożoną nawigacją, możesz dołożyć do artykułu lub działu, menu wyboru języka, jako element organizacyjny Twojej strony.', # MODIF
-	'texte_multilinguisme_trad' => 'Możesz także włączyć system zarządzania linkami pomiędzy przekładami artykułów.', # MODIF
+	'texte_multilinguisme' => 'Jeśli planujesz edytować artykuły w wielu językach, ze złożoną nawigacją, możesz dołożyć do artykułu lub działu, menu wyboru języka, jako element organizacyjny Twojej strony.',
+	'texte_multilinguisme_trad' => 'Możesz także włączyć system zarządzania linkami pomiędzy przekładami artykułów.',
 	'texte_non_compresse' => '<i>nie skompresowany</i> (twój serwer nie posiada tej funkcji)',
 	'texte_nouvelle_version_spip_1' => 'Nowa wersja SPIP została zainstalowana.',
-	'texte_nouvelle_version_spip_2' => 'Nowa wersja wymaga bardziej kompletnego dostosowania niż zwykle. Jeśli jesteś administratorem strony wykasuj plik @connect@ z katalogu <tt>ecrire</tt> i powtórz instalację w celu uaktualnienia Twoich parametrów połączenia z bazą danych .<p> (NB. : jeśli zapomniałeś parametry połączenia, rzuć okiem do pliku @connect@ zanim go skasujesz...)', # MODIF
+	'texte_nouvelle_version_spip_2' => 'Nowa wersja wymaga bardziej kompletnego dostosowania niż zwykle. Jeśli jesteś administratorem strony wykasuj plik @connect@ z katalogu <tt>ecrire</tt> i powtórz instalację w celu uaktualnienia Twoich parametrów połączenia z bazą danych .<p> (NB. : jeśli zapomniałeś parametry połączenia, rzuć okiem do pliku @connect@ zanim go skasujesz...)</p>',
 	'texte_operation_echec' => 'Powróć do poprzedniej strony, wybierz inną bazę danych lub stwórz nową. Sprawdź informacje podane przez twój serwis hostingowy.',
 	'texte_plus_trois_car' => 'więcej niż 3 znaki',
 	'texte_plusieurs_articles' => 'Kilku autorów zostało znalezionych dla "@cherche_auteur@":',
@@ -744,14 +819,9 @@ zreinstalować SPIP w celu utworzenia nowej bazy danych i dostępu pierwszego ad
 odświeżyć tylko jedną stronę, zrób to z obszaru publicznego, używając przycisku « odśwież ».',
 	'texte_recuperer_base' => 'Napraw bazę danych',
 	'texte_reference_mais_redirige' => 'linki z artykułów w twoim serwisie SPIP, przekierowujące do innych URL-i.',
-	'texte_requetes_echouent' => '<b>Jeśli pewne zapytania SQL nie udają się
-  regularnie i bez widocznego powodu, możliwe jest
-  że powodem tego jest baza danych</b><p>
-  SQL ma możliwość naprawy poszczególnych tabel
-  jeśli przez przypadek zostały uszkodzone.
- Możesz spróbować naprawić je tutaj ; jeśli jednak nie powiedzie się taka operacja,
-  zachcowaj kopię wyświetlanego komunikatu, ponieważ może on zawierać wskazówki w czym tkwi poroblem.
-<p>  Jeśli problem będzie się pojawiał często skontaktuj się z administratorem Twojego serwera.', # MODIF
+	'texte_requetes_echouent' => '<b>Jeśli pewne zapytania SQL nie udają się  regularnie i bez widocznego powodu, możliwe jest  że powodem tego jest baza danych</b><p>
+ SQL ma możliwość naprawy poszczególnych tabel  jeśli przez przypadek zostały uszkodzone. Możesz spróbować naprawić je tutaj ; jeśli jednak nie powiedzie się taka operacja,  zachcowaj kopię wyświetlanego komunikatu, ponieważ może on zawierać wskazówki w czym tkwi poroblem.</p>
+<p>Jeśli problem będzie się pojawiał często skontaktuj się z administratorem Twojego serwera.</p>',
 	'texte_selection_langue_principale' => 'Możesz poniżej wybrać « główny język » serwisu. Ten wybór nie zmusza Cię - na szczęście ! - do pisania artykułów w wybranym języku, ale pozwala określić :
  <ul><li> domyślny format dat na stronach publicznych ;</li>
  <li> rodzaj kodowania tekstu, który ma używać SPIP ;</li>
@@ -799,12 +869,13 @@ odświeżyć tylko jedną stronę, zrób to z obszaru publicznego, używając pr
 	'titre_config_langage' => 'Konfiguracja języka',
 	'titre_configuration' => 'Konfiguracja strony',
 	'titre_configurer_preferences' => 'Skonfiguruj swoje preferencje',
+	'titre_configurer_preferences_menus' => 'Ustaw swoje preferencje menu.',
 	'titre_conflit_edition' => 'Konflikt podczas edycji',
 	'titre_connexion_ldap' => 'Opcje: <b>Twoje połączenie LDAP</b>',
 	'titre_groupe_mots' => 'GRUPY SŁÓW KLUCZOWYCH:',
 	'titre_identite_site' => 'Tożsamość strony',
-	'titre_langue_article' => 'JĘZYK ARTYKUŁU', # MODIF
-	'titre_langue_rubrique' => 'JĘZYK DZIAŁU', # MODIF
+	'titre_langue_article' => 'Język artykułu', # RELIRE
+	'titre_langue_rubrique' => 'Język działu',
 	'titre_langue_trad_article' => 'JĘZYK I TŁUMACZENIA ARTYKUŁU',
 	'titre_les_articles' => 'ARTYKUŁY',
 	'titre_messagerie_agenda' => 'System komunikacji i kalendarz',
@@ -820,14 +891,15 @@ odświeżyć tylko jedną stronę, zrób to z obszaru publicznego, używając pr
 	'titre_page_recherche' => 'Wyniki wyszukiwania @recherche@',
 	'titre_page_statistiques_referers' => 'Statystyki (linki wchodzące)',
 	'titre_page_upgrade' => 'Dostosowanie SPIP',
+	'titre_preference_menus_favoris' => 'Ulubione menu',
 	'titre_publication_articles_post_dates' => 'Publikacja post-datowanych artykułów',
 	'titre_reparation' => 'Napraw',
 	'titre_suivi_petition' => 'Archiwum ogłoszeń',
 	'tls_ldap' => 'Transport Layer Security :',
 	'trad_article_traduction' => 'Wszystkie wersje tego artykułu:',
-	'trad_delier' => 'Nie łączyć artykułu z tym przekładem', # MODIF
+	'trad_delier' => 'Nie łączyć z tymi tłumaczeniami',
 	'trad_lier' => 'Ten artykuł jest przekładem artykułu numer',
-	'trad_new' => 'Napisz nowe tłumaczenie artykułu', # MODIF
+	'trad_new' => 'Napisz nowe tłumaczenie artykułu',
 
 	// U
 	'utf8_convert_erreur_orig' => 'Błąd : kodowanie @charset@ nie jest wspierane.',

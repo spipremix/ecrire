@@ -20,6 +20,16 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
+if (!defined('_UPGRADE_TIME_OUT')) {
+	/**
+	 * Durée en secondes pour relancer les scripts de mises à jour, x secondes
+	 * avant que la durée d'exécution du script provoque un timeout
+	 *
+	 * @var int
+	 **/
+	define('_UPGRADE_TIME_OUT', 20);
+}
+
 /**
  * Programme de mise à jour des tables SQL lors d'un changement de version.
  *
@@ -311,15 +321,6 @@ function maj_debut_page($installee, $meta, $table) {
 	$done = true;
 }
 
-if (!defined('_UPGRADE_TIME_OUT')) {
-	/**
-	 * Durée en secondes pour relancer les scripts de mises à jour, x secondes
-	 * avant que la durée d'exécution du script provoque un timeout
-	 *
-	 * @var int
-	 **/
-	define('_UPGRADE_TIME_OUT', 20);
-}
 
 /**
  * Gestion des mises à jour de SPIP et des plugins
@@ -381,8 +382,7 @@ function maj_while($installee, $cible, $maj, $meta = '', $table = 'meta', $redir
 		define('_TIME_OUT', $time + _UPGRADE_TIME_OUT);
 	}
 
-	reset($maj);
-	while (list($v, ) = each($maj)) {
+	foreach ($maj as $v => $operations) {
 		// si une maj pour cette version
 		if ($v == 'init' or
 			(spip_version_compare($v, $installee, '>')
@@ -392,7 +392,7 @@ function maj_while($installee, $cible, $maj, $meta = '', $table = 'meta', $redir
 				maj_debut_page($v, $meta, $table);
 			}
 			echo "MAJ $v";
-			$etape = serie_alter($v, $maj[$v], $meta, $table, $redirect);
+			$etape = serie_alter($v, $operations, $meta, $table, $redirect);
 			$trouver_table(''); // vider le cache des descriptions de table
 			# echec sur une etape en cours ?
 			# on sort

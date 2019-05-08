@@ -289,6 +289,8 @@ en el sitio "@nom_site_spip@" (@adresse_login@):',
 	'form_prop_non_enregistre' => 'Tu propuesta no fue registrada.',
 	'form_prop_sujet' => 'Asunto',
 	'form_prop_url_site' => 'Dirección URL del sitio',
+	'format_date_incorrecte' => 'La fecha o su formato es incorrecto', # RELIRE
+	'format_heure_incorrecte' => 'La hora o su formato es incorrecto', # RELIRE
 	'forum_non_inscrit' => 'No estás inscrita o inscrito, o bien la dirección o la contraseña son erróneas.',
 	'forum_par_auteur' => 'por @auteur@',
 	'forum_titre_erreur' => 'Error...',
@@ -542,6 +544,8 @@ en el sitio "@nom_site_spip@" (@adresse_login@):',
 	// M
 	'masquer_colonne' => 'Ocultar esta columna',
 	'masquer_trad' => 'Ocultar las traducciones',
+	'message_nouveaux_identifiants_echec' => 'Imposible generar nuevas credenciales.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Las nuevas credenciales de inicio de sesión no se pudieron enviar.',
 	'module_fichiers_langues' => 'Archivos de idioma',
 
 	// N

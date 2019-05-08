@@ -616,7 +616,7 @@ and log in to the site.
 	'previsualiser' => 'Show preview',
 
 	// R
-	'retour' => 'Return',
+	'retour' => 'Back',
 
 	// S
 	'spip_conforme_dtd' => 'SPIP finds this page to be in compliance with its DOCTYPE:',
@@ -686,6 +686,9 @@ and log in to the site.
 	'todo' => 'to come',
 	'trad_definir_reference' => 'Choose "@titre@" as a reference for translations',
 	'trad_reference' => '(reference for translations)',
+
+	// U
+	'upload_limit' => 'This file is too big for the server: the maximum size allowed for <i>upload</i> is @max@.',
 
 	// Z
 	'zbug_balise_b_aval' => ': B tag too late in loop',

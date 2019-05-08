@@ -117,10 +117,6 @@ function taches_generales($taches_generales = array()) {
 	// Optimisation de la base
 	$taches_generales['optimiser'] = 3600 * 48;
 
-	// cache (chaque 10 minutes => 1/16eme du repertoire cache,
-	// soit toutes les 2h40 sur le meme rep)
-	$taches_generales['invalideur'] = 600;
-
 	// nouveautes
 	if (isset($GLOBALS['meta']['adresse_neuf']) and $GLOBALS['meta']['adresse_neuf']
 		and $GLOBALS['meta']['jours_neuf']
@@ -136,24 +132,6 @@ function taches_generales($taches_generales = array()) {
 	$taches_generales['mise_a_jour'] = 3 * 24 * 3600;
 
 	return pipeline('taches_generales_cron', $taches_generales);
-}
-
-// Pas de fichier a part pour une fonction aussi petite:
-// - elle peut retirer les fichiers perimes
-// - elle fait appliquer le quota
-// En cas de quota sur le CACHE/, nettoyer les fichiers les plus vieux
-// http://code.spip.net/@genie_invalideur_dist
-function genie_invalideur_dist($t) {
-
-	include_spip('inc/invalideur');
-	$encore = appliquer_quota_cache();
-
-	// si le cache est trop gonfle, redemander la main pour poursuivre
-	if ($encore) {
-		return (0 - $t);
-	}
-
-	return 1;
 }
 
 /**
@@ -176,7 +154,7 @@ function genie_queue_watch_dist() {
 	$deja_la = true;
 	$taches = taches_generales();
 	$programmees = sql_allfetsel('fonction', 'spip_jobs', sql_in('fonction', array_keys($taches)));
-	$programmees = array_map('reset', $programmees);
+	$programmees = array_column($programmees, 'fonction');
 	foreach ($taches as $tache => $periode) {
 		if (!in_array($tache, $programmees)) {
 			queue_genie_replan_job($tache, $periode, time() - round(rand(1, $periode)), 0);

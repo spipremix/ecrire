@@ -28,7 +28,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 
 // FLV est incrustable, la MAJ precedente l'avait oublie
 $GLOBALS['maj'][1931] = array(
-	array('spip_query', "UPDATE spip_types_documents SET `inclus`='embed' WHERE `extension`='flv'")
+	array('sql_query', "UPDATE spip_types_documents SET `inclus`='embed' WHERE `extension`='flv'")
 );
 
 // Ajout de spip_forum.date_thread, et on essaie de le remplir
@@ -38,14 +38,14 @@ $GLOBALS['maj'][1932] = array(
 	array('sql_alter', "TABLE spip_forum ADD `date_thread` datetime DEFAULT '0000-00-00 00:00:00' NOT NULL"),
 	array('sql_alter', "TABLE spip_forum ADD INDEX `date_thread` (`date_thread`)"),
 
-	array('spip_query', "DROP TABLE IF EXISTS spip_tmp"),
+	array('sql_query', "DROP TABLE IF EXISTS spip_tmp"),
 	array(
-		'spip_query',
+		'sql_query',
 		"CREATE TABLE spip_tmp SELECT `id_thread`,MAX(`date_heure`) AS dt FROM spip_forum GROUP BY `id_thread`"
 	),
 	array('sql_alter', "TABLE spip_tmp ADD INDEX `p` (`id_thread`)"),
-	array('spip_query', "UPDATE spip_forum AS F JOIN spip_tmp AS T ON F.id_thread=T.id_thread SET F.date_thread=T.dt"),
-	array('spip_query', "DROP TABLE spip_tmp"),
+	array('sql_query', "UPDATE spip_forum AS F JOIN spip_tmp AS T ON F.id_thread=T.id_thread SET F.date_thread=T.dt"),
+	array('sql_query', "DROP TABLE spip_tmp"),
 );
 
 /**
@@ -55,14 +55,14 @@ function maj_1_934() {
 	// attention, en cas de mutualisation _DIR_IMG contient quelque chose comme sites/urldusite/IMG/
 	// essayons en ne prenant que le dernier segment
 	$dir_img = basename(_DIR_IMG) . '/';
-	$res = spip_query("SELECT fichier FROM spip_documents WHERE fichier LIKE " . _q($dir_img . '%') . " LIMIT 0,1");
-	if (!$row = spip_fetch_array($res)) {
-		//Êsinon on essaye avec le chemin complet
+	$res = sql_query("SELECT fichier FROM spip_documents WHERE fichier LIKE " . sql_quote($dir_img . '%') . " LIMIT 0,1");
+	if (!$row = sql_fetch($res)) {
+		// sinon on essaye avec le chemin complet
 		// il faut donc verifier qu'on a bien le bon nom de repertoire
 		$dir_img = substr(_DIR_IMG, strlen(_DIR_RACINE));
 	}
 	$n = strlen($dir_img) + 1;
-	spip_query("UPDATE spip_documents SET `fichier`=substring(fichier,$n) WHERE `fichier` LIKE " . _q($dir_img . '%'));
+	sql_query("UPDATE spip_documents SET `fichier`=substring(fichier,$n) WHERE `fichier` LIKE " . sql_quote($dir_img . '%'));
 }
 
 $GLOBALS['maj'][1934] = array(array('maj_1_934'));
@@ -79,14 +79,14 @@ function maj_1_935() {
 	         ) as $type => $id_table_objet) {
 		$table_objet = "$type" . "s";
 		$chapo = $type == 'article' ? ",a.chapo" : "";
-		$res = spip_query("SELECT a.$id_table_objet,a.texte $chapo FROM spip_documents_$table_objet AS d JOIN spip_$table_objet AS a ON a.$id_table_objet=d.$id_table_objet GROUP BY $id_table_objet");
+		$res = sql_query("SELECT a.$id_table_objet,a.texte $chapo FROM spip_documents_$table_objet AS d JOIN spip_$table_objet AS a ON a.$id_table_objet=d.$id_table_objet GROUP BY $id_table_objet");
 		while ($row = sql_fetch($res)) {
 			$GLOBALS['doublons_documents_inclus'] = array();
 			traiter_modeles(($chapo ? $row['chapo'] : "") . $row['texte'], true); // detecter les doublons
 			if (count($GLOBALS['doublons_documents_inclus'])) {
 				$id = $row[$id_table_objet];
 				$liste = "(" . implode(",$id,'oui'),(", $GLOBALS['doublons_documents_inclus']) . ",$id,'oui')";
-				spip_query("REPLACE INTO spip_documents_$table_objet (`id_document`,`$id_table_objet`,`vu`) VALUES $liste");
+				sql_query("REPLACE INTO spip_documents_$table_objet (`id_document`,`$id_table_objet`,`vu`) VALUES $liste");
 			}
 		}
 	}
@@ -114,7 +114,7 @@ function convertir_un_champ_blob_en_text($table, $champ, $type) {
 	if ($charset = sql_getfetsel('@@character_set_connection')) {
 		sql_alter("TABLE $table DEFAULT CHARACTER SET " . $charset);
 	}
-	$res = spip_query("SHOW FULL COLUMNS FROM $table LIKE '$champ'");
+	$res = sql_query("SHOW FULL COLUMNS FROM $table LIKE '$champ'");
 	if ($row = sql_fetch($res)) {
 		if (strtolower($row['Type']) != strtolower($type)) {
 			$default = $row['Default'] ? (" DEFAULT " . sql_quote($row['Default'])) : "";
@@ -161,9 +161,9 @@ function maj_1_938() {
 		$s = sql_select('extension' . ($repli ? '' : ',id_type'), 'spip_types_documents');
 		while ($t = sql_fetch($s)) {
 			if (isset($t['id_type'])) {
-				spip_query("UPDATE spip_documents	SET `extension`=" . _q($t['extension']) . " WHERE `id_type`=" . _q($t['id_type']));
+				sql_query("UPDATE spip_documents	SET `extension`=" . sql_quote($t['extension']) . " WHERE `id_type`=" . sql_quote($t['id_type']));
 			} else {
-				spip_query("UPDATE spip_documents	SET `extension`=" . _q($t['extension']) . " WHERE fichier LIKE " . _q("%." . $t['extension']));
+				sql_query("UPDATE spip_documents	SET `extension`=" . sql_quote($t['extension']) . " WHERE fichier LIKE " . sql_quote("%." . $t['extension']));
 			}
 		}
 		$res = sql_select('extension', 'spip_documents', "extension='' OR extension is NULL");
@@ -202,17 +202,17 @@ $GLOBALS['maj'][1939] = array(
 );
 
 $GLOBALS['maj'][1940] = array(
-	array('spip_query', "DROP TABLE spip_caches"),
+	array('sql_query', "DROP TABLE spip_caches"),
 );
 
 
 $GLOBALS['maj'][1941] = array(
-	array('spip_query', "UPDATE spip_meta SET `valeur` = '' WHERE `nom`='preview' AND `valeur`='non' "),
+	array('sql_query', "UPDATE spip_meta SET `valeur` = '' WHERE `nom`='preview' AND `valeur`='non' "),
 	array(
-		'spip_query',
+		'sql_query',
 		"UPDATE spip_meta SET `valeur` = ',0minirezo,1comite,' WHERE `nom`='preview' AND `valeur`='1comite' "
 	),
-	array('spip_query', "UPDATE spip_meta SET `valeur` = ',0minirezo,' WHERE `nom`='preview' AND `valeur`='oui' "),
+	array('sql_query', "UPDATE spip_meta SET `valeur` = ',0minirezo,' WHERE `nom`='preview' AND `valeur`='oui' "),
 );
 
 $GLOBALS['maj'][1942] = array(
@@ -249,8 +249,8 @@ $GLOBALS['maj'][1943] = array(
 	array('sql_alter', "TABLE spip_signatures DROP KEY `idx`"),
 	array('sql_alter', "TABLE spip_signatures DROP `idx`"),
 
-	array('spip_query', "DROP TABLE spip_index"),
-	array('spip_query', "DROP TABLE spip_index_dico"),
+	array('sql_query', "DROP TABLE spip_index"),
+	array('sql_query', "DROP TABLE spip_index_dico"),
 );
 
 $GLOBALS['maj'][1944] = array(
@@ -460,8 +460,8 @@ function maj_1_952() {
 			$vignettes[] = intval($t['id_document']);
 		}
 
-		$ok &= spip_query("UPDATE spip_documents SET `mode`='image' WHERE `mode`='vignette'");
-		$ok &= spip_query("UPDATE spip_documents SET `mode`='vignette' WHERE `mode`='image' AND " . sql_in('id_document',
+		$ok &= sql_query("UPDATE spip_documents SET `mode`='image' WHERE `mode`='vignette'");
+		$ok &= sql_query("UPDATE spip_documents SET `mode`='vignette' WHERE `mode`='image' AND " . sql_in('id_document',
 				$vignettes));
 	}
 	if (!$ok) {
@@ -476,38 +476,38 @@ $GLOBALS['maj'][1953] = array(array('upgrade_types_documents'));
 $GLOBALS['maj'][1954] = array(
 
 	//pas de psd en <img>
-	array('spip_query', "UPDATE spip_types_documents SET `inclus`='non' WHERE `extension`='psd'"),
+	array('sql_query', "UPDATE spip_types_documents SET `inclus`='non' WHERE `extension`='psd'"),
 	//ajout csv
-	array('spip_query', "INSERT IGNORE INTO spip_types_documents (`extension`, `titre`) VALUES ('csv', 'CSV')"),
-	array('spip_query', "UPDATE spip_types_documents SET `mime_type`='text/csv' WHERE `extension`='csv'"),
+	array('sql_query', "INSERT IGNORE INTO spip_types_documents (`extension`, `titre`) VALUES ('csv', 'CSV')"),
+	array('sql_query', "UPDATE spip_types_documents SET `mime_type`='text/csv' WHERE `extension`='csv'"),
 	//ajout mkv
 	array(
-		'spip_query',
+		'sql_query',
 		"INSERT IGNORE INTO spip_types_documents (`extension`, `titre`, `inclus`) VALUES ('mkv', 'Matroska Video', 'embed')"
 	),
-	array('spip_query', "UPDATE spip_types_documents SET `mime_type`='video/x-mkv' WHERE `extension`='mkv'"),
+	array('sql_query', "UPDATE spip_types_documents SET `mime_type`='video/x-mkv' WHERE `extension`='mkv'"),
 	//ajout mka
 	array(
-		'spip_query',
+		'sql_query',
 		"INSERT IGNORE INTO spip_types_documents (`extension`, `titre`, `inclus`) VALUES ('mka', 'Matroska Audio', 'embed')"
 	),
-	array('spip_query', "UPDATE spip_types_documents SET `mime_type`='audio/x-mka' WHERE `extension`='mka'"),
+	array('sql_query', "UPDATE spip_types_documents SET `mime_type`='audio/x-mka' WHERE `extension`='mka'"),
 	//ajout kml
 	array(
-		'spip_query',
+		'sql_query',
 		"INSERT IGNORE INTO spip_types_documents (`extension`, `titre`) VALUES ('kml', 'Keyhole Markup Language')"
 	),
 	array(
-		'spip_query',
+		'sql_query',
 		"UPDATE spip_types_documents SET `mime_type`='application/vnd.google-earth.kml+xml' WHERE `extension`='kml'"
 	),
 	//ajout kmz
 	array(
-		'spip_query',
+		'sql_query',
 		"INSERT IGNORE INTO spip_types_documents (`extension`, `titre`) VALUES ('kmz', 'Google Earth Placemark File')"
 	),
 	array(
-		'spip_query',
+		'sql_query',
 		"UPDATE spip_types_documents SET `mime_type`='application/vnd.google-earth.kmz' WHERE `extension`='kmz'"
 	)
 );

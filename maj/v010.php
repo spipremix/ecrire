@@ -29,28 +29,28 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function maj_v010_dist($version_installee, $version_cible) {
 
 	if (upgrade_vers(1.01, $version_installee, $version_cible)) {
-		spip_query("UPDATE spip_forum SET statut='publie' WHERE statut=''");
+		sql_query("UPDATE spip_forum SET statut='publie' WHERE statut=''");
 		maj_version(1.01);
 	}
 
 	if (upgrade_vers(1.02, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_forum ADD id_auteur BIGINT DEFAULT '0' NOT NULL");
+		sql_query("ALTER TABLE spip_forum ADD id_auteur BIGINT DEFAULT '0' NOT NULL");
 		maj_version(1.02);
 	}
 
 	if (upgrade_vers(1.03, $version_installee, $version_cible)) {
-		spip_query("DROP TABLE spip_maj");
+		sql_query("DROP TABLE spip_maj");
 		maj_version(1.03);
 	}
 
 	if (upgrade_vers(1.04, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_articles ADD accepter_forum VARCHAR(3)");
+		sql_query("ALTER TABLE spip_articles ADD accepter_forum VARCHAR(3)");
 		maj_version(1.04);
 	}
 
 	if (upgrade_vers(1.05, $version_installee, $version_cible)) {
-		spip_query("DROP TABLE spip_petition");
-		spip_query("DROP TABLE spip_signatures_petition");
+		sql_query("DROP TABLE spip_petition");
+		sql_query("DROP TABLE spip_signatures_petition");
 		maj_version(1.05);
 	}
 }

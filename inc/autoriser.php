@@ -1116,7 +1116,7 @@ function liste_rubriques_auteur($id_auteur, $raz = false) {
 		)
 		and count($r)
 	) {
-		$r = array_map('reset', $r);
+		$r = array_column($r, 'id_objet');
 
 		// recuperer toute la branche, au format chaine enumeration
 		include_spip('inc/rubriques');
@@ -1141,22 +1141,6 @@ function liste_rubriques_auteur($id_auteur, $raz = false) {
 
 
 	return $restreint[$id_auteur] = $rubriques;
-}
-
-/**
- * Autorisation de modifier l'URL d'un objet
- *
- * Il faut pouvoir modifier l'objet.
- *
- * @param  string $faire Action demandée
- * @param  string $type Type d'objet sur lequel appliquer l'action
- * @param  int $id Identifiant de l'objet
- * @param  array $qui Description de l'auteur demandant l'autorisation
- * @param  array $opt Options de cette autorisation
- * @return bool          true s'il a le droit, false sinon
- **/
-function autoriser_modifierurl_dist($faire, $type, $id, $qui, $opt) {
-	return autoriser('modifier', $type, $id, $qui, $opt);
 }
 
 /**
@@ -1395,6 +1379,22 @@ function autoriser_menugrandeentree_dist($faire, $type, $id, $qui, $opt) {
 }
 
 /**
+ * Autorisation de voir la page auteurs
+ *
+ * Toujours OK
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_auteurs_voir_dist($faire, $type, $id, $qui, $opt) {
+	return true;
+}
+
+/**
  * Autorisation de voir le menu auteurs
  *
  * Toujours OK
@@ -1407,6 +1407,22 @@ function autoriser_menugrandeentree_dist($faire, $type, $id, $qui, $opt) {
  * @return bool          true s'il a le droit, false sinon
  **/
 function autoriser_auteurs_menu_dist($faire, $type, $id, $qui, $opt) {
+	return autoriser('voir', '_auteurs', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir la page articles
+ *
+ * Toujours OK
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_articles_voir_dist($faire, $type, $id, $qui, $opt) {
 	return true;
 }
 
@@ -1423,6 +1439,22 @@ function autoriser_auteurs_menu_dist($faire, $type, $id, $qui, $opt) {
  * @return bool          true s'il a le droit, false sinon
  **/
 function autoriser_articles_menu_dist($faire, $type, $id, $qui, $opt) {
+	return autoriser('voir', '_articles', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir la page rubriques
+ *
+ * Toujours OK
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_rubriques_voir_dist($faire, $type, $id, $qui, $opt) {
 	return true;
 }
 
@@ -1439,7 +1471,7 @@ function autoriser_articles_menu_dist($faire, $type, $id, $qui, $opt) {
  * @return bool          true s'il a le droit, false sinon
  **/
 function autoriser_rubriques_menu_dist($faire, $type, $id, $qui, $opt) {
-	return true;
+	return autoriser('voir', '_rubriques', $id, $qui, $opt);
 }
 
 /**
@@ -1457,6 +1489,7 @@ function autoriser_rubriques_menu_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_articlecreer_menu_dist($faire, $type, $id, $qui, $opt) {
 	return verifier_table_non_vide();
 }
+
 
 /**
  * Autorisation de voir le menu auteurcreer
@@ -1710,7 +1743,7 @@ function auteurs_objet($objet, $id_objet, $cond = '') {
 		$where
 	);
 	if (is_array($auteurs)) {
-		return array_map('reset', $auteurs);
+		return array_column($auteurs, 'id_auteur');
 	}
 	return array();
 }

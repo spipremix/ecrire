@@ -543,6 +543,11 @@ class Boucle {
 	 */
 	public $iterateur = ''; // type d'iterateur
 
+	/**
+	 * @var array $debug Textes qui seront insérés dans l’entête de boucle du mode debug
+	 */
+	public $debug = [];
+
 	// obsoletes, conserves provisoirement pour compatibilite
 	public $tout = false;
 	public $plat = false;

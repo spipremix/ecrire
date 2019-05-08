@@ -108,7 +108,7 @@ function expression_recherche($recherche, $options) {
 		// 'une', 'des' ...)
 
 		// attention : plusieurs mots entre guillemets sont a rechercher tels quels
-		$recherche_trans = $recherche_mod = $recherche;
+		$recherche_trans = $recherche_mod = $recherche_org = $recherche;
 
 		// les expressions entre " " sont un mot a chercher tel quel
 		// -> on remplace les espaces par un \x1 et on enleve les guillemets
@@ -126,17 +126,22 @@ function expression_recherche($recherche, $options) {
 			$recherche_inter = '|';
 			$recherche_mots = explode(' ', $recherche_mod);
 			$min_long = defined('_RECHERCHE_MIN_CAR') ? _RECHERCHE_MIN_CAR : 4;
+			$petits_mots = true;
 			foreach ($recherche_mots as $mot) {
 				if (strlen($mot) >= $min_long) {
 					// echapper les caracteres de regexp qui sont eventuellement dans la recherche
 					$recherche_inter .= preg_quote($mot) . ' ';
+					$petits_mots = false;
 				}
 			}
 			$recherche_inter = str_replace("\x1", '\s', $recherche_inter);
 
 			// mais on cherche quand même l'expression complète, même si elle
 			// comporte des mots de moins de quatre lettres
-			$recherche = rtrim(preg_quote($recherche) . preg_replace(',\s+,' . $u, '|', $recherche_inter), '|');
+			$recherche = trim(preg_replace(',\s+,' . $u, '|', $recherche_inter), '|');
+			if (!$recherche or $petits_mots){
+				$recherche = preg_quote($recherche_org);
+			}
 			$recherche_trans = translitteration($recherche);
 		}
 

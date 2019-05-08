@@ -57,8 +57,8 @@ function inc_plonger_dist($id_rubrique, $idom = "", $list = array(), $col = 1, $
 		$rec = generer_url_ecrire('plonger', "rac=$idom&exclus=$exclu&do=$do&col=" . ($col + 1));
 		$info = generer_url_ecrire('informer', "type=rubrique&rac=$idom&do=$do&id=");
 		$args = "'$idom',this,$col,'" . $GLOBALS['spip_lang_left'] . "','$info',event";
-		while (list($id, $titrebrut) = each($ordre)) {
 
+		foreach ($ordre as $id => $titrebrut) {
 			$titre = supprimer_numero($titrebrut);
 
 			$classe1 = $id_rubrique ? 'petite-rubrique' : "petit-secteur";

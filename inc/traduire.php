@@ -103,30 +103,31 @@ function chercher_module_lang($module, $lang = '') {
  * @return string Langue du module chargé, sinon chaîne vide.
  **/
 function charger_langue($lang, $module = 'spip') {
+	static $langs = array();
 	$var = 'i18n_' . $module . '_' . $lang;
-	if ($lang and $fichiers_lang = chercher_module_lang($module, $lang)) {
-		$GLOBALS['idx_lang'] = $var;
-		include(array_shift($fichiers_lang));
-		surcharger_langue($fichiers_lang);
-		$GLOBALS['lang_' . $var] = $lang;
-	} else {
-		// si le fichier de langue du module n'existe pas, on se rabat sur
-		// la langue par defaut du site -- et au pire sur le francais, qui
-		// *par definition* doit exister, et on copie le tableau dans la
-		// var liee a la langue
-		$l = $GLOBALS['meta']['langue_site'];
-		if (!$fichiers_lang = chercher_module_lang($module, $l)) {
-			$l = _LANGUE_PAR_DEFAUT;
-			$fichiers_lang = chercher_module_lang($module, $l);
+	if (!isset($langs[$lang])) {
+		$langs[$lang] = array();
+		if ($lang) {
+			$langs[$lang][] = $lang;
+			if (strpos($lang, '_') !== false) {
+				$l = explode('_', $lang);
+				$langs[$lang][] = reset($l);
+			}
 		}
-
-		if ($fichiers_lang) {
+		$langs[$lang][] = $GLOBALS['meta']['langue_site'];
+		$langs[$lang][] = _LANGUE_PAR_DEFAUT;
+	}
+	foreach ($langs[$lang] as $l) {
+		if ($fichiers_lang = chercher_module_lang($module, $l)) {
 			$GLOBALS['idx_lang'] = 'i18n_' . $module . '_' . $l;
 			include(array_shift($fichiers_lang));
 			surcharger_langue($fichiers_lang);
-			$GLOBALS[$var] = &$GLOBALS['i18n_' . $module . '_' . $l];
+			if ($l !== $lang) {
+				$GLOBALS[$var] = &$GLOBALS['i18n_' . $module . '_' . $l];
+			}
 			$GLOBALS['lang_' . $var] = $l;
-			#spip_log("module de langue : ${module}_$l.php");
+			#spip_log("module de langue : ${module}_$l.php", 'traduire');
+			break;
 		}
 	}
 }

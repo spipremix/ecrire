@@ -36,7 +36,7 @@ $GLOBALS['maj'][11042] = array(array('upgrade_types_documents'));
 // l'impossibilite de telecharger une image
 // http://trac.rezo.net/trac/spip/ticket/1238
 $GLOBALS['maj'][11171] = array(
-	array('spip_query', "UPDATE spip_types_documents SET upload='oui' WHERE upload IS NULL OR upload!='non'")
+	array('sql_query', "UPDATE spip_types_documents SET upload='oui' WHERE upload IS NULL OR upload!='non'")
 );
 
 /**
@@ -72,7 +72,7 @@ function maj_11388() {
 	while ($t = sql_fetch($s)) {
 		$k = sql_fetsel('referer', 'spip_referers', 'referer_md5=' . sql_quote($t['referer_md5']));
 		if ($k['referer']) {
-			spip_query('UPDATE spip_referers_articles
+			sql_query('UPDATE spip_referers_articles
 			SET referer=' . sql_quote($k['referer']) . '
 			WHERE referer_md5=' . sql_quote($t['referer_md5'])
 				. " AND (referer='' OR referer IS NULL)"
@@ -88,7 +88,7 @@ $GLOBALS['maj'][11388] = array(array('maj_11388'));
  */
 function maj_11431() {
 	// mysql only
-	// spip_query("UPDATE spip_mots AS a LEFT JOIN spip_groupes_mots AS b ON (a.id_groupe = b.id_groupe) SET a.type=b.titre");
+	// sql_query("UPDATE spip_mots AS a LEFT JOIN spip_groupes_mots AS b ON (a.id_groupe = b.id_groupe) SET a.type=b.titre");
 
 	// selection des mots cles dont le type est different du groupe
 	$res = sql_select(

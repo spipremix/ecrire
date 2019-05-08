@@ -50,9 +50,7 @@ function definir_puce() {
 	}
 
 	if (!isset($GLOBALS[$p])) {
-		$img = find_in_path($p . '.gif');
-		list(, , , $size) = @getimagesize($img);
-		$GLOBALS[$p] = '<img src="' . $img . '" ' . $size . ' class="puce" alt="-" />';
+		$GLOBALS[$p] = '<span class="spip-puce '.$dir.'"><b>–</b></span>';
 	}
 
 	return $GLOBALS[$p];

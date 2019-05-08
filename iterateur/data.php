@@ -127,7 +127,9 @@ class IterateurDATA implements Iterator {
 	 */
 	public function rewind() {
 		reset($this->tableau);
-		list($this->cle, $this->valeur) = each($this->tableau);
+		$this->cle = key($this->tableau);
+		$this->valeur = current($this->tableau);
+		next($this->tableau);
 	}
 
 	/**
@@ -433,7 +435,7 @@ class IterateurDATA implements Iterator {
 	 *
 	 **/
 	protected function select_datapath() {
-		list(, $base) = each($this->command['datapath']);
+		$base = reset($this->command['datapath']);
 		if (strlen($base = ltrim(trim($base), "/"))) {
 			$this->tableau = table_valeur($this->tableau, $base);
 			if (!is_array($this->tableau)) {
@@ -486,17 +488,17 @@ class IterateurDATA implements Iterator {
 					$a = ' . sprintf($tv, '$aa') . ';
 					$b = ' . sprintf($tv, '$bb') . ';
 					if ($a <> $b)
-						return ($a ' . ((isset($r[2]) and $r[2]) ? '>' : '<') . ' $b) ? -1 : 1;';
+						return ($a ' . (!empty($r[2]) ? '>' : '<') . ' $b) ? -1 : 1;';
 					}
 				}
 			}
 		}
 
 		if ($sortfunc) {
-			uasort($this->tableau, create_function('$aa,$bb',
-				$sortfunc . '
-				return 0;'
-			));
+			$sortfunc .= "\n return 0;";
+			uasort($this->tableau, function($aa, $bb) use ($sortfunc) {
+				return eval($sortfunc);
+			});
 		}
 	}
 
@@ -556,7 +558,9 @@ class IterateurDATA implements Iterator {
 	 */
 	public function next() {
 		if ($this->valid()) {
-			list($this->cle, $this->valeur) = each($this->tableau);
+			$this->cle = key($this->tableau);
+			$this->valeur = current($this->tableau);
+			next($this->tableau);
 		}
 	}
 

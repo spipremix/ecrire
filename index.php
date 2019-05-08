@@ -45,7 +45,6 @@ if (autoriser_sans_cookie($exec)) {
 	if (!isset($reinstall)) {
 		$reinstall = 'non';
 	}
-	set_request('transformer_xml');
 	$var_auth = true;
 } else {
 	// Authentification, redefinissable
@@ -160,13 +159,6 @@ if (!$var_auth and isset($_COOKIE['spip_lang_ecrire'])
 	action_converser_post($GLOBALS['visiteur_session']['lang'], true);
 }
 
-
-// Passer la main aux outils XML a la demande (meme les redac s'ils veulent).
-// mais seulement si on a bien ete auhentifie
-if ($var_f = _request('transformer_xml')) {
-	set_request('var_url', $exec);
-	$exec = $var_f;
-}
 if ($var_f = tester_url_ecrire($exec)) {
 	$var_f = charger_fonction($var_f);
 	$var_f(); // at last

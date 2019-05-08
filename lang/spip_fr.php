@@ -686,6 +686,9 @@ et vous reconnecter au site.
 	'trad_definir_reference' => 'Choisir "@titre@" comme référence des traductions',
 	'trad_reference' => '(référence des traductions)',
 
+	// U
+	'upload_limit' => 'Ce fichier est trop gros pour le serveur ; la taille maximum autorisée en <i>upload</i> est de @max@.',
+
 	// Z
 	'zbug_balise_b_aval' => ' : balise B en aval',
 	'zbug_balise_inexistante' => 'Balise @balise@ mal déclarée pour @from@',

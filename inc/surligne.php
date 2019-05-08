@@ -20,22 +20,6 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 /**
- * Ancien marqueur de début de surlignement
- *
- * @see balise_DEBUT_SURLIGNE_dist()
- * @deprecated N'a plus d'effet
- **/
-define('MARQUEUR_SURLIGNE', 'debut_surligneconditionnel');
-/**
- * Ancien marqueur de fin de surlignement
- *
- * @see balise_FIN_SURLIGNE_dist()
- * @deprecated N'a plus d'effet
- **/
-define('MARQUEUR_FSURLIGNE', 'finde_surligneconditionnel');
-
-
-/**
  * Ajoute au HTML un script JS surlignant une recherche indiquée et/ou issue des réferers
  *
  * Ajoute à la page HTML, seulement si des mots de recherches sont présents,
@@ -70,7 +54,7 @@ function surligner_mots($page, $surcharge_surligne = '') {
 	);
 
 
-	$ref = $_SERVER['HTTP_REFERER'];
+	$ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 	//avoid a js injection
 	if ($surcharge_surligne) {
 		$surcharge_surligne = preg_replace(",(?<!\\\\)((?:(?>\\\\){2})*)('),", "$1\\\\$2", $surcharge_surligne);

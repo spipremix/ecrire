@@ -664,6 +664,9 @@ Tente se',
 	'trad_definir_reference' => 'Escolher "@titre@" como referência das traduções',
 	'trad_reference' => '(matéria das traduções)',
 
+	// U
+	'upload_limit' => 'Este arquivo é grande demais para o servidor; o tamanho máximo autorizado para <i>upload</i> é de @max@.',
+
 	// Z
 	'zbug_balise_b_aval' => ': tag B colocada após BOUCLE',
 	'zbug_balise_inexistante' => 'Tag @balise@ mal declarada para @from@',

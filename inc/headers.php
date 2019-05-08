@@ -49,10 +49,6 @@ function redirige_par_entete($url, $equiv = '', $status = 302) {
 		$url = url_absolue($url);
 	}
 
-	if ($x = _request('transformer_xml')) {
-		$url = parametre_url($url, 'transformer_xml', $x, '&');
-	}
-
 	if (defined('_AJAX') and _AJAX) {
 		$url = parametre_url($url, 'var_ajax_redir', 1, '&');
 	}

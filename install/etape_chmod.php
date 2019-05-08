@@ -93,7 +93,7 @@ function install_etape_chmod_dist() {
 	$bad_dirs = array();
 	$absent_dirs = array();
 
-	while (list(, $my_dir) = each($GLOBALS['test_dirs'])) {
+	foreach ($GLOBALS['test_dirs'] as $i => $my_dir) {
 		$test = test_ecrire($my_dir);
 		if (!$test) {
 			$m = preg_replace(',^' . _DIR_RACINE . ',', '', $my_dir);

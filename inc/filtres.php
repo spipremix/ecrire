@@ -683,9 +683,7 @@ function entites_html($texte, $tout = false, $quote = true) {
 	}
 	include_spip('inc/texte');
 	$flags = ($quote ? ENT_QUOTES : ENT_NOQUOTES);
-	if (defined('ENT_HTML401')) {
-		$flags |= ENT_HTML401;
-	}
+	$flags |= ENT_HTML401;
 	$texte = spip_htmlspecialchars(echappe_retour(echappe_html($texte, '', true), '', 'proteger_amp'), $flags);
 	if ($tout) {
 		return corriger_toutes_entites_html($texte);
@@ -930,7 +928,7 @@ function recuperer_numero($texte) {
  *     Texte converti
  **/
 function supprimer_tags($texte, $rempl = "") {
-	$texte = preg_replace(",<(!--|\w|/)[^>]*>,US", $rempl, $texte);
+	$texte = preg_replace(",<(!--|\w|/|!\[endif|!\[if)[^>]*>,US", $rempl, $texte);
 	// ne pas oublier un < final non ferme car coupe
 	$texte = preg_replace(",<(!--|\w|/).*$,US", $rempl, $texte);
 	// mais qui peut aussi etre un simple signe plus petit que
@@ -1369,82 +1367,6 @@ function choixsivide($a, $vide, $pasvide) {
  **/
 function choixsiegal($a1, $a2, $v, $f) {
 	return ($a1 == $a2) ? $v : $f;
-}
-
-/**
- * Alignements en HTML (Old-style, préférer CSS)
- *
- * Cette fonction ne crée pas de paragraphe
- *
- * @deprecated Utiliser CSS
- * @param string $letexte
- * @param string $justif
- * @return string
- */
-function aligner($letexte, $justif = '') {
-	$letexte = trim($letexte);
-	if (!strlen($letexte)) {
-		return '';
-	}
-
-	// Paragrapher rapidement
-	$letexte = "<div style='text-align:$justif'>"
-		. $letexte
-		. "</div>";
-
-	return $letexte;
-}
-
-/**
- * Justifie en HTML (Old-style, préférer CSS)
- *
- * @deprecated Utiliser CSS
- * @uses aligner()
- * @param string $letexte
- * @return string
- */
-function justifier($letexte) { return aligner($letexte, 'justify'); }
-
-/**
- * Aligne à droite en HTML (Old-style, préférer CSS)
- *
- * @deprecated Utiliser CSS
- * @uses aligner()
- * @param string $letexte
- * @return string
- */
-function aligner_droite($letexte) { return aligner($letexte, 'right'); }
-
-/**
- * Aligne à gauche en HTML (Old-style, préférer CSS)
- *
- * @deprecated Utiliser CSS
- * @uses aligner()
- * @param string $letexte
- * @return string
- */
-function aligner_gauche($letexte) { return aligner($letexte, 'left'); }
-
-/**
- * Centre en HTML (Old-style, préférer CSS)
- *
- * @deprecated Utiliser CSS
- * @uses aligner()
- * @param string $letexte
- * @return string
- */
-function centrer($letexte) { return aligner($letexte, 'center'); }
-
-/**
- * Retourne un texte de style CSS aligné sur la langue en cours
- *
- * @deprecated
- * @param mixed $bof Inutilisé
- * @return string Style CSS
- **/
-function style_align($bof) {
-
-	return "text-align: " . $GLOBALS['spip_lang_left'];
 }
 
 //
@@ -1905,11 +1827,13 @@ function alterner($i) {
  **/
 function extraire_attribut($balise, $attribut, $complet = false) {
 	if (is_array($balise)) {
-		array_walk($balise,
-			create_function('&$a,$key,$t',
-				'$a = extraire_attribut($a,$t);'
-			),
-			$attribut);
+		array_walk(
+			$balise,
+			function(&$a, $key, $t){
+				$a = extraire_attribut($a, $t);
+			},
+			$attribut
+		);
 
 		return $balise;
 	}
@@ -2389,7 +2313,9 @@ function extraire_balise($texte, $tag = 'a') {
 	if (is_array($texte)) {
 		array_walk(
 			$texte,
-			create_function('&$a,$key,$t', '$a = extraire_balise($a,$t);'),
+			function(&$a, $key, $t){
+				$a = extraire_balise($a, $t);
+			},
 			$tag
 		);
 
@@ -2431,7 +2357,9 @@ function extraire_balises($texte, $tag = 'a') {
 	if (is_array($texte)) {
 		array_walk(
 			$texte,
-			create_function('&$a,$key,$t', '$a = extraire_balises($a,$t);'),
+			function(&$a, $key, $t){
+				$a = extraire_balises($a, $t);
+			},
 			$tag
 		);
 
@@ -2834,9 +2762,11 @@ function urls_absolues_css($contenu, $source) {
 
 	return preg_replace_callback(
 		",url\s*\(\s*['\"]?([^'\"/#\s][^:]*)['\"]?\s*\),Uims",
-		create_function('$x',
-			'return "url(\'".suivre_lien(\'' . $path . '\',$x[1])."\')";'
-		), $contenu);
+		function($x) use ($path) {
+			return "url('" . suivre_lien($path, $x[1]) . "')";
+		},
+		$contenu
+	);
 }
 
 
@@ -2889,7 +2819,7 @@ function direction_css($css, $voulue = '') {
 
 	if (
 		// url absolue
-		preg_match(",^http:,i", $css)
+		preg_match(",^https?:,i", $css)
 		// ou qui contient un ?
 		or (($p = strpos($css, '?')) !== false)
 	) {
@@ -2917,8 +2847,8 @@ function direction_css($css, $voulue = '') {
 	// la css peut etre distante (url absolue !)
 	if ($distant) {
 		include_spip('inc/distant');
-		$contenu = recuperer_page($css);
-		if (!$contenu) {
+		$res = recuperer_url($css);
+		if (!$res or !$contenu = $res['page']) {
 			return $css;
 		}
 	} else {
@@ -2932,10 +2862,16 @@ function direction_css($css, $voulue = '') {
 		}
 	}
 
-	$contenu = str_replace(
-		array('right', 'left', '@@@@L E F T@@@@'),
-		array('@@@@L E F T@@@@', 'right', 'left'),
-		$contenu);
+
+	// Inverser la direction gauche-droite en utilisant CSSTidy qui gere aussi les shorthands
+	include_spip("lib/csstidy/class.csstidy");
+	$parser = new csstidy();
+	$parser->set_cfg('optimise_shorthands', 0);
+	$parser->set_cfg('reverse_left_and_right', true);
+	$parser->parse($contenu);
+
+	$contenu = $parser->print->plain();
+
 
 	// reperer les @import auxquels il faut propager le direction_css
 	preg_match_all(",\@import\s*url\s*\(\s*['\"]?([^'\"/][^:]*)['\"]?\s*\),Uims", $contenu, $regs);

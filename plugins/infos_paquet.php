@@ -75,15 +75,11 @@ function plugins_infos_paquet($desc, $plug = '', $dir_plugins = _DIR_PLUGINS) {
 
 		return $tree;
 	}
+
 	// Prendre les messages d'erreur sans les numeros de lignes
 	$msg = array_map('array_shift', $vxml->err);
-	// Construire le lien renvoyant sur l'application du validateur XML 
-	$h = $GLOBALS['meta']['adresse_site'] . '/'
-		. substr("$dir_plugins$plug/", strlen(_DIR_RACINE)) . 'paquet.xml';
-
-	$h = generer_url_ecrire('valider_xml', "var_url=$h");
 	$t = _T('plugins_erreur', array('plugins' => $plug));
-	array_unshift($msg, "<a href='$h'>$t</a>");
+	array_unshift($msg, $t . " <ul class='erreur_xml'><li>" . reset($msg) . "</li></ul>");
 
 	return array('erreur' => $msg);
 }

@@ -148,7 +148,6 @@ if (!defined('_IS_BOT')) {
 	);
 }
 
-//
 // *** Parametrage par defaut de SPIP ***
 //
 // Les globales qui suivent peuvent etre modifiees
@@ -156,6 +155,64 @@ if (!defined('_IS_BOT')) {
 // Il suffit de copier les lignes ci-dessous, et ajouter le marquage de debut
 // et fin de fichier PHP ("< ?php" et "? >", sans les espaces)
 // Ne pas les rendre indefinies.
+
+global
+	$nombre_de_logs,
+	$taille_des_logs,
+	$table_prefix,
+	$cookie_prefix,
+	$dossier_squelettes,
+	$filtrer_javascript,
+	$type_urls,
+	$debut_date_publication,
+	$ip,
+	$mysql_rappel_connexion,
+	$mysql_rappel_nom_base,
+	$test_i18n,
+	$ignore_auth_http,
+	$ignore_remote_user,
+	$derniere_modif_invalide,
+	$quota_cache,
+	$home_server,
+	$help_server,
+	$url_glossaire_externe,
+	$tex_server,
+	$traiter_math,
+	$xhtml,
+	$xml_indent,
+	$source_vignettes,
+	$formats_logos,
+	$controler_dates_rss,
+	$spip_pipeline,
+	$spip_matrice,
+	$plugins,
+	$surcharges,
+	$exceptions_des_tables,
+	$tables_principales,
+	$table_des_tables,
+	$tables_auxiliaires,
+	$table_primary,
+	$table_date,
+	$table_titre,
+	$tables_jointures,
+	$liste_des_statuts,
+	$liste_des_etats,
+	$liste_des_authentifications,
+	$spip_version_branche,
+	$spip_version_code,
+	$spip_version_base,
+	$spip_sql_version,
+	$spip_version_affichee,
+	$visiteur_session,
+	$auteur_session,
+	$connect_statut,
+	$connect_toutes_rubriques,
+	$hash_recherche,
+	$hash_recherche_strict,
+	$ldap_present,
+	$meta,
+	$connect_id_rubrique,
+	$puce;
 
 # comment on logge, defaut 4 tmp/spip.log de 100k, 0 ou 0 suppriment le log
 $nombre_de_logs = 4;
@@ -280,11 +337,6 @@ $ignore_remote_user = true; # methode obsolete et risquee
 // vous pouvez mettre cette globale a false (dans mes_options).
 $derniere_modif_invalide = true;
 
-// Quota : la variable $quota_cache, si elle est > 0, indique la taille
-// totale maximale desiree des fichiers contenus dans le cache ; ce quota n'est
-// pas "dur" : si le site necessite un espace plus important, il le prend
-$quota_cache = 10;
-
 //
 // Serveurs externes
 //
@@ -372,10 +424,10 @@ $liste_des_authentifications = array(
 // pour specifier les versions de SPIP necessaires
 // il faut s'en tenir a un nombre de decimales fixe
 // ex : 2.0.0, 2.0.0-dev, 2.0.0-beta, 2.0.0-beta2
-$spip_version_branche = "3.2.3";
+$spip_version_branche = "3.3.0-dev";
 // cette version dev accepte tous les plugins compatible avec la version ci-dessous
 // a supprimer en phase beta/rc/release
-#define('_DEV_VERSION_SPIP_COMPAT',"3.1.3");
+define('_DEV_VERSION_SPIP_COMPAT',"3.2.99");
 // version des signatures de fonctions PHP
 // (= numero SVN de leur derniere modif cassant la compatibilite et/ou necessitant un recalcul des squelettes)
 $spip_version_code = 22653;
@@ -408,10 +460,6 @@ if (_FILE_OPTIONS) {
 	include_once _FILE_OPTIONS;
 }
 
-if (!defined('E_DEPRECATED')) {
-	/** Compatibilite PHP 5.3 */
-	define('E_DEPRECATED', 8192);
-}
 if (!defined('SPIP_ERREUR_REPORT')) {
 	/** Masquer les warning */
 	define('SPIP_ERREUR_REPORT', E_ALL ^ E_NOTICE ^ E_DEPRECATED);
@@ -499,7 +547,10 @@ if (isset($_REQUEST['var_memotri'])
 	if (!function_exists('session_set')) {
 		include_spip('inc/session');
 	}
-	session_set($t, _request($t));
+	$t = preg_replace(",\W,","_", $t);
+	if ($v = _request($t)) {
+		session_set($t, $v);
+	}
 }
 
 /**
@@ -512,7 +563,12 @@ if (!defined('_HEADER_COMPOSED_BY')) {
 	define('_HEADER_COMPOSED_BY', "Composed-By: SPIP");
 }
 if (!headers_sent() and _HEADER_COMPOSED_BY) {
-	header("Vary: Cookie, Accept-Encoding");
+	if (!defined('_HEADER_VARY')) {
+		define('_HEADER_VARY', "Vary: Cookie, Accept-Encoding");
+	}
+	if (_HEADER_VARY) {
+		header(_HEADER_VARY);
+	}
 	if (!isset($GLOBALS['spip_header_silencieux']) or !$GLOBALS['spip_header_silencieux']) {
 		include_spip('inc/filtres_mini');
 		header(_HEADER_COMPOSED_BY . " $spip_version_affichee @ www.spip.net + " . url_absolue(_DIR_VAR . "config.txt"));

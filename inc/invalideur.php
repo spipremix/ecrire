@@ -128,7 +128,7 @@ function taille_du_cache() {
  * @param bool $modif
  *     Inutilisé
  **/
-function suivre_invalideur($cond, $modif = true) {
+function inc_suivre_invalideur_dist($cond, $modif = true) {
 	if (!$modif) {
 		return;
 	}
@@ -224,62 +224,6 @@ function purger_repertoire($dir, $options = array()) {
 
 
 //
-// Methode : on prend un des sous-repertoires de CACHE/
-// on considere qu'il fait 1/16e de la taille du cache
-// et on le ratiboise en supprimant les fichiers qui n'ont pas
-// ete sollicites dans l'heure qui vient de s'ecouler
-//
-// http://code.spip.net/@appliquer_quota_cache
-function appliquer_quota_cache() {
-
-	$encore = false;
-
-	$tour_quota_cache = intval(1 + $GLOBALS['meta']['tour_quota_cache']) % 16;
-	ecrire_meta('tour_quota_cache', $tour_quota_cache);
-
-	$l = dechex($tour_quota_cache);
-	$dir = sous_repertoire(_DIR_CACHE, $l);
-	list($nombre, $taille) = nombre_de_fichiers_repertoire($dir);
-	$total_cache = $taille * $nombre;
-	spip_log("Taille du CACHE estimee ($l): "
-		. (intval(16 * $total_cache / (1024 * 1024 / 10)) / 10) . ' Mo', 'invalideur');
-
-	// Nombre max de fichiers a supprimer
-	if ($GLOBALS['quota_cache'] > 0
-		and $taille > 0
-	) {
-		$trop = $total_cache - ($GLOBALS['quota_cache'] / 16) * 1024 * 1024;
-		$trop = 3 * intval($trop / $taille);
-		if ($trop > 0) {
-			$n = purger_repertoire(
-				$dir,
-				array(
-					'atime' => time() - _AGE_CACHE_ATIME,
-					'limit' => $trop,
-					'subdir' => true // supprimer les vieux sous repertoire de session (avant [15851])
-				)
-			);
-			spip_log("$dir : $n/$trop caches supprimes [taille moyenne $taille]", 'invalideur');
-			$total_cache = intval(max(0, (16 * $total_cache) - $n * $taille) / (1024 * 1024) * 10) / 10;
-			spip_log("cache restant estime : $total_cache Mo, ratio " . $total_cache / $GLOBALS['quota_cache'], 'invalideur');
-
-			// redemander la main pour eviter que le cache ne gonfle trop
-			// mais pas si on ne peut pas purger car les fichiers sont trops recents
-			if (
-				$total_cache / $GLOBALS['quota_cache'] > 1.5
-				and $n * 50 > $trop
-			) {
-				$encore = true;
-				spip_log('Il faut encore purger', 'invalideur');
-			}
-		}
-	}
-
-	return $encore;
-}
-
-
-//
 // Destruction des fichiers caches invalides
 //
 
@@ -298,6 +242,16 @@ function retire_cache($cache) {
 	}
 }
 
+// Supprimer les caches marques "x"
+// A priori dans cette version la fonction ne sera pas appelee, car
+// la meta est toujours false ; mais evitons un bug si elle est appellee
+// http://code.spip.net/@retire_caches
+function inc_retire_caches_dist($chemin = '') {
+	if (isset($GLOBALS['meta']['invalider_caches'])) {
+		effacer_meta('invalider_caches');
+	} # concurrence
+}
+
 #######################################################################
 ##
 ## Ci-dessous les fonctions qui restent appellees dans le core
@@ -305,25 +259,24 @@ function retire_cache($cache) {
 ## mais ici elles ne font plus rien
 ##
 
-// Supprimer les caches marques "x"
-// A priori dans cette version la fonction ne sera pas appelee, car
-// la meta est toujours false ; mais evitons un bug si elle est appellee
-// http://code.spip.net/@retire_caches
 function retire_caches($chemin = '') {
-	if (isset($GLOBALS['meta']['invalider_caches'])) {
-		effacer_meta('invalider_caches');
-	} # concurrence
+	if ($retire_caches = charger_fonction('retire_caches', 'inc', true)) {
+		return $retire_caches($chemin);
+	}
 }
 
 
 // Fonction permettant au compilo de calculer les invalideurs d'une page
 // (note: si absente, n'est pas appellee)
-/*
+
 // http://code.spip.net/@calcul_invalideurs
 function calcul_invalideurs($corps, $primary, &$boucles, $id_boucle) {
+	if ($calcul_invalideurs = charger_fonction('calcul_invalideurs', 'inc', true)) {
+		return $calcul_invalideurs($corps, $primary, $boucles, $id_boucle);
+	}
 	return $corps;
 }
-*/
+
 
 // Cette fonction permet de supprimer tous les invalideurs
 // Elle ne touche pas aux fichiers cache eux memes ; elle est
@@ -331,24 +284,44 @@ function calcul_invalideurs($corps, $primary, &$boucles, $id_boucle) {
 //
 // http://code.spip.net/@supprime_invalideurs
 function supprime_invalideurs() {
+	if ($supprime_invalideurs = charger_fonction('supprime_invalideurs', 'inc', true)) {
+		return $supprime_invalideurs();
+	}
 }
 
 
 // Calcul des pages : noter dans la base les liens d'invalidation
 // http://code.spip.net/@maj_invalideurs
 function maj_invalideurs($fichier, &$page) {
+	if ($maj_invalideurs = charger_fonction('maj_invalideurs', 'inc', true)) {
+		return $maj_invalideurs($fichier, $page);
+	}
 }
 
 
 // les invalideurs sont de la forme "objet/id_objet"
 // http://code.spip.net/@insere_invalideur
 function insere_invalideur($inval, $fichier) {
+	if ($insere_invalideur = charger_fonction('insere_invalideur', 'inc', true)) {
+		return $insere_invalideur($inval, $fichier);
+	}
 }
-
 
 //
 // Marquer les fichiers caches invalides comme etant a supprimer
 //
 // http://code.spip.net/@applique_invalideur
 function applique_invalideur($depart) {
+	if ($applique_invalideur = charger_fonction('applique_invalideur', 'inc', true)) {
+		return $applique_invalideur($depart);
+	}
+}
+
+//
+// Invalider les caches liés à telle condition
+//
+function suivre_invalideur($cond, $modif = true) {
+	if ($suivre_invalideur = charger_fonction('suivre_invalideur', 'inc', true)) {
+		return $suivre_invalideur($cond, $modif);
+	}
 }

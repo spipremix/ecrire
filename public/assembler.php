@@ -23,6 +23,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
+// En cas de modification, il faut aussi actualiser la regexp de nettoyer_uri_var() dans inc/utils.php
 if (!defined('_CONTEXTE_IGNORE_VARIABLES')) {
 	define('_CONTEXTE_IGNORE_VARIABLES', "/(^var_|^PHPSESSID$|^fbclid$|^utm_)/");
 }
@@ -512,11 +513,10 @@ function inclure_modele($type, $id, $params, $lien, $connect = '', $env = array(
 
 	$params = array_filter(explode('|', $params));
 	if ($params) {
-		list(, $soustype) = each($params);
+		$soustype = current($params);
 		$soustype = strtolower(trim($soustype));
-		if (in_array($soustype,
-			array('left', 'right', 'center', 'ajax'))) {
-			list(, $soustype) = each($params);
+		if (in_array($soustype, array('left', 'right', 'center', 'ajax'))) {
+			$soustype = next($params);
 			$soustype = strtolower($soustype);
 		}
 

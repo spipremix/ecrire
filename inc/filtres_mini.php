@@ -84,6 +84,7 @@ function suivre_lien($url, $lien) {
 
 	# lien relatif, il faut verifier l'url de base
 	# commencer par virer la chaine de get de l'url de base
+	$dir = '/';
 	if (preg_match(';^((?:[a-z]{3,7}:)?//[^/]+)(/.*?/?)?([^/#?]*)([?][^#]*)?(#.*)?$;S', $url, $regs)) {
 		$debut = $regs[1];
 		$dir = !strlen($regs[2]) ? '/' : $regs[2];
@@ -228,12 +229,9 @@ function abs_url($texte, $base = '') {
  * @param bool $double_encode
  * @return string
  */
-function spip_htmlspecialchars($string, $flags = null, $encoding = 'ISO-8859-1', $double_encode = true) {
+function spip_htmlspecialchars($string, $flags = null, $encoding = 'UTF-8', $double_encode = true) {
 	if (is_null($flags)) {
-		$flags = ENT_COMPAT;
-		if (defined('ENT_HTML401')) {
-			$flags |= ENT_HTML401;
-		}
+		$flags = ENT_COMPAT|ENT_HTML401;
 	}
 
 	return htmlspecialchars($string, $flags, $encoding, $double_encode);
@@ -248,12 +246,9 @@ function spip_htmlspecialchars($string, $flags = null, $encoding = 'ISO-8859-1',
  * @param bool $double_encode
  * @return string
  */
-function spip_htmlentities($string, $flags = null, $encoding = 'ISO-8859-1', $double_encode = true) {
+function spip_htmlentities($string, $flags = null, $encoding = 'UTF-8', $double_encode = true) {
 	if (is_null($flags)) {
-		$flags = ENT_COMPAT;
-		if (defined('ENT_HTML401')) {
-			$flags |= ENT_HTML401;
-		}
+		$flags = ENT_COMPAT|ENT_HTML401;
 	}
 
 	return htmlentities($string, $flags, $encoding, $double_encode);

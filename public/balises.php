@@ -769,54 +769,6 @@ function calculer_balise_expose($p, $on, $off) {
 
 
 /**
- * Compile la balise `#DEBUT_SURLIGNE` qui permettait le surlignage
- * des mots d'une recherche
- *
- * @note
- *     Cette balise n'a plus d'effet depuis r9343
- *
- * @balise
- * @see balise_FIN_SURLIGNE_dist()
- * @deprecated Utiliser les classes CSS `surlignable` ou `pas_surlignable`
- *
- * @param Champ $p
- *     Pile au niveau de la balise
- * @return Champ
- *     Pile complétée par le code à générer
- **/
-function balise_DEBUT_SURLIGNE_dist($p) {
-	include_spip('inc/surligne');
-	$p->code = "'<!-- " . MARQUEUR_SURLIGNE . " -->'";
-
-	return $p;
-}
-
-
-/**
- * Compile la balise `#FIN_SURLIGNE` qui arrêtait le surlignage
- * des mots d'une recherche
- *
- * @note
- *     Cette balise n'a plus d'effet depuis r9343
- *
- * @balise
- * @see balise_DEBUT_SURLIGNE_dist()
- * @deprecated Utiliser les classes CSS `surlignable` ou `pas_surlignable`
- *
- * @param Champ $p
- *     Pile au niveau de la balise
- * @return Champ
- *     Pile complétée par le code à générer
- **/
-function balise_FIN_SURLIGNE_dist($p) {
-	include_spip('inc/surligne');
-	$p->code = "'<!-- " . MARQUEUR_FSURLIGNE . "-->'";
-
-	return $p;
-}
-
-
-/**
  * Compile la balise `#INTRODUCTION`
  *
  * Retourne une introduction d'un objet éditorial, c'est à dire les 600
@@ -853,9 +805,16 @@ function balise_INTRODUCTION_dist($p) {
 	$type = $p->type_requete;
 
 	$_texte = champ_sql('texte', $p);
-	$_descriptif = ($type == 'articles' or $type == 'rubriques') ? champ_sql('descriptif', $p) : "''";
+	$trouver_table = charger_fonction('trouver_table', 'base');
+	$desc = $trouver_table(table_objet_sql($type));
+	$_descriptif = "''";
+	if ($desc and isset($desc['field']['descriptif'])) {
+		// notamment articles et rubriques mais aussi tout nouvel objet concerne
+		$_descriptif = champ_sql('descriptif', $p);
+	}
 
-	if ($type == 'articles') {
+	// notamment les articles mais aussi tout nouvel objet concerne
+	if ($desc and isset($desc['field']['chapo'])) {
 		$_chapo = champ_sql('chapo', $p);
 		$_texte = "(strlen($_descriptif))
 		? ''
@@ -1013,6 +972,8 @@ function balise_RANG_dist($p) {
 		// si pas trouve de champ sql rang :
 		if (!$_rang or $_rang == "''") {
 			$boucle = &$p->boucles[$b];
+
+			// on gere le cas ou #RANG est une extraction du numero dans le titre
 			$trouver_table = charger_fonction('trouver_table', 'base');
 			$desc = $trouver_table($boucle->id_table);
 			$_titre = ''; # où extraire le numero ?
@@ -1039,13 +1000,24 @@ function balise_RANG_dist($p) {
 					}
 				}
 			}
-			
+
 			// si on n'a rien trouvé, on utilise le champ titre classique
 			if (!$_titre) {
 				$_titre = champ_sql('titre', $p);
 			}
-			
-			$_rang = "recuperer_numero($_titre)";
+
+			// et on recupere aussi les infos de liaison si on est en train d'editer les liens justement
+			// cas des formulaires xxx_lies utilises par #FORMULAIRE_EDITER_LIENS
+			$type_boucle = $boucle->type_requete;
+			$objet = objet_type($type_boucle);
+			$id_table_objet = id_table_objet($type_boucle);
+			$_primary = champ_sql($id_table_objet, $p, '', false);
+			$_env = '$Pile[0]';
+
+			if (!$_titre) {$_titre = "''";}
+			if (!$_primary) {$_primary = "''";}
+			$_rang = "calculer_rang_smart($_titre, '$objet', $_primary, $_env)";
+
 		}
 		
 		$p->code = $_rang;
@@ -1158,7 +1130,7 @@ function balise_PAGINATION_dist($p, $liste = 'true') {
 	// si true, les arguments simples (sans truc=chose) vont degager
 	$_contexte = argumenter_inclure($p->param, true, $p, $p->boucles, $p->id_boucle, false, false);
 	if (count($_contexte)) {
-		list($key, $val) = each($_contexte);
+		$key = key($_contexte);
 		if (is_numeric($key)) {
 			array_shift($_contexte);
 			$__modele = interprete_argument_balise(1, $p);
@@ -2086,7 +2058,7 @@ function balise_MODELE_dist($p) {
 	// erreur de syntaxe = fond absent
 	// (2 messages d'erreur SPIP pour le prix d'un, mais pas d'erreur PHP
 	if (!$_contexte) {
-		$contexte = array();
+		$_contexte = array();
 	}
 
 	if (!isset($_contexte[1])) {

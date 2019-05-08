@@ -36,7 +36,7 @@ function maj_v016_dist($version_installee, $version_cible) {
 	}
 
 	if (upgrade_vers(1.601, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_forum ADD INDEX id_syndic (id_syndic)");
+		sql_query("ALTER TABLE spip_forum ADD INDEX id_syndic (id_syndic)");
 		maj_version(1.601);
 	}
 
@@ -49,15 +49,15 @@ function maj_v016_dist($version_installee, $version_cible) {
 	}
 
 	if (upgrade_vers(1.604, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_auteurs ADD lang VARCHAR(10) DEFAULT '' NOT NULL");
-		$u = spip_query("SELECT * FROM spip_auteurs WHERE prefs LIKE '%spip_lang%'");
+		sql_query("ALTER TABLE spip_auteurs ADD lang VARCHAR(10) DEFAULT '' NOT NULL");
+		$u = sql_query("SELECT * FROM spip_auteurs WHERE prefs LIKE '%spip_lang%'");
 		while ($row = sql_fetch($u)) {
 			$prefs = unserialize($row['prefs']);
 			$l = $prefs['spip_lang'];
 			unset($prefs['spip_lang']);
-			spip_query("UPDATE spip_auteurs SET lang=" . _q($l) . ", prefs='" . addslashes(serialize($prefs)) . "' WHERE id_auteur=" . $row['id_auteur']);
+			sql_query("UPDATE spip_auteurs SET lang=" . sql_quote($l) . ", prefs='" . sql_quote(serialize($prefs)) . "' WHERE id_auteur=" . $row['id_auteur']);
 		}
-		$u = spip_query("SELECT lang FROM spip_auteurs");
+		$u = sql_query("SELECT lang FROM spip_auteurs");
 		maj_version(1.604, $u);
 	}
 }

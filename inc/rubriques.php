@@ -382,7 +382,7 @@ function propager_les_secteurs() {
 				"spip_rubriques",
 				"profondeur=" . intval($prof + 1) . " AND id_parent NOT IN (" . sql_get_select("zzz.id_rubrique",
 					"spip_rubriques AS zzz", "zzz.profondeur=" . intval($prof)) . ")", '', '', '0,100')) {
-			$rows = array_map('reset', $rows);
+			$rows = array_column($rows, 'id');
 			sql_updateq("spip_rubriques", array('profondeur' => $prof + 2), sql_in("id_rubrique", $rows));
 		}
 
@@ -663,7 +663,7 @@ function inc_calcul_branche_in_dist($id) {
 			'spip_rubriques',
 			sql_in('id_parent', $r) . " AND " . sql_in('id_rubrique', $r, 'NOT')
 		)) {
-		$r = join(',', array_map('reset', $filles));
+		$r = join(',', array_column($filles, 'id_rubrique'));
 		$branche .= ',' . $r;
 	}
 
@@ -718,7 +718,7 @@ function inc_calcul_hierarchie_in_dist($id, $tout = true) {
 			'spip_rubriques',
 			sql_in('id_rubrique', $ids_nouveaux_parents) . " AND " . sql_in('id_parent', $hier, 'NOT')
 		)) {
-		$ids_nouveaux_parents = join(',', array_map('reset', $parents));
+		$ids_nouveaux_parents = join(',', array_column($parents, 'id_parent'));
 		$hier = $ids_nouveaux_parents . (strlen($hier) ? ',' . $hier : '');
 	}
 

@@ -28,33 +28,33 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function v019_pre193($version_installee, $version_cible) {
 	// Syndication : ajout de l'option resume=oui/non et de la langue
 	if (upgrade_vers(1.901, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_syndic ADD `resume` VARCHAR(3) DEFAULT 'oui'");
-		spip_query("ALTER TABLE spip_syndic_articles ADD `lang` VARCHAR(10) DEFAULT '' NOT NULL");
+		sql_query("ALTER TABLE spip_syndic ADD `resume` VARCHAR(3) DEFAULT 'oui'");
+		sql_query("ALTER TABLE spip_syndic_articles ADD `lang` VARCHAR(10) DEFAULT '' NOT NULL");
 		maj_version(1.901);
 	}
 
 	// Syndication : ajout de source, url_source, tags
 	if (upgrade_vers(1.902, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_syndic_articles ADD `url_source` TINYTEXT DEFAULT '' NOT NULL");
-		spip_query("ALTER TABLE spip_syndic_articles ADD `source` TINYTEXT DEFAULT '' NOT NULL");
-		spip_query("ALTER TABLE spip_syndic_articles ADD `tags` TEXT DEFAULT '' NOT NULL");
+		sql_query("ALTER TABLE spip_syndic_articles ADD `url_source` TINYTEXT DEFAULT '' NOT NULL");
+		sql_query("ALTER TABLE spip_syndic_articles ADD `source` TINYTEXT DEFAULT '' NOT NULL");
+		sql_query("ALTER TABLE spip_syndic_articles ADD `tags` TEXT DEFAULT '' NOT NULL");
 		maj_version(1.902);
 	}
 
 	// URLs propres des sites (sait-on jamais)
 	// + oubli des KEY url_propre sur les auteurs si installation neuve
 	if (upgrade_vers(1.903, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_syndic ADD `url_propre` VARCHAR(255) NOT NULL");
-		spip_query("ALTER TABLE spip_syndic ADD INDEX `url_propre` (`url_propre`)");
-		spip_query("ALTER TABLE spip_auteurs ADD INDEX `url_propre` (`url_propre`)");
+		sql_query("ALTER TABLE spip_syndic ADD `url_propre` VARCHAR(255) NOT NULL");
+		sql_query("ALTER TABLE spip_syndic ADD INDEX `url_propre` (`url_propre`)");
+		sql_query("ALTER TABLE spip_auteurs ADD INDEX `url_propre` (`url_propre`)");
 		maj_version(1.903);
 	}
 
 	// suppression des anciennes tables temporaires des visites
 	// (maintenant stockees sous forme de fichiers)
 	if (upgrade_vers(1.904, $version_installee, $version_cible)) {
-		spip_query("DROP TABLE IF EXISTS spip_visites_temp");
-		spip_query("DROP TABLE IF EXISTS spip_referers_temp");
+		sql_query("DROP TABLE IF EXISTS spip_visites_temp");
+		sql_query("DROP TABLE IF EXISTS spip_referers_temp");
 		maj_version(1.904);
 	}
 
@@ -63,8 +63,8 @@ function v019_pre193($version_installee, $version_cible) {
 	if (upgrade_vers(1.905, $version_installee, $version_cible)) {
 		// agrandir le champ "valeur" de spip_meta pour pouvoir y stocker
 		// des choses plus sympa
-		spip_query("ALTER TABLE spip_meta DROP INDEX `valeur`");
-		spip_query("ALTER TABLE spip_meta CHANGE `valeur` `valeur` TEXT");
+		sql_query("ALTER TABLE spip_meta DROP INDEX `valeur`");
+		sql_query("ALTER TABLE spip_meta CHANGE `valeur` `valeur` TEXT");
 		// table des correspondances table->id_table
 		$liste_tables = array();
 		$liste_tables[1] = 'spip_articles';
@@ -81,32 +81,32 @@ function v019_pre193($version_installee, $version_cible) {
 
 ## devenu inutile car suppression totale de l'indexation
 		/*
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_article` as id_objet,'1' as id_table FROM spip_index_articles");
-				spip_query("DROP TABLE IF EXISTS spip_index_articles");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_article` as id_objet,'1' as id_table FROM spip_index_articles");
+				sql_query("DROP TABLE IF EXISTS spip_index_articles");
 
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_auteur` as id_objet,'2' as id_table FROM spip_index_auteurs");
-				spip_query("DROP TABLE IF EXISTS spip_index_auteurs");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_auteur` as id_objet,'2' as id_table FROM spip_index_auteurs");
+				sql_query("DROP TABLE IF EXISTS spip_index_auteurs");
 
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_breve` as id_objet,'3' as id_table FROM spip_index_breves");
-				spip_query("DROP TABLE IF EXISTS spip_index_breves");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_breve` as id_objet,'3' as id_table FROM spip_index_breves");
+				sql_query("DROP TABLE IF EXISTS spip_index_breves");
 
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_document` as id_objet,'4' as id_table FROM spip_index_documents");
-				spip_query("DROP TABLE IF EXISTS spip_index_documents");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_document` as id_objet,'4' as id_table FROM spip_index_documents");
+				sql_query("DROP TABLE IF EXISTS spip_index_documents");
 
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_forum` as id_objet,'5' as id_table FROM spip_index_forum");
-				spip_query("DROP TABLE IF EXISTS spip_index_forum");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_forum` as id_objet,'5' as id_table FROM spip_index_forum");
+				sql_query("DROP TABLE IF EXISTS spip_index_forum");
 
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_mot` as id_objet,'6' as id_table FROM spip_index_mots");
-				spip_query("DROP TABLE IF EXISTS spip_index_mots");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_mot` as id_objet,'6' as id_table FROM spip_index_mots");
+				sql_query("DROP TABLE IF EXISTS spip_index_mots");
 
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_rubrique` as id_objet,'7' as id_table FROM spip_index_rubriques");
-				spip_query("DROP TABLE IF EXISTS spip_index_rubriques");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_rubrique` as id_objet,'7' as id_table FROM spip_index_rubriques");
+				sql_query("DROP TABLE IF EXISTS spip_index_rubriques");
 
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_signature` as id_objet,'8' as id_table FROM spip_index_signatures");
-				spip_query("DROP TABLE IF EXISTS spip_index_signatures");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_signature` as id_objet,'8' as id_table FROM spip_index_signatures");
+				sql_query("DROP TABLE IF EXISTS spip_index_signatures");
 
-				spip_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_syndic` as id_objet,'9' as `id_table FROM spip_index_syndic");
-				spip_query("DROP TABLE IF EXISTS spip_index_syndic");
+				sql_query("INSERT INTO spip_index (`hash`,`points`,`id_objet`,`id_table`) SELECT `hash`,`points`,`id_syndic` as id_objet,'9' as `id_table FROM spip_index_syndic");
+				sql_query("DROP TABLE IF EXISTS spip_index_syndic");
 		*/
 		maj_version(1.905);
 	}
@@ -117,50 +117,50 @@ function v019_pre193($version_installee, $version_cible) {
 	// de versions alpha :-)
 	if (upgrade_vers(1.906, $version_installee, $version_cible)) {
 		if (!@in_array('podcast_client', $GLOBALS['plugins'])) {
-			spip_query("DROP TABLE spip_documents_syndic");
+			sql_query("DROP TABLE spip_documents_syndic");
 		}
 		maj_version(1.906);
 	}
 	if (upgrade_vers(1.907, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_forum ADD INDEX `idx` (`idx`)");
+		sql_query("ALTER TABLE spip_forum ADD INDEX `idx` (`idx`)");
 		maj_version(1.907);
 	}
 	// Oups ! on stockait les tags de syndication sous la forme rel="category"
 	// au lieu de rel="directory" - http://microformats.org/wiki/rel-directory
 	if (upgrade_vers(1.908, $version_installee, $version_cible)) {
-		spip_query("UPDATE spip_syndic_articles SET `tags` = REPLACE(`tags`, 'rel=\"category\">', 'rel=\"directory\">') WHERE `tags` like '%category%'");
+		sql_query("UPDATE spip_syndic_articles SET `tags` = REPLACE(`tags`, 'rel=\"category\">', 'rel=\"directory\">') WHERE `tags` like '%category%'");
 		maj_version(1.908);
 	}
 	if (upgrade_vers(1.909, $version_installee, $version_cible)) {
-		spip_query("ALTER IGNORE TABLE spip_mots_articles ADD PRIMARY KEY (`id_article`, `id_mot`)");
-		spip_query("ALTER IGNORE TABLE spip_mots_breves ADD PRIMARY KEY (`id_breve`, `id_mot`)");
-		spip_query("ALTER IGNORE TABLE spip_mots_rubriques ADD PRIMARY KEY (`id_rubrique`, `id_mot`)");
-		spip_query("ALTER IGNORE TABLE spip_mots_syndic ADD PRIMARY KEY (`id_syndic`, `id_mot`)");
-		spip_query("ALTER IGNORE TABLE spip_mots_documents ADD PRIMARY KEY (`id_document`, `id_mot`)");
-		spip_query("ALTER IGNORE TABLE spip_mots_forum ADD PRIMARY KEY (`id_forum`, `id_mot`)");
+		sql_query("ALTER IGNORE TABLE spip_mots_articles ADD PRIMARY KEY (`id_article`, `id_mot`)");
+		sql_query("ALTER IGNORE TABLE spip_mots_breves ADD PRIMARY KEY (`id_breve`, `id_mot`)");
+		sql_query("ALTER IGNORE TABLE spip_mots_rubriques ADD PRIMARY KEY (`id_rubrique`, `id_mot`)");
+		sql_query("ALTER IGNORE TABLE spip_mots_syndic ADD PRIMARY KEY (`id_syndic`, `id_mot`)");
+		sql_query("ALTER IGNORE TABLE spip_mots_documents ADD PRIMARY KEY (`id_document`, `id_mot`)");
+		sql_query("ALTER IGNORE TABLE spip_mots_forum ADD PRIMARY KEY (`id_forum`, `id_mot`)");
 		maj_version(1.909);
 	}
 
 	if (upgrade_vers(1.910, $version_installee, $version_cible)) {
-		spip_query("ALTER IGNORE TABLE spip_auteurs_articles ADD PRIMARY KEY (`id_auteur`, `id_article`)");
-		spip_query("ALTER IGNORE TABLE spip_auteurs_rubriques ADD PRIMARY KEY (`id_auteur`, `id_rubrique`)");
-		spip_query("ALTER IGNORE TABLE spip_auteurs_messages ADD PRIMARY KEY (`id_auteur`, `id_message`)");
+		sql_query("ALTER IGNORE TABLE spip_auteurs_articles ADD PRIMARY KEY (`id_auteur`, `id_article`)");
+		sql_query("ALTER IGNORE TABLE spip_auteurs_rubriques ADD PRIMARY KEY (`id_auteur`, `id_rubrique`)");
+		sql_query("ALTER IGNORE TABLE spip_auteurs_messages ADD PRIMARY KEY (`id_auteur`, `id_message`)");
 		maj_version(1.910);
 	}
 
 	if (upgrade_vers(1.911, $version_installee, $version_cible)) {
 
-		spip_query("ALTER IGNORE TABLE spip_auteurs_articles DROP INDEX `id_auteur`");
-		spip_query("ALTER IGNORE TABLE spip_auteurs_rubriques DROP INDEX `id_auteur`");
-		spip_query("ALTER IGNORE TABLE spip_auteurs_messages DROP INDEX `id_auteur`");
-		spip_query("ALTER IGNORE TABLE spip_mots_articles DROP INDEX `id_article`");
-		spip_query("ALTER IGNORE TABLE spip_mots_breves DROP INDEX `id_breve`");
-		spip_query("ALTER IGNORE TABLE spip_mots_rubriques DROP INDEX `id_rubrique`");
-		spip_query("ALTER IGNORE TABLE spip_mots_syndic DROP INDEX `id_syndic`");
-		spip_query("ALTER IGNORE TABLE spip_mots_forum DROP INDEX `id_forum`");
-		spip_query("ALTER IGNORE TABLE spip_mots_documents DROP INDEX `id_document`");
+		sql_query("ALTER IGNORE TABLE spip_auteurs_articles DROP INDEX `id_auteur`");
+		sql_query("ALTER IGNORE TABLE spip_auteurs_rubriques DROP INDEX `id_auteur`");
+		sql_query("ALTER IGNORE TABLE spip_auteurs_messages DROP INDEX `id_auteur`");
+		sql_query("ALTER IGNORE TABLE spip_mots_articles DROP INDEX `id_article`");
+		sql_query("ALTER IGNORE TABLE spip_mots_breves DROP INDEX `id_breve`");
+		sql_query("ALTER IGNORE TABLE spip_mots_rubriques DROP INDEX `id_rubrique`");
+		sql_query("ALTER IGNORE TABLE spip_mots_syndic DROP INDEX `id_syndic`");
+		sql_query("ALTER IGNORE TABLE spip_mots_forum DROP INDEX `id_forum`");
+		sql_query("ALTER IGNORE TABLE spip_mots_documents DROP INDEX `id_document`");
 # 18 juillet 2007: table depreciee
-#		spip_query("ALTER IGNORE TABLE spip_caches DROP	INDEX fichier");
+#		sql_query("ALTER IGNORE TABLE spip_caches DROP	INDEX fichier");
 		maj_version(1.911);
 	}
 
@@ -178,14 +178,14 @@ function v019_pre193($version_installee, $version_cible) {
 
 	// suppression de auteur_modif qui n'est plus utilise nulle part
 	if (upgrade_vers(1.913, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_articles DROP `auteur_modif`");
+		sql_query("ALTER TABLE spip_articles DROP `auteur_modif`");
 		maj_version(1.913);
 	}
 
 	// Ajout de SVG
 	if (upgrade_vers(1.914, $version_installee, $version_cible)) {
-		spip_query("INSERT IGNORE INTO spip_types_documents (`extension`, `titre`, `inclus`) VALUES ('svg', 'Scalable Vector Graphics', 'embed')");
-		spip_query("UPDATE spip_types_documents SET `mime_type`='image/svg+xml' WHERE `extension`='svg'");
+		sql_query("INSERT IGNORE INTO spip_types_documents (`extension`, `titre`, `inclus`) VALUES ('svg', 'Scalable Vector Graphics', 'embed')");
+		sql_query("UPDATE spip_types_documents SET `mime_type`='image/svg+xml' WHERE `extension`='svg'");
 		maj_version(1.914);
 	}
 
@@ -197,41 +197,41 @@ function v019_pre193($version_installee, $version_cible) {
 	if (upgrade_vers(1.916, $version_installee, $version_cible)) {
 		// agrandir le champ "valeur" de spip_meta pour pouvoir y stocker
 		// des choses plus sympa
-		spip_query("ALTER TABLE spip_meta DROP INDEX `valeur`");
-		spip_query("ALTER TABLE spip_meta CHANGE `valeur` `valeur` TEXT");
+		sql_query("ALTER TABLE spip_meta DROP INDEX `valeur`");
+		sql_query("ALTER TABLE spip_meta CHANGE `valeur` `valeur` TEXT");
 #8/08/07  plus d'indexation dans le core
 		//include_spip('inc/indexation'); 
 		//update_index_tables();
 		maj_version(1.916);
 	}
 	if (upgrade_vers(1.917, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_documents DROP `inclus`");
+		sql_query("ALTER TABLE spip_documents DROP `inclus`");
 		maj_version(1.917);
 	}
 
 	// Permettre d'enregistrer un numero IP dans les revisions d'articles
 	// a la place de l'id_auteur
 	if (upgrade_vers(1.918, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_versions CHANGE `id_auteur` `id_auteur` VARCHAR(23)");
+		sql_query("ALTER TABLE spip_versions CHANGE `id_auteur` `id_auteur` VARCHAR(23)");
 		maj_version(1.918);
 	}
 
 	if (upgrade_vers(1.919, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_ajax_fonc DROP `id_auteur`");
+		sql_query("ALTER TABLE spip_ajax_fonc DROP `id_auteur`");
 		maj_version('1.919');
 	}
 
 	if (upgrade_vers(1.920, $version_installee, $version_cible)) {
-		spip_query("ALTER IGNORE TABLE spip_documents_articles ADD PRIMARY KEY (`id_article`, `id_document`)");
-		spip_query("ALTER IGNORE TABLE spip_documents_breves ADD PRIMARY KEY (`id_breve`, `id_document`)");
-		spip_query("ALTER IGNORE TABLE spip_documents_rubriques ADD PRIMARY KEY (`id_rubrique`, `id_document`)");
-		spip_query("ALTER IGNORE TABLE spip_documents_articles DROP INDEX `id_article`");
-		spip_query("ALTER IGNORE TABLE spip_documents_breves DROP INDEX `id_breve`");
-		spip_query("ALTER IGNORE TABLE spip_documents_rubriques DROP INDEX `id_rubrique`");
+		sql_query("ALTER IGNORE TABLE spip_documents_articles ADD PRIMARY KEY (`id_article`, `id_document`)");
+		sql_query("ALTER IGNORE TABLE spip_documents_breves ADD PRIMARY KEY (`id_breve`, `id_document`)");
+		sql_query("ALTER IGNORE TABLE spip_documents_rubriques ADD PRIMARY KEY (`id_rubrique`, `id_document`)");
+		sql_query("ALTER IGNORE TABLE spip_documents_articles DROP INDEX `id_article`");
+		sql_query("ALTER IGNORE TABLE spip_documents_breves DROP INDEX `id_breve`");
+		sql_query("ALTER IGNORE TABLE spip_documents_rubriques DROP INDEX `id_rubrique`");
 		maj_version('1.920');
 	}
 	if (upgrade_vers(1.922, $version_installee, $version_cible)) {
-		spip_query("ALTER TABLE spip_meta ADD `impt` ENUM('non', 'oui') DEFAULT 'oui' NOT NULL AFTER `valeur`");
+		sql_query("ALTER TABLE spip_meta ADD `impt` ENUM('non', 'oui') DEFAULT 'oui' NOT NULL AFTER `valeur`");
 		$meta_serveur = array(
 			'version_installee',
 			'adresse_site',
@@ -257,7 +257,7 @@ function v019_pre193($version_installee, $version_cible) {
 			'plugin'
 		);
 		foreach ($meta_serveur as $nom) {
-			spip_query("UPDATE spip_meta SET `impt`='non' WHERE `nom`=" . _q($nom));
+			sql_query("UPDATE spip_meta SET `impt`='non' WHERE `nom`=" . sql_quote($nom));
 		}
 		maj_version('1.922');
 	}
@@ -275,7 +275,7 @@ function v019_pre193($version_installee, $version_cible) {
 	}
 
 	if (upgrade_vers(1.924, $version_installee, $version_cible)) {
-		spip_query('DROP TABLE spip_ajax_fonc');
+		sql_query('DROP TABLE spip_ajax_fonc');
 		maj_version('1.924');
 	}
 
@@ -301,7 +301,7 @@ function v019_pre193($version_installee, $version_cible) {
 		}
 		/* deplacement des upload */
 		$auteurs = array();
-		$req = spip_query("SELECT `login` FROM spip_auteurs WHERE `statut` = '0minirezo'");
+		$req = sql_query("SELECT `login` FROM spip_auteurs WHERE `statut` = '0minirezo'");
 		while ($row = sql_fetch($req)) {
 			$auteurs[] = $row['login'];
 		}
@@ -334,8 +334,8 @@ function v019_pre193($version_installee, $version_cible) {
 	}
 	// Ajout de MP4
 	if (upgrade_vers(1.926, $version_installee, $version_cible)) {
-		spip_query("INSERT IGNORE INTO spip_types_documents (`extension`, `titre`, `inclus`) VALUES ('mp4', 'MPEG4', 'embed')");
-		spip_query("UPDATE spip_types_documents SET `mime_type`='application/mp4' WHERE `extension`='mp4'");
+		sql_query("INSERT IGNORE INTO spip_types_documents (`extension`, `titre`, `inclus`) VALUES ('mp4', 'MPEG4', 'embed')");
+		sql_query("UPDATE spip_types_documents SET `mime_type`='application/mp4' WHERE `extension`='mp4'");
 		maj_version('1.926');
 	}
 }

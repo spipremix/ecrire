@@ -69,14 +69,14 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_chercher' => 'Suchen',
 	'bouton_choisir' => 'Auswählen',
 	'bouton_deplacer' => 'Verschieben',
-	'bouton_download' => 'Herunterladen',
+	'bouton_download' => 'Runterladen',
 	'bouton_enregistrer' => 'Speichern',
 	'bouton_radio_desactiver_messagerie_interne' => 'Interne Nachrichten abschalten',
 	'bouton_radio_envoi_annonces' => 'Editorische Ankündigungen verschicken',
 	'bouton_radio_non_envoi_annonces' => 'Keine Ankündigungen verschicken',
 	'bouton_radio_non_envoi_liste_nouveautes' => 'Keine Liste der Neuigkeiten verschicken',
 	'bouton_recharger_page' => 'Seite neu laden',
-	'bouton_telecharger' => 'Herunterladen',
+	'bouton_telecharger' => 'Runterladen',
 	'bouton_upload' => 'Hochladen',
 	'bouton_valider' => 'Bestätigen',
 
@@ -288,8 +288,10 @@ wird Ihre Adresse beibehalten):
 	'form_prop_non_enregistre' => 'Ihr Vorschlag wurde nicht gespeichert.',
 	'form_prop_sujet' => 'Thema',
 	'form_prop_url_site' => 'URL der der Website',
+	'format_date_incorrecte' => 'Falsches Datum oder Datumsformat',
+	'format_heure_incorrecte' => 'Falsches Zeitformat oder Zeit',
 	'forum_non_inscrit' => 'Sie sind nicht eingeschrieben oder Adresse bzw. Passwort waren falsch.',
-	'forum_par_auteur' => 'Nach @auteur@',
+	'forum_par_auteur' => 'von @auteur@',
 	'forum_titre_erreur' => 'Fehler...',
 
 	// I
@@ -540,6 +542,9 @@ wird Ihre Adresse beibehalten):
 	// M
 	'masquer_colonne' => 'Diese Spalte verbergen',
 	'masquer_trad' => 'Übersetzungen ausblenden',
+	'message_nouveaux_identifiants_echec' => 'Es können keine neuen Zugangsdaten erzeigt werden.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Die neuen Zugangsdaten konnten nicht übermittelt werden.',
+	'message_nouveaux_identifiants_ok' => 'Die neuen Zugangsdaten wurden an @email@ übermittelt.',
 	'module_fichiers_langues' => 'Sprachdateien',
 
 	// N
@@ -657,6 +662,9 @@ Sie können auf dieser Seite ein neues Passwort eingeben und sich wieder bei der
 	'todo' => 'demnächst',
 	'trad_definir_reference' => 'Wählen Sie "@titre@" als Referenz für Übersetzungen',
 	'trad_reference' => '(Referenzartikel)',
+
+	// U
+	'upload_limit' => 'Die Datei ist zu groß für den Server; die maximal erlaubte Dateigröße für den <i>Upload</i> ist @max@.',
 
 	// Z
 	'zbug_balise_b_aval' => ' : Tag B muss vor der Schleife stehen',

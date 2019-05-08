@@ -20,26 +20,6 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 /**
- * Affiche un code html (echo) et log l'affichage car cet echo est anormal !
- *
- * Signale une fonction qui devrait retourner un contenu mais effectue
- * un echo à la place pour compatibilité ascendante
- *
- * @deprecated
- *     Utiliser des squelettes pour l'affichage !
- *
- * @param string $f
- *     Nom de la fonction
- * @param string $ret
- *     Code HTML à afficher
- * @return void
- **/
-function echo_log($f, $ret) {
-	spip_log("Page " . self() . " function $f: echo " . substr($ret, 0, 50) . "...", 'echo');
-	echo(_SIGNALER_ECHOS ? "#Echo par $f#" : "") . $ret;
-}
-
-/**
  * Retourne le code HTML d'un début de cadre pour le centre de page (haut de page)
  *
  * @return string Code HTML

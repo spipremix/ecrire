@@ -422,7 +422,7 @@ function _request($var, $c = false) {
  *
  * @param string $var Nom de la clé
  * @param string $val Valeur à affecter
- * @param bool|array $c Tableu de données (sinon utilise `$_GET` et `$_POST`)
+ * @param bool|array $c Tableau de données (sinon utilise `$_GET` et `$_POST`)
  * @return array|bool
  *     - array $c complété si un $c est transmis,
  *     - false sinon
@@ -633,6 +633,9 @@ function nettoyer_uri($reset = null) {
 
 /**
  * Nettoie une request_uri des paramètres var_xxx
+ * 
+ * Attention, la regexp doit suivre _CONTEXTE_IGNORE_VARIABLES défini au début de public/assembler.php
+ * 
  * @param $request_uri
  * @return string
  */
@@ -640,7 +643,7 @@ function nettoyer_uri_var($request_uri) {
 	$uri1 = $request_uri;
 	do {
 		$uri = $uri1;
-		$uri1 = preg_replace(',([?&])(PHPSESSID|(var_[^=&]*))=[^&]*(&|$),i',
+		$uri1 = preg_replace(',([?&])(var_[^=&]*|PHPSESSID|fbclid|utm_[^=&]*)=[^&]*(&|$),i',
 			'\1', $uri);
 	} while ($uri <> $uri1);
 	return preg_replace(',[?&]$,', '', $uri1);
@@ -1422,7 +1425,7 @@ function chemin_image($icone) {
 	}
 
 	// si c'est un nom d'image complet (article-24.png) essayer de le renvoyer direct
-	if (preg_match(',[.](png|gif|jpg)$,', $icone) and $f = find_in_theme("images/$icone")) {
+	if (preg_match(',[.](png|gif|jpg|svg)$,', $icone) and $f = find_in_theme("images/$icone")) {
 		return $f;
 	}
 	// sinon passer par le module de renommage
@@ -1810,7 +1813,7 @@ function generer_url_entite_absolue($id = '', $entite = '', $args = '', $ancre =
  * Tester qu'une variable d'environnement est active
  *
  * Sur certains serveurs, la valeur 'Off' tient lieu de false dans certaines
- * variables d'environnement comme $_SERVER[HTTPS] ou ini_get(register_globals)
+ * variables d'environnement comme `$_SERVER['HTTPS']` ou `ini_get('display_errors')`
  *
  * @param string|bool $truc
  *     La valeur de la variable d'environnement
@@ -2010,30 +2013,6 @@ function generer_url_ecrire($script = '', $args = "", $no_entities = false, $rel
 	}
 
 	return $rel . ($no_entities ? $args : str_replace('&', '&amp;', $args));
-}
-
-/**
- * Permet d'ajouter lien vers une page privée à un paramètre d'url (déprécié)
- *
- *     ```
- *     // deprecié
- *     $h = generer_url_ecrire('article', "id_article=$id_article&redirect=" . generer_url_retour('articles'));
- *     // utiliser
- *     $h = generer_url_ecrire('article');
- *     $h = parametre_url($h, 'id_article', $id_article);
- *     $h = parametre_url($h, 'redirect', generer_url_ecrire('articles'));
- *     ```
- *
- * @deprecated Utiliser parametre_url() et generer_url_ecrire()
- * @see parametre_url()
- * @see generer_url_ecrire()
- *
- * @param string $script
- * @param string $args
- * @return string
- */
-function generer_url_retour($script, $args = "") {
-	return rawurlencode(generer_url_ecrire($script, $args, true, true));
 }
 
 //
@@ -2483,22 +2462,6 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 	spip_desinfecte($_COOKIE);
 	spip_desinfecte($_REQUEST);
 
-	// Si les variables sont passees en global par le serveur,
-	// il faut faire quelques verifications de base
-	// Todo: test à supprimer lorsque version PHP minimum >= 5.4.
-	$avertir_register_globals = false;
-	if (test_valeur_serveur(@ini_get('register_globals'))) {
-		// ne pas desinfecter les globales en profondeur car elle contient aussi les
-		// precedentes, qui seraient desinfectees 2 fois.
-		spip_desinfecte($GLOBALS, false);
-		// plugin grenier
-		if (include_spip('inc/php3')) {
-			spip_register_globals(true);
-		}
-
-		$avertir_register_globals = true;
-	}
-
 	// appliquer le cookie_prefix
 	if ($GLOBALS['cookie_prefix'] != 'spip') {
 		include_spip('inc/cookie');
@@ -2541,12 +2504,6 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 	// charge aussi effacer_meta et ecrire_meta
 	$inc_meta = charger_fonction('meta', 'inc');
 	$inc_meta();
-
-	// on a pas pu le faire plus tot
-	if ($avertir_register_globals) {
-		avertir_auteurs("register_globals",
-			_L("Probl&egrave;me de s&eacute;curit&eacute; : register_globals=on; dans php.ini &agrave; corriger."));
-	}
 
 	// nombre de repertoires depuis la racine
 	// on compare a l'adresse de spip.php : $_SERVER["SCRIPT_NAME"]
@@ -2667,25 +2624,22 @@ function spip_initialisation_suite() {
 	}
 
 	if (!defined('_DOCTYPE_ECRIRE')) {
-		define('_DOCTYPE_ECRIRE',
-			// "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>\n");
-			//"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>\n");
-			//"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n");
-			// "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1 //EN' 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'>\n");
-		"<!DOCTYPE html>\n");
+		/** Définit le doctype de l’espace privé */
+		define('_DOCTYPE_ECRIRE', "<!DOCTYPE html>\n");
 	}
 	if (!defined('_DOCTYPE_AIDE')) {
+		/** Définit le doctype de l’aide en ligne */
 		define('_DOCTYPE_AIDE',
 		"<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Frameset//EN' 'http://www.w3.org/TR/1999/REC-html401-19991224/frameset.dtd'>");
 	}
 
-	/** L'adresse de base du site ; on peut mettre '' si la racine est gerée par
-	 * le script de l'espace public, alias index.php */
 	if (!defined('_SPIP_SCRIPT')) {
+		/** L'adresse de base du site ; on peut mettre '' si la racine est gerée par
+		 * le script de l'espace public, alias index.php */
 		define('_SPIP_SCRIPT', 'spip.php');
 	}
-	/** Argument page, personalisable en cas de conflit avec un autre script */
 	if (!defined('_SPIP_PAGE')) {
+		/** Argument page, personalisable en cas de conflit avec un autre script */
 		define('_SPIP_PAGE', 'page');
 	}
 
@@ -3219,12 +3173,18 @@ function recuperer_fond($fond, $contexte = array(), $options = array(), $connect
 
 	$GLOBALS['_INC_PUBLIC']++;
 
+	// fix #4235
+	$cache_utilise_session_appelant	= (isset($GLOBALS['cache_utilise_session']) ? $GLOBALS['cache_utilise_session'] : null);
+
 
 	foreach (is_array($fond) ? $fond : array($fond) as $f) {
+		
+		unset($GLOBALS['cache_utilise_session']);	// fix #4235
+
 		$page = evaluer_fond($f, $contexte, $connect);
 		if ($page === '') {
 			$c = isset($options['compil']) ? $options['compil'] : '';
-			$a = array('fichier' => $fond);
+			$a = array('fichier' => $f);
 			$erreur = _T('info_erreur_squelette2', $a); // squelette introuvable
 			erreur_squelette($erreur, $c);
 			// eviter des erreurs strictes ensuite sur $page['cle'] en PHP >= 5.4
@@ -3256,6 +3216,17 @@ function recuperer_fond($fond, $contexte = array(), $options = array(), $connect
 		} else {
 			$texte .= $options['trim'] ? rtrim($page['texte']) : $page['texte'];
 		}
+		
+		// contamination de la session appelante, pour les inclusions statiques
+		if (isset($page['invalideurs']['session'])){
+			$cache_utilise_session_appelant = $page['invalideurs']['session'];
+		}
+	}
+
+	// restaurer le sessionnement du contexte appelant, 
+	// éventuellement contaminé si on vient de récupérer une inclusion statique sessionnée
+	if (isset($cache_utilise_session_appelant)) {
+		$GLOBALS['cache_utilise_session'] = $cache_utilise_session_appelant;
 	}
 
 	$GLOBALS['_INC_PUBLIC']--;
@@ -3350,25 +3321,21 @@ function tester_url_ecrire($nom) {
 
 
 /**
- * Tente de charger dynamiquement une extension PHP
+ * Teste la présence d’une extension PHP
  *
+ * @deprected Utiliser directement la fonction native `extension_loaded($module)`
  * @example
  *     ```
  *     $ok = charger_php_extension('sqlite');
  *     ```
- * @uses inc_charger_php_extension_dist() Si la librairie n'est pas déjà charchée
- *
  * @param string $module Nom du module à charger
  * @return bool true si le module est chargé
  **/
 function charger_php_extension($module) {
 	if (extension_loaded($module)) {
 		return true;
-	} else {
-		$charger_php_extension = charger_fonction('charger_php_extension', 'inc');
-
-		return $charger_php_extension($module);
 	}
+	return false;
 }
 
 
@@ -3408,37 +3375,6 @@ function lire_meta($nom) {
  * @deprecated
  **/
 function ecrire_metas() { }
-
-/**
- * Retourne une ligne d'un résultat de requête mysql (déprécié)
- *
- * @see sql_fetch()
- * @deprecated Utiliser sql_fetch()
- * @param Ressource $r Ressource mysql
- * @param int|null $t Type de retour
- * @return array|void|bool Tableau de la ligne SQL
- **/
-function spip_fetch_array($r, $t = null) {
-	if (!isset($t)) {
-		if ($r) {
-			return sql_fetch($r);
-		}
-	} else {
-		if ($t == 'SPIP_NUM') {
-			$t = MYSQLI_NUM;
-		}
-		if ($t == 'SPIP_BOTH') {
-			$t = MYSQLI_BOTH;
-		}
-		if ($t == 'SPIP_ASSOC') {
-			$t = MYSQLI_ASSOC;
-		}
-		spip_log("appel deprecie de spip_fetch_array(..., $t)", 'vieilles_defs');
-		if ($r) {
-			return mysqli_fetch_array($r, $t);
-		}
-	}
-}
 
 /**
  * Poser une alerte qui sera affiche aux auteurs de bon statut ('' = tous)

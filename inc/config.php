@@ -544,8 +544,8 @@ function actualise_metas($liste_meta) {
 	// verifier le impt=non
 	sql_updateq('spip_meta', array('impt' => 'non'), sql_in('nom', $meta_serveur));
 
-	while (list($nom, $valeur) = each($liste_meta)) {
-		if (!isset($GLOBALS['meta'][$nom]) or !$GLOBALS['meta'][$nom]) {
+	foreach ($liste_meta as $nom => $valeur) {
+		if (empty($GLOBALS['meta'][$nom])) {
 			ecrire_meta($nom, $valeur);
 		}
 	}

@@ -151,7 +151,7 @@ function balise_FORMULAIRE_ADMIN_dyn($float = '', $debug = '') {
  * Préparer le contexte d'environnement pour les boutons
  *
  * Permettra d'afficher le bouton 'Modifier ce...' s'il y a un
- * `$id_XXX` défini globalement par `spip_register_globals`
+ * `$id_XXX` défini dans le contexte de la page
  *
  * @note
  *   Attention à l'ordre dans la boucle:

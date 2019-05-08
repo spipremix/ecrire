@@ -94,23 +94,14 @@ function req_sqlite_dist($addr, $port, $login, $pass, $db = '', $prefixe = '', $
 		// pour tester la connexion
 		$db = "_sqlite" . $sqlite_version . "_install";
 		$tmp = _DIR_DB . $db . ".sqlite";
-		if ($sqlite_version == 3) {
-			$ok = $link = new PDO("sqlite:$tmp");
-		} else {
-			$ok = $link = sqlite_open($tmp, _SQLITE_CHMOD, $err);
-		}
+		$ok = $link = new \PDO("sqlite:$tmp");
 	} else {
 		// Ouvrir (eventuellement creer la base)
-		// si pas de version fourni, on essaie la 3, sinon la 2
-		if ($sqlite_version == 3) {
-			$ok = $link = new PDO("sqlite:$f");
-		} else {
-			$ok = $link = sqlite_open($f, _SQLITE_CHMOD, $err);
-		}
+		$ok = $link = new \PDO("sqlite:$f");
 	}
 
 	if (!$ok) {
-		$e = sqlite_last_error($db);
+		$e = _sqlite_last_error_from_link($link);
 		spip_log("Impossible d'ouvrir la base SQLite($sqlite_version) $f : $e", 'sqlite.' . _LOG_HS);
 
 		return false;
@@ -327,20 +318,10 @@ function spip_sqlite_alter($query, $serveur = '', $requeter = true) {
 			case 'RENAME':
 				$do = "RENAME TO" . substr($do, 6);
 			case 'RENAME TO':
-				if (_sqlite_is_version(3, '', $serveur)) {
-					if (!spip_sqlite::executer_requete("$debut $do", $serveur)) {
-						spip_log("SQLite : Erreur ALTER TABLE / RENAME : $query", 'sqlite.' . _LOG_ERREUR);
+				if (!spip_sqlite::executer_requete("$debut $do", $serveur)) {
+					spip_log("SQLite : Erreur ALTER TABLE / RENAME : $query", 'sqlite.' . _LOG_ERREUR);
 
-						return false;
-					}
-					// artillerie lourde pour sqlite2 !
-				} else {
-					$table_dest = trim(substr($do, 9));
-					if (!_sqlite_modifier_table(array($table => $table_dest), '', array(), $serveur)) {
-						spip_log("SQLite : Erreur ALTER TABLE / RENAME : $query", 'sqlite.' . _LOG_ERREUR);
-
-						return false;
-					}
+					return false;
 				}
 				break;
 
@@ -397,7 +378,7 @@ function spip_sqlite_alter($query, $serveur = '', $requeter = true) {
 				$do = "ADD" . substr($do, 10);
 			case 'ADD':
 			default:
-				if (_sqlite_is_version(3, '', $serveur) and !preg_match(',primary\s+key,i', $do)) {
+				if (!preg_match(',primary\s+key,i', $do)) {
 					if (!spip_sqlite::executer_requete("$debut $do", $serveur)) {
 						spip_log("SQLite : Erreur ALTER TABLE / ADD : $query", 'sqlite.' . _LOG_ERREUR);
 
@@ -406,7 +387,6 @@ function spip_sqlite_alter($query, $serveur = '', $requeter = true) {
 					break;
 
 				}
-				// artillerie lourde pour sqlite2 !
 				// ou si la colonne est aussi primary key
 				// cas du add id_truc int primary key
 				// ajout d'une colonne qui passe en primary key directe
@@ -505,11 +485,9 @@ function spip_sqlite_create_base($nom, $serveur = '', $option = true) {
 	if (strpos($nom, "/") === false) {
 		$f = _DIR_DB . $f;
 	}
-	if (_sqlite_is_version(2, '', $serveur)) {
-		$ok = sqlite_open($f, _SQLITE_CHMOD, $err);
-	} else {
-		$ok = new PDO("sqlite:$f");
-	}
+
+	$ok = new \PDO("sqlite:$f");
+
 	if ($ok) {
 		unset($ok);
 
@@ -639,31 +617,26 @@ function spip_sqlite_count($r, $serveur = '', $requeter = true) {
 		return 0;
 	}
 
-	if (_sqlite_is_version(3, '', $serveur)) {
-		// select ou autre (insert, update,...) ?
-
-		// (link,requete) a compter
-		if (is_array($r->spipSqliteRowCount)) {
-			list($link, $query) = $r->spipSqliteRowCount;
-			// amelioration possible a tester intensivement : pas de order by pour compter !
-			// $query = preg_replace(",ORDER BY .+(LIMIT\s|HAVING\s|GROUP BY\s|$),Uims","\\1",$query);
-			$query = "SELECT count(*) as zzzzsqlitecount FROM ($query)";
-			$l = $link->query($query);
-			$i = 0;
-			if ($l and $z = $l->fetch()) {
-				$i = $z['zzzzsqlitecount'];
-			}
-			$r->spipSqliteRowCount = $i;
+	// select ou autre (insert, update,...) ?
+	// (link,requete) a compter
+	if (is_array($r->spipSqliteRowCount)) {
+		list($link, $query) = $r->spipSqliteRowCount;
+		// amelioration possible a tester intensivement : pas de order by pour compter !
+		// $query = preg_replace(",ORDER BY .+(LIMIT\s|HAVING\s|GROUP BY\s|$),Uims","\\1",$query);
+		$query = "SELECT count(*) as zzzzsqlitecount FROM ($query)";
+		$l = $link->query($query);
+		$i = 0;
+		if ($l and $z = $l->fetch()) {
+			$i = $z['zzzzsqlitecount'];
 		}
-		if (isset($r->spipSqliteRowCount)) {
-			// Ce compte est faux s'il y a des limit dans la requete :(
-			// il retourne le nombre d'enregistrements sans le limit
-			return $r->spipSqliteRowCount;
-		} else {
-			return $r->rowCount();
-		}
+		$r->spipSqliteRowCount = $i;
+	}
+	if (isset($r->spipSqliteRowCount)) {
+		// Ce compte est faux s'il y a des limit dans la requete :(
+		// il retourne le nombre d'enregistrements sans le limit
+		return $r->spipSqliteRowCount;
 	} else {
-		return sqlite_num_rows($r);
+		return $r->rowCount();
 	}
 }
 
@@ -694,12 +667,7 @@ function spip_sqlite_countsel(
 	$r = spip_sqlite_select("COUNT($c)", $from, $where, '', '', '',
 		$having, $serveur, $requeter);
 	if ((is_resource($r) or is_object($r)) && $requeter) { // ressource : sqlite2, object : sqlite3
-		if (_sqlite_is_version(3, '', $serveur)) {
-			list($r) = spip_sqlite_fetch($r, SPIP_SQLITE3_NUM, $serveur);
-		} else {
-			list($r) = spip_sqlite_fetch($r, SPIP_SQLITE2_NUM, $serveur);
-		}
-
+		list($r) = spip_sqlite_fetch($r, SPIP_SQLITE3_NUM, $serveur);
 	}
 
 	return $r;
@@ -731,11 +699,7 @@ function spip_sqlite_delete($table, $where = '', $serveur = '', $requeter = true
 
 	if ($res) {
 		$link = _sqlite_link($serveur);
-		if (_sqlite_is_version(3, $link)) {
-			return $res->rowCount();
-		} else {
-			return sqlite_changes($link);
-		}
+		return $res->rowCount();
 	} else {
 		return false;
 	}
@@ -758,14 +722,6 @@ function spip_sqlite_drop_table($table, $exist = '', $serveur = '', $requeter = 
 		$exist = " IF EXISTS";
 	}
 
-	/* simuler le IF EXISTS - version 2 */
-	if ($exist && _sqlite_is_version(2, '', $serveur)) {
-		$a = spip_sqlite_showtable($table, $serveur);
-		if (!$a) {
-			return true;
-		}
-		$exist = '';
-	}
 	if (spip_sqlite_query("DROP TABLE$exist $table", $serveur, $requeter)) {
 		return true;
 	} else {
@@ -788,15 +744,6 @@ function spip_sqlite_drop_table($table, $exist = '', $serveur = '', $requeter = 
 function spip_sqlite_drop_view($view, $exist = '', $serveur = '', $requeter = true) {
 	if ($exist) {
 		$exist = " IF EXISTS";
-	}
-
-	/* simuler le IF EXISTS - version 2 */
-	if ($exist && _sqlite_is_version(2, '', $serveur)) {
-		$a = spip_sqlite_showtable($view, $serveur);
-		if (!$a) {
-			return true;
-		}
-		$exist = '';
 	}
 
 	return spip_sqlite_query("DROP VIEW$exist $view", $serveur, $requeter);
@@ -824,15 +771,6 @@ function spip_sqlite_drop_index($nom, $table, $serveur = '', $requeter = true) {
 	$index = $table . '_' . $nom;
 	$exist = " IF EXISTS";
 
-	/* simuler le IF EXISTS - version 2 */
-	if (_sqlite_is_version(2, '', $serveur)) {
-		$a = spip_sqlite_showtable($table, $serveur);
-		if (!isset($a['key']['KEY ' . $nom])) {
-			return true;
-		}
-		$exist = '';
-	}
-
 	$query = "DROP INDEX$exist $index";
 
 	return spip_sqlite_query($query, $serveur, $requeter);
@@ -853,7 +791,24 @@ function spip_sqlite_drop_index($nom, $table, $serveur = '', $requeter = true) {
 function spip_sqlite_error($query = '', $serveur = '') {
 	$link = _sqlite_link($serveur);
 
-	if (_sqlite_is_version(3, $link)) {
+	if ($link) {
+		$errs = $link->errorInfo();
+		$s = _sqlite_last_error_from_link($link);
+	} else {
+		$s = ": aucune ressource sqlite (link)";
+	}
+	if ($s) {
+		$trace = debug_backtrace();
+		if ($trace[0]['function'] != "spip_sqlite_error") {
+			spip_log("$s - $query - " . sql_error_backtrace(), 'sqlite.' . _LOG_ERREUR);
+		}
+	}
+
+	return $s;
+}
+
+function _sqlite_last_error_from_link($link) {
+	if ($link) {
 		$errs = $link->errorInfo();
 		/*
 			$errs[0]
@@ -865,23 +820,11 @@ function spip_sqlite_error($query = '', $serveur = '') {
 			$errs[2]
 				Le texte du message d'erreur
 		*/
-		$s = '';
 		if (ltrim($errs[0], '0')) { // 00000 si pas d'erreur
-			$s = "$errs[2]";
-		}
-	} elseif ($link) {
-		$s = sqlite_error_string(sqlite_last_error($link));
-	} else {
-		$s = ": aucune ressource sqlite (link)";
-	}
-	if ($s) {
-		$trace = debug_backtrace();
-		if ($trace[0]['function'] != "spip_mysql_error") {
-			spip_log("$s - $query - " . sql_error_backtrace(), 'sqlite.' . _LOG_ERREUR);
+			return "$errs[2]";
 		}
 	}
-
-	return $s;
+	return "";
 }
 
 /**
@@ -900,14 +843,12 @@ function spip_sqlite_error($query = '', $serveur = '') {
 function spip_sqlite_errno($serveur = '') {
 	$link = _sqlite_link($serveur);
 
-	if (_sqlite_is_version(3, $link)) {
+	if ($link) {
 		$t = $link->errorInfo();
 		$s = ltrim($t[0], '0'); // 00000 si pas d'erreur
 		if ($s) {
 			$s .= ' / ' . $t[1];
 		} // ajoute l'erreur du moteur SQLite
-	} elseif ($link) {
-		$s = sqlite_last_error($link);
 	} else {
 		$s = ": aucune ressource sqlite (link)";
 	}
@@ -962,17 +903,14 @@ function spip_sqlite_explain($query, $serveur = '', $requeter = true) {
 function spip_sqlite_fetch($r, $t = '', $serveur = '', $requeter = true) {
 
 	$link = _sqlite_link($serveur);
-	$is_v3 = _sqlite_is_version(3, $link);
-	if (!$t) {
-		$t = ($is_v3 ? SPIP_SQLITE3_ASSOC : SPIP_SQLITE2_ASSOC);
-	}
+	$t = $t ? $t : SPIP_SQLITE3_ASSOC;
 
 	$retour = false;
 	if ($r) {
-		$retour = ($is_v3 ? $r->fetch($t) : sqlite_fetch_array($r, $t));
+		$retour = $r->fetch($t);
 	}
 
-	// les version 2 et 3 parfois renvoie des 'table.titre' au lieu de 'titre' tout court ! pff !
+	// Renvoie des 'table.titre' au lieu de 'titre' tout court ! pff !
 	// suppression de 'table.' pour toutes les cles (c'est un peu violent !)
 	// c'est couteux : on ne verifie que la premiere ligne pour voir si on le fait ou non
 	if ($retour
@@ -999,17 +937,8 @@ function spip_sqlite_fetch($r, $t = '', $serveur = '', $requeter = true) {
  * @return bool True si déplacement réussi, false sinon.
  **/
 function spip_sqlite_seek($r, $row_number, $serveur = '', $requeter = true) {
-	if ($r) {
-		$link = _sqlite_link($serveur);
-		if (_sqlite_is_version(3, $link)) {
-			// encore un truc de bien fichu : PDO ne PEUT PAS faire de seek ou de rewind...
-			// je me demande si pour sqlite 3 il ne faudrait pas mieux utiliser
-			// les nouvelles fonctions sqlite3_xx (mais encore moins presentes...)
-			return false;
-		} else {
-			return sqlite_seek($r, $row_number);
-		}
-	}
+	// encore un truc de bien fichu : PDO ne PEUT PAS faire de seek ou de rewind...
+	return false;
 }
 
 
@@ -1832,14 +1761,14 @@ function spip_sqlite_showtable($nom_table, $serveur = '', $requeter = true) {
 					continue;
 				}
 
-				$fields[$k] = $def;
-				$k_precedent = $k;
-
 				// la primary key peut etre dans une des descriptions de champs
 				// et non en fin de table, cas encore decouvert avec Sqlite Manager
 				if (stripos($r[2], 'PRIMARY KEY') !== false) {
 					$keys['PRIMARY KEY'] = $k;
 				}
+
+				$fields[$k] = $def;
+				$k_precedent = $k;
 			}
 			// key inclues dans la requete
 			foreach (preg_split('/\)\s*(,|$)/', $namedkeys) as $v) {
@@ -2027,11 +1956,8 @@ function _sqlite_is_version($version = '', $link = '', $serveur = '', $requeter 
 	if (!$link) {
 		return false;
 	}
-	if ($link instanceof PDO) {
-		$v = 3;
-	} else {
-		$v = 2;
-	}
+
+	$v = 3;
 
 	if (!$version) {
 		return $v;
@@ -2091,19 +2017,20 @@ function _sqlite_calculer_cite($v, $type) {
 		}
 	}
 
-	if (function_exists('sqlite_escape_string')) {
-		return "'" . sqlite_escape_string($v) . "'";
-	}
-
-	// trouver un link sqlite3 pour faire l'echappement
+	// trouver un link sqlite pour faire l'echappement
 	foreach ($GLOBALS['connexions'] as $s) {
-		if (_sqlite_is_version(3, $l = $s['link'])) {
+		if (
+			$l = $s['link']
+			and is_object($l)
+			and $l instanceof \PDO
+			and $l->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'sqlite'
+		) {
 			return $l->quote($v);
 		}
 	}
 
 	// echapper les ' en ''
-	spip_log("Pas de methode sqlite_escape_string ni ->quote pour echapper", "sqlite." . _LOG_INFO_IMPORTANTE);
+	spip_log("Pas de methode ->quote pour echapper", "sqlite." . _LOG_INFO_IMPORTANTE);
 
 	return ("'" . str_replace("'", "''", $v) . "'");
 }
@@ -2240,16 +2167,9 @@ function _sqlite_calculer_where($v) {
 function _sqlite_charger_version($version = '') {
 	$versions = array();
 
-	// version 2
-	if (!$version || $version == 2) {
-		if (charger_php_extension('sqlite')) {
-			$versions[] = 2;
-		}
-	}
-
 	// version 3
 	if (!$version || $version == 3) {
-		if (charger_php_extension('pdo') && charger_php_extension('pdo_sqlite')) {
+		if (extension_loaded('pdo') && extension_loaded('pdo_sqlite')) {
 			$versions[] = 3;
 		}
 	}
@@ -2296,16 +2216,16 @@ function _sqlite_charger_version($version = '') {
 function _sqlite_modifier_table($table, $colonne, $opt = array(), $serveur = '') {
 
 	if (is_array($table)) {
-		reset($table);
-		list($table_origine, $table_destination) = each($table);
+		$table_destination = reset($table);
+		$table_origine = key($table);
 	} else {
 		$table_origine = $table_destination = $table;
 	}
 	// ne prend actuellement qu'un changement
 	// mais pourra etre adapte pour changer plus qu'une colonne a la fois
 	if (is_array($colonne)) {
-		reset($colonne);
-		list($colonne_origine, $colonne_destination) = each($colonne);
+		$colonne_destination = reset($colonne);
+		$colonne_origine = key($colonne);
 	} else {
 		$colonne_origine = $colonne_destination = $colonne;
 	}
@@ -2405,20 +2325,7 @@ function _sqlite_modifier_table($table, $colonne, $opt = array(), $serveur = '')
 	// avec le nom de la table destination
 	// si necessaire
 	if ($meme_table) {
-		if (_sqlite_is_version(3, '', $serveur)) {
-			$queries[] = "ALTER TABLE $table_copie RENAME TO $table_destination";
-		} else {
-			$queries[] = _sqlite_requete_create(
-				$table_destination,
-				$fields,
-				$keys,
-				$autoinc,
-				$temporary = false,
-				$ifnotexists = false, // la table existe puisqu'on est dans une transaction
-				$serveur);
-			$queries[] = "INSERT INTO $table_destination SELECT * FROM $table_copie";
-			$queries[] = "DROP TABLE $table_copie";
-		}
+		$queries[] = "ALTER TABLE $table_copie RENAME TO $table_destination";
 	}
 
 	// 5) remettre les index !
@@ -2634,28 +2541,28 @@ function _sqlite_requete_create(
 	// soit faussement dans les 2 (et dans ce cas, il faut l’enlever à un des 2 endroits !)
 	$pk = "PRIMARY KEY";
 	// le champ de cle primaire
-	$c = !empty($cles[$pk]) ? $cles[$pk] : '';
+	$champ_pk = !empty($cles[$pk]) ? $cles[$pk] : '';
 
 	foreach ($champs as $k => $v) {
 		if (false !== stripos($v, $pk)) {
-			$c = $k;
+			$champ_pk = $k;
 			// on n'en a plus besoin dans field, vu que defini dans key
 			$champs[$k] = preg_replace("/$pk/is", '', $champs[$k]);
 			break;
 		}
 	}
 
-	if ($c) {
-		$keys = "\n\t\t$pk ($c)";
+	if ($champ_pk) {
+		$keys = "\n\t\t$pk ($champ_pk)";
 	}
 	// Pas de DEFAULT 0 sur les cles primaires en auto-increment
-	if (isset($champs[$c])
-		and stripos($champs[$c], "default 0") !== false
+	if (isset($champs[$champ_pk])
+		and stripos($champs[$champ_pk], "default 0") !== false
 	) {
-		$champs[$c] = trim(str_ireplace("default 0", "", $champs[$c]));
+		$champs[$champ_pk] = trim(str_ireplace("default 0", "", $champs[$champ_pk]));
 	}
 
-	$champs = _sqlite_remplacements_definitions_table($champs, $autoinc ? $c : false);
+	$champs = _sqlite_remplacements_definitions_table($champs, $autoinc ? $champ_pk : false);
 	foreach ($champs as $k => $v) {
 		$query .= "$s\n\t\t$k $v";
 		$s = ",";
@@ -2674,7 +2581,7 @@ function _sqlite_requete_create(
 			$ifnotexists = ' IF NOT EXISTS';
 		} else {
 			/* simuler le IF EXISTS - version 2 et sqlite < 3.3a */
-			$a = spip_sqlite_showtable($table, $serveur);
+			$a = spip_sqlite_showtable($nom, $serveur);
 			if (isset($a['key']['KEY ' . $nom])) {
 				return true;
 			}
@@ -2938,25 +2845,21 @@ class sqlite_requeteur {
 			$GLOBALS['connexions'][$this->serveur ? $this->serveur : 0]['last'] = $query;
 			$GLOBALS['connexions'][$this->serveur ? $this->serveur : 0]['total_requetes']++;
 
-			if ($this->sqlite_version == 3) {
-				$r = $this->link->query($query);
-				// sauvegarde de la requete (elle y est deja dans $r->queryString)
-				# $r->spipQueryString = $query;
+			$r = $this->link->query($query);
+			// sauvegarde de la requete (elle y est deja dans $r->queryString)
+			# $r->spipQueryString = $query;
 
-				// comptage : oblige de compter le nombre d'entrees retournees 
-				// par une requete SELECT
-				// aucune autre solution ne donne le nombre attendu :( !
-				// particulierement s'il y a des LIMIT dans la requete.
-				if (strtoupper(substr(ltrim($query), 0, 6)) == 'SELECT') {
-					if ($r) {
-						// noter le link et la query pour faire le comptage *si* on en a besoin
-						$r->spipSqliteRowCount = array($this->link, $query);
-					} elseif ($r instanceof PDOStatement) {
-						$r->spipSqliteRowCount = 0;
-					}
+			// comptage : oblige de compter le nombre d'entrees retournees
+			// par une requete SELECT
+			// aucune autre solution ne donne le nombre attendu :( !
+			// particulierement s'il y a des LIMIT dans la requete.
+			if (strtoupper(substr(ltrim($query), 0, 6)) == 'SELECT') {
+				if ($r) {
+					// noter le link et la query pour faire le comptage *si* on en a besoin
+					$r->spipSqliteRowCount = array($this->link, $query);
+				} elseif ($r instanceof PDOStatement) {
+					$r->spipSqliteRowCount = 0;
 				}
-			} else {
-				$r = sqlite_query($this->link, $query);
 			}
 
 			// loger les warnings/erreurs eventuels de sqlite remontant dans PHP
@@ -2984,11 +2887,7 @@ class sqlite_requeteur {
 	 * @return int
 	 **/
 	public function last_insert_id() {
-		if ($this->sqlite_version == 3) {
-			return $this->link->lastInsertId();
-		} else {
-			return sqlite_last_insert_rowid($this->link);
-		}
+		return $this->link->lastInsertId();
 	}
 }
 

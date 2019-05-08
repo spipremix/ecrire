@@ -19,11 +19,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'aucun_article' => 'Op dit adres is geen artikel te vinden',
 	'aucun_auteur' => 'Op dit adres is geen auteur te vinden',
 	'aucun_site' => 'Op dit adres is geen site te vinden',
-	'aucune_breve' => 'Op dit adres is geen nieuwsbericht te vinden',
+	'aucune_breve' => 'Op dit adres is geen nieuwsflits te vinden',
 	'aucune_rubrique' => 'Op dit adres is geen rubriek te vinden',
 	'auteur' => 'Auteur',
 	'autres' => 'Anderen',
-	'autres_breves' => 'Andere nieuwsberichten',
+	'autres_breves' => 'Andere nieuwsflitsen',
 	'autres_groupes_mots_clefs' => 'Andere groepen trefwoorden',
 	'autres_sites' => 'Andere sites',
 
@@ -38,7 +38,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// D
 	'date' => 'Datum',
 	'dernier_ajout' => 'Laatste toevoeging',
-	'dernieres_breves' => 'Laatste nieuwsberichten',
+	'dernieres_breves' => 'Laatste nieuwsflitsen',
 	'derniers_articles' => 'Laatste artikelen',
 	'derniers_commentaires' => 'Laatste commentaren',
 	'derniers_messages_forum' => 'Laatst gepubliceerde berichten in het forum',
@@ -48,7 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'en_reponse' => 'Als antwoord op:',
 	'en_resume' => 'Samengevat',
 	'envoyer_message' => 'Een bericht sturen',
-	'espace_prive' => 'Privé-gedeelte',
+	'espace_prive' => 'Privé gedeelte',
 
 	// F
 	'formats_acceptes' => 'Toegelaten formaten: @formats@.',
@@ -79,7 +79,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'nouveautes' => 'Nieuwigheden',
 	'nouveautes_web' => 'Nieuwigheden op het Web',
 	'nouveaux_articles' => 'Nieuwe artikelen',
-	'nouvelles_breves' => 'Nieuwe nieuwsberichten',
+	'nouvelles_breves' => 'Nieuwe nieuwsflitsen',
 
 	// P
 	'page_precedente' => 'vorige pagina',
@@ -93,7 +93,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// R
 	'repondre_article' => 'Dit artikel beantwoorden',
-	'repondre_breve' => 'Dit nieuwsbericht beantwoorden',
+	'repondre_breve' => 'Op deze nieuwsflits reageren',
 	'resultats_recherche' => 'Resultaten van de zoekopdracht',
 	'retour_debut_forums' => 'Terug naar de startpagina van de forums',
 	'rubrique' => 'Rubriek',

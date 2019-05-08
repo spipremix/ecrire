@@ -624,7 +624,7 @@ function ecrire_fichier_session($fichier, $auteur) {
 	// enregistrer les autres donnees du visiteur
 	$texte = "<" . "?php\n";
 	foreach ($auteur as $var => $val) {
-		$texte .= '$GLOBALS[\'visiteur_session\'][\'' . $var . '\'] = '
+		$texte .= '$GLOBALS[\'visiteur_session\'][' . var_export($var, true) . '] = '
 			. var_export($val, true) . ";\n";
 	}
 	$texte .= "?" . ">\n";
@@ -717,11 +717,7 @@ function spip_php_session_start() {
  **/
 function is_php_session_started() {
 	if (php_sapi_name() !== 'cli') {
-		if (PHP_VERSION_ID >= 50400) {
-			return session_status() === PHP_SESSION_ACTIVE ? true : false;
-		} else {
-			return session_id() === '' ? false : true;
-		}
+		return session_status() === PHP_SESSION_ACTIVE ? true : false;
 	}
 
 	return false;

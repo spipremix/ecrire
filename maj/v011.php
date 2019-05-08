@@ -28,8 +28,8 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function maj_v011_dist($version_installee, $version_cible) {
 
 	if (upgrade_vers(1.1, $version_installee, $version_cible)) {
-		spip_query("DROP TABLE spip_petition");
-		spip_query("DROP TABLE spip_signatures_petition");
+		sql_query("DROP TABLE spip_petition");
+		sql_query("DROP TABLE spip_signatures_petition");
 		maj_version(1.1);
 	}
 }

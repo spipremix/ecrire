@@ -41,7 +41,7 @@ if (!defined('_MYSQL_NOPLANES')) {
  *     - tableau décrivant la connexion sinon
  */
 function req_mysql_dist($host, $port, $login, $pass, $db = '', $prefixe = '') {
-	if (!charger_php_extension('mysqli')) {
+	if (!extension_loaded('mysqli')) {
 		return false;
 	}
 
@@ -1680,7 +1680,8 @@ function spip_get_lock($nom, $timeout = 0) {
 	$nom = "$bd:$prefixe:$nom" . _LOCK_TIME;
 
 	$connexion['last'] = $q = "SELECT GET_LOCK(" . _q($nom) . ", $timeout) AS n";
-	$q = @sql_fetch(mysql_query($q));
+
+	$q = @sql_fetch(mysqli_query(_mysql_link(), $q));
 	if (!$q) {
 		spip_log("pas de lock sql pour $nom", _LOG_ERREUR);
 	}
@@ -1719,8 +1720,6 @@ function spip_release_lock($nom) {
  *     True si on a les fonctions, false sinon
  */
 function spip_versions_mysql() {
-	charger_php_extension('mysqli');
-
 	return function_exists('mysqli_query');
 }
 
