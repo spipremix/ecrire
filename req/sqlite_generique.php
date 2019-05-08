@@ -2674,7 +2674,7 @@ function _sqlite_requete_create(
 			$ifnotexists = ' IF NOT EXISTS';
 		} else {
 			/* simuler le IF EXISTS - version 2 et sqlite < 3.3a */
-			$a = spip_sqlite_showtable($table, $serveur);
+			$a = spip_sqlite_showtable($nom, $serveur);
 			if (isset($a['key']['KEY ' . $nom])) {
 				return true;
 			}

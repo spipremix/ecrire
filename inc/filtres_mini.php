@@ -84,6 +84,7 @@ function suivre_lien($url, $lien) {
 
 	# lien relatif, il faut verifier l'url de base
 	# commencer par virer la chaine de get de l'url de base
+	$dir = '/';
 	if (preg_match(';^((?:[a-z]{3,7}:)?//[^/]+)(/.*?/?)?([^/#?]*)([?][^#]*)?(#.*)?$;S', $url, $regs)) {
 		$debut = $regs[1];
 		$dir = !strlen($regs[2]) ? '/' : $regs[2];
