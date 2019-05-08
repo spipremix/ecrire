@@ -218,6 +218,7 @@ function liste_plugin_valides($liste_plug, $force = false) {
 		)
 	);
 
+	$invalides = array();
 	foreach ($liste_ext as $plug) {
 		if (isset($infos['_DIR_PLUGINS_DIST'][$plug])) {
 			plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS_DIST');
@@ -225,7 +226,10 @@ function liste_plugin_valides($liste_plug, $force = false) {
 	}
 	foreach ($liste_plug as $plug) {
 		if (isset($infos['_DIR_PLUGINS'][$plug])) {
-			plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS');
+			$r = plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS');
+			if (is_array($r)) {
+				$invalides = array_merge($invalides, $r);
+			}
 		}
 	}
 
@@ -233,14 +237,20 @@ function liste_plugin_valides($liste_plug, $force = false) {
 		$infos['_DIR_PLUGINS_SUPPL'] = $get_infos($liste_plug, false, _DIR_PLUGINS_SUPPL);
 		foreach ($liste_plug as $plug) {
 			if (isset($infos['_DIR_PLUGINS_SUPPL'][$plug])) {
-				plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS_SUPPL');
+				$r = plugin_valide_resume($liste_non_classee, $plug, $infos, '_DIR_PLUGINS_SUPPL');
+				if (is_array($r)) {
+					$invalides = array_merge($invalides, $r);
+				}
 			}
 		}
 	}
 
 	plugin_fixer_procure($liste_non_classee, $infos);
 
-	return array($infos, $liste_non_classee);
+	// les plugins qui sont dans $liste_non_classee ne sont pas invalides (on a trouve un autre version valide)
+	$invalides = array_diff_key($invalides, $liste_non_classee);
+
+	return array($infos, $liste_non_classee, $invalides);
 }
 
 /**
@@ -252,27 +262,34 @@ function liste_plugin_valides($liste_plug, $force = false) {
  * @param string $plug
  * @param array $infos
  * @param string $dir_type
+ * @return string|array
+ *   string prefixe dans $liste si on a accepte le plugin
+ *   array description short si on ne le retient pas (pour memorisation dans une table des erreurs)
  */
 function plugin_valide_resume(&$liste, $plug, $infos, $dir_type) {
 	$i = $infos[$dir_type][$plug];
+	$p = strtoupper($i['prefix']);
+	$short_desc = array(
+		'nom' => $i['nom'],
+		'etat' => $i['etat'],
+		'version' => $i['version'],
+		'dir' => $plug,
+		'dir_type' => $dir_type
+	);
 	if (isset($i['erreur']) and $i['erreur']) {
-		return;
+		$short_desc['erreur'] = $i['erreur'];
+		return array($p=>$short_desc);
 	}
 	if (!plugin_version_compatible($i['compatibilite'], $GLOBALS['spip_version_branche'], 'spip')) {
-		return;
+		return array($p=>$short_desc);
 	}
-	$p = strtoupper($i['prefix']);
 	if (!isset($liste[$p])
 		or spip_version_compare($i['version'], $liste[$p]['version'], '>')
 	) {
-		$liste[$p] = array(
-			'nom' => $i['nom'],
-			'etat' => $i['etat'],
-			'version' => $i['version'],
-			'dir' => $plug,
-			'dir_type' => $dir_type
-		);
+		$liste[$p] = $short_desc;
 	}
+	// ok le plugin etait deja dans la liste ou on a choisi une version plus recente
+	return $p;
 }
 
 /**
@@ -443,7 +460,13 @@ function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 
 		$plug = constant($dir_type) . $plug;
 		if (!isset($msg[$p])) {
-			if (!$msg[$p] = plugin_necessite($k['necessite'], $liste, 'necessite')) {
+			if (isset($resume['erreur']) and $resume['erreur']) {
+				$msg[$p] = array($resume['erreur']);
+			}
+			elseif (!plugin_version_compatible($k['compatibilite'], $GLOBALS['spip_version_branche'], 'spip')) {
+				$msg[$p] = array(plugin_message_incompatibilite($k['compatibilite'], $GLOBALS['spip_version_branche'], 'SPIP', 'necessite'));
+			}
+			elseif (!$msg[$p] = plugin_necessite($k['necessite'], $liste, 'necessite')) {
 				$msg[$p] = plugin_necessite($k['utilise'], $liste, 'utilise');
 			}
 		} else {
@@ -675,11 +698,11 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	// pour ne pas rater l'ajout ou la suppression d'un fichier fonctions/options/administrations
 	// pourra etre evite quand on ne supportera plus les plugin.xml
 	// en deplacant la detection de ces fichiers dans la compilation ci dessous
-	list($infos, $liste) = liste_plugin_valides($plugin, true);
+	list($infos, $liste, $invalides) = liste_plugin_valides($plugin, true);
 	// trouver l'ordre d'activation
 	list($plugin_valides, $ordre, $reste) = plugin_trier($infos, $liste);
-	if ($reste) {
-		plugins_erreurs($reste, $liste, $infos);
+	if ($invalides or $reste) {
+		plugins_erreurs(array_merge($invalides, $reste), $liste, $infos);
 	}
 	// Ignorer les plugins necessitant une lib absente
 	// et preparer la meta d'entete Http

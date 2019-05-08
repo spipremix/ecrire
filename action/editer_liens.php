@@ -247,7 +247,12 @@ function objet_dupliquer_liens($objet, $id_source, $id_cible, $types = null, $ex
 				foreach ($liens as $lien) {
 					$n++;
 					if ($infos['type'] == $objet) {
-						objet_associer(array($objet => $id_cible), array($lien['objet'] => $lien[$lien['objet']]), $lien);
+						if (
+							(is_null($types) or in_array($lien['objet'], $types))
+							and (is_null($exclure_types) or !in_array($lien['objet'], $exclure_types))
+						) {
+							objet_associer(array($objet => $id_cible), array($lien['objet'] => $lien[$lien['objet']]), $lien);
+						}
 					} else {
 						objet_associer(array($infos['type'] => $lien[$infos['type']]), array($objet => $id_cible), $lien);
 					}
@@ -802,7 +807,7 @@ function lien_find($objet_source, $primary, $table_lien, $id, $objets, $cond = n
 		// ajouter les entrees objet_source et objet cible par convenance
 		foreach ($liens as $l) {
 			$l[$objet_source] = $l[$primary];
-			$l[$objet] = $l['id_objet'];
+			$l[$l['objet']] = $l['id_objet'];
 			$trouve[] = $l;
 		}
 	}

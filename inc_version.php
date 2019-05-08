@@ -373,7 +373,7 @@ $liste_des_authentifications = array(
 // pour specifier les versions de SPIP necessaires
 // il faut s'en tenir a un nombre de decimales fixe
 // ex : 2.0.0, 2.0.0-dev, 2.0.0-beta, 2.0.0-beta2
-$spip_version_branche = "3.1.9";
+$spip_version_branche = "3.1.10";
 // version des signatures de fonctions PHP
 // (= numero SVN de leur derniere modif cassant la compatibilite et/ou necessitant un recalcul des squelettes)
 $spip_version_code = 22653;
@@ -497,7 +497,10 @@ if (isset($_REQUEST['var_memotri'])
 	if (!function_exists('session_set')) {
 		include_spip('inc/session');
 	}
-	session_set($t, _request($t));
+	$t = preg_replace(",\W,","_", $t);
+	if ($v = _request($t)) {
+		session_set($t, $v);
+	}
 }
 
 /**
@@ -510,7 +513,12 @@ if (!defined('_HEADER_COMPOSED_BY')) {
 	define('_HEADER_COMPOSED_BY', "Composed-By: SPIP");
 }
 if (!headers_sent() and _HEADER_COMPOSED_BY) {
-	header("Vary: Cookie, Accept-Encoding");
+	if (!defined('_HEADER_VARY')) {
+		define('_HEADER_VARY', "Vary: Cookie, Accept-Encoding");
+	}
+	if (_HEADER_VARY) {
+		header(_HEADER_VARY);
+	}
 	if (!isset($GLOBALS['spip_header_silencieux']) or !$GLOBALS['spip_header_silencieux']) {
 		header(_HEADER_COMPOSED_BY . " $spip_version_affichee @ www.spip.net" . (isset($GLOBALS['meta']['plugin_header']) ? (" + " . $GLOBALS['meta']['plugin_header']) : ""));
 	} else // header minimal
